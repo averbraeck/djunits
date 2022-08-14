@@ -1,0 +1,75 @@
+##TIME##
+Time
+ * <p>
+ * Note that when the offset of a stored absolute Time becomes large, precision of a double might not be enough for the required
+ * resolution of a Time. A double has around 16 significant digits (52 bit mantissa). This means that when we need to have a
+ * double Time with TimeUnit.BASE as its unit, the largest value where the ms precision is reached is 2^51 = 2.3E15, which is
+ * around 71000 years. This is sufficient to store a date in the 21st Century with a BASE or an Epoch offset precise to a
+ * microsecond.
+##
+##FLOATTIME##
+Time
+ * <p>
+ * Note that when the offset of a stored absolute Time becomes large, precision of a float might not be enough for the required
+ * resolution of a Time. A float has around 7 significant digits (23 bit mantissa). This means that when we need to have a float
+ * time that is precise to microseconds, the Time value should not go above 2^22 = 4.0E6. This is <b>not</b> enough to store
+ * Epoch values that are in the order of magnitude of 2E12 ms! So feeding System.TimeInMillis() to a FloatTime with
+ * TimeUnit.BASE as its unit is not having the required precision. At best, a FloatTime can store TimeUnit.BASE or
+ * TimeUnit.EPOCH values with real calendar values with a precision of several minutes.
+##
+##MASS##
+Mass
+
+    /** {@inheritDoc} */
+    @Override
+    public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
+    {
+        if (!Double.isFinite(this.si))
+        {
+            return toString(getDisplayUnit().getStandardUnit());
+        }
+        // PK: I can't think of an easier way to figure out what the exponent will be; rounding of the mantissa to the available
+        // width makes this hard; This feels like an expensive way.
+        String check = String.format(this.si >= 0 ? "%10.8E" : "%10.7E", this.si);
+        int exponent = Integer.parseInt(check.substring(check.indexOf("E") + 1));
+        if (exponent < -27 || exponent < smallestPower || exponent > 21 + 2 || exponent > biggestPower)
+        {
+            // Out of SI prefix range; do not scale.
+            return String.format(this.si >= 0 ? "%10.4E" : "%10.3E", this.si) + " "
+                    + getDisplayUnit().getStandardUnit().getId();
+        }
+        Integer roundedExponent = (int) Math.ceil((exponent - 2.0) / 3) * 3 + 3;
+        // System.out.print(String.format("exponent=%d; roundedExponent=%d ", exponent, roundedExponent));
+        String key = SIPrefixes.FACTORS.get(roundedExponent).getDefaultTextualPrefix() + "g";
+        MassUnit displayUnit = getDisplayUnit().getQuantity().getUnitByAbbreviation(key);
+        return toString(displayUnit);
+    }
+##
+##FLOATMASS##
+Mass
+
+    /** {@inheritDoc} */
+    @Override
+    public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
+    {
+        if (!Float.isFinite(this.si))
+        {
+            return toString(getDisplayUnit().getStandardUnit());
+        }
+        // PK: I can't think of an easier way to figure out what the exponent will be; rounding of the mantissa to the available
+        // width makes this hard; This feels like an expensive way.
+        String check = String.format(this.si >= 0 ? "%10.8E" : "%10.7E", this.si);
+        int exponent = Integer.parseInt(check.substring(check.indexOf("E") + 1));
+        if (exponent < -27 || exponent < smallestPower || exponent > 21 + 2 || exponent > biggestPower)
+        {
+            // Out of SI prefix range; do not scale.
+            return String.format(this.si >= 0 ? "%10.4E" : "%10.3E", this.si) + " " + getDisplayUnit().getStandardUnit().getId();
+        }
+        Integer roundedExponent = (int) Math.ceil((exponent - 2.0) / 3) * 3 + 3;
+        // System.out.print(String.format("exponent=%d; roundedExponent=%d ", exponent, roundedExponent));
+        String key = SIPrefixes.FACTORS.get(roundedExponent).getDefaultTextualPrefix() + "g";
+        MassUnit displayUnit = getDisplayUnit().getQuantity().getUnitByAbbreviation(key);
+        return toString(displayUnit);
+    }
+
+##
