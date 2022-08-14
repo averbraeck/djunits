@@ -1,0 +1,51 @@
+                   --------------------------------
+                   DJUNITS - Delft Java UNIT System
+                   --------------------------------
+                   Version 4, October, 2019
+                   --------------------------------
+                   
+DJUNITS - Delft Java UNIT System
+
+	DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors at compile time.
+
+    * DJUNITS performs automatic conversions between most commonly used units of the same type. 
+      E.g. conversion of distances from Miles to kilometers.
+
+    * DJUNITS stores all values internally in the basic SI unit for that value. 
+      The value can be converted to any (user-selectable) suitable unit for display.
+
+    * DJUNITS distinguishes Absolute and Relative values to catch common errors at compile time,
+
+    * DJUNITS ensures that a quantities expressed in different (but compatible) units are correctly added together. 
+      E.g. a distance in Miles is correctly added to a distance in kilometers.
+
+    * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
+      (that may have another unit).
+
+    * DJUNITS can create and carry out operations with new SI types such as s2/m2 using SIDimensions. 
+
+    * DJUNITS handles Scalars, Vectors and Matrices.
+
+    * DJUNITS stores almost everything in immutable objects. Vectors and Matrices also come in a Mutable variant 
+      where the stored values can be modified one by one or all at once.
+
+    * DJUNITS stores values as Float or Double values.
+    
+    []
+    
+==========
+
+	The demo project has a number of examples using DJUNITS.
+
+==========
+
+	DJUNITS has an open source BSD 3-clause license.
+
+    * Third party components used in DJUNITS can not have a license that is more restrictive than BSD, Apache, MIT, LGPL, or Eclipse.
+
+    * DJUNITS can be incorporated in part or in full in other products for any use (educational, commercial, whatever).
+
+    * DJUNITS may be extended, evolved by anyone into anything else for any purpose.
+    
+    []
+    
