@@ -44,7 +44,7 @@
     <maven.surefire-report.version>3.0.0-M7</maven.surefire-report.version>
     <maven.failsafe.version>3.0.0-M7</maven.failsafe.version>
     <maven.jacoco.version>0.8.8</maven.jacoco.version>
-    <maven.spotbugs.version>4.7.1</maven.spotbugs.version>
+    <maven.spotbugs.version>4.7.1.1</maven.spotbugs.version>
     <spotbugs.version>4.7.1</spotbugs.version>
     <maven.project-info-reports.version>3.4.0</maven.project-info-reports.version>
     <maven.jxr.version>3.2.0</maven.jxr.version>
