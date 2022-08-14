@@ -49,7 +49,7 @@ Absolute and distances are Relative.
 Generally, if adding a value to itself makes no sense, the value is Absolute; otherwise it is Relative.
 
 | Operation 	| Operands              | Result      |
-| ----------- | ----------------------------------- |
+| ----------- | --------------------- | ----------- |
 | + (plus) 	  | Absolute + Absolute 	| Not allowed |
 | + (plus) 	  | Absolute + Relative 	| Absolute    |
 | + (plus)    | Relative + Absolute	  | Absolute 	  | 
@@ -76,8 +76,8 @@ table below.
 | Quantity    | Absolute interpretation | Absolute class 	    | Unit                    | Relative interpretation            | Relative class | Unit | 
 | ----------- | ----------------------- | --------------------| ----------------------- | ---------------------------------- | -------------- | ---- | 
 | Length 	    | Position 	              | Position 	          | PositionUnit            | Distance                           | Length         | LengthUnit |
-| Angle       | Direction or Slope 	    | Direction 	        | DirectionUnit           | Angle (direction/slope difference) | Angle          | AngleUnit
-| Temperature | Temperature 	          | AbsoluteTemperature | AbsoluteTemperatureUnit | Temperature difference             | Temperature    | TemperatureUnit
+| Angle       | Direction or Slope 	    | Direction 	        | DirectionUnit           | Angle (direction or slope difference) | Angle          | AngleUnit
+| Temperature | Temperature 	          | Absolute<br/>Temperature | Absolute<br/>TemperatureUnit | Temperature<br/>difference             | Temperature    | TemperatureUnit
 | Time        | Time (instant) 	        | Time 	              | TimeUnit                | Duration                           | Duration       | DurationUnit |
 
 The use of Absolute in relation to Temperature here may be confusing. In the table above, an absolute temperature is not 
