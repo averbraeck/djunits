@@ -54,7 +54,7 @@ Generally, if adding a value to itself makes no sense, the value is Absolute; ot
 | + (plus) 	  | Absolute + Relative 	| Absolute    |
 | + (plus)    | Relative + Absolute	  | Absolute 	  | 
 | + (plus)    | Relative + Relative	  | Relative    |
-| - (minus)	  | Absolute - Absolute 	| Relative    |
+| - (minus)	  | Absolute - Absolute 	| Relative (corresponding quantity) |
 | - (minus)	  | Absolute - Relative 	| Absolute    |
 | - (minus)   | Relative - Absolute	  | Not allowed | 
 | - (minus)   | Relative - Relative	  | Relative    |
@@ -73,12 +73,12 @@ All quantities make sense as Relative values. The four quantities that also make
 table below.
 
 
-| Quantity    | Absolute interpretation | Absolute class 	    | Unit                    | Relative interpretation            | Relative class | Unit | 
-| ----------- | ----------------------- | --------------------| ----------------------- | ---------------------------------- | -------------- | ---- | 
-| Length 	    | Position 	              | Position 	          | PositionUnit            | Distance                           | Length         | LengthUnit |
-| Angle       | Direction or Slope 	    | Direction 	        | DirectionUnit           | Angle (direction or slope difference) | Angle          | AngleUnit
-| Temperature | Temperature 	          | Absolute<br/>Temperature | Absolute<br/>TemperatureUnit | Temperature<br/>difference             | Temperature    | TemperatureUnit
-| Time        | Time (instant) 	        | Time 	              | TimeUnit                | Duration                           | Duration       | DurationUnit |
+| Quantity    | Absolute interpretation | Absolute class<br/>and Unit | Relative interpretation | Relative class<br/> and Unit |
+| ----------- | ----------------------- | ----------------------------| ----------------------- | ---------------------------- |
+| Length 	    | Position 	              | Position<br/>PositionUnit   | Distance                | Length<br/>LengthUnit        |
+| Angle       | Direction or Slope 	    | Direction<br/>DirectionUnit | Angle (direction or slope difference) | Angle<br/>AngleUnit |
+| Temperature | Temperature 	          | AbsoluteTemperature<br/>AbsoluteTemperatureUnit | Temperature difference | Temperature<br/>TemperatureUnit |
+| Time        | Time (instant) 	        | Time<br/>TimeUnit           | Duration                | Duration<br/>DurationUnit    |
 
 The use of Absolute in relation to Temperature here may be confusing. In the table above, an absolute temperature is not 
 necessarily expressed in Kelvin. E.g. the melting temperature of water at normal atmospheric pressure is an Absolute value 
@@ -99,14 +99,21 @@ System.out.println("speed1:     " + speed1);
 Speed speed2 = new Speed(10, SpeedUnit.METER_PER_SECOND);
 System.out.println("speed2:     " + speed2);
 Speed diff = speed1.minus(speed2);
-System.out.println("difference: " + diff); // Default display unit will be SI unit for speed
-diff.setDisplayUnit(SpeedUnit.MILE_PER_HOUR); // Change default display unit; internal SI value is unaltered
+// Default display unit will be SI unit for speed:
+System.out.println("difference: " + diff); 
+// Change default display unit; internal SI value is unaltered:
+diff.setDisplayUnit(SpeedUnit.MILE_PER_HOUR); 
 System.out.println("difference: " + diff);
-System.out.println("difference: " + diff.getInUnit(SpeedUnit.KNOT) + " kt"); // Works, but not mistake-safe
-System.out.println("difference: " + diff.toString(SpeedUnit.KNOT)); // Safer
-System.out.println("difference: " + diff.si + " m/s (si)"); // Programmer must be really sure that SI-unit is m/s
-System.out.println("difference: " + diff.getSI() + " m/s (si)"); // Same as previous
-System.out.println("difference: " + diff.toString(SpeedUnit.SI) + " (si)"); // Safer
+// Works, but not mistake-safe:
+System.out.println("difference: " + diff.getInUnit(SpeedUnit.KNOT) + " kt"); 
+// Safer:
+System.out.println("difference: " + diff.toString(SpeedUnit.KNOT)); 
+// Programmer must be really sure that SI-unit is m/s:
+System.out.println("difference: " + diff.si + " m/s (si)"); 
+// Same as previous:
+System.out.println("difference: " + diff.getSI() + " m/s (si)"); 
+// Safer:
+System.out.println("difference: " + diff.toString(SpeedUnit.SI) + " (si)"); 
 System.out.println("difference: " + diff.toString(SpeedUnit.KM_PER_HOUR));
 ```
 
@@ -157,11 +164,22 @@ DJUNITS is designed to protect the programmer from easily made mistakes:
 ```java
 Speed speed = new Speed(12, SpeedUnit.KM_PER_HOUR);
 Length length = new Length(4, LengthUnit.MILE);
-Duration howLongOK = length.divide(speed); // Good
-Duration howLongWrong = speed.divide(length); // Does not compile; result would be a frequency
-Speed other = speed.minus(length); // Does not compile; subtracting a length from a speed make no sense
-Acceleration acceleration = speed.times(speed).asAcceleration(); // Throws a UnitRuntimeException
-Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM).times(0.5)).asEnergy(); // OK
+
+// Good:
+Duration howLongOK = length.divide(speed); 
+
+// Does not compile; result would be a frequency:
+Duration howLongWrong = speed.divide(length); 
+
+// Does not compile; subtracting a length from a speed make no sense:
+Speed other = speed.minus(length); 
+
+// Throws a UnitRuntimeException:
+Acceleration acceleration = speed.times(speed).asAcceleration(); 
+
+// OK:
+Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM)
+    .times(0.5)).asEnergy(); // OK
 ```
 
 The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like eclipse) such mistakes will be marked in by the java editor.
@@ -171,7 +189,8 @@ The before-last line multiplies a speed by another speed. The result of this ope
 A correct example where DJUNITS does not know the unit of the result (thus requiring an asXXX() cast) is:
 
 ```java
-Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM).times(0.5)).asEnergy(); // OK
+Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM)
+    .times(0.5)).asEnergy(); // OK
 System.out.println(kineticEnergy);
 ```
 
