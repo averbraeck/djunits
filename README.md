@@ -48,19 +48,24 @@ Absolute and distances are Relative.
 
 Generally, if adding a value to itself makes no sense, the value is Absolute; otherwise it is Relative.
 
-| Operation 	| ↓ Left operand   Right operand → 	| Absolute    | Relative    |
-| ----------- | --------------------------------- | ----------- | ----------- |
-| + (plus) 	  | Absolute 	                        | Not allowed | Absolute    |
-|             | Relative 	                        | Absolute 	  | Relative    |
-| ----------- | --------------------------------- | ----------- | ----------- |
-| - (minus) 	| Absolute 	                        | Relative 	  | Absolute    |
-|             | Relative 	                        | Not allowed | Relative    |
-| ----------- | --------------------------------- | ----------- | ----------- |
-
-* (times) 	Absolute 	Not allowed 	Not allowed
-Relative 	Not allowed 	Relative
-/ (divide) 	Absolute 	Not allowed 	Not allowed
-Relative 	Not allowed 	Relative
+| Operation 	| Operands              | Result      |
+| ----------- | ----------------------------------- |
+| + (plus) 	  | Absolute + Absolute 	| Not allowed |
+| + (plus) 	  | Absolute + Relative 	| Absolute    |
+| + (plus)    | Relative + Absolute	  | Absolute 	  | 
+| + (plus)    | Relative + Relative	  | Relative    |
+| - (minus)	  | Absolute - Absolute 	| Relative    |
+| - (minus)	  | Absolute - Relative 	| Absolute    |
+| - (minus)   | Relative - Absolute	  | Not allowed | 
+| - (minus)   | Relative - Relative	  | Relative    |
+| * (times) 	| Absolute * Absolute	  | Not allowed |
+| * (times) 	| Absolute * Relative	  | Not allowed |
+| * (times) 	| Relative * Absolute	  | Not allowed |
+| * (times) 	| Relative * Relative	  | Relative (different quantity) |
+| / (divide) 	| Absolute / Absolute	  | Not allowed |
+| / (divide) 	| Absolute / Relative	  | Not allowed |
+| / (divide) 	| Relative / Absolute	  | Not allowed |
+| / (divide) 	| Relative / Relative	  | Relative (different quantity) |
 
 Attempts to perform operations that are marked not allowed are caught at compile time.
 
@@ -68,11 +73,12 @@ All quantities make sense as Relative values. The four quantities that also make
 table below.
 
 
-Quantity 	Absolute interpretation 	Absolute class 	Unit 	Relative interpretation 	Relative class 	Unit
-Length 	Position 	Position 	PositionUnit 	Distance 	Length 	LengthUnit
-Angle 	Direction or Slope 	Direction 	DirectionUnit 	Angle (direction/slope difference) 	Angle 	AngleUnit
-Temperature 	Temperature 	AbsoluteTemperature 	AbsoluteTemperatureUnit 	Temperature difference 	Temperature 	TemperatureUnit
-Time 	Time (instant) 	Time 	TimeUnit 	Duration 	Duration 	DurationUnit
+| Quantity    | Absolute interpretation | Absolute class 	    | Unit                    | Relative interpretation            | Relative class | Unit | 
+| ----------- | ----------------------- | --------------------| ----------------------- | ---------------------------------- | -------------- | ---- | 
+| Length 	    | Position 	              | Position 	          | PositionUnit            | Distance                           | Length         | LengthUnit |
+| Angle       | Direction or Slope 	    | Direction 	        | DirectionUnit           | Angle (direction/slope difference) | Angle          | AngleUnit
+| Temperature | Temperature 	          | AbsoluteTemperature | AbsoluteTemperatureUnit | Temperature difference             | Temperature    | TemperatureUnit
+| Time        | Time (instant) 	        | Time 	              | TimeUnit                | Duration                           | Duration       | DurationUnit |
 
 The use of Absolute in relation to Temperature here may be confusing. In the table above, an absolute temperature is not 
 necessarily expressed in Kelvin. E.g. the melting temperature of water at normal atmospheric pressure is an Absolute value 
