@@ -1,5 +1,5 @@
 # djunits
-Delft Java UNIT System
+## Delft Java UNIT System
 
 DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors at compile time 
 and some others at runtime.
@@ -48,11 +48,15 @@ Absolute and distances are Relative.
 
 Generally, if adding a value to itself makes no sense, the value is Absolute; otherwise it is Relative.
 
-Operation 	↓ Left operand Right operand → 	Absolute 	Relative
-+ (plus) 	Absolute 	Not allowed 	Absolute
-Relative 	Absolute 	Relative
-- (minus) 	Absolute 	Relative 	Absolute
-Relative 	Not allowed 	Relative
+| Operation 	| ↓ Left operand   Right operand → 	| Absolute    | Relative    |
+| ----------- | --------------------------------- | ----------- | ----------- |
+| + (plus) 	  | Absolute 	                        | Not allowed | Absolute    |
+|             | Relative 	                        | Absolute 	  | Relative    |
+| ----------- | --------------------------------- | ----------- | ----------- |
+| - (minus) 	| Absolute 	                        | Relative 	  | Absolute    |
+|             | Relative 	                        | Not allowed | Relative    |
+| ----------- | --------------------------------- | ----------- | ----------- |
+
 * (times) 	Absolute 	Not allowed 	Not allowed
 Relative 	Not allowed 	Relative
 / (divide) 	Absolute 	Not allowed 	Not allowed
@@ -83,6 +87,7 @@ Dimensionless is a special relative unit in DJUNITS that has a unit of 1.
 
 DJUNITS has a large number of pre-defined units. Internally, all values are stored in SI-units or an equivalent standard unit. For scalar values, the field is called si and can be retrieved as it is a public (immutable) field. Alternatively, the getSI() method can be used. The internal storage in SI units allows addition and subtraction of values that have been initialized using different units. Formatting and expressing the unit can be done using any defined unit. The code below illustrates some of the features.
 
+```java
 Speed speed1 = new Speed(30, SpeedUnit.MILE_PER_HOUR);
 System.out.println("speed1:     " + speed1);
 Speed speed2 = new Speed(10, SpeedUnit.METER_PER_SECOND);
@@ -97,9 +102,11 @@ System.out.println("difference: " + diff.si + " m/s (si)"); // Programmer must b
 System.out.println("difference: " + diff.getSI() + " m/s (si)"); // Same as previous
 System.out.println("difference: " + diff.toString(SpeedUnit.SI) + " (si)"); // Safer
 System.out.println("difference: " + diff.toString(SpeedUnit.KM_PER_HOUR));
+```
 
 This would create the following output:
 
+```
 speed1:     30.0000000 mi/h
 speed2:     10.0000000 m/s
 difference: 3.41120000 m/s
@@ -110,6 +117,7 @@ difference: 3.411199999999999 m/s (si)
 difference: 3.411199999999999 m/s (si)
 difference: 3.41120000 m/s (si)
 difference: 12.2803200 km/h
+```
 
 When a class implements the interface UNITS (org.djunits.unit.UNITS), all defined units are available without the prefix XxxUnit. So, 
 in that case a Length can be defined as new Length(12.0, METER) instead of Length(12.0, LengthUnit.METER).
@@ -121,12 +129,14 @@ Multiplying or dividing physical quantities produces a result in a different phy
 where the Java compiler can check the type of the result in the general case. Therefore DJUNITS has an extensive list of built-in 
 multiplication and division operations with known result type. For instance
 
+```java
 Speed speed = new Speed(50, SpeedUnit.KM_PER_HOUR);
 Duration duration = new Duration(0.5, DurationUnit.HOUR);
 Length distance = speed.multiplyBy(duration);
 Acceleration acc0 = speed.divideBy(duration);
 Area area = distance.multiplyBy(distance);
 Volume vol = area.multiplyBy(distance);
+```
 
 DJUNITS knows that the result of multiplication of a speed and a time is a distance. The value of distance is 2500 m.
 
@@ -138,6 +148,7 @@ It just does not make sense to multiply 23 September 2015, 3 PM (an absolute Tim
 
 DJUNITS is designed to protect the programmer from easily made mistakes:
 
+```java
 Speed speed = new Speed(12, SpeedUnit.KM_PER_HOUR);
 Length length = new Length(4, LengthUnit.MILE);
 Duration howLongOK = length.divide(speed); // Good
@@ -145,6 +156,7 @@ Duration howLongWrong = speed.divide(length); // Does not compile; result would 
 Speed other = speed.minus(length); // Does not compile; subtracting a length from a speed make no sense
 Acceleration acceleration = speed.times(speed).asAcceleration(); // Throws a UnitRuntimeException
 Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM).times(0.5)).asEnergy(); // OK
+```
 
 The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like eclipse) such mistakes will be marked in by the java editor.
 
@@ -152,12 +164,16 @@ The before-last line multiplies a speed by another speed. The result of this ope
 
 A correct example where DJUNITS does not know the unit of the result (thus requiring an asXXX() cast) is:
 
+```java
 Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM).times(0.5)).asEnergy(); // OK
 System.out.println(kineticEnergy);
+```
 
 This would print:
 
+```
 16.6666667 J
+```
 
 
 ## Scalars, Vectors and Matrices
