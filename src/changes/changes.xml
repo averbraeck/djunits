@@ -1,0 +1,750 @@
+<document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <body>
+
+    <release version="5.06.06" date="2022-08-15" description="Single project; move to github">
+      <action dev="averbraeck" type="update">
+        The projects djunits, djunits-demo and djunits-generator have been put together into one project.
+        Source code will be hosted on github from now on. Updates and changes can be retrieved from github
+        from this version onward.  
+      </action>
+      <action dev="averbraeck" type="add">
+        Documentation is implicitly added in a docs folder using the MkDocs static website generator. 
+      </action>
+      <action dev="averbraeck" type="add">
+        Releases are hosted on Maven Central from now on.  
+      </action>
+    </release>
+
+    <release version="4.01.09" date="2022-03-14" description="reciprocal() function more specific">
+      <action dev="averbraeck" type="update">
+        The reciprocal() function was not specific for quantities that have a reciprocal within djunits, such as the 
+        Duration (Frequency) and the Length (LinearDensity). The reciprocal() function has been made more specific,
+        and returns an SIScalar when there is no known reciprocal quantity. 
+      </action>
+      <action dev="pknoppers" type="add">
+        Added toStringSIPrefixed method to display quantities with the nearest SI unit (e.g., 6 km instead of 6000 m).
+      </action>
+    </release>
+
+    <release version="4.01.08" date="2022-02-08" description="Resources stored in subfolder resources">
+      <action dev="averbraeck" type="update">
+        When using DJUNITS in Eclipse, the resources from src/main/resources are placed in /target/classes.
+        When building a Runnable JAR file from Eclipse from the same project, the resources are placed within the jar
+        in the /resources folder, and therefore cannot be found. This disconnect between Eclipse and Maven has existed 
+        for over 10 years and is seen as a 'feature' and not as a bug. Two solutions exist: remove the Exluded: ** in
+        all project properties, Java Build Path, under the source directories of /src/main/resources (then the resource
+        files will be placed in the root in the runnable jar file), but this reverts after a Maven Update of the project.
+        Therefore, we have chosen the opposite solution: all resources are copied to the /target/classes/resources folder
+        in Eclipse, and to the /resources folder within the runnable jar file. Thereby they are always found at the same 
+        location. This holds in djunits for the resource bundle properties files.
+        An additional advantage is that the Jar files look less cluttered without all the resources in the root folder. 
+      </action>
+    </release>
+    
+    <release version="4.01.07" date="2022-01-10" description="Javadoc, copyright notice, no dependency on ojAlgo">
+      <action dev="averbraeck" type="update">
+        Dependency on ojAlgo has been removed. The package was only used to calculate the determinant of a matrix. 
+      </action>
+      <action dev="averbraeck" type="update">
+        Javadoc comments updated to contain correct types of parameters. 
+      </action>
+      <action dev="averbraeck" type="update">
+        Copyright notice for 2022. 
+      </action>
+    </release>
+
+    <release version="4.01.06" date="2020-08-20" description="Zero length vectors and matrices allowed">
+      <action dev="averbraeck" type="update">
+        Zero length vectors and matrices were not allowed. As a corner case, e.g., when no data is available, a zero
+        length vector or zero-column or zero-row matrix, can be useful to have. From this version onward, these zero-length
+        vectors and matrices are allowed.
+      </action>
+      <action dev="averbraeck" type="update">
+        For linking to the newest ojAlgo version, PrimitiveMatrix has been replaced with Primitive32Matrix for float and
+        Primitive64Matrix for double matrices.
+      </action>
+    </release>
+    
+    <release version="4.01.05" date="2020-01-19" description="Javadoc, spotbugs warnings, Localization">
+      <action dev="averbraeck" type="update">
+        Solved a few spotbugs warnings. Improved Javadoc in a few places. Updated copyright notice to 2020.
+      </action>
+      <action dev="averbraeck" type="fix">
+        The Serializable class Localization had two fields that were non-serializable. They have been marked as transient. 
+      </action>
+    </release>
+    
+    <release version="4.01.04" date="2020-01-17" description="Internal consistency, unit tests">
+      <action dev="pknoppers" type="add">
+        Added three units: AngularVelocity, AngularAcceleration, Momentum.
+      </action>
+      <action dev="pknoppers" type="update">
+        The static instantiate methods of SIVector, FloatSIVector, SIMatrix and FloatSIMatrix now explicitly test that unit is 
+        not null.
+      </action>
+      <action dev="pknoppers" type="update">
+        OffsetLinearScale no longer explicitly implements Scale. (It still implements that implicitly through LinearScale.)
+      </action>
+      <action dev="averbraeck" type="update">
+        AbstractScalar implemented the Value interface, where there is also a Scalar interface. There are also
+        abstract classes named AbstractValue and AbstractIndexedValue. This looked not so logical. Because 
+        AbstractScalar extends Number, which is a class rather than an interface, it cannot also extend 
+        AbstractValue. Therefore, it implements all methods of AbstractValue again. For naming clarity, the
+        class has been named AbstractScalar now instead of AbstractValue.
+      </action>
+    </release>
+    
+    <release version="4.01.03" date="2019-11-10" description="Time and Duration abbreviations expanded">
+      <action dev="averbraeck" type="update">
+        All units with hours as duration have "h", "hr", "hour" as allowed abbreviations. All units with seconds
+        have "s", "sec" as allowed abbreviations. All units with minutes have only "min" as allowed abbreviation.
+        The "m" for minute has been left out as it is too confusing with "m" for the LengthUnit meters.
+        All units with day as duration have only "day" as allowed abbreviation. "d" has been left out.
+        All units with week as duration have "wk", "week" as allowed abbreviations. "w" has been left out.
+        Defaults are "s", "min", "h", "day", "wk". The expanded units are: AccelerationUnit, DurationUnit,
+        FlowMassUnit, FlowVolumeUnit, FrequencyUnit, SpeedUnit and TimeUnit.
+      </action>
+      <action dev="averbraeck" type="add">
+        Unit tests and properties files for the units have been updated accordingly.
+      </action>
+      <action dev="averbraeck" type="fix">
+        The GenerateXSD utility in djunits-generator has been repaired to be compliant with OTS.
+      </action>
+    </release>
+
+    <release version="4.01.02" date="2019-11-10" description="Iterable Vector; scalar toString methods">
+      <action dev="averbraeck" type="update">
+        All units with hours as duration have "h", "hr", "hour" as allowed abbreviations. All units with seconds
+        have "s", "sec" as allowed abbreviations. All units with minutes have only "min" as allowed abbreviation.
+        All units with day as duration have only "day" as allowed abbreviation. All units with week as
+        duration have "wk", "week" as allowed abbreviations. Defaults are "s", "min", "h", "day", "wk".
+        The expanded units are: AccelerationUnit, DurationUnit, FlowMassUnit, FlowVolumeUnit, FrequencyUnit,
+        SpeedUnit and TimeUnit.
+      </action>
+      <action dev="averbraeck" type="add">
+        Vectors and FloatVectors are now Iterable again.
+      </action>
+      <action dev="averbraeck" type="update">
+        toString(...) functions of Scalar, Vector and Matrix are non-final and can be overridden.
+      </action>
+      <action dev="averbraeck" type="add">
+        Scalars could only be printed in engineering format. A method toTextualString() has been added
+        to allow printing without trailing zeroes in the number, and using the default textual unit.
+      </action>
+      <action dev="averbraeck" type="add">
+        Scalars could only be printed in engineering format. A method toDisplayString() has been added
+        to allow printing without trailing zeroes in the number, and using the default display unit.
+      </action>
+    </release>
+
+    <release version="4.01.01" date="2019-10-31" description="SpotBugs instead of FindBugs in Maven; Java 9+">
+      <action dev="averbraeck" type="fix">
+        Ensured that "package-list" exists in apidocs for backward compatibility of javadoc linking.
+      </action>
+      <action dev="pknoppers" type="update">
+        Fixed TODO regarding memory use for temporary matrix to convert the values to SI.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Replaced FindBugs (which already had a problem supporting Java 8) with SpotBugs
+        (supporting later Java versions as well).
+      </action>
+      <action dev="averbraeck" type="update">
+        Updated JavaParser to latest version in djunits-generator to be compatible with Java 11+.
+      </action>
+      <action dev="averbraeck" type="update">
+        Included jakarta.annotation-api to be compatible with Java 11+.
+      </action>
+      <action dev="averbraeck" type="fix">
+        tt-tag in javadoc replaced by code-tag to be compatible with HTML-5 and Java-11+.
+      </action>
+      <action dev="averbraeck" type="fix">
+        javadoc source version 8 added to pom-file to be compatible with Java-11+.
+      </action>
+    </release>
+
+    <release version="4.01.00" date="2019-10-25" description="Code generation for new units; BaseUnit renamed to Quantity">
+      <action dev="pknoppers" type="update">
+        Renamed UnitBase to Quantity (which should be more descriptive); UnitTypes renamed to Quantities.
+      </action>
+      <action dev="pknoppers" type="add">
+        Added quantity name field to UnitBase.
+      </action>
+      <action dev="averbraeck" type="fix">
+        UNITS.java has been regenerated including the new units.
+      </action>
+      <action dev="averbraeck" type="add">
+        UnitTypes.getRegistry() method added.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Unit.getAbbreviations() now returns a safe copy.
+      </action>
+    </release>
+
+    <release version="4.00.04" date="2019-10-20" description="Standard units for new additions added">
+      <action dev="averbraeck" type="add">
+        Standard units such as the rad, rem, Gauss, Maxwell and others added for: AbsorbedDose, AmountOfSubstance,
+        CatalyticActivity, ElectricalCapacitance, ElectricalConductance, ElectricalInductance, EquivalentDose,
+        Illuminance, LuminousFlux, LuminousIntensity, MagneticFluxDensity, MagneticFlux, and RadioActivity.
+      </action>
+      <action dev="averbraeck" type="add">
+        DoubleScalars and FloatScalars again extend Number to be able to seamlessly exchange Double, Float, Long,
+        Duration and Time for simulation times and durations in DSOL.
+      </action>
+    </release>
+
+    <release version="4.00.03" date="2019-10-19" description="Per-units updated to reflect correct name and abbreviation">
+      <action dev="averbraeck" type="fix">
+        The "per" units such as FrequencyUnit (per second) and LinearDensityUnit (per meter) were receiving
+        incorrect names ("nano per second" instead of "per nanosecond"), abbreviations (n/s instead of /ns)
+        and scales (per millisecond was scaled as 1.0E-3 per-second instead of 1.0E3 per-second). The "PER_UNIT"
+        has been added to the SIPrefixes, and a method derivePerSI(...) has been added to Unit to take care of
+        proper generation of "per" units.
+      </action>
+      <action dev="averbraeck" type="fix">
+        The derived units of a higher power such as AreaUnit (square second) and VolumeUnit (cubic meter) were
+        receiving incorrect names ("kilosquared meter" instead of "squared kilometer"), and scale factors
+        (1000 for square kilometer instead of 1E6). This has been repaired by introducing a power factor in
+        all derived units using an SI prefix. This unit can, of course, be 1.0.
+      </action>
+    </release>
+
+    <release version="4.00.02" date="2019-10-19" description="Small updates in site docs, javadoc, final">
+      <action dev="averbraeck" type="fix">
+        Tested and repaired the determinant() function of the FloatMatrix and DoubleMatrix.
+      </action>
+      <action dev="averbraeck" type="update">
+        Site documentation adapted for version 4.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Javadoc fixed in a couple of places to account for generics parameters.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Added 'final' for parameters in a number of methods.
+      </action>
+    </release>
+
+    <release version="4.00.01" date="2019-10-18" description="MAJOR NEW RELEASE, MANY METHODS CHANGED">
+      <action dev="averbraeck" type="add">
+        Added SIDimensions class to indicate the factors used in each unit (m/s2 = m1 s-2 kg0 mol0 rad0 sr0 A0 cd0 K0).
+        The SIDimensions class is used to construct new SIUnits and to do dimension checks.
+      </action>
+      <action dev="averbraeck" type="add">
+        Every unit now has a BaseUnit that stores the common dimensionality of all the DisplayUnits of that unit.
+      </action>
+      <action dev="averbraeck" type="add">
+        The following units have been added as standard units w.r.t. djunits version 3: AbsorbedDose, AmountOfSubstance,
+        CatalyticActivity, ElectricalCapacitance, ElectricalConductance, ElectricalInductance, EquivalentDose,
+        Illuminance, LuminousFlux, LuminousIntensity, MagneticFluxDensity, MagneticFlux, and RadioActivity.
+      </action>
+      <action dev="averbraeck" type="update">
+        All classes with the name AngleSolid have been renamed to SolidAngle.
+      </action>
+      <action dev="averbraeck" type="update">
+        Package structure for each type of scalar, vector and matrix updated to have the types (including SI type),
+        the base (abstract) classes from which the types extend, and the data classes that are used to store the data
+        internally.
+      </action>
+      <action dev="averbraeck" type="update">
+        The absolute and relative classes have new abstract classes that are organized as follows: Rel,
+        Abs, and RelWithAbs. The latter is there to allow Abs = Rel.plus(Abs) operations.
+      </action>
+      <action dev="pknoppers" type="add">
+        Almost full coverage of unit tests made to catch many errors.
+      </action>
+      <action dev="pknoppers" type="fix">
+        Fixed dozens of errors in (sparse) vector and matrix calculations.
+      </action>
+      <action dev="pknoppers" type="update">
+        Changed the vector and matrix calculation routines for sparse and dense data in such a way that
+        the assign(Function) method is used to do the majority of calculations, avoiding many different
+        implementations for operation on (especially sparse) vectors and matrices.
+      </action>
+      <action dev="averbraeck" type="remove">
+        Several operations have been removed that do not make sense, such as multiplying or dividing absolute
+        values with each other (or with relative values). This does not make sense as they do have a scale
+        with a shifted (or fixed) offset.
+      </action>
+      <action dev="averbraeck" type="remove">
+        The separate mutable types of Vector, Matrix, FloatVector and FloatMatrix have been removed. Instead, a flag
+        in the different types indicates whether it is mutable or not. CopyOnWrite is used to avoid duplicating
+        data when no changes are made to vectors and matrices.
+      </action>
+      <action dev="averbraeck" type="remove">
+        For now, the Money types have been removed because they were not generic enough and did not
+        provide enough added value. In a later version, the money types might come back in a much more
+        flexible version (possibly as an extra SIDimension).
+      </action>
+      <action dev="averbraeck" type="add">
+        of(value, "unit") static method added for all scalars to make it easy to instantiate a scalar.
+      </action>
+      <action dev="averbraeck" type="add">
+        as(unitType, displayUnit) and asUnit() methods added for all scalars to transform an SIScalar to any type.
+      </action>
+      <action dev="averbraeck" type="update">
+        create(...) methods renamed to instantiate(...) methods.
+        createSI(value) in scalar is now instantiateSI(value) to make it consistent with matrices and vectors.
+        create() methods in SIScalar, SIVector, SIScalar renamed to instantiate().
+        instantiate methods for scalars are now all instantiateSI methods to make it consistent with the
+        SI values in the data storage of matrices and vectors.
+        Added instantiate methods in all classes to deal with user-defined units, scalars, vectors and matrices.
+        Changed getUnit() to getDisplayUnit() for all values.
+        Repaired imports for new locations of classes.
+        Changed the SI classes to use instantiate(...) instead of create(...).
+      </action>
+      <action dev="averbraeck" type="update">
+        ojalgo and joda-money have been updated to new versions. Code has been slightly adapted
+        to handle new matrix handling algorithms in ojalgo.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Mistake in ElectricalChargeUnit repaired:
+        MILLIAMPERE_HOUR = new ElectricalChargeUnit(ElectricalCurrentUnit.MILLIAMPERE, DurationUnit.HOUR,
+        "ElectricalChargeUnit.mAh", SI_DERIVED);
+        had the same abbreviation as:
+        MILLIAMPERE_SECOND = new ElectricalChargeUnit(ElectricalCurrentUnit.MILLIAMPERE, DurationUnit.SECOND,
+        "ElectricalChargeUnit.mAh", SI_DERIVED);
+      </action>
+      <action dev="averbraeck" type="add">
+        New test in UnitsTest to find errors such as the one above. All units are compared on a constructed
+        scalar with new(...) and a scalar with valueOf(...) to see if they match.
+      </action>
+    </release>
+
+    <release version="3.01.04" date="2019-04-22" description="XSD generates unit patterns">
+      <action dev="averbraeck" type="update">
+        The XSD generator now also generates unit patterns. The abbreviation itself has been removed from
+        the human readable XML-patterns, as it can be a symbol such as the degree symbol.
+      </action>
+      <action dev="averbraeck" type="add">
+        Several extra unit tests added for Direction, testing the valueOf() method.
+      </action>
+    </release>
+
+    <release version="3.01.03" date="2019-04-21" description="DirectionUnit human readable improved">
+      <action dev="averbraeck" type="update">
+        The human readable form of the DirectionUnit has been improved. The old form was e.g. East(deg)
+        which is not logical, as the unit is degree, w.r.t. the East. Therefore, the units have been
+        changed to:
+<![CDATA[
+<pre>
+DirectionUnit.rad(North) = rad(N) | rad(North) | rad(N) | rad(North)
+DirectionUnit.rad(East) = rad | rad(East) | rad | rad(E) | rad(East)
+DirectionUnit.deg(North) = \U00B0(N) | deg(North) | deg(N) | deg(North)
+DirectionUnit.deg(East) = \U00B0 | deg(East) | deg | deg(E) | deg(East) 
+</pre>
+]]>
+      </action>
+      <action dev="averbraeck" type="update">
+        The GenerateXSD program in the djunits-generator project now also generates unit dependent
+        XML that can only have positive values or zero.
+      </action>
+      <action dev="averbraeck" type="update">
+        The GenerateXSD program in the djunits-generator project now also generates the possibility
+        to use the E-notation, e.g. "1.0E+6 meter".
+      </action>
+    </release>
+
+    <release version="3.01.02" date="2019-04-01" description="DirectionUnit repaired; serializable">
+      <action dev="averbraeck" type="fix">
+        The DirectionUnit gave wrong results for Northing versus Easting. Easting has now been taken as
+        the BASE direction whereas Northing shows a shift of 90 degrees. All units are counter-clockwise.
+        A DirectionTest and DirectionUnitTest have been added to check the correctness.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Several classes were not serializable. A unit test now checks all (outer) classes that are
+        not interfaces, abstract classes, or classes with a private constructor (utility classes)
+        for the implementation of the Serializable interface. Classes that were not serializable
+        have been adapted.
+      </action>
+    </release>
+
+    <release version="3.01.01" date="2019-03-16" description="stringOf methods have space between number and unit">
+      <action dev="averbraeck" type="fix">
+        The Scalar.stringOf methods now have a space between the number and the unit, so "2.3 rad"
+        instead of "2.3rad".
+      </action>
+    </release>
+
+    <release version="3.01.00" date="2019-03-02" description="Unit constructor and localizations changed">
+      <action dev="averbraeck" type="fix">
+        The surefire test plugin in the pom file has forkMode set to 'always' to ensure every unit test
+        is run as a separate process to avoid static leaks between tests. If not, the created '7abbr'
+        units will leak from one test to the other.
+      </action>
+      <action dev="averbraeck" type="fix">
+        The use of localizations has been fixed, and unit tests to check the localization have been
+        included.
+      </action>
+      <action dev="averbraeck" type="add">
+        In the djunits-generator project, the class GenerateXSD generates a file called 'djunits.xsd' with
+        all units in /generated-code/resources, which can be used for text-based XML parsing of units.
+      </action>
+      <action dev="averbraeck" type="update">
+        Website information has incorporated the Unit constructor changes.
+      </action>
+      <action dev="averbraeck" type="add">
+        The properties file for the localizations file has changed. The abbreviation key now finds both
+        the abbreviation and the name for a localized unit. In addition, zero or more text-only
+        representations of the unit can be added in the properties file. An example: rather than having
+        a mu-sign in the textual representations for a micrometer, a "mum" text-only version is added.
+        Another example: the textual representation for a week can be "wk" or "week". This is
+        especially useful in the parsing of human input or XML/JSON files.
+      </action>
+      <action dev="averbraeck" type="add">
+        In order to guarantee one textual representation of a unit that is not localized in
+        e.g., an XML or JSON file, extra methods have been added to the Unit class to get the
+        abbreviation, name, and textual representations in the default locale (currently 'en').
+      </action>
+      <action dev="averbraeck" type="remove">
+        Since the nameKey is not used anymore to get the localized names from the properties files,
+        the nameKey has been removed from all unit implementations. Of course it is still possible
+        to initialize a Unit with a user-defined name. In order to make the construction easier,
+        different constructors for user-defined and standard units are included; one with a name
+        and an abbreviation, the other just with an abbreviationKey. The boolean to indicate whether
+        the unit is a standard unit disappeared as a result. This influences the construction of
+        all units!
+      </action>
+    </release>
+
+    <release version="3.00.09" date="2019-02-27" description="valueOf and stringOf">
+      <action dev="averbraeck" type="add">
+        Scalar has been provided with a stringOf(Scalar) method, and all absolute and relative
+        scalars have been provided with a valueOf(String) method.
+      </action>
+      <action dev="averbraeck" type="add">
+        The generators have been adapted to create the valueOf(...) code for all absolute and
+        relative scalar classes, both Double and Float.
+      </action>
+      <action dev="averbraeck" type="add">
+        A small demo for valueOf and stringOf has called Parsing has been added to djunits-demo.
+      </action>
+    </release>
+
+    <release version="3.00.08" date="2019-01-17" description="javadoc">
+      <action dev="averbraeck" type="add">
+        The ParamComments utility class has been added to the djunits-generator project.
+        It adds or updates the type for each parameter in the javadoc of all java files in
+        /src/main/java in all or in selected projects in the workspace.
+      </action>
+      <action dev="averbraeck" type="update">
+        Copyright message changed to 2019.
+      </action>
+    </release>
+
+    <release version="3.00.07" date="2018-08-11" description="setDisplayUnit method added to all value types">
+      <action dev="averbraeck" type="add">
+        All scalars, vectors and matrices now have a setDisplayUnit method. The unit is just for display purposes;
+        it used to be final, although the value is stored in the SI or standard unit. When a value was instantiated
+        using an SI value, but the display unit had to be different, methods like: 
+<![CDATA[
+<pre>
+   FloatDensity fd = new FloatDensity(FloatDensity.createSI(si).getInUnit(unit), unit);
+</pre>
+]]>
+        had to be used. Now this can easily been done as follows:
+<![CDATA[
+<pre>
+   FloatDensity fd =(FloatDensity.createSI(si);
+   fd.setDisplayUnit(unit);
+</pre>
+]]>
+      </action>
+      <action dev="averbraeck" type="add">
+        For Scalar, FloatScalar, Vector, FloatVector, Matrix, and FloatMatrix, a generic instantiate method
+        is added to a utility class (e.g., DoubleScalarUtil), which instantiates values based on the unit
+        type it is provided with. So you can use:
+<![CDATA[
+<pre>
+  Acceleration = DoubleScalarUtil.instantiate(12960.0, AccelerationUnit.KM_PER_HOUR_2);
+</pre>
+]]>
+        but also with a more 'anonymous' unit:
+<![CDATA[
+<pre>
+  Unit<?> unitUSDm2 = new MoneyPerAreaUnit(MoneyUnit.USD, AreaUnit.SQUARE_METER, "USD/m2", "$/m2");
+  MoneyPerArea moneyPerArea = DoubleScalarUtil.instantiateAnonymous(10.0, unitUSDm2);
+</pre>
+]]>
+        This can be especially useful in data driven simulations where various types of data can be sent
+        through messages, and where the message contains the unit as well.
+      </action>
+    </release>
+
+    <release version="3.00.06" date="2018-08-10" description="hashCode and equals for MoneyUnit changed">
+      <action dev="averbraeck" type="update">
+        hashCode and equal for the MoneyUnit added. equalsIgnoreNaming(...) works on the basis of
+        the numeric code of the currency.
+      </action>
+    </release>
+
+    <release version="3.00.05" date="2018-08-10" description="hashCodes for Units changed">
+      <action dev="averbraeck" type="update">
+        hashCode and equal for the units worked only on the basis of abbreviations
+        and names.
+        For LinearUnit and AbsoluteLinearUnit, the scale has been added to hashCode and equals.
+      </action>
+      <action dev="averbraeck" type="add">
+        for equals() a unit with Dutch names is different from the same unit with
+        English names. Now, the units
+        that have the same 'scale factor' and/or offset, have the same
+        equalsIgnoreNaming().
+        This means, for instance, that although a METRIC_TON and a MEGAGRAM are different MassUnits,
+        equalsIgnoreNaming() will now state that they are the same, as each represents 1000 kg.
+        This also means that hand-made units that correspond numerically to an existing unit,
+        will be considered equal according to equalsIgnoreNaming (but not to the equals method).
+      </action>
+    </release>
+
+    <release version="3.00.04" date="2018-08-09" description="get(r,c) added to Matrix interface">
+      <action dev="averbraeck" type="add">
+        Matrix and FloatMatrix interface now have the get(r, c) function that was
+        already implemented.
+      </action>
+    </release>
+
+    <release version="3.00.03" date="2018-01-28" description="toArray() function added to Vector and FloatVector">
+      <action dev="averbraeck" type="add">
+        Typed Scalar[] toArray() function added for all vectors.
+      </action>
+      <action dev="averbraeck" type="add">
+        VectorToArrayExample added to djunits-demo.
+      </action>
+    </release>
+
+    <release version="3.00.02" date="2018-01-28" description="Iterator added to Vector and FloatVector">
+      <action dev="averbraeck" type="add">
+        Iterator added to Vector and FloatVector, so statements like "for (Speed s :
+        speedVector)" are possible.
+      </action>
+      <action dev="averbraeck" type="fix">
+        Bug for instantiateMD() and instantiate() on the basis of a sparse Map in FloatVector solved:
+      <![CDATA[
+<pre>
+  IntStream.range(0, values.size()).parallel().forEach(index -> valuesSI[index] 
+    = values.get(indices[index]).getSI());
+instead of
+  values.keySet().parallelStream().forEach(index -> valuesSI[index] 
+    = values.get(index).getSI());
+</pre>
+]]>
+      </action>
+      <action dev="averbraeck" type="add">
+        VectorIteratorExample added to djunits-demo.
+      </action>
+      <action dev="averbraeck" type="update">
+        Copyright statement extended to 2018.
+      </action>
+    </release>
+
+    <release version="3.00.01" date="2017-04-29" description="Several absolute base units added">
+      <action dev="averbraeck" type="add">
+        For DirectionUnit, EAST_RADIAN and EAST_DEGREE have been added.
+      </action>
+      <action dev="averbraeck" type="add">
+        For TimeUnit, several BASE units with e.g., SECOND, MINUTE, HOUR, DAY, WEEK
+        have been added.
+      </action>
+      <action dev="averbraeck" type="update">
+        In the TimeUnit, Time, and FloatTime classes a warning has been placed that
+        indicates that precision is limited.
+        For floatTime it states: Note that when the offset of a stored absolute Time
+        becomes large, precision of a float
+        might not be enough for the required resolution of a Time. A float has around
+        7 significant digits (23 bit mantissa).
+        This means that when we need to have a float time that is precise to
+        microseconds, the Time value should not go
+        above 2^22 = 4.0E6. This is not enough to store Epoch values that are
+        in the order of magnitude of 2E12 ms!
+        So feeding System.TimeInMillis() to a FloatTime with TimeUnit.BASE as its
+        unit is not having the required precision.
+        At best, a FloatTime can store TimeUnit.BASE or TimeUnit.EPOCH values
+        with real calendar values with a precision
+        of
+        several minutes.
+      </action>
+      <action dev="averbraeck" type="add">
+        The GenerateUNITs has a replacement option that can insert the above
+        precision warnings in the automatically generated
+        Time and FloatTime (and other) classes.
+      </action>
+    </release>
+
+    <release version="3.00.00" date="2017-04-27" description="Absolute units separate from relative units">
+      <action dev="averbraeck" type="add">
+        Abolute units and relative units have been separated. They are truly
+        different. In DJUNITS version 2, absolute and separate variables use the same unit.
+        E.g., a Time and a Duration
+        both use a TimeUnit. In classes that have to enforce that
+        all components are of unit TimeUnit, Duration as well
+        as Time can be used. This is not desirable.
+        Therefore we need to split the TimeUnit, AngleUnit, LengthUnit and
+        TemperatureUnit
+        into an absolute and a relative version.
+      </action>
+      <action dev="averbraeck" type="update">
+        UNITS.java has been made consistent with the absolute/relative unit changes.
+      </action>
+      <action dev="averbraeck" type="update">
+        Unit tests have been made consistent with the absolute/relative unit changes.
+      </action>
+      <action dev="averbraeck" type="update">
+        Documentation has been made consistent with the absolute/relative unit
+        changes.
+      </action>
+      <action dev="averbraeck" type="update">
+        OffsetLinearScale now extends LinearScale.
+      </action>
+      <action dev="averbraeck" type="update">
+        MoneyPerTimeUnit renamed to MoneyPerDurationUnit; same for all other types
+        refering to MoneyPerTime.
+      </action>
+      <action dev="averbraeck" type="update">
+        Removed the methods to multiply and divide absolute values with absolute
+        values. How can I multiply a position on this planet with another position on the planet?
+        Or a time with another
+        time? Just doesn't make sense, so removed the methods and the
+        corresponding tests.
+      </action>
+      <action dev="averbraeck" type="update">
+        the toAbs() and toRel() methods are removed. I don't understand how to
+        translate 1-4-2017 at 12:00 to a relative value.
+        The only thing that makes sense is to subtract a value (some
+        kind of offset) from the absolute value to get a relative value.
+      </action>
+    </release>
+
+    <release version="2.02.00" date="2017-04-17" description="Units added to create consistency">
+      <action dev="averbraeck" type="add">
+        For many Unit classes, standard units have been added to make the unit list
+        more internally consistent.
+      </action>
+      <action dev="averbraeck" type="update">
+        UNITS.java has been made consistent with the added units.
+      </action>
+      <action dev="averbraeck" type="add">
+        The UNITS.java content can be generate with the GenerateStaticUNITS program
+        in djunits-generator.
+      </action>
+    </release>
+
+    <release version="2.01.03" date="2017-01-30" description="createSI() method added to scalars; scalar constants added">
+      <action dev="averbraeck" type="update">
+        Scalars with the exception of Money scalars can now be created with e.g.,
+        Length len = Length.createSI(5.0). OTS-297.
+      </action>
+      <action dev="averbraeck" type="update">
+        Constants NaN, POSITIVI_INFINITY, NEGATIVE_INFINITY, POS_MAXVALUE and
+        NEG_MAXVALUE have been added to scalars,
+        with the exception of Money scalars. OTS-298.
+      </action>
+    </release>
+
+    <release version="2.01.02" date="2017-01-24" description="Small changes to AbstractDoubleScalar and AbstractFloatScalar">
+      <action dev="averbraeck" type="update">
+        hashCode of Units are cached, as these are calculated in every compare of
+        scalars. OTS-289.
+      </action>
+      <action dev="averbraeck" type="update">
+        AbstractDoubleScalar.compareTo and AbstractFloatScalar.compareTo should use
+        static compare method. OTS-290.
+      </action>
+      <action dev="averbraeck" type="add">
+        Add eq0, ne0, gt0, lt0, ge0, and le0 methods to DoubleScalars and
+        FloatScalars. OTS-293.
+      </action>
+    </release>
+
+    <release version="2.01.01" date="2016-11-14" description="neg() function added; cleaned up code">
+      <action dev="averbraeck" type="add">
+        A neg() function has been added to the Scalar, MutableVector and
+        MutableMatrix classes.
+        The neg functions changes the value(s) to minus the value(s). OTS-216.
+      </action>
+      <action dev="averbraeck" type="update">
+        Code has been cleaned for @Override and open warnings for formatting of
+        comments.
+      </action>
+    </release>
+
+    <release version="2.01.00" date="2016-11-01" description="Increased speed of instantiation">
+      <action dev="averbraeck" type="update">
+        Several changes have been made to increase the speed of instantiation of
+        scalars. Especially
+        the need to use espessAsUnit(...) when the unit is the SI-unit has been decreased. This
+        leads
+        to a major speed improvement of the use of scalars.
+      </action>
+      <action dev="averbraeck" type="update">
+        A start has been made to increase the speed of instantiation of vectors.
+        Further speed
+        improvements will be made in the next version.
+      </action>
+      <action dev="averbraeck" type="add">
+        The Unit has a new method 'boolean isBaseSIUnit()' to help determine the need
+        for conversion
+        of a value into a standard (usually SI) unit.
+      </action>
+      <action dev="averbraeck" type="add">
+        The Scale has a new method 'boolean isBaseSIScale()' to help determine the
+        need for conversion
+        of a value into a standard (usually SI) unit.
+      </action>
+    </release>
+
+    <release version="2.00.00" date="2016-10-16" description="Major upgrade of type hierarchy">
+      <action dev="averbraeck" type="update">
+        A major upgrade has been made to the type hierarchy. Instead of the TypedXXX
+        template functions,
+        abstract classes and interfaces have been introduced that are more natural to implement and
+        have
+        faster execution than the typed templates.
+      </action>
+      <action dev="averbraeck" type="update">
+        The DoubleScalar, DoubleVector, DoubleMatrix classes are not at the root of
+        the typed classes
+        anymore. Rather, they are an implementation of the Abstract classes, next to the typed classes
+        in the type hierarchy. So a Length does not extend a DoubleScalar.Rel&lt;LengthUnit&gt; anymore.
+        Rather, Length
+        and DoubleScalar.Rel&lt;LengthUnit&gt; both extend AbstractDoubleScalarRel.
+        Same for the Float classes.
+      </action>
+    </release>
+
+    <release version="1.03.01" date="2016-05-28" description="Min and max functions added for scalars">
+      <action dev="averbraeck" type="add">
+        min and max functions have been added for scalars, for combinations of abs,
+        rel, dimensionless, money, and float.
+      </action>
+      <action dev="averbraeck" type="update">
+        Copyright notice has been extended to 2016.
+      </action>
+    </release>
+
+    <release version="1.03.00" date="2016-04-23" description="Abs and Rel for detailed versions removed">
+      <action dev="averbraeck" type="update">
+        The following changes have been made:
+        Time.Abs, Time.Rel --) Time, Duration
+        (TimeUnit)
+        Length.Abs, Length.Rel --) Position, Length (LengthUnit)
+        Temperature.Abs, Temperature.Rel --)
+        AbsoluteTemperature, Temperature (TemperatureUnit)
+        Angle.Abs, Angle.Rel --) Direction, Angle (AngleUnit)
+      </action>
+    </release>
+
+    <release version="1.02.06" date="2015-12-23" description="Dependency on reflections package removed">
+      <action dev="averbraeck" type="update">
+        DJUNITS is no longer dependent on 'reflections'. Instead, the 'Unit' class
+        now defines an array of standard units that exist in the package. This list is also used in the unit tests (it
+        is public static final).
+      </action>
+    </release>
+
+    <release version="1.02.05" date="2015-12-22" description="ZERO constants for scalars">
+      <action dev="averbraeck" type="add">
+        Added ZERO constants for double and float scalars, with the exception of
+        Money scalars.
+      </action>
+    </release>
+
+  </body>
+</document>
