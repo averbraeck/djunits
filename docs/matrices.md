@@ -18,9 +18,9 @@ Note: One of the advantages is that operations on vectors and matrices take plac
 
 ## Matrix Classes, Relative implementation
 
-![](double-matrix-rel.png)
+![](images/double-matrix-rel.png)
 
 
 ## Matrix Classes, Absolute implementation
 
-![](double-matrix-abs.png)
+![](images/double-matrix-abs.png)
