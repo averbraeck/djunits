@@ -1,17 +1,27 @@
 site_name: DJUNITS
 site_url: https://djunits.org/
-nav:
-    - Home: index.md
-    - Maven use: maven_use.md
-    - Package structure: package_structure.md
-    - Quantities: quantities.md
-    - Scales: scales.md
-    - Unit Systems: unit_systems.md
-    - Units: units.md
-    - Scalars: scalars.md
-    - Vectors: vectors.md
-    - Matrices: matrices.md
-    - Code Generation: code_generation.md
-    - DJUNITS documentation: https://djunits.org/docs/current/index.html
-    - DJUNITS API: https://djunits.org/docs/current/apidocs/index.html
+site_favicon: images/favicon.png
+copyright: (c) 2015-2022 Delft University of Technology
+
 theme: readthedocs
+
+markdown_extensions:
+  - admonition
+  
+extra_css:
+  - custom.css
+    
+nav:
+  - Home: index.md
+  - Maven use: maven_use.md
+  - Package structure: package_structure.md
+  - Quantities: quantities.md
+  - Scales: scales.md
+  - Unit Systems: unit_systems.md
+  - Units: units.md
+  - Scalars: scalars.md
+  - Vectors: vectors.md
+  - Matrices: matrices.md
+  - Code Generation: code_generation.md
+  - DJUNITS documentation: https://djunits.org/docs/current/index.html
+  - DJUNITS API: https://djunits.org/docs/current/apidocs/index.html
