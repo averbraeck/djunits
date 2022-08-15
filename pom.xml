@@ -33,7 +33,6 @@
 
     <maven.compiler.version>3.10.1</maven.compiler.version>
     <maven.site.version>3.12.1</maven.site.version>
-    <maven.deploy.version>3.0.0</maven.deploy.version>
     <maven.install.version>3.0.1</maven.install.version>
     <maven.source.version>3.2.1</maven.source.version>
     <maven.javadoc.version>3.4.1</maven.javadoc.version>
@@ -51,10 +50,6 @@
     <maven.taglist.version>3.0.0</maven.taglist.version>
     <maven.pmd.version>3.17.0</maven.pmd.version>
     <maven.changes.version>2.12.1</maven.changes.version>
-    <wagon.maven.version>2.0.0</wagon.maven.version>
-    <wagon.ssh.version>3.4.1</wagon.ssh.version>
-    <wagon.ftp.version>3.4.1</wagon.ftp.version>
-
   </properties>
 
 
@@ -92,21 +87,6 @@
         </includes>
       </testResource>
     </testResources>
-
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-        <version>${wagon.ssh.version}</version>
-      </extension>
-
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ftp</artifactId>
-        <version>${wagon.ftp.version}</version>
-      </extension>
-
-    </extensions>
 
     <plugins>
       <plugin>
@@ -189,76 +169,6 @@
               <goal>attach-descriptor</goal>
             </goals>
           </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>${maven.deploy.version}</version>
-      </plugin>
-
-      <!-- copy files starting with a period in the jacoco folder to the right site location. Normally, files starting with 
-        tilde, period or underscore are not copied. These files are also not taken into account when trying to the pages in a  
-        subfolder of a Drupal site, as files and folders starting with a period are filtered with a rewrite rule: 
-            RewriteRule "(^|/)\." - [F] 
-        To undo this rewrite rule, add a .htaccess file in the site folder with as content: 
-            RewriteRule "(^|/)\." - [L] 
-        Potentially, there is also a line with Options +Indexes in the .htaccess file. -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>wagon-maven-plugin</artifactId>
-        <version>${wagon.maven.version}</version>
-        <executions>
-
-          <execution>
-            <id>upload-jacoco-dot-files</id>
-            <phase>site-deploy</phase>
-            <goals>
-              <goal>upload</goal>
-            </goals>
-            <configuration>
-              <fromDir>${basedir}/target/site/jacoco-ut</fromDir>
-              <includes>.*, .resources/*</includes>
-              <url>scp://djunits.org/home/web/djunits.org/docs/${djunits.version}/${project.artifactId}</url>
-              <toDir>jacoco-ut</toDir>
-              <serverId>djunits-deployment</serverId>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>upload-license</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>upload</goal>
-            </goals>
-            <configuration>
-              <fromDir>${basedir}/src/main/resources</fromDir>
-              <includes>license.html</includes>
-              <url>scp://djunits.org/home/web/djunits.org</url>
-              <toDir>docs</toDir>
-              <serverId>djunits-deployment</serverId>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>upload-last-site</id>
-            <phase>site-deploy</phase>
-            <goals>
-              <goal>sshexec</goal>
-            </goals>
-            <configuration>
-              <url>scp://djunits.org/home/web/djunits.org</url>
-              <serverId>djunits-deployment</serverId>
-              <commands>
-                <command>rm -r -f /home/web/djunits.org/docs/current</command>
-                <command>mkdir -p /home/web/djunits.org/docs/current</command>
-                <command>cp -f /home/web/djunits.org/docs/${project.version}/apidocs/element-list /home/web/djunits.org/docs/${project.version}/apidocs/package-list</command>
-                <command>cp -r -f /home/web/djunits.org/docs/${project.version}/. /home/web/djunits.org/docs/current</command>
-              </commands>
-            </configuration>
-          </execution>
-
         </executions>
       </plugin>
 
