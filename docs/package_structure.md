@@ -1,3 +1,5 @@
+# Package Structure
+
 DJUNITS is divided into a number of packages:
 
 * **org.djunits** easy methods for pre-condition testing. Copied from the [DJUTILS](https://djutils.org/manual/djutils-project/exceptions) project.

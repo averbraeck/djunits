@@ -72,11 +72,11 @@ All quantities make sense as Relative values. The four quantities that also make
 table below.
 
 
-| Quantity    | Absolute interpretation | Absolute class<br/>and Unit | Relative interpretation | Relative class<br/> and Unit |
+| Quantity | Absolute<br/>interpretation | Absolute class<br/>and Unit | Relative<br/>interpretation | Relative class<br/> and Unit |
 | ----------- | ----------------------- | ----------------------------| ----------------------- | ---------------------------- |
 | Length      | Position                | Position<br/>PositionUnit   | Distance                | Length<br/>LengthUnit        |
-| Angle       | Direction or Slope      | Direction<br/>DirectionUnit | Angle (direction or slope difference) | Angle<br/>AngleUnit |
-| Temperature | Temperature             | AbsoluteTemperature<br/>AbsoluteTemperatureUnit | Temperature difference | Temperature<br/>TemperatureUnit |
+| Angle       | Direction<br/>or Slope  | Direction<br/>DirectionUnit | Angle (direction or<br/>slope difference) | Angle<br/>AngleUnit |
+| Temperature | Temperature             | AbsoluteTemperature<br/>AbsoluteTemperatureUnit | Temperature<br/>difference | Temperature<br/>TemperatureUnit |
 | Time        | Time (instant)          | Time<br/>TimeUnit           | Duration                | Duration<br/>DurationUnit    |
 
 The use of Absolute in relation to Temperature here may be confusing. In the table above, an absolute temperature is not 
@@ -98,19 +98,26 @@ System.out.println("speed1:     " + speed1);
 Speed speed2 = new Speed(10, SpeedUnit.METER_PER_SECOND);
 System.out.println("speed2:     " + speed2);
 Speed diff = speed1.minus(speed2);
+
 // Default display unit will be SI unit for speed:
 System.out.println("difference: " + diff); 
+
 // Change default display unit; internal SI value is unaltered:
 diff.setDisplayUnit(SpeedUnit.MILE_PER_HOUR); 
 System.out.println("difference: " + diff);
+
 // Works, but not mistake-safe:
 System.out.println("difference: " + diff.getInUnit(SpeedUnit.KNOT) + " kt"); 
+
 // Safer:
 System.out.println("difference: " + diff.toString(SpeedUnit.KNOT)); 
+
 // Programmer must be really sure that SI-unit is m/s:
 System.out.println("difference: " + diff.si + " m/s (si)"); 
+
 // Same as previous:
 System.out.println("difference: " + diff.getSI() + " m/s (si)"); 
+
 // Safer:
 System.out.println("difference: " + diff.toString(SpeedUnit.SI) + " (si)"); 
 System.out.println("difference: " + diff.toString(SpeedUnit.KM_PER_HOUR));

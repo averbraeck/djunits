@@ -21,7 +21,8 @@ Each newly constructed `Quantity` is automatically registered in the `Quantities
 
 DJUNITS treats radian (rad) and sterradian (sr) as first class base SI units in addition to the standard 7 (kg, m, s, A, K, mol, cd). The SIDimension class can parse, pretty-print, and manipulate the coefficients of any quantity. It is used to compute the coefficients of the unit of multiplication or division of scalars, vectors and matrices. If, for example, a Length is divided by a Duration, the coefficients of the Duration (0, 0, 0, 0, 0, 1, 0, 0, 0, 0) must be subtracted from those of the Length (0, 0, 0, 1, 0, 0, 0, 0, 0) , resulting in the coefficients for a Speed (0, 0, 0, 1, -1, 0, 0, 0, 0).
 
-! SIDimensions is prepared for fractional coefficients, but this is not yet implemented.
+!!! note
+    SIDimensions is prepared for fractional coefficients, but this is not yet implemented.
 
 <hr>
 <sup>1</sup>: See [https://en.wikipedia.org/wiki/Physical_quantity](https://en.wikipedia.org/wiki/Physical_quantity)
