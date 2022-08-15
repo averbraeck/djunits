@@ -1,14 +1,13 @@
-@media only screen and (min-width: 76.25em) {
-  .md-main__inner {
-    max-width: none;
+@media screen and (min-width: 1600px) {
+  .wy-nav-content {
+    max-width: 1200px;
   }
-  .md-sidebar--primary {
-    left: 0;
+@media screen and (min-width: 1400px) {
+  .wy-nav-content {
+    max-width: 1000px;
   }
-  .md-sidebar--secondary {
-    right: 0;
-    margin-left: 0;
-    -webkit-transform: none;
-    transform: none;
+@media screen and (min-width: 1200px) {
+  .wy-nav-content {
+    max-width: 800px;
   }
 }
