@@ -3,13 +3,15 @@ site_url: https://djunits.org/
 site_favicon: images/favicon.png
 copyright: (c) 2015-2022 Delft University of Technology
 
-theme: readthedocs
+theme:
+  name: readthedocs
+  navigation_depth: 1
 
 markdown_extensions:
   - admonition
   
 extra_css:
-  - custom.css
+  - css/custom.css
     
 nav:
   - Home: index.md

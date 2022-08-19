@@ -1,13 +1,20 @@
-@media screen and (min-width: 1600px) {
-  .wy-nav-content {
-    max-width: 1200px;
-  }
-@media screen and (min-width: 1400px) {
-  .wy-nav-content {
-    max-width: 1000px;
-  }
-@media screen and (min-width: 1200px) {
-  .wy-nav-content {
-    max-width: 800px;
-  }
+.wy-nav-content {
+  max-width: 1200px;
+}
+
+.rst-content code {
+  color: black;
+}
+
+img {
+  display: block;
+  margin: auto;
+}
+
+table td, table th {
+  white-space: normal;
+}
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+  white-space: normal;
 }
