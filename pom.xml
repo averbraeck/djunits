@@ -318,7 +318,14 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
         <version>${flatten.maven.version}</version>
-        <configuration></configuration>
+        <configuration>
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>oss</flattenMode>
+          <pomElements>
+            <distributionManagement>remove</distributionManagement>
+            <repositories>remove</repositories>
+          </pomElements>
+        </configuration>
         <executions>
           <!-- enable flattening -->
           <execution>
@@ -334,6 +341,26 @@
             <phase>clean</phase>
             <goals>
               <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>${maven.site.version}</version>
+        <configuration>
+          <chmod>true</chmod>
+          <inputEncoding>UTF-8</inputEncoding>
+          <outputEncoding>UTF-8</outputEncoding>
+          <templateFile>src/site/site.vm</templateFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-descriptor</id>
+            <goals>
+              <goal>attach-descriptor</goal>
             </goals>
           </execution>
         </executions>
@@ -582,26 +609,6 @@
               <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
               <autoReleaseAfterClose>true</autoReleaseAfterClose>
             </configuration>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>${maven.site.version}</version>
-            <configuration>
-              <chmod>true</chmod>
-              <inputEncoding>UTF-8</inputEncoding>
-              <outputEncoding>UTF-8</outputEncoding>
-              <templateFile>src/site/site.vm</templateFile>
-            </configuration>
-            <executions>
-              <execution>
-                <id>attach-descriptor</id>
-                <goals>
-                  <goal>attach-descriptor</goal>
-                </goals>
-              </execution>
-            </executions>
           </plugin>
 
           <plugin>
