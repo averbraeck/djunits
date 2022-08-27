@@ -32,7 +32,7 @@ jobs:
       run: mvn clean package -P release --file pom.xml
 
     - name: Publish to Apache Maven Central
-      run: mvn deploy -P release -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn -DskipTests deploy -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }} -P release -s $GITHUB_WORKSPACE/settings.xml
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
