@@ -233,6 +233,7 @@
           </dependency>
         </dependencies>
       </plugin>
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -248,7 +249,8 @@
             <exclude>**/IT*.java</exclude>
           </excludes>
           <!-- Make sure every unit test is run as a separate process to avoid static leaks between tests -->
-          <forkMode>always</forkMode>
+          <forkCount>1</forkCount>
+          <reuseForks>false</reuseForks>
         </configuration>
       </plugin>
 
