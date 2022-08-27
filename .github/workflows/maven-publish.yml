@@ -4,6 +4,7 @@
 name: Maven Package to Central
 
 on:
+  workflow_dispatch: # allow to run manually
   release:
     types: [created]
 
