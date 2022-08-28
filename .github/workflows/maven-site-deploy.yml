@@ -16,6 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Set up Java 11 for publishing to Maven Central Repository
       uses: actions/setup-java@v3
       with:
@@ -23,6 +24,18 @@ jobs:
         distribution: 'temurin'
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
         settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+    - name: Install SSH keys
+      run: |
+        echo 'install command'
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo 'private key into id_rsa'
+        echo "${{ secrets.SITE_RSA_PRIVATE }}" >> ~/.ssh/id_rsa
+        cat ~/.ssh/id_rsa
+        echo 'ssh-keyscan trial'
+        ssh-keyscan -H djunits.org
+        echo 'ssh-keyscan to known hosts'
+        ssh-keyscan -H djunits.org > ~/.ssh/known_hosts
 
     - name: install gpg key
       uses: crazy-max/ghaction-import-gpg@v5
@@ -32,12 +45,6 @@ jobs:
 
     - name: Build with Maven, do not sign
       run: mvn clean package site -P release --file pom.xml
-
-    - name: Install SSH keys
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SITE_RSA_PRIVATE }}" > ~/.ssh/id_rsa
-        ssh-keyscan -H djunits.org > ~/.ssh/known_hosts
       
     - name: Make tar file of site
       run: |
