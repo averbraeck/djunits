@@ -1,0 +1,54 @@
+# This workflow will build a package using Maven and then publish it to Maven Central when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Maven site deploy
+
+on:
+  workflow_dispatch: # allow to run manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Java 11 for publishing to Maven Central Repository
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        gpg-passphrase: MAVEN_GPG_PASSPHRASE
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
+        
+    - name: install gpg key
+      uses: crazy-max/ghaction-import-gpg@v5
+      with:
+        gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+        passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
+    - name: Build with Maven and test if signing works
+      run: mvn clean package site -P release --file pom.xml
+      env:
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
+    - name: Make tar file of site
+      run: |
+        mkdir ../transfer
+        tar cvf ../transfer/site.tar target/site
+        cp target/*.jar ../transfer
+        cp target/*.asc ../transfer
+        tar cvf ../transfer/docs.tar docs
+    
+    - name: copy file via ssh
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH2 }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        port: 22
+        source: ../transfer/*
+        target: "/data/home/web/djunits.org/new"
