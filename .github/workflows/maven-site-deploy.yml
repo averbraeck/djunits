@@ -45,19 +45,20 @@ jobs:
         echo 'mkdir, tar and copy'
         mkdir ../transfer
         tar cfz ../transfer/site.tar.gz target/site/
-        cp target/*.jar ../transfer || :
-        cp target/*.asc ../transfer || :
+        cp target/*.jar ../transfer
         tar cfz ../transfer/docs.tar.gz docs
-        cp pom.xml ../transfer || :
-        cp .flattened-pom.xml ../transfer || :
+        cp pom.xml ../transfer
+        cp .flattened-pom.xml ../transfer
         echo 'contents of transfer folder'
         ls -al ../transfer
+        echo 'again with absolute path'
+        ls -al /home/runner/work/djunits/transfer
     
     - name: copy file via ssh
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets.SITE_HOST }}
-        username: ${{ secrets.SITE_USERNAME }}
+        host: djunits.org
+        username: djunits
         password: ${{ secrets.SITE_PASSWORD }}
         port: 22
         source: /home/runner/work/djunits/transfer/*
