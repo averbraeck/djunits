@@ -30,16 +30,14 @@ jobs:
         gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
         passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
-    - name: Build with Maven and test if signing works
+    - name: Build with Maven, do not sign
       run: mvn clean package site -P release --file pom.xml
-      env:
-        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2
-      with:
-        key: ${{ secrets.SITE_RSA_PRIVATE }} 
-        known_hosts: unnecessary
+    - name: Install SSH keys
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SITE_RSA_PRIVATE }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H djunits.org > ~/.ssh/known_hosts
       
     - name: Make tar file of site
       run: |
@@ -49,6 +47,4 @@ jobs:
         tar cfz ../transfer/docs.tar.gz docs/
         cp pom.xml ../transfer
         cp .flattened-pom.xml ../transfer/flattened-pom.xml
-        mkdir .ssh
-        
         rsync -avz ../transfer/* djunits@djunits.org:/data/home/web/djunits.org/new
