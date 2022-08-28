@@ -27,12 +27,15 @@ jobs:
 
     - name: Install SSH keys
       run: |
+        ifconfig
         echo 'install command'
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo 'private key into id_rsa'
         echo "${{ secrets.SITE_RSA_PRIVATE }}" >> ~/.ssh/id_rsa
         cat ~/.ssh/id_rsa
         echo 'ssh-keyscan trial'
+        which ssh-keyscan
+        ssh-keyscan
         ssh-keyscan -H djunits.org
         echo 'ssh-keyscan to known hosts'
         ssh-keyscan -H djunits.org > ~/.ssh/known_hosts
