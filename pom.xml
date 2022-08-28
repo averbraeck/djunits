@@ -233,7 +233,7 @@
           </dependency>
         </dependencies>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -398,12 +398,6 @@
         <version>${maven.pmd.version}</version>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>${maven.changes.version}</version>
-      </plugin>
-
     </plugins>
 
   </build>
@@ -426,7 +420,6 @@
               <report>dependencies</report>
               <report>team</report>
               <report>mailing-lists</report>
-              <report>licenses</report>
               <report>scm</report>
             </reports>
           </reportSet>
@@ -575,10 +568,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
         <version>${maven.changes.version}</version>
-        <configuration>
-          <escapeHTML>false</escapeHTML>
-          <xmlPath>/src/changes/changes.xml</xmlPath>
-        </configuration>
         <reportSets>
           <reportSet>
             <reports>
