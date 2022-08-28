@@ -38,14 +38,19 @@ jobs:
     - name: Make tar file of site
       run: |
         pwd
+        echo 'ls -al'
         ls -al
+        echo 'ls -al target'
+        ls -al target
+        echo 'mkdir, tar and copy'
         mkdir ../transfer
-        tar cvfz ../transfer/site.tar.gz target/site/
+        tar cfz ../transfer/site.tar.gz target/site/
         cp target/*.jar ../transfer || :
         cp target/*.asc ../transfer || :
-        tar cvfz ../transfer/docs.tar.gz docs
+        tar cfz ../transfer/docs.tar.gz docs
         cp pom.xml ../transfer || :
         cp .flattened-pom.xml ../transfer || :
+        echo 'contents of transfer folder'
         ls -al ../transfer
     
     - name: copy file via ssh
@@ -55,5 +60,5 @@ jobs:
         username: ${{ secrets.SITE_USERNAME }}
         password: ${{ secrets.SITE_PASSWORD }}
         port: 22
-        source: ../transfer/*
+        source: /home/runner/work/djunits/transfer/*
         target: "/data/home/web/djunits.org/new"
