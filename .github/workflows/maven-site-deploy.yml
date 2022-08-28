@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
         settings-path: ${{ github.workspace }} # location for the settings.xml file
-        
+
     - name: install gpg key
       uses: crazy-max/ghaction-import-gpg@v5
       with:
@@ -35,6 +35,12 @@ jobs:
       env:
         MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SITE_RSA_PRIVATE }} 
+        known_hosts: unnecessary
+      
     - name: Make tar file of site
       run: |
         mkdir ../transfer
@@ -43,4 +49,6 @@ jobs:
         tar cfz ../transfer/docs.tar.gz docs/
         cp pom.xml ../transfer
         cp .flattened-pom.xml ../transfer/flattened-pom.xml
-        RSYNC_PASSWORD="${{ secrets.SITE_PASSWORD }}"; rsync -avz ../transfer/* djunits@djunits.org:/data/home/web/djunits.org/new
+        mkdir .ssh
+        
+        rsync -avz ../transfer/* djunits@djunits.org:/data/home/web/djunits.org/new
