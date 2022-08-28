@@ -43,4 +43,4 @@ jobs:
         tar cfz ../transfer/docs.tar.gz docs/
         cp pom.xml ../transfer
         cp .flattened-pom.xml ../transfer/flattened-pom.xml
-        RSYNC_PASSWORD=${{ secrets.SITE_PASSWORD }}; rsync -avz ../transfer/* djunits@djunits.org:/data/home/web/djunits.org/new
+        RSYNC_PASSWORD="${{ secrets.SITE_PASSWORD }}"; rsync -avz ../transfer/* djunits@djunits.org:/data/home/web/djunits.org/new
