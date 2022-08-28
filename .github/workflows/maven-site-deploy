@@ -37,18 +37,19 @@ jobs:
     - name: Make tar file of site
       run: |
         mkdir ../transfer
-        tar cvf ../transfer/site.tar target/site
+        tar cvfz ../transfer/site.tar.gz target/site/
         cp target/*.jar ../transfer
         cp target/*.asc ../transfer
-        tar cvf ../transfer/docs.tar docs
+        tar cvfz ../transfer/docs.tar.gz docs
+        cp pom.xml ../transfer
+        ls -al ../transfer
     
     - name: copy file via ssh
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH2 }}
-        passphrase: ${{ secrets.PASSPHRASE }}
+        host: ${{ secrets.SITE_HOST }}
+        username: ${{ secrets.SITE_USERNAME }}
+        password: ${{ secrets.SITE_PASSWORD }}
         port: 22
         source: ../transfer/*
         target: "/data/home/web/djunits.org/new"
