@@ -37,12 +37,15 @@ jobs:
 
     - name: Make tar file of site
       run: |
+        pwd
+        ls -al
         mkdir ../transfer
         tar cvfz ../transfer/site.tar.gz target/site/
-        cp target/*.jar ../transfer
-        cp target/*.asc ../transfer
+        cp target/*.jar ../transfer || :
+        cp target/*.asc ../transfer || :
         tar cvfz ../transfer/docs.tar.gz docs
-        cp pom.xml ../transfer
+        cp pom.xml ../transfer || :
+        cp .flattened-pom.xml ../transfer || :
         ls -al ../transfer
     
     - name: copy file via ssh
