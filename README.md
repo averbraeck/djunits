@@ -28,6 +28,7 @@ mature to be used in other projects.
 
 The main authors/contributors of the DJUNITS project are Alexander Verbraeck and Peter Knoppers.
 
+
 ## Absolute and Relative values
 
 Values in DJUNITS are either Absolute or Relative.
@@ -243,5 +244,5 @@ Several extensions are under consideration:
 
 ## Documentations and test reports
 
-DJUNITS documentation and test reports for the current version can be found at https://djunits.org/docs/current and the API can be 
-found at https://djunits.org/docs/current/apidocs/index.html.
+DJUNITS documentation and test reports for the current version can be found at [https://djunits.org/docs/latest](https://djunits.org/docs/latest). The manual is at [https://djunits.readthedocs.io](https://djunits.readthedocs.io), or at [https://djunits.org/manual](https://djunits.org/manual) The API can be 
+found at [https://djunits.org/docs/latest/apidocs/index.html](https://djunits.org/docs/latest/apidocs/index.html).
