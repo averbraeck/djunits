@@ -1,6 +1,6 @@
 package org.djunits.value.vdouble.matrix;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;

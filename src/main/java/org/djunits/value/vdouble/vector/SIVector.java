@@ -3,7 +3,7 @@ package org.djunits.value.vdouble.vector;
 import java.util.List;
 import java.util.SortedMap;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;

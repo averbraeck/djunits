@@ -1,6 +1,6 @@
 package org.djunits.value.vfloat.matrix;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 import org.djunits.unit.FlowMassUnit;
 import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;

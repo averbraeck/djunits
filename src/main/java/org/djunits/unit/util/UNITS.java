@@ -1,7 +1,5 @@
 package org.djunits.unit.util;
 
-import javax.annotation.Generated;
-
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
@@ -47,6 +45,8 @@ import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.TorqueUnit;
 import org.djunits.unit.VolumeUnit;
+
+import jakarta.annotation.Generated;
 
 /**
  * Easy access methods for many units. Can be used to create DoubleScalar, DoubleVector, DoubleMatrix classes and their Float

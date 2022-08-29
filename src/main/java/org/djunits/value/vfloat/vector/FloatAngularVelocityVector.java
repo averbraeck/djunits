@@ -1,6 +1,6 @@
 package org.djunits.value.vfloat.vector;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 import org.djunits.unit.AngularVelocityUnit;
 import org.djunits.value.vfloat.scalar.FloatAngularVelocity;

@@ -1,6 +1,6 @@
 package org.djunits.value.vdouble.vector;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 import org.djunits.unit.ForceUnit;
 import org.djunits.value.vdouble.scalar.Force;

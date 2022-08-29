@@ -2,7 +2,7 @@ package org.djunits.value.vdouble.scalar;
 
 import java.util.regex.Matcher;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 import org.djunits.Throw;
 import org.djunits.unit.AreaUnit;
