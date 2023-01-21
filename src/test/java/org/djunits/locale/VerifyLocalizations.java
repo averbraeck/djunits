@@ -193,10 +193,14 @@ public class VerifyLocalizations
         assertEquals("Duration", DurationUnit.MINUTE.getLocalizedName());
         assertEquals("h", DurationUnit.HOUR.getLocalizedDisplayAbbreviation());
         assertEquals("hour", DurationUnit.HOUR.getLocalizedTextualAbbreviation());
+        Set<String> localizedAbbreviationsEN = DurationUnit.HOUR.getLocalizedAbbreviations();
+        assertTrue(localizedAbbreviationsEN.contains("h"));
         Locale.setDefault(new Locale("nl", "NL"));
         assertEquals("Tijdsduur", DurationUnit.MINUTE.getLocalizedName());
         assertEquals("u", DurationUnit.HOUR.getLocalizedDisplayAbbreviation());
         assertEquals("uur", DurationUnit.HOUR.getLocalizedTextualAbbreviation());
+        Set<String> localizedAbbreviationsNL = DurationUnit.HOUR.getLocalizedAbbreviations();
+        assertTrue(localizedAbbreviationsNL.contains("u"));
     }
 
 }

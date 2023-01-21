@@ -575,7 +575,12 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
     public Set<String> getLocalizedAbbreviations()
     {
         String[] abbreviationArray = localization.getString(getQuantity().getName() + "." + this.id).split("\\|");
-        return new LinkedHashSet<>(Set.of(abbreviationArray));
+        Set<String> set = new LinkedHashSet<>();
+        for (String abb : abbreviationArray)
+        {
+            set.add(abb.strip());
+        }
+        return set;
     }
 
     /**
