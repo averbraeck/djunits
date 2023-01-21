@@ -443,7 +443,7 @@ public abstract class AbstractDoubleMatrix<U extends Unit<U>, S extends Abstract
         buf.append("\n");
         if (withUnit)
         {
-            buf.append(displayUnit.getDefaultDisplayAbbreviation());
+            buf.append(displayUnit.getLocalizedDisplayAbbreviation());
         }
         return buf.toString();
     }

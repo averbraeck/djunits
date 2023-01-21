@@ -444,7 +444,7 @@ public abstract class AbstractFloatMatrix<U extends Unit<U>, S extends AbstractF
         buf.append("\n");
         if (withUnit)
         {
-            buf.append(displayUnit.getDefaultDisplayAbbreviation());
+            buf.append(displayUnit.getLocalizedDisplayAbbreviation());
         }
         return buf.toString();
     }

@@ -218,7 +218,7 @@ public abstract class AbstractDoubleScalar<U extends Unit<U>, S extends Abstract
         if (withUnit)
         {
             buf.append(" "); // Insert one space as prescribed by SI writing conventions
-            buf.append(displayUnit.getDefaultDisplayAbbreviation());
+            buf.append(displayUnit.getLocalizedDisplayAbbreviation());
         }
         return buf.toString();
     }
@@ -277,7 +277,7 @@ public abstract class AbstractDoubleScalar<U extends Unit<U>, S extends Abstract
     public String toTextualString(final U displayUnit)
     {
         double d = ValueUtil.expressAsUnit(getSI(), displayUnit);
-        return d + " " + displayUnit.getDefaultTextualAbbreviation();
+        return format(d) + " " + displayUnit.getLocalizedTextualAbbreviation();
     }
 
     /** {@inheritDoc} */
@@ -292,7 +292,7 @@ public abstract class AbstractDoubleScalar<U extends Unit<U>, S extends Abstract
     public String toDisplayString(final U displayUnit)
     {
         double d = ValueUtil.expressAsUnit(getSI(), displayUnit);
-        return d + " " + displayUnit.getDefaultDisplayAbbreviation();
+        return format(d) + " " + displayUnit.getLocalizedDisplayAbbreviation();
     }
 
     /** {@inheritDoc} */

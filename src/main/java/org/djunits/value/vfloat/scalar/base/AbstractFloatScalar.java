@@ -218,7 +218,7 @@ public abstract class AbstractFloatScalar<U extends Unit<U>, S extends AbstractF
         if (withUnit)
         {
             buf.append(" "); // Insert one space as prescribed by SI writing conventions
-            buf.append(displayUnit.getDefaultDisplayAbbreviation());
+            buf.append(displayUnit.getLocalizedDisplayAbbreviation());
         }
         return buf.toString();
     }
@@ -277,7 +277,7 @@ public abstract class AbstractFloatScalar<U extends Unit<U>, S extends AbstractF
     public String toTextualString(final U displayUnit)
     {
         float f = (float) ValueUtil.expressAsUnit(getSI(), displayUnit);
-        return f + " " + displayUnit.getDefaultTextualAbbreviation();
+        return format(f) + " " + displayUnit.getLocalizedTextualAbbreviation();
     }
 
     /** {@inheritDoc} */
@@ -292,7 +292,7 @@ public abstract class AbstractFloatScalar<U extends Unit<U>, S extends AbstractF
     public String toDisplayString(final U displayUnit)
     {
         float f = (float) ValueUtil.expressAsUnit(getSI(), displayUnit);
-        return f + " " + displayUnit.getDefaultDisplayAbbreviation();
+        return format(f) + " " + displayUnit.getLocalizedDisplayAbbreviation();
     }
 
     /** {@inheritDoc} */
