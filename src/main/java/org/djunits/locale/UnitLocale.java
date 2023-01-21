@@ -49,6 +49,22 @@ public class UnitLocale implements Serializable
     }
 
     /**
+     * Reload the resource bundle.
+     */
+    public void reload()
+    {
+        this.currentLocale = Locale.getDefault(Locale.Category.DISPLAY);
+        try
+        {
+            this.resourceBundle = ResourceBundle.getBundle("resources/locale/" + this.bundleNamePrefix, this.currentLocale);
+        }
+        catch (MissingResourceException e)
+        {
+            this.resourceBundle = null;
+        }
+    }
+    
+    /**
      * Retrieve a string from a resource bundle. If retrieval fails, try the fallbackLocale. If that fails as well, return the
      * value of key string, surrounded by exclamation marks. When the DefaultLocale has changed, load a new ResourceBundle.
      * @param key String; the key for the locale in the currently valid resource bundle
@@ -58,15 +74,7 @@ public class UnitLocale implements Serializable
     {
         if (this.currentLocale == null || !this.currentLocale.equals(Locale.getDefault(Locale.Category.DISPLAY)))
         {
-            this.currentLocale = Locale.getDefault(Locale.Category.DISPLAY);
-            try
-            {
-                this.resourceBundle = ResourceBundle.getBundle("resources/locale/" + this.bundleNamePrefix, this.currentLocale);
-            }
-            catch (MissingResourceException e)
-            {
-                this.resourceBundle = null;
-            }
+            reload();
         }
         if (null == this.resourceBundle)
         {
