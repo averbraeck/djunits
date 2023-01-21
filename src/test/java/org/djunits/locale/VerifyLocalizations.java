@@ -72,8 +72,8 @@ public class VerifyLocalizations
     public void verifyLocalizations() throws IOException, ClassNotFoundException, NoSuchMethodException, SecurityException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException, URISyntaxException
     {
-        String pathToResources = new File(getClass().getResource("/resources").toURI().getPath()).getAbsolutePath();
-        String referenceFileName = "localeunit.properties";
+        String pathToResources = new File(getClass().getResource("/resources/locale").toURI().getPath()).getAbsolutePath();
+        String referenceFileName = "unit_en.properties";
         // system.out.println(pathToResources + "/" + referenceFileName);
         // Parse the localeunit.properties file and store all the keys
         List<String> reference =
@@ -133,7 +133,7 @@ public class VerifyLocalizations
         for (Path path : paths)
         {
             // System.out.println(path);
-            if (path.getFileName().toString().startsWith("localeunit_")
+            if (path.getFileName().toString().startsWith("unit_")
                     && path.getFileName().toString().endsWith(".properties"))
             {
                 // system.out.println("Verifying locale file " + path.getFileName().toString());
@@ -186,14 +186,17 @@ public class VerifyLocalizations
      * localizations.
      * @throws URISyntaxException on error
      */
-    // @Test
-    // TODO: this does not yet work. We really have to rethink the use of Locales in djunits...
+    @Test
     public final void checkUnitSystemsLocale() throws URISyntaxException
     {
-        DefaultLocale.setLocale(Locale.US);
-        assertEquals("hour", DurationUnit.HOUR.getName());
-        DefaultLocale.setLocale(Locale.forLanguageTag("nl-NL"));
-        assertEquals("uur", DurationUnit.HOUR.getName());
+        Locale.setDefault(Locale.US);
+        assertEquals("Duration", DurationUnit.MINUTE.getLocalizedName());
+        assertEquals("h", DurationUnit.HOUR.getLocalizedDisplayAbbreviation());
+        assertEquals("hour", DurationUnit.HOUR.getLocalizedTextualAbbreviation());
+        Locale.setDefault(new Locale("nl", "NL"));
+        assertEquals("Tijdsduur", DurationUnit.MINUTE.getLocalizedName());
+        assertEquals("u", DurationUnit.HOUR.getLocalizedDisplayAbbreviation());
+        assertEquals("uur", DurationUnit.HOUR.getLocalizedTextualAbbreviation());
     }
 
 }
