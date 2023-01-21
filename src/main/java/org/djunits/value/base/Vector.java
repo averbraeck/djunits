@@ -16,7 +16,7 @@ import org.djunits.value.ValueRuntimeException;
  * class LengthVector implements Vector&lt;LengthUnit, Length, LengthVector&gt;
  * </pre>
  * 
- * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
  * @param <U> the unit
@@ -60,7 +60,7 @@ public interface Vector<U extends Unit<U>, S extends Scalar<U, S>, V extends Vec
      *   class AreaVector implements Vector.Rel&lt;AreaUnit, Area, AreaVector&gt;
      * </pre>
      * 
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
      * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
@@ -117,7 +117,7 @@ public interface Vector<U extends Unit<U>, S extends Scalar<U, S>, V extends Vec
      *     PositionUnit, Position, PositionVector, LengthUnit, Length, LengthVector&gt;
      * </pre>
      * 
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
      * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
@@ -152,7 +152,7 @@ public interface Vector<U extends Unit<U>, S extends Scalar<U, S>, V extends Vec
      *     PositionUnit, Position, PositionVector, LengthUnit, Length, LengthVector&gt;
      * </pre>
      * 
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
      * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>

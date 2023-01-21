@@ -9,7 +9,7 @@ import org.djunits.value.Value;
 /**
  * Scalar to distinguish a scalar from vectors and matrices.
  * <p>
- * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * <p>
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
@@ -129,7 +129,7 @@ public interface Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends Value
     /**
      * Methods for Relative Scalar.
      * <p>
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
      * <p>
@@ -158,7 +158,7 @@ public interface Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends Value
      * Additional methods for Relative Scalar that has a corresponding Absolute Scalar. An example is the relative scalar Length
      * that has a corresponding absolute scalar Position.
      * <p>
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
      * <p>
@@ -183,7 +183,7 @@ public interface Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends Value
     /**
      * Methods for Absolute Scalar.
      * <p>
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
      * <p>

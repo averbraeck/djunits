@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * The JUNIT Test for <code>Throw</code> class.
  * <p>
- * Copyright (c) 2002-2022 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * Copyright (c) 2002-2023 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank"> https://djunits.org</a>. The DJUNITS project is
  * distributed under a three-clause BSD-style license, which can be found at
  * <a href="https://djunits.org/docs/license.html" target="_blank"> https://djunits.org/docs/license.html</a>.

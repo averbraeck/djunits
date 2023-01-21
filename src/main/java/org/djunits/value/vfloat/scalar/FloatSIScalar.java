@@ -57,7 +57,7 @@ import org.djunits.value.vfloat.scalar.base.FloatScalar;
 /**
  * Easy access methods for the generic Relative SI FloatScalar.
  * <p>
- * Copyright (c) 2013-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
+ * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
  * All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>

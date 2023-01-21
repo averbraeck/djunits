@@ -32,7 +32,7 @@ import java.util.List;
  * only occurs if the exception condition is met. All methods have a version where the first parameter is returned. Thereby, the
  * Throw can be used as part of a <b>super</b>(...) call in a constructor.
  * <p>
- * Copyright (c) 2016-2022 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * Copyright (c) 2016-2023 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank"> https://djunits.org</a>. The DJUNITS project is
  * distributed under a three-clause BSD-style license, which can be found at
  * <a href="https://djunits.org/docs/license.html" target="_blank"> https://djunits.org/docs/license.html</a>.

@@ -14,7 +14,7 @@ import org.djunits.value.ValueRuntimeException;
  * class LengthMatrix implements Matrix&lt;LengthUnit, Length, LengthMatrix&gt;
  * </pre>
  * 
- * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
  * @param <U> the unit
@@ -111,7 +111,7 @@ public interface Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extends Vec
      *   class AreaMatrix implements Matrix.Rel&lt;AreaUnit, Area, AreaMatrix&gt;
      * </pre>
      * 
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
      * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
@@ -169,7 +169,7 @@ public interface Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extends Vec
      *     PositionUnit, Position, PositionMatrix, LengthUnit, Length, LengthMatrix&gt;
      * </pre>
      * 
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
      * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
@@ -207,7 +207,7 @@ public interface Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extends Vec
      *     PositionUnit, Position, PositionMatrix, LengthUnit, Length, LengthMatrix&gt;
      * </pre>
      * 
-     * Copyright (c) 2019-2022 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
      * <br>
      * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>. <br>
      * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>

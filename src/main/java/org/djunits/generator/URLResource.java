@@ -12,7 +12,7 @@ import java.net.URL;
  * The URLResource class helps to resolve a file location in a project, JAR, or folder. The static methods return a URL of the
  * file location that was found, or null in case it was not found. This class originates from the DSOL simulation project.
  * <p>
- * Copyright (c) 2002-2022 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.<br>
+ * Copyright (c) 2002-2023 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.<br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
