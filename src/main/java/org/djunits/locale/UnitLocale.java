@@ -31,13 +31,13 @@ public class UnitLocale implements Serializable
     private Locale currentLocale = null;
 
     /** the fallback resource bundle. */
-    private transient ResourceBundle fallbackResourceBundle;
+    private transient final ResourceBundle fallbackResourceBundle;
 
     /** fallback locale. */
     private final Locale fallbackLocale;
 
     /**
-     * Create a Localization object.
+     * Create a localization object for units and unit systems. The prefix is right now either "unit" or "unitsystem".
      * @param prefix String; the prefix of the properties files to use.
      */
     public UnitLocale(final String prefix)
@@ -45,41 +45,55 @@ public class UnitLocale implements Serializable
         Throw.whenNull(prefix, "prefix cannot be null");
         this.bundleNamePrefix = prefix;
         this.fallbackLocale = new Locale("en");
+        this.fallbackResourceBundle = ResourceBundle.getBundle("resources/locale/" + prefix, this.fallbackLocale);
     }
 
     /**
-     * Retrieve a string from a locale bundle. If retrieval fails, try the fallbackLocale. If that ails as well, return the
+     * Retrieve a string from a resource bundle. If retrieval fails, try the fallbackLocale. If that fails as well, return the
      * value of key string, surrounded by exclamation marks. When the DefaultLocale has changed, load a new ResourceBundle.
-     * @param key String; the key for the locale in the properties file
-     * @return String; localized string, or, if a translation could not be found return the key surrounded by exclamation marks
+     * @param key String; the key for the locale in the currently valid resource bundle
+     * @return String; localized string, or, if the key could not be found, the key surrounded by exclamation marks
      */
     public final String getString(final String key)
     {
-        if (this.currentLocale == null || !this.currentLocale.equals(DefaultLocale.getLocale()))
+        if (this.currentLocale == null || !this.currentLocale.equals(Locale.getDefault(Locale.Category.DISPLAY)))
         {
-            if (DefaultLocale.getLocale() == null)
-            {
-                Locale.setDefault(new Locale("en"));
-            }
-            this.currentLocale = DefaultLocale.getLocale();
-            Locale.setDefault(this.currentLocale);
+            this.currentLocale = Locale.getDefault(Locale.Category.DISPLAY);
             try
             {
                 this.resourceBundle = ResourceBundle.getBundle("resources/locale/" + this.bundleNamePrefix, this.currentLocale);
             }
             catch (MissingResourceException e)
             {
-                return '!' + key.substring(key.indexOf('.') + 1) + '!';
+                this.resourceBundle = null;
             }
         }
         if (null == this.resourceBundle)
         {
             // Failed to find the resourceBundle (on a previous call to getString)
-            return '!' + key.substring(key.indexOf('.') + 1) + '!';
+            return getFallbackString(key);
         }
         try
         {
             return this.resourceBundle.getString(key);
+        }
+        catch (MissingResourceException e)
+        {
+            return getFallbackString(key);
+        }
+    }
+
+    /**
+     * Retrieve a string from the falback bundle. If retrieval fails, return the value of key string, surrounded by exclamation
+     * marks.
+     * @param key String; the key for the fallback locale to look up in the resource bundle
+     * @return String; localized string, or, if the key could not be found, the key surrounded by exclamation marks
+     */
+    private final String getFallbackString(final String key)
+    {
+        try
+        {
+            return this.fallbackResourceBundle.getString(key);
         }
         catch (MissingResourceException e)
         {
