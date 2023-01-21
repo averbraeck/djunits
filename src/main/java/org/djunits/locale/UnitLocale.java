@@ -62,7 +62,7 @@ public class UnitLocale implements Serializable
             Locale.setDefault(this.currentLocale);
             try
             {
-                this.resourceBundle = ResourceBundle.getBundle("resources/" + this.bundleNamePrefix, this.currentLocale);
+                this.resourceBundle = ResourceBundle.getBundle("resources/locale/" + this.bundleNamePrefix, this.currentLocale);
             }
             catch (MissingResourceException e)
             {
