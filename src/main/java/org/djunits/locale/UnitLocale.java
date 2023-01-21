@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.djunits.Throw;
+
 /**
  * Localization object for language specific reporting of units.
  * <p>
@@ -28,11 +30,11 @@ public class UnitLocale implements Serializable
     /** current locale. */
     private Locale currentLocale = null;
 
-    /** the default resource bundle. */
-    private transient ResourceBundle defaultResourceBundle;
+    /** the fallback resource bundle. */
+    private transient ResourceBundle fallbackResourceBundle;
 
-    /** default locale. */
-    private Locale defaultLocale = null;
+    /** fallback locale. */
+    private final Locale fallbackLocale;
 
     /**
      * Create a Localization object.
@@ -40,13 +42,14 @@ public class UnitLocale implements Serializable
      */
     public UnitLocale(final String prefix)
     {
+        Throw.whenNull(prefix, "prefix cannot be null");
         this.bundleNamePrefix = prefix;
-        getString("xyz"); // initialize the default locale
+        this.fallbackLocale = new Locale("en");
     }
 
     /**
-     * Retrieve a string from a locale bundle. If retrieval fails the value of key string, surrounded by exclamation marks is
-     * returned.
+     * Retrieve a string from a locale bundle. If retrieval fails, try the fallbackLocale. If that ails as well, return the
+     * value of key string, surrounded by exclamation marks. When the DefaultLocale has changed, load a new ResourceBundle.
      * @param key String; the key for the locale in the properties file
      * @return String; localized string, or, if a translation could not be found return the key surrounded by exclamation marks
      */
@@ -56,7 +59,7 @@ public class UnitLocale implements Serializable
         {
             if (DefaultLocale.getLocale() == null)
             {
-                DefaultLocale.setLocale(new Locale("en"));
+                Locale.setDefault(new Locale("en"));
             }
             this.currentLocale = DefaultLocale.getLocale();
             Locale.setDefault(this.currentLocale);
@@ -84,62 +87,12 @@ public class UnitLocale implements Serializable
         }
     }
 
-    /**
-     * Retrieve a string from the default locale bundle. If retrieval fails the value of key string, surrounded by exclamation
-     * marks is returned.
-     * @param key String; the key for the locale in the properties file
-     * @return String; localized string, or, if a translation could not be found return the key surrounded by exclamation marks
-     */
-    public final String getDefaultString(final String key)
-    {
-        if (this.defaultLocale == null)
-        {
-            this.defaultLocale = new Locale("en");
-            try
-            {
-                this.defaultResourceBundle = ResourceBundle.getBundle("resources/" + this.bundleNamePrefix, this.defaultLocale);
-            }
-            catch (MissingResourceException e)
-            {
-                return '!' + key.substring(key.indexOf('.') + 1) + '!';
-            }
-        }
-        if (null == this.defaultResourceBundle)
-        {
-            // Failed to find the resourceBundle (on a previous call to getString)
-            return '!' + key.substring(key.indexOf('.') + 1) + '!';
-        }
-        try
-        {
-            return this.defaultResourceBundle.getString(key);
-        }
-        catch (MissingResourceException e)
-        {
-            return '!' + key.substring(key.indexOf('.') + 1) + '!';
-        }
-    }
-
-    /**
-     * Return whether the current locale is the default (English) locale.
-     * @return boolean; true if the current locale is the default; false if the current locale is not the default
-     */
-    public boolean isDefault()
-    {
-        if (this.currentLocale == null || this.defaultLocale == null || !this.currentLocale.equals(this.defaultLocale)
-                || !this.currentLocale.equals(DefaultLocale.getLocale()))
-        {
-            return false;
-        }
-        return true;
-    }
-
     /** {@inheritDoc} */
     @Override
     public String toString()
     {
-        return "Localization [bundleNamePrefix=" + this.bundleNamePrefix + ", resourceBundle=" + this.resourceBundle
-                + ", currentLocale=" + this.currentLocale + ", defaultResourceBundle=" + this.defaultResourceBundle
-                + ", defaultLocale=" + this.defaultLocale + "]";
+        return "Localization [bundleNamePrefix=" + this.bundleNamePrefix + ", currentLocale=" + this.currentLocale
+                + ", fallbackLocale=" + this.fallbackLocale + "]";
     }
 
 }
