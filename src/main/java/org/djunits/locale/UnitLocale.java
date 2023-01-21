@@ -49,21 +49,24 @@ public class UnitLocale implements Serializable
     }
 
     /**
-     * Reload the resource bundle.
+     * Reload the resource bundle if necessary.
      */
-    public void reload()
+    public void checkReload()
     {
-        this.currentLocale = Locale.getDefault(Locale.Category.DISPLAY);
-        try
+        if (this.currentLocale == null || !this.currentLocale.equals(Locale.getDefault(Locale.Category.DISPLAY)))
         {
-            this.resourceBundle = ResourceBundle.getBundle("resources/locale/" + this.bundleNamePrefix, this.currentLocale);
-        }
-        catch (MissingResourceException e)
-        {
-            this.resourceBundle = null;
+            this.currentLocale = Locale.getDefault(Locale.Category.DISPLAY);
+            try
+            {
+                this.resourceBundle = ResourceBundle.getBundle("resources/locale/" + this.bundleNamePrefix, this.currentLocale);
+            }
+            catch (MissingResourceException e)
+            {
+                this.resourceBundle = null;
+            }
         }
     }
-    
+
     /**
      * Retrieve a string from a resource bundle. If retrieval fails, try the fallbackLocale. If that fails as well, return the
      * value of key string, surrounded by exclamation marks. When the DefaultLocale has changed, load a new ResourceBundle.
@@ -72,10 +75,7 @@ public class UnitLocale implements Serializable
      */
     public final String getString(final String key)
     {
-        if (this.currentLocale == null || !this.currentLocale.equals(Locale.getDefault(Locale.Category.DISPLAY)))
-        {
-            reload();
-        }
+        checkReload();
         if (null == this.resourceBundle)
         {
             // Failed to find the resourceBundle (on a previous call to getString)
@@ -97,7 +97,7 @@ public class UnitLocale implements Serializable
      * @param key String; the key for the fallback locale to look up in the resource bundle
      * @return String; localized string, or, if the key could not be found, the key surrounded by exclamation marks
      */
-    private final String getFallbackString(final String key)
+    public final String getFallbackString(final String key)
     {
         try
         {
