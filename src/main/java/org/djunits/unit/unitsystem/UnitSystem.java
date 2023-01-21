@@ -72,7 +72,7 @@ public abstract class UnitSystem implements Serializable
     private final String nameKey;
 
     /** Localization information. */
-    private static UnitLocale localization = new UnitLocale("localeunitsystem");
+    private static UnitLocale localization = new UnitLocale("unitsystem");
 
     /**
      * Construct a new UnitSystem.
