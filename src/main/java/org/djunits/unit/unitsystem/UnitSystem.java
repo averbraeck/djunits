@@ -2,7 +2,7 @@ package org.djunits.unit.unitsystem;
 
 import java.io.Serializable;
 
-import org.djunits.locale.Localization;
+import org.djunits.locale.UnitLocale;
 
 /**
  * Systems of Units such as SI, including SI-derived; cgs (centimeter-gram-second).
@@ -72,7 +72,7 @@ public abstract class UnitSystem implements Serializable
     private final String nameKey;
 
     /** Localization information. */
-    private static Localization localization = new Localization("localeunitsystem");
+    private static UnitLocale localization = new UnitLocale("localeunitsystem");
 
     /**
      * Construct a new UnitSystem.

@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class Localization implements Serializable
+public class UnitLocale implements Serializable
 {
     /** */
     private static final long serialVersionUID = 20200118L;
@@ -38,7 +38,7 @@ public class Localization implements Serializable
      * Create a Localization object.
      * @param prefix String; the prefix of the properties files to use.
      */
-    public Localization(final String prefix)
+    public UnitLocale(final String prefix)
     {
         this.bundleNamePrefix = prefix;
         getString("xyz"); // initialize the default locale
