@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.locale.DefaultLocale;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +24,7 @@ public class VolumeUnitTest extends AbstractLinearUnitTest<VolumeUnit>
     @Before
     public final void setup()
     {
-        DefaultLocale.setLocale(new Locale("en"));
+        Locale.setDefault(new Locale("en"));
     }
 
     /**
