@@ -240,6 +240,13 @@ public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector
         return new SIScalar(valueSI, unit);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
+    {
+        return super.toString(displayUnit, verbose, withUnit).replaceAll("!", "");
+    }
+
     /**********************************************************************************/
     /******************************** 'CAST AS' METHODS *******************************/
     /**********************************************************************************/

@@ -163,6 +163,13 @@ public class FloatSIMatrix extends AbstractFloatMatrixRel<SIUnit, FloatSIScalar,
         return new FloatSIScalar(valueSI, unit);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
+    {
+        return super.toString(displayUnit, verbose, withUnit).replaceAll("!", "");
+    }
+
     /**********************************************************************************/
     /******************************** 'CAST AS' METHODS *******************************/
     /**********************************************************************************/
