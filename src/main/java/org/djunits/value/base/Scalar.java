@@ -127,6 +127,37 @@ public interface Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends Value
     String toDisplayString(U displayUnit);
 
     /**
+     * Format a string according to the current locale and the standard (minimized) format, such as "3.14" or "300.0".
+     * @param d double; the number to format
+     * @return String; the formatted number using the current Locale
+     */
+    default String format(final double d)
+    {
+        if (d < 1E-5 || d > 1E5)
+            return format(d, "%E");
+        return format(d, "%f");
+    }
+    
+    /**
+     * Format a string according to the current locale and the provided format string.
+     * @param d double; the number to format
+     * @param format String; the formatting string to use for the number
+     * @return String; the formatted number using the current Locale and the format string
+     */
+    default String format(final double d, final String format)
+    {
+        String s = String.format(format, d);
+        if (s.contains("e") || s.contains("E"))
+            return s;
+        while (s.endsWith("0") && s.length() > 2)
+            s = s.substring(0, s.length() - 1);
+        String last = s.substring(s.length() - 1);
+        if (!"01234567890".contains(last))
+            s += "0";
+        return s;
+    }
+    
+    /**
      * Methods for Relative Scalar.
      * <p>
      * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved.
