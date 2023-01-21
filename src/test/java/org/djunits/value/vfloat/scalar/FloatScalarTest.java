@@ -125,7 +125,7 @@ public class FloatScalarTest
             for (Unit<?> unit : quantity.getUnitsById().values())
             {
                 Method ofMethod = scalarClass.getDeclaredMethod("of", float.class, String.class);
-                for (String unitAbbreviation : unit.getAbbreviations())
+                for (String unitAbbreviation : unit.getDefaultAbbreviations())
                 {
                     AbstractFloatScalar<?, ?> scalar =
                             (AbstractFloatScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);

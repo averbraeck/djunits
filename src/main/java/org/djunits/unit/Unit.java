@@ -189,7 +189,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
                 cloneName = siPrefix.getPrefixName() + cloneName;
             }
             Set<String> cloneAbbreviations = new LinkedHashSet<>();
-            for (String abbreviation : clone.getAbbreviations())
+            for (String abbreviation : clone.getDefaultAbbreviations())
             {
                 cloneAbbreviations.add(siPrefix.getDefaultTextualPrefix() + abbreviation);
             }
@@ -261,7 +261,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
                 "deriving from a kilo-unit: defaultDisplayAbbreviation should start with 'k'");
         Throw.when(!this.name.startsWith("kilo"), UnitRuntimeException.class,
                 "deriving from a kilo-unit: name should start with 'kilo'");
-        for (String abbreviation : getAbbreviations())
+        for (String abbreviation : getDefaultAbbreviations())
         {
             Throw.when(!abbreviation.startsWith("k"), UnitRuntimeException.class,
                     "deriving from a kilo-unit: each abbreviation should start with 'k'");
@@ -275,7 +275,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
             String cloneId = siPrefix.getDefaultTextualPrefix() + clone.getId().substring(1);
             String cloneName = siPrefix.getPrefixName() + clone.getName().substring(4);
             Set<String> cloneAbbreviations = new LinkedHashSet<>();
-            for (String abbreviation : clone.getAbbreviations())
+            for (String abbreviation : clone.getDefaultAbbreviations())
             {
                 cloneAbbreviations.add(siPrefix.getDefaultTextualPrefix() + abbreviation.substring(1));
             }
@@ -339,7 +339,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
             String cloneName =
                     siPrefix.getPrefixName() + clone.getName().replace("per", "").replace("1/", "").replace("/", "").trim();
             Set<String> cloneAbbreviations = new LinkedHashSet<>();
-            for (String abbreviation : clone.getAbbreviations())
+            for (String abbreviation : clone.getDefaultAbbreviations())
             {
                 cloneAbbreviations
                         .add(siPrefix.getDefaultTextualPrefix() + abbreviation.replace("1/", "").replace("/", "").trim());
@@ -536,7 +536,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
      * Retrieve a safe copy of the unit abbreviations.
      * @return Set&lt;String&gt;; the unit abbreviations
      */
-    public Set<String> getAbbreviations()
+    public Set<String> getDefaultAbbreviations()
     {
         return new LinkedHashSet<>(this.abbreviations);
     }
@@ -566,6 +566,16 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
     public String getName()
     {
         return this.name;
+    }
+
+    /**
+     * Retrieve a safe copy of the localized unit abbreviations.
+     * @return Set&lt;String&gt;; the localized unit abbreviations
+     */
+    public Set<String> getLocalizedAbbreviations()
+    {
+        String[] abbreviationArray = localization.getString(getQuantity().getName() + "." + this.id).split("\\|");
+        return new LinkedHashSet<>(Set.of(abbreviationArray));
     }
 
     /**

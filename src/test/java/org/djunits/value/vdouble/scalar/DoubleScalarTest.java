@@ -129,7 +129,7 @@ public class DoubleScalarTest
             for (Unit<?> unit : quantity.getUnitsById().values())
             {
                 Method ofMethod = scalarClass.getDeclaredMethod("of", double.class, String.class);
-                for (String unitAbbreviation : unit.getAbbreviations())
+                for (String unitAbbreviation : unit.getDefaultAbbreviations())
                 {
                     AbstractDoubleScalar<?, ?> scalar =
                             (AbstractDoubleScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);

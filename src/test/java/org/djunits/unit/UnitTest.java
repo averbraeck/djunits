@@ -54,8 +54,8 @@ public class UnitTest
         assertEquals("xxName2", xx2.getName());
         assertEquals("xx11t", xx1.getDefaultTextualAbbreviation());
         assertEquals("xx22t", xx2.getDefaultTextualAbbreviation());
-        assertEquals(new LinkedHashSet<String>(Arrays.asList("xx1", "xx11t")), xx1.getAbbreviations());
-        assertEquals(new LinkedHashSet<String>(Arrays.asList("xx2", "xx22t")), xx2.getAbbreviations());
+        assertEquals(new LinkedHashSet<String>(Arrays.asList("xx1", "xx11t")), xx1.getDefaultAbbreviations());
+        assertEquals(new LinkedHashSet<String>(Arrays.asList("xx2", "xx22t")), xx2.getDefaultAbbreviations());
         assertNotEquals(xx1, xx2);
         LengthUnit.BASE.unregister(xx1);
         LengthUnit.BASE.unregister(xx2);

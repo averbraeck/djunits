@@ -169,7 +169,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
         }
 
         // register the abbreviation(s) of the (generated) unit
-        for (String abbreviation : unit.getAbbreviations())
+        for (String abbreviation : unit.getDefaultAbbreviations())
         {
             if (this.unitsByAbbreviation.containsKey(abbreviation))
             {
@@ -208,7 +208,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
         {
             this.unitsById.remove(unit.getId(), unit);
         }
-        for (String abbreviation : unit.getAbbreviations())
+        for (String abbreviation : unit.getDefaultAbbreviations())
         {
             if (this.unitsByAbbreviation.containsKey(abbreviation))
             {
