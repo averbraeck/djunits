@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.djunits.Throw;
@@ -56,7 +54,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /** Last loaded Locale for the localized abbreviations. */
     private static Locale currentLocale = null;
-    
+
     /** Localization information. */
     private static UnitLocale localization = new UnitLocale("unit");
 
@@ -189,7 +187,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
             if (this.unitsByAbbreviation.containsKey(abbreviation))
             {
                 // if both are generated or both are not generated, give an exception
-                if (getUnitByAbbreviation(abbreviation).isGenerated() == unit.isGenerated())
+                if (this.unitsByAbbreviation.get(abbreviation).isGenerated() == unit.isGenerated())
                 {
                     throw new UnitRuntimeException("A unit with abbreviation " + abbreviation
                             + " has already been registered for unit type " + unit.getClass().getSimpleName());
@@ -262,26 +260,27 @@ public class Quantity<U extends Unit<U>> implements Serializable
         return this.unitsById.get(id);
     }
 
-    /** 
-     * Check whether the locale for which abbreviation maps have been loaded is still current. If not, (re)load.  
+    /**
+     * Check whether the locale for which abbreviation maps have been loaded is still current. If not, (re)load.
      */
     protected void checkLocale()
     {
         if (currentLocale == null || !currentLocale.equals(Locale.getDefault(Locale.Category.DISPLAY)))
         {
-            localization.reload();
+            localization.checkReload();
             this.unitsByLocalizedAbbreviation.clear();
             for (String id : this.unitsById.keySet())
             {
                 String[] abbreviationArray = localization.getString(getName() + "." + id).split("\\|");
                 for (String abb : abbreviationArray)
                 {
-                    this.unitsByLocalizedAbbreviation.put(abb, this.unitsById.get(id));
+                    this.unitsByLocalizedAbbreviation.put(abb.strip(), this.unitsById.get(id));
                 }
             }
+            currentLocale = Locale.getDefault(Locale.Category.DISPLAY);
         }
     }
-    
+
     /**
      * Retrieve a unit by one of its abbreviations. First try whether the abbreviation itself is available. If not, look up the
      * unit without spaces, "." and "^" to map e.g., "kg.m/s^2" to "kgm/s2". If that fails, see if the unit is an SIDimensions
@@ -408,7 +407,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
     {
         return localization.getString(getName());
     }
-    
+
     /**
      * Retrieve the standard unit for this unit base (usually the first registered unit).
      * @return U; the standardUnit for this unit base (usually the first registered unit)
