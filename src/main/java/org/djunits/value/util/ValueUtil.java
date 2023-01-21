@@ -1,7 +1,5 @@
 package org.djunits.value.util;
 
-import java.util.regex.Pattern;
-
 import org.djunits.Throw;
 import org.djunits.unit.Unit;
 
@@ -16,16 +14,6 @@ import org.djunits.unit.Unit;
  */
 public final class ValueUtil
 {
-    /** Number pattern regex to be used in valueOf() method. */
-    public static final Pattern NUMBER_PATTERN;
-
-    /** Compile number pattern regex to be used in valueOf() method of derived classes. */
-    static
-    {
-        String regex = "[+-]?\\d+\\.?\\d*([Ee][+-]?\\d+)?";
-        NUMBER_PATTERN = Pattern.compile(regex);
-    }
-
     /**
      * This class shall never be instantiated.
      */
