@@ -2,9 +2,15 @@ package org.djunits.unit.quantity;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.djunits.Throw;
+import org.djunits.locale.UnitLocale;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.si.SIPrefix;
@@ -44,6 +50,15 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /** The standard unit belonging to this unit base. The first unit that gets registered is considered to be standard. */
     private U standardUnit = null;
+
+    /** Derived units for this unit base, retrievable by localized abbreviation. The key is the localized abbreviation. */
+    private final Map<String, U> unitsByLocalizedAbbreviation = new LinkedHashMap<String, U>();
+
+    /** Last loaded Locale for the localized abbreviations. */
+    private static Locale currentLocale = null;
+    
+    /** Localization information. */
+    private static UnitLocale localization = new UnitLocale("unit");
 
     /**
      * Create a unit base with the SI dimensions.
@@ -247,6 +262,26 @@ public class Quantity<U extends Unit<U>> implements Serializable
         return this.unitsById.get(id);
     }
 
+    /** 
+     * Check whether the locale for which abbreviation maps have been loaded is still current. If not, (re)load.  
+     */
+    protected void checkLocale()
+    {
+        if (currentLocale == null || !currentLocale.equals(Locale.getDefault(Locale.Category.DISPLAY)))
+        {
+            localization.reload();
+            this.unitsByLocalizedAbbreviation.clear();
+            for (String id : this.unitsById.keySet())
+            {
+                String[] abbreviationArray = localization.getString(getName() + "." + id).split("\\|");
+                for (String abb : abbreviationArray)
+                {
+                    this.unitsByLocalizedAbbreviation.put(abb, this.unitsById.get(id));
+                }
+            }
+        }
+    }
+    
     /**
      * Retrieve a unit by one of its abbreviations. First try whether the abbreviation itself is available. If not, look up the
      * unit without spaces, "." and "^" to map e.g., "kg.m/s^2" to "kgm/s2". If that fails, see if the unit is an SIDimensions
@@ -256,7 +291,16 @@ public class Quantity<U extends Unit<U>> implements Serializable
      */
     public U getUnitByAbbreviation(final String abbreviation)
     {
-        U unit = this.unitsByAbbreviation.get(abbreviation);
+        checkLocale();
+        U unit = this.unitsByLocalizedAbbreviation.get(abbreviation);
+        if (unit == null)
+        {
+            unit = this.unitsByLocalizedAbbreviation.get(abbreviation.replaceAll("[ .^]", ""));
+        }
+        if (unit == null)
+        {
+            unit = this.unitsByAbbreviation.get(abbreviation);
+        }
         if (unit == null)
         {
             unit = this.unitsByAbbreviation.get(abbreviation.replaceAll("[ .^]", ""));
@@ -292,8 +336,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
     }
 
     /**
-     * Retrieve a safe copy of the registryById.
-     * @return Map&lt;String, U&gt;; a safe copy of the registryById
+     * Retrieve a safe copy of the unitsById.
+     * @return Map&lt;String, U&gt;; a safe copy of the unitsById
      */
     public Map<String, U> getUnitsById()
     {
@@ -301,14 +345,70 @@ public class Quantity<U extends Unit<U>> implements Serializable
     }
 
     /**
-     * Return a safe copy of the registryByAbbreviation.
-     * @return Map&lt;String, U&gt;; a safe copy of the registryByAbbreviation
+     * Return a safe copy of the unitsByAbbreviation.
+     * @return Map&lt;String, U&gt;; a safe copy of the unitsByAbbreviation
      */
     public Map<String, U> getUnitsByAbbreviation()
     {
         return new LinkedHashMap<>(this.unitsByAbbreviation);
     }
 
+    /**
+     * Return a safe copy of the unitsByLocalizedAbbreviation.
+     * @return Map&lt;String, U&gt;; a safe copy of the unitsByLocalizedAbbreviation
+     */
+    public Map<String, U> getUnitsByLocalizedAbbreviation()
+    {
+        return new LinkedHashMap<>(this.unitsByLocalizedAbbreviation);
+    }
+
+    /**
+     * Retrieve a safe copy of the localized unit abbreviations.
+     * @param unit U; the unit for which to retrieve the abbreviations
+     * @return Set&lt;String&gt;; the localized unit abbreviations
+     */
+    public Set<String> getLocalizedAbbreviations(final U unit)
+    {
+        String[] abbreviationArray = localization.getString(getName() + "." + unit.getId()).split("\\|");
+        Set<String> set = new LinkedHashSet<>();
+        for (String abb : abbreviationArray)
+        {
+            set.add(abb.strip());
+        }
+        return set;
+    }
+
+    /**
+     * Retrieve the localized display abbreviation.
+     * @param unit U; the unit for which to retrieve the display abbreviation
+     * @return String; the localized display abbreviation
+     */
+    public String getLocalizedDisplayAbbreviation(final U unit)
+    {
+        String[] abbreviationArray = localization.getString(getName() + "." + unit.getId()).split("\\|");
+        return abbreviationArray[0].strip();
+    }
+
+    /**
+     * Retrieve the localized textual abbreviation.
+     * @param unit U; the unit for which to retrieve the textual abbreviation
+     * @return String; the localized textual abbreviation
+     */
+    public String getLocalizedTextualAbbreviation(final U unit)
+    {
+        String[] abbreviationArray = localization.getString(getName() + "." + unit.getId()).split("\\|");
+        return (abbreviationArray.length > 1) ? abbreviationArray[1].strip() : abbreviationArray[0].strip();
+    }
+
+    /**
+     * Retrieve the localized name of this unit.
+     * @return String; the localized name of this unit
+     */
+    public String getLocalizedName()
+    {
+        return localization.getString(getName());
+    }
+    
     /**
      * Retrieve the standard unit for this unit base (usually the first registered unit).
      * @return U; the standardUnit for this unit base (usually the first registered unit)

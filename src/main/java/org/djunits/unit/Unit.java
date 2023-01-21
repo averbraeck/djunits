@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.djunits.Throw;
-import org.djunits.locale.UnitLocale;
 import org.djunits.unit.quantity.Quantities;
 import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.scale.IdentityScale;
@@ -67,9 +66,6 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
      * unit of a unit base is null.
      */
     private Quantity<U> quantity;
-
-    /** Localization information. */
-    private static UnitLocale localization = new UnitLocale("unit");
 
     // TODO create a static that loads all unit classes in the registry
 
@@ -572,44 +568,30 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
      * Retrieve a safe copy of the localized unit abbreviations.
      * @return Set&lt;String&gt;; the localized unit abbreviations
      */
+    @SuppressWarnings("unchecked")
     public Set<String> getLocalizedAbbreviations()
     {
-        String[] abbreviationArray = localization.getString(getQuantity().getName() + "." + this.id).split("\\|");
-        Set<String> set = new LinkedHashSet<>();
-        for (String abb : abbreviationArray)
-        {
-            set.add(abb.strip());
-        }
-        return set;
+        return getQuantity().getLocalizedAbbreviations((U) this);
     }
 
     /**
      * Retrieve the localized display abbreviation.
      * @return String; the localized display abbreviation
      */
+    @SuppressWarnings("unchecked")
     public String getLocalizedDisplayAbbreviation()
     {
-        String[] abbreviationArray = localization.getString(getQuantity().getName() + "." + this.id).split("\\|");
-        return abbreviationArray[0].strip();
+        return getQuantity().getLocalizedDisplayAbbreviation((U) this);
     }
 
     /**
      * Retrieve the localized textual abbreviation.
      * @return String; the localized textual abbreviation
      */
+    @SuppressWarnings("unchecked")
     public String getLocalizedTextualAbbreviation()
     {
-        String[] abbreviationArray = localization.getString(getQuantity().getName() + "." + this.id).split("\\|");
-        return (abbreviationArray.length > 1) ? abbreviationArray[1].strip() : abbreviationArray[0].strip();
-    }
-
-    /**
-     * Retrieve the localized name of this unit.
-     * @return String; the localized name of this unit
-     */
-    public String getLocalizedName()
-    {
-        return localization.getString(getQuantity().getName());
+        return getQuantity().getLocalizedTextualAbbreviation((U) this);
     }
 
     /**
