@@ -1,8 +1,7 @@
 package org.djunits.value.vdouble.scalar;
 
-import java.util.regex.Matcher;
-
-import jakarta.annotation.Generated;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
@@ -50,9 +49,10 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+
+import jakarta.annotation.Generated;
 
 /**
  * Easy access methods for the generic Relative SI DoubleScalar.
@@ -64,7 +64,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalar;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class SIScalar extends AbstractDoubleScalarRel<SIUnit, SIScalar>
 {
     /** */
@@ -202,27 +202,26 @@ public class SIScalar extends AbstractDoubleScalarRel<SIUnit, SIScalar>
     {
         Throw.whenNull(text, "Error parsing SIScalar: unitString is null");
         Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing SIScalar: empty unitString");
-        Matcher matcher = ValueUtil.NUMBER_PATTERN.matcher(text);
-        if (matcher.find())
+        try
         {
-            int index = matcher.end();
-            try
-            {
-                String unitString = text.substring(index).trim();
-                String valueString = text.substring(0, index).trim();
-                SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
-                if (unit != null)
-                {
-                    double d = Double.parseDouble(valueString);
-                    return new SIScalar(d, unit);
-                }
-            }
-            catch (Exception exception)
-            {
-                throw new IllegalArgumentException("Error parsing SIScalar from " + text, exception);
-            }
+            NumberFormat formatter = NumberFormat.getInstance();
+            int index = 0;
+            while (index < text.length() && "0123456789,._eE+-".contains(text.substring(index, index + 1)))
+                index++;
+            String unitString = text.substring(index).trim();
+            String valueString = text.substring(0, index).trim();
+            SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
+            if (unit == null)
+                throw new IllegalArgumentException("Unit " + unitString + " for SIScalar not found");
+            double d = formatter.parse(valueString).doubleValue();
+            return new SIScalar(d, unit);
         }
-        throw new IllegalArgumentException("Error parsing SIScalar from " + text);
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException(
+                    "Error parsing SIScalar from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
+                    exception);
+        }
     }
 
     /**
@@ -262,13 +261,6 @@ public class SIScalar extends AbstractDoubleScalarRel<SIUnit, SIScalar>
     /**********************************************************************************/
     /******************************** 'CAST AS' METHODS *******************************/
     /**********************************************************************************/
-
-    /** {@inheritDoc} */
-    @Override
-    protected Object clone() throws CloneNotSupportedException
-    {
-        return super.clone();
-    }
 
     /**
      * Return the current scalar transformed to a scalar in the given unit. Of course the SI dimensionality has to match,

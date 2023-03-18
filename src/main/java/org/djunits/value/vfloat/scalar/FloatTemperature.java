@@ -1,16 +1,16 @@
 package org.djunits.value.vfloat.scalar;
 
-import java.util.regex.Matcher;
-
-import jakarta.annotation.Generated;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import org.djunits.Throw;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.TemperatureUnit;
-import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+
+import jakarta.annotation.Generated;
 
 /**
  * Easy access methods for the FloatTemperature FloatScalar.
@@ -22,7 +22,7 @@ import org.djunits.value.vfloat.scalar.base.FloatScalar;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class FloatTemperature extends
         AbstractFloatScalarRelWithAbs<AbsoluteTemperatureUnit, FloatAbsoluteTemperature, TemperatureUnit, FloatTemperature>
 {
@@ -181,8 +181,8 @@ public class FloatTemperature extends
 
     /**
      * Returns a FloatTemperature representation of a textual representation of a value with a unit. The String representation
-     * that can be parsed is the double value in the unit, followed by the official abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
+     * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
+     * are allowed, but not required, between the value and the unit.
      * @param text String; the textual representation to parse into a FloatTemperature
      * @return FloatTemperature; the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -192,24 +192,29 @@ public class FloatTemperature extends
     {
         Throw.whenNull(text, "Error parsing FloatTemperature: text to parse is null");
         Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing FloatTemperature: empty text to parse");
-        Matcher matcher = ValueUtil.NUMBER_PATTERN.matcher(text);
-        if (matcher.find())
+        try
         {
-            int index = matcher.end();
+            NumberFormat formatter = NumberFormat.getInstance();
+            int index = 0;
+            while (index < text.length() && "0123456789,._eE+-".contains(text.substring(index, index + 1)))
+                index++;
             String unitString = text.substring(index).trim();
             String valueString = text.substring(0, index).trim();
             TemperatureUnit unit = TemperatureUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit != null)
-            {
-                float f = Float.parseFloat(valueString);
-                return new FloatTemperature(f, unit);
-            }
+            if (unit == null)
+                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            float f = formatter.parse(valueString).floatValue();
+            return new FloatTemperature(f, unit);
         }
-        throw new IllegalArgumentException("Error parsing FloatTemperature from " + text);
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException("Error parsing FloatTemperature from " + text + " using Locale "
+                    + Locale.getDefault(Locale.Category.FORMAT), exception);
+        }
     }
 
     /**
-     * Returns a FloatTemperature based on a value and the textual representation of the unit.
+     * Returns a FloatTemperature based on a value and the textual representation of the unit, which can be localized.
      * @param value double; the value to use
      * @param unitString String; the textual representation of the unit
      * @return FloatTemperature; the Scalar representation of the value in its unit

@@ -1,7 +1,5 @@
 package org.djunits.value.vdouble.matrix;
 
-import jakarta.annotation.Generated;
-
 import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
@@ -59,6 +57,8 @@ import org.djunits.value.vdouble.vector.SIVector;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
+import jakarta.annotation.Generated;
+
 /**
  * Easy access methods for the generic Relative SI DoubleMatrix.
  * <p>
@@ -69,7 +69,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class SIMatrix extends AbstractDoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatrix>
 {
     /** */

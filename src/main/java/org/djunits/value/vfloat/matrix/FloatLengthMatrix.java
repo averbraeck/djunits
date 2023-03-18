@@ -1,7 +1,5 @@
 package org.djunits.value.vfloat.matrix;
 
-import jakarta.annotation.Generated;
-
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
 import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRelWithAbs;
@@ -12,6 +10,8 @@ import org.djunits.value.vfloat.vector.FloatLengthVector;
 import org.djunits.value.vfloat.vector.FloatPositionVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
+import jakarta.annotation.Generated;
+
 /**
  * Immutable FloatLength Matrix.
  * <p>
@@ -21,7 +21,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class FloatLengthMatrix extends AbstractFloatMatrixRelWithAbs<PositionUnit, FloatPosition, FloatPositionVector,
         FloatPositionMatrix, LengthUnit, FloatLength, FloatLengthVector, FloatLengthMatrix>
 {

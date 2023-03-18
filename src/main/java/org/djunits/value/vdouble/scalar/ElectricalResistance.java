@@ -1,16 +1,16 @@
 package org.djunits.value.vdouble.scalar;
 
-import java.util.regex.Matcher;
-
-import jakarta.annotation.Generated;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import org.djunits.Throw;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.ElectricalInductanceUnit;
 import org.djunits.unit.ElectricalPotentialUnit;
 import org.djunits.unit.ElectricalResistanceUnit;
-import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+
+import jakarta.annotation.Generated;
 
 /**
  * Easy access methods for the ElectricalResistance DoubleScalar, which is relative by definition.
@@ -21,7 +21,7 @@ import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class ElectricalResistance extends AbstractDoubleScalarRel<ElectricalResistanceUnit, ElectricalResistance>
 {
     /** */
@@ -169,8 +169,8 @@ public class ElectricalResistance extends AbstractDoubleScalarRel<ElectricalResi
 
     /**
      * Returns a ElectricalResistance representation of a textual representation of a value with a unit. The String
-     * representation that can be parsed is the double value in the unit, followed by the official abbreviation of the unit.
-     * Spaces are allowed, but not required, between the value and the unit.
+     * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
+     * unit. Spaces are allowed, but not required, between the value and the unit.
      * @param text String; the textual representation to parse into a ElectricalResistance
      * @return ElectricalResistance; the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -181,24 +181,29 @@ public class ElectricalResistance extends AbstractDoubleScalarRel<ElectricalResi
         Throw.whenNull(text, "Error parsing ElectricalResistance: text to parse is null");
         Throw.when(text.length() == 0, IllegalArgumentException.class,
                 "Error parsing ElectricalResistance: empty text to parse");
-        Matcher matcher = ValueUtil.NUMBER_PATTERN.matcher(text);
-        if (matcher.find())
+        try
         {
-            int index = matcher.end();
+            NumberFormat formatter = NumberFormat.getInstance();
+            int index = 0;
+            while (index < text.length() && "0123456789,._eE+-".contains(text.substring(index, index + 1)))
+                index++;
             String unitString = text.substring(index).trim();
             String valueString = text.substring(0, index).trim();
             ElectricalResistanceUnit unit = ElectricalResistanceUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit != null)
-            {
-                double d = Double.parseDouble(valueString);
-                return new ElectricalResistance(d, unit);
-            }
+            if (unit == null)
+                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            double d = formatter.parse(valueString).doubleValue();
+            return new ElectricalResistance(d, unit);
         }
-        throw new IllegalArgumentException("Error parsing ElectricalResistance from " + text);
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException("Error parsing ElectricalResistance from " + text + " using Locale "
+                    + Locale.getDefault(Locale.Category.FORMAT), exception);
+        }
     }
 
     /**
-     * Returns a ElectricalResistance based on a value and the textual representation of the unit.
+     * Returns a ElectricalResistance based on a value and the textual representation of the unit, which can be localized.
      * @param value double; the value to use
      * @param unitString String; the textual representation of the unit
      * @return ElectricalResistance; the Scalar representation of the value in its unit

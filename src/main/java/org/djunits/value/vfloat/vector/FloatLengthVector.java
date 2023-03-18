@@ -1,13 +1,13 @@
 package org.djunits.value.vfloat.vector;
 
-import jakarta.annotation.Generated;
-
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
+
+import jakarta.annotation.Generated;
 
 /**
  * Relative FloatLength Vector.
@@ -18,7 +18,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class FloatLengthVector extends AbstractFloatVectorRelWithAbs<PositionUnit, FloatPosition, FloatPositionVector,
         LengthUnit, FloatLength, FloatLengthVector>
 {

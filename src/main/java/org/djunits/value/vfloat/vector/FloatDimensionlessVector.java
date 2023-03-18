@@ -1,13 +1,13 @@
 package org.djunits.value.vfloat.vector;
 
-import jakarta.annotation.Generated;
-
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.value.function.DimensionlessFunctions;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.FloatDimensionless;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
+
+import jakarta.annotation.Generated;
 
 /**
  * Immutable Float FloatDimensionlessVector, a vector of values with a DimensionlessUnit.
@@ -18,7 +18,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class FloatDimensionlessVector
         extends AbstractFloatVectorRel<DimensionlessUnit, FloatDimensionless, FloatDimensionlessVector>
         implements DimensionlessFunctions<DimensionlessUnit, FloatDimensionlessVector>

@@ -1,13 +1,13 @@
 package org.djunits.value.vdouble.matrix;
 
-import jakarta.annotation.Generated;
-
 import org.djunits.unit.MomentumUnit;
 import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Momentum;
 import org.djunits.value.vdouble.vector.MomentumVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
+
+import jakarta.annotation.Generated;
 
 /**
  * Immutable Double MomentumMatrix, a matrix of values with a MomentumUnit.
@@ -18,7 +18,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2022-03-14T11:14:15.180987200Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
 public class MomentumMatrix extends AbstractDoubleMatrixRel<MomentumUnit, Momentum, MomentumVector, MomentumMatrix>
 
 {
