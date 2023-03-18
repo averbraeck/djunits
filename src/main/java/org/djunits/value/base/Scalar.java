@@ -137,7 +137,7 @@ public interface Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends Value
             return format(d, "%E");
         return format(d, "%f");
     }
-    
+
     /**
      * Format a string according to the current locale and the provided format string.
      * @param d double; the number to format
@@ -156,7 +156,7 @@ public interface Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends Value
             s += "0";
         return s;
     }
-    
+
     /**
      * Methods for Relative Scalar.
      * <p>
