@@ -102,13 +102,6 @@
           <include>**/*</include>
         </includes>
       </testResource>
-      <testResource>
-        <directory>${basedir}/src/main/resources</directory>
-        <targetPath>${project.build.directory}/test-classes/resources</targetPath>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </testResource>
     </testResources>
 
     <plugins>
