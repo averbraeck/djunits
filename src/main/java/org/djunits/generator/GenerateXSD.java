@@ -157,7 +157,7 @@ public class GenerateXSD
 
     /** indicate first unit, so no |. */
     static boolean first;
-     
+
     /**
      * Write a scalar with unit to the file, with or without [+-]?
      * @param pw PrintWriter; the file to write to

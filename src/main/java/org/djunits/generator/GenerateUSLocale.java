@@ -162,8 +162,8 @@ public class GenerateUSLocale
             for (String unitId : idArray)
             {
                 Unit<?> u = quantity.getUnitById(unitId);
-                System.out.print(quantity.getName() + "." + u.getId() + " = "
-                        + u.getDefaultDisplayAbbreviation() + " | " + u.getName());
+                System.out.print(
+                        quantity.getName() + "." + u.getId() + " = " + u.getDefaultDisplayAbbreviation() + " | " + u.getName());
                 if (u.getDefaultAbbreviations().size() > 1)
                 {
                     for (String abbreviation : u.getDefaultAbbreviations())

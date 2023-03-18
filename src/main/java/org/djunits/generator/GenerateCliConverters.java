@@ -28,7 +28,8 @@ public class GenerateCliConverters
     {
         String generationTime = Instant.now().toString();
         List<String> types = Files.readAllLines(Paths.get(URLResource.getResource("/resources/TYPES_REL.txt").toURI()));
-        List<String> absRelTypes = Files.readAllLines(Paths.get(URLResource.getResource("/resources/TYPES_ABS_REL.txt").toURI()));
+        List<String> absRelTypes =
+                Files.readAllLines(Paths.get(URLResource.getResource("/resources/TYPES_ABS_REL.txt").toURI()));
         for (String ar : absRelTypes)
         {
             String[] arParts = ar.split(",");

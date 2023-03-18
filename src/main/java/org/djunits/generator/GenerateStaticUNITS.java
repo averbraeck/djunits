@@ -14,7 +14,7 @@ import java.lang.reflect.Modifier;
 public final class GenerateStaticUNITS
 {
     /** the standard units. */
-    private static final String[] STANDARD_UNITS = new String[] { "AbsoluteTemperatureUnit", "AccelerationUnit", "AngleUnit",
+    private static final String[] STANDARD_UNITS = new String[] {"AbsoluteTemperatureUnit", "AccelerationUnit", "AngleUnit",
             "AngularAccelerationUnit", "AngularVelocityUnit", "AreaUnit", "DensityUnit", "DimensionlessUnit", "DirectionUnit",
             "DurationUnit", "ElectricalChargeUnit", "ElectricalCurrentUnit", "ElectricalPotentialUnit",
             "ElectricalResistanceUnit", "EnergyUnit", "FlowMassUnit", "FlowVolumeUnit", "ForceUnit", "FrequencyUnit",
@@ -22,7 +22,7 @@ public final class GenerateStaticUNITS
             "SolidAngleUnit", "SpeedUnit", "TemperatureUnit", "TimeUnit", "TorqueUnit", "VolumeUnit", "AbsorbedDoseUnit",
             "AmountOfSubstanceUnit", "CatalyticActivityUnit", "ElectricalCapacitanceUnit", "ElectricalConductanceUnit",
             "ElectricalInductanceUnit", "EquivalentDoseUnit", "IlluminanceUnit", "LuminousFluxUnit", "LuminousIntensityUnit",
-            "MagneticFluxDensityUnit", "MagneticFluxUnit", "RadioActivityUnit" };
+            "MagneticFluxDensityUnit", "MagneticFluxUnit", "RadioActivityUnit"};
 
     /**
      * 
@@ -108,7 +108,8 @@ public final class GenerateStaticUNITS
             }
             if (className.contains("Dimensionless"))
             {
-                System.out.println(String.format("    /** */ %-45s = %s;", c.getSimpleName() + " UNIT", c.getSimpleName() + ".SI"));
+                System.out.println(
+                        String.format("    /** */ %-45s = %s;", c.getSimpleName() + " UNIT", c.getSimpleName() + ".SI"));
             }
         }
     }
