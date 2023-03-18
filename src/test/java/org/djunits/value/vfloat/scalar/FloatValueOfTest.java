@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.SIUnit;
@@ -116,6 +117,7 @@ public class FloatValueOfTest
     @Test
     public void testFloatSIScalar() throws UnitException
     {
+        Locale.setDefault(Locale.US);
         SIUnit m2 = SIUnit.of(new SIDimensions(0, 0, 0, 2, 0, 0, 0, 0, 0));
         assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.of(10.0f, "m2"));
         assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.of(10.0f, "m^2"));
@@ -157,6 +159,7 @@ public class FloatValueOfTest
     @Test
     public void testFloatArea()
     {
+        Locale.setDefault(Locale.US);
         assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.of(10.0f, "m2"));
         assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.of(10.0f, "m^2"));
         assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.valueOf("10.0 m2"));
