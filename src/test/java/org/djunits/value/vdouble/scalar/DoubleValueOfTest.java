@@ -6,11 +6,16 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
+import java.util.Map;
 
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.SIUnit;
+import org.djunits.unit.Unit;
+import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitException;
+import org.djunits.value.CLASSNAMES;
+import org.djunits.value.base.Scalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
 import org.junit.Test;
 
@@ -131,7 +136,7 @@ public class DoubleValueOfTest
         illegal(SIScalar.class, 10.0, "");
         illegal(SIScalar.class, null);
         illegal(SIScalar.class, "");
-        // illegal(SIScalar.class, "1.0.0 m2"); // formatter.pasrse() does not use the whole number string
+        // illegal(SIScalar.class, "1.0.0 m2"); // formatter.parse() does not use the whole number string
         illegal(SIScalar.class, 10.0, "xyz");
         illegal(SIScalar.class, "10.0 xyz");
         try
@@ -143,7 +148,7 @@ public class DoubleValueOfTest
         {
             // Ignore expected exception
         }
-        
+
         try
         {
             SIScalar.valueOf("xyzuvw");
@@ -179,4 +184,131 @@ public class DoubleValueOfTest
         illegal(Area.class, 10.0, "m5s3");
         illegal(Area.class, "10.0 m5s3");
     }
+
+    /** test the valueOf and the of methods of all units with US locale. */
+    @Test
+    public void testValueOfUS()
+    {
+        Locale.setDefault(Locale.US);
+        // get the interfaces such as org.djunits.value.vdouble.scalar.Time
+        for (String scalarName : CLASSNAMES.ALL_LIST)
+        {
+            String scalarClassName = scalarName;
+            Class<? extends DoubleScalarInterface<?, ?>> scalarClass = null;
+            // get the implementation of that class
+            try
+            {
+                scalarClass = (Class<? extends DoubleScalarInterface<?, ?>>) Class
+                        .forName("org.djunits.value.vdouble.scalar." + scalarClassName);
+            }
+            catch (ClassNotFoundException exception)
+            {
+                fail("Class not found for Scalar class " + "org.djunits.value.vdouble.scalar." + scalarClassName);
+            }
+            testValue(scalarClass, ".", ",");
+        }
+    }
+
+    /**
+     * Test scalar valueOf() and of() functions.
+     * @param scalarClass the class to test
+     * @param dec decimal separator
+     * @param k thousands separator
+     */
+    private void testValue(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass, final String dec, final String k)
+    {
+        try
+        {
+            Method insMethod = scalarClass.getDeclaredMethod("instantiateSI", double.class);
+            Scalar<?, ?> scalar = (Scalar<?, ?>) insMethod.invoke(null, 10.0);
+            Unit<?> unit = scalar.getDisplayUnit();
+
+            Method qMethod = unit.getClass().getMethod("getQuantity");
+            Quantity<?> quantity = (Quantity<?>) qMethod.invoke(unit);
+            Map<String, Unit<?>> abbreviations = (Map<String, Unit<?>>) quantity.getUnitsByAbbreviation();
+            for (String abb : abbreviations.keySet())
+            {
+                legal(scalarClass, 10.0, abb);
+                legal(scalarClass, -10.0, abb);
+                legal(scalarClass, -10.0E-10, abb);
+                legal(scalarClass, 10.0E10, abb);
+                
+                legal(scalarClass, "10" + abb);
+                legal(scalarClass, "10 " + abb);
+                legal(scalarClass, "10.0" + abb);
+                legal(scalarClass, "10.0 " + abb);
+                legal(scalarClass, "-10.0" + abb);
+                legal(scalarClass, "-10.0 " + abb);
+                legal(scalarClass, "0" + abb);
+                legal(scalarClass, "0 " + abb);
+                legal(scalarClass, "0.0" + abb);
+                legal(scalarClass, "0.0 " + abb);
+                legal(scalarClass, "-0.0" + abb);
+                legal(scalarClass, "-0.0 " + abb);
+
+                legal(scalarClass, "10e1" + abb);
+                legal(scalarClass, "10e1 " + abb);
+                legal(scalarClass, "10.0e1" + abb);
+                legal(scalarClass, "10.0e1 " + abb);
+                legal(scalarClass, "-10.0e1" + abb);
+                legal(scalarClass, "-10.0e1 " + abb);
+                legal(scalarClass, "0e1" + abb);
+                legal(scalarClass, "0e1 " + abb);
+                legal(scalarClass, "0.0e1" + abb);
+                legal(scalarClass, "0.0e1 " + abb);
+                legal(scalarClass, "-0.0e1" + abb);
+                legal(scalarClass, "-0.0e1 " + abb);
+
+                legal(scalarClass, "10e-1" + abb);
+                legal(scalarClass, "10e-1 " + abb);
+                legal(scalarClass, "10.0e-1" + abb);
+                legal(scalarClass, "10.0e-1 " + abb);
+                legal(scalarClass, "-10.0e-1" + abb);
+                legal(scalarClass, "-10.0e-1 " + abb);
+                legal(scalarClass, "0e-1" + abb);
+                legal(scalarClass, "0e-1 " + abb);
+                legal(scalarClass, "0.0e-1" + abb);
+                legal(scalarClass, "0.0e-1 " + abb);
+                legal(scalarClass, "-0.0e-1" + abb);
+                legal(scalarClass, "-0.0e-1 " + abb);
+
+                legal(scalarClass, "10E1" + abb);
+                legal(scalarClass, "10E1 " + abb);
+                legal(scalarClass, "10.0E1" + abb);
+                legal(scalarClass, "10.0E1 " + abb);
+                legal(scalarClass, "-10.0E1" + abb);
+                legal(scalarClass, "-10.0E1 " + abb);
+                legal(scalarClass, "0E1" + abb);
+                legal(scalarClass, "0E1 " + abb);
+                legal(scalarClass, "0.0E1" + abb);
+                legal(scalarClass, "0.0E1 " + abb);
+                legal(scalarClass, "-0.0E1" + abb);
+                legal(scalarClass, "-0.0E1 " + abb);
+
+                legal(scalarClass, "10E-1" + abb);
+                legal(scalarClass, "10E-1 " + abb);
+                legal(scalarClass, "10.0E-1" + abb);
+                legal(scalarClass, "10.0E-1 " + abb);
+                legal(scalarClass, "-10.0E-1" + abb);
+                legal(scalarClass, "-10.0E-1 " + abb);
+                legal(scalarClass, "0E-1" + abb);
+                legal(scalarClass, "0E-1 " + abb);
+                legal(scalarClass, "0.0E-1" + abb);
+                legal(scalarClass, "0.0E-1 " + abb);
+                legal(scalarClass, "-0.0E-1" + abb);
+                legal(scalarClass, "-0.0E-1 " + abb);
+            }
+
+        }
+        catch (InvocationTargetException exception)
+        {
+            // ok
+        }
+        catch (Throwable e)
+        {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
