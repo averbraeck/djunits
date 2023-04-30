@@ -1,6 +1,5 @@
 package org.djunits.value.vdouble.scalar;
 
-import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.djunits.unit.AngleUnit;
@@ -18,6 +17,7 @@ import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
@@ -32,7 +32,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class Duration extends AbstractDoubleScalarRelWithAbs<TimeUnit, Time, DurationUnit, Duration>
 {
     /** */
@@ -193,16 +193,12 @@ public class Duration extends AbstractDoubleScalarRelWithAbs<TimeUnit, Time, Dur
         Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing Duration: empty text to parse");
         try
         {
-            NumberFormat formatter = NumberFormat.getInstance();
-            int index = 0;
-            while (index < text.length() && "0123456789,._eE+-".contains(text.substring(index, index + 1)))
-                index++;
-            String unitString = text.substring(index).trim();
-            String valueString = text.substring(0, index).trim();
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            double d = numberParser.parseDouble(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             DurationUnit unit = DurationUnit.BASE.getUnitByAbbreviation(unitString);
             if (unit == null)
                 throw new IllegalArgumentException("Unit " + unitString + " not found");
-            double d = formatter.parse(valueString).doubleValue();
             return new Duration(d, unit);
         }
         catch (Exception exception)

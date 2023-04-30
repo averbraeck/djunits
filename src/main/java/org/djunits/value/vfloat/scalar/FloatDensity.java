@@ -1,6 +1,5 @@
 package org.djunits.value.vfloat.scalar;
 
-import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.djunits.unit.DensityUnit;
@@ -9,6 +8,7 @@ import org.djunits.unit.FlowMassUnit;
 import org.djunits.unit.MassUnit;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class FloatDensity extends AbstractFloatScalarRel<DensityUnit, FloatDensity>
 {
     /** */
@@ -186,16 +186,12 @@ public class FloatDensity extends AbstractFloatScalarRel<DensityUnit, FloatDensi
         Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing FloatDensity: empty text to parse");
         try
         {
-            NumberFormat formatter = NumberFormat.getInstance();
-            int index = 0;
-            while (index < text.length() && "0123456789,._eE+-".contains(text.substring(index, index + 1)))
-                index++;
-            String unitString = text.substring(index).trim();
-            String valueString = text.substring(0, index).trim();
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            float f = numberParser.parseFloat(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             DensityUnit unit = DensityUnit.BASE.getUnitByAbbreviation(unitString);
             if (unit == null)
                 throw new IllegalArgumentException("Unit " + unitString + " not found");
-            float f = formatter.parse(valueString).floatValue();
             return new FloatDensity(f, unit);
         }
         catch (Exception exception)

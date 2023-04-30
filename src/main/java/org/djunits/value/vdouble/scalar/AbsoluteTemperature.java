@@ -1,11 +1,11 @@
 package org.djunits.value.vdouble.scalar;
 
-import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
+import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-01-21T20:18:25.227867Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class AbsoluteTemperature
         extends AbstractDoubleScalarAbs<AbsoluteTemperatureUnit, AbsoluteTemperature, TemperatureUnit, Temperature>
 {
@@ -167,16 +167,12 @@ public class AbsoluteTemperature
                 "Error parsing AbsoluteTemperature: empty text to parse");
         try
         {
-            NumberFormat formatter = NumberFormat.getInstance();
-            int index = 0;
-            while (index < text.length() && "0123456789,._eE+-".contains(text.substring(index, index + 1)))
-                index++;
-            String unitString = text.substring(index).trim();
-            String valueString = text.substring(0, index).trim();
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            double d = numberParser.parseDouble(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             AbsoluteTemperatureUnit unit = AbsoluteTemperatureUnit.BASE.getUnitByAbbreviation(unitString);
             if (unit == null)
                 throw new IllegalArgumentException("Unit " + unitString + " not found");
-            double d = formatter.parse(valueString).doubleValue();
             return new AbsoluteTemperature(d, unit);
         }
         catch (Exception exception)
