@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.djunits.Try;
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.LengthUnit;
@@ -44,6 +43,7 @@ import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
 import org.djunits.value.vfloat.vector.base.FloatVectorInterface;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
+import org.djutils.exceptions.Try;
 import org.junit.Test;
 
 /**

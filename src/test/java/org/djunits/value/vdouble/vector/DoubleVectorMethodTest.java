@@ -9,7 +9,6 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.djunits.Try;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AreaUnit;
@@ -40,6 +39,7 @@ import org.djunits.value.vdouble.scalar.Position;
 import org.djunits.value.vdouble.scalar.Time;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
+import org.djutils.exceptions.Try;
 import org.junit.Test;
 
 /**

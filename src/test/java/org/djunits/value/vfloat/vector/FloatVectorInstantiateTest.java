@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.djunits.Try;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
@@ -27,6 +26,7 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
 import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
+import org.djutils.exceptions.Try;
 import org.junit.Test;
 
 /**
