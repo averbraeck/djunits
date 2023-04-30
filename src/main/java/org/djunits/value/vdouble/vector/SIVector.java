@@ -3,7 +3,6 @@ package org.djunits.value.vdouble.vector;
 import java.util.List;
 import java.util.SortedMap;
 
-import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
 import org.djunits.unit.AmountOfSubstanceUnit;
@@ -56,6 +55,7 @@ import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

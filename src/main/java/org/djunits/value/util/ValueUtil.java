@@ -1,7 +1,7 @@
 package org.djunits.value.util;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
+import org.djutils.exceptions.Throw;
 
 /**
  * ValueUtil implements a couple of unit-related static methods.

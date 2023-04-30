@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.stream.IntStream;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.Scale;
 import org.djunits.value.ValueRuntimeException;
@@ -16,6 +15,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatFunction2;
 import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djutils.exceptions.Throw;
 
 /**
  * Stores the data for a FloatVector and carries out basic operations.

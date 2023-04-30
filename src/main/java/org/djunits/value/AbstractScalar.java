@@ -2,9 +2,9 @@ package org.djunits.value;
 
 import java.io.Serializable;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.value.base.Scalar;
+import org.djutils.exceptions.Throw;
 
 /**
  * AbstractScalar is a class to help construct Scalar classes. In contrast with AbstractScalar, it extends Number.

@@ -3,7 +3,6 @@ package org.djunits.value.vfloat.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AngularVelocityUnit;
 import org.djunits.unit.DimensionlessUnit;
@@ -19,6 +18,7 @@ import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

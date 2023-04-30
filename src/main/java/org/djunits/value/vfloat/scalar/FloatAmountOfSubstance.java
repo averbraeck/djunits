@@ -3,13 +3,13 @@ package org.djunits.value.vfloat.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.AmountOfSubstanceUnit;
 import org.djunits.unit.CatalyticActivityUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

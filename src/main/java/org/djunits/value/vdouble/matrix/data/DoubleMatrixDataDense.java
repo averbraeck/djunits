@@ -3,11 +3,11 @@ package org.djunits.value.vdouble.matrix.data;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-import org.djunits.Throw;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleFunction2;
+import org.djutils.exceptions.Throw;
 
 /**
  * Stores dense data for a DoubleMatrix and carries out basic operations.

@@ -2,13 +2,13 @@ package org.djunits.unit;
 
 import java.io.Serializable;
 
-import org.djunits.Throw;
 import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.unit.util.UnitRuntimeException;
+import org.djutils.exceptions.Throw;
 
 /**
  * The AbsoluteUnit class indicates that a unit is absolute and has a "zero" point. The relative unit base will be set correctly

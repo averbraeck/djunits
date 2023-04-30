@@ -3,7 +3,6 @@ package org.djunits.value.vfloat.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.DensityUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.FlowMassUnit;
@@ -14,6 +13,7 @@ import org.djunits.unit.MassUnit;
 import org.djunits.unit.MomentumUnit;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

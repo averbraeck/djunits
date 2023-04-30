@@ -2,11 +2,11 @@ package org.djunits.value.vdouble.matrix.base;
 
 import java.io.Serializable;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djutils.exceptions.Throw;
 
 /**
  * Data point for a matrix that can be used for constructing sparse matrices.

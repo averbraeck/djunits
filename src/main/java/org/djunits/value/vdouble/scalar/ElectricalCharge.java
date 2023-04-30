@@ -3,7 +3,6 @@ package org.djunits.value.vdouble.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.ElectricalCapacitanceUnit;
@@ -12,6 +11,7 @@ import org.djunits.unit.ElectricalCurrentUnit;
 import org.djunits.unit.ElectricalPotentialUnit;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.djunits.Throw;
 import org.djunits.unit.quantity.Quantities;
 import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.scale.IdentityScale;
@@ -17,6 +16,7 @@ import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.unit.util.UnitRuntimeException;
+import org.djutils.exceptions.Throw;
 
 /**
  * All units are internally <i>stored</i> relative to a standard unit with conversion factor. This means that e.g., a meter is

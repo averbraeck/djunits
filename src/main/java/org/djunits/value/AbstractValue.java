@@ -2,8 +2,8 @@ package org.djunits.value;
 
 import java.io.Serializable;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
+import org.djutils.exceptions.Throw;
 
 /**
  * AbstractValue is a class to help construct Scalar, Vector, and Matrix classes.

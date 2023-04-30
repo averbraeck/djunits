@@ -3,12 +3,12 @@ package org.djunits.value.vdouble.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.ElectricalInductanceUnit;
 import org.djunits.unit.ElectricalPotentialUnit;
 import org.djunits.unit.ElectricalResistanceUnit;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

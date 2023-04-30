@@ -3,7 +3,6 @@ package org.djunits.value.vdouble.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
 import org.djunits.unit.AmountOfSubstanceUnit;
@@ -44,6 +43,7 @@ import org.djunits.unit.TorqueUnit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.value.function.DimensionlessFunctions;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

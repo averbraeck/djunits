@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.djunits.Throw;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.IdentityScale;
@@ -16,6 +15,7 @@ import org.djunits.value.vdouble.matrix.SIMatrix;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
 import org.djunits.value.vdouble.vector.base.DoubleVectorInterface;
+import org.djutils.exceptions.Throw;
 
 /**
  * DoubleMatrix utility methods, e.g., for creating DoubleMatrixs from different types of data.

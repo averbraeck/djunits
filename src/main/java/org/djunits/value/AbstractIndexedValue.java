@@ -1,10 +1,10 @@
 package org.djunits.value;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.value.base.Scalar;
 import org.djunits.value.storage.AbstractStorage;
 import org.djunits.value.storage.StorageType;
+import org.djutils.exceptions.Throw;
 
 /**
  * AbstractIndexedValue.java.

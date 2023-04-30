@@ -2,11 +2,11 @@ package org.djunits.value.vfloat.matrix.data;
 
 import java.util.stream.IntStream;
 
-import org.djunits.Throw;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatFunction2;
+import org.djutils.exceptions.Throw;
 
 /**
  * Stores dense data for a FloatMatrix and carries out basic operations.

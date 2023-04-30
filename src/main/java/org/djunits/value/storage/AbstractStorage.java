@@ -2,7 +2,7 @@ package org.djunits.value.storage;
 
 import java.io.Serializable;
 
-import org.djunits.Throw;
+import org.djutils.exceptions.Throw;
 
 /**
  * StorageInterface.java.

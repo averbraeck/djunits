@@ -3,12 +3,12 @@ package org.djunits.value.vfloat.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

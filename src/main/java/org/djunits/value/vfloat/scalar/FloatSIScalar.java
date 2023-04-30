@@ -3,7 +3,6 @@ package org.djunits.value.vfloat.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
 import org.djunits.unit.AmountOfSubstanceUnit;
@@ -51,6 +50,7 @@ import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

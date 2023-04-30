@@ -1,6 +1,5 @@
 package org.djunits.value.vdouble.matrix;
 
-import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
 import org.djunits.unit.AmountOfSubstanceUnit;
@@ -56,6 +55,7 @@ import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.vector.SIVector;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

@@ -2,7 +2,7 @@ package org.djunits.unit.si;
 
 import java.io.Serializable;
 
-import org.djunits.Throw;
+import org.djutils.exceptions.Throw;
 
 /**
  * SIPrefix contains information about one prefix, such as M for mega with the value 1.0E6.

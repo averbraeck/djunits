@@ -7,7 +7,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.djunits.Throw;
 import org.djunits.locale.UnitLocale;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIDimensions;
@@ -15,6 +14,7 @@ import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.util.UnitException;
 import org.djunits.unit.util.UnitRuntimeException;
+import org.djutils.exceptions.Throw;
 
 /**
  * Quantity contains a map of all registered units belonging to this base. It also contains the SI 'fingerprint' of the unit.

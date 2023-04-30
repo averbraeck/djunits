@@ -5,7 +5,6 @@ import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
 import org.djunits.value.AbstractIndexedValue;
@@ -18,6 +17,7 @@ import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
+import org.djutils.exceptions.Throw;
 
 /**
  * The most basic abstract class for the FloatVector.

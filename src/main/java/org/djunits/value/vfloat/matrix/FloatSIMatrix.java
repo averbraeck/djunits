@@ -1,6 +1,5 @@
 package org.djunits.value.vfloat.matrix;
 
-import org.djunits.Throw;
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
 import org.djunits.unit.AmountOfSubstanceUnit;
@@ -56,6 +55,7 @@ import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.vector.FloatSIVector;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

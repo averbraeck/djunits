@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.Scale;
 import org.djunits.value.ValueRuntimeException;
@@ -14,6 +13,7 @@ import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatFunction2;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djutils.exceptions.Throw;
 
 /**
  * Stores sparse data for a FloatMatrix and carries out basic operations. The index in the sparse matrix data is calculated as

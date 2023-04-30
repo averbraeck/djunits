@@ -2,7 +2,6 @@ package org.djunits.value.vdouble.matrix.base;
 
 import java.lang.reflect.Array;
 
-import org.djunits.Throw;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
 import org.djunits.value.AbstractIndexedValue;
@@ -17,6 +16,7 @@ import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
+import org.djutils.exceptions.Throw;
 
 /**
  * The most basic abstract class for the DoubleMatrix.

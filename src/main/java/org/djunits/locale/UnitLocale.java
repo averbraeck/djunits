@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.djunits.Throw;
+import org.djutils.exceptions.Throw;
 
 /**
  * Localization object for language specific reporting of units.

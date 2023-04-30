@@ -3,10 +3,10 @@ package org.djunits.value.vdouble.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 

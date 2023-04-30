@@ -3,7 +3,6 @@ package org.djunits.value.vdouble.scalar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.djunits.Throw;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AngularVelocityUnit;
 import org.djunits.unit.DimensionlessUnit;
@@ -11,6 +10,7 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djutils.exceptions.Throw;
 
 import jakarta.annotation.Generated;
 
