@@ -1151,32 +1151,12 @@ public class DoubleMatrixInstantiateTest
         double[][] d1_1 = new double[1][];
         d1_1[0] = new double[1];
 
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                DoubleMatrix.instantiate((double[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
-            }
-        }.test("constructing matrix with null input should have thrown an exception", NullPointerException.class);
-
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                DoubleMatrix.instantiate(d1_1, null, StorageType.DENSE);
-            }
-        }.test("constructing matrix with null unit should have thrown an exception", NullPointerException.class);
-
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                DoubleMatrix.instantiate(d1_1, SpeedUnit.METER_PER_SECOND, null);
-            }
-        }.test("constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> DoubleMatrix.instantiate((double[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+                "constructing matrix with null input should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> DoubleMatrix.instantiate(d1_1, null, StorageType.DENSE),
+                "constructing matrix with null unit should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> DoubleMatrix.instantiate(d1_1, SpeedUnit.METER_PER_SECOND, null),
+                "constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
     }
 
     /**

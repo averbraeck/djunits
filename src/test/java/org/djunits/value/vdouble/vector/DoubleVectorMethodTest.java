@@ -78,9 +78,9 @@ public class DoubleVectorMethodTest
             sparseTestData[index] = 10000.456 + index;
             reverseSparseTestData[index] = 20000.567 + index;
         }
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 AreaVector am =
@@ -259,10 +259,10 @@ public class DoubleVectorMethodTest
 
                 // TEST METHODS THAT INVOLVE TWO VECTOR INSTANCES
 
-                for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+                for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                 {
                     double[] testData2 = storageType2.equals(StorageType.DENSE) ? denseTestData : reverseSparseTestData;
-                    for (AreaUnit au2 : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+                    for (AreaUnit au2 : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
                     {
                         // PLUS and INCREMENTBY(VECTOR)
                         AreaVector am2 = DoubleVector
@@ -335,9 +335,9 @@ public class DoubleVectorMethodTest
         double[] denseTestData = DOUBLEVECTOR.denseArray(105);
         double[] sparseTestData = DOUBLEVECTOR.sparseArray(105);
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 AreaVector am =
@@ -345,134 +345,23 @@ public class DoubleVectorMethodTest
                 am = am.immutable();
                 final AreaVector amPtr = am;
                 Area fa = Area.of(10.0d, "m^2");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.assign(DoubleMathFunctions.ABS);
-                    }
-                }.test("ImmutableVector.assign(...) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.decrementBy(fa);
-                    }
-                }.test("ImmutableVector.decrementBy(scalar) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.decrementBy(amPtr);
-                    }
-                }.test("ImmutableVector.decrementBy(vector) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.incrementBy(fa);
-                    }
-                }.test("ImmutableVector.incrementBy(scalar) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.incrementBy(amPtr);
-                    }
-                }.test("ImmutableVector.incrementBy(vector) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.divideBy(2.0d);
-                    }
-                }.test("ImmutableVector.divideBy(factor) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.multiplyBy(2.0d);
-                    }
-                }.test("ImmutableVector.multiplyBy(factor) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.set(1, fa);
-                    }
-                }.test("ImmutableVector.set() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setSI(1, 20.1d);
-                    }
-                }.test("ImmutableVector.setSI() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setInUnit(1, 15.2d);
-                    }
-                }.test("ImmutableVector.setInUnit(f) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setInUnit(1, 15.2d, AreaUnit.ARE);
-                    }
-                }.test("ImmutableVector.setInUnit(f, u) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.abs();
-                    }
-                }.test("ImmutableVector.abs() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.ceil();
-                    }
-                }.test("ImmutableVector.ceil() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.floor();
-                    }
-                }.test("ImmutableVector.floor() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.neg();
-                    }
-                }.test("ImmutableVector.neg() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.rint();
-                    }
-                }.test("ImmutableVector.rint() should throw error");
+                Try.testFail(() -> amPtr.assign(DoubleMathFunctions.ABS), "ImmutableVector.assign(...) should throw error");
+                Try.testFail(() -> amPtr.decrementBy(fa), "ImmutableVector.decrementBy(scalar) should throw error");
+                Try.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableVector.decrementBy(vector) should throw error");
+                Try.testFail(() -> amPtr.incrementBy(fa), "ImmutableVector.incrementBy(scalar) should throw error");
+                Try.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableVector.incrementBy(vector) should throw error");
+                Try.testFail(() -> amPtr.divideBy(2.0d), "ImmutableVector.divideBy(factor) should throw error");
+                Try.testFail(() -> amPtr.multiplyBy(2.0d), "ImmutableVector.multiplyBy(factor) should throw error");
+                Try.testFail(() -> amPtr.set(1, fa), "ImmutableVector.set() should throw error");
+                Try.testFail(() -> amPtr.setSI(1, 20.1d), "ImmutableVector.setSI() should throw error");
+                Try.testFail(() -> amPtr.setInUnit(1, 15.2d), "ImmutableVector.setInUnit(f) should throw error");
+                Try.testFail(() -> amPtr.setInUnit(1, 15.2d, AreaUnit.ARE),
+                        "ImmutableVector.setInUnit(f, u) should throw error");
+                Try.testFail(() -> amPtr.abs(), "ImmutableVector.abs() should throw error");
+                Try.testFail(() -> amPtr.ceil(), "ImmutableVector.ceil() should throw error");
+                Try.testFail(() -> amPtr.floor(), "ImmutableVector.floor() should throw error");
+                Try.testFail(() -> amPtr.neg(), "ImmutableVector.neg() should throw error");
+                Try.testFail(() -> amPtr.rint(), "ImmutableVector.rint() should throw error");
             }
         }
     }
@@ -486,9 +375,9 @@ public class DoubleVectorMethodTest
         double[] denseTestData = DOUBLEVECTOR.denseArray(105);
         double[] sparseTestData = DOUBLEVECTOR.sparseArray(105);
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 AreaVector am =
@@ -576,7 +465,7 @@ public class DoubleVectorMethodTest
             assertEquals("absDecByRelM", -29.0 * denseTestData[index], absDecByRelM.getSI(index), 0.01);
             assertEquals("relPlusAbs", 61.0 * denseTestData[index], relPlusAbs.getSI(index), 0.01);
         }
-        for (int dLength : new int[] { -1, 1 })
+        for (int dLength : new int[] {-1, 1})
         {
             double[] other = DOUBLEVECTOR.denseArray(denseTestData.length + dLength);
             TimeVector wrongTimeVector = DoubleVector.instantiate(
@@ -691,7 +580,7 @@ public class DoubleVectorMethodTest
             IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
     {
         double[][] testValues = DOUBLEMATRIX.denseRectArrays(10, 20);
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             for (String type : CLASSNAMES.REL_LIST)
             {
@@ -699,7 +588,7 @@ public class DoubleVectorMethodTest
                 Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
                 for (U unit : quantity.getUnitsById().values())
                 {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, storageType })
+                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, storageType})
                     {
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         SIMatrix matrix = SIMatrix.instantiate(testValues, siUnit, storageType2);
@@ -741,7 +630,7 @@ public class DoubleVectorMethodTest
     {
         double[] testData = DOUBLEVECTOR.denseArray(123);
         testData[2] = 0;
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             DoubleVectorData dvd = DoubleVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
             assertTrue("Double vector data is equal to itself", dvd.equals(dvd));
@@ -749,7 +638,7 @@ public class DoubleVectorMethodTest
             assertFalse("Double vector data is not equal to some string", dvd.equals("some string"));
             assertTrue("Double vector is equal to sparse version of itself", dvd.equals(dvd.toSparse()));
             assertTrue("Double vector is equal to dense version of itself", dvd.equals(dvd.toDense()));
-            for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+            for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 DoubleVectorData dvd2 = DoubleVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertEquals(

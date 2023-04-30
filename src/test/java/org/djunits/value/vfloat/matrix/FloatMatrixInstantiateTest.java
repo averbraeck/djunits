@@ -79,7 +79,7 @@ public class FloatMatrixInstantiateTest
             @SuppressWarnings("unchecked")
             Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(scalarName + "Unit");
             U standardUnit = quantity.getStandardUnit();
-            for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 float[][] testValues = FLOATMATRIX.denseRectArrays(5, 10);
                 FloatMatrixData dmd = FloatMatrixData.instantiate(testValues, standardUnit.getScale(), storageType);
@@ -95,7 +95,7 @@ public class FloatMatrixInstantiateTest
                 FloatVectorData dvd =
                         FloatVectorData.instantiate(floatMatrix.getRowSI(0), standardUnit.getScale(), storageType);
                 FloatVectorInterface<U, S, V> floatVector = floatMatrix.instantiateVector(dvd, standardUnit);
-                assertArrayEquals("Float vector contains values from row 0", new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
+                assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         floatVector.getValuesSI(), 0.001f);
                 // TODO next cast should be unnecessary
                 FloatScalarInterface<U, S> floatScalar = floatMatrix.instantiateScalarSI(1.234f, standardUnit);
@@ -129,7 +129,7 @@ public class FloatMatrixInstantiateTest
             Quantity<AU> absQuantity = (Quantity<AU>) Quantities.INSTANCE.getQuantity(absScalarName + "Unit");
             RU relStandardUnit = relQuantity.getStandardUnit();
             AU absStandardUnit = absQuantity.getStandardUnit();
-            for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 float[][] testValues = FLOATMATRIX.denseRectArrays(5, 10);
                 FloatMatrixData dmd = FloatMatrixData.instantiate(testValues, relStandardUnit.getScale(), storageType);
@@ -145,7 +145,7 @@ public class FloatMatrixInstantiateTest
                         FloatVectorData.instantiate(relFloatMatrix.getRowSI(0), relStandardUnit.getScale(), storageType);
                 AbstractFloatVectorAbs<AU, ?, ?, RU, ?, ?> absFloatVector =
                         relFloatMatrix.instantiateVectorAbs(dvd, absStandardUnit);
-                assertArrayEquals("Float vector contains values from row 0", new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
+                assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         absFloatVector.getValuesSI(), 0.001f);
                 AbstractFloatScalarAbs<AU, ?, RU, ?> absFloatScalar =
                         relFloatMatrix.instantiateScalarAbsSI(1.234f, absStandardUnit);
@@ -158,7 +158,7 @@ public class FloatMatrixInstantiateTest
                 dvd = FloatVectorData.instantiate(absFloatMatrix.getRowSI(0), absStandardUnit.getScale(), storageType);
                 AbstractFloatVectorRelWithAbs<AU, ?, ?, RU, ?, ?> relFloatVector =
                         absFloatMatrix.instantiateVectorRel(dvd, relStandardUnit);
-                assertArrayEquals("Float vector contains values from row 0", new float[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
+                assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         relFloatVector.getValuesSI(), 0.001f);
                 AbstractFloatScalarRelWithAbs<AU, ?, RU, ?> relFloatScalar =
                         absFloatMatrix.instantiateScalarRelSI(1.234f, relStandardUnit);
@@ -975,7 +975,7 @@ public class FloatMatrixInstantiateTest
      * Test the instantiation of dense and sparse matrix types with one row or one column, and errors with null pointers.
      */
     @Test
-    @SuppressWarnings({ "checkstyle:methodlength", "checkstyle:localvariablename" })
+    @SuppressWarnings({"checkstyle:methodlength", "checkstyle:localvariablename"})
     public void testInstantiateEdgeCases()
     {
         // DENSE DATA
@@ -1159,34 +1159,14 @@ public class FloatMatrixInstantiateTest
         float[][] d1_1 = new float[1][];
         d1_1[0] = new float[1];
 
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                FloatMatrix.instantiate((float[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
-            }
-        }.test("constructing matrix with null input should have thrown an exception", NullPointerException.class);
-
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                FloatMatrix.instantiate(d1_1, null, StorageType.DENSE);
-            }
-        }.test("constructing matrix with null unit should have thrown an exception", NullPointerException.class);
-
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                FloatMatrix.instantiate(d1_1, SpeedUnit.METER_PER_SECOND, null);
-            }
-        }.test("constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> FloatMatrix.instantiate((float[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+                "constructing matrix with null input should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> FloatMatrix.instantiate(d1_1, null, StorageType.DENSE),
+                "constructing matrix with null unit should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> FloatMatrix.instantiate(d1_1, SpeedUnit.METER_PER_SECOND, null),
+                "constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
     }
-    
+
     /**
      * Test matrix construction and operations with zero length.
      */
@@ -1209,10 +1189,10 @@ public class FloatMatrixInstantiateTest
                 FloatMatrix.instantiate(
                         FloatMatrixData.instantiate(floatMatrix00, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
-        smMap.put(2, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix00, StorageType.DENSE),
-                SpeedUnit.KM_PER_HOUR));
-        smMap.put(3, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix00, StorageType.SPARSE),
-                SpeedUnit.KM_PER_HOUR));
+        smMap.put(2,
+                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix00, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
+        smMap.put(3,
+                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix00, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
         smMap.put(4, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedList, 0, 0, StorageType.DENSE),
                 SpeedUnit.KM_PER_HOUR));
         smMap.put(5, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedList, 0, 0, StorageType.SPARSE),
@@ -1225,10 +1205,10 @@ public class FloatMatrixInstantiateTest
                 FloatMatrix.instantiate(
                         FloatMatrixData.instantiate(floatMatrix10, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
-        smMap.put(8, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix10, StorageType.DENSE),
-                SpeedUnit.KM_PER_HOUR));
-        smMap.put(9, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix10, StorageType.SPARSE),
-                SpeedUnit.KM_PER_HOUR));
+        smMap.put(8,
+                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix10, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
+        smMap.put(9,
+                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix10, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
 
         for (Map.Entry<Integer, FloatSpeedMatrix> entry : smMap.entrySet())
         {

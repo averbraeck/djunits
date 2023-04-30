@@ -79,18 +79,18 @@ public class FloatMatrixMethodTest
             }
         }
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 FloatAreaMatrix am =
                         FloatMatrix.instantiate(FloatMatrixData.instantiate(testData, au.getScale(), storageType), au);
 
                 // INDEX CHECKING
-                for (int row : new int[] { -1, 0, denseTestData.length - 1, denseTestData.length })
+                for (int row : new int[] {-1, 0, denseTestData.length - 1, denseTestData.length})
                 {
-                    for (int col : new int[] { -1, 0, denseTestData[0].length - 1, denseTestData[0].length })
+                    for (int col : new int[] {-1, 0, denseTestData[0].length - 1, denseTestData[0].length})
                     {
                         if (row < 0 || col < 0 || row >= denseTestData.length || col >= denseTestData[0].length)
                         {
@@ -122,7 +122,7 @@ public class FloatMatrixMethodTest
                         }
                     }
                 }
-                for (int col : new int[] { -1, 0, denseTestData[0].length - 1, denseTestData[0].length })
+                for (int col : new int[] {-1, 0, denseTestData[0].length - 1, denseTestData[0].length})
                 {
                     if (col < 0 || col >= denseTestData[0].length)
                     {
@@ -369,8 +369,7 @@ public class FloatMatrixMethodTest
                     }
                 }
 
-                float[][] testData4x4 =
-                        new float[][] { { 2, 3, 5, 7 }, { 11, 13, 17, 19 }, { 23, 29, 31, 37 }, { 41, 43, 47, 49 } };
+                float[][] testData4x4 = new float[][] {{2, 3, 5, 7}, {11, 13, 17, 19}, {23, 29, 31, 37}, {41, 43, 47, 49}};
                 FloatAreaMatrix am4x4 =
                         FloatMatrix.instantiate(FloatMatrixData.instantiate(testData4x4, au.getScale(), storageType), au);
                 float det = am4x4.determinantSI();
@@ -378,22 +377,14 @@ public class FloatMatrixMethodTest
                 float err = Math.max(det, detCalc) / 1000.0f;
                 assertEquals("Determinant of square matrix with unit " + au.getDefaultTextualAbbreviation() + ", storage = "
                         + storageType + " = " + det + " but should have been " + detCalc, detCalc, det, err);
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        float detErr = am.determinantSI();
-                        // system.out.println(detErr);
-                    }
-                }.test("Determinant of non-square matrix should have thrown exception");
+                Try.testFail(() -> am.determinantSI(), "Determinant of non-square matrix should have thrown exception");
 
                 // TEST METHODS THAT INVOLVE TWO MATRIX INSTANCES
 
-                for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+                for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                 {
                     float[][] testData2 = storageType2.equals(StorageType.DENSE) ? denseTestData : reverseSparseTestData;
-                    for (AreaUnit au2 : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+                    for (AreaUnit au2 : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
                     {
 
                         // PLUS and INCREMENTBY(MATRIX)
@@ -478,9 +469,9 @@ public class FloatMatrixMethodTest
         float[][] denseTestData = FLOATMATRIX.denseRectArrays(5, 10);
         float[][] sparseTestData = FLOATMATRIX.sparseRectArrays(5, 10);
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 FloatAreaMatrix am =
@@ -488,134 +479,23 @@ public class FloatMatrixMethodTest
                 am = am.immutable();
                 final FloatAreaMatrix amPtr = am;
                 FloatArea fa = FloatArea.of(10.0f, "m^2");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.assign(FloatMathFunctions.ABS);
-                    }
-                }.test("ImmutableMatrix.assign(...) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.decrementBy(fa);
-                    }
-                }.test("ImmutableMatrix.decrementBy(scalar) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.decrementBy(amPtr);
-                    }
-                }.test("ImmutableMatrix.decrementBy(matrix) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.incrementBy(fa);
-                    }
-                }.test("ImmutableMatrix.incrementBy(scalar) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.incrementBy(amPtr);
-                    }
-                }.test("ImmutableMatrix.incrementBy(matrix) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.divideBy(2.0f);
-                    }
-                }.test("ImmutableMatrix.divideBy(factor) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.multiplyBy(2.0f);
-                    }
-                }.test("ImmutableMatrix.multiplyBy(factor) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.set(1, 1, fa);
-                    }
-                }.test("ImmutableMatrix.set() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setSI(1, 1, 20.1f);
-                    }
-                }.test("ImmutableMatrix.setSI() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setInUnit(1, 1, 15.2f);
-                    }
-                }.test("ImmutableMatrix.setInUnit(f) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setInUnit(1, 1, 15.2f, AreaUnit.ARE);
-                    }
-                }.test("ImmutableMatrix.setInUnit(f, u) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.abs();
-                    }
-                }.test("ImmutableMatrix.abs() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.ceil();
-                    }
-                }.test("ImmutableMatrix.ceil() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.floor();
-                    }
-                }.test("ImmutableMatrix.floor() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.neg();
-                    }
-                }.test("ImmutableMatrix.neg() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.rint();
-                    }
-                }.test("ImmutableMatrix.rint() should throw error");
+                Try.testFail(() -> amPtr.assign(FloatMathFunctions.ABS), "ImmutableMatrix.assign(...) should throw error");
+                Try.testFail(() -> amPtr.decrementBy(fa), "ImmutableMatrix.decrementBy(scalar) should throw error");
+                Try.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableMatrix.decrementBy(matrix) should throw error");
+                Try.testFail(() -> amPtr.incrementBy(fa), "ImmutableMatrix.incrementBy(scalar) should throw error");
+                Try.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableMatrix.incrementBy(matrix) should throw error");
+                Try.testFail(() -> amPtr.divideBy(2.0f), "ImmutableMatrix.divideBy(factor) should throw error");
+                Try.testFail(() -> amPtr.multiplyBy(2.0f), "ImmutableMatrix.multiplyBy(factor) should throw error");
+                Try.testFail(() -> amPtr.set(1, 1, fa), "ImmutableMatrix.set() should throw error");
+                Try.testFail(() -> amPtr.setSI(1, 1, 20.1f), "ImmutableMatrix.setSI() should throw error");
+                Try.testFail(() -> amPtr.setInUnit(1, 1, 15.2f), "ImmutableMatrix.setInUnit(f) should throw error");
+                Try.testFail(() -> amPtr.setInUnit(1, 1, 15.2f, AreaUnit.ARE),
+                        "ImmutableMatrix.setInUnit(f, u) should throw error");
+                Try.testFail(() -> amPtr.abs(), "ImmutableMatrix.abs() should throw error");
+                Try.testFail(() -> amPtr.ceil(), "ImmutableMatrix.ceil() should throw error");
+                Try.testFail(() -> amPtr.floor(), "ImmutableMatrix.floor() should throw error");
+                Try.testFail(() -> amPtr.neg(), "ImmutableMatrix.neg() should throw error");
+                Try.testFail(() -> amPtr.rint(), "ImmutableMatrix.rint() should throw error");
             }
         }
     }
@@ -629,9 +509,9 @@ public class FloatMatrixMethodTest
         float[][] denseTestData = FLOATMATRIX.denseRectArrays(5, 10);
         float[][] sparseTestData = FLOATMATRIX.sparseRectArrays(5, 10);
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 FloatAreaMatrix am =
@@ -725,9 +605,9 @@ public class FloatMatrixMethodTest
                 assertEquals("relPlusAbs", 61.0 * denseTestData[row][col], relPlusAbs.getSI(row, col), 0.01);
             }
         }
-        for (int dRows : new int[] { -1, 0, 1 })
+        for (int dRows : new int[] {-1, 0, 1})
         {
-            for (int dCols : new int[] { -1, 0, 1 })
+            for (int dCols : new int[] {-1, 0, 1})
             {
                 if (dRows == 0 && dCols == 0)
                 {
@@ -890,7 +770,7 @@ public class FloatMatrixMethodTest
             IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
     {
         float[][] testValues = FLOATMATRIX.denseRectArrays(10, 20);
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             for (String type : CLASSNAMES.REL_LIST)
             {
@@ -898,7 +778,7 @@ public class FloatMatrixMethodTest
                 Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
                 for (U unit : quantity.getUnitsById().values())
                 {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, storageType })
+                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, storageType})
                     {
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         FloatSIMatrix matrix = FloatSIMatrix.instantiate(testValues, siUnit, storageType2);
@@ -940,7 +820,7 @@ public class FloatMatrixMethodTest
     {
         float[][] testData = FLOATMATRIX.denseRectArrays(12, 34);
         testData[2][2] = 0;
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             FloatMatrixData fmd = FloatMatrixData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
             assertTrue("Float matrix is equal to itself", fmd.equals(fmd));
@@ -948,7 +828,7 @@ public class FloatMatrixMethodTest
             assertFalse("Float matrix data is not equal to some string", fmd.equals("some string"));
             assertTrue("Float matrix is equal to sparse version of itself", fmd.equals(fmd.toSparse()));
             assertTrue("Float matrix is equal to dense version of itself", fmd.equals(fmd.toDense()));
-            for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+            for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 FloatMatrixData dvd2 = FloatMatrixData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertEquals(
@@ -975,7 +855,7 @@ public class FloatMatrixMethodTest
     /**
      * Test the sparse value class.
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Test
     public void sparseValueTest()
     {

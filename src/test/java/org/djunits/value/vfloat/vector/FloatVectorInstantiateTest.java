@@ -470,32 +470,12 @@ public class FloatVectorInstantiateTest
 
         float[] d1 = new float[1];
 
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                FloatVector.instantiate((float[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
-            }
-        }.test("constructing vector with null input should have thrown an exception", NullPointerException.class);
-
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                FloatVector.instantiate(d1, null, StorageType.DENSE);
-            }
-        }.test("constructing vector with null unit should have thrown an exception", NullPointerException.class);
-
-        new Try()
-        {
-            @Override
-            public void execute()
-            {
-                FloatVector.instantiate(d1, SpeedUnit.METER_PER_SECOND, null);
-            }
-        }.test("constructing vector with null storage type should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> FloatVector.instantiate((float[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+                "constructing vector with null input should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> FloatVector.instantiate(d1, null, StorageType.DENSE),
+                "constructing vector with null unit should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> FloatVector.instantiate(d1, SpeedUnit.METER_PER_SECOND, null),
+                "constructing vector with null storage type should have thrown an exception", NullPointerException.class);
     }
 
     /**

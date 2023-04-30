@@ -73,9 +73,9 @@ public class FloatVectorMethodTest
         sparseTestData[10] = 123.456f;
         reverseSparseTestData[10] = sparseTestData[10];
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 FloatAreaVector am =
@@ -253,10 +253,10 @@ public class FloatVectorMethodTest
 
                 // TEST METHODS THAT INVOLVE TWO VECTOR INSTANCES
 
-                for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+                for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                 {
                     float[] testData2 = storageType2.equals(StorageType.DENSE) ? denseTestData : reverseSparseTestData;
-                    for (AreaUnit au2 : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+                    for (AreaUnit au2 : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
                     {
 
                         // PLUS and INCREMENTBY(VECTOR)
@@ -331,9 +331,9 @@ public class FloatVectorMethodTest
         float[] denseTestData = FLOATVECTOR.denseArray(105);
         float[] sparseTestData = FLOATVECTOR.sparseArray(105);
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 FloatAreaVector am =
@@ -341,134 +341,23 @@ public class FloatVectorMethodTest
                 am = am.immutable();
                 final FloatAreaVector amPtr = am;
                 FloatArea fa = FloatArea.of(10.0f, "m^2");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.assign(FloatMathFunctions.ABS);
-                    }
-                }.test("ImmutableVector.assign(...) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.decrementBy(fa);
-                    }
-                }.test("ImmutableVector.decrementBy(scalar) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.decrementBy(amPtr);
-                    }
-                }.test("ImmutableVector.decrementBy(vector) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.incrementBy(fa);
-                    }
-                }.test("ImmutableVector.incrementBy(scalar) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.incrementBy(amPtr);
-                    }
-                }.test("ImmutableVector.incrementBy(vector) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.divideBy(2.0d);
-                    }
-                }.test("ImmutableVector.divideBy(factor) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.multiplyBy(2.0d);
-                    }
-                }.test("ImmutableVector.multiplyBy(factor) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.set(1, fa);
-                    }
-                }.test("ImmutableVector.set() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setSI(1, 20.1f);
-                    }
-                }.test("ImmutableVector.setSI() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setInUnit(1, 15.2f);
-                    }
-                }.test("ImmutableVector.setInUnit(f) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.setInUnit(1, 15.2f, AreaUnit.ARE);
-                    }
-                }.test("ImmutableVector.setInUnit(f, u) should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.abs();
-                    }
-                }.test("ImmutableVector.abs() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.ceil();
-                    }
-                }.test("ImmutableVector.ceil() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.floor();
-                    }
-                }.test("ImmutableVector.floor() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.neg();
-                    }
-                }.test("ImmutableVector.neg() should throw error");
-                new Try()
-                {
-                    @Override
-                    public void execute()
-                    {
-                        amPtr.rint();
-                    }
-                }.test("ImmutableVector.rint() should throw error");
+                Try.testFail(() -> amPtr.assign(FloatMathFunctions.ABS), "ImmutableVector.assign(...) should throw error");
+                Try.testFail(() -> amPtr.decrementBy(fa), "ImmutableVector.decrementBy(scalar) should throw error");
+                Try.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableVector.decrementBy(vector) should throw error");
+                Try.testFail(() -> amPtr.incrementBy(fa), "ImmutableVector.incrementBy(scalar) should throw error");
+                Try.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableVector.incrementBy(vector) should throw error");
+                Try.testFail(() -> amPtr.divideBy(2.0d), "ImmutableVector.divideBy(factor) should throw error");
+                Try.testFail(() -> amPtr.multiplyBy(2.0d), "ImmutableVector.multiplyBy(factor) should throw error");
+                Try.testFail(() -> amPtr.set(1, fa), "ImmutableVector.set() should throw error");
+                Try.testFail(() -> amPtr.setSI(1, 20.1f), "ImmutableVector.setSI() should throw error");
+                Try.testFail(() -> amPtr.setInUnit(1, 15.2f), "ImmutableVector.setInUnit(f) should throw error");
+                Try.testFail(() -> amPtr.setInUnit(1, 15.2f, AreaUnit.ARE),
+                        "ImmutableVector.setInUnit(f, u) should throw error");
+                Try.testFail(() -> amPtr.abs(), "ImmutableVector.abs() should throw error");
+                Try.testFail(() -> amPtr.ceil(), "ImmutableVector.ceil() should throw error");
+                Try.testFail(() -> amPtr.floor(), "ImmutableVector.floor() should throw error");
+                Try.testFail(() -> amPtr.neg(), "ImmutableVector.neg() should throw error");
+                Try.testFail(() -> amPtr.rint(), "ImmutableVector.rint() should throw error");
             }
         }
     }
@@ -482,9 +371,9 @@ public class FloatVectorMethodTest
         float[] denseTestData = FLOATVECTOR.denseArray(105);
         float[] sparseTestData = FLOATVECTOR.sparseArray(105);
 
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AreaUnit au : new AreaUnit[] { AreaUnit.SQUARE_METER, AreaUnit.ACRE })
+            for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
                 FloatAreaVector am =
@@ -572,7 +461,7 @@ public class FloatVectorMethodTest
             assertEquals("absDecByRelM", -29.0 * denseTestData[index], absDecByRelM.getSI(index), 0.01);
             assertEquals("relPlusAbs", 61.0 * denseTestData[index], relPlusAbs.getSI(index), 0.01);
         }
-        for (int dLength : new int[] { -1, 1 })
+        for (int dLength : new int[] {-1, 1})
         {
             float[] other = FLOATVECTOR.denseArray(denseTestData.length + dLength);
             FloatTimeVector wrongTimeVector = FloatVector.instantiate(
@@ -687,7 +576,7 @@ public class FloatVectorMethodTest
             IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
     {
         float[][] testValues = FLOATMATRIX.denseRectArrays(10, 20);
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             for (String type : CLASSNAMES.REL_LIST)
             {
@@ -695,7 +584,7 @@ public class FloatVectorMethodTest
                 Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
                 for (U unit : quantity.getUnitsById().values())
                 {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, storageType })
+                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, storageType})
                     {
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         FloatSIMatrix matrix = FloatSIMatrix.instantiate(testValues, siUnit, storageType2);
@@ -737,7 +626,7 @@ public class FloatVectorMethodTest
     {
         float[] testData = FLOATVECTOR.denseArray(123);
         testData[2] = 0;
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             FloatVectorData fvd = FloatVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
             assertTrue("Float vector data is equal to itself", fvd.equals(fvd));
@@ -745,7 +634,7 @@ public class FloatVectorMethodTest
             assertFalse("Float vector data is not equal to some string", fvd.equals("some string"));
             assertTrue("Float vector is equal to sparse version of itself", fvd.equals(fvd.toSparse()));
             assertTrue("Float vector is equal to dense version of itself", fvd.equals(fvd.toDense()));
-            for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+            for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 FloatVectorData dvd2 = FloatVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertEquals(

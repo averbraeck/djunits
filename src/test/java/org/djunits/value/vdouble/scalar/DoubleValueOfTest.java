@@ -316,7 +316,7 @@ public class DoubleValueOfTest
     @Test
     public void testValueOfNL()
     {
-        Locale.setDefault(Locale.of("NL"));
+        Locale.setDefault(Locale.forLanguageTag("NL"));
         // get the interfaces such as org.djunits.value.vdouble.scalar.Time
         for (String scalarName : CLASSNAMES.ALL_LIST)
         {
