@@ -6,9 +6,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AreaUnit;
@@ -16,28 +13,18 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
-import org.djunits.unit.SIUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
-import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.util.UnitException;
-import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.CLASSNAMES;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.matrix.FLOATMATRIX;
-import org.djunits.value.vfloat.matrix.FloatSIMatrix;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
 import org.djunits.value.vfloat.scalar.FloatAbsoluteTemperature;
 import org.djunits.value.vfloat.scalar.FloatArea;
 import org.djunits.value.vfloat.scalar.FloatDirection;
 import org.djunits.value.vfloat.scalar.FloatDuration;
 import org.djunits.value.vfloat.scalar.FloatPosition;
 import org.djunits.value.vfloat.scalar.FloatTime;
-import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -72,14 +59,18 @@ public class FloatVectorMethodTest
         // Ensure that both have a value at some index (i.c. 10)
         sparseTestData[10] = 123.456f;
         reverseSparseTestData[10] = sparseTestData[10];
-
+        // Ensure that there are > 50% positions where both have a non-zero value
+        for (int index = 20; index < 90; index++)
+        {
+            sparseTestData[index] = 10000.456f + index;
+            reverseSparseTestData[index] = 20000.567f + index;
+        }
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                FloatAreaVector am =
-                        FloatVector.instantiate(FloatVectorData.instantiate(testData, au.getScale(), storageType), au);
+                FloatAreaVector am = new FloatAreaVector(FloatVectorData.instantiate(testData, au.getScale(), storageType), au);
 
                 // SPARSE AND DENSE
                 assertEquals(am, am.toSparse());
@@ -97,7 +88,7 @@ public class FloatVectorMethodTest
                 assertEquals(am, am);
                 assertNotEquals(am, new Object());
                 assertNotEquals(am, null);
-                assertNotEquals(am, FloatVector.instantiate(
+                assertNotEquals(am, new FloatLengthVector(
                         FloatVectorData.instantiate(testData, LengthUnit.METER.getScale(), storageType), LengthUnit.METER));
                 assertNotEquals(am, am.divide(2.0d));
 
@@ -120,6 +111,7 @@ public class FloatVectorMethodTest
                     if (ammut2.getSI(index) == 0)
                     {
                         assertTrue("Value should be NaN", Float.isNaN(ammut3.getSI(index)));
+
                     }
                     else
                     {
@@ -129,7 +121,7 @@ public class FloatVectorMethodTest
 
                 // ZSUM and CARDINALITY
                 FloatArea zSum = am.zSum();
-                double sum = 0;
+                float sum = 0;
                 int card = 0;
                 for (int index = 0; index < testData.length; index++)
                 {
@@ -149,11 +141,11 @@ public class FloatVectorMethodTest
                 for (int index = 0; index < testData.length; index++)
                 {
                     assertEquals("increment and decrement with scalar should result in same vector", am.getSI(index),
-                            amid.getSI(index), 0.1);
+                            amid.getSI(index), 0.1E5);
                     assertEquals("m + s = (m+s)", au.getScale().toStandardUnit(testData[index]) + 10.0, aminc.getSI(index),
-                            0.1);
+                            0.1E5);
                     assertEquals("m - s = (m-s)", au.getScale().toStandardUnit(testData[index]) - 10.0, amdec.getSI(index),
-                            0.1);
+                            0.1E5);
                 }
 
                 // MULTIPLYBY() and DIVIDEBY(), TIMES(), DIVIDE()
@@ -168,14 +160,14 @@ public class FloatVectorMethodTest
                 {
                     assertEquals("times followed by divide with constant should result in same vector", am.getSI(index),
                             amtd.getSI(index), 0.1);
-                    assertEquals("m * 5.0 = (m*5.0)", au.getScale().toStandardUnit(testData[index]) * 5.0d, amt5.getSI(index),
-                            0.2);
-                    assertEquals("m / 5.0 = (m/5.0)", au.getScale().toStandardUnit(testData[index]) / 5.0d, amd5.getSI(index),
-                            0.1);
-                    assertEquals("amtimD", amt5.getSI(index), amtimD.getSI(index), 0.1d);
-                    assertEquals("amtimF", amt5.getSI(index), amtimF.getSI(index), 0.1d);
-                    assertEquals("amdivD", amd5.getSI(index), amdivD.getSI(index), 0.01d);
-                    assertEquals("amdivD", amd5.getSI(index), amdivF.getSI(index), 0.01d);
+                    assertEquals("m * 5.0 = (m*5.0)", au.getScale().toStandardUnit(testData[index]) * 5.0f, amt5.getSI(index),
+                            0.1E4);
+                    assertEquals("m / 5.0 = (m/5.0)", au.getScale().toStandardUnit(testData[index]) / 5.0f, amd5.getSI(index),
+                            0.1E4);
+                    assertEquals("amtimD", amt5.getSI(index), amtimD.getSI(index), 0.1f);
+                    assertEquals("amtimF", amt5.getSI(index), amtimF.getSI(index), 0.1f);
+                    assertEquals("amdivD", amd5.getSI(index), amdivD.getSI(index), 0.01f);
+                    assertEquals("amdivD", amd5.getSI(index), amdivF.getSI(index), 0.01f);
                 }
 
                 // GET(), GETINUNIT()
@@ -187,16 +179,16 @@ public class FloatVectorMethodTest
                         am.getInUnit(2, AreaUnit.SQUARE_YARD), 0.1);
 
                 // SET(), SETINUNIT()
-                FloatArea fasqft = new FloatArea(10.5d, AreaUnit.SQUARE_FOOT);
+                FloatArea fasqft = new FloatArea(10.5f, AreaUnit.SQUARE_FOOT);
                 FloatAreaVector famChange = am.clone().mutable();
                 famChange.set(2, fasqft);
                 assertEquals("set()", fasqft.si, famChange.get(2).si, 0.1d);
                 famChange = am.clone().mutable();
                 famChange.setSI(2, 123.4f);
-                assertEquals("setSI()", 123.4d, famChange.get(2).si, 0.1d);
+                assertEquals("setSI()", 123.4f, famChange.get(2).si, 0.1d);
                 famChange = am.clone().mutable();
                 famChange.setInUnit(2, 1.2f);
-                assertEquals("setInUnit()", 1.2d, famChange.getInUnit(2), 0.1d);
+                assertEquals("setInUnit()", 1.2f, famChange.getInUnit(2), 0.1d);
                 famChange = am.clone().mutable();
                 famChange.setInUnit(2, 1.5f, AreaUnit.HECTARE);
                 assertEquals("setInUnit(unit)", 15000.0d, famChange.get(2).si, 1.0d);
@@ -208,13 +200,13 @@ public class FloatVectorMethodTest
                 FloatArea[] valscalars = am.getScalars();
                 for (int index = 0; index < testData.length; index++)
                 {
-                    assertEquals("getValuesSI()", au.getScale().toStandardUnit(testData[index]), valsi[index], 0.1);
+                    assertEquals("getValuesSI()", au.getScale().toStandardUnit(testData[index]), valsi[index], 0.1E5);
                     assertEquals("getValuesInUnit()", testData[index], valunit[index], 0.1);
                     assertEquals("getValuesInUnit(unit)",
                             AreaUnit.SQUARE_YARD.getScale().fromStandardUnit(au.getScale().toStandardUnit(testData[index])),
-                            valsqft[index], 0.1);
+                            valsqft[index], 0.1E5);
                     assertEquals("getValuesInUnit(unit)", au.getScale().toStandardUnit(testData[index]), valscalars[index].si,
-                            0.1);
+                            0.1E5);
                 }
 
                 // ASSIGN FUNCTION ABS, CEIL, FLOOR, NEG, RINT
@@ -239,16 +231,16 @@ public class FloatVectorMethodTest
                 for (int index = 0; index < testData.length; index++)
                 {
                     // TODO: Should be rounded IN THE UNIT rather than BY SI VALUES
-                    assertEquals("div2", au.getScale().toStandardUnit(testData[index]) / 2.0d, amdiv2.getSI(index), 0.1d);
+                    assertEquals("div2", au.getScale().toStandardUnit(testData[index]) / 2.0d, amdiv2.getSI(index), 0.1E5);
                     assertEquals("abs", Math.abs(au.getScale().toStandardUnit(testData[index]) / 2.0d), amAbs.getSI(index),
-                            0.1d);
+                            0.1E5);
                     assertEquals("ceil", Math.ceil(au.getScale().toStandardUnit(testData[index]) / 2.0d), amCeil.getSI(index),
-                            0.1d);
+                            0.1E5);
                     assertEquals("floor", Math.floor(au.getScale().toStandardUnit(testData[index]) / 2.0d),
-                            amFloor.getSI(index), 0.1d);
-                    assertEquals("neg", -au.getScale().toStandardUnit(testData[index]) / 2.0d, amNeg.getSI(index), 0.1d);
+                            amFloor.getSI(index), 0.1E5);
+                    assertEquals("neg", -au.getScale().toStandardUnit(testData[index]) / 2.0d, amNeg.getSI(index), 0.1E5);
                     assertEquals("rint", Math.rint(au.getScale().toStandardUnit(testData[index]) / 2.0d), amRint.getSI(index),
-                            0.1d);
+                            0.1E5);
                 }
 
                 // TEST METHODS THAT INVOLVE TWO VECTOR INSTANCES
@@ -258,10 +250,9 @@ public class FloatVectorMethodTest
                     float[] testData2 = storageType2.equals(StorageType.DENSE) ? denseTestData : reverseSparseTestData;
                     for (AreaUnit au2 : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
                     {
-
                         // PLUS and INCREMENTBY(VECTOR)
-                        FloatAreaVector am2 = FloatVector
-                                .instantiate(FloatVectorData.instantiate(testData2, au2.getScale(), storageType2), au2);
+                        FloatAreaVector am2 =
+                                new FloatAreaVector(FloatVectorData.instantiate(testData2, au2.getScale(), storageType2), au2);
                         FloatAreaVector amSum1 = am.plus(am2);
                         FloatAreaVector amSum2 = am2.plus(am);
                         FloatAreaVector amSum3 = am.mutable().incrementBy(am2).immutable();
@@ -272,8 +263,8 @@ public class FloatVectorMethodTest
                         assertEquals("a+c == c+a", amSum1, amSum4);
                         for (int index = 0; index < testData.length; index++)
                         {
-                            float tolerance = Float.isFinite(amSum1.getSI(index))
-                                    ? Math.abs((float) (amSum1.getSI(index) / 10000.0d)) : 0.1f;
+                            float tolerance =
+                                    Float.isFinite(amSum1.getSI(index)) ? Math.abs(amSum1.getSI(index) / 10000.0f) : 0.1f;
                             assertEquals("value in vector matches", au.getScale().toStandardUnit(testData[index])
                                     + au2.getScale().toStandardUnit(testData2[index]), amSum1.getSI(index), tolerance);
                         }
@@ -289,8 +280,8 @@ public class FloatVectorMethodTest
                         assertEquals("a-c == -(c-a)", amDiff1, amDiff4);
                         for (int index = 0; index < testData.length; index++)
                         {
-                            float tolerance = Float.isFinite(amDiff1.getSI(index))
-                                    ? Math.abs((float) (amDiff1.getSI(index) / 10000.0d)) : 0.1f;
+                            float tolerance =
+                                    Float.isFinite(amDiff1.getSI(index)) ? Math.abs(amDiff1.getSI(index) / 10000.0f) : 0.1f;
                             assertEquals("value in vector matches", au.getScale().toStandardUnit(testData[index])
                                     - au2.getScale().toStandardUnit(testData2[index]), amDiff1.getSI(index), tolerance);
                         }
@@ -304,18 +295,17 @@ public class FloatVectorMethodTest
                                 amDiv.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
                         for (int index = 0; index < testData.length; index++)
                         {
-                            float tolerance = Float.isFinite(amTim.getSI(index))
-                                    ? Math.abs((float) (amTim.getSI(index) / 10000.0d)) : 0.1f;
+                            float tolerance =
+                                    Float.isFinite(amTim.getSI(index)) ? Math.abs(amTim.getSI(index) / 10000.0f) : 0.1f;
                             assertEquals("value in m2 * m2 matches", au.getScale().toStandardUnit(testData[index])
                                     * au2.getScale().toStandardUnit(testData2[index]), amTim.getSI(index), tolerance);
-                            tolerance = Float.isFinite(amTim.getSI(index)) ? Math.abs((float) (amDiv.getSI(index) / 10000.0d))
-                                    : 0.1f;
+                            tolerance = Float.isFinite(amTim.getSI(index)) ? Math.abs(amDiv.getSI(index) / 10000.0f) : 0.1f;
                             assertEquals("value in m2 / m2 matches (could be NaN)",
                                     au.getScale().toStandardUnit(testData[index])
                                             / au2.getScale().toStandardUnit(testData2[index]),
                                     amDiv.getSI(index), tolerance);
                         }
-                        // This does not compile: SIVector amTim2 = am.immutable().multiplyBy(am2).immutable();
+                        // This does not compile: FloatSIVector amTim2 = am.immutable().multiplyBy(am2).immutable();
                     }
                 }
             }
@@ -336,8 +326,7 @@ public class FloatVectorMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                FloatAreaVector am =
-                        FloatVector.instantiate(FloatVectorData.instantiate(testData, au.getScale(), storageType), au);
+                FloatAreaVector am = new FloatAreaVector(FloatVectorData.instantiate(testData, au.getScale(), storageType), au);
                 am = am.immutable();
                 final FloatAreaVector amPtr = am;
                 FloatArea fa = FloatArea.of(10.0f, "m^2");
@@ -376,8 +365,7 @@ public class FloatVectorMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                FloatAreaVector am =
-                        FloatVector.instantiate(FloatVectorData.instantiate(testData, au.getScale(), storageType), au);
+                FloatAreaVector am = new FloatAreaVector(FloatVectorData.instantiate(testData, au.getScale(), storageType), au);
                 String s1 = am.toString(); // non-verbose with unit
                 assertTrue(s1.contains(au.getDefaultTextualAbbreviation()));
                 String s2 = am.toString(AreaUnit.SQUARE_INCH); // non-verbose with unit
@@ -410,12 +398,12 @@ public class FloatVectorMethodTest
                 assertFalse(sNotVerbose.contains(au.getDefaultTextualAbbreviation()));
             }
         }
-        FloatTimeVector tm = FloatVector.instantiate(
+        FloatTimeVector tm = new FloatTimeVector(
                 FloatVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
         String st = tm.toString(TimeUnit.DEFAULT, true, true); // verbose with unit
         assertFalse(st.contains("Rel"));
         assertTrue(st.contains("Abs"));
-        FloatLengthVector lm = FloatVector.instantiate(
+        FloatLengthVector lm = new FloatLengthVector(
                 FloatVectorData.instantiate(denseTestData, LengthUnit.SI.getScale(), StorageType.DENSE), LengthUnit.SI);
         String sl = lm.toString(LengthUnit.SI, true, true); // verbose with unit
         assertTrue(sl.contains("Rel"));
@@ -429,29 +417,29 @@ public class FloatVectorMethodTest
     public void testSpecialVectorMethodsRelWithAbs()
     {
         float[] denseTestData = FLOATVECTOR.denseArray(105);
-        FloatTimeVector tv = FloatVector.instantiate(
+        FloatTimeVector tm = new FloatTimeVector(
                 FloatVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        FloatDurationVector dv = FloatVector.instantiate(
+        FloatDurationVector dm = new FloatDurationVector(
                 FloatVectorData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
                 DurationUnit.SECOND);
-        assertTrue(tv.isAbsolute());
-        assertFalse(dv.isAbsolute());
-        assertFalse(tv.isRelative());
-        assertTrue(dv.isRelative());
+        assertTrue(tm.isAbsolute());
+        assertFalse(dm.isAbsolute());
+        assertFalse(tm.isRelative());
+        assertTrue(dm.isRelative());
 
-        FloatTimeVector absPlusRel = tv.plus(dv);
-        FloatTimeVector absMinusRel = tv.minus(dv);
+        FloatTimeVector absPlusRel = tm.plus(dm);
+        FloatTimeVector absMinusRel = tm.minus(dm);
         float[] halfDenseData = FLOATVECTOR.denseArray(105);
         for (int index = 0; index < halfDenseData.length; index++)
         {
             halfDenseData[index] *= 0.5;
         }
-        FloatTimeVector halfTimeVector = FloatVector.instantiate(
+        FloatTimeVector halfTimeVector = new FloatTimeVector(
                 FloatVectorData.instantiate(halfDenseData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        FloatDurationVector absMinusAbs = tv.minus(halfTimeVector);
-        FloatTimeVector absDecByRelS = tv.mutable().decrementBy(FloatDuration.of(1.0f, "min"));
-        FloatTimeVector absDecByRelM = tv.mutable().decrementBy(dv.divide(2.0d));
-        FloatTimeVector relPlusAbs = dv.plus(tv);
+        FloatDurationVector absMinusAbs = tm.minus(halfTimeVector);
+        FloatTimeVector absDecByRelS = tm.mutable().decrementBy(FloatDuration.of(1.0f, "min"));
+        FloatTimeVector absDecByRelM = tm.mutable().decrementBy(dm.divide(2.0f));
+        FloatTimeVector relPlusAbs = dm.plus(tm);
         for (int index = 0; index < denseTestData.length; index++)
         {
             assertEquals("absPlusRel", 61.0 * denseTestData[index], absPlusRel.getSI(index), 0.01);
@@ -464,11 +452,11 @@ public class FloatVectorMethodTest
         for (int dLength : new int[] {-1, 1})
         {
             float[] other = FLOATVECTOR.denseArray(denseTestData.length + dLength);
-            FloatTimeVector wrongTimeVector = FloatVector.instantiate(
+            FloatTimeVector wrongTimeVector = new FloatTimeVector(
                     FloatVectorData.instantiate(other, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
             try
             {
-                tv.mutable().minus(wrongTimeVector);
+                tm.mutable().minus(wrongTimeVector);
                 fail("Mismatching size should have thrown a ValueRuntimeException");
             }
             catch (ValueRuntimeException vre)
@@ -488,9 +476,9 @@ public class FloatVectorMethodTest
     public void testInstantiateAbs()
     {
         float[] denseTestData = FLOATVECTOR.denseArray(105);
-        FloatTimeVector timeVector = FloatVector.instantiate(
+        FloatTimeVector timeVector = new FloatTimeVector(
                 FloatVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        FloatDurationVector durationVector = FloatVector.instantiate(
+        FloatDurationVector durationVector = new FloatDurationVector(
                 FloatVectorData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
                 DurationUnit.SECOND);
 
@@ -504,13 +492,13 @@ public class FloatVectorMethodTest
         {
             assertEquals("relPlusAbsTime", 61.0 * denseTestData[index], relPlusAbsTime.getSI(index), 0.01);
         }
-        FloatTime floatTime = durationVector.instantiateScalarAbsSI(123.456f, TimeUnit.EPOCH_DAY);
-        assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, floatTime.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatTime.si, 0.1);
+        FloatTime time = durationVector.instantiateScalarAbsSI(123.456f, TimeUnit.EPOCH_DAY);
+        assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, time.getDisplayUnit());
+        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, time.si, 0.1);
 
-        FloatAngleVector angleVector = FloatVector.instantiate(
+        FloatAngleVector angleVector = new FloatAngleVector(
                 FloatVectorData.instantiate(denseTestData, AngleUnit.DEGREE.getScale(), StorageType.DENSE), AngleUnit.DEGREE);
-        FloatDirectionVector directionVector = FloatVector.instantiate(
+        FloatDirectionVector directionVector = new FloatDirectionVector(
                 FloatVectorData.instantiate(denseTestData, DirectionUnit.EAST_DEGREE.getScale(), StorageType.DENSE),
                 DirectionUnit.EAST_DEGREE);
 
@@ -520,14 +508,14 @@ public class FloatVectorMethodTest
             assertEquals("relPlusAbsDirection", 2.0 / 180 * Math.PI * denseTestData[index], relPlusAbsDirection.getSI(index),
                     0.01);
         }
-        FloatDirection floatDirection = angleVector.instantiateScalarAbsSI(123.456f, DirectionUnit.NORTH_RADIAN);
-        assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, floatDirection.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatDirection.si, 0.1);
+        FloatDirection direction = angleVector.instantiateScalarAbsSI(123.456f, DirectionUnit.NORTH_RADIAN);
+        assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit());
+        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, direction.si, 0.1);
 
-        FloatTemperatureVector temperatureVector = FloatVector.instantiate(
+        FloatTemperatureVector temperatureVector = new FloatTemperatureVector(
                 FloatVectorData.instantiate(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT.getScale(), StorageType.DENSE),
                 TemperatureUnit.DEGREE_FAHRENHEIT);
-        FloatAbsoluteTemperatureVector absoluteTemperatureVector = FloatVector.instantiate(
+        FloatAbsoluteTemperatureVector absoluteTemperatureVector = new FloatAbsoluteTemperatureVector(
                 FloatVectorData.instantiate(denseTestData, AbsoluteTemperatureUnit.KELVIN.getScale(), StorageType.DENSE),
                 AbsoluteTemperatureUnit.KELVIN);
 
@@ -537,15 +525,15 @@ public class FloatVectorMethodTest
             assertEquals("relPlusAbsTemperature", (1.0 + 5.0 / 9.0) * denseTestData[index], relPlusAbsTemperature.getSI(index),
                     0.01);
         }
-        FloatAbsoluteTemperature floatAbsoluteTemperature =
+        FloatAbsoluteTemperature absoluteTemperature =
                 temperatureVector.instantiateScalarAbsSI(123.456f, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
         assertEquals("Unit of instantiateScalarAbsSI matches", AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT,
-                floatAbsoluteTemperature.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatAbsoluteTemperature.si, 0.1);
+                absoluteTemperature.getDisplayUnit());
+        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, absoluteTemperature.si, 0.1);
 
-        FloatLengthVector lengthVector = FloatVector.instantiate(
+        FloatLengthVector lengthVector = new FloatLengthVector(
                 FloatVectorData.instantiate(denseTestData, LengthUnit.MILE.getScale(), StorageType.DENSE), LengthUnit.MILE);
-        FloatPositionVector positionVector = FloatVector.instantiate(
+        FloatPositionVector positionVector = new FloatPositionVector(
                 FloatVectorData.instantiate(denseTestData, PositionUnit.KILOMETER.getScale(), StorageType.DENSE),
                 PositionUnit.KILOMETER);
 
@@ -554,67 +542,9 @@ public class FloatVectorMethodTest
         {
             assertEquals("relPlusAbsPosition", 2609.344 * denseTestData[index], relPlusAbsPosition.getSI(index), 1);
         }
-        FloatPosition floatPosition = lengthVector.instantiateScalarAbsSI(123.456f, PositionUnit.ANGSTROM);
-        assertEquals("Unit of instantiateScalarAbsSI matches", PositionUnit.ANGSTROM, floatPosition.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatPosition.si, 0.1);
-    }
-
-    /**
-     * Test the <code>as</code> method of the SIVector class.
-     * @throws SecurityException on error
-     * @throws NoSuchMethodException on error
-     * @throws InvocationTargetException on error
-     * @throws IllegalArgumentException on error
-     * @throws IllegalAccessException on error
-     * @throws ClassNotFoundException on error
-     * @throws UnitException on error
-     * @param <U> the unit type
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public <U extends Unit<U>> void testAsUnit() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
-    {
-        float[][] testValues = FLOATMATRIX.denseRectArrays(10, 20);
-        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
-        {
-            for (String type : CLASSNAMES.REL_LIST)
-            {
-                Class.forName("org.djunits.unit." + type + "Unit");
-                Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
-                for (U unit : quantity.getUnitsById().values())
-                {
-                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, storageType})
-                    {
-                        SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
-                        FloatSIMatrix matrix = FloatSIMatrix.instantiate(testValues, siUnit, storageType2);
-                        Method asMethod = FloatSIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        AbstractFloatMatrixRel<U, ?, ?, ?> asMatrix =
-                                (AbstractFloatMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
-                        assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
-                        siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
-                        for (int row = 0; row < testValues.length; row++)
-                        {
-                            for (int col = 0; col < testValues[0].length; col++)
-                            {
-                                assertEquals("Values should match", testValues[row][col], matrix.getInUnit(row, col), 0.001);
-                            }
-                        }
-                        try
-                        {
-                            asMethod.invoke(matrix, siUnit);
-                            fail("as method should not be able to cast to unrelated (absoluteTemperature) unit");
-                        }
-                        catch (InvocationTargetException ite)
-                        {
-                            Throwable cause = ite.getCause();
-                            assertEquals("cause is UnitRuntimeException", UnitRuntimeException.class, cause.getClass());
-                            // Otherwise ignore expected exception
-                        }
-                    }
-                }
-            }
-        }
+        FloatPosition position = lengthVector.instantiateScalarAbsSI(123.456f, PositionUnit.ANGSTROM);
+        assertEquals("Unit of instantiateScalarAbsSI matches", PositionUnit.ANGSTROM, position.getDisplayUnit());
+        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, position.si, 0.1);
     }
 
     /**
@@ -628,28 +558,106 @@ public class FloatVectorMethodTest
         testData[2] = 0;
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            FloatVectorData fvd = FloatVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
-            assertTrue("Float vector data is equal to itself", fvd.equals(fvd));
-            assertFalse("Float vector data is not equal to null", fvd.equals(null));
-            assertFalse("Float vector data is not equal to some string", fvd.equals("some string"));
-            assertTrue("Float vector is equal to sparse version of itself", fvd.equals(fvd.toSparse()));
-            assertTrue("Float vector is equal to dense version of itself", fvd.equals(fvd.toDense()));
+            FloatVectorData dvd = FloatVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
+            assertTrue("Float vector data is equal to itself", dvd.equals(dvd));
+            assertFalse("Float vector data is not equal to null", dvd.equals(null));
+            assertFalse("Float vector data is not equal to some string", dvd.equals("some string"));
+            assertTrue("Float vector is equal to sparse version of itself", dvd.equals(dvd.toSparse()));
+            assertTrue("Float vector is equal to dense version of itself", dvd.equals(dvd.toDense()));
             for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 FloatVectorData dvd2 = FloatVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertEquals(
-                        "Float vector data is equal to other double vector containing same values regardless of storage type",
-                        fvd, dvd2);
+                        "Float vector data is equal to other float vector containing same values regardless of storage type",
+                        dvd, dvd2);
                 float[] testData2 = FLOATVECTOR.denseArray(122);
                 testData2[2] = 0;
                 dvd2 = FloatVectorData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Float vector data is not equal to other double vector containing same values except last one",
-                        fvd.equals(dvd2));
+                assertFalse("Float vector data is not equal to other float vector containing same values except last one",
+                        dvd.equals(dvd2));
                 testData2 = FLOATVECTOR.denseArray(123);
                 dvd2 = FloatVectorData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Float vector data is not equal to other double vector containing same values except for one zero",
-                        fvd.equals(dvd2));
+                assertFalse("Float vector data is not equal to other float vector containing same values except for one zero",
+                        dvd.equals(dvd2));
             }
+        }
+    }
+
+    /**
+     * Test the plus and similar methods.
+     */
+    @Test
+    public void operationTest()
+    {
+        float[] testValues = new float[] {0, 123.456f, 0, -273.15f, -273.15f, 0, -273.15f, 234.567f, 0, 0};
+        float[] testValues2 = new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for (AbsoluteTemperatureUnit temperatureUnit : new AbsoluteTemperatureUnit[] {AbsoluteTemperatureUnit.KELVIN,
+                AbsoluteTemperatureUnit.DEGREE_CELSIUS, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT})
+        {
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+            {
+                FloatAbsoluteTemperatureVector atv =
+                        new FloatAbsoluteTemperatureVector(testValues, temperatureUnit, storageType);
+                for (TemperatureUnit relativeTemperatureUnit : new TemperatureUnit[] {TemperatureUnit.KELVIN,
+                        TemperatureUnit.DEGREE_CELSIUS, TemperatureUnit.DEGREE_FAHRENHEIT})
+                {
+                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+                    {
+                        FloatTemperatureVector rtv =
+                                new FloatTemperatureVector(testValues2, relativeTemperatureUnit, storageType2);
+                        FloatAbsoluteTemperatureVector sumtv = atv.plus(rtv);
+                        compareSum(atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN),
+                                rtv.getValuesInUnit(TemperatureUnit.KELVIN),
+                                sumtv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
+                        FloatAbsoluteTemperatureVector difftv = atv.minus(rtv);
+                        compareSum(rtv.getValuesInUnit(TemperatureUnit.KELVIN),
+                                difftv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN),
+                                atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
+
+                        String s = atv.toString(temperatureUnit);
+                        assertTrue("toString returns something sensible", s.startsWith("["));
+                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
+                        // System.out.println(atv.toString(true, true));
+                        s = atv.toString(true, true);
+                        assertTrue("toString includes Immutable", s.contains("Immutable"));
+                        assertTrue("toString includes Abs", s.contains("Abs"));
+                        assertTrue("toString includes Dense or Sparse", s.contains(atv.isDense() ? "Dense" : "Sparse"));
+                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
+                        s = atv.mutable().toString(true, true);
+                        assertTrue("toString includes Mutable", s.contains("Mutable"));
+
+                        s = rtv.toString();
+                        assertTrue("toString returns something sensible", s.startsWith("["));
+                        assertTrue("toString returns something sensible",
+                                s.endsWith("] " + relativeTemperatureUnit.toString()));
+                        s = rtv.toString(true, true);
+                        assertTrue("toString includes Immutable", s.contains("Immutable"));
+                        assertTrue("toString includes Rel", s.contains("Rel"));
+                        assertTrue("toString includes Dense or Sparse", s.contains(rtv.isDense() ? "Dense" : "Sparse"));
+                        assertTrue("toString returns something sensible",
+                                s.endsWith("] " + relativeTemperatureUnit.toString()));
+                        s = rtv.mutable().toString(true, true);
+                        assertTrue("toString includes Mutable", s.contains("Mutable"));
+
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Check that two arrays and a sum array match.
+     * @param left float[]; the left array
+     * @param right float[]; the right array
+     * @param sum float[]; the sum array
+     */
+    public void compareSum(final float[] left, final float[] right, final float[] sum)
+    {
+        assertEquals("length of left must equal length of sum", left.length, sum.length);
+        assertEquals("length of right must equal length of sum", right.length, sum.length);
+        for (int i = 0; i < sum.length; i++)
+        {
+            assertEquals("left plus right is sum", left[i] + right[i], sum[i], 0.001);
         }
     }
 

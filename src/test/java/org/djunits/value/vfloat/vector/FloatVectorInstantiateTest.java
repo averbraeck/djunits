@@ -15,16 +15,14 @@ import org.djunits.unit.AreaUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.SpeedUnit;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.util.UnitException;
-import org.djunits.userdefined.FloatJerk;
-import org.djunits.userdefined.FloatJerkVector;
-import org.djunits.userdefined.JerkUnit;
 import org.djunits.value.storage.StorageType;
+import org.djunits.value.vdouble.scalar.Speed;
 import org.djunits.value.vfloat.scalar.FloatArea;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
-import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -45,15 +43,14 @@ public class FloatVectorInstantiateTest
     @Test
     public void testInstantiateDenseData()
     {
-        FloatLengthVector lvdkm10 =
-                FloatVector.instantiate(FLOATVECTOR.denseArray(100), LengthUnit.KILOMETER, StorageType.DENSE);
+        FloatLengthVector lvdkm10 = new FloatLengthVector(FLOATVECTOR.denseArray(100), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(100, lvdkm10.size());
         assertEquals(100, lvdkm10.cardinality());
         assertEquals(50 * 101 * 1000.0, lvdkm10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.KILOMETER, lvdkm10.getDisplayUnit());
 
         FloatLengthVector lvskm10 =
-                FloatVector.instantiate(FLOATVECTOR.denseArray(100), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new FloatLengthVector(FLOATVECTOR.denseArray(100), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(100, lvskm10.size());
         assertEquals(100, lvskm10.cardinality());
         assertEquals(50 * 101 * 1000.0, lvskm10.zSum().getSI(), 0.001);
@@ -71,27 +68,27 @@ public class FloatVectorInstantiateTest
         assertTrue(lvskm10.isSparse());
 
         FloatLengthVector lvdsi10 =
-                FloatVector.instantiateSI(FLOATVECTOR.denseArray(100), LengthUnit.CENTIMETER, StorageType.DENSE);
+                new FloatLengthVector(FLOATVECTOR.denseArray(100), LengthUnit.CENTIMETER, StorageType.DENSE);
         assertEquals(100, lvdsi10.size());
         assertEquals(100, lvdsi10.cardinality());
-        assertEquals(50 * 101, lvdsi10.zSum().getSI(), 0.001);
+        assertEquals(50 * 1.01, lvdsi10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lvdsi10.getDisplayUnit());
 
         FloatLengthVector lvssi10 =
-                FloatVector.instantiateSI(FLOATVECTOR.denseArray(100), LengthUnit.CENTIMETER, StorageType.SPARSE);
+                new FloatLengthVector(FLOATVECTOR.denseArray(100), LengthUnit.CENTIMETER, StorageType.SPARSE);
         assertEquals(100, lvssi10.size());
         assertEquals(100, lvssi10.cardinality());
-        assertEquals(50 * 101, lvssi10.zSum().getSI(), 0.001);
+        assertEquals(50 * 1.01, lvssi10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lvssi10.getDisplayUnit());
 
-        FloatLengthVector lvdsc10 = FloatVector.instantiate(FLOATVECTOR.denseScalarArray(100, FloatLength.class),
+        FloatLengthVector lvdsc10 = new FloatLengthVector(FLOATVECTOR.denseScalarArray(100, FloatLength.class),
                 LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(100, lvdsc10.size());
         assertEquals(100, lvdsc10.cardinality());
         assertEquals(50 * 101, lvdsc10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.HECTOMETER, lvdsc10.getDisplayUnit());
 
-        FloatLengthVector lvssc10 = FloatVector.instantiate(FLOATVECTOR.denseScalarArray(100, FloatLength.class),
+        FloatLengthVector lvssc10 = new FloatLengthVector(FLOATVECTOR.denseScalarArray(100, FloatLength.class),
                 LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(100, lvssc10.size());
         assertEquals(100, lvssc10.cardinality());
@@ -106,14 +103,14 @@ public class FloatVectorInstantiateTest
     public void testInstantiatSparseData()
     {
         FloatLengthVector lvdkm10 =
-                FloatVector.instantiate(FLOATVECTOR.sparseArray(100), LengthUnit.KILOMETER, StorageType.DENSE);
+                new FloatLengthVector(FLOATVECTOR.sparseArray(100), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(100, lvdkm10.size());
         assertEquals(10, lvdkm10.cardinality());
         assertEquals(5 * 11 * 1000.0, lvdkm10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.KILOMETER, lvdkm10.getDisplayUnit());
 
         FloatLengthVector lvskm10 =
-                FloatVector.instantiate(FLOATVECTOR.sparseArray(100), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new FloatLengthVector(FLOATVECTOR.sparseArray(100), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(100, lvskm10.size());
         assertEquals(10, lvskm10.cardinality());
         assertEquals(5 * 11 * 1000.0, lvskm10.zSum().getSI(), 0.001);
@@ -127,27 +124,27 @@ public class FloatVectorInstantiateTest
         assertEquals(lvskm10, lvskm10.toDense()); // dense and sparse are the same if content is the same
 
         FloatLengthVector lvdsi10 =
-                FloatVector.instantiateSI(FLOATVECTOR.sparseArray(100), LengthUnit.CENTIMETER, StorageType.DENSE);
+                new FloatLengthVector(FLOATVECTOR.sparseArray(100), LengthUnit.CENTIMETER, StorageType.DENSE);
         assertEquals(100, lvdsi10.size());
         assertEquals(10, lvdsi10.cardinality());
-        assertEquals(5 * 11, lvdsi10.zSum().getSI(), 0.001);
+        assertEquals(5 * 11 * 0.01, lvdsi10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lvdsi10.getDisplayUnit());
 
         FloatLengthVector lvssi10 =
-                FloatVector.instantiateSI(FLOATVECTOR.sparseArray(100), LengthUnit.CENTIMETER, StorageType.SPARSE);
+                new FloatLengthVector(FLOATVECTOR.sparseArray(100), LengthUnit.CENTIMETER, StorageType.SPARSE);
         assertEquals(100, lvssi10.size());
         assertEquals(10, lvssi10.cardinality());
-        assertEquals(5 * 11, lvssi10.zSum().getSI(), 0.001);
+        assertEquals(5 * 11 * 0.01, lvssi10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lvssi10.getDisplayUnit());
 
-        FloatLengthVector lvdsc10 = FloatVector.instantiate(FLOATVECTOR.sparseScalarArray(100, FloatLength.class),
+        FloatLengthVector lvdsc10 = new FloatLengthVector(FLOATVECTOR.sparseScalarArray(100, FloatLength.class),
                 LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(100, lvdsc10.size());
         assertEquals(10, lvdsc10.cardinality());
         assertEquals(5 * 11, lvdsc10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.HECTOMETER, lvdsc10.getDisplayUnit());
 
-        FloatLengthVector lvssc10 = FloatVector.instantiate(FLOATVECTOR.sparseScalarArray(100, FloatLength.class),
+        FloatLengthVector lvssc10 = new FloatLengthVector(FLOATVECTOR.sparseScalarArray(100, FloatLength.class),
                 LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(100, lvssc10.size());
         assertEquals(10, lvssc10.cardinality());
@@ -161,18 +158,18 @@ public class FloatVectorInstantiateTest
     @Test
     public void testInstantiateDenseDataWithClass()
     {
-        FloatAreaVector lvdkm10 = FloatVector.instantiate(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, FloatAreaVector.class);
+        FloatAreaVector lvdkm10 =
+                new FloatAreaVector(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_KILOMETER, StorageType.DENSE);
         assertEquals(100, lvdkm10.size());
         assertEquals(100, lvdkm10.cardinality());
-        assertEquals(50 * 101 * 1.0E6, lvdkm10.zSum().getSI(), 1000.0);
+        assertEquals(50 * 101 * 1.0E6, lvdkm10.zSum().getSI(), 0.1E5);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lvdkm10.getDisplayUnit());
 
-        FloatAreaVector lvskm10 = FloatVector.instantiate(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, FloatAreaVector.class);
+        FloatAreaVector lvskm10 =
+                new FloatAreaVector(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_KILOMETER, StorageType.SPARSE);
         assertEquals(100, lvskm10.size());
         assertEquals(100, lvskm10.cardinality());
-        assertEquals(50 * 101 * 1.0E6, lvskm10.zSum().getSI(), 1000.0);
+        assertEquals(50 * 101 * 1.0E6, lvskm10.zSum().getSI(), 0.1E5);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lvskm10.getDisplayUnit());
 
         assertEquals(lvdkm10, lvdkm10.toSparse().toDense());
@@ -182,29 +179,29 @@ public class FloatVectorInstantiateTest
         assertEquals(lvdkm10, lvdkm10.toSparse()); // dense and sparse are the same if content is the same
         assertEquals(lvskm10, lvskm10.toDense()); // dense and sparse are the same if content is the same
 
-        FloatAreaVector lvdsi10 = FloatVector.instantiateSI(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, FloatAreaVector.class);
+        FloatAreaVector lvdsi10 =
+                new FloatAreaVector(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_CENTIMETER, StorageType.DENSE);
         assertEquals(100, lvdsi10.size());
         assertEquals(100, lvdsi10.cardinality());
-        assertEquals(50 * 101, lvdsi10.zSum().getSI(), 0.001);
+        assertEquals(50 * 101 * 0.01 * 0.01, lvdsi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lvdsi10.getDisplayUnit());
 
-        FloatAreaVector lvssi10 = FloatVector.instantiateSI(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, FloatAreaVector.class);
+        FloatAreaVector lvssi10 =
+                new FloatAreaVector(FLOATVECTOR.denseArray(100), AreaUnit.SQUARE_CENTIMETER, StorageType.SPARSE);
         assertEquals(100, lvssi10.size());
         assertEquals(100, lvssi10.cardinality());
-        assertEquals(50 * 101, lvssi10.zSum().getSI(), 0.001);
+        assertEquals(50 * 101 * 0.01 * 0.01, lvssi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lvssi10.getDisplayUnit());
 
-        FloatAreaVector lvdsc10 = FloatVector.instantiate(FLOATVECTOR.denseScalarArray(100, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, FloatAreaVector.class);
+        FloatAreaVector lvdsc10 = new FloatAreaVector(FLOATVECTOR.denseScalarArray(100, FloatArea.class),
+                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE);
         assertEquals(100, lvdsc10.size());
         assertEquals(100, lvdsc10.cardinality());
         assertEquals(50 * 101, lvdsc10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lvdsc10.getDisplayUnit());
 
-        FloatAreaVector lvssc10 = FloatVector.instantiate(FLOATVECTOR.denseScalarArray(100, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, FloatAreaVector.class);
+        FloatAreaVector lvssc10 = new FloatAreaVector(FLOATVECTOR.denseScalarArray(100, FloatArea.class),
+                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE);
         assertEquals(100, lvssc10.size());
         assertEquals(100, lvssc10.cardinality());
         assertEquals(50 * 101, lvssc10.zSum().getSI(), 0.001);
@@ -217,15 +214,15 @@ public class FloatVectorInstantiateTest
     @Test
     public void testInstantiatSparseDataWithClass()
     {
-        FloatAreaVector lvdkm10 = FloatVector.instantiate(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, FloatAreaVector.class);
+        FloatAreaVector lvdkm10 =
+                new FloatAreaVector(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_KILOMETER, StorageType.DENSE);
         assertEquals(100, lvdkm10.size());
         assertEquals(10, lvdkm10.cardinality());
         assertEquals(5 * 11 * 1.0E6, lvdkm10.zSum().getSI(), 0.1);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lvdkm10.getDisplayUnit());
 
-        FloatAreaVector lvskm10 = FloatVector.instantiate(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, FloatAreaVector.class);
+        FloatAreaVector lvskm10 =
+                new FloatAreaVector(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_KILOMETER, StorageType.SPARSE);
         assertEquals(100, lvskm10.size());
         assertEquals(10, lvskm10.cardinality());
         assertEquals(5 * 11 * 1.0E6, lvskm10.zSum().getSI(), 0.1);
@@ -235,148 +232,36 @@ public class FloatVectorInstantiateTest
         assertEquals(lvskm10, lvskm10.toDense().toSparse());
         assertEquals(lvdkm10, lvskm10.toDense());
         assertEquals(lvskm10, lvdkm10.toSparse());
-        assertEquals(lvdkm10, lvdkm10.toSparse());
-        assertEquals(lvskm10, lvskm10.toDense());
+        assertEquals(lvdkm10, lvdkm10.toSparse()); // dense and sparse are the same if content is the same
+        assertEquals(lvskm10, lvskm10.toDense()); // dense and sparse are the same if content is the same
 
-        FloatAreaVector lvdsi10 = FloatVector.instantiateSI(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, FloatAreaVector.class);
+        FloatAreaVector lvdsi10 =
+                new FloatAreaVector(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_CENTIMETER, StorageType.DENSE);
         assertEquals(100, lvdsi10.size());
         assertEquals(10, lvdsi10.cardinality());
-        assertEquals(5 * 11, lvdsi10.zSum().getSI(), 0.001);
+        assertEquals(5 * 11 * 0.01 * 0.01, lvdsi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lvdsi10.getDisplayUnit());
 
-        FloatAreaVector lvssi10 = FloatVector.instantiateSI(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, FloatAreaVector.class);
+        FloatAreaVector lvssi10 =
+                new FloatAreaVector(FLOATVECTOR.sparseArray(100), AreaUnit.SQUARE_CENTIMETER, StorageType.SPARSE);
         assertEquals(100, lvssi10.size());
         assertEquals(10, lvssi10.cardinality());
-        assertEquals(5 * 11, lvssi10.zSum().getSI(), 0.001);
+        assertEquals(5 * 11 * 0.01 * 0.01, lvssi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lvssi10.getDisplayUnit());
 
-        FloatAreaVector lvdsc10 = FloatVector.instantiate(FLOATVECTOR.sparseScalarArray(100, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, FloatAreaVector.class);
+        FloatAreaVector lvdsc10 = new FloatAreaVector(FLOATVECTOR.sparseScalarArray(100, FloatArea.class),
+                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE);
         assertEquals(100, lvdsc10.size());
         assertEquals(10, lvdsc10.cardinality());
         assertEquals(5 * 11, lvdsc10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lvdsc10.getDisplayUnit());
 
-        FloatAreaVector lvssc10 = FloatVector.instantiate(FLOATVECTOR.sparseScalarArray(100, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, FloatAreaVector.class);
+        FloatAreaVector lvssc10 = new FloatAreaVector(FLOATVECTOR.sparseScalarArray(100, FloatArea.class),
+                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE);
         assertEquals(100, lvssc10.size());
         assertEquals(10, lvssc10.cardinality());
         assertEquals(5 * 11, lvssc10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lvssc10.getDisplayUnit());
-    }
-
-    /**
-     * Test the instantiation of dense and sparse vector types with dense data (no zeros).
-     */
-    @Test
-    public void testInstantiateDenseDataWithUserDefinedClass()
-    {
-        FloatJerkVector lvdkm10 =
-                FloatVector.instantiate(FLOATVECTOR.denseArray(100), JerkUnit.JERK, StorageType.DENSE, FloatJerkVector.class);
-        assertEquals(100, lvdkm10.size());
-        assertEquals(100, lvdkm10.cardinality());
-        assertEquals(50 * 101, lvdkm10.zSum().getSI(), 0.1);
-        assertEquals(JerkUnit.JERK, lvdkm10.getDisplayUnit());
-
-        FloatJerkVector lvskm10 =
-                FloatVector.instantiate(FLOATVECTOR.denseArray(100), JerkUnit.JERK, StorageType.SPARSE, FloatJerkVector.class);
-        assertEquals(100, lvskm10.size());
-        assertEquals(100, lvskm10.cardinality());
-        assertEquals(50 * 101, lvskm10.zSum().getSI(), 0.1);
-        assertEquals(JerkUnit.JERK, lvskm10.getDisplayUnit());
-
-        assertEquals(lvdkm10, lvdkm10.toSparse().toDense());
-        assertEquals(lvskm10, lvskm10.toDense().toSparse());
-        assertEquals(lvdkm10, lvskm10.toDense());
-        assertEquals(lvskm10, lvdkm10.toSparse());
-        assertEquals(lvdkm10, lvdkm10.toSparse()); // dense and sparse are the same if content is the same
-        assertEquals(lvskm10, lvskm10.toDense()); // dense and sparse are the same if content is the same
-
-        FloatJerkVector lvdsi10 =
-                FloatVector.instantiateSI(FLOATVECTOR.denseArray(100), JerkUnit.JERK, StorageType.DENSE, FloatJerkVector.class);
-        assertEquals(100, lvdsi10.size());
-        assertEquals(100, lvdsi10.cardinality());
-        assertEquals(50 * 101, lvdsi10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvdsi10.getDisplayUnit());
-
-        FloatJerkVector lvssi10 = FloatVector.instantiateSI(FLOATVECTOR.denseArray(100), JerkUnit.JERK, StorageType.SPARSE,
-                FloatJerkVector.class);
-        assertEquals(100, lvssi10.size());
-        assertEquals(100, lvssi10.cardinality());
-        assertEquals(50 * 101, lvssi10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvssi10.getDisplayUnit());
-
-        FloatJerkVector lvdsc10 = FloatVector.instantiate(FLOATVECTOR.denseScalarArray(100, FloatJerk.class), JerkUnit.JERK,
-                StorageType.DENSE, FloatJerkVector.class);
-        assertEquals(100, lvdsc10.size());
-        assertEquals(100, lvdsc10.cardinality());
-        assertEquals(50 * 101, lvdsc10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvdsc10.getDisplayUnit());
-
-        FloatJerkVector lvssc10 = FloatVector.instantiate(FLOATVECTOR.denseScalarArray(100, FloatJerk.class), JerkUnit.JERK,
-                StorageType.SPARSE, FloatJerkVector.class);
-        assertEquals(100, lvssc10.size());
-        assertEquals(100, lvssc10.cardinality());
-        assertEquals(50 * 101, lvssc10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvssc10.getDisplayUnit());
-    }
-
-    /**
-     * Test the instantiation of dense and sparse vector types with sparse data (90% zeros).
-     */
-    @Test
-    public void testInstantiatSparseDataWithUserDefinedClass()
-    {
-        FloatJerkVector lvdkm10 =
-                FloatVector.instantiate(FLOATVECTOR.sparseArray(100), JerkUnit.JERK, StorageType.DENSE, FloatJerkVector.class);
-        assertEquals(100, lvdkm10.size());
-        assertEquals(10, lvdkm10.cardinality());
-        assertEquals(5 * 11, lvdkm10.zSum().getSI(), 0.1);
-        assertEquals(JerkUnit.JERK, lvdkm10.getDisplayUnit());
-
-        FloatJerkVector lvskm10 =
-                FloatVector.instantiate(FLOATVECTOR.sparseArray(100), JerkUnit.JERK, StorageType.SPARSE, FloatJerkVector.class);
-        assertEquals(100, lvskm10.size());
-        assertEquals(10, lvskm10.cardinality());
-        assertEquals(5 * 11, lvskm10.zSum().getSI(), 0.1);
-        assertEquals(JerkUnit.JERK, lvskm10.getDisplayUnit());
-
-        assertEquals(lvdkm10, lvdkm10.toSparse().toDense());
-        assertEquals(lvskm10, lvskm10.toDense().toSparse());
-        assertEquals(lvdkm10, lvskm10.toDense());
-        assertEquals(lvskm10, lvdkm10.toSparse());
-        assertEquals(lvdkm10, lvdkm10.toSparse()); // dense and sparse are the same if content is the same
-        assertEquals(lvskm10, lvskm10.toDense()); // dense and sparse are the same if content is the same
-
-        FloatJerkVector lvdsi10 = FloatVector.instantiateSI(FLOATVECTOR.sparseArray(100), JerkUnit.JERK, StorageType.DENSE,
-                FloatJerkVector.class);
-        assertEquals(100, lvdsi10.size());
-        assertEquals(10, lvdsi10.cardinality());
-        assertEquals(5 * 11, lvdsi10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvdsi10.getDisplayUnit());
-
-        FloatJerkVector lvssi10 = FloatVector.instantiateSI(FLOATVECTOR.sparseArray(100), JerkUnit.JERK, StorageType.SPARSE,
-                FloatJerkVector.class);
-        assertEquals(100, lvssi10.size());
-        assertEquals(10, lvssi10.cardinality());
-        assertEquals(5 * 11, lvssi10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvssi10.getDisplayUnit());
-
-        FloatJerkVector lvdsc10 = FloatVector.instantiate(FLOATVECTOR.sparseScalarArray(100, FloatJerk.class), JerkUnit.JERK,
-                StorageType.DENSE, FloatJerkVector.class);
-        assertEquals(100, lvdsc10.size());
-        assertEquals(10, lvdsc10.cardinality());
-        assertEquals(5 * 11, lvdsc10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvdsc10.getDisplayUnit());
-
-        FloatJerkVector lvssc10 = FloatVector.instantiate(FLOATVECTOR.sparseScalarArray(100, FloatJerk.class), JerkUnit.JERK,
-                StorageType.SPARSE, FloatJerkVector.class);
-        assertEquals(100, lvssc10.size());
-        assertEquals(10, lvssc10.cardinality());
-        assertEquals(5 * 11, lvssc10.zSum().getSI(), 0.001);
-        assertEquals(JerkUnit.JERK, lvssc10.getDisplayUnit());
     }
 
     /**
@@ -386,26 +271,26 @@ public class FloatVectorInstantiateTest
     @Test
     public void testInstantiateSIUnit() throws UnitException
     {
-        FloatSIVector si10dd = FloatVector.instantiate(FLOATVECTOR.denseArray(100), SIUnit.of("m2/s3"), StorageType.DENSE);
+        FloatSIVector si10dd = new FloatSIVector(FLOATVECTOR.denseArray(100), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(100, si10dd.size());
         assertEquals(100, si10dd.cardinality());
         assertEquals(50 * 101, si10dd.zSum().getSI(), 0.001);
         assertEquals("m2/s3", si10dd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
         assertEquals("getScalarClass returns FloatSIScalar", FloatSIScalar.class, si10dd.getScalarClass());
 
-        FloatSIVector si10ds = FloatVector.instantiate(FLOATVECTOR.denseArray(100), SIUnit.of("m2/s3"), StorageType.SPARSE);
+        FloatSIVector si10ds = new FloatSIVector(FLOATVECTOR.denseArray(100), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(100, si10ds.size());
         assertEquals(100, si10ds.cardinality());
         assertEquals(50 * 101, si10ds.zSum().getSI(), 0.001);
         assertEquals("m2/s3", si10ds.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
-        FloatSIVector si10sd = FloatVector.instantiate(FLOATVECTOR.sparseArray(100), SIUnit.of("m2/s3"), StorageType.DENSE);
+        FloatSIVector si10sd = new FloatSIVector(FLOATVECTOR.sparseArray(100), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(100, si10sd.size());
         assertEquals(10, si10sd.cardinality());
         assertEquals(5 * 11, si10sd.zSum().getSI(), 0.001);
         assertEquals("m2/s3", si10sd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
-        FloatSIVector si10ss = FloatVector.instantiate(FLOATVECTOR.sparseArray(100), SIUnit.of("m2/s3"), StorageType.SPARSE);
+        FloatSIVector si10ss = new FloatSIVector(FLOATVECTOR.sparseArray(100), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(100, si10ss.size());
         assertEquals(10, si10ss.cardinality());
         assertEquals(5 * 11, si10ss.zSum().getSI(), 0.001);
@@ -437,14 +322,14 @@ public class FloatVectorInstantiateTest
         // DENSE DATA
 
         FloatSpeedVector vect1dd =
-                FloatVector.instantiate(FLOATVECTOR.denseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedVector(FLOATVECTOR.denseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, vect1dd.size());
         assertEquals(1, vect1dd.cardinality());
         assertEquals(1, vect1dd.zSum().getSI(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, vect1dd.getDisplayUnit());
 
         FloatSpeedVector vect1ds =
-                FloatVector.instantiate(FLOATVECTOR.denseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedVector(FLOATVECTOR.denseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, vect1ds.size());
         assertEquals(1, vect1ds.cardinality());
         assertEquals(1, vect1ds.zSum().getSI(), 0.001);
@@ -453,14 +338,14 @@ public class FloatVectorInstantiateTest
         // SPARSE DATA
 
         FloatSpeedVector vect1sd =
-                FloatVector.instantiate(FLOATVECTOR.sparseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedVector(FLOATVECTOR.sparseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, vect1sd.size());
         assertEquals(1, vect1sd.cardinality());
         assertEquals(1, vect1sd.zSum().getSI(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, vect1sd.getDisplayUnit());
 
         FloatSpeedVector vect1ss =
-                FloatVector.instantiate(FLOATVECTOR.sparseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedVector(FLOATVECTOR.sparseArray(1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, vect1ss.size());
         assertEquals(1, vect1ss.cardinality());
         assertEquals(1, vect1ss.zSum().getSI(), 0.001);
@@ -470,11 +355,11 @@ public class FloatVectorInstantiateTest
 
         float[] d1 = new float[1];
 
-        Try.testFail(() -> FloatVector.instantiate((float[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+        Try.testFail(() -> new FloatSpeedVector((float[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
                 "constructing vector with null input should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> FloatVector.instantiate(d1, null, StorageType.DENSE),
+        Try.testFail(() -> new FloatSpeedVector(d1, null, StorageType.DENSE),
                 "constructing vector with null unit should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> FloatVector.instantiate(d1, SpeedUnit.METER_PER_SECOND, null),
+        Try.testFail(() -> new FloatSpeedVector(d1, SpeedUnit.METER_PER_SECOND, null),
                 "constructing vector with null storage type should have thrown an exception", NullPointerException.class);
     }
 
@@ -487,50 +372,48 @@ public class FloatVectorInstantiateTest
         float[] floatArray = new float[] {};
         FloatSpeed[] speedArray = new FloatSpeed[] {};
         List<Float> floatList = new ArrayList<>();
-        List<FloatSpeed> speedList = new ArrayList<>();
+        List<Speed> speedList = new ArrayList<>();
         SortedMap<Integer, Float> floatMap = new TreeMap<>();
-        SortedMap<Integer, FloatSpeed> speedMap = new TreeMap<>();
+        SortedMap<Integer, Speed> speedMap = new TreeMap<>();
         SortedMap<Integer, FloatSpeedVector> svMap = new TreeMap<>();
         svMap.put(0,
-                FloatVector.instantiate(
+                new FloatSpeedVector(
                         FloatVectorData.instantiate(floatArray, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.DENSE),
                         SpeedUnit.KM_PER_HOUR));
         svMap.put(1,
-                FloatVector.instantiate(
+                new FloatSpeedVector(
                         FloatVectorData.instantiate(floatArray, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
-        svMap.put(2,
-                FloatVector.instantiate(FloatVectorData.instantiate(speedArray, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
-        svMap.put(3,
-                FloatVector.instantiate(FloatVectorData.instantiate(speedArray, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
+        svMap.put(2, new FloatSpeedVector(FloatVectorData.instantiate(speedArray, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
+        svMap.put(3, new FloatSpeedVector(FloatVectorData.instantiate(speedArray, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
         svMap.put(4,
-                FloatVector.instantiate(
+                new FloatSpeedVector(
                         FloatVectorData.instantiate(floatList, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.DENSE),
                         SpeedUnit.KM_PER_HOUR));
         svMap.put(5,
-                FloatVector.instantiate(
+                new FloatSpeedVector(
                         FloatVectorData.instantiate(floatList, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
         svMap.put(6,
-                FloatVector.instantiate(
+                new FloatSpeedVector(
                         FloatVectorData.instantiate(floatMap, 0, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.DENSE),
                         SpeedUnit.KM_PER_HOUR));
         svMap.put(7,
-                FloatVector.instantiate(
+                new FloatSpeedVector(
                         FloatVectorData.instantiate(floatMap, 0, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
-        svMap.put(8,
-                FloatVector.instantiate(FloatVectorData.instantiateList(speedList, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
-        svMap.put(9,
-                FloatVector.instantiate(FloatVectorData.instantiateList(speedList, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
-        svMap.put(10,
-                FloatVector.instantiate(FloatVectorData.instantiateMap(speedMap, 0, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
-        svMap.put(11, FloatVector.instantiate(FloatVectorData.instantiateMap(speedMap, 0, StorageType.SPARSE),
+        svMap.put(8, new FloatSpeedVector(FloatVectorData.instantiate(speedList, IdentityScale.SCALE, StorageType.DENSE),
                 SpeedUnit.KM_PER_HOUR));
-        svMap.put(12,
-                new FloatSpeedVector(FloatVectorData.instantiateList(speedList, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
-        svMap.put(13,
-                new FloatSpeedVector(FloatVectorData.instantiateList(speedList, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
+        svMap.put(9, new FloatSpeedVector(FloatVectorData.instantiate(speedList, IdentityScale.SCALE, StorageType.SPARSE),
+                SpeedUnit.KM_PER_HOUR));
+        svMap.put(10, new FloatSpeedVector(FloatVectorData.instantiate(speedMap, 0, IdentityScale.SCALE, StorageType.DENSE),
+                SpeedUnit.KM_PER_HOUR));
+        svMap.put(11, new FloatSpeedVector(FloatVectorData.instantiate(speedMap, 0, IdentityScale.SCALE, StorageType.SPARSE),
+                SpeedUnit.KM_PER_HOUR));
+        svMap.put(12, new FloatSpeedVector(FloatVectorData.instantiate(speedList, IdentityScale.SCALE, StorageType.DENSE),
+                SpeedUnit.KM_PER_HOUR));
+        svMap.put(13, new FloatSpeedVector(FloatVectorData.instantiate(speedList, IdentityScale.SCALE, StorageType.SPARSE),
+                SpeedUnit.KM_PER_HOUR));
 
         for (Map.Entry<Integer, FloatSpeedVector> entry : svMap.entrySet())
         {
@@ -577,5 +460,4 @@ public class FloatVectorInstantiateTest
             assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
         }
     }
-
 }
