@@ -1,7 +1,12 @@
 package org.djunits.value.vdouble.vector;
 
+import java.util.List;
+import java.util.SortedMap;
+
 import org.djunits.unit.DimensionlessUnit;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.function.DimensionlessFunctions;
+import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.scalar.Dimensionless;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
@@ -18,7 +23,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
 public class DimensionlessVector extends AbstractDoubleVectorRel<DimensionlessUnit, Dimensionless, DimensionlessVector>
         implements DoubleMathFunctions, DimensionlessFunctions<DimensionlessUnit, DimensionlessVector>
 {
@@ -27,13 +32,255 @@ public class DimensionlessVector extends AbstractDoubleVectorRel<DimensionlessUn
 
     /**
      * Construct an DimensionlessVector from an internal data object.
-     * @param data DoubleVectorData; the internal data object for the vector data
+     * @param data DoubleVectorData; the internal data object for the vector
      * @param displayUnit DimensionlessUnit; the display unit of the vector data
      */
     public DimensionlessVector(final DoubleVectorData data, final DimensionlessUnit displayUnit)
     {
         super(data, displayUnit);
     }
+
+    /* CONSTRUCTORS WITH double[] */
+
+    /**
+     * Construct an DimensionlessVector from a double[] object. The double values are expressed in the displayUnit, and will be
+     * printed using the displayUnit.
+     * @param data double[]; the data for the vector, expressed in the displayUnit
+     * @param displayUnit DimensionlessUnit; the unit of the values in the data array, and display unit when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final double[] data, final DimensionlessUnit displayUnit, final StorageType storageType)
+    {
+        this(DoubleVectorData.instantiate(data, displayUnit.getScale(), storageType), displayUnit);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a double[] object. The double values are expressed in the displayUnit. Assume that
+     * the StorageType is DENSE since we offer the data as an array.
+     * @param data double[]; the data for the vector
+     * @param displayUnit DimensionlessUnit; the unit of the values in the data array, and display unit when printing
+     */
+    public DimensionlessVector(final double[] data, final DimensionlessUnit displayUnit)
+    {
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a double[] object with SI-unit values.
+     * @param data double[]; the data for the vector, in SI units
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final double[] data, final StorageType storageType)
+    {
+        this(data, DimensionlessUnit.SI, storageType);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a double[] object with SI-unit values. Assume that the StorageType is DENSE since
+     * we offer the data as an array.
+     * @param data double[]; the data for the vector, in SI units
+     */
+    public DimensionlessVector(final double[] data)
+    {
+        this(data, StorageType.DENSE);
+    }
+
+    /* CONSTRUCTORS WITH Dimensionless[] */
+
+    /**
+     * Construct an DimensionlessVector from an array of Dimensionless objects. The Dimensionless values are each expressed in
+     * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
+     * @param data Dimensionless[]; the data for the vector
+     * @param displayUnit DimensionlessUnit; the display unit of the values when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final Dimensionless[] data, final DimensionlessUnit displayUnit, final StorageType storageType)
+    {
+        this(DoubleVectorData.instantiate(data, storageType), displayUnit);
+    }
+
+    /**
+     * Construct an DimensionlessVector from an array of Dimensionless objects. The Dimensionless values are each expressed in
+     * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that
+     * the StorageType is DENSE since we offer the data as an array.
+     * @param data Dimensionless[]; the data for the vector
+     * @param displayUnit DimensionlessUnit; the display unit of the values when printing
+     */
+    public DimensionlessVector(final Dimensionless[] data, final DimensionlessUnit displayUnit)
+    {
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /**
+     * Construct an DimensionlessVector from an array of Dimensionless objects. The Dimensionless values are each expressed in
+     * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer
+     * the data as an array.
+     * @param data Dimensionless[]; the data for the vector
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final Dimensionless[] data, final StorageType storageType)
+    {
+        this(data, DimensionlessUnit.SI, storageType);
+    }
+
+    /**
+     * Construct an DimensionlessVector from an array of Dimensionless objects. The Dimensionless values are each expressed in
+     * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
+     * StorageType is DENSE since we offer the data as an array.
+     * @param data Dimensionless[]; the data for the vector
+     */
+    public DimensionlessVector(final Dimensionless[] data)
+    {
+        this(data, StorageType.DENSE);
+    }
+
+    /* CONSTRUCTORS WITH List<Double> or List<Dimensionless> */
+
+    /**
+     * Construct an DimensionlessVector from a list of Number objects or a list of Dimensionless objects. Note that the
+     * displayUnit has a different meaning depending on whether the list contains Number objects (e.g., Double objects) or
+     * Dimensionless objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values
+     * in the list are expressed, as well as the unit in which they will be printed. In case the list contains Dimensionless
+     * objects, each Dimensionless has its own unit, and the displayUnit is just used for printing. The values but will always
+     * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
+     * @param data List&lt;Double&gt; or List&lt;Dimensionless&gt;; the data for the vector
+     * @param displayUnit DimensionlessUnit; the display unit of the vector data, and the unit of the data points when the data
+     *            is expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final List<? extends Number> data, final DimensionlessUnit displayUnit,
+            final StorageType storageType)
+    {
+        this(data.size() == 0 ? DoubleVectorData.instantiate(new double[] {}, IdentityScale.SCALE, storageType)
+                : data.get(0) instanceof Dimensionless ? DoubleVectorData.instantiate(data, IdentityScale.SCALE, storageType)
+                        : DoubleVectorData.instantiate(data, displayUnit.getScale(), storageType),
+                displayUnit);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a list of Number objects or a list of Dimensionless objects. Note that the
+     * displayUnit has a different meaning depending on whether the list contains Number objects (e.g., Double objects) or
+     * Dimensionless objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values
+     * in the list are expressed, as well as the unit in which they will be printed. In case the list contains Dimensionless
+     * objects, each Dimensionless has its own unit, and the displayUnit is just used for printing. The values but will always
+     * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
+     * the storage type is DENSE since we offer the data as a List.
+     * @param data List&lt;Double&gt; or List&lt;Dimensionless&gt;; the data for the vector
+     * @param displayUnit DimensionlessUnit; the display unit of the vector data, and the unit of the data points when the data
+     *            is expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     */
+    public DimensionlessVector(final List<? extends Number> data, final DimensionlessUnit displayUnit)
+    {
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a list of Number objects or a list of Dimensionless objects. When data contains
+     * numbers such as Double, assume that they are expressed using SI units. When the data consists of Dimensionless objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing.
+     * @param data List&lt;Double&gt; or List&lt;Dimensionless&gt;; the data for the vector
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final List<? extends Number> data, final StorageType storageType)
+    {
+        this(data, DimensionlessUnit.SI, storageType);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a list of Number objects or a list of Dimensionless objects. When data contains
+     * numbers such as Double, assume that they are expressed using SI units. When the data consists of Dimensionless objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
+     * type is DENSE since we offer the data as a List.
+     * @param data List&lt;Double&gt; or List&lt;Dimensionless&gt;; the data for the vector
+     */
+    public DimensionlessVector(final List<? extends Number> data)
+    {
+        this(data, StorageType.DENSE);
+    }
+
+    /* CONSTRUCTORS WITH SortedMap<Integer, Double> or SortedMap<Integer, Dimensionless> */
+
+    /**
+     * Construct an DimensionlessVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of Dimensionless objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Double objects) or Dimensionless objects.
+     * In case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed,
+     * as well as the unit in which they will be printed. In case the map contains Dimensionless objects, each Dimensionless has
+     * its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values
+     * or base values, and expressed using the display unit or base unit when printing.
+     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Dimensionless&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param displayUnit DimensionlessUnit; the display unit of the vector data, and the unit of the data points when the data
+     *            is expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final SortedMap<Integer, ? extends Number> data, final int size,
+            final DimensionlessUnit displayUnit, final StorageType storageType)
+    {
+        this(data.size() == 0 ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
+                : data.get(data.firstKey()) instanceof Dimensionless
+                        ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
+                        : DoubleVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
+                displayUnit);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of Dimensionless objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Double objects) or Dimensionless objects.
+     * In case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed,
+     * as well as the unit in which they will be printed. In case the map contains Dimensionless objects, each Dimensionless has
+     * its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values
+     * or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since
+     * we offer the data as a Map.
+     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Dimensionless&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param displayUnit DimensionlessUnit; the display unit of the vector data, and the unit of the data points when the data
+     *            is expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     */
+    public DimensionlessVector(final SortedMap<Integer, ? extends Number> data, final int size,
+            final DimensionlessUnit displayUnit)
+    {
+        this(data, size, displayUnit, StorageType.SPARSE);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of Dimensionless objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Double, assume that they are expressed using SI units. When the data consists of Dimensionless objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing.
+     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Dimensionless&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public DimensionlessVector(final SortedMap<Integer, ? extends Number> data, final int size, final StorageType storageType)
+    {
+        this(data, size, DimensionlessUnit.SI, storageType);
+    }
+
+    /**
+     * Construct an DimensionlessVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of Dimensionless objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Double, assume that they are expressed using SI units. When the data consists of Dimensionless objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
+     * since we offer the data as a Map.
+     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Dimensionless&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     */
+    public DimensionlessVector(final SortedMap<Integer, ? extends Number> data, final int size)
+    {
+        this(data, size, StorageType.SPARSE);
+    }
+
+    /* ****************************** Other methods ****************************** */
 
     /** {@inheritDoc} */
     @Override

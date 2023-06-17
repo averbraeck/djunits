@@ -46,14 +46,12 @@ import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TorqueUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.VolumeUnit;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.SIScalar;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
-import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Throw;
 
@@ -69,63 +67,160 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
 public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector>
 {
     /** */
     private static final long serialVersionUID = 20150901L;
 
     /**
-     * Construct a new Relative Double SIVector.
-     * @param values double[]; the values of the entries in the new Relative Double SIVector
-     * @param unit SIUnit; the unit of the new Relative Double SIVector
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIVector; the SIVector of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct an SIVector from an internal data object.
+     * @param data DoubleVectorData; the internal data object for the vector
+     * @param displayUnit SIUnit; the display unit of the vector data
      */
-    public static SIVector instantiate(final double[] values, final SIUnit unit, final StorageType storageType)
-            throws ValueRuntimeException
+    public SIVector(final DoubleVectorData data, final SIUnit displayUnit)
     {
-        return new SIVector(DoubleVectorData.instantiate(values, unit.getScale(), storageType), unit);
+        super(data, displayUnit);
+    }
+
+    /* ****************************** CONSTRUCTORS WITH double[] ****************************** */
+
+    /**
+     * Construct an SIVector from a double[] object. The double values are expressed in the displayUnit, and will be printed
+     * using the displayUnit.
+     * @param data double[]; the data for the vector, expressed in the displayUnit
+     * @param displayUnit SIUnit; the unit of the values in the data array, and display unit when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public SIVector(final double[] data, final SIUnit displayUnit, final StorageType storageType)
+    {
+        this(DoubleVectorData.instantiate(data, displayUnit.getScale(), storageType), displayUnit);
     }
 
     /**
-     * Construct a new Relative Double SIVector.
-     * @param values List&lt;Double&gt;; the values of the entries in the new Relative Double SIVector
-     * @param unit SIUnit; the unit of the new Relative Double SIVector
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIVector; the SIVector of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct an SIVector from a double[] object. The double values are expressed in the displayUnit. Assume that the
+     * StorageType is DENSE since we offer the data as an array.
+     * @param data double[]; the data for the vector
+     * @param displayUnit SIUnit; the unit of the values in the data array, and display unit when printing
      */
-    public static SIVector instantiate(final List<Double> values, final SIUnit unit, final StorageType storageType)
-            throws ValueRuntimeException
+    public SIVector(final double[] data, final SIUnit displayUnit)
     {
-        return new SIVector(DoubleVectorData.instantiate(values, unit.getScale(), storageType), unit);
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /* ****************************** CONSTRUCTORS WITH SIScalar[] ****************************** */
+
+    /**
+     * Construct an SIVector from an array of SIScalar objects. The SIScalar values are each expressed in their own unit, but
+     * will be internally stored as SI values, all expressed in the displayUnit when printing.
+     * @param data SIScalar[]; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the values when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public SIVector(final SIScalar[] data, final SIUnit displayUnit, final StorageType storageType)
+    {
+        this(DoubleVectorData.instantiate(data, storageType), displayUnit);
     }
 
     /**
-     * Construct a new Relative Double SIVector.
-     * @param values SortedMap&lt;Integer, Double&gt;; the map of indexes to values of the Relative Sparse Double SIVector
-     * @param length int; the size of the vector
-     * @param unit SIUnit; the unit of the new Relative Sparse Double SIVector
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIVector; the SIVector of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct an SIVector from an array of SIScalar objects. The SIScalar values are each expressed in their own unit, but
+     * will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the StorageType is
+     * DENSE since we offer the data as an array.
+     * @param data SIScalar[]; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the values when printing
      */
-    public static SIVector instantiate(final SortedMap<Integer, Double> values, final int length, final SIUnit unit,
-            final StorageType storageType) throws ValueRuntimeException
+    public SIVector(final SIScalar[] data, final SIUnit displayUnit)
     {
-        return new SIVector(DoubleVectorData.instantiate(values, length, unit.getScale(), storageType), unit);
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /* ****************************** CONSTRUCTORS WITH List<Double> or List<SIScalar> ****************************** */
+
+    /**
+     * Construct an SIVector from a list of Number objects or a list of SIScalar objects. Note that the displayUnit has a
+     * different meaning depending on whether the list contains Number objects (e.g., Double objects) or SIScalar objects. In
+     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
+     * as well as the unit in which they will be printed. In case the list contains SIScalar objects, each SIScalar has its own
+     * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
+     * values, and expressed using the display unit or base unit when printing.
+     * @param data List&lt;Double&gt; or List&lt;SIScalar&gt;; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public SIVector(final List<? extends Number> data, final SIUnit displayUnit, final StorageType storageType)
+    {
+        this(data.size() == 0 ? DoubleVectorData.instantiate(new double[] {}, IdentityScale.SCALE, storageType)
+                : data.get(0) instanceof SIScalar ? DoubleVectorData.instantiate(data, IdentityScale.SCALE, storageType)
+                        : DoubleVectorData.instantiate(data, displayUnit.getScale(), storageType),
+                displayUnit);
     }
 
     /**
-     * @param data DoubleVectorData; an internal data object
-     * @param unit SIUnit; the unit
+     * Construct an SIVector from a list of Number objects or a list of SIScalar objects. Note that the displayUnit has a
+     * different meaning depending on whether the list contains Number objects (e.g., Double objects) or SIScalar objects. In
+     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
+     * as well as the unit in which they will be printed. In case the list contains SIScalar objects, each SIScalar has its own
+     * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
+     * values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we offer
+     * the data as a List.
+     * @param data List&lt;Double&gt; or List&lt;SIScalar&gt;; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
-    public SIVector(final DoubleVectorData data, final SIUnit unit)
+    public SIVector(final List<? extends Number> data, final SIUnit displayUnit)
     {
-        super(data, unit);
+        this(data, displayUnit, StorageType.DENSE);
     }
+
+    /* ******************** CONSTRUCTORS WITH SortedMap<Integer, Double> or SortedMap<Integer, SIScalar> ******************** */
+
+    /**
+     * Construct an SIVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to of
+     * SIScalar objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size of
+     * the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
+     * meaning depending on whether the map contains Number objects (e.g., Double objects) or SIScalar objects. In case the map
+     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
+     * unit in which they will be printed. In case the map contains SIScalar objects, each SIScalar has its own unit, and the
+     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
+     * expressed using the display unit or base unit when printing.
+     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, SIScalar&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public SIVector(final SortedMap<Integer, ? extends Number> data, final int size, final SIUnit displayUnit,
+            final StorageType storageType)
+    {
+        this(data.size() == 0 ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
+                : data.get(data.firstKey()) instanceof SIScalar
+                        ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
+                        : DoubleVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
+                displayUnit);
+    }
+
+    /**
+     * Construct an SIVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to of
+     * SIScalar objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size of
+     * the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
+     * meaning depending on whether the map contains Number objects (e.g., Double objects) or SIScalar objects. In case the map
+     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
+     * unit in which they will be printed. In case the map contains SIScalar objects, each SIScalar has its own unit, and the
+     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
+     * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
+     * a Map.
+     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, SIScalar&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     */
+    public SIVector(final SortedMap<Integer, ? extends Number> data, final int size, final SIUnit displayUnit)
+    {
+        this(data, size, displayUnit, StorageType.SPARSE);
+    }
+
+    /* ****************************** Other methods ****************************** */
 
     /** {@inheritDoc} */
     @Override
@@ -154,7 +249,7 @@ public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return SIVector.instantiate(value, unit, storageType);
+                return new SIVector(value, unit, storageType);
             }
         }
         catch (Exception exception)
@@ -184,7 +279,7 @@ public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return SIVector.instantiate(valueList, unit, storageType);
+                return new SIVector(valueList, unit, storageType);
             }
         }
         catch (Exception exception)
@@ -216,7 +311,7 @@ public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return SIVector.instantiate(valueMap, length, unit, storageType);
+                return new SIVector(valueMap, length, unit, storageType);
             }
         }
         catch (Exception exception)
@@ -250,26 +345,6 @@ public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector
     /**********************************************************************************/
     /******************************** 'CAST AS' METHODS *******************************/
     /**********************************************************************************/
-
-    /**
-     * Return the current vector transformed to a vector in the given unit. Of course the SI dimensionality has to match,
-     * otherwise the vector cannot be transformed. The compiler will check the alignment between the return value and the unit.
-     * @param displayUnit KU; the unit in which the vector needs to be expressed
-     * @return V; the vector that has been transformed into the right vector type and unit
-     * @param <U> the unit type
-     * @param <S> the scalar type
-     * @param <V> the vector type
-     */
-    public final <U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>,
-            V extends AbstractDoubleVectorRel<U, S, V>> V as(final U displayUnit)
-    {
-        Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(displayUnit.getQuantity().getSiDimensions())),
-                UnitRuntimeException.class, "SIVector with unit %s cannot be converted to a vector with unit %s",
-                getDisplayUnit(), displayUnit);
-        V result = DoubleVector.instantiate(this.data, displayUnit.getStandardUnit());
-        result.setDisplayUnit(displayUnit);
-        return result;
-    }
 
     /**
      * Return the current vector as a absorbeddose vector.
