@@ -3,11 +3,15 @@ package org.djunits.value;
 import java.io.Serializable;
 
 import org.djunits.unit.Unit;
-import org.djunits.value.function.ValueFunctions;
 
 /**
  * Value is the generic interface for all Scalar, Vector and Matrix classes that forces implementation of a few unit- and
- * value-related methods.
+ * value-related methods. The Value interface defines a limited number of functions of Math to be implemented for absolute
+ * values. Note: a lot of standard Math functions are <i>not</i> implemented, as they don't make sense with the units. E.g., a
+ * cubic root of a Volume should give a Length, and not another volume... Trigoniometric functions should not give back the same
+ * unit either. The abs() function is not included here, as abs() only makes sense for relative vales. What is the absolute
+ * value of 14 January 2016? Therefore the set of functions that the interface forces to implement is rather limited, and
+ * certainly not the entire range of java.lang.Math functions.
  * <p>
  * Copyright (c) 2015-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
@@ -17,7 +21,7 @@ import org.djunits.value.function.ValueFunctions;
  * @param <U> the unit type
  * @param <T> the value type for this unit
  */
-public interface Value<U extends Unit<U>, T extends Value<U, T>> extends ValueFunctions<U, T>, Serializable, Cloneable
+public interface Value<U extends Unit<U>, T extends Value<U, T>> extends Serializable, Cloneable
 {
     /**
      * Retrieve the unit of this Value.
@@ -73,4 +77,35 @@ public interface Value<U extends Unit<U>, T extends Value<U, T>> extends ValueFu
      * @return String; printable string with the value contents
      */
     String toString(U displayUnit, boolean verbose, boolean withUnit);
+
+    /**
+     * Return a new Scalar/Vector/Matrix with absolute value(s).
+     * @return R; a new R with absolute value(s)
+     */
+    T abs();
+
+    /**
+     * Return a new Scalar/Vector/Matrix with the nearest integer value(s) above the current value(s).
+     * @return R; a new R with absolute value(s)
+     */
+    T ceil();
+
+    /**
+     * Return a new Scalar/Vector/Matrix with the nearest integer value(s) below the current value(s).
+     * @return R; a new R with absolute value(s)
+     */
+    T floor();
+
+    /**
+     * Return a new Scalar/Vector/Matrix with negated value(s).
+     * @return R; a new R with negated value(s)
+     */
+    T neg();
+
+    /**
+     * Return a new Scalar/Vector/Matrix with the nearest integer value(s). When the value is exactly in the middle between two
+     * integer values, the even one is returned.
+     * @return R; a new R with absolute value(s)
+     */
+    T rint();
 }
