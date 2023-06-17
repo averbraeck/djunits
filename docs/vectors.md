@@ -8,8 +8,7 @@ Vectors and Matrices are implemented in eight different ways: Sparse or Dense da
 double[] data = new double[10];
 for (int i = 0; i < data.length; i++)
     data[i] = i * 0.8;
-LengthVector lengthVector = DoubleVector.instantiate(data, 
-    LengthUnit.FOOT, StorageType.DENSE);
+LengthVector lengthVector = new LengthVector(data, LengthUnit.FOOT);
 lengthVector = lengthVector.mutable();
 System.out.println(lengthVector);
 lengthVector.rint();
@@ -106,9 +105,13 @@ That's it. With this class JerkVectors can be created with code like:
 
 ```java
 double[] sv = new double[] {1, 2, 3, 4, 5};
-JerkVector jerkVector = DoubleVector.instantiate(sv, JerkUnit.SI, 
-    StorageType.DENSE, JerkVector.class);
+JerkVector jerkVector = new JerkVector(
+  new DoubleVectorData(sv, JerkUnit.SI.getScale(), StorageType.DENSE), 
+  JerkUnit.SI);
 ```
+
+Of course, other convenience constructors using `double[]`, `Jerk[]`, `List<Double>` or `SortedMap<Integer, Double>` to provide the data to the Vector can be added to the class. Standard DJUNITS Vector classes have 13 constructors providing 17 distinct ways to instantiate a Vector.
+
 
 ## Vector Classes, Relative only
 The top of the diagram shows only interfaces. Below that are abstract classes and along the bottom the data storage classes (`DoubleVectorDataDense` and `DoubleVectorDataSparse`) and two of the many vector classes of DJUNITS.
