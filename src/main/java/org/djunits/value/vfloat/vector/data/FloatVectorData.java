@@ -3,7 +3,6 @@ package org.djunits.value.vfloat.vector.data;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.stream.IntStream;
 
@@ -65,28 +64,27 @@ public abstract class FloatVectorData extends AbstractStorage<FloatVectorData> i
         float[] valuesSI = new float[values.length];
         IntStream.range(0, values.length).parallel().forEach(i -> valuesSI[i] = (float) scale.toStandardUnit(values[i]));
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
-                return new FloatVectorDataDense(valuesSI);
-
-            case SPARSE:
-                return FloatVectorDataSparse.instantiate(valuesSI);
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in FloatVectorData.instantiate: " + storageType);
+            return new FloatVectorDataDense(valuesSI);
+        }
+        else
+        {
+            return FloatVectorDataSparse.instantiate(valuesSI);
         }
     }
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param values List&lt;Float&gt;; the values to store
+     * @param values List&lt;? extends Number&gt;; the values to store, can either be a list of numbers, or a list of
+     *            FloatScalars
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
      * @return FloatVectorData; the FloatVectorData with the right data type
      * @throws NullPointerException when list is null, or storageType is null
      */
-    public static FloatVectorData instantiate(final List<Float> values, final Scale scale, final StorageType storageType)
+    public static FloatVectorData instantiate(final List<? extends Number> values, final Scale scale,
+            final StorageType storageType)
     {
         Throw.whenNull(values, "FloatVectorData.instantiate: float[] values is null");
         Throw.whenNull(scale, "FloatVectorData.instantiate: scale is null");
@@ -95,18 +93,16 @@ public abstract class FloatVectorData extends AbstractStorage<FloatVectorData> i
                 "values contains one or more null values");
 
         float[] valuesSI = new float[values.size()];
-        IntStream.range(0, values.size()).parallel().forEach(i -> valuesSI[i] = (float) scale.toStandardUnit(values.get(i)));
+        IntStream.range(0, values.size()).parallel()
+                .forEach(i -> valuesSI[i] = (float) scale.toStandardUnit(values.get(i).floatValue()));
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
-                return new FloatVectorDataDense(valuesSI);
-
-            case SPARSE:
-                return FloatVectorDataSparse.instantiate(valuesSI);
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in FloatVectorData.instantiate: " + storageType);
+            return new FloatVectorDataDense(valuesSI);
+        }
+        else
+        {
+            return FloatVectorDataSparse.instantiate(valuesSI);
         }
     }
 
@@ -133,211 +129,111 @@ public abstract class FloatVectorData extends AbstractStorage<FloatVectorData> i
         float[] valuesSI = new float[values.length];
         IntStream.range(0, values.length).parallel().forEach(i -> valuesSI[i] = values[i].getSI());
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
-                return new FloatVectorDataDense(valuesSI);
-
-            case SPARSE:
-                return FloatVectorDataSparse.instantiate(valuesSI);
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in FloatVectorData.instantiate: " + storageType);
+            return new FloatVectorDataDense(valuesSI);
+        }
+        else
+        {
+            return FloatVectorDataSparse.instantiate(valuesSI);
         }
     }
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param valueList List&lt;? extends FloatScalarInterface&gt;; the FloatScalar values to store
-     * @param storageType StorageType; the data type to use
-     * @return FloatVectorData; the FloatVectorData with the right data type
-     * @throws NullPointerException when values is null, or storageType is null
-     * @param <U> the unit type
-     * @param <S> the corresponding scalar type
-     */
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> FloatVectorData instantiateList(
-            final List<S> valueList, final StorageType storageType)
-    {
-        Throw.whenNull(valueList, "FloatVectorData.instantiate: valueList is null");
-        Throw.whenNull(storageType, "FloatVectorData.instantiate: storageType is null");
-
-        for (S s : valueList)
-        {
-            Throw.whenNull(s, "null value in valueList");
-        }
-
-        float[] valuesSI = new float[valueList.size()];
-        IntStream.range(0, valueList.size()).parallel().forEach(i -> valuesSI[i] = valueList.get(i).getSI());
-
-        switch (storageType)
-        {
-            case DENSE:
-                return new FloatVectorDataDense(valuesSI);
-
-            case SPARSE:
-                return FloatVectorDataSparse.instantiate(valuesSI);
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in FloatVectorData.instantiate: " + storageType);
-        }
-    }
-
-    /**
-     * Instantiate a FloatVectorData with the right data type.
-     * @param valueMap SortedMap&lt;Integer,Float&gt;; the FloatScalar values to store
-     * @param length int; the length of the vector to pad with 0 after last entry in map
+     * @param valueMap SortedMap&lt;Integer,? extends Number&gt;; the values to store; either Numbers or FloatScalars
+     * @param size int; the size of the vector to pad with 0 after last entry in map
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
      * @return FloatVectorData; the FloatVectorData with the right data type
      * @throws ValueRuntimeException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
      */
-    public static FloatVectorData instantiate(final SortedMap<Integer, Float> valueMap, final int length, final Scale scale,
-            final StorageType storageType) throws ValueRuntimeException
+    public static FloatVectorData instantiate(final SortedMap<Integer, ? extends Number> valueMap, final int size,
+            final Scale scale, final StorageType storageType) throws ValueRuntimeException
     {
         Throw.whenNull(valueMap, "FloatVectorData.instantiate: values is null");
-        Throw.when(length < 0, ValueRuntimeException.class, "Length must be >= 0");
+        Throw.when(size < 0, ValueRuntimeException.class, "size must be >= 0");
         Throw.whenNull(scale, "FloatVectorData.instantiate: scale is null");
         Throw.whenNull(storageType, "FloatVectorData.instantiate: storageType is null");
         for (Integer key : valueMap.keySet())
         {
-            Throw.when(key < 0 || key >= length, ValueRuntimeException.class, "Key in values out of range");
+            Throw.when(key < 0 || key >= size, ValueRuntimeException.class, "Key in values out of range");
         }
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
+            float[] valuesSI = new float[size];
+            if (scale.isBaseSIScale())
             {
-                float[] valuesSI = new float[length];
-                if (scale.isBaseSIScale())
-                {
-                    valueMap.entrySet().parallelStream().forEach(entry -> valuesSI[entry.getKey()] = entry.getValue());
-                }
-                else
-                {
-                    Arrays.fill(valuesSI, (float) scale.toStandardUnit(0.0));
-                    valueMap.entrySet().parallelStream()
-                            .forEach(entry -> valuesSI[entry.getKey()] = (float) scale.toStandardUnit(entry.getValue()));
-                }
-                return new FloatVectorDataDense(valuesSI);
+                valueMap.entrySet().parallelStream().forEach(entry -> valuesSI[entry.getKey()] = entry.getValue().floatValue());
             }
-
-            case SPARSE:
+            else
             {
-                int nonZeroCount;
-                if (scale.isBaseSIScale())
-                {
-                    nonZeroCount = (int) valueMap.keySet().parallelStream().filter(d -> d != 0d).count();
-                }
-                else
-                {
-                    // Much harder, and the result is unlikely to be very sparse
-                    nonZeroCount = length
-                            - (int) valueMap.values().parallelStream().filter(d -> scale.toStandardUnit(d) == 0d).count();
-                }
-                int[] indices = new int[nonZeroCount];
-                float[] valuesSI = new float[nonZeroCount];
-                if (scale.isBaseSIScale())
-                {
-                    int index = 0;
-                    for (Integer key : valueMap.keySet())
-                    {
-                        float value = valueMap.get(key);
-                        if (0.0 != value)
-                        {
-                            indices[index] = key;
-                            valuesSI[index] = value;
-                            index++;
-                        }
-                    }
-                }
-                else
-                {
-                    Arrays.fill(valuesSI, (float) scale.toStandardUnit(0.0));
-                    int index = 0;
-                    int lastKey = 0;
-                    for (Integer key : valueMap.keySet())
-                    {
-                        for (int i = lastKey; i < key; i++)
-                        {
-                            indices[index++] = i;
-                        }
-                        lastKey = key;
-                        float value = (float) scale.toStandardUnit(valueMap.get(key));
-                        if (0.0 != value)
-                        {
-                            indices[index] = key;
-                            valuesSI[index] = value;
-                            index++;
-                        }
-                        lastKey = key + 1;
-                    }
-                    while (index < indices.length)
-                    {
-                        indices[index++] = lastKey++;
-                    }
-                }
-                return new FloatVectorDataSparse(valuesSI, indices, length);
+                Arrays.fill(valuesSI, (float) scale.toStandardUnit(0.0));
+                valueMap.entrySet().parallelStream().forEach(
+                        entry -> valuesSI[entry.getKey()] = (float) scale.toStandardUnit(entry.getValue().floatValue()));
             }
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in FloatVectorData.instantiate: " + storageType);
-        }
-    }
-
-    /**
-     * Instantiate a FloatVectorData with the right data type.
-     * @param values SortedMap&lt;Integer,S&gt;; the FloatScalar values to store
-     * @param length int; the length of the vector to pad with 0 after last entry in map
-     * @param storageType StorageType; the data type to use
-     * @return FloatVectorData; the FloatVectorData with the right data type
-     * @throws NullPointerException when values is null, or storageType is null
-     * @throws ValueRuntimeException when length &lt; 0
-     * @param <U> the unit type
-     * @param <S> the scalar type to use
-     */
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> FloatVectorData instantiateMap(
-            final SortedMap<Integer, S> values, final int length, final StorageType storageType) throws ValueRuntimeException
-    {
-        Throw.whenNull(values, "FloatVectorData.instantiate: values is null");
-        Throw.when(length < 0, ValueRuntimeException.class, "Length must be >= 0");
-        Throw.whenNull(storageType, "FloatVectorData.instantiate: storageType is null");
-        for (Entry<Integer, S> e : values.entrySet())
-        {
-            Throw.when(e.getKey() < 0 || e.getKey() >= length, ValueRuntimeException.class, "Key in values out of range");
-            Throw.whenNull(e.getValue(), "null value in map");
+            return new FloatVectorDataDense(valuesSI);
         }
 
-        switch (storageType)
-        {
-            case DENSE:
-            {
-                float[] valuesSI = new float[length];
-                values.entrySet().parallelStream().forEach(entry -> valuesSI[entry.getKey()] = entry.getValue().getSI());
-                return new FloatVectorDataDense(valuesSI);
-            }
+        else // StorageType.SPARSE
 
-            case SPARSE:
+        {
+            int nonZeroCount;
+            if (scale.isBaseSIScale())
             {
-                int nonZeroCount = (int) values.values().parallelStream().filter(s -> s.getSI() != 0f).count();
-                int[] indices = new int[nonZeroCount];
-                float[] valuesSI = new float[nonZeroCount];
+                nonZeroCount = (int) valueMap.values().parallelStream().filter(f -> f.floatValue() != 0f).count();
+            }
+            else
+            {
+                // Much harder, and the result is unlikely to be very sparse
+                nonZeroCount = size - (int) valueMap.values().parallelStream()
+                        .filter(d -> scale.toStandardUnit(d.floatValue()) == 0d).count();
+            }
+            int[] indices = new int[nonZeroCount];
+            float[] valuesSI = new float[nonZeroCount];
+            if (scale.isBaseSIScale())
+            {
                 int index = 0;
-                for (Integer key : values.keySet())
+                for (Integer key : valueMap.keySet())
                 {
-                    float value = values.get(key).getSI();
-                    if (0.0f != value)
+                    float value = valueMap.get(key).floatValue();
+                    if (0.0 != value)
                     {
                         indices[index] = key;
                         valuesSI[index] = value;
                         index++;
                     }
                 }
-                return new FloatVectorDataSparse(valuesSI, indices, length);
             }
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in FloatVectorData.instantiate: " + storageType);
+            else
+            {
+                Arrays.fill(valuesSI, (float) scale.toStandardUnit(0.0));
+                int index = 0;
+                int lastKey = 0;
+                for (Integer key : valueMap.keySet())
+                {
+                    for (int i = lastKey; i < key; i++)
+                    {
+                        indices[index++] = i;
+                    }
+                    lastKey = key;
+                    float value = (float) scale.toStandardUnit(valueMap.get(key).floatValue());
+                    if (0.0 != value)
+                    {
+                        indices[index] = key;
+                        valuesSI[index] = value;
+                        index++;
+                    }
+                    lastKey = key + 1;
+                }
+                while (index < indices.length)
+                {
+                    indices[index++] = lastKey++;
+                }
+            }
+            return new FloatVectorDataSparse(valuesSI, indices, size);
         }
     }
 
