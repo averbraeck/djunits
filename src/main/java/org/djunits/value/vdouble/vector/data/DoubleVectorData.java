@@ -3,7 +3,6 @@ package org.djunits.value.vdouble.vector.data;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.stream.IntStream;
 
@@ -78,111 +77,106 @@ public abstract class DoubleVectorData extends AbstractStorage<DoubleVectorData>
             }
         }
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
-                return new DoubleVectorDataDense(valuesSI);
-
-            case SPARSE:
-                return DoubleVectorDataSparse.instantiate(valuesSI);
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in DoubleVectorData.instantiate: " + storageType);
+            return new DoubleVectorDataDense(valuesSI);
+        }
+        else
+        {
+            return DoubleVectorDataSparse.instantiate(valuesSI);
         }
     }
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param values List&lt;Double&gt;; the values to store
+     * @param values List&lt;? extends Number&gt;; the values to store; can be either list of numbers, or a list of scalars
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
      * @return DoubleVectorData; the DoubleVectorData with the right data type
      * @throws NullPointerException when list is null, or storageType is null
      */
-    public static DoubleVectorData instantiate(final List<Double> values, final Scale scale, final StorageType storageType)
+    public static DoubleVectorData instantiate(final List<? extends Number> values, final Scale scale,
+            final StorageType storageType)
     {
-        Throw.whenNull(values, "DoubleVectorData.instantiate: double[] values is null");
+        Throw.whenNull(values, "DoubleVectorData.instantiate: values is null");
         Throw.whenNull(scale, "DoubleVectorData.instantiate: scale is null");
         Throw.whenNull(storageType, "DoubleVectorData.instantiate: storageType is null");
         Throw.when(values.parallelStream().filter(d -> d == null).count() > 0, NullPointerException.class,
                 "values contains one or more null values");
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
+            double[] valuesSI;
+            if (values.size() > PARALLEL_THRESHOLD)
             {
-                double[] valuesSI;
-                if (values.size() > PARALLEL_THRESHOLD)
+                if (scale.isBaseSIScale())
                 {
-                    if (scale.isBaseSIScale())
-                    {
-                        valuesSI = values.parallelStream().mapToDouble(d -> d).toArray();
-                    }
-                    else
-                    {
-                        valuesSI = values.parallelStream().mapToDouble(d -> scale.toStandardUnit(d)).toArray();
-                    }
+                    valuesSI = values.parallelStream().mapToDouble(d -> d.doubleValue()).toArray();
                 }
                 else
                 {
-                    if (scale.isBaseSIScale())
-                    {
-                        valuesSI = values.stream().mapToDouble(d -> d).toArray();
-                    }
-                    else
-                    {
-                        valuesSI = values.stream().mapToDouble(d -> scale.toStandardUnit(d)).toArray();
-                    }
+                    valuesSI = values.parallelStream().mapToDouble(d -> scale.toStandardUnit(d.doubleValue())).toArray();
                 }
-                return new DoubleVectorDataDense(valuesSI);
             }
-
-            case SPARSE:
+            else
             {
-                int nonZeroCount;
-                if (values.size() > PARALLEL_THRESHOLD)
+                if (scale.isBaseSIScale())
                 {
-                    if (scale.isBaseSIScale())
-                    {
-                        nonZeroCount = (int) values.parallelStream().filter(d -> d != 0d).count();
-                    }
-                    else
-                    {
-                        nonZeroCount = (int) values.parallelStream().filter(d -> scale.toStandardUnit(d) != 0d).count();
-                    }
+                    valuesSI = values.stream().mapToDouble(d -> d.doubleValue()).toArray();
                 }
                 else
                 {
-                    if (scale.isBaseSIScale())
-                    {
-                        nonZeroCount = (int) values.stream().filter(d -> d != 0d).count();
-                    }
-                    else
-                    {
-                        nonZeroCount = values.size()
-                                - (int) values.parallelStream().filter(d -> scale.toStandardUnit(d) == 0d).count();
-                    }
+                    valuesSI = values.stream().mapToDouble(d -> scale.toStandardUnit(d.doubleValue())).toArray();
                 }
-                int[] indices = new int[nonZeroCount];
-                double[] valuesSI = new double[nonZeroCount];
-                // Counting non zeros could be done in parallel; but filling the arrays has to be done sequentially
-                int index = 0;
-                for (int i = 0; i < values.size(); i++)
-                {
-                    double d = scale.toStandardUnit(values.get(i));
-                    if (d != 0.0)
-                    {
-                        indices[index] = i;
-                        valuesSI[index] = d;
-                        index++;
-                    }
-                }
-                return new DoubleVectorDataSparse(valuesSI, indices, values.size());
             }
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in DoubleVectorData.instantiate: " + storageType);
+            return new DoubleVectorDataDense(valuesSI);
         }
+
+        else // StorageType.SPARSE
+
+        {
+            int nonZeroCount;
+            if (values.size() > PARALLEL_THRESHOLD)
+            {
+                if (scale.isBaseSIScale())
+                {
+                    nonZeroCount = (int) values.parallelStream().filter(d -> d.doubleValue() != 0d).count();
+                }
+                else
+                {
+                    nonZeroCount =
+                            (int) values.parallelStream().filter(d -> scale.toStandardUnit(d.doubleValue()) != 0d).count();
+                }
+            }
+            else
+            {
+                if (scale.isBaseSIScale())
+                {
+                    nonZeroCount = (int) values.stream().filter(d -> d.doubleValue() != 0d).count();
+                }
+                else
+                {
+                    nonZeroCount = values.size()
+                            - (int) values.parallelStream().filter(d -> scale.toStandardUnit(d.doubleValue()) == 0d).count();
+                }
+            }
+            int[] indices = new int[nonZeroCount];
+            double[] valuesSI = new double[nonZeroCount];
+            // Counting non zeros could be done in parallel; but filling the arrays has to be done sequentially
+            int index = 0;
+            for (int i = 0; i < values.size(); i++)
+            {
+                double d = scale.toStandardUnit(values.get(i).doubleValue());
+                if (d != 0.0)
+                {
+                    indices[index] = i;
+                    valuesSI[index] = d;
+                    index++;
+                }
+            }
+            return new DoubleVectorDataSparse(valuesSI, indices, values.size());
+        }
+
     }
 
     /**
@@ -204,259 +198,109 @@ public abstract class DoubleVectorData extends AbstractStorage<DoubleVectorData>
             Throw.whenNull(s, "null value in values");
         }
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
+            double[] valuesSI;
+            if (values.length > PARALLEL_THRESHOLD)
             {
-                double[] valuesSI;
-                if (values.length > PARALLEL_THRESHOLD)
-                {
-                    valuesSI = Arrays.stream(values).parallel().mapToDouble(s -> s.getSI()).toArray();
-                }
-                else
-                {
-                    valuesSI = Arrays.stream(values).mapToDouble(s -> s.getSI()).toArray();
-                }
-                return new DoubleVectorDataDense(valuesSI);
+                valuesSI = Arrays.stream(values).parallel().mapToDouble(s -> s.getSI()).toArray();
             }
-
-            case SPARSE:
+            else
             {
-                int nonZeroCount;
-                if (values.length > PARALLEL_THRESHOLD)
-                {
-                    nonZeroCount = (int) Arrays.stream(values).parallel().filter(s -> s.getSI() != 0).count();
-                }
-                else
-                {
-                    nonZeroCount = (int) Arrays.stream(values).filter(s -> s.getSI() != 0.0).count();
-                }
-                int[] indices = new int[nonZeroCount];
-                double[] valuesSI = new double[nonZeroCount];
-                // Counting non zeros could be done in parallel; but filling the arrays has to be done sequentially
-                int index = 0;
-                for (int i = 0; i < values.length; i++)
-                {
-                    double d = values[i].getSI();
-                    if (d != 0.0)
-                    {
-                        indices[index] = i;
-                        valuesSI[index] = d;
-                        index++;
-                    }
-                }
-                return new DoubleVectorDataSparse(valuesSI, indices, values.length);
+                valuesSI = Arrays.stream(values).mapToDouble(s -> s.getSI()).toArray();
             }
+            return new DoubleVectorDataDense(valuesSI);
+        }
 
-            default:
-                throw new ValueRuntimeException("Unknown storage type in DoubleVectorData.instantiate: " + storageType);
+        else // StorageType.SPARSE
+        {
+            int nonZeroCount;
+            if (values.length > PARALLEL_THRESHOLD)
+            {
+                nonZeroCount = (int) Arrays.stream(values).parallel().filter(s -> s.getSI() != 0).count();
+            }
+            else
+            {
+                nonZeroCount = (int) Arrays.stream(values).filter(s -> s.getSI() != 0.0).count();
+            }
+            int[] indices = new int[nonZeroCount];
+            double[] valuesSI = new double[nonZeroCount];
+            // Counting non zeros could be done in parallel; but filling the arrays has to be done sequentially
+            int index = 0;
+            for (int i = 0; i < values.length; i++)
+            {
+                double d = values[i].getSI();
+                if (d != 0.0)
+                {
+                    indices[index] = i;
+                    valuesSI[index] = d;
+                    index++;
+                }
+            }
+            return new DoubleVectorDataSparse(valuesSI, indices, values.length);
         }
     }
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param valueList List&lt;S&gt;; the values to store
-     * @param storageType StorageType; the data type to use
-     * @return DoubleVectorData; the DoubleVectorData with the right data type
-     * @throws NullPointerException when values is null, or storageType is null
-     * @param <U> the unit type
-     * @param <S> the corresponding scalar type
-     */
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> DoubleVectorData instantiateList(
-            final List<S> valueList, final StorageType storageType)
-    {
-        Throw.whenNull(valueList, "DoubleVectorData.instantiate: valueList is null");
-        Throw.whenNull(storageType, "DoubleVectorData.instantiate: storageType is null");
-        for (S s : valueList)
-        {
-            Throw.whenNull(s, "null value in valueList");
-        }
-
-        switch (storageType)
-        {
-            case DENSE:
-            {
-                double[] valuesSI;
-                if (valueList.size() > PARALLEL_THRESHOLD)
-                {
-                    valuesSI = valueList.stream().parallel().mapToDouble(s -> s.getSI()).toArray();
-                }
-                else
-                {
-                    valuesSI = valueList.stream().mapToDouble(s -> s.getSI()).toArray();
-                }
-                return new DoubleVectorDataDense(valuesSI);
-            }
-
-            case SPARSE:
-            {
-                int nonZeroCount = (int) valueList.parallelStream().filter(s -> s.getSI() != 0.0).count();
-                int[] indices = new int[nonZeroCount];
-                double[] valuesSI = new double[nonZeroCount];
-                // Counting non zeros could be done in parallel; but filling the arrays has to be done sequentially
-                int index = 0;
-                for (int i = 0; i < valueList.size(); i++)
-                {
-                    double d = valueList.get(i).getSI();
-                    if (d != 0.0)
-                    {
-                        indices[index] = i;
-                        valuesSI[index] = d;
-                        index++;
-                    }
-                }
-                return new DoubleVectorDataSparse(valuesSI, indices, valueList.size());
-            }
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in DoubleVectorData.instantiate: " + storageType);
-        }
-    }
-
-    /**
-     * Instantiate a DoubleVectorData with the right data type.
-     * @param valueMap SortedMap&lt;Integer,Double&gt;; the DoubleScalar values to store
-     * @param length int; the length of the vector to pad with 0 after last entry in map
+     * @param valueMap SortedMap&lt;Integer,? extends Number&gt;; the Number or Scalar values to store
+     * @param size int; the size of the vector to pad with 0 after last entry in map
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
      * @return DoubleVectorData; the DoubleVectorData with the right data type
      * @throws ValueRuntimeException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
      */
-    public static DoubleVectorData instantiate(final SortedMap<Integer, Double> valueMap, final int length, final Scale scale,
-            final StorageType storageType) throws ValueRuntimeException
+    public static DoubleVectorData instantiate(final SortedMap<Integer, ? extends Number> valueMap, final int size,
+            final Scale scale, final StorageType storageType) throws ValueRuntimeException
     {
         Throw.whenNull(valueMap, "DoubleVectorData.instantiate: values is null");
-        Throw.when(length < 0, ValueRuntimeException.class, "Length must be >= 0");
+        Throw.when(size < 0, ValueRuntimeException.class, "size must be >= 0");
         Throw.whenNull(scale, "DoubleVectorData.instantiate: scale is null");
         Throw.whenNull(storageType, "DoubleVectorData.instantiate: storageType is null");
         for (Integer key : valueMap.keySet())
         {
-            Throw.when(key < 0 || key >= length, ValueRuntimeException.class, "Key in values out of range");
+            Throw.when(key < 0 || key >= size, ValueRuntimeException.class, "Key in values out of range");
         }
 
-        switch (storageType)
+        if (storageType.equals(StorageType.DENSE))
         {
-            case DENSE:
+            double[] valuesSI = new double[size];
+            if (scale.isBaseSIScale())
             {
-                double[] valuesSI = new double[length];
-                if (scale.isBaseSIScale())
-                {
-                    valueMap.entrySet().parallelStream().forEach(entry -> valuesSI[entry.getKey()] = entry.getValue());
-                }
-                else
-                {
-                    Arrays.fill(valuesSI, scale.toStandardUnit(0.0));
-                    valueMap.entrySet().parallelStream()
-                            .forEach(entry -> valuesSI[entry.getKey()] = scale.toStandardUnit(entry.getValue()));
-                }
-                return new DoubleVectorDataDense(valuesSI);
+                valueMap.entrySet().parallelStream()
+                        .forEach(entry -> valuesSI[entry.getKey()] = entry.getValue().doubleValue());
             }
-
-            case SPARSE:
+            else
             {
-                int nonZeroCount;
-                if (scale.isBaseSIScale())
-                {
-                    nonZeroCount = (int) valueMap.keySet().parallelStream().filter(d -> d != 0d).count();
-                }
-                else
-                {
-                    // Much harder, and the result is unlikely to be very sparse
-                    nonZeroCount = length
-                            - (int) valueMap.values().parallelStream().filter(d -> scale.toStandardUnit(d) == 0d).count();
-                }
-                int[] indices = new int[nonZeroCount];
-                double[] valuesSI = new double[nonZeroCount];
-                if (scale.isBaseSIScale())
-                {
-                    int index = 0;
-                    for (Integer key : valueMap.keySet())
-                    {
-                        double value = valueMap.get(key);
-                        if (0.0 != value)
-                        {
-                            indices[index] = key;
-                            valuesSI[index] = value;
-                            index++;
-                        }
-                    }
-                }
-                else
-                {
-                    Arrays.fill(valuesSI, scale.toStandardUnit(0.0));
-                    int index = 0;
-                    int lastKey = 0;
-                    for (Integer key : valueMap.keySet())
-                    {
-                        for (int i = lastKey; i < key; i++)
-                        {
-                            indices[index++] = i;
-                        }
-                        lastKey = key;
-                        double value = scale.toStandardUnit(valueMap.get(key));
-                        if (0.0 != value)
-                        {
-                            indices[index] = key;
-                            valuesSI[index] = value;
-                            index++;
-                        }
-                        lastKey = key + 1;
-                    }
-                    while (index < indices.length)
-                    {
-                        indices[index++] = lastKey++;
-                    }
-                }
-                return new DoubleVectorDataSparse(valuesSI, indices, length);
+                Arrays.fill(valuesSI, scale.toStandardUnit(0.0));
+                valueMap.entrySet().parallelStream()
+                        .forEach(entry -> valuesSI[entry.getKey()] = scale.toStandardUnit(entry.getValue().doubleValue()));
             }
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in DoubleVectorData.instantiate: " + storageType);
-        }
-    }
-
-    /**
-     * Instantiate a DoubleVectorData with the right data type.
-     * @param values SortedMap&lt;Integer,S&gt;; the DoubleScalar values to store
-     * @param length int; the length of the vector to pad with 0 after last entry in map
-     * @param storageType StorageType; the data type to use
-     * @return DoubleVectorData; the DoubleVectorData with the right data type
-     * @throws NullPointerException when values is null, or storageType is null
-     * @param <U> the unit
-     * @param <S> the corresponding scalar type
-     * @throws ValueRuntimeException when length &lt; 0
-     */
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> DoubleVectorData instantiateMap(
-            final SortedMap<Integer, S> values, final int length, final StorageType storageType) throws ValueRuntimeException
-    {
-        Throw.whenNull(values, "DoubleVectorData.instantiate: values is null");
-        Throw.when(length < 0, ValueRuntimeException.class, "Length must be >= 0");
-        Throw.whenNull(storageType, "DoubleVectorData.instantiate: storageType is null");
-        for (Entry<Integer, S> e : values.entrySet())
-        {
-            Throw.when(e.getKey() < 0 || e.getKey() >= length, ValueRuntimeException.class, "Key in values out of range");
-            Throw.whenNull(e.getValue(), "null value in map");
+            return new DoubleVectorDataDense(valuesSI);
         }
 
-        switch (storageType)
+        else // SoorageType.SPARSE
         {
-            case DENSE:
+            int nonZeroCount;
+            if (scale.isBaseSIScale())
             {
-                double[] valuesSI = new double[length];
-                values.entrySet().parallelStream().forEach(entry -> valuesSI[entry.getKey()] = entry.getValue().getSI());
-                return new DoubleVectorDataDense(valuesSI);
+                nonZeroCount = (int) valueMap.values().parallelStream().filter(d -> d.doubleValue() != 0d).count();
             }
-
-            case SPARSE:
+            else
             {
-                int nonZeroCount = (int) values.values().parallelStream().filter(s -> s.getSI() != 0d).count();
-                int[] indices = new int[nonZeroCount];
-                double[] valuesSI = new double[nonZeroCount];
+                // Much harder, and the result is unlikely to be very sparse
+                nonZeroCount = size - (int) valueMap.values().parallelStream()
+                        .filter(d -> scale.toStandardUnit(d.doubleValue()) == 0d).count();
+            }
+            int[] indices = new int[nonZeroCount];
+            double[] valuesSI = new double[nonZeroCount];
+            if (scale.isBaseSIScale())
+            {
                 int index = 0;
-                for (Integer key : values.keySet())
+                for (Integer key : valueMap.keySet())
                 {
-                    double value = values.get(key).getSI();
+                    double value = valueMap.get(key).doubleValue();
                     if (0.0 != value)
                     {
                         indices[index] = key;
@@ -464,11 +308,34 @@ public abstract class DoubleVectorData extends AbstractStorage<DoubleVectorData>
                         index++;
                     }
                 }
-                return new DoubleVectorDataSparse(valuesSI, indices, length);
             }
-
-            default:
-                throw new ValueRuntimeException("Unknown storage type in DoubleVectorData.instantiate: " + storageType);
+            else
+            {
+                Arrays.fill(valuesSI, scale.toStandardUnit(0.0));
+                int index = 0;
+                int lastKey = 0;
+                for (Integer key : valueMap.keySet())
+                {
+                    for (int i = lastKey; i < key; i++)
+                    {
+                        indices[index++] = i;
+                    }
+                    lastKey = key;
+                    double value = scale.toStandardUnit(valueMap.get(key).doubleValue());
+                    if (0.0 != value)
+                    {
+                        indices[index] = key;
+                        valuesSI[index] = value;
+                        index++;
+                    }
+                    lastKey = key + 1;
+                }
+                while (index < indices.length)
+                {
+                    indices[index++] = lastKey++;
+                }
+            }
+            return new DoubleVectorDataSparse(valuesSI, indices, size);
         }
     }
 
