@@ -1,4 +1,4 @@
-package org.djunits.unit.quantity;
+package org.djunits.quantity;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

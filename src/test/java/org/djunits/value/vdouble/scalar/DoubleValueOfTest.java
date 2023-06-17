@@ -8,10 +8,10 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Map;
 
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;

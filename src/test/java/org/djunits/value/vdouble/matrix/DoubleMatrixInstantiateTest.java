@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.djunits.quantity.Quantities;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;

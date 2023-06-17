@@ -8,14 +8,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.djunits.quantity.Quantities;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.scale.GradeScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.util.UNITS;

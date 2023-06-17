@@ -9,6 +9,8 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.djunits.quantity.Quantities;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AreaUnit;
@@ -20,8 +22,6 @@ import org.djunits.unit.SIUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.util.UnitException;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;

@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeMap;
 
+import org.djunits.quantity.Quantities;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.unit.util.UNITS;
 

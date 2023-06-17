@@ -2,7 +2,7 @@ package org.djunits.unit;
 
 import java.io.Serializable;
 
-import org.djunits.unit.quantity.Quantity;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefixes;

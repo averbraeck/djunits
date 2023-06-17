@@ -9,13 +9,13 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.djunits.quantity.Quantities;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.ElectricalResistanceUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
