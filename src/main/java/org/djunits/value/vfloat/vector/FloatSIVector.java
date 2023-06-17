@@ -46,14 +46,12 @@ import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TorqueUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.VolumeUnit;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
-import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Throw;
 
@@ -69,63 +67,160 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
 public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar, FloatSIVector>
 {
     /** */
     private static final long serialVersionUID = 20150901L;
 
     /**
-     * Construct a new Relative Float SIVector.
-     * @param values float[]; the values of the entries in the new Relative Float SIVector
-     * @param unit SIUnit; the unit of the new Relative Float SIVector
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIVector; the SIVector of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct a FloatSIVector from an internal data object.
+     * @param data FloatVectorData; the internal data object for the vector
+     * @param displayUnit SIUnit; the display unit of the vector data
      */
-    public static FloatSIVector instantiate(final float[] values, final SIUnit unit, final StorageType storageType)
-            throws ValueRuntimeException
+    public FloatSIVector(final FloatVectorData data, final SIUnit displayUnit)
     {
-        return new FloatSIVector(FloatVectorData.instantiate(values, unit.getScale(), storageType), unit);
+        super(data, displayUnit);
+    }
+
+    /* ****************************** CONSTRUCTORS WITH float[] ****************************** */
+
+    /**
+     * Construct a FloatSIVector from a float[] object. The float values are expressed in the displayUnit, and will be printed
+     * using the displayUnit.
+     * @param data float[]; the data for the vector, expressed in the displayUnit
+     * @param displayUnit SIUnit; the unit of the values in the data array, and display unit when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public FloatSIVector(final float[] data, final SIUnit displayUnit, final StorageType storageType)
+    {
+        this(FloatVectorData.instantiate(data, displayUnit.getScale(), storageType), displayUnit);
     }
 
     /**
-     * Construct a new Relative Float SIVector.
-     * @param values List&lt;Float&gt;; the values of the entries in the new Relative Float SIVector
-     * @param unit SIUnit; the unit of the new Relative Float SIVector
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIVector; the SIVector of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct a FloatSIVector from a float[] object. The float values are expressed in the displayUnit. Assume that the
+     * StorageType is DENSE since we offer the data as an array.
+     * @param data float[]; the data for the vector
+     * @param displayUnit SIUnit; the unit of the values in the data array, and display unit when printing
      */
-    public static FloatSIVector instantiate(final List<Float> values, final SIUnit unit, final StorageType storageType)
-            throws ValueRuntimeException
+    public FloatSIVector(final float[] data, final SIUnit displayUnit)
     {
-        return new FloatSIVector(FloatVectorData.instantiate(values, unit.getScale(), storageType), unit);
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /* ****************************** CONSTRUCTORS WITH FloatSIScalar[] ****************************** */
+
+    /**
+     * Construct a FloatSIVector from an array of FloatSIScalar objects. The FloatSIScalar values are each expressed in their own unit, but
+     * will be internally stored as SI values, all expressed in the displayUnit when printing.
+     * @param data FloatSIScalar[]; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the values when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public FloatSIVector(final FloatSIScalar[] data, final SIUnit displayUnit, final StorageType storageType)
+    {
+        this(FloatVectorData.instantiate(data, storageType), displayUnit);
     }
 
     /**
-     * Construct a new Relative Float SIVector.
-     * @param values SortedMap&lt;Integer, Float&gt;; the map of indexes to values of the Relative Sparse Float SIVector
-     * @param length int; the size of the vector
-     * @param unit SIUnit; the unit of the new Relative Sparse Float SIVector
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIVector; the SIVector of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct a FloatSIVector from an array of FloatSIScalar objects. The FloatSIScalar values are each expressed in their own unit, but
+     * will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the StorageType is
+     * DENSE since we offer the data as an array.
+     * @param data FloatSIScalar[]; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the values when printing
      */
-    public static FloatSIVector instantiate(final SortedMap<Integer, Float> values, final int length, final SIUnit unit,
-            final StorageType storageType) throws ValueRuntimeException
+    public FloatSIVector(final FloatSIScalar[] data, final SIUnit displayUnit)
     {
-        return new FloatSIVector(FloatVectorData.instantiate(values, length, unit.getScale(), storageType), unit);
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /* ****************************** CONSTRUCTORS WITH List<Float> or List<FloatSIScalar> ****************************** */
+
+    /**
+     * Construct a FloatSIVector from a list of Number objects or a list of FloatSIScalar objects. Note that the displayUnit has a
+     * different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatSIScalar objects. In
+     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
+     * as well as the unit in which they will be printed. In case the list contains FloatSIScalar objects, each FloatSIScalar has its own
+     * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
+     * values, and expressed using the display unit or base unit when printing.
+     * @param data List&lt;Float&gt; or List&lt;SIScalar&gt;; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public FloatSIVector(final List<? extends Number> data, final SIUnit displayUnit, final StorageType storageType)
+    {
+        this(data.size() == 0 ? FloatVectorData.instantiate(new float[] {}, IdentityScale.SCALE, storageType)
+                : data.get(0) instanceof FloatSIScalar ? FloatVectorData.instantiate(data, IdentityScale.SCALE, storageType)
+                        : FloatVectorData.instantiate(data, displayUnit.getScale(), storageType),
+                displayUnit);
     }
 
     /**
-     * @param data FloatVectorData; an internal data object
-     * @param unit SIUnit; the unit
+     * Construct a FloatSIVector from a list of Number objects or a list of FloatSIScalar objects. Note that the displayUnit has a
+     * different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatSIScalar objects. In
+     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
+     * as well as the unit in which they will be printed. In case the list contains FloatSIScalar objects, each FloatSIScalar has its own
+     * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
+     * values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we offer
+     * the data as a List.
+     * @param data List&lt;Float&gt; or List&lt;SIScalar&gt;; the data for the vector
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
-    public FloatSIVector(final FloatVectorData data, final SIUnit unit)
+    public FloatSIVector(final List<? extends Number> data, final SIUnit displayUnit)
     {
-        super(data, unit);
+        this(data, displayUnit, StorageType.DENSE);
     }
+
+    /* ******************** CONSTRUCTORS WITH SortedMap<Integer, Float> or SortedMap<Integer, FloatSIScalar> ******************** */
+
+    /**
+     * Construct a FloatSIVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to of
+     * FloatSIScalar objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size of
+     * the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
+     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatSIScalar objects. In case the map
+     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
+     * unit in which they will be printed. In case the map contains FloatSIScalar objects, each FloatSIScalar has its own unit, and the
+     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
+     * expressed using the display unit or base unit when printing.
+     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatSIScalar&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     */
+    public FloatSIVector(final SortedMap<Integer, ? extends Number> data, final int size, final SIUnit displayUnit,
+            final StorageType storageType)
+    {
+        this(data.size() == 0 ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
+                : data.get(data.firstKey()) instanceof FloatSIScalar
+                        ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
+                        : FloatVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
+                displayUnit);
+    }
+
+    /**
+     * Construct a FloatSIVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to of
+     * FloatSIScalar objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size of
+     * the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
+     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatSIScalar objects. In case the map
+     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
+     * unit in which they will be printed. In case the map contains FloatSIScalar objects, each FloatSIScalar has its own unit, and the
+     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
+     * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
+     * a Map.
+     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatSIScalar&gt;; the data for the vector
+     * @param size int; the size off the vector, i.e., the highest index
+     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     */
+    public FloatSIVector(final SortedMap<Integer, ? extends Number> data, final int size, final SIUnit displayUnit)
+    {
+        this(data, size, displayUnit, StorageType.SPARSE);
+    }
+
+    /* ****************************** Other methods ****************************** */
 
     /** {@inheritDoc} */
     @Override
@@ -135,95 +230,95 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
     }
 
     /**
-     * Returns an SIVector based on an array of values and the textual representation of the unit.
+     * Returns a FloatSIVector based on an array of values and the textual representation of the unit.
      * @param value float[]; the values to use
      * @param unitString String; the textual representation of the unit
      * @param storageType StorageType; the storage type to use
-     * @return SIVector; the vector representation of the values in their unit
+     * @return FloatSIVector; the vector representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
     public static FloatSIVector of(final float[] value, final String unitString, final StorageType storageType)
     {
-        Throw.whenNull(value, "Error parsing SIVector: value is null");
-        Throw.whenNull(unitString, "Error parsing SIVector: unitString is null");
+        Throw.whenNull(value, "Error parsing FloatSIVector: value is null");
+        Throw.whenNull(unitString, "Error parsing FloatSIVector: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatSIVector: empty unitString");
-        Throw.whenNull(storageType, "Error parsing SIVector: storageType is null");
+        Throw.whenNull(storageType, "Error parsing FloatSIVector: storageType is null");
         try
         {
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return FloatSIVector.instantiate(value, unit, storageType);
+                return new FloatSIVector(value, unit, storageType);
             }
         }
         catch (Exception exception)
         {
             throw new IllegalArgumentException("Error parsing SIUnit from " + unitString, exception);
         }
-        throw new IllegalArgumentException("Error parsing SIVector with unit " + unitString);
+        throw new IllegalArgumentException("Error parsing FloatSIVector with unit " + unitString);
     }
 
     /**
-     * Returns an SIVector based on an array of values and the textual representation of the unit.
+     * Returns a FloatSIVector based on an array of values and the textual representation of the unit.
      * @param valueList List&lt;Float&gt;; the values to use
      * @param unitString String; the textual representation of the unit
      * @param storageType StorageType; the storage type to use
-     * @return SIVector; the vector representation of the values in their unit
+     * @return FloatSIVector; the vector representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
     public static FloatSIVector of(final List<Float> valueList, final String unitString, final StorageType storageType)
     {
-        Throw.whenNull(valueList, "Error parsing SIVector: valueList is null");
-        Throw.whenNull(unitString, "Error parsing SIVector: unitString is null");
+        Throw.whenNull(valueList, "Error parsing FloatSIVector: valueList is null");
+        Throw.whenNull(unitString, "Error parsing FloatSIVector: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatSIVector: empty unitString");
-        Throw.whenNull(storageType, "Error parsing SIVector: storageType is null");
+        Throw.whenNull(storageType, "Error parsing FloatSIVector: storageType is null");
         try
         {
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return FloatSIVector.instantiate(valueList, unit, storageType);
+                return new FloatSIVector(valueList, unit, storageType);
             }
         }
         catch (Exception exception)
         {
             throw new IllegalArgumentException("Error parsing SIUnit from " + unitString, exception);
         }
-        throw new IllegalArgumentException("Error parsing SIVector with unit " + unitString);
+        throw new IllegalArgumentException("Error parsing FloatSIVector with unit " + unitString);
     }
 
     /**
-     * Returns an SIVector based on a (sparse) map of values and the textual representation of the unit.
+     * Returns a FloatSIVector based on a (sparse) map of values and the textual representation of the unit.
      * @param valueMap SortedMap&lt;Integer, Float&gt;; the values to use
      * @param unitString String; the textual representation of the unit
      * @param length int; the size of the vector
      * @param storageType StorageType; the storage type to use
-     * @return SIVector; the vector representation of the values in their unit
+     * @return FloatSIVector; the vector representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
     public static FloatSIVector of(final SortedMap<Integer, Float> valueMap, final String unitString, final int length,
             final StorageType storageType)
     {
-        Throw.whenNull(valueMap, "Error parsing SIVector: valueMap is null");
-        Throw.whenNull(unitString, "Error parsing SIVector: unitString is null");
+        Throw.whenNull(valueMap, "Error parsing FloatSIVector: valueMap is null");
+        Throw.whenNull(unitString, "Error parsing FloatSIVector: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatSIVector: empty unitString");
-        Throw.whenNull(storageType, "Error parsing SIVector: storageType is null");
+        Throw.whenNull(storageType, "Error parsing FloatSIVector: storageType is null");
         try
         {
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return FloatSIVector.instantiate(valueMap, length, unit, storageType);
+                return new FloatSIVector(valueMap, length, unit, storageType);
             }
         }
         catch (Exception exception)
         {
             throw new IllegalArgumentException("Error parsing SIUnit from " + unitString, exception);
         }
-        throw new IllegalArgumentException("Error parsing SIVector with unit " + unitString);
+        throw new IllegalArgumentException("Error parsing FloatSIVector with unit " + unitString);
     }
 
     /** {@inheritDoc} */
@@ -251,27 +346,7 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
     /******************************** 'CAST AS' METHODS *******************************/
     /**********************************************************************************/
 
-    /**
-     * Return the current vector transformed to a vector in the given unit. Of course the SI dimensionality has to match,
-     * otherwise the vector cannot be transformed. The compiler will check the alignment between the return value and the unit.
-     * @param displayUnit KU; the unit in which the vector needs to be expressed
-     * @return V; the vector that has been transformed into the right vector type and unit
-     * @param <U> the unit type
-     * @param <S> the scalar type
-     * @param <V> the vector type
-     */
-    public final <U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
-            V extends AbstractFloatVectorRel<U, S, V>> V as(final U displayUnit)
-    {
-        Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(displayUnit.getQuantity().getSiDimensions())),
-                UnitRuntimeException.class, "SIVector with unit %s cannot be converted to a FloatVector with unit %s",
-                getDisplayUnit(), displayUnit);
-        V result = FloatVector.instantiate(this.data, displayUnit.getStandardUnit());
-        result.setDisplayUnit(displayUnit);
-        return result;
-    }
-
-    /**
+        /**
      * Return the current vector as a absorbeddose vector.
      * @return FloatAbsorbedDoseVector; the current vector as a absorbeddose vector
      */
@@ -295,7 +370,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a acceleration vector.
      * @return FloatAccelerationVector; the current vector as a acceleration vector
@@ -320,7 +394,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a amountofsubstance vector.
      * @return FloatAmountOfSubstanceVector; the current vector as a amountofsubstance vector
@@ -345,7 +418,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a angularacceleration vector.
      * @return FloatAngularAccelerationVector; the current vector as a angularacceleration vector
@@ -370,7 +442,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a angularvelocity vector.
      * @return FloatAngularVelocityVector; the current vector as a angularvelocity vector
@@ -395,7 +466,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a area vector.
      * @return FloatAreaVector; the current vector as a area vector
@@ -420,7 +490,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a catalyticactivity vector.
      * @return FloatCatalyticActivityVector; the current vector as a catalyticactivity vector
@@ -445,7 +514,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a density vector.
      * @return FloatDensityVector; the current vector as a density vector
@@ -470,7 +538,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a dimensionless vector.
      * @return FloatDimensionlessVector; the current vector as a dimensionless vector
@@ -495,7 +562,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalcapacitance vector.
      * @return FloatElectricalCapacitanceVector; the current vector as a electricalcapacitance vector
@@ -516,12 +582,10 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
     {
         Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(ElectricalCapacitanceUnit.BASE.getSiDimensions())),
                 UnitRuntimeException.class, "cannot cast %s to FloatElectricalCapacitanceVector", this.toString());
-        FloatElectricalCapacitanceVector result =
-                new FloatElectricalCapacitanceVector(this.data, displayUnit.getStandardUnit());
+        FloatElectricalCapacitanceVector result = new FloatElectricalCapacitanceVector(this.data, displayUnit.getStandardUnit());
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalcharge vector.
      * @return FloatElectricalChargeVector; the current vector as a electricalcharge vector
@@ -546,7 +610,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalconductance vector.
      * @return FloatElectricalConductanceVector; the current vector as a electricalconductance vector
@@ -567,12 +630,10 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
     {
         Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(ElectricalConductanceUnit.BASE.getSiDimensions())),
                 UnitRuntimeException.class, "cannot cast %s to FloatElectricalConductanceVector", this.toString());
-        FloatElectricalConductanceVector result =
-                new FloatElectricalConductanceVector(this.data, displayUnit.getStandardUnit());
+        FloatElectricalConductanceVector result = new FloatElectricalConductanceVector(this.data, displayUnit.getStandardUnit());
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalcurrent vector.
      * @return FloatElectricalCurrentVector; the current vector as a electricalcurrent vector
@@ -597,7 +658,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalinductance vector.
      * @return FloatElectricalInductanceVector; the current vector as a electricalinductance vector
@@ -622,7 +682,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalpotential vector.
      * @return FloatElectricalPotentialVector; the current vector as a electricalpotential vector
@@ -647,7 +706,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a electricalresistance vector.
      * @return FloatElectricalResistanceVector; the current vector as a electricalresistance vector
@@ -672,7 +730,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a energy vector.
      * @return FloatEnergyVector; the current vector as a energy vector
@@ -697,7 +754,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a equivalentdose vector.
      * @return FloatEquivalentDoseVector; the current vector as a equivalentdose vector
@@ -722,7 +778,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a flowmass vector.
      * @return FloatFlowMassVector; the current vector as a flowmass vector
@@ -747,7 +802,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a flowvolume vector.
      * @return FloatFlowVolumeVector; the current vector as a flowvolume vector
@@ -772,7 +826,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a force vector.
      * @return FloatForceVector; the current vector as a force vector
@@ -797,7 +850,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a frequency vector.
      * @return FloatFrequencyVector; the current vector as a frequency vector
@@ -822,7 +874,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a illuminance vector.
      * @return FloatIlluminanceVector; the current vector as a illuminance vector
@@ -847,7 +898,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a lineardensity vector.
      * @return FloatLinearDensityVector; the current vector as a lineardensity vector
@@ -872,7 +922,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a luminousflux vector.
      * @return FloatLuminousFluxVector; the current vector as a luminousflux vector
@@ -897,7 +946,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a luminousintensity vector.
      * @return FloatLuminousIntensityVector; the current vector as a luminousintensity vector
@@ -922,7 +970,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a magneticfluxdensity vector.
      * @return FloatMagneticFluxDensityVector; the current vector as a magneticfluxdensity vector
@@ -947,7 +994,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a magneticflux vector.
      * @return FloatMagneticFluxVector; the current vector as a magneticflux vector
@@ -972,7 +1018,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a mass vector.
      * @return FloatMassVector; the current vector as a mass vector
@@ -997,7 +1042,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a momentum vector.
      * @return FloatMomentumVector; the current vector as a momentum vector
@@ -1022,7 +1066,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a power vector.
      * @return FloatPowerVector; the current vector as a power vector
@@ -1047,7 +1090,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a pressure vector.
      * @return FloatPressureVector; the current vector as a pressure vector
@@ -1072,7 +1114,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a radioactivity vector.
      * @return FloatRadioActivityVector; the current vector as a radioactivity vector
@@ -1097,7 +1138,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a solidangle vector.
      * @return FloatSolidAngleVector; the current vector as a solidangle vector
@@ -1122,7 +1162,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a speed vector.
      * @return FloatSpeedVector; the current vector as a speed vector
@@ -1147,7 +1186,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a torque vector.
      * @return FloatTorqueVector; the current vector as a torque vector
@@ -1172,7 +1210,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a volume vector.
      * @return FloatVolumeVector; the current vector as a volume vector
@@ -1197,7 +1234,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a angle vector.
      * @return FloatAngleVector; the current vector as a angle vector
@@ -1222,7 +1258,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a length vector.
      * @return FloatLengthVector; the current vector as a length vector
@@ -1247,7 +1282,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a temperature vector.
      * @return FloatTemperatureVector; the current vector as a temperature vector
@@ -1272,7 +1306,6 @@ public class FloatSIVector extends AbstractFloatVectorRel<SIUnit, FloatSIScalar,
         result.setDisplayUnit(displayUnit);
         return result;
     }
-
     /**
      * Return the current vector as a duration vector.
      * @return FloatDurationVector; the current vector as a duration vector
