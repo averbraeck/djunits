@@ -13,7 +13,7 @@ import org.djutils.exceptions.Throw;
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
  * @param <T> the vector or matrix data type
  */
-public abstract class AbstractStorage<T extends AbstractStorage<T>> implements Cloneable, Serializable
+public abstract class Storage<T extends Storage<T>> implements Cloneable, Serializable
 {
     /** ... */
     private static final long serialVersionUID = 20191018L;
@@ -25,7 +25,7 @@ public abstract class AbstractStorage<T extends AbstractStorage<T>> implements C
      * Construct a new Data store.
      * @param storageType StorageType; the data type
      */
-    public AbstractStorage(final StorageType storageType)
+    public Storage(final StorageType storageType)
     {
         Throw.whenNull(storageType, "storage type cannot be null");
         this.storageType = storageType;

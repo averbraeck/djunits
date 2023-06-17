@@ -2,7 +2,7 @@ package org.djunits.value;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.base.Scalar;
-import org.djunits.value.storage.AbstractStorage;
+import org.djunits.value.storage.Storage;
 import org.djunits.value.storage.StorageType;
 import org.djutils.exceptions.Throw;
 
@@ -19,7 +19,7 @@ import org.djutils.exceptions.Throw;
  * @param <D> the data storage type
  */
 public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
-        T extends AbstractIndexedValue<U, S, T, D>, D extends AbstractStorage<D>> extends AbstractValue<U, T>
+        T extends AbstractIndexedValue<U, S, T, D>, D extends Storage<D>> extends AbstractValue<U, T>
         implements IndexedValue<U, S, T>, Cloneable
 {
     /** */

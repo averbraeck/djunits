@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.Scale;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.storage.AbstractStorage;
+import org.djunits.value.storage.Storage;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleFunction2;
@@ -25,7 +25,7 @@ import org.djutils.exceptions.Throw;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-public abstract class DoubleMatrixData extends AbstractStorage<DoubleMatrixData> implements Serializable
+public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> implements Serializable
 {
     /** */
     private static final long serialVersionUID = 1L;
