@@ -6,9 +6,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AreaUnit;
@@ -16,28 +13,18 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
-import org.djunits.unit.SIUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
-import org.djunits.unit.Unit;
-import org.djunits.unit.quantity.Quantities;
-import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.util.UnitException;
-import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.CLASSNAMES;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.DOUBLEMATRIX;
-import org.djunits.value.vdouble.matrix.SIMatrix;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
 import org.djunits.value.vdouble.scalar.AbsoluteTemperature;
 import org.djunits.value.vdouble.scalar.Area;
 import org.djunits.value.vdouble.scalar.Direction;
 import org.djunits.value.vdouble.scalar.Duration;
 import org.djunits.value.vdouble.scalar.Position;
 import org.djunits.value.vdouble.scalar.Time;
-import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -83,8 +70,7 @@ public class DoubleVectorMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                AreaVector am =
-                        DoubleVector.instantiate(DoubleVectorData.instantiate(testData, au.getScale(), storageType), au);
+                AreaVector am = new AreaVector(DoubleVectorData.instantiate(testData, au.getScale(), storageType), au);
 
                 // SPARSE AND DENSE
                 assertEquals(am, am.toSparse());
@@ -102,7 +88,7 @@ public class DoubleVectorMethodTest
                 assertEquals(am, am);
                 assertNotEquals(am, new Object());
                 assertNotEquals(am, null);
-                assertNotEquals(am, DoubleVector.instantiate(
+                assertNotEquals(am, new LengthVector(
                         DoubleVectorData.instantiate(testData, LengthUnit.METER.getScale(), storageType), LengthUnit.METER));
                 assertNotEquals(am, am.divide(2.0d));
 
@@ -265,8 +251,8 @@ public class DoubleVectorMethodTest
                     for (AreaUnit au2 : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
                     {
                         // PLUS and INCREMENTBY(VECTOR)
-                        AreaVector am2 = DoubleVector
-                                .instantiate(DoubleVectorData.instantiate(testData2, au2.getScale(), storageType2), au2);
+                        AreaVector am2 =
+                                new AreaVector(DoubleVectorData.instantiate(testData2, au2.getScale(), storageType2), au2);
                         AreaVector amSum1 = am.plus(am2);
                         AreaVector amSum2 = am2.plus(am);
                         AreaVector amSum3 = am.mutable().incrementBy(am2).immutable();
@@ -340,8 +326,7 @@ public class DoubleVectorMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                AreaVector am =
-                        DoubleVector.instantiate(DoubleVectorData.instantiate(testData, au.getScale(), storageType), au);
+                AreaVector am = new AreaVector(DoubleVectorData.instantiate(testData, au.getScale(), storageType), au);
                 am = am.immutable();
                 final AreaVector amPtr = am;
                 Area fa = Area.of(10.0d, "m^2");
@@ -380,8 +365,7 @@ public class DoubleVectorMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                AreaVector am =
-                        DoubleVector.instantiate(DoubleVectorData.instantiate(testData, au.getScale(), storageType), au);
+                AreaVector am = new AreaVector(DoubleVectorData.instantiate(testData, au.getScale(), storageType), au);
                 String s1 = am.toString(); // non-verbose with unit
                 assertTrue(s1.contains(au.getDefaultTextualAbbreviation()));
                 String s2 = am.toString(AreaUnit.SQUARE_INCH); // non-verbose with unit
@@ -414,12 +398,12 @@ public class DoubleVectorMethodTest
                 assertFalse(sNotVerbose.contains(au.getDefaultTextualAbbreviation()));
             }
         }
-        TimeVector tm = DoubleVector.instantiate(
+        TimeVector tm = new TimeVector(
                 DoubleVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
         String st = tm.toString(TimeUnit.DEFAULT, true, true); // verbose with unit
         assertFalse(st.contains("Rel"));
         assertTrue(st.contains("Abs"));
-        LengthVector lm = DoubleVector.instantiate(
+        LengthVector lm = new LengthVector(
                 DoubleVectorData.instantiate(denseTestData, LengthUnit.SI.getScale(), StorageType.DENSE), LengthUnit.SI);
         String sl = lm.toString(LengthUnit.SI, true, true); // verbose with unit
         assertTrue(sl.contains("Rel"));
@@ -433,9 +417,9 @@ public class DoubleVectorMethodTest
     public void testSpecialVectorMethodsRelWithAbs()
     {
         double[] denseTestData = DOUBLEVECTOR.denseArray(105);
-        TimeVector tm = DoubleVector.instantiate(
+        TimeVector tm = new TimeVector(
                 DoubleVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        DurationVector dm = DoubleVector.instantiate(
+        DurationVector dm = new DurationVector(
                 DoubleVectorData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
                 DurationUnit.SECOND);
         assertTrue(tm.isAbsolute());
@@ -450,7 +434,7 @@ public class DoubleVectorMethodTest
         {
             halfDenseData[index] *= 0.5;
         }
-        TimeVector halfTimeVector = DoubleVector.instantiate(
+        TimeVector halfTimeVector = new TimeVector(
                 DoubleVectorData.instantiate(halfDenseData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
         DurationVector absMinusAbs = tm.minus(halfTimeVector);
         TimeVector absDecByRelS = tm.mutable().decrementBy(Duration.of(1.0d, "min"));
@@ -468,7 +452,7 @@ public class DoubleVectorMethodTest
         for (int dLength : new int[] {-1, 1})
         {
             double[] other = DOUBLEVECTOR.denseArray(denseTestData.length + dLength);
-            TimeVector wrongTimeVector = DoubleVector.instantiate(
+            TimeVector wrongTimeVector = new TimeVector(
                     DoubleVectorData.instantiate(other, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
             try
             {
@@ -492,9 +476,9 @@ public class DoubleVectorMethodTest
     public void testInstantiateAbs()
     {
         double[] denseTestData = DOUBLEVECTOR.denseArray(105);
-        TimeVector timeVector = DoubleVector.instantiate(
+        TimeVector timeVector = new TimeVector(
                 DoubleVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        DurationVector durationVector = DoubleVector.instantiate(
+        DurationVector durationVector = new DurationVector(
                 DoubleVectorData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
                 DurationUnit.SECOND);
 
@@ -512,9 +496,9 @@ public class DoubleVectorMethodTest
         assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, time.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, time.si, 0.1);
 
-        AngleVector angleVector = DoubleVector.instantiate(
+        AngleVector angleVector = new AngleVector(
                 DoubleVectorData.instantiate(denseTestData, AngleUnit.DEGREE.getScale(), StorageType.DENSE), AngleUnit.DEGREE);
-        DirectionVector directionVector = DoubleVector.instantiate(
+        DirectionVector directionVector = new DirectionVector(
                 DoubleVectorData.instantiate(denseTestData, DirectionUnit.EAST_DEGREE.getScale(), StorageType.DENSE),
                 DirectionUnit.EAST_DEGREE);
 
@@ -528,10 +512,10 @@ public class DoubleVectorMethodTest
         assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, direction.si, 0.1);
 
-        TemperatureVector temperatureVector = DoubleVector.instantiate(
+        TemperatureVector temperatureVector = new TemperatureVector(
                 DoubleVectorData.instantiate(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT.getScale(), StorageType.DENSE),
                 TemperatureUnit.DEGREE_FAHRENHEIT);
-        AbsoluteTemperatureVector absoluteTemperatureVector = DoubleVector.instantiate(
+        AbsoluteTemperatureVector absoluteTemperatureVector = new AbsoluteTemperatureVector(
                 DoubleVectorData.instantiate(denseTestData, AbsoluteTemperatureUnit.KELVIN.getScale(), StorageType.DENSE),
                 AbsoluteTemperatureUnit.KELVIN);
 
@@ -547,9 +531,9 @@ public class DoubleVectorMethodTest
                 absoluteTemperature.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, absoluteTemperature.si, 0.1);
 
-        LengthVector lengthVector = DoubleVector.instantiate(
+        LengthVector lengthVector = new LengthVector(
                 DoubleVectorData.instantiate(denseTestData, LengthUnit.MILE.getScale(), StorageType.DENSE), LengthUnit.MILE);
-        PositionVector positionVector = DoubleVector.instantiate(
+        PositionVector positionVector = new PositionVector(
                 DoubleVectorData.instantiate(denseTestData, PositionUnit.KILOMETER.getScale(), StorageType.DENSE),
                 PositionUnit.KILOMETER);
 
@@ -561,64 +545,6 @@ public class DoubleVectorMethodTest
         Position position = lengthVector.instantiateScalarAbsSI(123.456f, PositionUnit.ANGSTROM);
         assertEquals("Unit of instantiateScalarAbsSI matches", PositionUnit.ANGSTROM, position.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, position.si, 0.1);
-    }
-
-    /**
-     * Test the <code>as</code> method of the SIVector class.
-     * @throws SecurityException on error
-     * @throws NoSuchMethodException on error
-     * @throws InvocationTargetException on error
-     * @throws IllegalArgumentException on error
-     * @throws IllegalAccessException on error
-     * @throws ClassNotFoundException on error
-     * @throws UnitException on error
-     * @param <U> the unit type
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public <U extends Unit<U>> void testAsUnit() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
-    {
-        double[][] testValues = DOUBLEMATRIX.denseRectArrays(10, 20);
-        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
-        {
-            for (String type : CLASSNAMES.REL_LIST)
-            {
-                Class.forName("org.djunits.unit." + type + "Unit");
-                Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
-                for (U unit : quantity.getUnitsById().values())
-                {
-                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, storageType})
-                    {
-                        SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
-                        SIMatrix matrix = SIMatrix.instantiate(testValues, siUnit, storageType2);
-                        Method asMethod = SIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        AbstractDoubleMatrixRel<U, ?, ?, ?> asMatrix =
-                                (AbstractDoubleMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
-                        assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
-                        siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
-                        for (int row = 0; row < testValues.length; row++)
-                        {
-                            for (int col = 0; col < testValues[0].length; col++)
-                            {
-                                assertEquals("Values should match", testValues[row][col], matrix.getInUnit(row, col), 0.001);
-                            }
-                        }
-                        try
-                        {
-                            asMethod.invoke(matrix, siUnit);
-                            fail("as method should not be able to cast to unrelated (absoluteTemperature) unit");
-                        }
-                        catch (InvocationTargetException ite)
-                        {
-                            Throwable cause = ite.getCause();
-                            assertEquals("cause is UnitRuntimeException", UnitRuntimeException.class, cause.getClass());
-                            // Otherwise ignore expected exception
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -654,6 +580,82 @@ public class DoubleVectorMethodTest
                 assertFalse("Double vector data is not equal to other double vector containing same values except for one zero",
                         dvd.equals(dvd2));
             }
+        }
+    }
+
+    /**
+     * Test the plus and similar methods.
+     */
+    @Test
+    public void operationTest()
+    {
+        double[] testValues = new double[] {0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0};
+        double[] testValues2 = new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for (AbsoluteTemperatureUnit temperatureUnit : new AbsoluteTemperatureUnit[] {AbsoluteTemperatureUnit.KELVIN,
+                AbsoluteTemperatureUnit.DEGREE_CELSIUS, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT})
+        {
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+            {
+                AbsoluteTemperatureVector atv = new AbsoluteTemperatureVector(testValues, temperatureUnit, storageType);
+                for (TemperatureUnit relativeTemperatureUnit : new TemperatureUnit[] {TemperatureUnit.KELVIN,
+                        TemperatureUnit.DEGREE_CELSIUS, TemperatureUnit.DEGREE_FAHRENHEIT})
+                {
+                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+                    {
+                        TemperatureVector rtv = new TemperatureVector(testValues2, relativeTemperatureUnit, storageType2);
+                        AbsoluteTemperatureVector sumtv = atv.plus(rtv);
+                        compareSum(atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN),
+                                rtv.getValuesInUnit(TemperatureUnit.KELVIN),
+                                sumtv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
+                        AbsoluteTemperatureVector difftv = atv.minus(rtv);
+                        compareSum(rtv.getValuesInUnit(TemperatureUnit.KELVIN),
+                                difftv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN),
+                                atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
+
+                        String s = atv.toString(temperatureUnit);
+                        assertTrue("toString returns something sensible", s.startsWith("["));
+                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
+                        // System.out.println(atv.toString(true, true));
+                        s = atv.toString(true, true);
+                        assertTrue("toString includes Immutable", s.contains("Immutable"));
+                        assertTrue("toString includes Abs", s.contains("Abs"));
+                        assertTrue("toString includes Dense or Sparse", s.contains(atv.isDense() ? "Dense" : "Sparse"));
+                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
+                        s = atv.mutable().toString(true, true);
+                        assertTrue("toString includes Mutable", s.contains("Mutable"));
+
+                        s = rtv.toString();
+                        assertTrue("toString returns something sensible", s.startsWith("["));
+                        assertTrue("toString returns something sensible",
+                                s.endsWith("] " + relativeTemperatureUnit.toString()));
+                        s = rtv.toString(true, true);
+                        assertTrue("toString includes Immutable", s.contains("Immutable"));
+                        assertTrue("toString includes Rel", s.contains("Rel"));
+                        assertTrue("toString includes Dense or Sparse", s.contains(rtv.isDense() ? "Dense" : "Sparse"));
+                        assertTrue("toString returns something sensible",
+                                s.endsWith("] " + relativeTemperatureUnit.toString()));
+                        s = rtv.mutable().toString(true, true);
+                        assertTrue("toString includes Mutable", s.contains("Mutable"));
+
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Check that two arrays and a sum array match.
+     * @param left double[]; the left array
+     * @param right double[]; the right array
+     * @param sum double[]; the sum array
+     */
+    public void compareSum(final double[] left, final double[] right, final double[] sum)
+    {
+        assertEquals("length of left must equal length of sum", left.length, sum.length);
+        assertEquals("length of right must equal length of sum", right.length, sum.length);
+        for (int i = 0; i < sum.length; i++)
+        {
+            assertEquals("left plus right is sum", left[i] + right[i], sum[i], 0.001);
         }
     }
 

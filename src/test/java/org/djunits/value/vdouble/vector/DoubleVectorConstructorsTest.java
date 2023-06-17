@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -15,30 +17,28 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.djunits.unit.AbsoluteTemperatureUnit;
-import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
-import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.quantity.Quantities;
 import org.djunits.unit.quantity.Quantity;
 import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
-import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Scalar;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.AbsoluteTemperature;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
-import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.base.DoubleVectorInterface;
+import org.djunits.value.vdouble.vector.data.DoubleVectorData;
+import org.djutils.exceptions.Try;
 import org.junit.Test;
 
 /**
@@ -47,19 +47,18 @@ import org.junit.Test;
 public class DoubleVectorConstructorsTest
 {
     /**
-     * Test the constructors of DoubleVector.
-     * @throws ClassNotFoundException if that happens uncaught; this test has failed
-     * @throws SecurityException if that happens uncaught; this test has failed
-     * @throws NoSuchMethodException if that happens uncaught; this test has failed
-     * @throws InvocationTargetException if that happens uncaught; this test has failed
-     * @throws IllegalArgumentException if that happens uncaught; this test has failed
-     * @throws IllegalAccessException if that happens uncaught; this test has failed
-     * @throws InstantiationException if that happens uncaught; this test has failed
+     * test double[] constructors
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws InstantiationException on error
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void instantiatorTest() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    public void testDoubleConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
         // Force loading of all classes
         LengthUnit length = UNITS.METER;
@@ -71,15 +70,12 @@ public class DoubleVectorConstructorsTest
         for (String scalarName : CLASSNAMES.ALL_NODIM_LIST)
         {
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
-            // double
-            @SuppressWarnings("rawtypes")
-            Unit standardUnit = quantity.getStandardUnit();
-            double[] testValues = new double[] { 0, 123.456d, 0, 0, 234.567d, 0, 0 };
+            Unit<?> standardUnit = quantity.getStandardUnit();
+            Class<?> unitClass = standardUnit.getClass();
+            double[] testValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
+
             int cardinality = 0;
-            double zSum = 0;
-            List<Double> list = new ArrayList<>();
-            SortedMap<Integer, Double> map = new TreeMap<>();
-            SortedMap<Integer, Double> notQuiteSparseMap = new TreeMap<>();
+            double zSum = 0.0;
             for (int index = 0; index < testValues.length; index++)
             {
                 double value = testValues[index];
@@ -87,490 +83,1012 @@ public class DoubleVectorConstructorsTest
                 {
                     cardinality++;
                     zSum += value;
-                    map.put(index, value);
-                    notQuiteSparseMap.put(index, value);
                 }
-                else if (index % 2 == 0)
-                {
-                    notQuiteSparseMap.put(index, value);
-                }
-                list.add(value);
             }
-            for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
-                DoubleVectorInterface<?, ?, ?> doubleVector = DoubleVector.instantiate(testValues, standardUnit, storageType);
-                // System.out.println(doubleVector);
-                compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
-                assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
-                assertEquals("StorageType must match", storageType, doubleVector.getStorageType());
-                assertEquals("Cardinality", cardinality, doubleVector.cardinality());
-                if (doubleVector instanceof Relative)
+                // get the constructors
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorDUS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(double[].class, unitClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorDU =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(double[].class, unitClass);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorDS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(double[].class, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorD =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(double[].class);
+
+                // initialize vectors
+                DoubleVectorInterface<?, ?, ?> vDUS = constructorDUS.newInstance(testValues, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vDUS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vDU = constructorDU.newInstance(testValues, standardUnit);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vDU.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vDS = constructorDS.newInstance(testValues, storageType);
+                assertEquals("StorageType must match", storageType, vDS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vD = constructorD.newInstance(testValues);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vD.getStorageType());
+
+                for (DoubleVectorInterface<?, ?, ?> doubleVector : new DoubleVectorInterface[] {vDUS, vDU, vDS, vD})
                 {
-                    assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
+                    assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
+                    assertEquals("Cardinality", cardinality, doubleVector.cardinality());
+                    if (doubleVector instanceof Relative)
+                    {
+                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    }
+
+                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
+                    assertTrue("mutable double vector is mutable", mutable.isMutable());
+                    mutable.setSI(0, 0);
+                    mutable.setInUnit(0, 0);
+                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.mutable().setSI(testValues.length, 0),
+                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                    mutable.setSI(testValues.length - 1, 0);
+                    mutable.ceil();
+                    for (int index = 0; index < testValues.length; index++)
+                    {
+                        assertEquals("ceil", Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    DoubleVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    mutable = doubleVector.mutable().mutable();
+                    mutable.floor();
+                    for (int index = 0; index < testValues.length; index++)
+                    {
+                        assertEquals("floor", Math.floor(testValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.rint();
+                    for (int index = 0; index < testValues.length; index++)
+                    {
+                        assertEquals("rint", Math.rint(testValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.neg();
+                    for (int index = 0; index < testValues.length; index++)
+                    {
+                        assertEquals("neg", -testValues[index], mutable.getInUnit(index), 0.001);
+                    }
+                    int nextIndex = 0;
+                    for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
+                    {
+                        AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
+                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
+                        assertEquals("value of scalar matches", s.getInUnit(), testValues[nextIndex], 0.001);
+                        nextIndex++;
+                    }
                 }
-                String scalarClassName = "org.djunits.value.vdouble.scalar." + scalarName;
-                Class<?> scalarClass = Class.forName(scalarClassName);
-                assertEquals("getScalarClass", scalarClass, doubleVector.getScalarClass());
-                compareValues(testValues, doubleVector.getValuesInUnit());
-                doubleVector = DoubleVector.instantiateSI(testValues, standardUnit, storageType);
-                compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
-                assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
-                assertEquals("StorageType must match", storageType, doubleVector.getStorageType());
-                assertFalse("double vector is immutable by default", doubleVector.isMutable());
-                try
-                {
-                    doubleVector.setSI(0, 0);
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                try
-                {
-                    doubleVector.setInUnit(0, 0);
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                try
-                {
-                    doubleVector.ceil();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
-                assertTrue("mutable double vector is mutable", mutable.isMutable());
-                mutable.setSI(0, 0);
-                mutable.setInUnit(0, 0);
-                try
-                {
-                    mutable.setSI(-1, 0);
-                    fail("negative index should have thrown an exception");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                try
-                {
-                    mutable.setSI(testValues.length, 0);
-                    fail("index just above range should have thrown an exception");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                mutable.setSI(testValues.length - 1, 0);
-                mutable.ceil();
-                for (int index = 0; index < testValues.length; index++)
-                {
-                    assertEquals("ceil", Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001);
-                }
-                DoubleVectorInterface<?, ?, ?> immutable = doubleVector.immutable();
-                try
-                {
-                    immutable.ceil();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                try
-                {
-                    doubleVector.floor();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                try
-                {
-                    doubleVector.rint();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                try
-                {
-                    doubleVector.neg();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-                mutable = doubleVector.mutable().mutable();
-                mutable.floor();
-                for (int index = 0; index < testValues.length; index++)
-                {
-                    assertEquals("floor", Math.floor(testValues[index]), mutable.getInUnit(index), 0.001);
-                }
-                mutable = doubleVector.mutable();
-                mutable.rint();
-                for (int index = 0; index < testValues.length; index++)
-                {
-                    assertEquals("rint", Math.rint(testValues[index]), mutable.getInUnit(index), 0.001);
-                }
-                mutable = doubleVector.mutable();
-                mutable.neg();
-                for (int index = 0; index < testValues.length; index++)
-                {
-                    assertEquals("neg", -testValues[index], mutable.getInUnit(index), 0.001);
-                }
-                int nextIndex = 0;
-                for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
-                {
-                    AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
-                    assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                    assertEquals("value of scalar matches", s.getInUnit(), testValues[nextIndex], 0.001);
-                    nextIndex++;
-                }
-                // This does not compile
-                // DoubleVectorInterface<?, ?, ?> secondary = DoubleVector.instantiateAnonymous(doubleVector.getScalars(),
-                // standardUnit);
-                doubleVector = DoubleVector.instantiate(list, standardUnit, storageType);
-                assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
-                compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
-                doubleVector = DoubleVector.instantiate(map, testValues.length, standardUnit, storageType);
-                compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
-                doubleVector = DoubleVector.instantiate(notQuiteSparseMap, testValues.length, standardUnit, storageType);
-                compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
-                Scalar<?, ?>[] scalarValues = doubleVector.getScalars();
-                assertEquals("length of array of scalars", testValues.length, scalarValues.length);
-                for (int i = 0; i < testValues.length; i++)
-                {
-                    Scalar<?, ?> s = scalarValues[i];
-                    assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                    assertEquals("value of scalar matches", ((AbstractDoubleScalar<?, ?>) s).getSI(), testValues[i], 0.001);
-                }
-                doubleVector = DoubleVector.instantiateSI(list, standardUnit, storageType);
-                assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
-                compareValuesWithScale(standardUnit.getScale(), testValues, doubleVector.getValuesSI());
             }
         }
     }
 
     /**
-     * Test constructors of array, list, map with the AbsoluteTemperature unit.
+     * test Scalar[] constructors
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws InstantiationException on error
      */
+    @SuppressWarnings("unchecked")
     @Test
-    public void instantiateListTest()
+    public void testScalarConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
-        double[] testValues = new double[] { 0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0 };
-        int cardinality = 0;
-        int offsetCardinality = testValues.length;
-        AbsoluteTemperature[] at = new AbsoluteTemperature[testValues.length];
-        List<AbsoluteTemperature> al = new ArrayList<>();
-        List<Double> adl = new ArrayList<>();
-        SortedMap<Integer, AbsoluteTemperature> map = new TreeMap<>();
-        SortedMap<Integer, AbsoluteTemperature> notQuiteSparseMap = new TreeMap<>();
-        SortedMap<Integer, Double> mapd = new TreeMap<>();
-        for (int i = 0; i < testValues.length; i++)
+        // Force loading of all classes
+        LengthUnit length = UNITS.METER;
+        if (length == null)
         {
-            adl.add(testValues[i]);
-            AbsoluteTemperature value = new AbsoluteTemperature(testValues[i], AbsoluteTemperatureUnit.KELVIN);
-            at[i] = value;
-            al.add(value);
-            if (0.0 != value.si)
+            fail();
+        }
+
+        for (String scalarName : CLASSNAMES.ALL_NODIM_LIST)
+        {
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
+            Unit<?> standardUnit = quantity.getStandardUnit();
+            Class<?> unitClass = standardUnit.getClass();
+            double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
+            Class<?> scalarClass = CLASSNAMES.doubleScalarClass(scalarName);
+            Object[] testValues = (Object[]) Array.newInstance(scalarClass, doubleValues.length);
+            Class<?> scalarArrayClass = testValues.getClass();
+            Constructor<DoubleScalarInterface<?, ?>> constructorScalar =
+                    (Constructor<DoubleScalarInterface<?, ?>>) scalarClass.getConstructor(double.class, unitClass);
+
+            int cardinality = 0;
+            double zSum = 0.0;
+            for (int index = 0; index < doubleValues.length; index++)
             {
-                cardinality++;
-                map.put(i, value);
-                mapd.put(i, value.si);
-                notQuiteSparseMap.put(i, value);
+                double value = doubleValues[index];
+                Array.set(testValues, index, constructorScalar.newInstance(value, standardUnit));
+                if (0.0 != value)
+                {
+                    cardinality++;
+                    zSum += value;
+                }
             }
-            else if (i % 2 == 0)
+
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
-                notQuiteSparseMap.put(i, value);
-            }
-            if (AbsoluteTemperatureUnit.DEGREE_CELSIUS.getScale().toStandardUnit(testValues[i]) == 0)
-            {
-                offsetCardinality--;
+                // get the constructors
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLUS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(scalarArrayClass, unitClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLU =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(scalarArrayClass, unitClass);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(scalarArrayClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorL =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(scalarArrayClass);
+
+                // initialize vectors
+                DoubleVectorInterface<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vL = constructorL.newInstance(new Object[] {testValues});
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+
+                for (DoubleVectorInterface<?, ?, ?> doubleVector : new DoubleVectorInterface[] {vLUS, vLU, vLS, vL})
+                {
+                    compareValuesWithScale(standardUnit.getScale(), doubleValues, doubleVector.getValuesSI());
+                    assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
+                    assertEquals("Cardinality", cardinality, doubleVector.cardinality());
+                    if (doubleVector instanceof Relative)
+                    {
+                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    }
+                    assertEquals("scalarClass must match", scalarClass, doubleVector.getScalarClass());
+                    Method instantiateMethod =
+                            doubleVector.getClass().getDeclaredMethod("instantiateVector", DoubleVectorData.class, unitClass);
+                    DoubleVectorInterface<?, ?, ?> vData =
+                            (DoubleVectorInterface<?, ?, ?>) instantiateMethod.invoke(doubleVector,
+                                    DoubleVectorData.instantiate(doubleValues, IdentityScale.SCALE, storageType), standardUnit);
+                    compareValuesWithScale(standardUnit.getScale(), doubleValues, vData.getValuesSI());
+
+                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
+                    assertTrue("mutable double vector is mutable", mutable.isMutable());
+                    mutable.setSI(0, 0);
+                    mutable.setInUnit(0, 0);
+                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
+                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                    mutable.setSI(doubleValues.length - 1, 0);
+                    mutable.ceil();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("ceil", Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    DoubleVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    mutable = doubleVector.mutable().mutable();
+                    mutable.floor();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("floor", Math.floor(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.rint();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("rint", Math.rint(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.neg();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("neg", -doubleValues[index], mutable.getInUnit(index), 0.001);
+                    }
+                    int nextIndex = 0;
+                    for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
+                    {
+                        AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
+                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
+                        assertEquals("value of scalar matches", s.getInUnit(), doubleValues[nextIndex], 0.001);
+                        nextIndex++;
+                    }
+                }
             }
         }
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+    }
+
+    /**
+     * test List<Double> constructors
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws InstantiationException on error
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testListDoubleConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        // Force loading of all classes
+        LengthUnit length = UNITS.METER;
+        if (length == null)
         {
-            for (AbsoluteTemperatureUnit temperatureUnit : new AbsoluteTemperatureUnit[] { AbsoluteTemperatureUnit.KELVIN,
-                    AbsoluteTemperatureUnit.DEGREE_CELSIUS })
+            fail();
+        }
+
+        for (String scalarName : CLASSNAMES.ALL_NODIM_LIST)
+        {
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
+            Unit<?> standardUnit = quantity.getStandardUnit();
+            Class<?> unitClass = standardUnit.getClass();
+            double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
+            List<Double> testValues = new ArrayList<>();
+
+            int cardinality = 0;
+            double zSum = 0.0;
+            for (int index = 0; index < doubleValues.length; index++)
             {
-                double offset = temperatureUnit.equals(AbsoluteTemperatureUnit.KELVIN) ? 0 : 273.15;
-
-                AbsoluteTemperatureVector atv = DoubleVector.instantiate(testValues, temperatureUnit, storageType);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", offset == 0 ? cardinality : offsetCardinality, atv.cardinality());
-                atv = DoubleVector.instantiate(testValues, temperatureUnit, storageType, AbsoluteTemperatureVector.class);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", offset == 0 ? cardinality : offsetCardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiateSI(testValues, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiateSI(testValues, temperatureUnit, storageType, AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiateSI(adl, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiateSI(adl, temperatureUnit, storageType, AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiate(adl, temperatureUnit, storageType);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", offset == 0 ? cardinality : offsetCardinality, atv.cardinality());
-                atv = DoubleVector.instantiate(adl, temperatureUnit, storageType, AbsoluteTemperatureVector.class);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", offset == 0 ? cardinality : offsetCardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiate(at, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiate(at, temperatureUnit, storageType, AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiateList(al, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiateList(al, temperatureUnit, storageType, AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiateMap(map, testValues.length, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiateMap(map, testValues.length, temperatureUnit, storageType,
-                        AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiateMap(notQuiteSparseMap, testValues.length, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiateMap(notQuiteSparseMap, testValues.length, temperatureUnit, storageType,
-                        AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiate(mapd, testValues.length, temperatureUnit, storageType);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", offset == 0 ? cardinality : offsetCardinality, atv.cardinality());
-                atv = DoubleVector.instantiate(mapd, testValues.length, temperatureUnit, storageType,
-                        AbsoluteTemperatureVector.class);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", offset == 0 ? cardinality : offsetCardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiateSI(mapd, testValues.length, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-                atv = DoubleVector.instantiateSI(mapd, testValues.length, temperatureUnit, storageType,
-                        AbsoluteTemperatureVector.class);
-                compareValues(testValues, atv.getValuesSI());
-                assertEquals("Unit must match", temperatureUnit, atv.getDisplayUnit());
-                assertEquals("cardinality", cardinality, atv.cardinality());
-
-                atv = DoubleVector.instantiate(testValues, temperatureUnit, storageType);
-                for (int i = 0; i < testValues.length; i++)
+                double value = doubleValues[index];
+                testValues.add(value);
+                if (0.0 != value)
                 {
-                    assertEquals("getInUnit returns value in specified unit", testValues[i], atv.getInUnit(i, temperatureUnit),
-                            0.001);
+                    cardinality++;
+                    zSum += value;
+                }
+            }
+
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+            {
+                // get the constructors
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLUS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(List.class, unitClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLU =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(List.class, unitClass);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(List.class, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorL = (Constructor<
+                        DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName).getConstructor(List.class);
+
+                // initialize vectors
+                DoubleVectorInterface<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vL = constructorL.newInstance(testValues);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+
+                for (DoubleVectorInterface<?, ?, ?> doubleVector : new DoubleVectorInterface[] {vLUS, vLU, vLS, vL})
+                {
+                    compareValuesWithScale(standardUnit.getScale(), doubleValues, doubleVector.getValuesSI());
+                    assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
+                    assertEquals("Cardinality", cardinality, doubleVector.cardinality());
+                    if (doubleVector instanceof Relative)
+                    {
+                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    }
+
+                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
+                    assertTrue("mutable double vector is mutable", mutable.isMutable());
+                    mutable.setSI(0, 0);
+                    mutable.setInUnit(0, 0);
+                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
+                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                    mutable.setSI(doubleValues.length - 1, 0);
+                    mutable.ceil();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("ceil", Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    DoubleVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    mutable = doubleVector.mutable().mutable();
+                    mutable.floor();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("floor", Math.floor(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.rint();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("rint", Math.rint(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.neg();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("neg", -doubleValues[index], mutable.getInUnit(index), 0.001);
+                    }
+                    int nextIndex = 0;
+                    for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
+                    {
+                        AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
+                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
+                        assertEquals("value of scalar matches", s.getInUnit(), doubleValues[nextIndex], 0.001);
+                        nextIndex++;
+                    }
                 }
 
-                try
+                // test the empty list
+                vLUS = constructorLUS.newInstance(new ArrayList<Double>(), standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vLUS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vLUS.cardinality());
+                if (vLUS instanceof Relative)
                 {
-                    atv.getInUnit(-1, temperatureUnit);
-                    fail("negative index should have thrown a ValueRuntimeException");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    atv.getInUnit(testValues.length, temperatureUnit);
-                    fail("index above range should have thrown a ValueRuntimeException");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
-                try
+                vLU = constructorLU.newInstance(new ArrayList<Double>(), standardUnit);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                assertEquals("Unit must match", standardUnit, vLU.getDisplayUnit());
+                assertEquals("Cardinality", 0, vLU.cardinality());
+                if (vLU instanceof Relative)
                 {
-                    atv.set(0, al.get(0));
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    atv.set(-1, al.get(0));
-                    fail("negative index should have thrown a ValueRuntimeException");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
-                try
+                vLS = constructorLS.newInstance(new ArrayList<Double>(), storageType);
+                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vLS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vLS.cardinality());
+                if (vLS instanceof Relative)
                 {
-                    atv.set(testValues.length, al.get(0));
-                    fail("index above range should have thrown a ValueRuntimeException");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    atv.setInUnit(0, 0, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-                    fail("should have been immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
 
-                AbsoluteTemperatureVector matv = atv.mutable();
-                matv.setInUnit(0, 0, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-                assertEquals("Setting temp in F should have stored equivalent value in K", matv.getSI(0), 255.37, 0.01);
-                try
+                vL = constructorL.newInstance(new ArrayList<Double>());
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+                assertEquals("Unit must match", standardUnit, vL.getDisplayUnit());
+                assertEquals("Cardinality", 0, vL.cardinality());
+                if (vL instanceof Relative)
                 {
-                    matv.setInUnit(-1, 0, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-                    fail("negative index should have thrown an exception");
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
                 }
-                catch (ValueRuntimeException vre)
+            }
+        }
+    }
+
+    /**
+     * test List<Scalar> constructors
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws InstantiationException on error
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testListScalarConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        // Force loading of all classes
+        LengthUnit length = UNITS.METER;
+        if (length == null)
+        {
+            fail();
+        }
+
+        for (String scalarName : CLASSNAMES.ALL_NODIM_LIST)
+        {
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
+            Unit<?> standardUnit = quantity.getStandardUnit();
+            Class<?> unitClass = standardUnit.getClass();
+            double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
+            List<DoubleScalarInterface<?, ?>> testValues = new ArrayList<>();
+            Constructor<DoubleScalarInterface<?, ?>> constructorScalar = (Constructor<DoubleScalarInterface<?, ?>>) CLASSNAMES
+                    .doubleScalarClass(scalarName).getConstructor(double.class, unitClass);
+
+            int cardinality = 0;
+            double zSum = 0.0;
+            for (int index = 0; index < doubleValues.length; index++)
+            {
+                double value = doubleValues[index];
+                testValues.add(constructorScalar.newInstance(value, standardUnit));
+                if (0.0 != value)
                 {
-                    // Ignore expected exception
+                    cardinality++;
+                    zSum += value;
+                }
+            }
+
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+            {
+                // get the constructors
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLUS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(List.class, unitClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLU =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(List.class, unitClass);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorLS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(List.class, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorL = (Constructor<
+                        DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName).getConstructor(List.class);
+
+                // initialize vectors
+                DoubleVectorInterface<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vL = constructorL.newInstance(testValues);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+
+                for (DoubleVectorInterface<?, ?, ?> doubleVector : new DoubleVectorInterface[] {vLUS, vLU, vLS, vL})
+                {
+                    compareValuesWithScale(standardUnit.getScale(), doubleValues, doubleVector.getValuesSI());
+                    assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
+                    assertEquals("Cardinality", cardinality, doubleVector.cardinality());
+                    if (doubleVector instanceof Relative)
+                    {
+                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    }
+
+                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
+                    assertTrue("mutable double vector is mutable", mutable.isMutable());
+                    mutable.setSI(0, 0);
+                    mutable.setInUnit(0, 0);
+                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
+                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                    mutable.setSI(doubleValues.length - 1, 0);
+                    mutable.ceil();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("ceil", Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    DoubleVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    mutable = doubleVector.mutable().mutable();
+                    mutable.floor();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("floor", Math.floor(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.rint();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("rint", Math.rint(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.neg();
+                    for (int index = 0; index < doubleValues.length; index++)
+                    {
+                        assertEquals("neg", -doubleValues[index], mutable.getInUnit(index), 0.001);
+                    }
+                    int nextIndex = 0;
+                    for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
+                    {
+                        AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
+                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
+                        assertEquals("value of scalar matches", s.getInUnit(), doubleValues[nextIndex], 0.001);
+                        nextIndex++;
+                    }
                 }
 
-                matv.setInUnit(testValues.length - 1, 0, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-                try
+                // test the empty list
+                vLUS = constructorLUS.newInstance(new ArrayList<DoubleScalarInterface<?, ?>>(), standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vLUS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vLUS.cardinality());
+                if (vLUS instanceof Relative)
                 {
-                    matv.setInUnit(testValues.length, 0, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-                    fail("too large index should have thrown an exception");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                // More complete memory test; somewhat inspired on mats+
-                matv = atv.mutable();
-                for (int index = 0; index < testValues.length; index++)
-                {
-                    // read and check; change, read again and check again
-                    double v = matv.getSI(index);
-                    assertEquals("initial value is returned", testValues[index] + offset, v, 0.001);
-                    v += 100;
-                    matv.setSI(index, v);
-                    v = matv.getSI(index);
-                    assertEquals("initial value + 100 is returned", testValues[index] + 100 + offset, v, 0.001);
-                }
-                for (int index = testValues.length; --index >= 0;)
-                {
-                    // read and check, change and check again
-                    double v = matv.getSI(index);
-                    assertEquals("initial value + 100 is returned", testValues[index] + 100 + offset, v, 0.001);
-                    v -= 100;
-                    matv.setSI(index, v);
-                    v = matv.getSI(index);
-                    assertEquals("initial value is returned", testValues[index] + offset, v, 0.001);
-                }
-                assertEquals("Cardinality should be back to original value", 0 == offset ? cardinality : offsetCardinality,
-                        matv.cardinality());
-                for (int index = 0; index < testValues.length; index++)
-                {
-                    // read and check; change, read again and check again
-                    double v = matv.getSI(index);
-                    assertEquals("initial value is returned", testValues[index] + offset, v, 0.001);
-                    v += 100;
-                    matv.setSI(index, v);
-                    v = matv.getSI(index);
-                    assertEquals("initial value + 100 is returned", testValues[index] + 100 + offset, v, 0.001);
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
-                // Check that we can set on the mutable version
-                matv.set(0, al.get(0));
-                try
+                vLU = constructorLU.newInstance(new ArrayList<DoubleScalarInterface<?, ?>>(), standardUnit);
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                assertEquals("Unit must match", standardUnit, vLU.getDisplayUnit());
+                assertEquals("Cardinality", 0, vLU.cardinality());
+                if (vLU instanceof Relative)
                 {
-                    matv.set(-1, al.get(0));
-                    fail("negative index should have thrown a ValueRuntimeException");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
-                try
+                vLS = constructorLS.newInstance(new ArrayList<DoubleScalarInterface<?, ?>>(), storageType);
+                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vLS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vLS.cardinality());
+                if (vLS instanceof Relative)
                 {
-                    matv.set(testValues.length, al.get(0));
-                    fail("index above range should have thrown a ValueRuntimeException");
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
-                catch (ValueRuntimeException vre)
+
+                vL = constructorL.newInstance(new ArrayList<DoubleScalarInterface<?, ?>>());
+                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+                assertEquals("Unit must match", standardUnit, vL.getDisplayUnit());
+                assertEquals("Cardinality", 0, vL.cardinality());
+                if (vL instanceof Relative)
                 {
-                    // Ignore expected exception
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                }
+            }
+        }
+    }
+
+    /**
+     * test Map<Integer, Double> constructors
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws InstantiationException on error
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testMapDoubleConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        // Force loading of all classes
+        LengthUnit length = UNITS.METER;
+        if (length == null)
+        {
+            fail();
+        }
+
+        for (String scalarName : CLASSNAMES.ALL_NODIM_LIST)
+        {
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
+            Unit<?> standardUnit = quantity.getStandardUnit();
+            Class<?> unitClass = standardUnit.getClass();
+            double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
+            double[] allValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0, 0, 0, 0};
+            int size = 10;
+            SortedMap<Integer, Double> testValues = new TreeMap<>();
+
+            int cardinality = 0;
+            double zSum = 0.0;
+            for (int index = 0; index < doubleValues.length; index++)
+            {
+                double value = doubleValues[index];
+                if (0.0 != value)
+                {
+                    testValues.put(index, value);
+                    cardinality++;
+                    zSum += value;
+                }
+            }
+
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+            {
+                // get the constructors
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorMUS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorMU =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class, unitClass);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorMS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorM =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class);
+
+                // initialize vectors
+                DoubleVectorInterface<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
+                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vM = constructorM.newInstance(testValues, size);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+
+                for (DoubleVectorInterface<?, ?, ?> doubleVector : new DoubleVectorInterface[] {vMUS, vMU, vMS, vM})
+                {
+                    compareValuesWithScale(standardUnit.getScale(), allValues, doubleVector.getValuesSI());
+                    assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
+                    assertEquals("Cardinality", cardinality, doubleVector.cardinality());
+                    assertEquals("Size", size, doubleVector.size());
+                    if (doubleVector instanceof Relative)
+                    {
+                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    }
+
+                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
+                    assertTrue("mutable double vector is mutable", mutable.isMutable());
+                    mutable.setSI(0, 0);
+                    mutable.setInUnit(0, 0);
+                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
+                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                    mutable.setSI(allValues.length - 1, 0);
+                    mutable.ceil();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("ceil", Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    DoubleVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    mutable = doubleVector.mutable().mutable();
+                    mutable.floor();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("floor", Math.floor(allValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.rint();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("rint", Math.rint(allValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.neg();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("neg", -allValues[index], mutable.getInUnit(index), 0.001);
+                    }
+                    int nextIndex = 0;
+                    for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
+                    {
+                        AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
+                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
+                        assertEquals("value of scalar matches", s.getInUnit(), allValues[nextIndex], 0.001);
+                        nextIndex++;
+                    }
                 }
 
-                AbsoluteTemperatureVector dense = atv.toDense();
-                assertTrue("Should be dense", dense.isDense());
-                assertFalse("Should be not be sparse", dense.isSparse());
-                assertEquals("Unit should be same", atv.getDisplayUnit(), dense.getDisplayUnit());
-                compareValues(dense.getValuesInUnit(), atv.getValuesInUnit());
-                assertFalse("Should be immutable", dense.isMutable());
+                // test the empty map
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, Double>(), 0, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMUS.cardinality());
+                if (vMUS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                }
 
-                AbsoluteTemperatureVector sparse = atv.toSparse();
-                assertTrue("Should be sparse", sparse.isSparse());
-                assertFalse("Should not be be dense", sparse.isDense());
-                assertEquals("Unit should be same", atv.getDisplayUnit(), sparse.getDisplayUnit());
-                compareValues(sparse.getValuesInUnit(), atv.getValuesInUnit());
-                assertFalse("Should be immutable", sparse.isMutable());
+                vMU = constructorMU.newInstance(new TreeMap<Integer, Double>(), 0, standardUnit);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMU.cardinality());
+                if (vMU instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                }
 
-                AbsoluteTemperatureVector copy = atv.clone();
-                assertEquals("storagetype should not have changed", atv.getStorageType(), copy.getStorageType());
-                assertEquals("unit should be same", atv.getDisplayUnit(), copy.getDisplayUnit());
-                compareValues(atv.getValuesInUnit(), copy.getValuesInUnit());
-                assertFalse("copy is immutable", copy.isMutable());
+                vMS = constructorMS.newInstance(new TreeMap<Integer, Double>(), 0, storageType);
+                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMS.cardinality());
+                if (vMS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                }
 
-                copy = matv.clone();
-                assertEquals("storagetype should not have changed", matv.getStorageType(), copy.getStorageType());
-                assertEquals("unit should be same", matv.getDisplayUnit(), copy.getDisplayUnit());
-                compareValues(matv.getValuesInUnit(), copy.getValuesInUnit());
-                assertTrue("copy is immutable", copy.isMutable());
+                vM = constructorM.newInstance(new TreeMap<Integer, Double>(), 0);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
+                assertEquals("Cardinality", 0, vM.cardinality());
+                if (vM instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                }
+
+                // test the empty map with a size
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, Double>(), 10, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMUS.cardinality());
+                assertEquals("Size", 10, vMUS.size());
+                if (vMUS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                }
+
+                vMU = constructorMU.newInstance(new TreeMap<Integer, Double>(), 10, standardUnit);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMU.cardinality());
+                assertEquals("Size", 10, vMU.size());
+                if (vMU instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                }
+
+                vMS = constructorMS.newInstance(new TreeMap<Integer, Double>(), 10, storageType);
+                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMS.cardinality());
+                assertEquals("Size", 10, vMS.size());
+                if (vMS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                }
+
+                vM = constructorM.newInstance(new TreeMap<Integer, Double>(), 10);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
+                assertEquals("Cardinality", 0, vM.cardinality());
+                assertEquals("Size", 10, vM.size());
+                if (vM instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                }
+            }
+        }
+    }
+
+    /**
+     * test SortedMap<Integer, Scalar> constructors
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws InstantiationException on error
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testMapScalarConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        // Force loading of all classes
+        LengthUnit length = UNITS.METER;
+        if (length == null)
+        {
+            fail();
+        }
+
+        for (String scalarName : CLASSNAMES.ALL_NODIM_LIST)
+        {
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
+            Unit<?> standardUnit = quantity.getStandardUnit();
+            Class<?> unitClass = standardUnit.getClass();
+            double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
+            double[] allValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0, 0, 0, 0};
+            int size = 10;
+            SortedMap<Integer, DoubleScalarInterface<?, ?>> testValues = new TreeMap<>();
+            Constructor<DoubleScalarInterface<?, ?>> constructorScalar = (Constructor<DoubleScalarInterface<?, ?>>) CLASSNAMES
+                    .doubleScalarClass(scalarName).getConstructor(double.class, unitClass);
+
+            int cardinality = 0;
+            double zSum = 0.0;
+            for (int index = 0; index < doubleValues.length; index++)
+            {
+                double value = doubleValues[index];
+                if (0.0 != value)
+                {
+                    testValues.put(index, constructorScalar.newInstance(value, standardUnit));
+                    cardinality++;
+                    zSum += value;
+                }
+            }
+
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
+            {
+                // get the constructors
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorMUS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorMU =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class, unitClass);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorMS =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class, StorageType.class);
+                Constructor<DoubleVectorInterface<?, ?, ?>> constructorM =
+                        (Constructor<DoubleVectorInterface<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
+                                .getConstructor(SortedMap.class, int.class);
+
+                // initialize vectors
+                DoubleVectorInterface<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
+                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
+                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                DoubleVectorInterface<?, ?, ?> vM = constructorM.newInstance(testValues, size);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+
+                for (DoubleVectorInterface<?, ?, ?> doubleVector : new DoubleVectorInterface[] {vMUS, vMU, vMS, vM})
+                {
+                    compareValuesWithScale(standardUnit.getScale(), allValues, doubleVector.getValuesSI());
+                    assertEquals("Unit must match", standardUnit, doubleVector.getDisplayUnit());
+                    assertEquals("Cardinality", cardinality, doubleVector.cardinality());
+                    assertEquals("Size", size, doubleVector.size());
+                    if (doubleVector instanceof Relative)
+                    {
+                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                    }
+
+                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    DoubleVectorInterface<?, ?, ?> mutable = doubleVector.mutable();
+                    assertTrue("mutable double vector is mutable", mutable.isMutable());
+                    mutable.setSI(0, 0);
+                    mutable.setInUnit(0, 0);
+                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
+                            ValueRuntimeException.class);
+                    Try.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
+                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                    mutable.setSI(allValues.length - 1, 0);
+                    mutable.ceil();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("ceil", Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    DoubleVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    mutable = doubleVector.mutable().mutable();
+                    mutable.floor();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("floor", Math.floor(allValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.rint();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("rint", Math.rint(allValues[index]), mutable.getInUnit(index), 0.001);
+                    }
+                    mutable = doubleVector.mutable();
+                    mutable.neg();
+                    for (int index = 0; index < allValues.length; index++)
+                    {
+                        assertEquals("neg", -allValues[index], mutable.getInUnit(index), 0.001);
+                    }
+                    int nextIndex = 0;
+                    for (Iterator<?> iterator = doubleVector.iterator(); iterator.hasNext();)
+                    {
+                        AbstractDoubleScalar<?, ?> s = (AbstractDoubleScalar<?, ?>) iterator.next();
+                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
+                        assertEquals("value of scalar matches", s.getInUnit(), allValues[nextIndex], 0.001);
+                        nextIndex++;
+                    }
+                }
+
+                // test the empty list
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 0, standardUnit,
+                        storageType);
+                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMUS.cardinality());
+                if (vMUS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                }
+
+                vMU = constructorMU.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 0, standardUnit);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMU.cardinality());
+                if (vMU instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                }
+
+                vMS = constructorMS.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 0, storageType);
+                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMS.cardinality());
+                if (vMS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                }
+
+                vM = constructorM.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 0);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
+                assertEquals("Cardinality", 0, vM.cardinality());
+                if (vM instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                }
+
+                // test the empty map with a size
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 10, standardUnit,
+                        storageType);
+                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMUS.cardinality());
+                assertEquals("Size", 10, vMUS.size());
+                if (vMUS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                }
+
+                vMU = constructorMU.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 10, standardUnit);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMU.cardinality());
+                assertEquals("Size", 10, vMU.size());
+                if (vMU instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                }
+
+                vMS = constructorMS.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 10, storageType);
+                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
+                assertEquals("Cardinality", 0, vMS.cardinality());
+                assertEquals("Size", 10, vMS.size());
+                if (vMS instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                }
+
+                vM = constructorM.newInstance(new TreeMap<Integer, DoubleScalarInterface<?, ?>>(), 10);
+                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
+                assertEquals("Cardinality", 0, vM.cardinality());
+                assertEquals("Size", 10, vM.size());
+                if (vM instanceof Relative)
+                {
+                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                }
             }
         }
     }
@@ -583,7 +1101,7 @@ public class DoubleVectorConstructorsTest
      */
     @SuppressWarnings("unlikely-arg-type")
     @Test
-    public void siVectorTest() throws ValueRuntimeException, UnitException, ClassNotFoundException
+    public void siVectorConstructors() throws ValueRuntimeException, UnitException, ClassNotFoundException
     {
         // Force loading of all classes
         LengthUnit length = UNITS.METER;
@@ -599,7 +1117,7 @@ public class DoubleVectorConstructorsTest
             // double
             @SuppressWarnings("rawtypes")
             Unit standardUnit = quantity.getStandardUnit();
-            double[] testValues = new double[] { 0, 123.456d, 0, 0, -234.567d, 0 };
+            double[] testValues = new double[] {0, 123.456d, 0, 0, -234.567d, 0};
             int cardinality = 0;
             double zSum = 0;
             List<Double> list = new ArrayList<>();
@@ -615,25 +1133,16 @@ public class DoubleVectorConstructorsTest
                 }
                 list.add(value);
             }
-            for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
-                SIVector siv = SIVector.instantiate(testValues, SIUnit.of(quantity.getSiDimensions()), storageType);
-                // system.out.println(siv);
+                SIVector siv = new SIVector(testValues, SIUnit.of(quantity.getSiDimensions()), storageType);
+                final SIVector sivf = siv;
                 compareValues(testValues, siv.getValuesSI());
-                // assertEquals("Underlying standardUnit must match", standardUnit, siv.getUnit());
                 assertEquals("StorageType must match", storageType, siv.getStorageType());
                 assertEquals("Cardinality", cardinality, siv.cardinality());
                 assertEquals("zSum", zSum, siv.zSum().getSI(), 0.001);
                 assertEquals("getScalarClass return SIScalar", SIScalar.class, siv.getScalarClass());
-                try
-                {
-                    siv.ceil();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
+                Try.testFail(() -> sivf.ceil(), "double vector should be immutable", ValueRuntimeException.class);
                 SIVector mutable = siv.mutable();
                 assertTrue("vector is equal to itself", siv.equals(siv));
                 assertTrue("vector and mutable vector are considered equal", siv.equals(mutable));
@@ -646,56 +1155,11 @@ public class DoubleVectorConstructorsTest
                 {
                     assertEquals("ceil", Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001);
                 }
-                DoubleVectorInterface<?, ?, ?> immutable = siv.immutable();
-                try
-                {
-                    immutable.abs();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    immutable.ceil();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    siv.floor();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    siv.rint();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
-
-                try
-                {
-                    siv.neg();
-                    fail("double vector should be immutable");
-                }
-                catch (ValueRuntimeException vre)
-                {
-                    // Ignore expected exception
-                }
+                Try.testFail(() -> sivf.immutable().abs(), "double vector should be immutable", ValueRuntimeException.class);
+                Try.testFail(() -> sivf.immutable().ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                Try.testFail(() -> sivf.immutable().floor(), "double vector should be immutable", ValueRuntimeException.class);
+                Try.testFail(() -> sivf.immutable().rint(), "double vector should be immutable", ValueRuntimeException.class);
+                Try.testFail(() -> sivf.immutable().neg(), "double vector should be immutable", ValueRuntimeException.class);
 
                 mutable = siv.mutable().mutable();
                 mutable.floor();
@@ -749,9 +1213,9 @@ public class DoubleVectorConstructorsTest
                 {
                     // Ignore expected exception
                 }
-                siv = SIVector.instantiate(map, testValues.length, SIUnit.of(quantity.getSiDimensions()), storageType);
+                siv = new SIVector(map, testValues.length, SIUnit.of(quantity.getSiDimensions()), storageType);
                 compareValues(testValues, siv.getValuesSI());
-                siv = SIVector.instantiate(list, SIUnit.of(quantity.getSiDimensions()), storageType);
+                siv = new SIVector(list, SIUnit.of(quantity.getSiDimensions()), storageType);
                 compareValues(testValues, siv.getValuesSI());
                 siv = SIVector.of(testValues, standardUnit.getQuantity().getSiDimensions().toString(true, true, true),
                         storageType);
@@ -772,7 +1236,7 @@ public class DoubleVectorConstructorsTest
     @Test
     public void exceptionsTest() throws ValueRuntimeException, UnitException
     {
-        double[] testValues = new double[] { 0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0 };
+        double[] testValues = new double[] {0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0};
         AbsoluteTemperature[] at = new AbsoluteTemperature[testValues.length];
         List<AbsoluteTemperature> al = new ArrayList<>();
         SortedMap<Integer, AbsoluteTemperature> map = new TreeMap<>();
@@ -787,203 +1251,62 @@ public class DoubleVectorConstructorsTest
             }
         }
 
-        DoubleVector.instantiate(testValues, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-        try
-        {
-            DoubleVector.instantiate((double[]) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException vre)
-        {
-            // Ignore expected exception
-        }
+        new AbsoluteTemperatureVector(testValues, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
+        Try.testFail(() -> new AbsoluteTemperatureVector((double[]) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(testValues, null, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(testValues, AbsoluteTemperatureUnit.KELVIN, null),
+                "null pointer should have thrown an exception", NullPointerException.class);
 
-        try
-        {
-            DoubleVector.instantiate(testValues, null, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
+        Try.testFail(() -> new AbsoluteTemperatureVector((AbsoluteTemperature[]) null, AbsoluteTemperatureUnit.KELVIN,
+                StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(at, null, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(at, AbsoluteTemperatureUnit.KELVIN, null),
+                "null pointer should have thrown an exception", NullPointerException.class);
 
-        try
-        {
-            DoubleVector.instantiate(testValues, AbsoluteTemperatureUnit.KELVIN, null);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
+        Try.testFail(() -> new AbsoluteTemperatureVector((List<AbsoluteTemperature>) null, AbsoluteTemperatureUnit.KELVIN,
+                StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(
+                () -> new AbsoluteTemperatureVector((List<Double>) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(al, null, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(al, AbsoluteTemperatureUnit.KELVIN, null),
+                "null pointer should have thrown an exception", NullPointerException.class);
 
-        DoubleVector.instantiate(at, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-        try
-        {
-            DoubleVector.instantiate((AbsoluteTemperature[]) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiate(at, null, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiate(at, AbsoluteTemperatureUnit.KELVIN, null);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        DoubleVector.instantiateList(al, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-        try
-        {
-            DoubleVector.instantiateList((List<AbsoluteTemperature>) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiateList(al, null, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiateList(al, AbsoluteTemperatureUnit.KELVIN, null);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-        DoubleVector.instantiateMap(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-        try
-        {
-            DoubleVector.instantiateMap((SortedMap<Integer, AbsoluteTemperature>) null, testValues.length,
-                    AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiateMap(map, testValues.length, null, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiateMap(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, null);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiateMap(map, -1, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("negative length should have thrown an exception");
-        }
-        catch (ValueRuntimeException vre)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            DoubleVector.instantiateMap(map, 1, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("bad length should have thrown an exception");
-        }
-        catch (ValueRuntimeException vre)
-        {
-            // Ignore expected exception
-        }
+        Try.testFail(
+                () -> new AbsoluteTemperatureVector((SortedMap<Integer, AbsoluteTemperature>) null, 10,
+                        AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector((SortedMap<Integer, Double>) null, 10, AbsoluteTemperatureUnit.KELVIN,
+                StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(map, 10, null, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(map, 10, AbsoluteTemperatureUnit.KELVIN, null),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(map, -1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
+                "negative length should have thrown an exception", ValueRuntimeException.class);
+        Try.testFail(() -> new AbsoluteTemperatureVector(map, 1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
+                "too small length should have thrown an exception", ValueRuntimeException.class);
 
         map.put(-1, at[0]);
-        try
-        {
-            DoubleVector.instantiateMap(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-            fail("bad entry in map should have thrown an exception");
-        }
-        catch (ValueRuntimeException vre)
-        {
-            // Ignore expected exception
-        }
+        Try.testFail(
+                () -> new AbsoluteTemperatureVector(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
+                "too small length should have thrown an exception", ValueRuntimeException.class);
 
         map.remove(-1); // Remove the offending entry
         Quantity<?> quantity = Quantities.INSTANCE.getQuantity("AbsoluteTemperature" + "Unit");
-        SIVector.instantiate(testValues, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
-        try
-        {
-            SIVector.instantiate((double[]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            SIVector.instantiate((List<Double>) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            SIVector.instantiate(testValues, null, StorageType.DENSE);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
-
-        try
-        {
-            SIVector.instantiate(testValues, SIUnit.of(quantity.getSiDimensions()), null);
-            fail("null pointer should have thrown an exception");
-        }
-        catch (NullPointerException npe)
-        {
-            // Ignore expected exception
-        }
+        new SIVector(testValues, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
+        Try.testFail(() -> new SIVector((double[]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new SIVector((List<Double>) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        Try.testFail(() -> new SIVector(testValues, null, StorageType.DENSE), "null pointer should have thrown an exception",
+                NullPointerException.class);
+        Try.testFail(() -> new SIVector(testValues, SIUnit.of(quantity.getSiDimensions()), null),
+                "null pointer should have thrown an exception", NullPointerException.class);
     }
 
     /**
@@ -993,9 +1316,11 @@ public class DoubleVectorConstructorsTest
     public void parallelTest()
     {
         double[] testValues = new double[4000];
+        double[] testValuesCelsius = new double[4000];
         for (int i = 0; i < testValues.length; i++)
         {
             testValues[i] = i % 3 != 0 ? 0 : (100.0 + i);
+            testValuesCelsius[i] = testValues[i] + 273.15;
         }
         List<AbsoluteTemperature> al = new ArrayList<>();
         List<Double> dl = new ArrayList<>();
@@ -1013,304 +1338,18 @@ public class DoubleVectorConstructorsTest
             value = new AbsoluteTemperature(testValues[i], AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
             at[i] = value;
         }
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
+        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            for (AbsoluteTemperatureUnit temperatureUnit : new AbsoluteTemperatureUnit[] { AbsoluteTemperatureUnit.KELVIN,
-                    AbsoluteTemperatureUnit.DEGREE_CELSIUS })
-            {
-                AbsoluteTemperatureVector atv = DoubleVector.instantiate(testValues, temperatureUnit, storageType);
-                compareValuesWithScale(temperatureUnit.getScale(), testValues, atv.getValuesSI());
-                atv = DoubleVector.instantiateList(al, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                atv = DoubleVector.instantiateSI(dl, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                atv = DoubleVector.instantiateMap(map, testValues.length, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesSI());
-                atv = DoubleVector.instantiate(at, temperatureUnit, storageType);
-                compareValues(testValues, atv.getValuesInUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT));
-            }
-        }
-    }
-
-    /**
-     * Test most "asXX" methods.
-     * @throws SecurityException on error
-     * @throws NoSuchMethodException on error
-     * @throws InvocationTargetException on error
-     * @throws IllegalArgumentException on error
-     * @throws IllegalAccessException on error
-     * @throws ClassNotFoundException on error
-     * @throws UnitException on error
-     * @param <U> the unit type
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
-    public <U extends Unit<U>> void testAsMost() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, UnitException
-    {
-        // load all classes
-        assertEquals("m", UNITS.METER.getId());
-
-        double[] testValues = new double[] { 0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0 };
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-        {
-            AbstractDoubleVectorRel allVector =
-                    (AbstractDoubleVectorRel) DoubleVector.instantiate(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-                            DimensionlessUnit.SI.getStandardUnit(), storageType);
-            for (String type : CLASSNAMES.REL_LIST)
-            {
-                Class.forName("org.djunits.unit." + type + "Unit");
-                Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
-                for (U unit : quantity.getUnitsById().values())
-                {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-                    {
-                        AbstractDoubleVectorRel vector =
-                                (AbstractDoubleVectorRel) DoubleVector.instantiate(testValues, unit, storageType2);
-                        SIVector mult = vector.times(allVector);
-                        Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
-                        AbstractDoubleVectorRel<U, ?, ?> asVector = (AbstractDoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
-                        assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
-                        compareValuesWithScale(unit.getScale(), testValues, mult.getValuesSI());
-
-                        Method asMethodDisplayUnit = SIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                        AbstractDoubleVectorRel<U, ?, ?> asVectorDisplayUnit =
-                                (AbstractDoubleVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
-                        assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
-                        compareValuesWithScale(unit.getScale(), testValues, asVectorDisplayUnit.getValuesSI());
-
-                        // test exception for wrong 'as'
-                        SIVector cd4sr2 = SIVector.instantiate(testValues, SIUnit.of("cd4/sr2"), storageType2);
-                        try
-                        {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim = (AbstractDoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
-                            fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
-                                    + asScalarDim);
-                        }
-                        catch (InvocationTargetException | UnitRuntimeException e)
-                        {
-                            // ok
-                        }
-
-                        try
-                        {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim =
-                                    (AbstractDoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
-                            fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
-                                    + asScalarDim);
-                        }
-                        catch (InvocationTargetException | UnitRuntimeException e)
-                        {
-                            // ok
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Test the "asXX" methods of the remaining classes.
-     * @throws SecurityException on error
-     * @throws NoSuchMethodException on error
-     * @throws InvocationTargetException on error
-     * @throws IllegalArgumentException on error
-     * @throws IllegalAccessException on error
-     * @throws ClassNotFoundException on error
-     * @throws UnitException on error
-     * @param <U> the unit type
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
-    public <U extends Unit<U>> void testAsRemaining() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, UnitException
-    {
-        // load all classes
-        assertEquals("m", UNITS.METER.getId());
-
-        double[] testValues = new double[] { 0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0 };
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-        {
-            AbstractDoubleVectorRel<?, ?, ?> dimless =
-                    (AbstractDoubleVectorRel<?, ?, ?>) DoubleVector.instantiate(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-                            DimensionlessUnit.SI.getStandardUnit(), storageType);
-            for (String type : CLASSNAMES.REL_WITH_ABS_LIST)
-            {
-                Class.forName("org.djunits.unit." + type + "Unit");
-                Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
-                for (U unit : quantity.getUnitsById().values())
-                {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-                    {
-                        AbstractDoubleVectorRel vector =
-                                (AbstractDoubleVectorRel) DoubleVector.instantiate(testValues, unit, storageType2);
-                        SIVector mult = vector.times(dimless);
-                        Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
-                        AbstractDoubleVectorRel<U, ?, ?> asVector = (AbstractDoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
-                        assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
-                        compareValuesWithScale(unit.getScale(), testValues, mult.getValuesSI());
-
-                        Method asMethodDisplayUnit = SIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                        AbstractDoubleVectorRel<U, ?, ?> asVectorDisplayUnit =
-                                (AbstractDoubleVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
-                        assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
-                        compareValuesWithScale(unit.getScale(), testValues, asVectorDisplayUnit.getValuesSI());
-
-                        // test exception for wrong 'as'
-                        SIVector cd4sr2 = SIVector.instantiate(testValues, SIUnit.of("cd4/sr2"), storageType2);
-                        try
-                        {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim = (AbstractDoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
-                            fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
-                                    + asScalarDim);
-                        }
-                        catch (InvocationTargetException | UnitRuntimeException e)
-                        {
-                            // ok
-                        }
-
-                        try
-                        {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim =
-                                    (AbstractDoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
-                            fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
-                                    + asScalarDim);
-                        }
-                        catch (InvocationTargetException | UnitRuntimeException e)
-                        {
-                            // ok
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Test the <code>as</code> method of the SIVector class.
-     * @throws SecurityException on error
-     * @throws NoSuchMethodException on error
-     * @throws InvocationTargetException on error
-     * @throws IllegalArgumentException on error
-     * @throws IllegalAccessException on error
-     * @throws ClassNotFoundException on error
-     * @throws UnitException on error
-     * @param <U> the unit type
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public <U extends Unit<U>> void testAsUnit() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
-    {
-        double[] testValues = new double[] { 0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0 };
-        for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-        {
-            for (String type : CLASSNAMES.REL_LIST)
-            {
-                Class.forName("org.djunits.unit." + type + "Unit");
-                Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
-                for (U unit : quantity.getUnitsById().values())
-                {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, storageType })
-                    {
-                        SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
-                        SIVector vector = SIVector.instantiate(testValues, siUnit, storageType2);
-                        Method asMethod = SIVector.class.getDeclaredMethod("as", Unit.class);
-                        AbstractDoubleVectorRel<U, ?, ?> asVector =
-                                (AbstractDoubleVectorRel<U, ?, ?>) asMethod.invoke(vector, siUnit);
-                        assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
-                        siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
-                        compareValues(testValues, asVector.getValuesSI());
-                        try
-                        {
-                            asMethod.invoke(vector, siUnit);
-                            fail("as method should not be able to cast to unrelated (absoluteTemperature) unit");
-                        }
-                        catch (InvocationTargetException ite)
-                        {
-                            Throwable cause = ite.getCause();
-                            assertEquals("cause is UnitRuntimeException", UnitRuntimeException.class, cause.getClass());
-                            // Otherwise ignore expected exception
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Test the plus and similar methods.
-     */
-    @Test
-    public void operationTest()
-    {
-        double[] testValues = new double[] { 0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0 };
-        double[] testValues2 = new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        for (AbsoluteTemperatureUnit temperatureUnit : new AbsoluteTemperatureUnit[] { AbsoluteTemperatureUnit.KELVIN,
-                AbsoluteTemperatureUnit.DEGREE_CELSIUS, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT })
-        {
-            for (StorageType storageType : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-            {
-                AbsoluteTemperatureVector atv = DoubleVector.instantiate(testValues, temperatureUnit, storageType);
-                for (TemperatureUnit relativeTemperatureUnit : new TemperatureUnit[] { TemperatureUnit.KELVIN,
-                        TemperatureUnit.DEGREE_CELSIUS, TemperatureUnit.DEGREE_FAHRENHEIT })
-                {
-                    for (StorageType storageType2 : new StorageType[] { StorageType.DENSE, StorageType.SPARSE })
-                    {
-                        TemperatureVector rtv = DoubleVector.instantiate(testValues2, relativeTemperatureUnit, storageType2);
-                        AbsoluteTemperatureVector sumtv = atv.plus(rtv);
-                        compareSum(atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN),
-                                rtv.getValuesInUnit(TemperatureUnit.KELVIN),
-                                sumtv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
-                        AbsoluteTemperatureVector difftv = atv.minus(rtv);
-                        compareSum(rtv.getValuesInUnit(TemperatureUnit.KELVIN),
-                                difftv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN),
-                                atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
-
-                        String s = atv.toString(temperatureUnit);
-                        assertTrue("toString returns something sensible", s.startsWith("["));
-                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
-                        // System.out.println(atv.toString(true, true));
-                        s = atv.toString(true, true);
-                        assertTrue("toString includes Immutable", s.contains("Immutable"));
-                        assertTrue("toString includes Abs", s.contains("Abs"));
-                        assertTrue("toString includes Dense or Sparse", s.contains(atv.isDense() ? "Dense" : "Sparse"));
-                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
-                        s = atv.mutable().toString(true, true);
-                        assertTrue("toString includes Mutable", s.contains("Mutable"));
-
-                        s = rtv.toString();
-                        assertTrue("toString returns something sensible", s.startsWith("["));
-                        assertTrue("toString returns something sensible",
-                                s.endsWith("] " + relativeTemperatureUnit.toString()));
-                        s = rtv.toString(true, true);
-                        assertTrue("toString includes Immutable", s.contains("Immutable"));
-                        assertTrue("toString includes Rel", s.contains("Rel"));
-                        assertTrue("toString includes Dense or Sparse", s.contains(rtv.isDense() ? "Dense" : "Sparse"));
-                        assertTrue("toString returns something sensible",
-                                s.endsWith("] " + relativeTemperatureUnit.toString()));
-                        s = rtv.mutable().toString(true, true);
-                        assertTrue("toString includes Mutable", s.contains("Mutable"));
-
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Check that two arrays and a sum array match.
-     * @param left double[]; the left array
-     * @param right double[]; the right array
-     * @param sum double[]; the sum array
-     */
-    public void compareSum(final double[] left, final double[] right, final double[] sum)
-    {
-        assertEquals("length of left must equal length of sum", left.length, sum.length);
-        assertEquals("length of right must equal length of sum", right.length, sum.length);
-        for (int i = 0; i < sum.length; i++)
-        {
-            assertEquals("left plus right is sum", left[i] + right[i], sum[i], 0.001);
+            AbsoluteTemperatureVector atv = new AbsoluteTemperatureVector(testValues, AbsoluteTemperatureUnit.KELVIN, storageType);
+            compareValuesWithScale(AbsoluteTemperatureUnit.KELVIN.getScale(), testValues, atv.getValuesSI());
+            atv = new AbsoluteTemperatureVector(al, AbsoluteTemperatureUnit.KELVIN, storageType);
+            compareValues(testValues, atv.getValuesSI());
+            atv = new AbsoluteTemperatureVector(dl, AbsoluteTemperatureUnit.KELVIN, storageType);
+            compareValues(testValues, atv.getValuesSI());
+            atv = new AbsoluteTemperatureVector(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, storageType);
+            compareValues(testValues, atv.getValuesSI());
+            atv = new AbsoluteTemperatureVector(at, AbsoluteTemperatureUnit.KELVIN, storageType);
+            compareValues(testValues, atv.getValuesInUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT));
         }
     }
 
