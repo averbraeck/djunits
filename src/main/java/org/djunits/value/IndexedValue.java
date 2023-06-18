@@ -5,7 +5,8 @@ import org.djunits.value.base.Scalar;
 import org.djunits.value.storage.StorageType;
 
 /**
- * IndexedValue.java.
+ * IndexedValue is the interface for Vector and Matrix, where multiple values can be retrieved using an index. The interface
+ * extends Value, which already identifies the key methods for all Scalar, Vector and Matrix classes.
  * <p>
  * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
