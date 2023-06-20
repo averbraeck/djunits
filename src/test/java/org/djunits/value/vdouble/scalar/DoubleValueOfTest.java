@@ -16,7 +16,7 @@ import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.base.Scalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.junit.Test;
 
 /**
@@ -35,7 +35,7 @@ public class DoubleValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void legal(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass, final double value,
+    private void legal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final double value,
             final String unitString)
     {
         try
@@ -54,7 +54,7 @@ public class DoubleValueOfTest
      * @param scalarClass the scalar class
      * @param text the text to parse
      */
-    private void legal(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass, final String text)
+    private void legal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final String text)
     {
         try
         {
@@ -73,7 +73,7 @@ public class DoubleValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void illegal(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass, final double value,
+    private void illegal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final double value,
             final String unitString)
     {
         try
@@ -97,7 +97,7 @@ public class DoubleValueOfTest
      * @param scalarClass the scalar class
      * @param text the text to parse
      */
-    private void illegal(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass, final String text)
+    private void illegal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final String text)
     {
         try
         {
@@ -195,11 +195,11 @@ public class DoubleValueOfTest
         for (String scalarName : CLASSNAMES.ALL_LIST)
         {
             String scalarClassName = scalarName;
-            Class<? extends DoubleScalarInterface<?, ?>> scalarClass = null;
+            Class<? extends DoubleScalar<?, ?>> scalarClass = null;
             // get the implementation of that class
             try
             {
-                scalarClass = (Class<? extends DoubleScalarInterface<?, ?>>) Class
+                scalarClass = (Class<? extends DoubleScalar<?, ?>>) Class
                         .forName("org.djunits.value.vdouble.scalar." + scalarClassName);
             }
             catch (ClassNotFoundException exception)
@@ -215,7 +215,7 @@ public class DoubleValueOfTest
      * @param scalarClass the class to test
      */
     @SuppressWarnings("unchecked")
-    private void testValueUS(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass)
+    private void testValueUS(final Class<? extends DoubleScalar<?, ?>> scalarClass)
     {
         try
         {
@@ -321,11 +321,11 @@ public class DoubleValueOfTest
         for (String scalarName : CLASSNAMES.ALL_LIST)
         {
             String scalarClassName = scalarName;
-            Class<? extends DoubleScalarInterface<?, ?>> scalarClass = null;
+            Class<? extends DoubleScalar<?, ?>> scalarClass = null;
             // get the implementation of that class
             try
             {
-                scalarClass = (Class<? extends DoubleScalarInterface<?, ?>>) Class
+                scalarClass = (Class<? extends DoubleScalar<?, ?>>) Class
                         .forName("org.djunits.value.vdouble.scalar." + scalarClassName);
             }
             catch (ClassNotFoundException exception)
@@ -341,7 +341,7 @@ public class DoubleValueOfTest
      * @param scalarClass the class to test
      */
     @SuppressWarnings("unchecked")
-    private void testValueNL(final Class<? extends DoubleScalarInterface<?, ?>> scalarClass)
+    private void testValueNL(final Class<? extends DoubleScalar<?, ?>> scalarClass)
     {
         try
         {

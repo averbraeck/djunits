@@ -17,7 +17,6 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Test;
 
@@ -57,13 +56,13 @@ public class DoubleScalarConstructorsTest implements UNITS
             Constructor<?> constructor = scalarClass.getConstructor(double.class, standardUnit.getClass());
             double testValue = 123.456d;
             Object[] args = new Object[] { testValue, standardUnit };
-            DoubleScalarInterface<?, ?> doubleScalar = (DoubleScalarInterface<?, ?>) constructor.newInstance(args);
+            DoubleScalar<?, ?> doubleScalar = (DoubleScalar<?, ?>) constructor.newInstance(args);
             // system.out.println(doubleScalar);
             assertEquals("Value must match", testValue, doubleScalar.getSI(), 0.1);
             assertEquals("Unit must match", standardUnit, doubleScalar.getDisplayUnit());
             constructor = scalarClass.getConstructor(doubleScalar.getClass());
             args = new Object[] { doubleScalar };
-            DoubleScalarInterface<?, ?> secondaryDoubleScalar = (DoubleScalarInterface<?, ?>) constructor.newInstance(args);
+            DoubleScalar<?, ?> secondaryDoubleScalar = (DoubleScalar<?, ?>) constructor.newInstance(args);
             assertEquals("Value must match", testValue, secondaryDoubleScalar.getSI(), 0.1);
             assertEquals("Unit must match", standardUnit, secondaryDoubleScalar.getDisplayUnit());
         }

@@ -18,7 +18,6 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
@@ -49,7 +48,7 @@ public class DoubleScalarTest
      * @param u Unit&lt;?&gt;; the expected type
      * @param expectAbsolute boolean; if true; ds should be Absolute; if false; ds should be Relative
      */
-    private static void checkContentsAndType(final AbstractDoubleScalar<?, ?> ds, final double reference,
+    private static void checkContentsAndType(final DoubleScalar<?, ?> ds, final double reference,
             final double precision, final Unit<?> u, final boolean expectAbsolute)
     {
         assertTrue("DoubleScalar should not be null", null != ds);
@@ -131,8 +130,8 @@ public class DoubleScalarTest
                 Method ofMethod = scalarClass.getDeclaredMethod("of", double.class, String.class);
                 for (String unitAbbreviation : unit.getDefaultAbbreviations())
                 {
-                    AbstractDoubleScalar<?, ?> scalar =
-                            (AbstractDoubleScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
+                    DoubleScalar<?, ?> scalar =
+                            (DoubleScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
                     assertEquals("unit was parsed correctly", scalar.getDisplayUnit().getId(), unit.getId());
                     assertEquals("value was parsed correctly", scalar.getInUnit(), testValue, 0.0001);
                 }
@@ -703,7 +702,7 @@ public class DoubleScalarTest
          * @param function DoubleToDouble; encapsulated function that converts one inputValue to an outputValue
          */
         public static void tester(final double inputValue, final String operation,
-                final AbstractDoubleScalar<?, ?> actualResult, final double precision, final DoubleToDouble function)
+                final DoubleScalar<?, ?> actualResult, final double precision, final DoubleToDouble function)
         {
             double expectedResult = function.function(inputValue);
             double got = actualResult.getSI();
