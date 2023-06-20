@@ -39,13 +39,19 @@ public interface Value<U extends Unit<U>, T extends Value<U, T>> extends Seriali
      * Indicate whether this is an Absolute Value.
      * @return boolean
      */
-    boolean isAbsolute();
+    default boolean isAbsolute()
+    {
+        return this instanceof Absolute;
+    }
 
     /**
      * Indicate whether this is a Relative Value.
      * @return boolean
      */
-    boolean isRelative();
+    default boolean isRelative()
+    {
+        return this instanceof Relative;
+    }
 
     /**
      * Concise description of this value.
