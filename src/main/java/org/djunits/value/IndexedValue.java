@@ -18,12 +18,14 @@ import org.djutils.exceptions.Throw;
  * @param <T> the value type for this unit
  * @param <D> the data storage type
  */
-public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
-        T extends AbstractIndexedValue<U, S, T, D>, D extends Storage<D>> extends AbstractValue<U, T>
-        implements IndexedValue<U, S, T>, Cloneable
+public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
+        T extends IndexedValue<U, S, T, D>, D extends Storage<D>> implements Value<U, T>
 {
     /** */
     private static final long serialVersionUID = 20190927L;
+
+    /** The display unit of this AbstractValue. */
+    private U displayUnit;
 
     /** If set, any modification of the data must be preceded by replacing the data with a local copy. */
     private boolean copyOnWrite = false;
@@ -32,12 +34,28 @@ public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U
     private boolean mutable = false;
 
     /**
-     * Construct a new AbstractIndexedValue.
-     * @param unit U; the unit
+     * Construct a new IndexedValue.
+     * @param displayUnit U; the unit of the new AbstractValue
      */
-    protected AbstractIndexedValue(final U unit)
+    public IndexedValue(final U displayUnit)
     {
-        super(unit);
+        Throw.whenNull(displayUnit, "display unit cannot be null");
+        this.displayUnit = displayUnit;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final U getDisplayUnit()
+    {
+        return this.displayUnit;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setDisplayUnit(final U newUnit)
+    {
+        Throw.whenNull(newUnit, "newUnit may not be null");
+        this.displayUnit = newUnit;
     }
 
     /**
@@ -52,8 +70,10 @@ public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U
      */
     protected abstract void setData(D data);
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Return the StorageType (DENSE, SPARSE, etc.) for the stored vector.
+     * @return StorageType; the storage type (DENSE, SPARSE, etc.) for the stored vector
+     */
     public final StorageType getStorageType()
     {
         return getData().getStorageType();
@@ -91,8 +111,10 @@ public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U
         this.copyOnWrite = copyOnWrite;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Return whether the data is mutable or not.
+     * @return boolean; whether the data is mutable or not
+     */
     public final boolean isMutable()
     {
         return this.mutable;
@@ -107,8 +129,10 @@ public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U
         this.mutable = mutable;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Turn the immutable flag on for this vector.
+     * @return T; the vector with a raised immutable flag
+     */
     public final T immutable()
     {
         if (isMutable())
@@ -121,8 +145,10 @@ public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U
         return result;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Turn the immutable flag off for this internal storage.
+     * @return T; the internal storage with a cleared immutable flag
+     */
     public final T mutable()
     {
         if (isMutable())
@@ -135,26 +161,52 @@ public abstract class AbstractIndexedValue<U extends Unit<U>, S extends Scalar<U
         return result;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Return whether the internal storage type of the indexed value is dense or not.
+     * @return boolean; whether the internal storage type of the indexed value is dense or not
+     */
     public final boolean isDense()
     {
         return getData().isDense();
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Return whether the internal storage type of the indexed value is sparse or not.
+     * @return boolean; whether the internal storage type of the indexed value is sparse or not
+     */
     public final boolean isSparse()
     {
         return getData().isSparse();
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Count the number of cells that have a non-zero SI value.
+     * @return int; the number of cells having non-zero SI value
+     */
     public final int cardinality()
     {
         return getData().cardinality();
     }
+
+    /**
+     * Create and return a dense version of this internal storage. When the data was already dense, the current version is
+     * returned and no copy will be made of the data.
+     * @return T; a dense version of this internal storage
+     */
+    public abstract T toDense();
+
+    /**
+     * Create and return a sparse version of this internal storage. When the data was already sparse, the current version is
+     * returned and no copy will be made of the data.
+     * @return T; a sparse version of this internal storage
+     */
+    public abstract T toSparse();
+
+    /**
+     * Return the class of the corresponding scalar.
+     * @return Class&lt;S&gt;; the class of the corresponding scalar
+     */
+    public abstract Class<S> getScalarClass();
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
