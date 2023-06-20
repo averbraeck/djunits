@@ -1,6 +1,7 @@
 package org.djunits.value.vdouble.scalar.base;
 
 import org.djunits.unit.Unit;
+import org.djunits.value.Relative;
 import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vdouble.scalar.SIScalar;
 
@@ -17,7 +18,7 @@ import org.djunits.value.vdouble.scalar.SIScalar;
  * @param <R> the Relative class for reference purposes
  */
 public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends AbstractDoubleScalarRel<U, R>>
-        extends AbstractDoubleScalar<U, R> implements DoubleScalarInterface.Rel<U, R>
+        extends DoubleScalar<U, R> implements Relative<U, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;
@@ -40,6 +41,14 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
     {
         super(value.getDisplayUnit(), value.getSI());
     }
+
+    /**
+     * Construct a new Relative Immutable DoubleScalar of the right type. Each extending class must implement this method.
+     * @param value double; the double value
+     * @param unit U; the unit
+     * @return R a new relative instance of the DoubleScalar of the right type
+     */
+    public abstract R instantiateRel(double value, U unit);
 
     /** {@inheritDoc} */
     @Override
@@ -99,7 +108,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R abs()
     {
         return instantiateRel(Math.abs(getInUnit()), getDisplayUnit());
@@ -107,7 +115,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R ceil()
     {
         return instantiateRel(Math.ceil(getInUnit()), getDisplayUnit());
@@ -115,7 +122,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R floor()
     {
         return instantiateRel(Math.floor(getInUnit()), getDisplayUnit());
@@ -123,7 +129,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R rint()
     {
         return instantiateRel(Math.rint(getInUnit()), getDisplayUnit());
@@ -131,7 +136,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R neg()
     {
         return instantiateRel(-getInUnit(), getDisplayUnit());
@@ -139,7 +143,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R times(final double constant)
     {
         return instantiateRel(getInUnit() * constant, getDisplayUnit());
@@ -147,7 +150,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R divide(final double constant)
     {
         return instantiateRel(getInUnit() / constant, getDisplayUnit());
@@ -155,7 +157,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R times(final float constant)
     {
         return instantiateRel(getInUnit() * constant, getDisplayUnit());
@@ -163,7 +164,6 @@ public abstract class AbstractDoubleScalarRel<U extends Unit<U>, R extends Abstr
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public R divide(final float constant)
     {
         return instantiateRel(getInUnit() / constant, getDisplayUnit());

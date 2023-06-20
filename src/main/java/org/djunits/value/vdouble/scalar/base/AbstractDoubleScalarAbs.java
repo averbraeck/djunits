@@ -2,6 +2,7 @@ package org.djunits.value.vdouble.scalar.base;
 
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
+import org.djunits.value.Absolute;
 import org.djunits.value.util.ValueUtil;
 
 /**
@@ -20,8 +21,8 @@ import org.djunits.value.util.ValueUtil;
  */
 public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         A extends AbstractDoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>> extends AbstractDoubleScalar<AU, A>
-        implements DoubleScalarInterface.Abs<AU, A, RU, R>
+        R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalar<AU, A>
+        implements Absolute<AU, A, RU, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;
@@ -45,6 +46,22 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
         super(value.getDisplayUnit(), value.getSI());
     }
 
+    /**
+     * Construct a new Relative Immutable DoubleScalar of the right type. Each extending class must implement this method.
+     * @param value double; the double value
+     * @param unit RU; the unit
+     * @return R a new relative instance of the DoubleScalar of the right type
+     */
+    public abstract R instantiateRel(double value, RU unit);
+
+    /**
+     * Construct a new Absolute Immutable DoubleScalar of the right type. Each extending class must implement this method.
+     * @param value double; the double value
+     * @param unit AU; the absolute unit
+     * @return A a new absolute instance of the DoubleScalar of the right type
+     */
+    public abstract A instantiateAbs(double value, AU unit);
+    
     /** {@inheritDoc} */
     @Override
     public final A plus(final R increment)
@@ -75,7 +92,6 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public A abs()
     {
         return instantiateAbs(Math.abs(getInUnit()), getDisplayUnit());
@@ -83,7 +99,6 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public A ceil()
     {
         return instantiateAbs(Math.ceil(getInUnit()), getDisplayUnit());
@@ -91,7 +106,6 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public A floor()
     {
         return instantiateAbs(Math.floor(getInUnit()), getDisplayUnit());
@@ -99,7 +113,6 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public A neg()
     {
         return instantiateAbs(-getInUnit(), getDisplayUnit());
@@ -107,7 +120,6 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("checkstyle:designforextension")
     public A rint()
     {
         return instantiateAbs(Math.rint(getInUnit()), getDisplayUnit());
