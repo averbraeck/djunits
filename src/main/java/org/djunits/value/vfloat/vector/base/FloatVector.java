@@ -7,14 +7,13 @@ import java.util.NoSuchElementException;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
-import org.djunits.value.AbstractIndexedValue;
 import org.djunits.value.ValueRuntimeException;
+import org.djunits.value.base.Vector;
 import org.djunits.value.formatter.Format;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Throw;
@@ -31,9 +30,8 @@ import org.djutils.exceptions.Throw;
  * @param <S> the scalar with unit U
  * @param <V> the generic vector type
  */
-public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractFloatScalar<U, S>,
-        V extends AbstractFloatVector<U, S, V>> extends AbstractIndexedValue<U, S, V, FloatVectorData>
-        implements FloatVectorInterface<U, S, V>
+public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>,
+        V extends FloatVector<U, S, V>> extends Vector<U, S, V, FloatVectorData>
 {
     /** */
     private static final long serialVersionUID = 20161015L;
@@ -47,13 +45,33 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
      * @param data FloatVectorData; an internal data object
      * @param unit U; the unit
      */
-    AbstractFloatVector(final FloatVectorData data, final U unit)
+    FloatVector(final FloatVectorData data, final U unit)
     {
         super(unit);
         Throw.whenNull(data, "data cannot be null");
         this.data = data;
     }
 
+    /**
+     * Instantiate a new vector of the class of this vector. This can be used instead of the FloatVector.instiantiate() methods
+     * in case another vector of this class is known. The method is faster than FloatVector.instantiate, and it will also work
+     * if the vector is user-defined.
+     * @param fvd FloatVectorData; the data used to instantiate the vector
+     * @param displayUnit U; the display unit of the vector
+     * @return V; a vector of the correct type
+     */
+    public abstract V instantiateVector(FloatVectorData fvd, U displayUnit);
+
+    /**
+     * Instantiate a new scalar for the class of this vector. This can be used instead of the FloatScalar.instiantiate() methods
+     * in case a vector of this class is known. The method is faster than FloatScalar.instantiate, and it will also work if the
+     * vector and/or scalar are user-defined.
+     * @param valueSI float; the SI value of the scalar
+     * @param displayUnit U; the unit in which the value will be displayed
+     * @return S; a scalar of the correct type, belonging to the vector type
+     */
+    public abstract S instantiateScalarSI(float valueSI, U displayUnit);
+    
     /** {@inheritDoc} */
     @Override
     protected final FloatVectorData getData()
@@ -68,22 +86,29 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
         this.data = data;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Create a float[] array filled with the values in the standard SI unit.
+     * @return float[]; array of values in the standard SI unit
+     */
     public final float[] getValuesSI()
     {
         return getData().getDenseVectorSI();
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Create a float[] array filled with the values in the original unit.
+     * @return float[]; the values in the original unit
+     */
     public final float[] getValuesInUnit()
     {
         return getValuesInUnit(getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Create a float[] array filled with the values converted into a specified unit.
+     * @param targetUnit U; the unit into which the values are converted for use
+     * @return float[]; the values converted into the specified unit
+     */
     public final float[] getValuesInUnit(final U targetUnit)
     {
         float[] values = getValuesSI();
@@ -114,8 +139,12 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Retrieve the value stored at a specified position in the standard SI unit.
+     * @param index int; index of the value to retrieve
+     * @return float; value at position index in the standard SI unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final float getSI(final int index) throws ValueRuntimeException
     {
         checkIndex(index);
@@ -129,22 +158,35 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
         return FloatScalar.instantiateSI(getSI(index), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Retrieve the value stored at a specified position in the original unit.
+     * @param index int; index of the value to retrieve
+     * @return float; value at position index in the original unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final float getInUnit(final int index) throws ValueRuntimeException
     {
         return (float) ValueUtil.expressAsUnit(getSI(index), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Retrieve the value stored at a specified position converted into a specified unit.
+     * @param index int; index of the value to retrieve
+     * @param targetUnit U; the unit for the result
+     * @return float; value at position index converted into the specified unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final float getInUnit(final int index, final U targetUnit) throws ValueRuntimeException
     {
         return (float) ValueUtil.expressAsUnit(getSI(index), targetUnit);
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the value, specified in the standard SI unit, at the specified position.
+     * @param index int; the index of the value to set
+     * @param valueSI float; the value, specified in the standard SI unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final void setSI(final int index, final float valueSI) throws ValueRuntimeException
     {
         checkIndex(index);
@@ -152,22 +194,35 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
         getData().setSI(index, valueSI);
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the value, specified in the (current) display unit, at the specified position.
+     * @param index int; the index of the value to set
+     * @param valueInUnit float; the value, specified in the (current) display unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public void setInUnit(final int index, final float valueInUnit) throws ValueRuntimeException
     {
         setSI(index, (float) ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the value, specified in the <code>valueUnit</code>, at the specified position.
+     * @param index int; the index of the value to set
+     * @param valueInUnit float; the value, specified in the (current) display unit
+     * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public void setInUnit(final int index, final float valueInUnit, final U valueUnit) throws ValueRuntimeException
     {
         setSI(index, (float) ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the scalar value at the specified position.
+     * @param index int; the index of the value to set
+     * @param value S; the value to set
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public void set(final int index, final S value) throws ValueRuntimeException
     {
         setSI(index, value.si);
@@ -223,9 +278,12 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Execute a function on a cell by cell basis. Note: May be expensive when used on sparse data.
+     * @param floatFunction FloatFunction; the function to apply
+     * @return V; this updated vector
+     */
     @SuppressWarnings("unchecked")
-    @Override
     public final V assign(final FloatFunction floatFunction)
     {
         checkCopyOnWrite();
@@ -330,11 +388,11 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
 
     /**
      * Centralized size equality check.
-     * @param other FloatVectorInterface&lt;?, ?, ?&gt;; other FloatVector
+     * @param other FloatVector&lt;?, ?, ?&gt;; other FloatVector
      * @throws NullPointerException when other vector is null
      * @throws ValueRuntimeException when vectors have unequal size
      */
-    protected final void checkSize(final FloatVectorInterface<?, ?, ?> other) throws ValueRuntimeException
+    protected final void checkSize(final FloatVector<?, ?, ?> other) throws ValueRuntimeException
     {
         Throw.whenNull(other, "Other vector is null");
         Throw.when(size() != other.size(), ValueRuntimeException.class, "The vectors have different sizes: %d != %d", size(),
@@ -363,7 +421,7 @@ public abstract class AbstractFloatVector<U extends Unit<U>, S extends AbstractF
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractFloatVector<?, ?, ?> other = (AbstractFloatVector<?, ?, ?>) obj;
+        FloatVector<?, ?, ?> other = (FloatVector<?, ?, ?>) obj;
         if (!getDisplayUnit().getStandardUnit().equals(other.getDisplayUnit().getStandardUnit()))
             return false;
         if (this.data == null)
