@@ -7,14 +7,13 @@ import java.util.NoSuchElementException;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
-import org.djunits.value.AbstractIndexedValue;
 import org.djunits.value.ValueRuntimeException;
+import org.djunits.value.base.Vector;
 import org.djunits.value.formatter.Format;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djunits.value.vdouble.vector.data.DoubleVectorDataDense;
@@ -33,9 +32,8 @@ import org.djutils.exceptions.Throw;
  * @param <S> the scalar with unit U
  * @param <V> the generic vector type
  */
-public abstract class AbstractDoubleVector<U extends Unit<U>, S extends AbstractDoubleScalar<U, S>,
-        V extends AbstractDoubleVector<U, S, V>> extends AbstractIndexedValue<U, S, V, DoubleVectorData>
-        implements DoubleVectorInterface<U, S, V>
+public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, S>, V extends DoubleVector<U, S, V>>
+        extends Vector<U, S, V, DoubleVectorData>
 {
     /** */
     private static final long serialVersionUID = 20161015L;
@@ -49,12 +47,32 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
      * @param data DoubleVectorData; an internal data object
      * @param unit U; the unit
      */
-    AbstractDoubleVector(final DoubleVectorData data, final U unit)
+    DoubleVector(final DoubleVectorData data, final U unit)
     {
         super(unit);
         Throw.whenNull(data, "data cannot be null");
         this.data = data;
     }
+
+    /**
+     * Instantiate a new vector of the class of this vector. This can be used instead of the DoubleVector.instiantiate() methods
+     * in case another vector of this class is known. The method is faster than DoubleVector.instantiate, and it will also work
+     * if the vector is user-defined.
+     * @param dvd DoubleVectorData; the data used to instantiate the vector
+     * @param displayUnit U; the display unit of the vector
+     * @return V; a vector of the correct type
+     */
+    public abstract V instantiateVector(DoubleVectorData dvd, U displayUnit);
+
+    /**
+     * Instantiate a new scalar for the class of this vector. This can be used instead of the DoubleScalar.instiantiate()
+     * methods in case a vector of this class is known. The method is faster than DoubleScalar.instantiate, and it will also
+     * work if the vector and/or scalar are user-defined.
+     * @param valueSI double; the SI value of the scalar
+     * @param displayUnit U; the unit in which the value will be displayed
+     * @return S; a scalar of the correct type, belonging to the vector type
+     */
+    public abstract S instantiateScalarSI(double valueSI, U displayUnit);
 
     /** {@inheritDoc} */
     @Override
@@ -70,22 +88,29 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
         this.data = data;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Create a double[] array filled with the values in the standard SI unit.
+     * @return double[]; array of values in the standard SI unit
+     */
     public final double[] getValuesSI()
     {
         return getData().getDenseVectorSI();
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Create a double[] array filled with the values in the original unit.
+     * @return double[]; the values in the original unit
+     */
     public final double[] getValuesInUnit()
     {
         return getValuesInUnit(getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Create a double[] array filled with the values converted into a specified unit.
+     * @param targetUnit U; the unit into which the values are converted for use
+     * @return double[]; the values converted into the specified unit
+     */
     public final double[] getValuesInUnit(final U targetUnit)
     {
         double[] values = getValuesSI();
@@ -116,8 +141,12 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Retrieve the value stored at a specified position in the standard SI unit.
+     * @param index int; index of the value to retrieve
+     * @return double; value at position index in the standard SI unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final double getSI(final int index) throws ValueRuntimeException
     {
         checkIndex(index);
@@ -131,22 +160,35 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
         return DoubleScalar.instantiateSI(getSI(index), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Retrieve the value stored at a specified position in the original unit.
+     * @param index int; index of the value to retrieve
+     * @return double; value at position index in the original unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final double getInUnit(final int index) throws ValueRuntimeException
     {
         return ValueUtil.expressAsUnit(getSI(index), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Retrieve the value stored at a specified position converted into a specified unit.
+     * @param index int; index of the value to retrieve
+     * @param targetUnit U; the unit for the result
+     * @return double; value at position index converted into the specified unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final double getInUnit(final int index, final U targetUnit) throws ValueRuntimeException
     {
         return ValueUtil.expressAsUnit(getSI(index), targetUnit);
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the value, specified in the standard SI unit, at the specified position.
+     * @param index int; the index of the value to set
+     * @param valueSI double; the value, specified in the standard SI unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public final void setSI(final int index, final double valueSI) throws ValueRuntimeException
     {
         checkIndex(index);
@@ -154,22 +196,35 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
         getData().setSI(index, valueSI);
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the value, specified in the (current) display unit, at the specified position.
+     * @param index int; the index of the value to set
+     * @param valueInUnit double; the value, specified in the (current) display unit
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public void setInUnit(final int index, final double valueInUnit) throws ValueRuntimeException
     {
         setSI(index, ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the value, specified in the <code>valueUnit</code>, at the specified position.
+     * @param index int; the index of the value to set
+     * @param valueInUnit double; the value, specified in the (current) display unit
+     * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public void setInUnit(final int index, final double valueInUnit, final U valueUnit) throws ValueRuntimeException
     {
         setSI(index, ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Set the scalar value at the specified position.
+     * @param index int; the index of the value to set
+     * @param value S; the value to set
+     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     */
     public void set(final int index, final S value) throws ValueRuntimeException
     {
         setSI(index, value.si);
@@ -225,9 +280,12 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Execute a function on a cell by cell basis. Note: May be expensive when used on sparse data.
+     * @param doubleFunction DoubleFunction; the function to apply
+     * @return V; this updated vector
+     */
     @SuppressWarnings("unchecked")
-    @Override
     public final V assign(final DoubleFunction doubleFunction)
     {
         checkCopyOnWrite();
@@ -339,11 +397,11 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
 
     /**
      * Centralized size equality check.
-     * @param other DoubleVectorInterface&lt;?, ?, ?&gt;; other DoubleVector
+     * @param other DoubleVector&lt;?, ?, ?&gt;; other DoubleVector
      * @throws NullPointerException when other vector is null
      * @throws ValueRuntimeException when vectors have unequal size
      */
-    protected final void checkSize(final DoubleVectorInterface<?, ?, ?> other) throws ValueRuntimeException
+    protected final void checkSize(final DoubleVector<?, ?, ?> other) throws ValueRuntimeException
     {
         Throw.whenNull(other, "Other vector is null");
         Throw.when(size() != other.size(), ValueRuntimeException.class, "The vectors have different sizes: %d != %d", size(),
@@ -372,7 +430,7 @@ public abstract class AbstractDoubleVector<U extends Unit<U>, S extends Abstract
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractDoubleVector<?, ?, ?> other = (AbstractDoubleVector<?, ?, ?>) obj;
+        DoubleVector<?, ?, ?> other = (DoubleVector<?, ?, ?>) obj;
         if (!getDisplayUnit().getStandardUnit().equals(other.getDisplayUnit().getStandardUnit()))
             return false;
         if (this.data == null)
