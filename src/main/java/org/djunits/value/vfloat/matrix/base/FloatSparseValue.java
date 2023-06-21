@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.djunits.unit.Unit;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.util.ValueUtil;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -18,7 +18,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type of the value
  * @param <S> the scalar type of the value
  */
-public class FloatSparseValue<U extends Unit<U>, S extends FloatScalarInterface<U, S>> implements Serializable
+public class FloatSparseValue<U extends Unit<U>, S extends FloatScalar<U, S>> implements Serializable
 {
     /** ... */
     private static final long serialVersionUID = 20191018L;
@@ -50,7 +50,7 @@ public class FloatSparseValue<U extends Unit<U>, S extends FloatScalarInterface<
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    private static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> S checkNull(final S value)
+    private static <U extends Unit<U>, S extends FloatScalar<U, S>> S checkNull(final S value)
     {
         Throw.whenNull(value, "value may not be null");
         return value;
