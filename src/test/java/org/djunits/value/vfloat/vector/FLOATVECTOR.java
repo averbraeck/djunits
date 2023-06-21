@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
 import org.djunits.unit.Unit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 
 /**
  * DOUBLEVECTOR for creating different test vectors.
@@ -62,7 +62,7 @@ public final class FLOATVECTOR
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> S[] denseScalarArray(final int size,
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[] denseScalarArray(final int size,
             final Class<S> scalarClass)
     {
         try
@@ -90,7 +90,7 @@ public final class FLOATVECTOR
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> S[] sparseScalarArray(final int size,
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[] sparseScalarArray(final int size,
             final Class<S> scalarClass)
     {
         try

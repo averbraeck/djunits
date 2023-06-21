@@ -34,9 +34,9 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatAbsoluteTemperature;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
-import org.djunits.value.vfloat.vector.base.FloatVectorInterface;
+import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -89,29 +89,29 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorDUS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorDUS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(float[].class, unitClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorDU =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorDU =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(float[].class, unitClass);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorDS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorDS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(float[].class, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorD = (Constructor<
-                        FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(float[].class);
+                Constructor<FloatVector<?, ?, ?>> constructorD = (Constructor<
+                        FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(float[].class);
 
                 // initialize vectors
-                FloatVectorInterface<?, ?, ?> vDUS = constructorDUS.newInstance(testValues, standardUnit, storageType);
+                FloatVector<?, ?, ?> vDUS = constructorDUS.newInstance(testValues, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vDUS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vDU = constructorDU.newInstance(testValues, standardUnit);
+                FloatVector<?, ?, ?> vDU = constructorDU.newInstance(testValues, standardUnit);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vDU.getStorageType());
-                FloatVectorInterface<?, ?, ?> vDS = constructorDS.newInstance(testValues, storageType);
+                FloatVector<?, ?, ?> vDS = constructorDS.newInstance(testValues, storageType);
                 assertEquals("StorageType must match", storageType, vDS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vD = constructorD.newInstance(testValues);
+                FloatVector<?, ?, ?> vD = constructorD.newInstance(testValues);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vD.getStorageType());
 
-                for (FloatVectorInterface<?, ?, ?> floatVector : new FloatVectorInterface[] {vDUS, vDU, vDS, vD})
+                for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vDUS, vDU, vDS, vD})
                 {
                     compareValuesWithScale(standardUnit.getScale(), testValues, floatVector.getValuesSI());
                     assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
@@ -126,7 +126,7 @@ public class FloatVectorConstructorsTest
                     Try.testFail(() -> floatVector.setInUnit(0, 0), "float vector should be immutable",
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
-                    FloatVectorInterface<?, ?, ?> mutable = floatVector.mutable();
+                    FloatVector<?, ?, ?> mutable = floatVector.mutable();
                     assertTrue("mutable float vector is mutable", mutable.isMutable());
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
@@ -140,7 +140,7 @@ public class FloatVectorConstructorsTest
                     {
                         assertEquals("ceil", Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001);
                     }
-                    FloatVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.floor(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.rint(), "float vector should be immutable", ValueRuntimeException.class);
@@ -206,8 +206,8 @@ public class FloatVectorConstructorsTest
             Class<?> scalarClass = CLASSNAMES.floatScalarClass(scalarName);
             Object[] testValues = (Object[]) Array.newInstance(scalarClass, floatValues.length);
             Class<?> scalarArrayClass = testValues.getClass();
-            Constructor<FloatScalarInterface<?, ?>> constructorScalar =
-                    (Constructor<FloatScalarInterface<?, ?>>) scalarClass.getConstructor(float.class, unitClass);
+            Constructor<FloatScalar<?, ?>> constructorScalar =
+                    (Constructor<FloatScalar<?, ?>>) scalarClass.getConstructor(float.class, unitClass);
 
             int cardinality = 0;
             float zSum = 0.0f;
@@ -225,30 +225,30 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLUS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLUS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(scalarArrayClass, unitClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLU =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLU =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(scalarArrayClass, unitClass);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(scalarArrayClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorL =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorL =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(scalarArrayClass);
 
                 // initialize vectors
-                FloatVectorInterface<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                FloatVector<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                FloatVectorInterface<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                FloatVector<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
                 assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vL = constructorL.newInstance(new Object[] {testValues});
+                FloatVector<?, ?, ?> vL = constructorL.newInstance(new Object[] {testValues});
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
 
-                for (FloatVectorInterface<?, ?, ?> floatVector : new FloatVectorInterface[] {vLUS, vLU, vLS, vL})
+                for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vLUS, vLU, vLS, vL})
                 {
                     compareValuesWithScale(standardUnit.getScale(), floatValues, floatVector.getValuesSI());
                     assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
@@ -260,7 +260,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("scalarClass must match", scalarClass, floatVector.getScalarClass());
                     Method instantiateMethod =
                             floatVector.getClass().getDeclaredMethod("instantiateVector", FloatVectorData.class, unitClass);
-                    FloatVectorInterface<?, ?, ?> vData = (FloatVectorInterface<?, ?, ?>) instantiateMethod.invoke(floatVector,
+                    FloatVector<?, ?, ?> vData = (FloatVector<?, ?, ?>) instantiateMethod.invoke(floatVector,
                             FloatVectorData.instantiate(floatValues, IdentityScale.SCALE, storageType), standardUnit);
                     compareValuesWithScale(standardUnit.getScale(), floatValues, vData.getValuesSI());
 
@@ -269,7 +269,7 @@ public class FloatVectorConstructorsTest
                     Try.testFail(() -> floatVector.setInUnit(0, 0), "float vector should be immutable",
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
-                    FloatVectorInterface<?, ?, ?> mutable = floatVector.mutable();
+                    FloatVector<?, ?, ?> mutable = floatVector.mutable();
                     assertTrue("mutable float vector is mutable", mutable.isMutable());
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
@@ -283,7 +283,7 @@ public class FloatVectorConstructorsTest
                     {
                         assertEquals("ceil", Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001);
                     }
-                    FloatVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.floor(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.rint(), "float vector should be immutable", ValueRuntimeException.class);
@@ -364,29 +364,29 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLUS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLUS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(List.class, unitClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLU =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLU =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(List.class, unitClass);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(List.class, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorL = (Constructor<
-                        FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
+                Constructor<FloatVector<?, ?, ?>> constructorL = (Constructor<
+                        FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
 
                 // initialize vectors
-                FloatVectorInterface<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                FloatVector<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                FloatVectorInterface<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                FloatVector<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
                 assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vL = constructorL.newInstance(testValues);
+                FloatVector<?, ?, ?> vL = constructorL.newInstance(testValues);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
 
-                for (FloatVectorInterface<?, ?, ?> floatVector : new FloatVectorInterface[] {vLUS, vLU, vLS, vL})
+                for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vLUS, vLU, vLS, vL})
                 {
                     compareValuesWithScale(standardUnit.getScale(), floatValues, floatVector.getValuesSI());
                     assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
@@ -401,7 +401,7 @@ public class FloatVectorConstructorsTest
                     Try.testFail(() -> floatVector.setInUnit(0, 0), "float vector should be immutable",
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
-                    FloatVectorInterface<?, ?, ?> mutable = floatVector.mutable();
+                    FloatVector<?, ?, ?> mutable = floatVector.mutable();
                     assertTrue("mutable float vector is mutable", mutable.isMutable());
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
@@ -415,7 +415,7 @@ public class FloatVectorConstructorsTest
                     {
                         assertEquals("ceil", Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001);
                     }
-                    FloatVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.floor(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.rint(), "float vector should be immutable", ValueRuntimeException.class);
@@ -515,8 +515,8 @@ public class FloatVectorConstructorsTest
             Unit<?> standardUnit = quantity.getStandardUnit();
             Class<?> unitClass = standardUnit.getClass();
             float[] floatValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0};
-            List<FloatScalarInterface<?, ?>> testValues = new ArrayList<>();
-            Constructor<FloatScalarInterface<?, ?>> constructorScalar = (Constructor<FloatScalarInterface<?, ?>>) CLASSNAMES
+            List<FloatScalar<?, ?>> testValues = new ArrayList<>();
+            Constructor<FloatScalar<?, ?>> constructorScalar = (Constructor<FloatScalar<?, ?>>) CLASSNAMES
                     .floatScalarClass(scalarName).getConstructor(float.class, unitClass);
 
             int cardinality = 0;
@@ -535,29 +535,29 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLUS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLUS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(List.class, unitClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLU =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLU =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(List.class, unitClass);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorLS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorLS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(List.class, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorL = (Constructor<
-                        FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
+                Constructor<FloatVector<?, ?, ?>> constructorL = (Constructor<
+                        FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
 
                 // initialize vectors
-                FloatVectorInterface<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                FloatVector<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                FloatVectorInterface<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                FloatVector<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
                 assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vL = constructorL.newInstance(testValues);
+                FloatVector<?, ?, ?> vL = constructorL.newInstance(testValues);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
 
-                for (FloatVectorInterface<?, ?, ?> floatVector : new FloatVectorInterface[] {vLUS, vLU, vLS, vL})
+                for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vLUS, vLU, vLS, vL})
                 {
                     compareValuesWithScale(standardUnit.getScale(), floatValues, floatVector.getValuesSI());
                     assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
@@ -572,7 +572,7 @@ public class FloatVectorConstructorsTest
                     Try.testFail(() -> floatVector.setInUnit(0, 0), "float vector should be immutable",
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
-                    FloatVectorInterface<?, ?, ?> mutable = floatVector.mutable();
+                    FloatVector<?, ?, ?> mutable = floatVector.mutable();
                     assertTrue("mutable float vector is mutable", mutable.isMutable());
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
@@ -586,7 +586,7 @@ public class FloatVectorConstructorsTest
                     {
                         assertEquals("ceil", Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001);
                     }
-                    FloatVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.floor(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.rint(), "float vector should be immutable", ValueRuntimeException.class);
@@ -620,7 +620,7 @@ public class FloatVectorConstructorsTest
                 }
 
                 // test the empty list
-                vLUS = constructorLUS.newInstance(new ArrayList<FloatScalarInterface<?, ?>>(), standardUnit, storageType);
+                vLUS = constructorLUS.newInstance(new ArrayList<FloatScalar<?, ?>>(), standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vLUS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vLUS.getDisplayUnit());
                 assertEquals("Cardinality", 0, vLUS.cardinality());
@@ -629,7 +629,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
-                vLU = constructorLU.newInstance(new ArrayList<FloatScalarInterface<?, ?>>(), standardUnit);
+                vLU = constructorLU.newInstance(new ArrayList<FloatScalar<?, ?>>(), standardUnit);
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
                 assertEquals("Unit must match", standardUnit, vLU.getDisplayUnit());
                 assertEquals("Cardinality", 0, vLU.cardinality());
@@ -638,7 +638,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
-                vLS = constructorLS.newInstance(new ArrayList<FloatScalarInterface<?, ?>>(), storageType);
+                vLS = constructorLS.newInstance(new ArrayList<FloatScalar<?, ?>>(), storageType);
                 assertEquals("StorageType must match", storageType, vLS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vLS.getDisplayUnit());
                 assertEquals("Cardinality", 0, vLS.cardinality());
@@ -647,7 +647,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
 
-                vL = constructorL.newInstance(new ArrayList<FloatScalarInterface<?, ?>>());
+                vL = constructorL.newInstance(new ArrayList<FloatScalar<?, ?>>());
                 assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
                 assertEquals("Unit must match", standardUnit, vL.getDisplayUnit());
                 assertEquals("Cardinality", 0, vL.cardinality());
@@ -706,30 +706,30 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorMUS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorMUS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorMU =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorMU =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class, unitClass);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorMS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorMS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorM =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorM =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class);
 
                 // initialize vectors
-                FloatVectorInterface<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
+                FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vMUS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
+                FloatVector<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
-                FloatVectorInterface<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
+                FloatVector<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
                 assertEquals("StorageType must match", storageType, vMS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vM = constructorM.newInstance(testValues, size);
+                FloatVector<?, ?, ?> vM = constructorM.newInstance(testValues, size);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
 
-                for (FloatVectorInterface<?, ?, ?> floatVector : new FloatVectorInterface[] {vMUS, vMU, vMS, vM})
+                for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vMUS, vMU, vMS, vM})
                 {
                     compareValuesWithScale(standardUnit.getScale(), allValues, floatVector.getValuesSI());
                     assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
@@ -745,7 +745,7 @@ public class FloatVectorConstructorsTest
                     Try.testFail(() -> floatVector.setInUnit(0, 0), "float vector should be immutable",
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
-                    FloatVectorInterface<?, ?, ?> mutable = floatVector.mutable();
+                    FloatVector<?, ?, ?> mutable = floatVector.mutable();
                     assertTrue("mutable float vector is mutable", mutable.isMutable());
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
@@ -759,7 +759,7 @@ public class FloatVectorConstructorsTest
                     {
                         assertEquals("ceil", Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001);
                     }
-                    FloatVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.floor(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.rint(), "float vector should be immutable", ValueRuntimeException.class);
@@ -902,8 +902,8 @@ public class FloatVectorConstructorsTest
             float[] floatValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0};
             float[] allValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0, 0, 0, 0};
             int size = 10;
-            SortedMap<Integer, FloatScalarInterface<?, ?>> testValues = new TreeMap<>();
-            Constructor<FloatScalarInterface<?, ?>> constructorScalar = (Constructor<FloatScalarInterface<?, ?>>) CLASSNAMES
+            SortedMap<Integer, FloatScalar<?, ?>> testValues = new TreeMap<>();
+            Constructor<FloatScalar<?, ?>> constructorScalar = (Constructor<FloatScalar<?, ?>>) CLASSNAMES
                     .floatScalarClass(scalarName).getConstructor(float.class, unitClass);
 
             int cardinality = 0;
@@ -922,30 +922,30 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorMUS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorMUS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorMU =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorMU =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class, unitClass);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorMS =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorMS =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class, StorageType.class);
-                Constructor<FloatVectorInterface<?, ?, ?>> constructorM =
-                        (Constructor<FloatVectorInterface<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
+                Constructor<FloatVector<?, ?, ?>> constructorM =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
                                 .getConstructor(SortedMap.class, int.class);
 
                 // initialize vectors
-                FloatVectorInterface<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
+                FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vMUS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
+                FloatVector<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
-                FloatVectorInterface<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
+                FloatVector<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
                 assertEquals("StorageType must match", storageType, vMS.getStorageType());
-                FloatVectorInterface<?, ?, ?> vM = constructorM.newInstance(testValues, size);
+                FloatVector<?, ?, ?> vM = constructorM.newInstance(testValues, size);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
 
-                for (FloatVectorInterface<?, ?, ?> floatVector : new FloatVectorInterface[] {vMUS, vMU, vMS, vM})
+                for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vMUS, vMU, vMS, vM})
                 {
                     compareValuesWithScale(standardUnit.getScale(), allValues, floatVector.getValuesSI());
                     assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
@@ -961,7 +961,7 @@ public class FloatVectorConstructorsTest
                     Try.testFail(() -> floatVector.setInUnit(0, 0), "float vector should be immutable",
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
-                    FloatVectorInterface<?, ?, ?> mutable = floatVector.mutable();
+                    FloatVector<?, ?, ?> mutable = floatVector.mutable();
                     assertTrue("mutable float vector is mutable", mutable.isMutable());
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
@@ -975,7 +975,7 @@ public class FloatVectorConstructorsTest
                     {
                         assertEquals("ceil", Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001);
                     }
-                    FloatVectorInterface<?, ?, ?> immutable = mutable.immutable();
+                    FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.floor(), "float vector should be immutable", ValueRuntimeException.class);
                     Try.testFail(() -> immutable.rint(), "float vector should be immutable", ValueRuntimeException.class);
@@ -1009,7 +1009,7 @@ public class FloatVectorConstructorsTest
                 }
 
                 // test the empty list
-                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 0, standardUnit,
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit,
                         storageType);
                 assertEquals("StorageType must match", storageType, vMUS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
@@ -1019,7 +1019,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
-                vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 0, standardUnit);
+                vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
                 assertEquals("Cardinality", 0, vMU.cardinality());
@@ -1028,7 +1028,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
-                vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 0, storageType);
+                vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, storageType);
                 assertEquals("StorageType must match", storageType, vMS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
                 assertEquals("Cardinality", 0, vMS.cardinality());
@@ -1037,7 +1037,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
-                vM = constructorM.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 0);
+                vM = constructorM.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
                 assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
                 assertEquals("Cardinality", 0, vM.cardinality());
@@ -1047,7 +1047,7 @@ public class FloatVectorConstructorsTest
                 }
 
                 // test the empty map with a size
-                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 10, standardUnit,
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit,
                         storageType);
                 assertEquals("StorageType must match", storageType, vMUS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
@@ -1058,7 +1058,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
-                vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 10, standardUnit);
+                vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
                 assertEquals("Cardinality", 0, vMU.cardinality());
@@ -1068,7 +1068,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
-                vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 10, storageType);
+                vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, storageType);
                 assertEquals("StorageType must match", storageType, vMS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
                 assertEquals("Cardinality", 0, vMS.cardinality());
@@ -1078,7 +1078,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
-                vM = constructorM.newInstance(new TreeMap<Integer, FloatScalarInterface<?, ?>>(), 10);
+                vM = constructorM.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10);
                 assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
                 assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
                 assertEquals("Cardinality", 0, vM.cardinality());
