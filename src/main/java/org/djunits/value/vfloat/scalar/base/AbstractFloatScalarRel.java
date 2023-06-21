@@ -1,6 +1,7 @@
 package org.djunits.value.vfloat.scalar.base;
 
 import org.djunits.unit.Unit;
+import org.djunits.value.Relative;
 import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 
@@ -17,7 +18,7 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
  * @param <R> the Relative class for reference purposes
  */
 public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends AbstractFloatScalarRel<U, R>>
-        extends AbstractFloatScalar<U, R> implements FloatScalarInterface.Rel<U, R>
+        extends FloatScalar<U, R> implements Relative<U, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;
@@ -40,6 +41,14 @@ public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends Abstra
     {
         super(value.getDisplayUnit(), value.getSI());
     }
+
+    /**
+     * Construct a new Relative Immutable FloatScalar of the right type. Each extending class must implement this method.
+     * @param value float; the float value
+     * @param unit U; the unit
+     * @return R a new relative instance of the FloatScalar of the right type
+     */
+    public abstract R instantiateRel(float value, U unit);
 
     /** {@inheritDoc} */
     @Override

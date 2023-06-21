@@ -2,6 +2,7 @@ package org.djunits.value.vfloat.scalar.base;
 
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
+import org.djunits.value.RelWithAbs;
 
 /**
  * The typed, abstract FloatScalarRelWithAbs class that forms the basis of the relative FloatScalars suck as Duration that have
@@ -20,7 +21,7 @@ import org.djunits.unit.Unit;
 public abstract class AbstractFloatScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         A extends AbstractFloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
         R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>> extends AbstractFloatScalarRel<RU, R>
-        implements FloatScalarInterface.RelWithAbs<AU, A, RU, R>
+        implements RelWithAbs<AU, A, RU, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;
@@ -34,6 +35,14 @@ public abstract class AbstractFloatScalarRelWithAbs<AU extends AbsoluteLinearUni
     {
         super(value, unit);
     }
+
+    /**
+     * Construct a new Absolute Immutable FloatScalar of the right type. Each extending class must implement this method.
+     * @param value float; the float value
+     * @param unit AU; the absolute unit
+     * @return A a new absolute instance of the FloatScalar of the right type
+     */
+    public abstract A instantiateAbs(float value, AU unit);
 
     /**
      * Construct a new Relative Immutable FloatScalar from an existing Relative Immutable FloatScalar.

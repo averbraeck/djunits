@@ -2,6 +2,7 @@ package org.djunits.value.vfloat.scalar.base;
 
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
+import org.djunits.value.Absolute;
 import org.djunits.value.util.ValueUtil;
 
 /**
@@ -20,8 +21,7 @@ import org.djunits.value.util.ValueUtil;
  */
 public abstract class AbstractFloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         A extends AbstractFloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>> extends AbstractFloatScalar<AU, A>
-        implements FloatScalarInterface.Abs<AU, A, RU, R>
+        R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>> extends FloatScalar<AU, A> implements Absolute<AU, A, RU, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;
@@ -44,6 +44,22 @@ public abstract class AbstractFloatScalarAbs<AU extends AbsoluteLinearUnit<AU, R
     {
         super(value.getDisplayUnit(), value.getSI());
     }
+
+    /**
+     * Construct a new Relative Immutable FloatScalar of the right type. Each extending class must implement this method.
+     * @param value float; the float value
+     * @param unit RU; the unit
+     * @return R a new relative instance of the FloatScalar of the right type
+     */
+    public abstract R instantiateRel(float value, RU unit);
+
+    /**
+     * Construct a new Absolute Immutable FloatScalar of the right type. Each extending class must implement this method.
+     * @param value float; the float value
+     * @param unit AU; the absolute unit
+     * @return A a new absolute instance of the FloatScalar of the right type
+     */
+    public abstract A instantiateAbs(float value, AU unit);
 
     /** {@inheritDoc} */
     @Override
