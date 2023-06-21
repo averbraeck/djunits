@@ -13,7 +13,7 @@ import org.djunits.value.storage.Storage;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleFunction2;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -188,7 +188,7 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> DoubleVectorData instantiate(final S[] values,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> DoubleVectorData instantiate(final S[] values,
             final StorageType storageType)
     {
         Throw.whenNull(values, "DoubleVectorData.instantiate: double[] values is null");
