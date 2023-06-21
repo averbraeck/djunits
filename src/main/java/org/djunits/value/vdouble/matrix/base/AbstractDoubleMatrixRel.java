@@ -5,17 +5,16 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Matrix;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.matrix.SIMatrix;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVector;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVector;
 
 /**
- * AbstractDoubleMatrixRel.java.
+ * DoubleMatrixRel.java.
  * <p>
  * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
@@ -28,7 +27,7 @@ import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
  */
 public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>,
         RV extends AbstractDoubleVectorRel<U, S, RV>, RM extends AbstractDoubleMatrixRel<U, S, RV, RM>>
-        extends AbstractDoubleMatrix<U, S, RV, RM> implements Matrix.Rel<U, S, RV, RM>, Relative<U, RM>
+        extends DoubleMatrix<U, S, RV, RM> implements Relative<U, RM>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -127,6 +126,28 @@ public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends Abstr
     }
 
     /**
+     * Multiply all values of this matrix by the multiplier. This only works if the matrix is mutable.
+     * @param multiplier double; the factor by which to multiply all values
+     * @return V; this modified matrix
+     * @throws ValueRuntimeException in case the matrix is immutable
+     */
+    public RM multiplyBy(final double multiplier)
+    {
+        return assign(DoubleMathFunctions.MULT(multiplier));
+    }
+
+    /**
+     * Divide all values of this matrix by the divisor. This only works if the matrix is mutable.
+     * @param divisor double; the value by which to divide all values
+     * @return RM; this modified matrix
+     * @throws ValueRuntimeException in case the matrix is immutable
+     */
+    public RM divideBy(final double divisor)
+    {
+        return assign(DoubleMathFunctions.DIV(divisor));
+    }
+
+    /**
      * Multiply a Relative value with this Relative value for a matrix or matrix. The multiplication is done value by value and
      * store the result in a new Relative value. If both operands are dense, the result is a dense matrix or matrix, otherwise
      * the result is a sparse matrix or matrix.
@@ -139,8 +160,8 @@ public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends Abstr
      * @param <VT> the vector type of the multiplier
      * @param <MT> the matrix type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractDoubleScalar<UT, ST>, VT extends AbstractDoubleVector<UT, ST, VT>,
-            MT extends AbstractDoubleMatrix<UT, ST, VT, MT> & Relative<UT, MT>> SIMatrix times(final MT rel)
+    public final <UT extends Unit<UT>, ST extends DoubleScalar<UT, ST>, VT extends DoubleVector<UT, ST, VT>,
+            MT extends DoubleMatrix<UT, ST, VT, MT> & Relative<UT, MT>> SIMatrix times(final MT rel)
                     throws ValueRuntimeException, UnitException
     {
         return new SIMatrix(this.getData().times(rel.getData()), SIUnit.of(
@@ -163,13 +184,6 @@ public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends Abstr
         return times((double) multiplier);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public final RM multiplyBy(final double multiplier)
-    {
-        return assign(DoubleMathFunctions.MULT(multiplier));
-    }
-
     /**
      * Divide this Relative matrix by another Relative matrix. The operation is done value by value and store the result is
      * stored in a new Relative matrix. If both operands are dense, the result is a dense matrix, otherwise the result is a
@@ -183,8 +197,8 @@ public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends Abstr
      * @param <VT> the vector type of the multiplier
      * @param <MT> the matrix type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractDoubleScalar<UT, ST>, VT extends AbstractDoubleVector<UT, ST, VT>,
-            MT extends AbstractDoubleMatrix<UT, ST, VT, MT> & Relative<UT, MT>> SIMatrix divide(final MT rel)
+    public final <UT extends Unit<UT>, ST extends DoubleScalar<UT, ST>, VT extends DoubleVector<UT, ST, VT>,
+            MT extends DoubleMatrix<UT, ST, VT, MT> & Relative<UT, MT>> SIMatrix divide(final MT rel)
                     throws ValueRuntimeException, UnitException
     {
         return new SIMatrix(this.getData().divide(rel.getData()), SIUnit.of(
@@ -205,13 +219,6 @@ public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends Abstr
         RM result = clone().mutable();
         result.assign(DoubleMathFunctions.DIV(divisor));
         return result.immutable();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final RM divideBy(final double divisor)
-    {
-        return assign(DoubleMathFunctions.DIV(divisor));
     }
 
 }

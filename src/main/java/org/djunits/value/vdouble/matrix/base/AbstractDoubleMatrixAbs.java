@@ -4,7 +4,6 @@ import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Matrix;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
@@ -39,8 +38,8 @@ public abstract class AbstractDoubleMatrixAbs<
         R   extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractDoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>,
         RM  extends AbstractDoubleMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
-        extends AbstractDoubleMatrix<AU, A, AV, AM>
-        implements Matrix.Abs<AU, A, AV, AM, RU, R, RV, RM>, Absolute
+        extends DoubleMatrix<AU, A, AV, AM>
+        implements Absolute<AU, AM, RU, RM>
 // @formatter:on
 {
     /** */
