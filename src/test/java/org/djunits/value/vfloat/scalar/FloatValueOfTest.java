@@ -11,7 +11,7 @@ import org.djunits.unit.AreaUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitException;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Test;
 
 /**
@@ -30,7 +30,7 @@ public class FloatValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void legal(final Class<? extends FloatScalarInterface<?, ?>> scalarClass, final float value,
+    private void legal(final Class<? extends FloatScalar<?, ?>> scalarClass, final float value,
             final String unitString)
     {
         try
@@ -49,7 +49,7 @@ public class FloatValueOfTest
      * @param scalarClass the scalar class
      * @param text the text to parse
      */
-    private void legal(final Class<? extends FloatScalarInterface<?, ?>> scalarClass, final String text)
+    private void legal(final Class<? extends FloatScalar<?, ?>> scalarClass, final String text)
     {
         try
         {
@@ -68,7 +68,7 @@ public class FloatValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void illegal(final Class<? extends FloatScalarInterface<?, ?>> scalarClass, final float value,
+    private void illegal(final Class<? extends FloatScalar<?, ?>> scalarClass, final float value,
             final String unitString)
     {
         try
@@ -92,7 +92,7 @@ public class FloatValueOfTest
      * @param scalarClass the scalar class
      * @param text the text to parse
      */
-    private void illegal(final Class<? extends FloatScalarInterface<?, ?>> scalarClass, final String text)
+    private void illegal(final Class<? extends FloatScalar<?, ?>> scalarClass, final String text)
     {
         try
         {

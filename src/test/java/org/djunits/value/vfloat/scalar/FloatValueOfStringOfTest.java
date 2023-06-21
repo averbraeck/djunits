@@ -12,7 +12,7 @@ import org.djunits.unit.TimeUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.base.Scalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Test;
 
 /**
@@ -101,7 +101,7 @@ public class FloatValueOfStringOfTest
                 {
                     continue;
                 }
-                FloatScalarInterface<?, ?> scalar = null;
+                FloatScalar<?, ?> scalar = null;
                 try
                 {
                     // XXX: TimeUnit of Y(1) fails. Check WHY!!!!!
@@ -109,7 +109,7 @@ public class FloatValueOfStringOfTest
                     {
                         continue;
                     }
-                    scalar = (FloatScalarInterface<?, ?>) constructScalar.newInstance(Float.valueOf(1.0f), unit);
+                    scalar = (FloatScalar<?, ?>) constructScalar.newInstance(Float.valueOf(1.0f), unit);
                     assertEquals("Float construction with unit + get in unit failed for " + unit.toString(), 1.0,
                             scalar.getInUnit(), 0.01);
                 }
