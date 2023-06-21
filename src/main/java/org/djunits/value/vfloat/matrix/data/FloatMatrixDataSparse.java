@@ -12,7 +12,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatFunction2;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -58,7 +58,7 @@ public class FloatMatrixDataSparse extends FloatMatrixData
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public <U extends Unit<U>, S extends FloatScalarInterface<U, S>> FloatMatrixDataSparse(
+    public <U extends Unit<U>, S extends FloatScalar<U, S>> FloatMatrixDataSparse(
             final Collection<FloatSparseValue<U, S>> dataSI, final int rows, final int cols) throws NullPointerException
     {
         super(StorageType.SPARSE);

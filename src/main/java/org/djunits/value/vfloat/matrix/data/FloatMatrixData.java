@@ -13,7 +13,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatFunction2;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -107,7 +107,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> FloatMatrixData instantiate(
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> FloatMatrixData instantiate(
             final Collection<FloatSparseValue<U, S>> values, final int rows, final int cols, final StorageType storageType)
             throws NullPointerException
     {
@@ -148,7 +148,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> FloatMatrixData instantiate(final S[][] values,
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> FloatMatrixData instantiate(final S[][] values,
             final StorageType storageType) throws ValueRuntimeException
     {
         Throw.whenNull(storageType, "FloatMatrixData.instantiate: storageType is null");
@@ -283,7 +283,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    protected static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> S[][] checkRectangularAndNonNull(
+    protected static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] checkRectangularAndNonNull(
             final S[][] values) throws ValueRuntimeException
     {
         Throw.when(null == values, NullPointerException.class, "Cannot create a matrix from a null Scalar[][]");
