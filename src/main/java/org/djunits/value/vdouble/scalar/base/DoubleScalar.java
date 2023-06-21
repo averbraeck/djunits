@@ -37,7 +37,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     public final double si;
 
     /**
-     * Construct a new AbstractDoubleScalar.
+     * Construct a new DoubleScalar.
      * @param unit U; the unit
      * @param si double; the si value to store
      */
@@ -239,9 +239,9 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     /**
-     * Format this AbstractDoubleScalar in SI unit using prefixes when possible. If the value is too small or too large,
+     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large,
      * e-notation and the plain SI unit are used.
-     * @return String; formatted value of this AbstractDoubleScalar
+     * @return String; formatted value of this DoubleScalar
      */
     public String toStringSIPrefixed()
     {
@@ -249,11 +249,11 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     /**
-     * Format this AbstractDoubleScalar in SI unit using prefixes when possible and within the specified size range. If the
+     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the
      * value is too small or too large, e-notation and the plain SI unit are used.
      * @param smallestPower int; the smallest exponent value that will be written using an SI prefix
      * @param biggestPower int; the largest exponent value that will be written using an SI prefix
-     * @return String; formatted value of this AbstractDoubleScalar
+     * @return String; formatted value of this DoubleScalar
      */
     public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
     {
