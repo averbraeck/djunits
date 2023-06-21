@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.djunits.unit.Unit;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.util.ValueUtil;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -18,9 +18,9 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type of the value
  * @param <S> the scalar type of the value
  */
-public class DoubleSparseValue<U extends Unit<U>, S extends DoubleScalarInterface<U, S>> implements Serializable
+public class DoubleSparseValue<U extends Unit<U>, S extends DoubleScalar<U, S>> implements Serializable
 {
-    /** ... */
+    /** */
     private static final long serialVersionUID = 20191018L;
 
     /** the row in the matrix. */
@@ -50,7 +50,7 @@ public class DoubleSparseValue<U extends Unit<U>, S extends DoubleScalarInterfac
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    private static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> S checkNull(final S value)
+    private static <U extends Unit<U>, S extends DoubleScalar<U, S>> S checkNull(final S value)
     {
         Throw.whenNull(value, "value may not be null");
         return value;
