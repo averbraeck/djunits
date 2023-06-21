@@ -19,10 +19,11 @@ import org.djunits.value.storage.Storage;
  * @param <S> the scalar type belonging to the matrix type
  * @param <V> the corresponding vector type
  * @param <M> the matrix type with the given unit
- * @param <D> the data storage type
+ * @param <DV> the data storage type of the Vector
+ * @param <DM> the data storage type of the Matrix
  */
-public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extends Vector<U, S, V, D>,
-        M extends Matrix<U, S, V, M, D>, D extends Storage<D>> extends IndexedValue<U, S, M, D>
+public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extends Vector<U, S, V, DV>, DV extends Storage<DV>,
+        M extends Matrix<U, S, V, DV, M, DM>, DM extends Storage<DM>> extends IndexedValue<U, S, M, DM>
 {
     /** */
     private static final long serialVersionUID = 20230620L;
