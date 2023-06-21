@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 
 /**
  * DOUBLEMATRIX for creating different test matrices. Matrix values from a double array are stored as m[row][column].
@@ -78,7 +78,7 @@ public final class DOUBLEMATRIX
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> S[][] denseRectScalarArrays(final int rows,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[][] denseRectScalarArrays(final int rows,
             final int cols, final Class<S> scalarClass)
     {
         try
@@ -110,7 +110,7 @@ public final class DOUBLEMATRIX
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> S[][] sparseRectScalarArrays(final int rows,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[][] sparseRectScalarArrays(final int rows,
             final int cols, final Class<S> scalarClass)
     {
         try
@@ -143,7 +143,7 @@ public final class DOUBLEMATRIX
      */
     @SuppressWarnings("unchecked")
     public static <U extends Unit<U>,
-            S extends DoubleScalarInterface<U, S>> Collection<DoubleSparseValue<U, S>> denseRectTuples(final int rows,
+            S extends DoubleScalar<U, S>> Collection<DoubleSparseValue<U, S>> denseRectTuples(final int rows,
                     final int cols, final Class<S> scalarClass)
     {
         try
@@ -177,7 +177,7 @@ public final class DOUBLEMATRIX
      * @param <S> the scalar type
      */
     public static <U extends Unit<U>,
-            S extends DoubleScalarInterface<U, S>> Collection<DoubleSparseValue<U, S>> sparseRectTuples(final int rows,
+            S extends DoubleScalar<U, S>> Collection<DoubleSparseValue<U, S>> sparseRectTuples(final int rows,
                     final int cols, final Class<S> scalarClass)
     {
         try

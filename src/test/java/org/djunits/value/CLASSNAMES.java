@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrix;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVector;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrix;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVector;
+import org.djunits.value.vdouble.vector.base.DoubleVector;
+import org.djunits.value.vfloat.matrix.base.FloatMatrix;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.vector.base.FloatVector;
 
 /**
  * CLASSNAMES.java.
@@ -100,11 +100,11 @@ public final class CLASSNAMES
      * @return list of float scalar classes for the quantity name
      */
     @SuppressWarnings("unchecked")
-    public static Class<? extends AbstractFloatScalar<?, ?>> floatScalarClass(final String qName)
+    public static Class<? extends FloatScalar<?, ?>> floatScalarClass(final String qName)
     {
         try
         {
-            return (Class<? extends AbstractFloatScalar<?, ?>>) Class.forName("org.djunits.value.vfloat.scalar.Float" + qName);
+            return (Class<? extends FloatScalar<?, ?>>) Class.forName("org.djunits.value.vfloat.scalar.Float" + qName);
         }
         catch (ClassNotFoundException exception)
         {
@@ -119,11 +119,11 @@ public final class CLASSNAMES
      * @return list of double vector classes for the quantity name
      */
     @SuppressWarnings("unchecked")
-    public static Class<? extends AbstractDoubleVector<?, ?, ?>> doubleVectorClass(final String qName)
+    public static Class<? extends DoubleVector<?, ?, ?>> doubleVectorClass(final String qName)
     {
         try
         {
-            return (Class<? extends AbstractDoubleVector<?, ?, ?>>) Class
+            return (Class<? extends DoubleVector<?, ?, ?>>) Class
                     .forName("org.djunits.value.vdouble.vector." + qName + "Vector");
         }
         catch (ClassNotFoundException exception)
@@ -139,11 +139,11 @@ public final class CLASSNAMES
      * @return list of float vector classes for the quantity name
      */
     @SuppressWarnings("unchecked")
-    public static Class<? extends AbstractFloatVector<?, ?, ?>> floatVectorClass(final String qName)
+    public static Class<? extends FloatVector<?, ?, ?>> floatVectorClass(final String qName)
     {
         try
         {
-            return (Class<? extends AbstractFloatVector<?, ?, ?>>) Class
+            return (Class<? extends FloatVector<?, ?, ?>>) Class
                     .forName("org.djunits.value.vfloat.vector.Float" + qName + "Vector");
         }
         catch (ClassNotFoundException exception)
@@ -159,11 +159,11 @@ public final class CLASSNAMES
      * @return list of double matrix classes for the quantity name
      */
     @SuppressWarnings("unchecked")
-    public static Class<? extends AbstractDoubleMatrix<?, ?, ?, ?>> doubleMatrixClass(final String qName)
+    public static Class<? extends DoubleMatrix<?, ?, ?, ?>> doubleMatrixClass(final String qName)
     {
         try
         {
-            return (Class<? extends AbstractDoubleMatrix<?, ?, ?, ?>>) Class
+            return (Class<? extends DoubleMatrix<?, ?, ?, ?>>) Class
                     .forName("org.djunits.value.vdouble.matrix." + qName + "Matrix");
         }
         catch (ClassNotFoundException exception)
@@ -179,11 +179,11 @@ public final class CLASSNAMES
      * @return list of float matrix classes for the quantity name
      */
     @SuppressWarnings("unchecked")
-    public static Class<? extends AbstractFloatMatrix<?, ?, ?, ?>> floatMatrixClass(final String qName)
+    public static Class<? extends FloatMatrix<?, ?, ?, ?>> floatMatrixClass(final String qName)
     {
         try
         {
-            return (Class<? extends AbstractFloatMatrix<?, ?, ?, ?>>) Class
+            return (Class<? extends FloatMatrix<?, ?, ?, ?>>) Class
                     .forName("org.djunits.value.vfloat.matrix.Float" + qName + "Matrix");
         }
         catch (ClassNotFoundException exception)

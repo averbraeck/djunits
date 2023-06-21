@@ -28,7 +28,6 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixAbs;
 import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRelWithAbs;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrixInterface;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Area;
@@ -37,11 +36,11 @@ import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.Speed;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.SIVector;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
-import org.djunits.value.vdouble.vector.base.DoubleVectorInterface;
+import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -79,21 +78,21 @@ public class DoubleMatrixInstantiateTest
             {
                 double[][] testValues = DOUBLEMATRIX.denseRectArrays(5, 10);
                 DoubleMatrixData dmd = DoubleMatrixData.instantiate(testValues, standardUnit.getScale(), storageType);
-                DoubleMatrixInterface<U, ?, ?, ?> doubleMatrix =
+                DoubleMatrix<U, ?, ?, ?> doubleMatrix =
                         DoubleMatrix.instantiate(testValues, standardUnit, storageType);
                 Class<?> scalarClass = doubleMatrix.getScalarClass();
                 assertEquals("scalar class should have the right name", scalarName, scalarClass.getSimpleName());
                 Class<?> vectorClass = doubleMatrix.getVectorClass();
                 assertEquals("vector class should have the right name", scalarName + "Vector", vectorClass.getSimpleName());
-                DoubleMatrixInterface<U, ?, ?, ?> doubleMatrix2 = doubleMatrix.instantiateMatrix(dmd, standardUnit);
+                DoubleMatrix<U, ?, ?, ?> doubleMatrix2 = doubleMatrix.instantiateMatrix(dmd, standardUnit);
                 assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
                         doubleMatrix, doubleMatrix2);
                 DoubleVectorData dvd =
                         DoubleVectorData.instantiate(doubleMatrix.getRowSI(0), standardUnit.getScale(), storageType);
-                DoubleVectorInterface<U, ?, ?> doubleVector = doubleMatrix.instantiateVector(dvd, standardUnit);
+                DoubleVector<U, ?, ?> doubleVector = doubleMatrix.instantiateVector(dvd, standardUnit);
                 assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         doubleVector.getValuesSI(), 0.001);
-                DoubleScalarInterface<U, ?> doubleScalar = doubleMatrix.instantiateScalarSI(1.234, standardUnit);
+                DoubleScalar<U, ?> doubleScalar = doubleMatrix.instantiateScalarSI(1.234, standardUnit);
                 assertEquals("Constructed scalar has correct value", 1.234, doubleScalar.getSI(), 0.001);
                 assertEquals("Constructed scalar has correct unit", standardUnit, doubleScalar.getDisplayUnit());
             }
@@ -133,7 +132,7 @@ public class DoubleMatrixInstantiateTest
                 AbstractDoubleMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absDoubleMatrix = (AbstractDoubleMatrixAbs<AU, ?, ?, ?, RU, ?,
                         ?, ?>) DoubleMatrix.instantiate(testValues, absStandardUnit, storageType);
 
-                DoubleMatrixInterface<AU, ?, ?, ?> absDoubleMatrix2 =
+                DoubleMatrix<AU, ?, ?, ?> absDoubleMatrix2 =
                         relDoubleMatrix.instantiateMatrixAbs(dmd, absStandardUnit);
                 assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
                         absDoubleMatrix, absDoubleMatrix2);
@@ -148,7 +147,7 @@ public class DoubleMatrixInstantiateTest
                 assertEquals("Constructed scalar has correct value", 1.234, absDoubleScalar.si, 0.001);
                 assertEquals("Constructed scalar has correct unit", absStandardUnit, absDoubleScalar.getDisplayUnit());
 
-                DoubleMatrixInterface<RU, ?, ?, ?> relDoubleMatrix2 =
+                DoubleMatrix<RU, ?, ?, ?> relDoubleMatrix2 =
                         absDoubleMatrix.instantiateMatrixRel(dmd, relStandardUnit);
                 assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
                         relDoubleMatrix, relDoubleMatrix2);

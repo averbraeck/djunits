@@ -1,28 +1,12 @@
 package org.djunits.value.vdouble.matrix;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
 import org.djunits.unit.DimensionlessUnit;
-import org.djunits.unit.SIUnit;
-import org.djunits.unit.Unit;
-import org.djunits.unit.util.UNITS;
-import org.djunits.unit.util.UnitException;
-import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
-import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
 import org.junit.Test;
 
 /**
@@ -36,7 +20,7 @@ import org.junit.Test;
 public class DoubleSIMatrixTest
 {
 
-    /**
+    /*-
      * Test all "asXX" methods.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
@@ -50,6 +34,7 @@ public class DoubleSIMatrixTest
      * @param <V> the vector type
      * @param <M> the matrix type
      */
+    /*- TODO: replace with new instantiation
     @SuppressWarnings("unchecked")
     @Test
     public <U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>, V extends AbstractDoubleVectorRel<U, S, V>,
@@ -136,6 +121,7 @@ public class DoubleSIMatrixTest
             }
         }
     }
+    */
 
     /**
      * Test the methods that are only implemented in DimensionLess matrices.

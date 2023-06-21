@@ -33,7 +33,6 @@ import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatAbsoluteTemperature;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
 import org.djunits.value.vfloat.vector.base.FloatVector;
@@ -89,17 +88,14 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVector<?, ?, ?>> constructorDUS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(float[].class, unitClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorDU =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(float[].class, unitClass);
-                Constructor<FloatVector<?, ?, ?>> constructorDS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(float[].class, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorD = (Constructor<
-                        FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(float[].class);
+                Constructor<FloatVector<?, ?, ?>> constructorDUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(float[].class, unitClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorDU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(float[].class, unitClass);
+                Constructor<FloatVector<?, ?, ?>> constructorDS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(float[].class, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorD = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(float[].class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vDUS = constructorDUS.newInstance(testValues, standardUnit, storageType);
@@ -166,7 +162,7 @@ public class FloatVectorConstructorsTest
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
-                        AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                        FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                         assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
                         assertEquals("value of scalar matches", s.getInUnit(), testValues[nextIndex], 0.001);
                         nextIndex++;
@@ -225,18 +221,14 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVector<?, ?, ?>> constructorLUS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(scalarArrayClass, unitClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorLU =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(scalarArrayClass, unitClass);
-                Constructor<FloatVector<?, ?, ?>> constructorLS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(scalarArrayClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorL =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(scalarArrayClass);
+                Constructor<FloatVector<?, ?, ?>> constructorLUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(scalarArrayClass, unitClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorLU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(scalarArrayClass, unitClass);
+                Constructor<FloatVector<?, ?, ?>> constructorLS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(scalarArrayClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorL = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(scalarArrayClass);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
@@ -309,7 +301,7 @@ public class FloatVectorConstructorsTest
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
-                        AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                        FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                         assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
                         assertEquals("value of scalar matches", s.getInUnit(), floatValues[nextIndex], 0.001);
                         nextIndex++;
@@ -364,17 +356,14 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVector<?, ?, ?>> constructorLUS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(List.class, unitClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorLU =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(List.class, unitClass);
-                Constructor<FloatVector<?, ?, ?>> constructorLS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(List.class, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorL = (Constructor<
-                        FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
+                Constructor<FloatVector<?, ?, ?>> constructorLUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(List.class, unitClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorLU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(List.class, unitClass);
+                Constructor<FloatVector<?, ?, ?>> constructorLS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(List.class, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorL =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
@@ -441,7 +430,7 @@ public class FloatVectorConstructorsTest
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
-                        AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                        FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                         assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
                         assertEquals("value of scalar matches", s.getInUnit(), floatValues[nextIndex], 0.001);
                         nextIndex++;
@@ -535,17 +524,14 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVector<?, ?, ?>> constructorLUS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(List.class, unitClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorLU =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(List.class, unitClass);
-                Constructor<FloatVector<?, ?, ?>> constructorLS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(List.class, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorL = (Constructor<
-                        FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
+                Constructor<FloatVector<?, ?, ?>> constructorLUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(List.class, unitClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorLU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(List.class, unitClass);
+                Constructor<FloatVector<?, ?, ?>> constructorLS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(List.class, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorL =
+                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName).getConstructor(List.class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
@@ -612,7 +598,7 @@ public class FloatVectorConstructorsTest
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
-                        AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                        FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                         assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
                         assertEquals("value of scalar matches", s.getInUnit(), floatValues[nextIndex], 0.001);
                         nextIndex++;
@@ -706,18 +692,14 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVector<?, ?, ?>> constructorMUS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorMU =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass);
-                Constructor<FloatVector<?, ?, ?>> constructorMS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorM =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class);
+                Constructor<FloatVector<?, ?, ?>> constructorMUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorMU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass);
+                Constructor<FloatVector<?, ?, ?>> constructorMS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorM = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
@@ -785,7 +767,7 @@ public class FloatVectorConstructorsTest
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
-                        AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                        FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                         assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
                         assertEquals("value of scalar matches", s.getInUnit(), allValues[nextIndex], 0.001);
                         nextIndex++;
@@ -922,18 +904,14 @@ public class FloatVectorConstructorsTest
             for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 // get the constructors
-                Constructor<FloatVector<?, ?, ?>> constructorMUS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorMU =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass);
-                Constructor<FloatVector<?, ?, ?>> constructorMS =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, StorageType.class);
-                Constructor<FloatVector<?, ?, ?>> constructorM =
-                        (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES.floatVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class);
+                Constructor<FloatVector<?, ?, ?>> constructorMUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorMU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass);
+                Constructor<FloatVector<?, ?, ?>> constructorMS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, StorageType.class);
+                Constructor<FloatVector<?, ?, ?>> constructorM = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
+                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
@@ -1001,7 +979,7 @@ public class FloatVectorConstructorsTest
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
-                        AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                        FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                         assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
                         assertEquals("value of scalar matches", s.getInUnit(), allValues[nextIndex], 0.001);
                         nextIndex++;
@@ -1009,8 +987,7 @@ public class FloatVectorConstructorsTest
                 }
 
                 // test the empty list
-                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit,
-                        storageType);
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vMUS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
                 assertEquals("Cardinality", 0, vMUS.cardinality());
@@ -1047,8 +1024,7 @@ public class FloatVectorConstructorsTest
                 }
 
                 // test the empty map with a size
-                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit,
-                        storageType);
+                vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit, storageType);
                 assertEquals("StorageType must match", storageType, vMUS.getStorageType());
                 assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
                 assertEquals("Cardinality", 0, vMUS.cardinality());
@@ -1187,7 +1163,7 @@ public class FloatVectorConstructorsTest
                 Iterator<?> iterator;
                 for (iterator = siv.iterator(); iterator.hasNext();)
                 {
-                    AbstractFloatScalar<?, ?> s = (AbstractFloatScalar<?, ?>) iterator.next();
+                    FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
                     assertEquals("SIDimensions match", s.getDisplayUnit().getQuantity().getSiDimensions(),
                             quantity.getSiDimensions());
                     assertEquals("value of scalar matches", s.getInUnit(), testValues[nextIndex], 0.001);

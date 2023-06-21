@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 
 /**
  * FLOATMATRIX for creating different test matrices. Matrix values from a float array are stored as m[row][column].
@@ -78,7 +78,7 @@ public final class FLOATMATRIX
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> S[][] denseRectScalarArrays(final int rows,
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] denseRectScalarArrays(final int rows,
             final int cols, final Class<S> scalarClass)
     {
         try
@@ -110,7 +110,7 @@ public final class FLOATMATRIX
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> S[][] sparseRectScalarArrays(final int rows,
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] sparseRectScalarArrays(final int rows,
             final int cols, final Class<S> scalarClass)
     {
         try
@@ -142,7 +142,7 @@ public final class FLOATMATRIX
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> Collection<FloatSparseValue<U, S>> denseRectTuples(
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> Collection<FloatSparseValue<U, S>> denseRectTuples(
             final int rows, final int cols, final Class<S> scalarClass)
     {
         try
@@ -175,7 +175,7 @@ public final class FLOATMATRIX
      * @param <U> the unit type
      * @param <S> the scalar type
      */
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> Collection<FloatSparseValue<U, S>> sparseRectTuples(
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> Collection<FloatSparseValue<U, S>> sparseRectTuples(
             final int rows, final int cols, final Class<S> scalarClass)
     {
         try

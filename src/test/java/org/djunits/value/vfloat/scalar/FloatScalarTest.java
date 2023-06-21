@@ -18,7 +18,6 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
@@ -45,7 +44,7 @@ public class FloatScalarTest
      * @param u Unit&lt;?&gt;; the expected type
      * @param expectAbsolute boolean; if true; ds should be Absolute; if false; ds should be Relative
      */
-    private static void checkContentsAndType(final AbstractFloatScalar<?, ?> ds, final float reference, final float precision,
+    private static void checkContentsAndType(final FloatScalar<?, ?> ds, final float reference, final float precision,
             final Unit<?> u, final boolean expectAbsolute)
     {
         assertTrue("FloatScalar should not be null", null != ds);
@@ -127,8 +126,7 @@ public class FloatScalarTest
                 Method ofMethod = scalarClass.getDeclaredMethod("of", float.class, String.class);
                 for (String unitAbbreviation : unit.getDefaultAbbreviations())
                 {
-                    AbstractFloatScalar<?, ?> scalar =
-                            (AbstractFloatScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
+                    FloatScalar<?, ?> scalar = (FloatScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
                     assertEquals("unit was not parsed correctly", scalar.getDisplayUnit().getId(), unit.getId());
                     if (Float.isFinite(scalar.getInUnit()) && scalar.getInUnit() != 0.0f && scalar.getInUnit() != -0.0f
                             && (!unitAbbreviation.contains("(Y")))
@@ -145,7 +143,7 @@ public class FloatScalarTest
                     assertTrue("Exception is an IllegalArgumentException",
                             ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"));
                 }
-                
+
                 try
                 {
                     ofMethod.invoke(null, testValue, "");
@@ -271,7 +269,7 @@ public class FloatScalarTest
     @Test
     public final void mathFunctionsTestAbsTest()
     {
-        float[] seedValues = { -10f, -2f, -1f, -0.5f, -0.1f, 0f, 0.1f, 0.5f, 1f, 2f, 10f };
+        float[] seedValues = {-10f, -2f, -1f, -0.5f, -0.1f, 0f, 0.1f, 0.5f, 1f, 2f, 10f};
         for (float seedValue : seedValues)
         {
             float input = seedValue;
@@ -530,7 +528,7 @@ public class FloatScalarTest
     @Test
     public final void mathFunctionsTestRelTest()
     {
-        float[] seedValues = { -10f, -2f, -1f, -0.5f, -0.1f, 0f, 0.1f, 0.5f, 1f, 2f, 10f };
+        float[] seedValues = {-10f, -2f, -1f, -0.5f, -0.1f, 0f, 0.1f, 0.5f, 1f, 2f, 10f};
         for (float seedValue : seedValues)
         {
             float input = seedValue;
@@ -655,7 +653,7 @@ public class FloatScalarTest
          * @param precision float; expected accuracy
          * @param function FloatToFloat; encapsulated function that converts one inputValue to an outputValue
          */
-        public static void tester(final float inputValue, final String operation, final AbstractFloatScalar<?, ?> actualResult,
+        public static void tester(final float inputValue, final String operation, final FloatScalar<?, ?> actualResult,
                 final float precision, final FloatToFloat function)
         {
             float expectedResult = function.function(inputValue);

@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import org.djunits.quantity.Quantity;
 import org.djunits.unit.Unit;
@@ -14,16 +15,12 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.util.ClassUtil;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -177,6 +174,11 @@ public class ScalarOperationsTest
             final boolean multiply, final boolean doubleType) throws NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException, NoSuchFieldException
     {
+        if (Modifier.isStatic(method.getModifiers()))
+        {
+            // not interested in static methods
+            return;
+        }
         Class<?> relativeOrAbsoluteClass = null;
         try
         {
@@ -397,11 +399,11 @@ public class ScalarOperationsTest
         }
         else
         {
-            if (!(o instanceof FloatScalarInterface))
+            if (!(o instanceof FloatScalar))
             {
                 fail("object is not a FloatScalar");
             }
-            result = ((AbstractFloatScalar<?, ?>) o).getSI();
+            result = ((FloatScalar<?, ?>) o).getSI();
         }
         if (o instanceof Absolute)
         {
@@ -479,7 +481,7 @@ public class ScalarOperationsTest
                 if (parTypes.length == 1)
                 {
                     // System.out.println("parType is " + parTypes[0]);
-                    AbstractFloatScalar<?, ?> newInstance = (AbstractFloatScalar<?, ?>) c.newInstance(left);
+                    FloatScalar<?, ?> newInstance = (FloatScalar<?, ?>) c.newInstance(left);
                     assertEquals("Result of constructor should be equal to original", value,
                             verifyAbsRelPrecisionAndExtractSI(abs, doubleType, newInstance), 0.01);
                 }
@@ -904,14 +906,14 @@ public class ScalarOperationsTest
         else
         {
             float zeroValue = 1.23456f;
-            AbstractFloatScalar<?,
+            FloatScalar<?,
                     ?> zero = abs
                             ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(zeroValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (AbstractFloatScalarRel<?, ?>) constructor.newInstance(zeroValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             float oneValue = 3.45678f;
-            AbstractFloatScalar<?,
+            FloatScalar<?,
                     ?> one = abs
                             ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
@@ -921,54 +923,53 @@ public class ScalarOperationsTest
             {
                 float expectedResult = (1.0f - ratio) * zeroValue + ratio * oneValue;
                 Method interpolate = ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, float.class);
-                AbstractFloatScalar<?, ?> result;
-                result = (AbstractFloatScalar<?, ?>) interpolate.invoke(null, zero, one, ratio);
+                FloatScalar<?, ?> result;
+                result = (FloatScalar<?, ?>) interpolate.invoke(null, zero, one, ratio);
                 assertEquals("Result of operation", expectedResult, verifyAbsRelPrecisionAndExtractSI(abs, doubleType, result),
                         0.01);
             }
             float biggestValue = 345.678f;
-            AbstractFloatScalar<?,
+            FloatScalar<?,
                     ?> biggest = abs
                             ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (AbstractFloatScalarRel<?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             Method max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass);
-            AbstractFloatScalar<?, ?> result = (AbstractFloatScalar<?, ?>) max.invoke(null, zero, one);
+            FloatScalar<?, ?> result = (FloatScalar<?, ?>) max.invoke(null, zero, one);
             assertEquals("max return object with maximum value", one, result);
-            result = (AbstractFloatScalar<?, ?>) max.invoke(null, one, zero);
+            result = (FloatScalar<?, ?>) max.invoke(null, one, zero);
             assertEquals("max return object with maximum value", one, result);
             // https://stackoverflow.com/questions/1679421/how-to-get-the-array-class-for-a-given-class-in-java
             Class<?> emptyClassArrayClass = java.lang.reflect.Array.newInstance(scalarClass, 0).getClass();
             max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass, emptyClassArrayClass);
-            AbstractFloatScalar<?, ?>[] additionalArguments =
-                    (AbstractFloatScalar<?, ?>[]) java.lang.reflect.Array.newInstance(scalarClass, 1);
+            FloatScalar<?, ?>[] additionalArguments = (FloatScalar<?, ?>[]) java.lang.reflect.Array.newInstance(scalarClass, 1);
             additionalArguments[0] = biggest;
-            result = (AbstractFloatScalar<?, ?>) max.invoke(null, zero, one, additionalArguments);
+            result = (FloatScalar<?, ?>) max.invoke(null, zero, one, additionalArguments);
             assertEquals("max return object with maximum value", biggest, result);
-            result = (AbstractFloatScalar<?, ?>) max.invoke(null, one, zero, additionalArguments);
+            result = (FloatScalar<?, ?>) max.invoke(null, one, zero, additionalArguments);
             assertEquals("max return object with maximum value", biggest, result);
             additionalArguments[0] = zero;
-            result = (AbstractFloatScalar<?, ?>) max.invoke(null, biggest, zero, additionalArguments);
+            result = (FloatScalar<?, ?>) max.invoke(null, biggest, zero, additionalArguments);
             assertEquals("max return object with maximum value", biggest, result);
 
             Method min = ClassUtil.resolveMethod(scalarClass, "min", scalarClass, scalarClass);
-            result = (AbstractFloatScalar<?, ?>) min.invoke(null, zero, one);
+            result = (FloatScalar<?, ?>) min.invoke(null, zero, one);
             assertEquals("min returns object with maximum value", zero, result);
-            result = (AbstractFloatScalar<?, ?>) min.invoke(null, one, zero);
+            result = (FloatScalar<?, ?>) min.invoke(null, one, zero);
             assertEquals("min returns object with maximum value", zero, result);
             min = ClassUtil.resolveMethod(scalarClass, "min", scalarClass, scalarClass, emptyClassArrayClass);
-            result = (AbstractFloatScalar<?, ?>) min.invoke(null, one, biggest, additionalArguments);
+            result = (FloatScalar<?, ?>) min.invoke(null, one, biggest, additionalArguments);
             assertEquals("min return object with minimum value", zero, result);
-            result = (AbstractFloatScalar<?, ?>) min.invoke(null, biggest, one, additionalArguments);
+            result = (FloatScalar<?, ?>) min.invoke(null, biggest, one, additionalArguments);
             assertEquals("min return object with minimum value", zero, result);
             additionalArguments[0] = biggest;
-            result = (AbstractFloatScalar<?, ?>) min.invoke(null, zero, one, additionalArguments);
+            result = (FloatScalar<?, ?>) min.invoke(null, zero, one, additionalArguments);
             assertEquals("min return object with minimum value", zero, result);
 
             Method valueOf = ClassUtil.resolveMethod(scalarClass, "valueOf", String.class);
             String string = zero.toString();
-            result = (AbstractFloatScalar<?, ?>) valueOf.invoke(null, string);
+            result = (FloatScalar<?, ?>) valueOf.invoke(null, string);
             assertEquals("valueOf toString returns a decent approximation of the input", zeroValue, result.getSI(), 0.001);
             try
             {
@@ -1012,7 +1013,7 @@ public class ScalarOperationsTest
             }
 
             Method instantiateSI = ClassUtil.resolveMethod(scalarClass, "instantiateSI", float.class);
-            result = (AbstractFloatScalar<?, ?>) instantiateSI.invoke(null, zeroValue);
+            result = (FloatScalar<?, ?>) instantiateSI.invoke(null, zeroValue);
             assertEquals("SI value was correctly set", zeroValue, result.getSI(), 0.0001);
         }
     }

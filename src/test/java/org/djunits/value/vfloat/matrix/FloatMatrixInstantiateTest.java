@@ -28,7 +28,6 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixAbs;
 import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRelWithAbs;
 import org.djunits.value.vfloat.matrix.base.FloatMatrix;
-import org.djunits.value.vfloat.matrix.base.FloatMatrixInterface;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatArea;
@@ -37,11 +36,11 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.FloatSIVector;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
-import org.djunits.value.vfloat.vector.base.FloatVectorInterface;
+import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -64,8 +63,8 @@ public class FloatMatrixInstantiateTest
      * @param <M> the matrix type
      */
     @Test
-    public <U extends Unit<U>, S extends FloatScalarInterface<U, S>, V extends FloatVectorInterface<U, S, V>,
-            M extends FloatMatrixInterface<U, S, V, M>> void instatiateAllMatrixTypes()
+    public <U extends Unit<U>, S extends FloatScalar<U, S>, V extends FloatVector<U, S, V>,
+            M extends FloatMatrix<U, S, V, M>> void instatiateAllMatrixTypes()
     {
         // Force loading of all classes
         LengthUnit length = UNITS.METER;
@@ -83,22 +82,22 @@ public class FloatMatrixInstantiateTest
             {
                 float[][] testValues = FLOATMATRIX.denseRectArrays(5, 10);
                 FloatMatrixData dmd = FloatMatrixData.instantiate(testValues, standardUnit.getScale(), storageType);
-                FloatMatrixInterface<U, S, V, M> floatMatrix = FloatMatrix.instantiate(testValues, standardUnit, storageType);
+                FloatMatrix<U, S, V, M> floatMatrix = FloatMatrix.instantiate(testValues, standardUnit, storageType);
                 Class<S> scalarClass = floatMatrix.getScalarClass();
                 assertEquals("scalar class should have the right name", "Float" + scalarName, scalarClass.getSimpleName());
                 Class<V> vectorClass = floatMatrix.getVectorClass();
                 assertEquals("vector class should have the right name", "Float" + scalarName + "Vector",
                         vectorClass.getSimpleName());
-                FloatMatrixInterface<U, S, V, M> floatMatrix2 = floatMatrix.instantiateMatrix(dmd, standardUnit);
+                FloatMatrix<U, S, V, M> floatMatrix2 = floatMatrix.instantiateMatrix(dmd, standardUnit);
                 assertEquals("matrix constructed from FloatMatrixData should be equal to matrix constructed from float[][]",
                         floatMatrix, floatMatrix2);
                 FloatVectorData dvd =
                         FloatVectorData.instantiate(floatMatrix.getRowSI(0), standardUnit.getScale(), storageType);
-                FloatVectorInterface<U, S, V> floatVector = floatMatrix.instantiateVector(dvd, standardUnit);
+                FloatVector<U, S, V> floatVector = floatMatrix.instantiateVector(dvd, standardUnit);
                 assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         floatVector.getValuesSI(), 0.001f);
                 // TODO next cast should be unnecessary
-                FloatScalarInterface<U, S> floatScalar = floatMatrix.instantiateScalarSI(1.234f, standardUnit);
+                FloatScalar<U, S> floatScalar = floatMatrix.instantiateScalarSI(1.234f, standardUnit);
                 assertEquals("Constructed scalar has correct value", 1.234f, floatScalar.getSI(), 0.001);
                 assertEquals("Constructed scalar has correct unit", standardUnit, floatScalar.getDisplayUnit());
             }
@@ -138,7 +137,7 @@ public class FloatMatrixInstantiateTest
                 AbstractFloatMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absFloatMatrix = (AbstractFloatMatrixAbs<AU, ?, ?, ?, RU, ?, ?,
                         ?>) FloatMatrix.instantiate(testValues, absStandardUnit, storageType);
 
-                FloatMatrixInterface<AU, ?, ?, ?> absFloatMatrix2 = relFloatMatrix.instantiateMatrixAbs(dmd, absStandardUnit);
+                FloatMatrix<AU, ?, ?, ?> absFloatMatrix2 = relFloatMatrix.instantiateMatrixAbs(dmd, absStandardUnit);
                 assertEquals("matrix constructed from FloatMatrixData should be equal to matrix constructed from float[][]",
                         absFloatMatrix, absFloatMatrix2);
                 FloatVectorData dvd =
@@ -152,7 +151,7 @@ public class FloatMatrixInstantiateTest
                 assertEquals("Constructed scalar has correct value", 1.234f, absFloatScalar.si, 0.001f);
                 assertEquals("Constructed scalar has correct unit", absStandardUnit, absFloatScalar.getDisplayUnit());
 
-                FloatMatrixInterface<RU, ?, ?, ?> relFloatMatrix2 = absFloatMatrix.instantiateMatrixRel(dmd, relStandardUnit);
+                FloatMatrix<RU, ?, ?, ?> relFloatMatrix2 = absFloatMatrix.instantiateMatrixRel(dmd, relStandardUnit);
                 assertEquals("matrix constructed from FloatMatrixData should be equal to matrix constructed from float[][]",
                         relFloatMatrix, relFloatMatrix2);
                 dvd = FloatVectorData.instantiate(absFloatMatrix.getRowSI(0), absStandardUnit.getScale(), storageType);
