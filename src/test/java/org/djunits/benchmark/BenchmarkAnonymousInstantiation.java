@@ -71,7 +71,7 @@ import org.djunits.value.vdouble.scalar.Temperature;
 import org.djunits.value.vdouble.scalar.Time;
 import org.djunits.value.vdouble.scalar.Torque;
 import org.djunits.value.vdouble.scalar.Volume;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 
 /**
  * BenschmarkAnonymousInstantiation.java.
@@ -84,7 +84,7 @@ import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
 public final class BenchmarkAnonymousInstantiation
 {
     /** the cache to make the lookup of the constructor for a Scalar belonging to a unit faster. */
-    private static final Map<Unit<?>, Constructor<? extends AbstractDoubleScalar<?, ?>>> CACHE = new HashMap<>();
+    private static final Map<Unit<?>, Constructor<? extends DoubleScalar<?, ?>>> CACHE = new HashMap<>();
 
     /** the cache to make the lookup of the method handle for a Scalar belonging to a unit faster. */
     private static final Map<Unit<?>, MethodHandle> MH_CACHE = new HashMap<>();
@@ -103,7 +103,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends AbstractDoubleScalar<U, S>> S instantiateCached(final double value,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateCached(final double value,
             final U unit)
     {
         return instantiateAnonymousCached(value, unit);
@@ -119,11 +119,11 @@ public final class BenchmarkAnonymousInstantiation
      * @param <S> the return type
      */
     @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
-    public static <S extends AbstractDoubleScalar<?, S>> S instantiateAnonymousCached(final double value, final Unit<?> unit)
+    public static <S extends DoubleScalar<?, S>> S instantiateAnonymousCached(final double value, final Unit<?> unit)
     {
         try
         {
-            Constructor<? extends AbstractDoubleScalar<?, ?>> scalarConstructor = CACHE.get(unit);
+            Constructor<? extends DoubleScalar<?, ?>> scalarConstructor = CACHE.get(unit);
             if (scalarConstructor == null)
             {
                 if (!unit.getClass().getSimpleName().endsWith("Unit"))
@@ -131,14 +131,14 @@ public final class BenchmarkAnonymousInstantiation
                     throw new ClassNotFoundException(
                             "Unit " + unit + " name does noet end with 'Unit'. Cannot find corresponding scalar");
                 }
-                Class<? extends AbstractDoubleScalar<?, ?>> scalarClass;
+                Class<? extends DoubleScalar<?, ?>> scalarClass;
                 if (unit instanceof SIUnit)
                 {
                     scalarClass = SIScalar.class;
                 }
                 else
                 {
-                    scalarClass = (Class<AbstractDoubleScalar<?, ?>>) Class
+                    scalarClass = (Class<DoubleScalar<?, ?>>) Class
                             .forName("org.djunits.value.vdouble.scalar." + unit.getClass().getSimpleName().replace("Unit", ""));
                 }
                 scalarConstructor = scalarClass.getDeclaredConstructor(double.class, unit.getClass());
@@ -162,7 +162,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends AbstractDoubleScalar<U, S>> S instantiateCascade(final double value,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateCascade(final double value,
             final U unit)
     {
         return instantiateAnonymousCascade(value, unit);
@@ -178,7 +178,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <S> the return type
      */
     @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
-    public static <S extends AbstractDoubleScalar<?, S>> S instantiateAnonymousCascade(final double value, final Unit<?> unit)
+    public static <S extends DoubleScalar<?, S>> S instantiateAnonymousCascade(final double value, final Unit<?> unit)
     {
         if (unit instanceof DimensionlessUnit)
             return (S) new Dimensionless(value, (DimensionlessUnit) unit);
@@ -250,7 +250,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends AbstractDoubleScalar<U, S>> S instantiateNonCached(final double value,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateNonCached(final double value,
             final U unit)
     {
         return instantiateAnonymousNonCached(value, unit);
@@ -266,13 +266,13 @@ public final class BenchmarkAnonymousInstantiation
      * @param <S> the return type
      */
     @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
-    public static <S extends AbstractDoubleScalar<?, S>> S instantiateAnonymousNonCached(final double value, final Unit<?> unit)
+    public static <S extends DoubleScalar<?, S>> S instantiateAnonymousNonCached(final double value, final Unit<?> unit)
     {
         try
         {
-            Class<AbstractDoubleScalar<?, ?>> scalarClass = (Class<AbstractDoubleScalar<?, ?>>) Class
+            Class<DoubleScalar<?, ?>> scalarClass = (Class<DoubleScalar<?, ?>>) Class
                     .forName("org.djunits.value.vdouble.scalar." + unit.getClass().getSimpleName().replace("Unit", ""));
-            Constructor<AbstractDoubleScalar<?, ?>> scalarConstructor =
+            Constructor<DoubleScalar<?, ?>> scalarConstructor =
                     scalarClass.getDeclaredConstructor(double.class, unit.getClass());
             CACHE.put(unit, scalarConstructor);
             return (S) scalarConstructor.newInstance(value, unit);
@@ -292,7 +292,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends AbstractDoubleScalar<U, S>> S instantiateMethodHandle(final double value,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateMethodHandle(final double value,
             final U unit)
     {
         return instantiateAnonymousMethodHandle(value, unit);
@@ -308,7 +308,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <S> the return type
      */
     @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
-    public static <S extends AbstractDoubleScalar<?, S>> S instantiateAnonymousMethodHandle(final double value,
+    public static <S extends DoubleScalar<?, S>> S instantiateAnonymousMethodHandle(final double value,
             final Unit<?> unit)
     {
         try
@@ -316,7 +316,7 @@ public final class BenchmarkAnonymousInstantiation
             MethodHandle methodHandle = MH_CACHE.get(unit);
             if (methodHandle == null)
             {
-                Class<AbstractDoubleScalar<?, S>> scalarClass = (Class<AbstractDoubleScalar<?, S>>) Class
+                Class<DoubleScalar<?, S>> scalarClass = (Class<DoubleScalar<?, S>>) Class
                         .forName("org.djunits.value.vdouble.scalar." + unit.getClass().getSimpleName().replace("Unit", ""));
                 final MethodHandles.Lookup lookup = MethodHandles.lookup();
                 methodHandle =

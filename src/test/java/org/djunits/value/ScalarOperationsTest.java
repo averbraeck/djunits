@@ -14,11 +14,11 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.util.ClassUtil;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
@@ -389,11 +389,11 @@ public class ScalarOperationsTest
         double result = Double.NaN;
         if (doubleType)
         {
-            if (!(o instanceof DoubleScalarInterface))
+            if (!(o instanceof DoubleScalar))
             {
                 fail("object is not a DoubleScalar");
             }
-            result = ((AbstractDoubleScalar<?, ?>) o).getSI();
+            result = ((DoubleScalar<?, ?>) o).getSI();
         }
         else
         {
@@ -458,7 +458,7 @@ public class ScalarOperationsTest
                 Class<?>[] parTypes = c.getParameterTypes();
                 if (parTypes.length == 1)
                 {
-                    AbstractDoubleScalar<?, ?> newInstance = (AbstractDoubleScalar<?, ?>) c.newInstance(left);
+                    DoubleScalar<?, ?> newInstance = (DoubleScalar<?, ?>) c.newInstance(left);
                     assertEquals("Result of constructor should be equal to original", value,
                             verifyAbsRelPrecisionAndExtractSI(abs, doubleType, newInstance), 0.01);
                 }
@@ -789,14 +789,14 @@ public class ScalarOperationsTest
         if (doubleType)
         {
             double zeroValue = 1.23456;
-            AbstractDoubleScalar<?,
+            DoubleScalar<?,
                     ?> zero = abs
                             ? (AbstractDoubleScalarAbs<?, ?, ?, ?>) constructor.newInstance(zeroValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (AbstractDoubleScalarRel<?, ?>) constructor.newInstance(zeroValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             double oneValue = 3.45678;
-            AbstractDoubleScalar<?,
+            DoubleScalar<?,
                     ?> one = abs
                             ? (AbstractDoubleScalarAbs<?, ?, ?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
@@ -807,54 +807,54 @@ public class ScalarOperationsTest
                 double expectedResult = (1.0 - ratio) * zeroValue + ratio * oneValue;
                 Method interpolate =
                         ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, double.class);
-                AbstractDoubleScalar<?, ?> result;
-                result = (AbstractDoubleScalar<?, ?>) interpolate.invoke(null, zero, one, ratio);
+                DoubleScalar<?, ?> result;
+                result = (DoubleScalar<?, ?>) interpolate.invoke(null, zero, one, ratio);
                 assertEquals("Result of operation", expectedResult, verifyAbsRelPrecisionAndExtractSI(abs, doubleType, result),
                         0.01);
             }
             double biggestValue = 345.678;
-            AbstractDoubleScalar<?,
+            DoubleScalar<?,
                     ?> biggest = abs
                             ? (AbstractDoubleScalarAbs<?, ?, ?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (AbstractDoubleScalarRel<?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             Method max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass);
-            AbstractDoubleScalar<?, ?> result = (AbstractDoubleScalar<?, ?>) max.invoke(null, zero, one);
+            DoubleScalar<?, ?> result = (DoubleScalar<?, ?>) max.invoke(null, zero, one);
             assertEquals("max returns object with maximum value", one, result);
-            result = (AbstractDoubleScalar<?, ?>) max.invoke(null, one, zero);
+            result = (DoubleScalar<?, ?>) max.invoke(null, one, zero);
             assertEquals("max returns object with maximum value", one, result);
             // https://stackoverflow.com/questions/1679421/how-to-get-the-array-class-for-a-given-class-in-java
             Class<?> emptyClassArrayClass = java.lang.reflect.Array.newInstance(scalarClass, 0).getClass();
             max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass, emptyClassArrayClass);
-            AbstractDoubleScalar<?, ?>[] additionalArguments =
-                    (AbstractDoubleScalar<?, ?>[]) java.lang.reflect.Array.newInstance(scalarClass, 1);
+            DoubleScalar<?, ?>[] additionalArguments =
+                    (DoubleScalar<?, ?>[]) java.lang.reflect.Array.newInstance(scalarClass, 1);
             additionalArguments[0] = biggest;
-            result = (AbstractDoubleScalar<?, ?>) max.invoke(null, zero, one, additionalArguments);
+            result = (DoubleScalar<?, ?>) max.invoke(null, zero, one, additionalArguments);
             assertEquals("max return object with maximum value", biggest, result);
-            result = (AbstractDoubleScalar<?, ?>) max.invoke(null, one, zero, additionalArguments);
+            result = (DoubleScalar<?, ?>) max.invoke(null, one, zero, additionalArguments);
             assertEquals("max return object with maximum value", biggest, result);
             additionalArguments[0] = zero;
-            result = (AbstractDoubleScalar<?, ?>) max.invoke(null, biggest, zero, additionalArguments);
+            result = (DoubleScalar<?, ?>) max.invoke(null, biggest, zero, additionalArguments);
             assertEquals("max return object with maximum value", biggest, result);
 
             Method min = ClassUtil.resolveMethod(scalarClass, "min", scalarClass, scalarClass);
-            result = (AbstractDoubleScalar<?, ?>) min.invoke(null, zero, one);
+            result = (DoubleScalar<?, ?>) min.invoke(null, zero, one);
             assertEquals("min returns object with maximum value", zero, result);
-            result = (AbstractDoubleScalar<?, ?>) min.invoke(null, one, zero);
+            result = (DoubleScalar<?, ?>) min.invoke(null, one, zero);
             assertEquals("min returns object with maximum value", zero, result);
             min = ClassUtil.resolveMethod(scalarClass, "min", scalarClass, scalarClass, emptyClassArrayClass);
-            result = (AbstractDoubleScalar<?, ?>) min.invoke(null, one, biggest, additionalArguments);
+            result = (DoubleScalar<?, ?>) min.invoke(null, one, biggest, additionalArguments);
             assertEquals("min return object with minimum value", zero, result);
-            result = (AbstractDoubleScalar<?, ?>) min.invoke(null, biggest, one, additionalArguments);
+            result = (DoubleScalar<?, ?>) min.invoke(null, biggest, one, additionalArguments);
             assertEquals("min return object with minimum value", zero, result);
             additionalArguments[0] = biggest;
-            result = (AbstractDoubleScalar<?, ?>) min.invoke(null, zero, one, additionalArguments);
+            result = (DoubleScalar<?, ?>) min.invoke(null, zero, one, additionalArguments);
             assertEquals("min return object with minimum value", zero, result);
 
             Method valueOf = ClassUtil.resolveMethod(scalarClass, "valueOf", String.class);
             String string = zero.toString();
-            result = (AbstractDoubleScalar<?, ?>) valueOf.invoke(null, string);
+            result = (DoubleScalar<?, ?>) valueOf.invoke(null, string);
             assertEquals("valueOf toString returns a decent approximation of the input", zeroValue, result.getSI(), 0.001);
             try
             {
@@ -898,7 +898,7 @@ public class ScalarOperationsTest
             }
 
             Method instantiateSI = ClassUtil.resolveMethod(scalarClass, "instantiateSI", double.class);
-            result = (AbstractDoubleScalar<?, ?>) instantiateSI.invoke(null, zeroValue);
+            result = (DoubleScalar<?, ?>) instantiateSI.invoke(null, zeroValue);
             assertEquals("SI value was correctly set", zeroValue, result.getSI(), 0.0001);
         }
         else

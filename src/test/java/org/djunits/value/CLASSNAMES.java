@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrix;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVector;
 import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrix;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
@@ -81,11 +81,11 @@ public final class CLASSNAMES
      * @return double scalar class for the quantity name
      */
     @SuppressWarnings("unchecked")
-    public static Class<? extends AbstractDoubleScalar<?, ?>> doubleScalarClass(final String qName)
+    public static Class<? extends DoubleScalar<?, ?>> doubleScalarClass(final String qName)
     {
         try
         {
-            return (Class<? extends AbstractDoubleScalar<?, ?>>) Class.forName("org.djunits.value.vdouble.scalar." + qName);
+            return (Class<? extends DoubleScalar<?, ?>>) Class.forName("org.djunits.value.vdouble.scalar." + qName);
         }
         catch (ClassNotFoundException exception)
         {
