@@ -13,7 +13,7 @@ import org.djunits.value.storage.Storage;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatFunction2;
-import org.djunits.value.vfloat.scalar.base.FloatScalarInterface;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -115,7 +115,7 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public static <U extends Unit<U>, S extends FloatScalarInterface<U, S>> FloatVectorData instantiate(final S[] values,
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> FloatVectorData instantiate(final S[] values,
             final StorageType storageType)
     {
         Throw.whenNull(values, "FloatVectorData.instantiate: double[] values is null");
