@@ -119,6 +119,50 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends Abstra
     }
 
     /**
+     * Multiply all values of this vector by the multiplier. This only works if the vector is mutable.
+     * @param multiplier float; the factor by which to multiply all values
+     * @return RV; this modified vector
+     * @throws ValueRuntimeException in case the vector is immutable
+     */
+    public RV multiplyBy(final float multiplier)
+    {
+        return assign(FloatMathFunctions.MULT(multiplier));
+    }
+
+    /**
+     * Divide all values of this vector by the divisor. This only works if the vector is mutable.
+     * @param divisor float; the value by which to divide all values
+     * @return RV; this modified vector
+     * @throws ValueRuntimeException in case the vector is immutable
+     */
+    public RV divideBy(final float divisor)
+    {
+        return assign(FloatMathFunctions.DIV(divisor));
+    }
+
+    /**
+     * Multiply all values of this vector by the multiplier. This only works if the vector is mutable.
+     * @param multiplier double; the factor by which to multiply all values
+     * @return RV; this modified vector
+     * @throws ValueRuntimeException in case the vector is immutable
+     */
+    public RV multiplyBy(final double multiplier)
+    {
+        return assign(FloatMathFunctions.MULT((float) multiplier));
+    }
+
+    /**
+     * Divide all values of this vector by the divisor. This only works if the vector is mutable.
+     * @param divisor double; the value by which to divide all values
+     * @return RV; this modified vector
+     * @throws ValueRuntimeException in case the vector is immutable
+     */
+    public RV divideBy(final double divisor)
+    {
+        return assign(FloatMathFunctions.DIV((float) divisor));
+    }
+
+    /**
      * Multiply a Relative value with this Relative value for a vector or matrix. The multiplication is done value by value and
      * store the result in a new Relative value. If both operands are dense, the result is a dense vector or matrix, otherwise
      * the result is a sparse vector or matrix.
