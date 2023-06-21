@@ -208,6 +208,22 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
      */
     public abstract Class<S> getScalarClass();
 
+    /**
+     * Multiply all values of this vector by the multiplier. This only works if the vector is mutable.
+     * @param multiplier double; the factor by which to multiply all values
+     * @return V; this modified vector
+     * @throws ValueRuntimeException in case the vector is immutable
+     */
+    public abstract T multiplyBy(double multiplier);
+
+    /**
+     * Divide all values of this vector by the divisor. This only works if the vector is mutable.
+     * @param divisor double; the value by which to divide all values
+     * @return V; this modified vector
+     * @throws ValueRuntimeException in case the vector is immutable
+     */
+    public abstract T divideBy(double divisor);    
+    
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
