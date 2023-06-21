@@ -507,22 +507,6 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     }
 
     /**
-     * Multiply the values of this vector with a number on a cell-by-cell basis.
-     * @param valueSI double; the value to multiply with
-     */
-    public final void multiplyBy(final double valueSI)
-    {
-        assign(new DoubleFunction()
-        {
-            @Override
-            public double apply(final double value)
-            {
-                return value * valueSI;
-            }
-        });
-    }
-
-    /**
      * Divide two vectors on a cell-by-cell basis. If this vector is sparse and <code>right</code> is dense, a sparse vector is
      * returned, otherwise a dense vector is returned.
      * @param right DoubleVectorData; the other data object to divide by
@@ -548,22 +532,6 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
                 return leftValue / rightValue;
             }
         }, right);
-    }
-
-    /**
-     * Divide the values of this vector by a number on a cell-by-cell basis.
-     * @param valueSI double; the value to multiply with
-     */
-    public final void divideBy(final double valueSI)
-    {
-        assign(new DoubleFunction()
-        {
-            @Override
-            public double apply(final double value)
-            {
-                return value / valueSI;
-            }
-        });
     }
 
     /* ============================================================================================ */
