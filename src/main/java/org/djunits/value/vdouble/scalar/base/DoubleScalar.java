@@ -41,7 +41,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param unit U; the unit
      * @param si double; the si value to store
      */
-    DoubleScalar(final U unit, final double si)
+    public DoubleScalar(final U unit, final double si)
     {
         super(unit);
         this.si = si;
