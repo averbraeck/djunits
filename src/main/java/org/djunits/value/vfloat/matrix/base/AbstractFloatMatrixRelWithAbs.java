@@ -2,7 +2,7 @@ package org.djunits.value.vfloat.matrix.base;
 
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
-import org.djunits.value.base.Matrix;
+import org.djunits.value.RelWithAbs;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
@@ -37,7 +37,7 @@ public abstract class AbstractFloatMatrixRelWithAbs<
         RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>,
         RM  extends AbstractFloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
         extends AbstractFloatMatrixRel<RU, R, RV, RM>
-        implements Matrix.RelWithAbs<AU, A, AV, AM, RU, R, RV, RM>
+        implements RelWithAbs<AU, AM, RU, RM>
 // @formatter:on
 {
     /** */

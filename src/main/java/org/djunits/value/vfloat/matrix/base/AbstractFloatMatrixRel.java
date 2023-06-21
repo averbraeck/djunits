@@ -5,14 +5,13 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Matrix;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.matrix.FloatSIMatrix;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalar;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVector;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVector;
 
 /**
  * AbstractFloatMatrixRel.java.
@@ -28,7 +27,7 @@ import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
  */
 public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
         RV extends AbstractFloatVectorRel<U, S, RV>, RM extends AbstractFloatMatrixRel<U, S, RV, RM>>
-        extends AbstractFloatMatrix<U, S, RV, RM> implements Matrix.Rel<U, S, RV, RM>
+        extends FloatMatrix<U, S, RV, RM> implements Relative<U, RM>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -125,6 +124,50 @@ public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends Abstra
     }
 
     /**
+     * Multiply all values of this matrix by the multiplier. This only works if the matrix is mutable.
+     * @param multiplier float; the factor by which to multiply all values
+     * @return RM; this modified matrix
+     * @throws ValueRuntimeException in case the matrix is immutable
+     */
+    public RM multiplyBy(final float multiplier)
+    {
+        return assign(FloatMathFunctions.MULT(multiplier));
+    }
+
+    /**
+     * Divide all values of this matrix by the divisor. This only works if the matrix is mutable.
+     * @param divisor float; the value by which to divide all values
+     * @return RM; this modified matrix
+     * @throws ValueRuntimeException in case the matrix is immutable
+     */
+    public RM divideBy(final float divisor)
+    {
+        return assign(FloatMathFunctions.DIV(divisor));
+    }
+    
+    /**
+     * Multiply all values of this matrix by the multiplier. This only works if the matrix is mutable.
+     * @param multiplier float; the factor by which to multiply all values
+     * @return RM; this modified matrix
+     * @throws ValueRuntimeException in case the matrix is immutable
+     */
+    public RM multiplyBy(final double multiplier)
+    {
+        return assign(FloatMathFunctions.MULT((float) multiplier));
+    }
+
+    /**
+     * Divide all values of this matrix by the divisor. This only works if the matrix is mutable.
+     * @param divisor float; the value by which to divide all values
+     * @return RM; this modified matrix
+     * @throws ValueRuntimeException in case the matrix is immutable
+     */
+    public RM divideBy(final double divisor)
+    {
+        return assign(FloatMathFunctions.DIV((float) divisor));
+    }
+
+    /**
      * Multiply a Relative value with this Relative value for a matrix or matrix. The multiplication is done value by value and
      * store the result in a new Relative value. If both operands are dense, the result is a dense matrix or matrix, otherwise
      * the result is a sparse matrix or matrix.
@@ -137,8 +180,8 @@ public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends Abstra
      * @param <VT> the vector type of the multiplier
      * @param <MT> the matrix type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractFloatScalar<UT, ST>, VT extends AbstractFloatVector<UT, ST, VT>,
-            MT extends AbstractFloatMatrix<UT, ST, VT, MT> & Relative<UT, MT>> FloatSIMatrix times(final MT rel)
+    public final <UT extends Unit<UT>, ST extends FloatScalar<UT, ST>, VT extends FloatVector<UT, ST, VT>,
+            MT extends FloatMatrix<UT, ST, VT, MT> & Relative<UT, MT>> FloatSIMatrix times(final MT rel)
                     throws ValueRuntimeException, UnitException
     {
         return new FloatSIMatrix(this.getData().times(rel.getData()), SIUnit.of(
@@ -161,13 +204,6 @@ public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends Abstra
         return times((float) multiplier);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public final RM multiplyBy(final double multiplier)
-    {
-        return assign(FloatMathFunctions.MULT((float) multiplier));
-    }
-
     /**
      * Divide this Relative matrix by another Relative matrix. The operation is done value by value and store the result is
      * stored in a new Relative matrix. If both operands are dense, the result is a dense matrix, otherwise the result is a
@@ -181,8 +217,8 @@ public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends Abstra
      * @param <VT> the vector type of the multiplier
      * @param <MT> the matrix type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractFloatScalar<UT, ST>, VT extends AbstractFloatVector<UT, ST, VT>,
-            MT extends AbstractFloatMatrix<UT, ST, VT, MT> & Relative<UT, MT>> FloatSIMatrix divide(final MT rel)
+    public final <UT extends Unit<UT>, ST extends FloatScalar<UT, ST>, VT extends FloatVector<UT, ST, VT>,
+            MT extends FloatMatrix<UT, ST, VT, MT> & Relative<UT, MT>> FloatSIMatrix divide(final MT rel)
                     throws ValueRuntimeException, UnitException
     {
         return new FloatSIMatrix(this.getData().divide(rel.getData()), SIUnit.of(
@@ -203,13 +239,6 @@ public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends Abstra
         RM result = clone().mutable();
         result.assign(FloatMathFunctions.DIV(divisor));
         return result.immutable();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final RM divideBy(final double divisor)
-    {
-        return assign(FloatMathFunctions.DIV((float) divisor));
     }
 
 }

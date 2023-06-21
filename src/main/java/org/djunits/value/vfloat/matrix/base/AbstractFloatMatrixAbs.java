@@ -4,7 +4,6 @@ import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Matrix;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
@@ -39,8 +38,8 @@ public abstract class AbstractFloatMatrixAbs<
         R   extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>,
         RM  extends AbstractFloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
-        extends AbstractFloatMatrix<AU, A, AV, AM>
-        implements Matrix.Abs<AU, A, AV, AM, RU, R, RV, RM>, Absolute
+        extends FloatMatrix<AU, A, AV, AM>
+        implements Absolute<AU, AM, RU, RM>
 // @formatter:on
 {
     /** */
