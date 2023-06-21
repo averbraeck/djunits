@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
 import org.djunits.unit.Unit;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 
 /**
  * DOUBLEVECTOR for creating different test vectors.
@@ -62,7 +62,7 @@ public final class DOUBLEVECTOR
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> S[] denseScalarArray(final int size,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[] denseScalarArray(final int size,
             final Class<S> scalarClass)
     {
         try
@@ -90,7 +90,7 @@ public final class DOUBLEVECTOR
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> S[] sparseScalarArray(final int size,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[] sparseScalarArray(final int size,
             final Class<S> scalarClass)
     {
         try
