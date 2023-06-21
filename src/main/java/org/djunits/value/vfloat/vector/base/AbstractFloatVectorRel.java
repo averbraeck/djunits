@@ -5,7 +5,6 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Vector;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
 import org.djunits.value.vfloat.vector.FloatSIVector;
@@ -23,7 +22,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <RV> the relative vector type with this unit
  */
 public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
-        RV extends AbstractFloatVectorRel<U, S, RV>> extends AbstractFloatVector<U, S, RV> implements Vector.Rel<U, S, RV>
+        RV extends AbstractFloatVectorRel<U, S, RV>> extends FloatVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -117,20 +116,6 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends Abstra
         checkCopyOnWrite();
         getData().decrementBy(decrement.getData());
         return (RV) this;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final RV multiplyBy(final double multiplier)
-    {
-        return assign(FloatMathFunctions.MULT((float) multiplier));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public RV divideBy(final double divisor)
-    {
-        return assign(FloatMathFunctions.DIV((float) divisor));
     }
 
     /**

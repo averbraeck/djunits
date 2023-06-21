@@ -4,7 +4,6 @@ import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Vector;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
@@ -32,8 +31,8 @@ public abstract class AbstractFloatVectorAbs<
         RU  extends Unit<RU>,
         R   extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>>
-        extends AbstractFloatVector<AU, A, AV>
-        implements Vector.Abs<AU, A, AV, RU, R, RV>, Absolute
+        extends FloatVector<AU, A, AV>
+        implements Absolute<AU, AV, RU, RV>
 // @formatter:on
 {
     /** */
