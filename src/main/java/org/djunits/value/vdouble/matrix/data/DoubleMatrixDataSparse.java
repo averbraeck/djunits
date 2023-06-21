@@ -12,7 +12,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleFunction2;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -58,7 +58,7 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
      * @param <U> the unit
      * @param <S> the corresponding scalar type
      */
-    public <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> DoubleMatrixDataSparse(
+    public <U extends Unit<U>, S extends DoubleScalar<U, S>> DoubleMatrixDataSparse(
             final Collection<DoubleSparseValue<U, S>> dataSI, final int rows, final int cols) throws NullPointerException
     {
         super(StorageType.SPARSE);

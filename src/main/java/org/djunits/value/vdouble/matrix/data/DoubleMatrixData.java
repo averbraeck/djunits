@@ -13,7 +13,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleFunction2;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarInterface;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -107,7 +107,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> DoubleMatrixData instantiate(
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> DoubleMatrixData instantiate(
             final Collection<DoubleSparseValue<U, S>> values, final int rows, final int cols, final StorageType storageType)
             throws ValueRuntimeException
     {
@@ -148,7 +148,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    public static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> DoubleMatrixData instantiate(final S[][] values,
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> DoubleMatrixData instantiate(final S[][] values,
             final StorageType storageType) throws ValueRuntimeException
     {
         Throw.whenNull(storageType, "DoubleMatrixData.instantiate: storageType is null");
@@ -275,7 +275,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    protected static <U extends Unit<U>, S extends DoubleScalarInterface<U, S>> S[][] checkRectangularAndNonNull(
+    protected static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[][] checkRectangularAndNonNull(
             final S[][] values) throws ValueRuntimeException
     {
         Throw.when(null == values, NullPointerException.class, "Cannot create a matrix from a null Scalar[][]");
