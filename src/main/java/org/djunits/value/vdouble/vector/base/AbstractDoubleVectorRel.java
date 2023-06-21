@@ -5,7 +5,6 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
-import org.djunits.value.base.Vector;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
 import org.djunits.value.vdouble.vector.SIVector;
@@ -23,8 +22,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @param <RV> the relative vector type with this unit
  */
 public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>,
-        RV extends AbstractDoubleVectorRel<U, S, RV>> extends AbstractDoubleVector<U, S, RV>
-        implements Vector.Rel<U, S, RV>, Relative<U, RV>
+        RV extends AbstractDoubleVectorRel<U, S, RV>> extends DoubleVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -119,26 +117,6 @@ public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends Abstr
     {
         checkCopyOnWrite();
         getData().decrementBy(decrement.getData());
-        return (RV) this;
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public RV multiplyBy(final double multiplier)
-    {
-        checkCopyOnWrite();
-        getData().multiplyBy(multiplier);
-        return (RV) this;
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public RV divideBy(final double divisor)
-    {
-        checkCopyOnWrite();
-        getData().divideBy(divisor);
         return (RV) this;
     }
 
