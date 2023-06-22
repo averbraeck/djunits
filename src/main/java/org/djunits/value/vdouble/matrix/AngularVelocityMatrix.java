@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.AngularVelocityUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.AngularVelocity;
 import org.djunits.value.vdouble.vector.AngularVelocityVector;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class AngularVelocityMatrix
-        extends AbstractDoubleMatrixRel<AngularVelocityUnit, AngularVelocity, AngularVelocityVector, AngularVelocityMatrix>
+        extends DoubleMatrixRel<AngularVelocityUnit, AngularVelocity, AngularVelocityVector, AngularVelocityMatrix>
 
 {
     /** */

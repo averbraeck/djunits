@@ -3,7 +3,7 @@ package org.djunits.value.vdouble.matrix;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.value.function.DimensionlessFunctions;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Dimensionless;
 import org.djunits.value.vdouble.vector.DimensionlessVector;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class DimensionlessMatrix
-        extends AbstractDoubleMatrixRel<DimensionlessUnit, Dimensionless, DimensionlessVector, DimensionlessMatrix>
+        extends DoubleMatrixRel<DimensionlessUnit, Dimensionless, DimensionlessVector, DimensionlessMatrix>
         implements DimensionlessFunctions<DimensionlessUnit, DimensionlessMatrix>
 {
     /** */

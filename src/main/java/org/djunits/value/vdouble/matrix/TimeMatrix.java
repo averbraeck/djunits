@@ -2,7 +2,7 @@ package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.TimeUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixAbs;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixAbs;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Duration;
 import org.djunits.value.vdouble.scalar.Time;
@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class TimeMatrix extends
-        AbstractDoubleMatrixAbs<TimeUnit, Time, TimeVector, TimeMatrix, DurationUnit, Duration, DurationVector, DurationMatrix>
+        DoubleMatrixAbs<TimeUnit, Time, TimeVector, TimeMatrix, DurationUnit, Duration, DurationVector, DurationMatrix>
 {
     /** */
     private static final long serialVersionUID = 20151006L;

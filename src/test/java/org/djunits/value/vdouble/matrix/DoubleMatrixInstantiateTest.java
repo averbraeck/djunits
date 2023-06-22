@@ -25,8 +25,8 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixAbs;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRelWithAbs;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixAbs;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRelWithAbs;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
@@ -127,9 +127,9 @@ public class DoubleMatrixInstantiateTest
             {
                 double[][] testValues = DOUBLEMATRIX.denseRectArrays(5, 10);
                 DoubleMatrixData dmd = DoubleMatrixData.instantiate(testValues, relStandardUnit.getScale(), storageType);
-                AbstractDoubleMatrixRelWithAbs<AU, ?, ?, ?, RU, ?, ?, ?> relDoubleMatrix = (AbstractDoubleMatrixRelWithAbs<AU,
+                DoubleMatrixRelWithAbs<AU, ?, ?, ?, RU, ?, ?, ?> relDoubleMatrix = (DoubleMatrixRelWithAbs<AU,
                         ?, ?, ?, RU, ?, ?, ?>) DoubleMatrix.instantiate(testValues, relStandardUnit, storageType);
-                AbstractDoubleMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absDoubleMatrix = (AbstractDoubleMatrixAbs<AU, ?, ?, ?, RU, ?,
+                DoubleMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absDoubleMatrix = (DoubleMatrixAbs<AU, ?, ?, ?, RU, ?,
                         ?, ?>) DoubleMatrix.instantiate(testValues, absStandardUnit, storageType);
 
                 DoubleMatrix<AU, ?, ?, ?> absDoubleMatrix2 =

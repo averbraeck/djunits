@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.MagneticFluxDensityUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.MagneticFluxDensity;
 import org.djunits.value.vdouble.vector.MagneticFluxDensityVector;
@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class MagneticFluxDensityMatrix extends AbstractDoubleMatrixRel<MagneticFluxDensityUnit, MagneticFluxDensity,
+public class MagneticFluxDensityMatrix extends DoubleMatrixRel<MagneticFluxDensityUnit, MagneticFluxDensity,
         MagneticFluxDensityVector, MagneticFluxDensityMatrix>
 
 {

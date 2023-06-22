@@ -2,7 +2,7 @@ package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixAbs;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixAbs;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Length;
 import org.djunits.value.vdouble.scalar.Position;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class PositionMatrix extends AbstractDoubleMatrixAbs<PositionUnit, Position, PositionVector, PositionMatrix, LengthUnit,
+public class PositionMatrix extends DoubleMatrixAbs<PositionUnit, Position, PositionVector, PositionMatrix, LengthUnit,
         Length, LengthVector, LengthMatrix>
 {
     /** */

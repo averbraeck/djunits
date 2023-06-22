@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.AreaUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Area;
 import org.djunits.value.vdouble.vector.AreaVector;
@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class AreaMatrix extends AbstractDoubleMatrixRel<AreaUnit, Area, AreaVector, AreaMatrix>
+public class AreaMatrix extends DoubleMatrixRel<AreaUnit, Area, AreaVector, AreaMatrix>
 
 {
     /** */

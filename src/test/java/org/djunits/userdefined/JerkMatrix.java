@@ -1,6 +1,6 @@
 package org.djunits.userdefined;
 
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
@@ -13,7 +13,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-public class JerkMatrix extends AbstractDoubleMatrixRel<JerkUnit, Jerk, JerkVector, JerkMatrix>
+public class JerkMatrix extends DoubleMatrixRel<JerkUnit, Jerk, JerkVector, JerkMatrix>
 
 {
     /** */

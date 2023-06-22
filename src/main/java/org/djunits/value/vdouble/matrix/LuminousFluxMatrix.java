@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.LuminousFluxUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.LuminousFlux;
 import org.djunits.value.vdouble.vector.LuminousFluxVector;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class LuminousFluxMatrix
-        extends AbstractDoubleMatrixRel<LuminousFluxUnit, LuminousFlux, LuminousFluxVector, LuminousFluxMatrix>
+        extends DoubleMatrixRel<LuminousFluxUnit, LuminousFlux, LuminousFluxVector, LuminousFluxMatrix>
 
 {
     /** */

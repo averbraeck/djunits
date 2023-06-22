@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.CatalyticActivityUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.CatalyticActivity;
 import org.djunits.value.vdouble.vector.CatalyticActivityVector;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class CatalyticActivityMatrix extends
-        AbstractDoubleMatrixRel<CatalyticActivityUnit, CatalyticActivity, CatalyticActivityVector, CatalyticActivityMatrix>
+        DoubleMatrixRel<CatalyticActivityUnit, CatalyticActivity, CatalyticActivityVector, CatalyticActivityMatrix>
 
 {
     /** */

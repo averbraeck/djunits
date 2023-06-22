@@ -28,7 +28,7 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
@@ -793,8 +793,8 @@ public class DoubleMatrixMethodTest
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         SIMatrix matrix = SIMatrix.instantiate(testValues, siUnit, storageType2);
                         Method asMethod = SIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        AbstractDoubleMatrixRel<U, ?, ?, ?> asMatrix =
-                                (AbstractDoubleMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
+                        DoubleMatrixRel<U, ?, ?, ?> asMatrix =
+                                (DoubleMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
                         assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
                         siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
                         for (int row = 0; row < testValues.length; row++)

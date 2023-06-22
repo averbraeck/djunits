@@ -27,16 +27,16 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @param <RM> the relative (immutable or mutable) matrix type with this unit
  */
 // @formatter:off
-public abstract class AbstractDoubleMatrixRelWithAbs<
+public abstract class DoubleMatrixRelWithAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
         A   extends DoubleScalarAbs<AU, A, RU, R>,
         AV  extends DoubleVectorAbs<AU, A, AV, RU, R, RV>,
-        AM  extends AbstractDoubleMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
+        AM  extends DoubleMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
         RU  extends Unit<RU>,
         R   extends DoubleScalarRelWithAbs<AU, A, RU, R>,
         RV  extends DoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>,
-        RM  extends AbstractDoubleMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
-        extends AbstractDoubleMatrixRel<RU, R, RV, RM>
+        RM  extends DoubleMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
+        extends DoubleMatrixRel<RU, R, RV, RM>
         implements RelWithAbs<AU, AM, RU, RM>
 // @formatter:on
 {
@@ -48,7 +48,7 @@ public abstract class AbstractDoubleMatrixRelWithAbs<
      * @param data DoubleMatrixData; an internal data object
      * @param unit RU; the unit
      */
-    protected AbstractDoubleMatrixRelWithAbs(final DoubleMatrixData data, final RU unit)
+    protected DoubleMatrixRelWithAbs(final DoubleMatrixData data, final RU unit)
     {
         // data will be copied in AbstractMutableDoubleMatrixRel
         super(data, unit);

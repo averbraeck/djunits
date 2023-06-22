@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.AccelerationUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Acceleration;
 import org.djunits.value.vdouble.vector.AccelerationVector;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class AccelerationMatrix
-        extends AbstractDoubleMatrixRel<AccelerationUnit, Acceleration, AccelerationVector, AccelerationMatrix>
+        extends DoubleMatrixRel<AccelerationUnit, Acceleration, AccelerationVector, AccelerationMatrix>
 
 {
     /** */

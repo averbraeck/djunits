@@ -2,7 +2,7 @@ package org.djunits.value.vdouble.matrix;
 
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.DirectionUnit;
-import org.djunits.value.vdouble.matrix.base.AbstractDoubleMatrixRelWithAbs;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRelWithAbs;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Angle;
 import org.djunits.value.vdouble.scalar.Direction;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class AngleMatrix extends AbstractDoubleMatrixRelWithAbs<DirectionUnit, Direction, DirectionVector, DirectionMatrix,
+public class AngleMatrix extends DoubleMatrixRelWithAbs<DirectionUnit, Direction, DirectionVector, DirectionMatrix,
         AngleUnit, Angle, AngleVector, AngleMatrix>
 {
     /** */
