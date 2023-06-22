@@ -7,7 +7,7 @@ import org.djunits.unit.AmountOfSubstanceUnit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatAmountOfSubstance;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
 import jakarta.annotation.Generated;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class FloatAmountOfSubstanceVector extends AbstractFloatVectorRel<AmountOfSubstanceUnit, FloatAmountOfSubstance, FloatAmountOfSubstanceVector>
+public class FloatAmountOfSubstanceVector extends FloatVectorRel<AmountOfSubstanceUnit, FloatAmountOfSubstance, FloatAmountOfSubstanceVector>
 
 {
     /** */

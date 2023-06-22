@@ -24,13 +24,13 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <RV> the relative (immutable or mutable) vector type with this unit
  */
 // @formatter:off
-public abstract class AbstractFloatVectorAbs<
+public abstract class FloatVectorAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
         A   extends FloatScalarAbs<AU, A, RU, R>,
-        AV  extends AbstractFloatVectorAbs<AU, A, AV, RU, R, RV>, 
+        AV  extends FloatVectorAbs<AU, A, AV, RU, R, RV>, 
         RU  extends Unit<RU>,
         R   extends FloatScalarRelWithAbs<AU, A, RU, R>,
-        RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>>
+        RV  extends FloatVectorRelWithAbs<AU, A, AV, RU, R, RV>>
         extends FloatVector<AU, A, AV>
         implements Absolute<AU, AV, RU, RV>
 // @formatter:on
@@ -43,7 +43,7 @@ public abstract class AbstractFloatVectorAbs<
      * @param data FloatVectorData; an internal data object
      * @param unit AU; the unit
      */
-    protected AbstractFloatVectorAbs(final FloatVectorData data, final AU unit)
+    protected FloatVectorAbs(final FloatVectorData data, final AU unit)
     {
         super(data.copy(), unit);
     }

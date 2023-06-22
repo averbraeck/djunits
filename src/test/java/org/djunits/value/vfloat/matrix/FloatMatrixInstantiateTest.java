@@ -38,8 +38,8 @@ import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.FloatSIVector;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
 import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
@@ -142,7 +142,7 @@ public class FloatMatrixInstantiateTest
                         absFloatMatrix, absFloatMatrix2);
                 FloatVectorData dvd =
                         FloatVectorData.instantiate(relFloatMatrix.getRowSI(0), relStandardUnit.getScale(), storageType);
-                AbstractFloatVectorAbs<AU, ?, ?, RU, ?, ?> absFloatVector =
+                FloatVectorAbs<AU, ?, ?, RU, ?, ?> absFloatVector =
                         relFloatMatrix.instantiateVectorAbs(dvd, absStandardUnit);
                 assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         absFloatVector.getValuesSI(), 0.001f);
@@ -155,7 +155,7 @@ public class FloatMatrixInstantiateTest
                 assertEquals("matrix constructed from FloatMatrixData should be equal to matrix constructed from float[][]",
                         relFloatMatrix, relFloatMatrix2);
                 dvd = FloatVectorData.instantiate(absFloatMatrix.getRowSI(0), absStandardUnit.getScale(), storageType);
-                AbstractFloatVectorRelWithAbs<AU, ?, ?, RU, ?, ?> relFloatVector =
+                FloatVectorRelWithAbs<AU, ?, ?, RU, ?, ?> relFloatVector =
                         absFloatMatrix.instantiateVectorRel(dvd, relStandardUnit);
                 assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         relFloatVector.getValuesSI(), 0.001f);

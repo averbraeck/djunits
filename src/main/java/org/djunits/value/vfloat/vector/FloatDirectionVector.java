@@ -9,7 +9,7 @@ import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatAngle;
 import org.djunits.value.vfloat.scalar.FloatDirection;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
 import jakarta.annotation.Generated;
@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class FloatDirectionVector extends AbstractFloatVectorAbs<DirectionUnit, FloatDirection, FloatDirectionVector,
+public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDirection, FloatDirectionVector,
     AngleUnit, FloatAngle, FloatAngleVector>
 {
     /** */

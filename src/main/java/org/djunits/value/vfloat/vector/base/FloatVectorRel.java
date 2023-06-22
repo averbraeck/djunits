@@ -21,8 +21,8 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <S> the scalar type belonging to the vector type
  * @param <RV> the relative vector type with this unit
  */
-public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends FloatScalarRel<U, S>,
-        RV extends AbstractFloatVectorRel<U, S, RV>> extends FloatVector<U, S, RV> implements Relative<U, RV>
+public abstract class FloatVectorRel<U extends Unit<U>, S extends FloatScalarRel<U, S>,
+        RV extends FloatVectorRel<U, S, RV>> extends FloatVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -32,7 +32,7 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends FloatS
      * @param data FloatVectorData; an internal data object
      * @param unit U; the unit
      */
-    protected AbstractFloatVectorRel(final FloatVectorData data, final U unit)
+    protected FloatVectorRel(final FloatVectorData data, final U unit)
     {
         super(data.copy(), unit);
     }
@@ -175,7 +175,7 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends FloatS
      * @param <VT> the vector type of the multiplier
      */
     public final <UT extends Unit<UT>, ST extends FloatScalarRel<UT, ST>,
-            VT extends AbstractFloatVectorRel<UT, ST, VT> & Relative<UT, VT>> FloatSIVector times(final VT rel)
+            VT extends FloatVectorRel<UT, ST, VT> & Relative<UT, VT>> FloatSIVector times(final VT rel)
                     throws ValueRuntimeException, UnitException
     {
         return new FloatSIVector(this.getData().times(rel.getData()), SIUnit.of(
@@ -195,7 +195,7 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends FloatS
      * @param <VT> the vector type of the multiplier
      */
     public final <UT extends Unit<UT>, ST extends FloatScalarRel<UT, ST>,
-            VT extends AbstractFloatVectorRel<UT, ST, VT> & Relative<UT, VT>> FloatSIVector divide(final VT rel)
+            VT extends FloatVectorRel<UT, ST, VT> & Relative<UT, VT>> FloatSIVector divide(final VT rel)
                     throws ValueRuntimeException, UnitException
     {
         return new FloatSIVector(this.getData().divide(rel.getData()), SIUnit.of(

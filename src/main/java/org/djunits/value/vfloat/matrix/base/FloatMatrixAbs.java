@@ -8,8 +8,8 @@ import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
 /**
@@ -32,11 +32,11 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
 public abstract class FloatMatrixAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
         A   extends FloatScalarAbs<AU, A, RU, R>,
-        AV  extends AbstractFloatVectorAbs<AU, A, AV, RU, R, RV>,
+        AV  extends FloatVectorAbs<AU, A, AV, RU, R, RV>,
         AM  extends FloatMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
         RU  extends Unit<RU>,
         R   extends FloatScalarRelWithAbs<AU, A, RU, R>,
-        RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>,
+        RV  extends FloatVectorRelWithAbs<AU, A, AV, RU, R, RV>,
         RM  extends FloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
         extends FloatMatrix<AU, A, AV, AM>
         implements Absolute<AU, AM, RU, RM>

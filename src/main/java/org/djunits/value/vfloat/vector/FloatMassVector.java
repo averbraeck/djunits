@@ -7,7 +7,7 @@ import org.djunits.unit.MassUnit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatMass;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
 import jakarta.annotation.Generated;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class FloatMassVector extends AbstractFloatVectorRel<MassUnit, FloatMass, FloatMassVector>
+public class FloatMassVector extends FloatVectorRel<MassUnit, FloatMass, FloatMassVector>
 
 {
     /** */

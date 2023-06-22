@@ -34,7 +34,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.scalar.FloatAbsoluteTemperature;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
@@ -114,7 +114,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, floatVector.cardinality());
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractFloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -247,7 +247,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, floatVector.cardinality());
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractFloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
                     }
                     assertEquals("scalarClass must match", scalarClass, floatVector.getScalarClass());
                     Method instantiateMethod =
@@ -382,7 +382,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, floatVector.cardinality());
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractFloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -444,7 +444,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLUS.cardinality());
                 if (vLUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
                 vLU = constructorLU.newInstance(new ArrayList<Float>(), standardUnit);
@@ -453,7 +453,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLU.cardinality());
                 if (vLU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
                 vLS = constructorLS.newInstance(new ArrayList<Float>(), storageType);
@@ -462,7 +462,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLS.cardinality());
                 if (vLS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
 
                 vL = constructorL.newInstance(new ArrayList<Float>());
@@ -471,7 +471,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vL.cardinality());
                 if (vL instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
                 }
             }
         }
@@ -550,7 +550,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, floatVector.cardinality());
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractFloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -612,7 +612,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLUS.cardinality());
                 if (vLUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
                 vLU = constructorLU.newInstance(new ArrayList<FloatScalar<?, ?>>(), standardUnit);
@@ -621,7 +621,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLU.cardinality());
                 if (vLU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
                 vLS = constructorLS.newInstance(new ArrayList<FloatScalar<?, ?>>(), storageType);
@@ -630,7 +630,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLS.cardinality());
                 if (vLS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
 
                 vL = constructorL.newInstance(new ArrayList<FloatScalar<?, ?>>());
@@ -639,7 +639,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vL.cardinality());
                 if (vL instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
                 }
             }
         }
@@ -719,7 +719,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("Size", size, floatVector.size());
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractFloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -781,7 +781,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMUS.cardinality());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, Float>(), 0, standardUnit);
@@ -790,7 +790,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMU.cardinality());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, Float>(), 0, storageType);
@@ -799,7 +799,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMS.cardinality());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, Float>(), 0);
@@ -808,7 +808,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vM.cardinality());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
 
                 // test the empty map with a size
@@ -819,7 +819,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vMUS.size());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, Float>(), 10, standardUnit);
@@ -829,7 +829,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vMU.size());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, Float>(), 10, storageType);
@@ -839,7 +839,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vMS.size());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, Float>(), 10);
@@ -849,7 +849,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vM.size());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
             }
         }
@@ -931,7 +931,7 @@ public class FloatVectorConstructorsTest
                     assertEquals("Size", size, floatVector.size());
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractFloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -993,7 +993,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMUS.cardinality());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit);
@@ -1002,7 +1002,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMU.cardinality());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, storageType);
@@ -1011,7 +1011,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMS.cardinality());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0);
@@ -1020,7 +1020,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Cardinality", 0, vM.cardinality());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
 
                 // test the empty map with a size
@@ -1031,7 +1031,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vMUS.size());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit);
@@ -1041,7 +1041,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vMU.size());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, storageType);
@@ -1051,7 +1051,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vMS.size());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10);
@@ -1061,7 +1061,7 @@ public class FloatVectorConstructorsTest
                 assertEquals("Size", 10, vM.size());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractFloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
             }
         }

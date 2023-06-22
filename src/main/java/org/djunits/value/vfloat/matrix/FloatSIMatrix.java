@@ -53,7 +53,7 @@ import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.vector.FloatSIVector;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Throw;
 
@@ -184,7 +184,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
      * @param <V> the vector type
      * @param <M> the matrix type
      */
-    public final <U extends Unit<U>, S extends FloatScalarRel<U, S>, V extends AbstractFloatVectorRel<U, S, V>,
+    public final <U extends Unit<U>, S extends FloatScalarRel<U, S>, V extends FloatVectorRel<U, S, V>,
             M extends FloatMatrixRel<U, S, V, M>> M as(final U displayUnit)
     {
         Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(displayUnit.getQuantity().getSiDimensions())),

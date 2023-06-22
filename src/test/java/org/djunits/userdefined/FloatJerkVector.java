@@ -1,6 +1,6 @@
 package org.djunits.userdefined;
 
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
 /**
@@ -12,7 +12,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-public class FloatJerkVector extends AbstractFloatVectorRel<JerkUnit, FloatJerk, FloatJerkVector>
+public class FloatJerkVector extends FloatVectorRel<JerkUnit, FloatJerk, FloatJerkVector>
 
 {
     /** */

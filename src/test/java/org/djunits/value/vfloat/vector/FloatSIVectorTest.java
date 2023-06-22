@@ -28,9 +28,9 @@ import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
-import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
+import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
 import org.junit.Test;
 
 /**
@@ -64,9 +64,9 @@ public class FloatSIVectorTest
     @SuppressWarnings("unchecked")
     @Test
     public <AU extends AbsoluteLinearUnit<AU, RU>, A extends FloatScalarAbs<AU, A, RU, R>,
-            AV extends AbstractFloatVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
+            AV extends FloatVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
             R extends FloatScalarRelWithAbs<AU, A, RU, R>,
-            RV extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
+            RV extends FloatVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
     {
@@ -83,11 +83,11 @@ public class FloatSIVectorTest
             Quantity<RU> quantity = (Quantity<RU>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (RU unit : quantity.getUnitsById().values())
             {
-                Constructor<AbstractFloatVectorRel<RU, R, RV>> constructor =
-                        (Constructor<AbstractFloatVectorRel<RU, R, RV>>) CLASSNAMES.floatVectorClass(type)
+                Constructor<FloatVectorRel<RU, R, RV>> constructor =
+                        (Constructor<FloatVectorRel<RU, R, RV>>) CLASSNAMES.floatVectorClass(type)
                                 .getConstructor(float[].class, unitClass, StorageType.class);
-                AbstractFloatVectorRel<RU, R, RV> vector = constructor.newInstance(denseTestData, unit, StorageType.DENSE);
-                AbstractFloatVectorRel<RU, R, RV> sparseVector = vector.toSparse();
+                FloatVectorRel<RU, R, RV> vector = constructor.newInstance(denseTestData, unit, StorageType.DENSE);
+                FloatVectorRel<RU, R, RV> sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
                 {
                     assertEquals("Value at index matches", vector.getSI(index), sparseVector.getSI(index), 0.0);
@@ -95,7 +95,7 @@ public class FloatSIVectorTest
 
                 FloatSIVector mult = vector.times(dimlessVector);
                 Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);
-                AbstractFloatVectorRel<RU, R, RV> asVector = (AbstractFloatVectorRel<RU, R, RV>) asMethod.invoke(mult);
+                FloatVectorRel<RU, R, RV> asVector = (FloatVectorRel<RU, R, RV>) asMethod.invoke(mult);
                 assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                 for (int index = 0; index < denseTestData.length; index++)
                 {
@@ -104,8 +104,8 @@ public class FloatSIVectorTest
                 }
 
                 Method asMethodDisplayUnit = FloatSIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                AbstractFloatVectorRel<RU, R, RV> asVectorDisplayUnit =
-                        (AbstractFloatVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                FloatVectorRel<RU, R, RV> asVectorDisplayUnit =
+                        (FloatVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
 
                 for (int index = 0; index < denseTestData.length; index++)
@@ -118,7 +118,7 @@ public class FloatSIVectorTest
                 FloatSIVector cd4sr2 = new FloatSIVector(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
                 {
-                    AbstractFloatVectorRel<RU, R, RV> asVectorDim = (AbstractFloatVectorRel<RU, R, RV>) asMethod.invoke(cd4sr2);
+                    FloatVectorRel<RU, R, RV> asVectorDim = (FloatVectorRel<RU, R, RV>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asVectorDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -128,8 +128,8 @@ public class FloatSIVectorTest
 
                 try
                 {
-                    AbstractFloatVectorRel<RU, R, RV> asVectorDim =
-                            (AbstractFloatVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
+                    FloatVectorRel<RU, R, RV> asVectorDim =
+                            (FloatVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asVectorDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -263,18 +263,18 @@ public class FloatSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<AbstractFloatVectorRel> constructor = (Constructor<AbstractFloatVectorRel>) CLASSNAMES
+                        Constructor<FloatVectorRel> constructor = (Constructor<FloatVectorRel>) CLASSNAMES
                                 .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
-                        AbstractFloatVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        FloatVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
                         FloatSIVector mult = vector.times(allVector);
                         Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);
-                        AbstractFloatVectorRel<U, ?, ?> asVector = (AbstractFloatVectorRel<U, ?, ?>) asMethod.invoke(mult);
+                        FloatVectorRel<U, ?, ?> asVector = (FloatVectorRel<U, ?, ?>) asMethod.invoke(mult);
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, mult.getValuesSI());
 
                         Method asMethodDisplayUnit = FloatSIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                        AbstractFloatVectorRel<U, ?, ?> asVectorDisplayUnit =
-                                (AbstractFloatVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                        FloatVectorRel<U, ?, ?> asVectorDisplayUnit =
+                                (FloatVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, asVectorDisplayUnit.getValuesSI());
 
@@ -331,7 +331,7 @@ public class FloatSIVectorTest
         float[] testValues = new float[] {0, 123.456f, 0, -273.15f, -273.15f, 0, -273.15f, 234.567f, 0, 0};
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            AbstractFloatVectorRel<?, ?, ?> dimless = new FloatDimensionlessVector(new float[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            FloatVectorRel<?, ?, ?> dimless = new FloatDimensionlessVector(new float[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                     DimensionlessUnit.SI.getStandardUnit(), storageType);
             for (String type : CLASSNAMES.REL_WITH_ABS_LIST)
             {
@@ -341,18 +341,18 @@ public class FloatSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<AbstractFloatVectorRel> constructor = (Constructor<AbstractFloatVectorRel>) CLASSNAMES
+                        Constructor<FloatVectorRel> constructor = (Constructor<FloatVectorRel>) CLASSNAMES
                                 .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
-                        AbstractFloatVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        FloatVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
                         FloatSIVector mult = vector.times(dimless);
                         Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);
-                        AbstractFloatVectorRel<U, ?, ?> asVector = (AbstractFloatVectorRel<U, ?, ?>) asMethod.invoke(mult);
+                        FloatVectorRel<U, ?, ?> asVector = (FloatVectorRel<U, ?, ?>) asMethod.invoke(mult);
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, mult.getValuesSI());
 
                         Method asMethodDisplayUnit = FloatSIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                        AbstractFloatVectorRel<U, ?, ?> asVectorDisplayUnit =
-                                (AbstractFloatVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                        FloatVectorRel<U, ?, ?> asVectorDisplayUnit =
+                                (FloatVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, asVectorDisplayUnit.getValuesSI());
 
