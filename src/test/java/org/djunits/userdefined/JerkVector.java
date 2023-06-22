@@ -1,6 +1,6 @@
 package org.djunits.userdefined;
 
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 /**
@@ -12,7 +12,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-public class JerkVector extends AbstractDoubleVectorRel<JerkUnit, Jerk, JerkVector>
+public class JerkVector extends DoubleVectorRel<JerkUnit, Jerk, JerkVector>
 
 {
     /** */

@@ -21,8 +21,8 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @param <S> the scalar type belonging to the vector type
  * @param <RV> the relative vector type with this unit
  */
-public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>,
-        RV extends AbstractDoubleVectorRel<U, S, RV>> extends DoubleVector<U, S, RV> implements Relative<U, RV>
+public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>,
+        RV extends DoubleVectorRel<U, S, RV>> extends DoubleVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -32,7 +32,7 @@ public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends Doubl
      * @param data DoubleVectorData; an internal data object
      * @param unit U; the unit
      */
-    protected AbstractDoubleVectorRel(final DoubleVectorData data, final U unit)
+    protected DoubleVectorRel(final DoubleVectorData data, final U unit)
     {
         super(data.copy(), unit);
     }
@@ -155,7 +155,7 @@ public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends Doubl
      * @param <VT> the vector type of the multiplier
      */
     public final <UT extends Unit<UT>, ST extends DoubleScalarRel<UT, ST>,
-            VT extends AbstractDoubleVectorRel<UT, ST, VT> & Relative<UT, VT>> SIVector times(final VT rel)
+            VT extends DoubleVectorRel<UT, ST, VT> & Relative<UT, VT>> SIVector times(final VT rel)
                     throws ValueRuntimeException, UnitException
     {
         checkSize(rel);
@@ -176,7 +176,7 @@ public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends Doubl
      * @param <VT> the vector type of the multiplier
      */
     public final <UT extends Unit<UT>, ST extends DoubleScalarRel<UT, ST>,
-            VT extends AbstractDoubleVectorRel<UT, ST, VT>> SIVector divide(final VT rel)
+            VT extends DoubleVectorRel<UT, ST, VT>> SIVector divide(final VT rel)
                     throws ValueRuntimeException, UnitException
     {
         checkSize(rel);

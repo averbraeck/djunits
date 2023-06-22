@@ -9,7 +9,7 @@ import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.AbsoluteTemperature;
 import org.djunits.value.vdouble.scalar.Temperature;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 import jakarta.annotation.Generated;
@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class AbsoluteTemperatureVector extends AbstractDoubleVectorAbs<AbsoluteTemperatureUnit, AbsoluteTemperature,
+public class AbsoluteTemperatureVector extends DoubleVectorAbs<AbsoluteTemperatureUnit, AbsoluteTemperature,
         AbsoluteTemperatureVector, TemperatureUnit, Temperature, TemperatureVector>
 {
     /** */

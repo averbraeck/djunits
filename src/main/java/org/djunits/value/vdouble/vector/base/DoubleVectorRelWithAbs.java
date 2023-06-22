@@ -22,14 +22,14 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @param <RV> the relative (immutable or mutable) vector type with this unit
  */
 // @formatter:off
-public abstract class AbstractDoubleVectorRelWithAbs<
+public abstract class DoubleVectorRelWithAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
         A   extends DoubleScalarAbs<AU, A, RU, R>,
-        AV  extends AbstractDoubleVectorAbs<AU, A, AV, RU, R, RV>,
+        AV  extends DoubleVectorAbs<AU, A, AV, RU, R, RV>,
         RU  extends Unit<RU>,
         R   extends DoubleScalarRelWithAbs<AU, A, RU, R>,
-        RV  extends AbstractDoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>>
-        extends AbstractDoubleVectorRel<RU, R, RV>
+        RV  extends DoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>>
+        extends DoubleVectorRel<RU, R, RV>
         implements RelWithAbs<AU, AV, RU, RV>
 // @formatter:on
 {
@@ -41,7 +41,7 @@ public abstract class AbstractDoubleVectorRelWithAbs<
      * @param data DoubleVectorData; an internal data object
      * @param unit RU; the unit
      */
-    protected AbstractDoubleVectorRelWithAbs(final DoubleVectorData data, final RU unit)
+    protected DoubleVectorRelWithAbs(final DoubleVectorData data, final RU unit)
     {
         // data will be copied in AbstractMutableDoubleVectorRel
         super(data, unit);

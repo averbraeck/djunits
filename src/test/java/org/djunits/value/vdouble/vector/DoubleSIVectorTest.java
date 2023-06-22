@@ -28,9 +28,9 @@ import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
 import org.junit.Test;
 
 /**
@@ -64,9 +64,9 @@ public class DoubleSIVectorTest
     @SuppressWarnings("unchecked")
     @Test
     public <AU extends AbsoluteLinearUnit<AU, RU>, A extends DoubleScalarAbs<AU, A, RU, R>,
-            AV extends AbstractDoubleVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
+            AV extends DoubleVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
             R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
-            RV extends AbstractDoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
+            RV extends DoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
     {
@@ -82,11 +82,11 @@ public class DoubleSIVectorTest
             Quantity<RU> quantity = (Quantity<RU>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (RU unit : quantity.getUnitsById().values())
             {
-                Constructor<AbstractDoubleVectorRel<RU, R, RV>> constructor =
-                        (Constructor<AbstractDoubleVectorRel<RU, R, RV>>) CLASSNAMES.doubleVectorClass(type)
+                Constructor<DoubleVectorRel<RU, R, RV>> constructor =
+                        (Constructor<DoubleVectorRel<RU, R, RV>>) CLASSNAMES.doubleVectorClass(type)
                                 .getConstructor(double[].class, unitClass, StorageType.class);
-                AbstractDoubleVectorRel<RU, R, RV> vector = constructor.newInstance(denseTestData, unit, StorageType.DENSE);
-                AbstractDoubleVectorRel<RU, R, RV> sparseVector = vector.toSparse();
+                DoubleVectorRel<RU, R, RV> vector = constructor.newInstance(denseTestData, unit, StorageType.DENSE);
+                DoubleVectorRel<RU, R, RV> sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
                 {
                     assertEquals("Value at index matches", vector.getSI(index), sparseVector.getSI(index), 0.0);
@@ -94,7 +94,7 @@ public class DoubleSIVectorTest
 
                 SIVector mult = vector.times(dimlessVector);
                 Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
-                AbstractDoubleVectorRel<RU, R, RV> asVector = (AbstractDoubleVectorRel<RU, R, RV>) asMethod.invoke(mult);
+                DoubleVectorRel<RU, R, RV> asVector = (DoubleVectorRel<RU, R, RV>) asMethod.invoke(mult);
                 assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                 for (int index = 0; index < denseTestData.length; index++)
                 {
@@ -103,8 +103,8 @@ public class DoubleSIVectorTest
                 }
 
                 Method asMethodDisplayUnit = SIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                AbstractDoubleVectorRel<RU, R, RV> asVectorDisplayUnit =
-                        (AbstractDoubleVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                DoubleVectorRel<RU, R, RV> asVectorDisplayUnit =
+                        (DoubleVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
 
                 for (int index = 0; index < denseTestData.length; index++)
@@ -117,8 +117,8 @@ public class DoubleSIVectorTest
                 SIVector cd4sr2 = new SIVector(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
                 {
-                    AbstractDoubleVectorRel<RU, R, RV> asVectorDim =
-                            (AbstractDoubleVectorRel<RU, R, RV>) asMethod.invoke(cd4sr2);
+                    DoubleVectorRel<RU, R, RV> asVectorDim =
+                            (DoubleVectorRel<RU, R, RV>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asVectorDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -128,8 +128,8 @@ public class DoubleSIVectorTest
 
                 try
                 {
-                    AbstractDoubleVectorRel<RU, R, RV> asVectorDim =
-                            (AbstractDoubleVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
+                    DoubleVectorRel<RU, R, RV> asVectorDim =
+                            (DoubleVectorRel<RU, R, RV>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asVectorDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -263,18 +263,18 @@ public class DoubleSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<AbstractDoubleVectorRel> constructor = (Constructor<AbstractDoubleVectorRel>) CLASSNAMES
+                        Constructor<DoubleVectorRel> constructor = (Constructor<DoubleVectorRel>) CLASSNAMES
                                 .doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
-                        AbstractDoubleVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        DoubleVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
                         SIVector mult = vector.times(allVector);
                         Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
-                        AbstractDoubleVectorRel<U, ?, ?> asVector = (AbstractDoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
+                        DoubleVectorRel<U, ?, ?> asVector = (DoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, mult.getValuesSI());
 
                         Method asMethodDisplayUnit = SIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                        AbstractDoubleVectorRel<U, ?, ?> asVectorDisplayUnit =
-                                (AbstractDoubleVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                        DoubleVectorRel<U, ?, ?> asVectorDisplayUnit =
+                                (DoubleVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, asVectorDisplayUnit.getValuesSI());
 
@@ -331,7 +331,7 @@ public class DoubleSIVectorTest
         double[] testValues = new double[] {0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0};
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
-            AbstractDoubleVectorRel<?, ?, ?> dimless = new DimensionlessVector(new double[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            DoubleVectorRel<?, ?, ?> dimless = new DimensionlessVector(new double[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                     DimensionlessUnit.SI.getStandardUnit(), storageType);
             for (String type : CLASSNAMES.REL_WITH_ABS_LIST)
             {
@@ -341,18 +341,18 @@ public class DoubleSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<AbstractDoubleVectorRel> constructor = (Constructor<AbstractDoubleVectorRel>) CLASSNAMES
+                        Constructor<DoubleVectorRel> constructor = (Constructor<DoubleVectorRel>) CLASSNAMES
                                 .doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
-                        AbstractDoubleVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        DoubleVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
                         SIVector mult = vector.times(dimless);
                         Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
-                        AbstractDoubleVectorRel<U, ?, ?> asVector = (AbstractDoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
+                        DoubleVectorRel<U, ?, ?> asVector = (DoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, mult.getValuesSI());
 
                         Method asMethodDisplayUnit = SIVector.class.getDeclaredMethod("as" + type, unit.getClass());
-                        AbstractDoubleVectorRel<U, ?, ?> asVectorDisplayUnit =
-                                (AbstractDoubleVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                        DoubleVectorRel<U, ?, ?> asVectorDisplayUnit =
+                                (DoubleVectorRel<U, ?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                         assertEquals(vector.getDisplayUnit().getStandardUnit(), asVectorDisplayUnit.getDisplayUnit());
                         compareValuesWithScale(unit.getScale(), testValues, asVectorDisplayUnit.getValuesSI());
 

@@ -7,7 +7,7 @@ import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.AbsorbedDose;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 import jakarta.annotation.Generated;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class AbsorbedDoseVector extends AbstractDoubleVectorRel<AbsorbedDoseUnit, AbsorbedDose, AbsorbedDoseVector>
+public class AbsorbedDoseVector extends DoubleVectorRel<AbsorbedDoseUnit, AbsorbedDose, AbsorbedDoseVector>
 
 {
     /** */

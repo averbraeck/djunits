@@ -51,7 +51,7 @@ import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.SIScalar;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Throw;
 
@@ -68,7 +68,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class SIVector extends AbstractDoubleVectorRel<SIUnit, SIScalar, SIVector>
+public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 {
     /** */
     private static final long serialVersionUID = 20150901L;

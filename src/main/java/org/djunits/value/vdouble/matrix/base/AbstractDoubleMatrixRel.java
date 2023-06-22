@@ -10,7 +10,7 @@ import org.djunits.value.vdouble.matrix.SIMatrix;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
 
 /**
@@ -26,7 +26,7 @@ import org.djunits.value.vdouble.vector.base.DoubleVector;
  * @param <RM> the relative matrix type with this unit
  */
 public abstract class AbstractDoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>,
-        RV extends AbstractDoubleVectorRel<U, S, RV>, RM extends AbstractDoubleMatrixRel<U, S, RV, RM>>
+        RV extends DoubleVectorRel<U, S, RV>, RM extends AbstractDoubleMatrixRel<U, S, RV, RM>>
         extends DoubleMatrix<U, S, RV, RM> implements Relative<U, RM>
 {
     /** */

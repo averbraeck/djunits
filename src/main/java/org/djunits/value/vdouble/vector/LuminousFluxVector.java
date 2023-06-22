@@ -7,7 +7,7 @@ import org.djunits.unit.LuminousFluxUnit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.LuminousFlux;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 import jakarta.annotation.Generated;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class LuminousFluxVector extends AbstractDoubleVectorRel<LuminousFluxUnit, LuminousFlux, LuminousFluxVector>
+public class LuminousFluxVector extends DoubleVectorRel<LuminousFluxUnit, LuminousFlux, LuminousFluxVector>
 
 {
     /** */

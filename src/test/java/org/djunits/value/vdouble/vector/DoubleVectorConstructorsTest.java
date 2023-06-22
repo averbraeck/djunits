@@ -34,7 +34,7 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.AbsoluteTemperature;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
@@ -118,7 +118,7 @@ public class DoubleVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, doubleVector.cardinality());
                     if (doubleVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
@@ -255,7 +255,7 @@ public class DoubleVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, doubleVector.cardinality());
                     if (doubleVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
                     }
                     assertEquals("scalarClass must match", scalarClass, doubleVector.getScalarClass());
                     Method instantiateMethod =
@@ -394,7 +394,7 @@ public class DoubleVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, doubleVector.cardinality());
                     if (doubleVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
@@ -456,7 +456,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLUS.cardinality());
                 if (vLUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
                 vLU = constructorLU.newInstance(new ArrayList<Double>(), standardUnit);
@@ -465,7 +465,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLU.cardinality());
                 if (vLU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
                 vLS = constructorLS.newInstance(new ArrayList<Double>(), storageType);
@@ -474,7 +474,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLS.cardinality());
                 if (vLS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
 
                 vL = constructorL.newInstance(new ArrayList<Double>());
@@ -483,7 +483,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vL.cardinality());
                 if (vL instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
                 }
             }
         }
@@ -565,7 +565,7 @@ public class DoubleVectorConstructorsTest
                     assertEquals("Cardinality", cardinality, doubleVector.cardinality());
                     if (doubleVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
@@ -627,7 +627,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLUS.cardinality());
                 if (vLUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
                 }
 
                 vLU = constructorLU.newInstance(new ArrayList<DoubleScalar<?, ?>>(), standardUnit);
@@ -636,7 +636,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLU.cardinality());
                 if (vLU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
                 }
 
                 vLS = constructorLS.newInstance(new ArrayList<DoubleScalar<?, ?>>(), storageType);
@@ -645,7 +645,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vLS.cardinality());
                 if (vLS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
                 }
 
                 vL = constructorL.newInstance(new ArrayList<DoubleScalar<?, ?>>());
@@ -654,7 +654,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vL.cardinality());
                 if (vL instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
                 }
             }
         }
@@ -738,7 +738,7 @@ public class DoubleVectorConstructorsTest
                     assertEquals("Size", size, doubleVector.size());
                     if (doubleVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
@@ -800,7 +800,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMUS.cardinality());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, Double>(), 0, standardUnit);
@@ -809,7 +809,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMU.cardinality());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, Double>(), 0, storageType);
@@ -818,7 +818,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMS.cardinality());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, Double>(), 0);
@@ -827,7 +827,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vM.cardinality());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
 
                 // test the empty map with a size
@@ -838,7 +838,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vMUS.size());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, Double>(), 10, standardUnit);
@@ -848,7 +848,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vMU.size());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, Double>(), 10, storageType);
@@ -858,7 +858,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vMS.size());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, Double>(), 10);
@@ -868,7 +868,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vM.size());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
             }
         }
@@ -954,7 +954,7 @@ public class DoubleVectorConstructorsTest
                     assertEquals("Size", size, doubleVector.size());
                     if (doubleVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((AbstractDoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
+                        assertEquals("zSum", zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001);
                     }
 
                     Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
@@ -1017,7 +1017,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMUS.cardinality());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, DoubleScalar<?, ?>>(), 0, standardUnit);
@@ -1026,7 +1026,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMU.cardinality());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, DoubleScalar<?, ?>>(), 0, storageType);
@@ -1035,7 +1035,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vMS.cardinality());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, DoubleScalar<?, ?>>(), 0);
@@ -1044,7 +1044,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Cardinality", 0, vM.cardinality());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
 
                 // test the empty map with a size
@@ -1056,7 +1056,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vMUS.size());
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, DoubleScalar<?, ?>>(), 10, standardUnit);
@@ -1066,7 +1066,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vMU.size());
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, DoubleScalar<?, ?>>(), 10, storageType);
@@ -1076,7 +1076,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vMS.size());
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, DoubleScalar<?, ?>>(), 10);
@@ -1086,7 +1086,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals("Size", 10, vM.size());
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((AbstractDoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals("zSum", 0.0, ((DoubleVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
                 }
             }
         }

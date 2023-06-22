@@ -9,7 +9,7 @@ import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.Length;
 import org.djunits.value.vdouble.scalar.Position;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 import jakarta.annotation.Generated;
@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
 public class LengthVector
-        extends AbstractDoubleVectorRelWithAbs<PositionUnit, Position, PositionVector, LengthUnit, Length, LengthVector>
+        extends DoubleVectorRelWithAbs<PositionUnit, Position, PositionVector, LengthUnit, Length, LengthVector>
 {
     /** */
     private static final long serialVersionUID = 20190905L;

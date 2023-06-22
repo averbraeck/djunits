@@ -9,7 +9,7 @@ import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.Duration;
 import org.djunits.value.vdouble.scalar.Time;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 import jakarta.annotation.Generated;
@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
 public class DurationVector
-        extends AbstractDoubleVectorRelWithAbs<TimeUnit, Time, TimeVector, DurationUnit, Duration, DurationVector>
+        extends DoubleVectorRelWithAbs<TimeUnit, Time, TimeVector, DurationUnit, Duration, DurationVector>
 {
     /** */
     private static final long serialVersionUID = 20190905L;

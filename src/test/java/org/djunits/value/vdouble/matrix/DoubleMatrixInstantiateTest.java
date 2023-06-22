@@ -38,8 +38,8 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.SIVector;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
@@ -138,7 +138,7 @@ public class DoubleMatrixInstantiateTest
                         absDoubleMatrix, absDoubleMatrix2);
                 DoubleVectorData dvd =
                         DoubleVectorData.instantiate(relDoubleMatrix.getRowSI(0), relStandardUnit.getScale(), storageType);
-                AbstractDoubleVectorAbs<AU, ?, ?, RU, ?, ?> absDoubleVector =
+                DoubleVectorAbs<AU, ?, ?, RU, ?, ?> absDoubleVector =
                         relDoubleMatrix.instantiateVectorAbs(dvd, absStandardUnit);
                 assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         absDoubleVector.getValuesSI(), 0.001);
@@ -152,7 +152,7 @@ public class DoubleMatrixInstantiateTest
                 assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
                         relDoubleMatrix, relDoubleMatrix2);
                 dvd = DoubleVectorData.instantiate(absDoubleMatrix.getRowSI(0), absStandardUnit.getScale(), storageType);
-                AbstractDoubleVectorRelWithAbs<AU, ?, ?, RU, ?, ?> relDoubleVector =
+                DoubleVectorRelWithAbs<AU, ?, ?, RU, ?, ?> relDoubleVector =
                         absDoubleMatrix.instantiateVectorRel(dvd, relStandardUnit);
                 assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         relDoubleVector.getValuesSI(), 0.001);

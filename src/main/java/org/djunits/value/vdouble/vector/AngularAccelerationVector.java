@@ -7,7 +7,7 @@ import org.djunits.unit.AngularAccelerationUnit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.scalar.AngularAcceleration;
-import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 import jakarta.annotation.Generated;
@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
 public class AngularAccelerationVector
-        extends AbstractDoubleVectorRel<AngularAccelerationUnit, AngularAcceleration, AngularAccelerationVector>
+        extends DoubleVectorRel<AngularAccelerationUnit, AngularAcceleration, AngularAccelerationVector>
 
 {
     /** */
