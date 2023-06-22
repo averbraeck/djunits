@@ -434,8 +434,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @return A; an absolute typed FloatScalar; the sum of the values as an Absolute value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractFloatScalarAbs<AU, A, RU, R>> A plus(final A left, final R right)
+            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
+            A extends FloatScalarAbs<AU, A, RU, R>> A plus(final A left, final R right)
     {
         return left.plus(right);
     }
@@ -452,8 +452,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @return A; an absolute typed FloatScalar; the sum of the values as an Absolute value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractFloatScalarAbs<AU, A, RU, R>> A plus(final R left, final A right)
+            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
+            A extends FloatScalarAbs<AU, A, RU, R>> A plus(final R left, final A right)
     {
         return right.plus(left);
     }
@@ -467,7 +467,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param <R> the relative type
      * @return R; a relative typed FloatScalar; the sum of the values as a Relative value
      */
-    public static <U extends Unit<U>, R extends AbstractFloatScalarRel<U, R>> R plus(final R left, final R right)
+    public static <U extends Unit<U>, R extends FloatScalarRel<U, R>> R plus(final R left, final R right)
     {
         return left.plus(right);
     }
@@ -484,8 +484,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @return A; an absolute typed FloatScalar; the resulting value as an absolute value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractFloatScalarAbs<AU, A, RU, R>> A minus(final A left, final R right)
+            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
+            A extends FloatScalarAbs<AU, A, RU, R>> A minus(final A left, final R right)
     {
         return left.minus(right);
     }
@@ -499,7 +499,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param <R> the relative type
      * @return R; a relative typed FloatScalar; the resulting value as a relative value
      */
-    public static <U extends Unit<U>, R extends AbstractFloatScalarRel<U, R>> R minus(final R left, final R right)
+    public static <U extends Unit<U>, R extends FloatScalarRel<U, R>> R minus(final R left, final R right)
     {
         return left.minus(right);
     }
@@ -516,8 +516,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @return R; a relative typed FloatScalar; the difference of the two absolute values as a relative value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractFloatScalarAbs<AU, A, RU, R>> R minus(final A left, final A right)
+            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
+            A extends FloatScalarAbs<AU, A, RU, R>> R minus(final A left, final A right)
     {
         return left.minus(right);
     }
@@ -528,7 +528,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param right AbstractFloatScalarRel&lt;?, ?&gt;; the right operand
      * @return AbstractFloatScalarRel&lt;SIUnit&gt;; the product of the two values
      */
-    public static FloatSIScalar multiply(final AbstractFloatScalarRel<?, ?> left, final AbstractFloatScalarRel<?, ?> right)
+    public static FloatSIScalar multiply(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
     {
         SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
                 .plus(right.getDisplayUnit().getQuantity().getSiDimensions()));
@@ -541,7 +541,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param right AbstractFloatScalarRel&lt;?, ?&gt;; the right operand
      * @return AbstractFloatScalarRel&lt;SIUnit&gt;; the ratio of the two values
      */
-    public static FloatSIScalar divide(final AbstractFloatScalarRel<?, ?> left, final AbstractFloatScalarRel<?, ?> right)
+    public static FloatSIScalar divide(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
     {
         SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
                 .minus(right.getDisplayUnit().getQuantity().getSiDimensions()));
@@ -557,7 +557,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param <R> the relative type
      * @return R; an Absolute Scalar at the <code>ratio</code> between <code>zero</code> and <code>one</code>
      */
-    public static <U extends Unit<U>, R extends AbstractFloatScalarRel<U, R>> R interpolate(final R zero, final R one,
+    public static <U extends Unit<U>, R extends FloatScalarRel<U, R>> R interpolate(final R zero, final R one,
             final float ratio)
     {
         return zero.instantiateRel(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
@@ -576,8 +576,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
      * @return R; a Relative Scalar at the <code>ratio</code> between <code>zero</code> and <code>one</code>
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractFloatScalarAbs<AU, A, RU, R>> A interpolate(final A zero, final A one, final float ratio)
+            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
+            A extends FloatScalarAbs<AU, A, RU, R>> A interpolate(final A zero, final A one, final float ratio)
     {
         return zero.instantiateAbs(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());

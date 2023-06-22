@@ -18,9 +18,9 @@ import org.djunits.value.RelWithAbs;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class AbstractFloatScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends AbstractFloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>> extends AbstractFloatScalarRel<RU, R>
+public abstract class FloatScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>,
+        A extends FloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
+        R extends FloatScalarRelWithAbs<AU, A, RU, R>> extends FloatScalarRel<RU, R>
         implements RelWithAbs<AU, A, RU, R>
 {
     /**  */
@@ -31,7 +31,7 @@ public abstract class AbstractFloatScalarRelWithAbs<AU extends AbsoluteLinearUni
      * @param value float; the value of the new Relative Immutable FloatScalar
      * @param unit RU; the unit of the new Relative Immutable FloatScalar
      */
-    public AbstractFloatScalarRelWithAbs(final float value, final RU unit)
+    public FloatScalarRelWithAbs(final float value, final RU unit)
     {
         super(value, unit);
     }
@@ -48,7 +48,7 @@ public abstract class AbstractFloatScalarRelWithAbs<AU extends AbsoluteLinearUni
      * Construct a new Relative Immutable FloatScalar from an existing Relative Immutable FloatScalar.
      * @param value R, a relative typed FloatScalar; the reference
      */
-    public AbstractFloatScalarRelWithAbs(final R value)
+    public FloatScalarRelWithAbs(final R value)
     {
         super(value);
     }

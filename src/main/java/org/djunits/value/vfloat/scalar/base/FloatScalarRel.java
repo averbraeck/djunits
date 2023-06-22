@@ -17,7 +17,7 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
  * @param <U> the unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends AbstractFloatScalarRel<U, R>>
+public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel<U, R>>
         extends FloatScalar<U, R> implements Relative<U, R>
 {
     /**  */
@@ -28,7 +28,7 @@ public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends Abstra
      * @param value float; the value of the new Relative Immutable FloatScalar
      * @param unit U; the unit of the new Relative Immutable FloatScalar
      */
-    public AbstractFloatScalarRel(final float value, final U unit)
+    public FloatScalarRel(final float value, final U unit)
     {
         super(unit, unit.isBaseSIUnit() ? value : (float) ValueUtil.expressAsSIUnit(value, unit));
     }
@@ -37,7 +37,7 @@ public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends Abstra
      * Construct a new Relative Immutable FloatScalar from an existing Relative Immutable FloatScalar.
      * @param value R, a relative typed FloatScalar; the reference
      */
-    public AbstractFloatScalarRel(final R value)
+    public FloatScalarRel(final R value)
     {
         super(value.getDisplayUnit(), value.getSI());
     }
@@ -81,7 +81,7 @@ public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends Abstra
      * @param otherScalar AbstractFloatScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
      * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
-    public FloatSIScalar times(final AbstractFloatScalarRel<?, ?> otherScalar)
+    public FloatSIScalar times(final FloatScalarRel<?, ?> otherScalar)
     {
         return FloatScalar.multiply(this, otherScalar);
     }
@@ -90,14 +90,14 @@ public abstract class AbstractFloatScalarRel<U extends Unit<U>, R extends Abstra
      * Create the reciprocal of this scalar with the correct dimensions.
      * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
-    public abstract AbstractFloatScalarRel<?, ?> reciprocal();
+    public abstract FloatScalarRel<?, ?> reciprocal();
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
      * @param otherScalar AbstractFloatScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
      * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
-    public FloatSIScalar divide(final AbstractFloatScalarRel<?, ?> otherScalar)
+    public FloatSIScalar divide(final FloatScalarRel<?, ?> otherScalar)
     {
         return FloatScalar.divide(this, otherScalar);
     }

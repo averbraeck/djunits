@@ -19,9 +19,9 @@ import org.djunits.value.util.ValueUtil;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class AbstractFloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends AbstractFloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>> extends FloatScalar<AU, A> implements Absolute<AU, A, RU, R>
+public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
+        A extends FloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
+        R extends FloatScalarRelWithAbs<AU, A, RU, R>> extends FloatScalar<AU, A> implements Absolute<AU, A, RU, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;
@@ -31,7 +31,7 @@ public abstract class AbstractFloatScalarAbs<AU extends AbsoluteLinearUnit<AU, R
      * @param value float; the value of the new Absolute Immutable FloatScalar
      * @param unit AU; the unit of the new Absolute Immutable FloatScalar
      */
-    public AbstractFloatScalarAbs(final float value, final AU unit)
+    public FloatScalarAbs(final float value, final AU unit)
     {
         super(unit, unit.isBaseSIUnit() ? value : (float) ValueUtil.expressAsSIUnit(value, unit));
     }
@@ -40,7 +40,7 @@ public abstract class AbstractFloatScalarAbs<AU extends AbsoluteLinearUnit<AU, R
      * Construct a new Absolute Immutable FloatScalar from an existing Absolute Immutable FloatScalar.
      * @param value A, an absolute typed FloatScalar; the reference
      */
-    public AbstractFloatScalarAbs(final A value)
+    public FloatScalarAbs(final A value)
     {
         super(value.getDisplayUnit(), value.getSI());
     }

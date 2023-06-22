@@ -2,7 +2,7 @@ package org.djunits.userdefined;
 
 import org.djunits.value.vfloat.scalar.FloatDimensionless;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 
 /**
@@ -13,7 +13,7 @@ import org.djunits.value.vfloat.scalar.base.FloatScalar;
  * <p>
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
  */
-public class FloatJerk extends AbstractFloatScalarRel<JerkUnit, FloatJerk>
+public class FloatJerk extends FloatScalarRel<JerkUnit, FloatJerk>
 {
     /** */
     private static final long serialVersionUID = 1L;

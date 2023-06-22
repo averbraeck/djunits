@@ -25,9 +25,9 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
+import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRelWithAbs;
@@ -63,9 +63,9 @@ public class FloatSIVectorTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public <AU extends AbsoluteLinearUnit<AU, RU>, A extends AbstractFloatScalarAbs<AU, A, RU, R>,
+    public <AU extends AbsoluteLinearUnit<AU, RU>, A extends FloatScalarAbs<AU, A, RU, R>,
             AV extends AbstractFloatVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
-            R extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
+            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
             RV extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
@@ -282,7 +282,7 @@ public class FloatSIVectorTest
                         FloatSIVector cd4sr2 = new FloatSIVector(testValues, SIUnit.of("cd4/sr2"), storageType2);
                         try
                         {
-                            AbstractFloatScalarRel<?, ?> asScalarDim = (AbstractFloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
+                            FloatScalarRel<?, ?> asScalarDim = (FloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }
@@ -293,8 +293,8 @@ public class FloatSIVectorTest
 
                         try
                         {
-                            AbstractFloatScalarRel<?, ?> asScalarDim =
-                                    (AbstractFloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
+                            FloatScalarRel<?, ?> asScalarDim =
+                                    (FloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }
@@ -360,7 +360,7 @@ public class FloatSIVectorTest
                         FloatSIVector cd4sr2 = new FloatSIVector(testValues, SIUnit.of("cd4/sr2"), storageType2);
                         try
                         {
-                            AbstractFloatScalarRel<?, ?> asScalarDim = (AbstractFloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
+                            FloatScalarRel<?, ?> asScalarDim = (FloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }
@@ -371,8 +371,8 @@ public class FloatSIVectorTest
 
                         try
                         {
-                            AbstractFloatScalarRel<?, ?> asScalarDim =
-                                    (AbstractFloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
+                            FloatScalarRel<?, ?> asScalarDim =
+                                    (FloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }

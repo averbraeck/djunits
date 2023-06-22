@@ -34,8 +34,8 @@ import org.djunits.value.vfloat.scalar.FloatArea;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRelWithAbs;
+import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.FloatSIVector;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorAbs;
@@ -146,7 +146,7 @@ public class FloatMatrixInstantiateTest
                         relFloatMatrix.instantiateVectorAbs(dvd, absStandardUnit);
                 assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         absFloatVector.getValuesSI(), 0.001f);
-                AbstractFloatScalarAbs<AU, ?, RU, ?> absFloatScalar =
+                FloatScalarAbs<AU, ?, RU, ?> absFloatScalar =
                         relFloatMatrix.instantiateScalarAbsSI(1.234f, absStandardUnit);
                 assertEquals("Constructed scalar has correct value", 1.234f, absFloatScalar.si, 0.001f);
                 assertEquals("Constructed scalar has correct unit", absStandardUnit, absFloatScalar.getDisplayUnit());
@@ -159,7 +159,7 @@ public class FloatMatrixInstantiateTest
                         absFloatMatrix.instantiateVectorRel(dvd, relStandardUnit);
                 assertArrayEquals("Float vector contains values from row 0", new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         relFloatVector.getValuesSI(), 0.001f);
-                AbstractFloatScalarRelWithAbs<AU, ?, RU, ?> relFloatScalar =
+                FloatScalarRelWithAbs<AU, ?, RU, ?> relFloatScalar =
                         absFloatMatrix.instantiateScalarRelSI(1.234f, relStandardUnit);
                 assertEquals("Constructed scalar has correct value", 1.234f, relFloatScalar.si, 0.001f);
                 assertEquals("Constructed scalar has correct unit", relStandardUnit, relFloatScalar.getDisplayUnit());

@@ -18,8 +18,8 @@ import org.djunits.util.ClassUtil;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Assert;
 import org.junit.Test;
@@ -297,11 +297,11 @@ public class ScalarOperationsTest
             }
             else
             {
-                AbstractFloatScalarRel<?, ?> left = (AbstractFloatScalarRel<?, ?>) constructor.newInstance(123f,
+                FloatScalarRel<?, ?> left = (FloatScalarRel<?, ?>) constructor.newInstance(123f,
                         getSIUnitInstance(getUnitClass(scalarClass), abs));
                 // System.out.println("constructed left: " + left);
                 constructor = parameterClass.getConstructor(double.class, getUnitClass(parameterClass));
-                AbstractFloatScalarRel<?, ?> right = (AbstractFloatScalarRel<?, ?>) constructor.newInstance(456f,
+                FloatScalarRel<?, ?> right = (FloatScalarRel<?, ?>) constructor.newInstance(456f,
                         getSIUnitInstance(getUnitClass(parameterClass), abs));
                 // System.out.println("constructed right: " + right);
                 float expectedValue = multiply ? 123f * 456 : 123f / 456;
@@ -310,17 +310,17 @@ public class ScalarOperationsTest
                 {
                     Method multiplyMethod = ClassUtil.resolveMethod(scalarClass, "times", new Class[] {parameterClass});
                     Object result = multiplyMethod.invoke(left, right);
-                    double resultSI = ((AbstractFloatScalarRel<?, ?>) result).getSI();
+                    double resultSI = ((FloatScalarRel<?, ?>) result).getSI();
                     assertEquals("Result of operation", expectedValue, resultSI, 0.01);
                 }
                 else
                 {
                     Method divideMethod = ClassUtil.resolveMethod(scalarClass, "divide", new Class[] {parameterClass});
                     Object result = divideMethod.invoke(left, right);
-                    float resultSI = ((AbstractFloatScalarRel<?, ?>) result).getSI();
+                    float resultSI = ((FloatScalarRel<?, ?>) result).getSI();
                     assertEquals("Result of operation", expectedValue, resultSI, 0.01);
                 }
-                AbstractFloatScalarRel<?, ?> result =
+                FloatScalarRel<?, ?> result =
                         multiply ? FloatScalar.multiply(left, right) : FloatScalar.divide(left, right);
                 // System.out.println("result is " + result);
                 String resultCoefficients = result.getDisplayUnit().getQuantity().getSiDimensions().toString();
@@ -469,9 +469,9 @@ public class ScalarOperationsTest
         else
         {
             left = abs
-                    ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance((float) value,
+                    ? (FloatScalarAbs<?, ?, ?, ?>) constructor.newInstance((float) value,
                             getSIUnitInstance(getUnitClass(scalarClass), abs))
-                    : (AbstractFloatScalarRel<?, ?>) constructor.newInstance((float) value,
+                    : (FloatScalarRel<?, ?>) constructor.newInstance((float) value,
                             getSIUnitInstance(getUnitClass(scalarClass), abs));
             // Find the constructor that takes an object of the current class as the single argument
             Constructor<?>[] constructors = scalarClass.getConstructors();
@@ -639,8 +639,8 @@ public class ScalarOperationsTest
             }
             else
             {
-                compatibleRight = abs ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance((float) value, newUnit)
-                        : (AbstractFloatScalarRel<?, ?>) constructor.newInstance((float) value, newUnit);
+                compatibleRight = abs ? (FloatScalarAbs<?, ?, ?, ?>) constructor.newInstance((float) value, newUnit)
+                        : (FloatScalarRel<?, ?>) constructor.newInstance((float) value, newUnit);
             }
             // System.out.println("compatibleRight prints like \"" + compatibleRight + "\"");
             newUnit.getQuantity().unregister(newUnit);
@@ -908,16 +908,16 @@ public class ScalarOperationsTest
             float zeroValue = 1.23456f;
             FloatScalar<?,
                     ?> zero = abs
-                            ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(zeroValue,
+                            ? (FloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(zeroValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
-                            : (AbstractFloatScalarRel<?, ?>) constructor.newInstance(zeroValue,
+                            : (FloatScalarRel<?, ?>) constructor.newInstance(zeroValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             float oneValue = 3.45678f;
             FloatScalar<?,
                     ?> one = abs
-                            ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(oneValue,
+                            ? (FloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
-                            : (AbstractFloatScalarRel<?, ?>) constructor.newInstance(oneValue,
+                            : (FloatScalarRel<?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             for (float ratio : new float[] {-5, -1, 0, 0.3f, 1, 2, 10})
             {
@@ -931,9 +931,9 @@ public class ScalarOperationsTest
             float biggestValue = 345.678f;
             FloatScalar<?,
                     ?> biggest = abs
-                            ? (AbstractFloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(biggestValue,
+                            ? (FloatScalarAbs<?, ?, ?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
-                            : (AbstractFloatScalarRel<?, ?>) constructor.newInstance(biggestValue,
+                            : (FloatScalarRel<?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             Method max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass);
             FloatScalar<?, ?> result = (FloatScalar<?, ?>) max.invoke(null, zero, one);

@@ -21,7 +21,7 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Test;
 
@@ -131,10 +131,10 @@ public class FloatSIScalarTest
                     {
                         continue;
                     }
-                    AbstractFloatScalarRel<?, ?> scalar1 =
-                            (AbstractFloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit1);
-                    AbstractFloatScalarRel<?, ?> scalar2 =
-                            (AbstractFloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(0.5f, unit2);
+                    FloatScalarRel<?, ?> scalar1 =
+                            (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit1);
+                    FloatScalarRel<?, ?> scalar2 =
+                            (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(0.5f, unit2);
                     FloatSIScalar scalar12a = FloatScalar.multiply(scalar1, scalar2);
                     FloatSIScalar scalar12b = scalar1.times(scalar2);
                     FloatSIScalar scalar12c = scalar2.times(scalar1);
@@ -184,10 +184,10 @@ public class FloatSIScalarTest
                     {
                         continue;
                     }
-                    AbstractFloatScalarRel<?, ?> scalar1 =
-                            (AbstractFloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit1);
-                    AbstractFloatScalarRel<?, ?> scalar2 =
-                            (AbstractFloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(0.5f, unit2);
+                    FloatScalarRel<?, ?> scalar1 =
+                            (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit1);
+                    FloatScalarRel<?, ?> scalar2 =
+                            (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(0.5f, unit2);
                     FloatSIScalar scalar12a = FloatScalar.divide(scalar1, scalar2);
                     FloatSIScalar scalar12b = scalar1.divide(scalar2);
                     FloatSIScalar scalar12c = scalar2.divide(scalar1);
@@ -221,24 +221,24 @@ public class FloatSIScalarTest
         // load all classes
         assertEquals("m", UNITS.METER.getId());
 
-        AbstractFloatScalarRel<?, ?> dimless = new FloatDimensionless(1.0f, DimensionlessUnit.SI);
+        FloatScalarRel<?, ?> dimless = new FloatDimensionless(1.0f, DimensionlessUnit.SI);
         for (String type : CLASSNAMES.REL_ALL_LIST)
         {
             Class.forName("org.djunits.unit." + type + "Unit");
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(type + "Unit");
             for (Unit<?> unit : quantity.getUnitsById().values())
             {
-                AbstractFloatScalarRel<?, ?> scalar =
-                        (AbstractFloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit);
+                FloatScalarRel<?, ?> scalar =
+                        (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit);
                 FloatSIScalar mult = scalar.times(dimless);
                 Method asMethod = FloatSIScalar.class.getDeclaredMethod("as" + type);
-                AbstractFloatScalarRel<?, ?> asScalar = (AbstractFloatScalarRel<?, ?>) asMethod.invoke(mult);
+                FloatScalarRel<?, ?> asScalar = (FloatScalarRel<?, ?>) asMethod.invoke(mult);
                 assertEquals(scalar.getDisplayUnit().getStandardUnit(), asScalar.getDisplayUnit());
                 assertEquals(scalar.si, asScalar.si, scalar.si / 1000.0);
 
                 Method asMethodDisplayUnit = FloatSIScalar.class.getDeclaredMethod("as" + type, unit.getClass());
-                AbstractFloatScalarRel<?, ?> asScalarDisplayUnit =
-                        (AbstractFloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                FloatScalarRel<?, ?> asScalarDisplayUnit =
+                        (FloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(scalar.getDisplayUnit().getStandardUnit(), asScalarDisplayUnit.getDisplayUnit());
                 assertEquals(scalar.si, asScalarDisplayUnit.si, scalar.si / 1000.0);
 
@@ -246,7 +246,7 @@ public class FloatSIScalarTest
                 FloatSIScalar cd4sr2 = FloatSIScalar.instantiateSI(8.0f, SIUnit.of("cd4/sr2"));
                 try
                 {
-                    AbstractFloatScalarRel<?, ?> asScalarDim = (AbstractFloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
+                    FloatScalarRel<?, ?> asScalarDim = (FloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asScalarDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -256,8 +256,8 @@ public class FloatSIScalarTest
 
                 try
                 {
-                    AbstractFloatScalarRel<?, ?> asScalarDim =
-                            (AbstractFloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, scalar.getDisplayUnit());
+                    FloatScalarRel<?, ?> asScalarDim =
+                            (FloatScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, scalar.getDisplayUnit());
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asScalarDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)

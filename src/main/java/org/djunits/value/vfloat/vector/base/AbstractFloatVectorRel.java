@@ -6,7 +6,7 @@ import org.djunits.unit.util.UnitException;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.vector.FloatSIVector;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
@@ -21,7 +21,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <S> the scalar type belonging to the vector type
  * @param <RV> the relative vector type with this unit
  */
-public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
+public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends FloatScalarRel<U, S>,
         RV extends AbstractFloatVectorRel<U, S, RV>> extends FloatVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
@@ -174,7 +174,7 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends Abstra
      * @param <ST> the scalar type of the multiplier
      * @param <VT> the vector type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractFloatScalarRel<UT, ST>,
+    public final <UT extends Unit<UT>, ST extends FloatScalarRel<UT, ST>,
             VT extends AbstractFloatVectorRel<UT, ST, VT> & Relative<UT, VT>> FloatSIVector times(final VT rel)
                     throws ValueRuntimeException, UnitException
     {
@@ -194,7 +194,7 @@ public abstract class AbstractFloatVectorRel<U extends Unit<U>, S extends Abstra
      * @param <ST> the scalar type of the multiplier
      * @param <VT> the vector type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractFloatScalarRel<UT, ST>,
+    public final <UT extends Unit<UT>, ST extends FloatScalarRel<UT, ST>,
             VT extends AbstractFloatVectorRel<UT, ST, VT> & Relative<UT, VT>> FloatSIVector divide(final VT rel)
                     throws ValueRuntimeException, UnitException
     {

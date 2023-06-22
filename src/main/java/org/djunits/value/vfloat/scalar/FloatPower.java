@@ -12,7 +12,7 @@ import org.djunits.unit.FrequencyUnit;
 import org.djunits.unit.MomentumUnit;
 import org.djunits.unit.PowerUnit;
 import org.djunits.unit.SpeedUnit;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -29,7 +29,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class FloatPower extends AbstractFloatScalarRel<PowerUnit, FloatPower>
+public class FloatPower extends FloatScalarRel<PowerUnit, FloatPower>
 {
     /** */
     private static final long serialVersionUID = 20150901L;

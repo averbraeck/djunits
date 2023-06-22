@@ -8,7 +8,7 @@ import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.matrix.FloatSIMatrix;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.base.AbstractFloatVectorRel;
 import org.djunits.value.vfloat.vector.base.FloatVector;
@@ -25,7 +25,7 @@ import org.djunits.value.vfloat.vector.base.FloatVector;
  * @param <RV> the relative vector type belonging to the relative matrix type
  * @param <RM> the relative matrix type with this unit
  */
-public abstract class FloatMatrixRel<U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
+public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel<U, S>,
         RV extends AbstractFloatVectorRel<U, S, RV>, RM extends FloatMatrixRel<U, S, RV, RM>>
         extends FloatMatrix<U, S, RV, RM> implements Relative<U, RM>
 {

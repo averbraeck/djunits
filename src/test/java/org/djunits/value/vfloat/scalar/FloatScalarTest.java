@@ -18,8 +18,8 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarAbs;
-import org.djunits.value.vfloat.scalar.base.AbstractFloatScalarRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Test;
 
@@ -185,8 +185,8 @@ public class FloatScalarTest
             for (Unit<?> relativeUnit : Quantities.INSTANCE.getQuantity(relativeType + "Unit").getUnitsById().values())
             {
                 Constructor<?> relConstructor = scalarClass.getConstructor(float.class, relativeUnit.getClass());
-                AbstractFloatScalarRel<?, ?> relScalar =
-                        (AbstractFloatScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
+                FloatScalarRel<?, ?> relScalar =
+                        (FloatScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
                 float absValue = 234.567f;
                 Quantity<?> quantity = Quantities.INSTANCE.getQuantity(absoluteType + "Unit");
                 for (Unit<?> absoluteUnit : quantity.getUnitsById().values())
@@ -194,12 +194,12 @@ public class FloatScalarTest
                     // Create an abs
                     Method instantiateAbsMethod =
                             scalarClass.getDeclaredMethod("instantiateAbs", float.class, absoluteUnit.getClass());
-                    AbstractFloatScalarAbs<?, ?, ?, ?> absScalar =
-                            (AbstractFloatScalarAbs<?, ?, ?, ?>) instantiateAbsMethod.invoke(relScalar, absValue, absoluteUnit);
+                    FloatScalarAbs<?, ?, ?, ?> absScalar =
+                            (FloatScalarAbs<?, ?, ?, ?>) instantiateAbsMethod.invoke(relScalar, absValue, absoluteUnit);
                     // method "plus" cannot be found with getMethod() for absScalar.getClass().
                     Method plusMethod = scalarClass.getMethod("plus", absScalar.getClass().getSuperclass());
-                    AbstractFloatScalarAbs<?, ?, ?, ?> sum =
-                            (AbstractFloatScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
+                    FloatScalarAbs<?, ?, ?, ?> sum =
+                            (FloatScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
                     // system.out.println("rel=" + relScalar + ", abs=" + absScalar + ", sum=" + sum);
                     assertEquals("sum in SI equals sum of SI values", absScalar.getSI() + relScalar.getSI(), sum.getSI(),
                             sum.getSI() / 1e7);
