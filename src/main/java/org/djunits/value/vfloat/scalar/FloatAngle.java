@@ -7,8 +7,8 @@ import org.djunits.unit.AngularVelocityUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

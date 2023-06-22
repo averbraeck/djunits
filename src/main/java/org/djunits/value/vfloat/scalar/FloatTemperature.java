@@ -5,8 +5,8 @@ import java.util.Locale;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.TemperatureUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

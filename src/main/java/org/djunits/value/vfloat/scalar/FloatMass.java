@@ -11,8 +11,8 @@ import org.djunits.unit.MassUnit;
 import org.djunits.unit.MomentumUnit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.unit.si.SIPrefixes;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

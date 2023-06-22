@@ -8,8 +8,8 @@ import org.djunits.unit.ElectricalCapacitanceUnit;
 import org.djunits.unit.ElectricalChargeUnit;
 import org.djunits.unit.ElectricalCurrentUnit;
 import org.djunits.unit.ElectricalPotentialUnit;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

@@ -47,8 +47,8 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

@@ -15,12 +15,12 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.util.ClassUtil;
+import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
-import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.Assert;
 import org.junit.Test;
 

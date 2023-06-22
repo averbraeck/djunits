@@ -10,8 +10,8 @@ import org.djunits.unit.ElectricalInductanceUnit;
 import org.djunits.unit.ElectricalPotentialUnit;
 import org.djunits.unit.MagneticFluxDensityUnit;
 import org.djunits.unit.MagneticFluxUnit;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

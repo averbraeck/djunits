@@ -4,8 +4,8 @@ import java.util.Locale;
 
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.RadioActivityUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

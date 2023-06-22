@@ -8,8 +8,8 @@ import org.djunits.unit.IlluminanceUnit;
 import org.djunits.unit.LuminousFluxUnit;
 import org.djunits.unit.LuminousIntensityUnit;
 import org.djunits.unit.SolidAngleUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

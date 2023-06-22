@@ -10,8 +10,8 @@ import org.djunits.unit.FlowVolumeUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.MassUnit;
 import org.djunits.unit.VolumeUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

@@ -8,8 +8,8 @@ import org.djunits.unit.ElectricalPotentialUnit;
 import org.djunits.unit.ElectricalResistanceUnit;
 import org.djunits.unit.MagneticFluxUnit;
 import org.djunits.unit.PowerUnit;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

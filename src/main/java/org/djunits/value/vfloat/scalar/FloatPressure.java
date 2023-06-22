@@ -6,8 +6,8 @@ import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.EnergyUnit;
 import org.djunits.unit.ForceUnit;
 import org.djunits.unit.PressureUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

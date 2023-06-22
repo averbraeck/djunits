@@ -11,8 +11,8 @@ import org.djunits.unit.LinearDensityUnit;
 import org.djunits.unit.MassUnit;
 import org.djunits.unit.PowerUnit;
 import org.djunits.unit.PressureUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

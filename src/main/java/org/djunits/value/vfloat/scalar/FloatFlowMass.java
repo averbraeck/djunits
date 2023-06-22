@@ -10,8 +10,8 @@ import org.djunits.unit.ForceUnit;
 import org.djunits.unit.FrequencyUnit;
 import org.djunits.unit.MassUnit;
 import org.djunits.unit.MomentumUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

@@ -10,8 +10,8 @@ import org.djunits.unit.PowerUnit;
 import org.djunits.unit.PressureUnit;
 import org.djunits.unit.TorqueUnit;
 import org.djunits.unit.VolumeUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

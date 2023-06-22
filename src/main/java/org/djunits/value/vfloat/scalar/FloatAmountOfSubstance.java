@@ -6,8 +6,8 @@ import org.djunits.unit.AmountOfSubstanceUnit;
 import org.djunits.unit.CatalyticActivityUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.DurationUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

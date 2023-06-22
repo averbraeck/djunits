@@ -8,10 +8,10 @@ import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.matrix.FloatSIMatrix;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.djunits.value.vfloat.vector.base.FloatVectorRel;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.vector.base.FloatVector;
+import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 
 /**
  * FloatMatrixRel.java.

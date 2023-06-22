@@ -2,8 +2,8 @@ package org.djunits.userdefined;
 
 import org.djunits.value.vdouble.scalar.Dimensionless;
 import org.djunits.value.vdouble.scalar.SIScalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 
 /**
  * JerkScalar as a test of a user-defined scalar.

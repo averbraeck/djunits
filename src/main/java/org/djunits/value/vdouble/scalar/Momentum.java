@@ -10,8 +10,8 @@ import org.djunits.unit.MassUnit;
 import org.djunits.unit.MomentumUnit;
 import org.djunits.unit.PowerUnit;
 import org.djunits.unit.SpeedUnit;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

@@ -8,10 +8,10 @@ import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.matrix.SIMatrix;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 
 /**
  * DoubleMatrixRel.java.

@@ -8,8 +8,8 @@ import org.djunits.unit.ElectricalConductanceUnit;
 import org.djunits.unit.ElectricalCurrentUnit;
 import org.djunits.unit.ElectricalPotentialUnit;
 import org.djunits.unit.PowerUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 

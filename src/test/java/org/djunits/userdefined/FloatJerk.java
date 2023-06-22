@@ -2,8 +2,8 @@ package org.djunits.userdefined;
 
 import org.djunits.value.vfloat.scalar.FloatDimensionless;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 
 /**
  * JerkScalar as a test of a user-defined scalar.
