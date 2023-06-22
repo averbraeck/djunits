@@ -25,9 +25,9 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
@@ -63,9 +63,9 @@ public class DoubleSIVectorTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public <AU extends AbsoluteLinearUnit<AU, RU>, A extends AbstractDoubleScalarAbs<AU, A, RU, R>,
+    public <AU extends AbsoluteLinearUnit<AU, RU>, A extends DoubleScalarAbs<AU, A, RU, R>,
             AV extends AbstractDoubleVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
-            R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
+            R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
             RV extends AbstractDoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
@@ -282,7 +282,7 @@ public class DoubleSIVectorTest
                         SIVector cd4sr2 = new SIVector(testValues, SIUnit.of("cd4/sr2"), storageType2);
                         try
                         {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim = (AbstractDoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
+                            DoubleScalarRel<?, ?> asScalarDim = (DoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }
@@ -293,8 +293,8 @@ public class DoubleSIVectorTest
 
                         try
                         {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim =
-                                    (AbstractDoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
+                            DoubleScalarRel<?, ?> asScalarDim =
+                                    (DoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }
@@ -360,7 +360,7 @@ public class DoubleSIVectorTest
                         SIVector cd4sr2 = new SIVector(testValues, SIUnit.of("cd4/sr2"), storageType2);
                         try
                         {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim = (AbstractDoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
+                            DoubleScalarRel<?, ?> asScalarDim = (DoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }
@@ -371,8 +371,8 @@ public class DoubleSIVectorTest
 
                         try
                         {
-                            AbstractDoubleScalarRel<?, ?> asScalarDim =
-                                    (AbstractDoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
+                            DoubleScalarRel<?, ?> asScalarDim =
+                                    (DoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, vector.getDisplayUnit());
                             fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in "
                                     + asScalarDim);
                         }

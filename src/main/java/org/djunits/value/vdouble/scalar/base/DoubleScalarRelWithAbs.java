@@ -18,9 +18,9 @@ import org.djunits.value.RelWithAbs;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class AbstractDoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends AbstractDoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>> extends AbstractDoubleScalarRel<RU, R>
+public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>,
+        A extends DoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
+        R extends DoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalarRel<RU, R>
         implements RelWithAbs<AU, A, RU, R>
 {
     /**  */
@@ -31,7 +31,7 @@ public abstract class AbstractDoubleScalarRelWithAbs<AU extends AbsoluteLinearUn
      * @param value double; the value of the new Relative Immutable DoubleScalar
      * @param unit RU; the unit of the new Relative Immutable DoubleScalar
      */
-    public AbstractDoubleScalarRelWithAbs(final double value, final RU unit)
+    public DoubleScalarRelWithAbs(final double value, final RU unit)
     {
         super(value, unit);
     }
@@ -40,7 +40,7 @@ public abstract class AbstractDoubleScalarRelWithAbs<AU extends AbsoluteLinearUn
      * Construct a new Relative Immutable DoubleScalar from an existing Relative Immutable DoubleScalar.
      * @param value R, a relative typed DoubleScalar; the reference
      */
-    public AbstractDoubleScalarRelWithAbs(final R value)
+    public DoubleScalarRelWithAbs(final R value)
     {
         super(value);
     }

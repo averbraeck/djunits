@@ -5,8 +5,8 @@ import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
 /**
@@ -26,10 +26,10 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 // @formatter:off
 public abstract class AbstractDoubleVectorAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
-        A   extends AbstractDoubleScalarAbs<AU, A, RU, R>,
+        A   extends DoubleScalarAbs<AU, A, RU, R>,
         AV  extends AbstractDoubleVectorAbs<AU, A, AV, RU, R, RV>, 
         RU  extends Unit<RU>,
-        R   extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
+        R   extends DoubleScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractDoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>>
         extends DoubleVector<AU, A, AV>
         implements Absolute<AU, AV, RU, RV>

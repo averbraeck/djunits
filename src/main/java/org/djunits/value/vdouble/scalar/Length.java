@@ -12,7 +12,7 @@ import org.djunits.unit.MomentumUnit;
 import org.djunits.unit.PositionUnit;
 import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.VolumeUnit;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
@@ -29,7 +29,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class Length extends AbstractDoubleScalarRelWithAbs<PositionUnit, Position, LengthUnit, Length>
+public class Length extends DoubleScalarRelWithAbs<PositionUnit, Position, LengthUnit, Length>
 {
     /** */
     private static final long serialVersionUID = 20150901L;

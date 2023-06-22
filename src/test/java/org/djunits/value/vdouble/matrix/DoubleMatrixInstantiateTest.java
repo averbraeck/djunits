@@ -34,8 +34,8 @@ import org.djunits.value.vdouble.scalar.Area;
 import org.djunits.value.vdouble.scalar.Length;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.Speed;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.SIVector;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
@@ -142,7 +142,7 @@ public class DoubleMatrixInstantiateTest
                         relDoubleMatrix.instantiateVectorAbs(dvd, absStandardUnit);
                 assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         absDoubleVector.getValuesSI(), 0.001);
-                AbstractDoubleScalarAbs<AU, ?, RU, ?> absDoubleScalar =
+                DoubleScalarAbs<AU, ?, RU, ?> absDoubleScalar =
                         relDoubleMatrix.instantiateScalarAbsSI(1.234, absStandardUnit);
                 assertEquals("Constructed scalar has correct value", 1.234, absDoubleScalar.si, 0.001);
                 assertEquals("Constructed scalar has correct unit", absStandardUnit, absDoubleScalar.getDisplayUnit());
@@ -156,7 +156,7 @@ public class DoubleMatrixInstantiateTest
                         absDoubleMatrix.instantiateVectorRel(dvd, relStandardUnit);
                 assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         relDoubleVector.getValuesSI(), 0.001);
-                AbstractDoubleScalarRelWithAbs<AU, ?, RU, ?> relDoubleScalar =
+                DoubleScalarRelWithAbs<AU, ?, RU, ?> relDoubleScalar =
                         absDoubleMatrix.instantiateScalarRelSI(1.234, relStandardUnit);
                 assertEquals("Constructed scalar has correct value", 1.234, relDoubleScalar.si, 0.001);
                 assertEquals("Constructed scalar has correct unit", relStandardUnit, relDoubleScalar.getDisplayUnit());

@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.TemperatureUnit;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class Temperature
-        extends AbstractDoubleScalarRelWithAbs<AbsoluteTemperatureUnit, AbsoluteTemperature, TemperatureUnit, Temperature>
+        extends DoubleScalarRelWithAbs<AbsoluteTemperatureUnit, AbsoluteTemperature, TemperatureUnit, Temperature>
 {
     /** */
     private static final long serialVersionUID = 20150901L;

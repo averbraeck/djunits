@@ -47,7 +47,7 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.VolumeUnit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -65,7 +65,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class SIScalar extends AbstractDoubleScalarRel<SIUnit, SIScalar>
+public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
 {
     /** */
     private static final long serialVersionUID = 20150901L;
@@ -266,7 +266,7 @@ public class SIScalar extends AbstractDoubleScalarRel<SIUnit, SIScalar>
      * @param <U> the unit type
      * @param <S> the scalar type
      */
-    public final <U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>> S as(final U displayUnit)
+    public final <U extends Unit<U>, S extends DoubleScalarRel<U, S>> S as(final U displayUnit)
     {
         Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(displayUnit.getQuantity().getSiDimensions())),
                 UnitRuntimeException.class, "SIScalar with unit %s cannot be converted to a scalar with unit %s",

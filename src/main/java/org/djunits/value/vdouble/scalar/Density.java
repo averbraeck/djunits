@@ -6,7 +6,7 @@ import org.djunits.unit.DensityUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.FlowMassUnit;
 import org.djunits.unit.MassUnit;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class Density extends AbstractDoubleScalarRel<DensityUnit, Density>
+public class Density extends DoubleScalarRel<DensityUnit, Density>
 {
     /** */
     private static final long serialVersionUID = 20150905L;

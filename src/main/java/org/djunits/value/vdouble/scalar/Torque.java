@@ -10,7 +10,7 @@ import org.djunits.unit.PowerUnit;
 import org.djunits.unit.PressureUnit;
 import org.djunits.unit.TorqueUnit;
 import org.djunits.unit.VolumeUnit;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -27,7 +27,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class Torque extends AbstractDoubleScalarRel<TorqueUnit, Torque>
+public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 {
     /** */
     private static final long serialVersionUID = 20150905L;

@@ -18,9 +18,9 @@ import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
@@ -182,15 +182,15 @@ public class DoubleScalarTest
             String absoluteType = CLASSNAMES.ABS_LIST.get(typeIndex);
             // This relies on the REL_WITH_ABS_LIST and ABS_LIST to be maintained "in sync".
             @SuppressWarnings("unchecked")
-            Class<? extends AbstractDoubleScalarRelWithAbs<?, ?, ?, ?>> scalarClass =
-                    (Class<? extends AbstractDoubleScalarRelWithAbs<?, ?, ?, ?>>) Class
+            Class<? extends DoubleScalarRelWithAbs<?, ?, ?, ?>> scalarClass =
+                    (Class<? extends DoubleScalarRelWithAbs<?, ?, ?, ?>>) Class
                             .forName("org.djunits.value.vdouble.scalar." + relativeType);
             double relValue = 123.456;
             for (Unit<?> relativeUnit : Quantities.INSTANCE.getQuantity(relativeType + "Unit").getUnitsById().values())
             {
                 Constructor<?> relConstructor = scalarClass.getConstructor(double.class, relativeUnit.getClass());
-                AbstractDoubleScalarRel<?, ?> relScalar =
-                        (AbstractDoubleScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
+                DoubleScalarRel<?, ?> relScalar =
+                        (DoubleScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
                 double absValue = 234.567;
                 Quantity<?> quantity = Quantities.INSTANCE.getQuantity(absoluteType + "Unit");
                 for (Unit<?> absoluteUnit : quantity.getUnitsById().values())
@@ -198,12 +198,12 @@ public class DoubleScalarTest
                     // Create an abs
                     Method instantiateAbsMethod =
                             scalarClass.getDeclaredMethod("instantiateAbs", double.class, absoluteUnit.getClass());
-                    AbstractDoubleScalarAbs<?, ?, ?, ?> absScalar = (AbstractDoubleScalarAbs<?, ?, ?, ?>) instantiateAbsMethod
+                    DoubleScalarAbs<?, ?, ?, ?> absScalar = (DoubleScalarAbs<?, ?, ?, ?>) instantiateAbsMethod
                             .invoke(relScalar, absValue, absoluteUnit);
                     // method "plus" cannot be found with getMethod() for absScalar.getClass().
                     Method plusMethod = scalarClass.getMethod("plus", absScalar.getClass().getSuperclass());
-                    AbstractDoubleScalarAbs<?, ?, ?, ?> sum =
-                            (AbstractDoubleScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
+                    DoubleScalarAbs<?, ?, ?, ?> sum =
+                            (DoubleScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
                     // system.out.println("rel=" + relScalar + ", abs=" + absScalar + ", sum=" + sum);
                     assertEquals("sum in SI equals sum of SI values", absScalar.getSI() + relScalar.getSI(), sum.getSI(),
                             sum.getSI() / 1e7);

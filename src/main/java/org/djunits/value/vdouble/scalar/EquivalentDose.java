@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.EquivalentDoseUnit;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class EquivalentDose extends AbstractDoubleScalarRel<EquivalentDoseUnit, EquivalentDose>
+public class EquivalentDose extends DoubleScalarRel<EquivalentDoseUnit, EquivalentDose>
 {
     /** */
     private static final long serialVersionUID = 20150905L;

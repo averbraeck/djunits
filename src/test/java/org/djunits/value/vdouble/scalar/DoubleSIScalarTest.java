@@ -21,7 +21,7 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.junit.Test;
 
@@ -121,10 +121,10 @@ public class DoubleSIScalarTest
                 SIDimensions siDim2 = quantity2.getSiDimensions();
                 for (Unit<?> unit2 : quantity2.getUnitsById().values())
                 {
-                    AbstractDoubleScalarRel<?, ?> scalar1 =
-                            (AbstractDoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
-                    AbstractDoubleScalarRel<?, ?> scalar2 =
-                            (AbstractDoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
+                    DoubleScalarRel<?, ?> scalar1 =
+                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
+                    DoubleScalarRel<?, ?> scalar2 =
+                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
                     SIScalar scalar12a = DoubleScalar.multiply(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.times(scalar2);
                     SIScalar scalar12c = scalar2.times(scalar1);
@@ -164,10 +164,10 @@ public class DoubleSIScalarTest
                 SIDimensions siDim2 = quantity2.getSiDimensions();
                 for (Unit<?> unit2 : quantity2.getUnitsById().values())
                 {
-                    AbstractDoubleScalarRel<?, ?> scalar1 =
-                            (AbstractDoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
-                    AbstractDoubleScalarRel<?, ?> scalar2 =
-                            (AbstractDoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
+                    DoubleScalarRel<?, ?> scalar1 =
+                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
+                    DoubleScalarRel<?, ?> scalar2 =
+                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
                     SIScalar scalar12a = DoubleScalar.divide(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.divide(scalar2);
                     SIScalar scalar12c = scalar2.divide(scalar1);
@@ -201,24 +201,24 @@ public class DoubleSIScalarTest
         // load all classes
         assertEquals("m", UNITS.METER.getId());
 
-        AbstractDoubleScalarRel<?, ?> dimless = new Dimensionless(1.0, DimensionlessUnit.SI);
+        DoubleScalarRel<?, ?> dimless = new Dimensionless(1.0, DimensionlessUnit.SI);
         for (String type : CLASSNAMES.REL_ALL_LIST)
         {
             Class.forName("org.djunits.unit." + type + "Unit");
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(type + "Unit");
             for (Unit<?> unit : quantity.getUnitsById().values())
             {
-                AbstractDoubleScalarRel<?, ?> scalar =
-                        (AbstractDoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit);
+                DoubleScalarRel<?, ?> scalar =
+                        (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit);
                 SIScalar mult = scalar.times(dimless);
                 Method asMethod = SIScalar.class.getDeclaredMethod("as" + type);
-                AbstractDoubleScalarRel<?, ?> asScalar = (AbstractDoubleScalarRel<?, ?>) asMethod.invoke(mult);
+                DoubleScalarRel<?, ?> asScalar = (DoubleScalarRel<?, ?>) asMethod.invoke(mult);
                 assertEquals(scalar.getDisplayUnit().getStandardUnit(), asScalar.getDisplayUnit());
                 assertEquals(scalar.si, asScalar.si, scalar.si / 1000.0);
 
                 Method asMethodDisplayUnit = SIScalar.class.getDeclaredMethod("as" + type, unit.getClass());
-                AbstractDoubleScalarRel<?, ?> asScalarDisplayUnit =
-                        (AbstractDoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                DoubleScalarRel<?, ?> asScalarDisplayUnit =
+                        (DoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(scalar.getDisplayUnit().getStandardUnit(), asScalarDisplayUnit.getDisplayUnit());
                 assertEquals(scalar.si, asScalarDisplayUnit.si, scalar.si / 1000.0);
 
@@ -226,7 +226,7 @@ public class DoubleSIScalarTest
                 SIScalar cd4sr2 = SIScalar.instantiateSI(8.0, SIUnit.of("cd4/sr2"));
                 try
                 {
-                    AbstractDoubleScalarRel<?, ?> asScalarDim = (AbstractDoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
+                    DoubleScalarRel<?, ?> asScalarDim = (DoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asScalarDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -236,8 +236,8 @@ public class DoubleSIScalarTest
 
                 try
                 {
-                    AbstractDoubleScalarRel<?, ?> asScalarDim =
-                            (AbstractDoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, scalar.getDisplayUnit());
+                    DoubleScalarRel<?, ?> asScalarDim =
+                            (DoubleScalarRel<?, ?>) asMethodDisplayUnit.invoke(cd4sr2, scalar.getDisplayUnit());
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asScalarDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)

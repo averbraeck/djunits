@@ -4,8 +4,8 @@ import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.RelWithAbs;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarAbs;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorAbs;
 import org.djunits.value.vdouble.vector.base.AbstractDoubleVectorRelWithAbs;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
@@ -29,11 +29,11 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 // @formatter:off
 public abstract class AbstractDoubleMatrixRelWithAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
-        A   extends AbstractDoubleScalarAbs<AU, A, RU, R>,
+        A   extends DoubleScalarAbs<AU, A, RU, R>,
         AV  extends AbstractDoubleVectorAbs<AU, A, AV, RU, R, RV>,
         AM  extends AbstractDoubleMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
         RU  extends Unit<RU>,
-        R   extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
+        R   extends DoubleScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractDoubleVectorRelWithAbs<AU, A, AV, RU, R, RV>,
         RM  extends AbstractDoubleMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
         extends AbstractDoubleMatrixRel<RU, R, RV, RM>

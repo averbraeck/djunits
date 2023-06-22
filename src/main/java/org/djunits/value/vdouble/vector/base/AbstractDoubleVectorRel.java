@@ -6,7 +6,7 @@ import org.djunits.unit.util.UnitException;
 import org.djunits.value.Relative;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.vector.SIVector;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 
@@ -21,7 +21,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @param <S> the scalar type belonging to the vector type
  * @param <RV> the relative vector type with this unit
  */
-public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>,
+public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>,
         RV extends AbstractDoubleVectorRel<U, S, RV>> extends DoubleVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
@@ -154,7 +154,7 @@ public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends Abstr
      * @param <ST> the scalar type of the multiplier
      * @param <VT> the vector type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractDoubleScalarRel<UT, ST>,
+    public final <UT extends Unit<UT>, ST extends DoubleScalarRel<UT, ST>,
             VT extends AbstractDoubleVectorRel<UT, ST, VT> & Relative<UT, VT>> SIVector times(final VT rel)
                     throws ValueRuntimeException, UnitException
     {
@@ -175,7 +175,7 @@ public abstract class AbstractDoubleVectorRel<U extends Unit<U>, S extends Abstr
      * @param <ST> the scalar type of the multiplier
      * @param <VT> the vector type of the multiplier
      */
-    public final <UT extends Unit<UT>, ST extends AbstractDoubleScalarRel<UT, ST>,
+    public final <UT extends Unit<UT>, ST extends DoubleScalarRel<UT, ST>,
             VT extends AbstractDoubleVectorRel<UT, ST, VT>> SIVector divide(final VT rel)
                     throws ValueRuntimeException, UnitException
     {

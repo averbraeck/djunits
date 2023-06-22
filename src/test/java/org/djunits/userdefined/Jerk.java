@@ -2,7 +2,7 @@ package org.djunits.userdefined;
 
 import org.djunits.value.vdouble.scalar.Dimensionless;
 import org.djunits.value.vdouble.scalar.SIScalar;
-import org.djunits.value.vdouble.scalar.base.AbstractDoubleScalarRel;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 
 /**
@@ -13,7 +13,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalar;
  * <p>
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
  */
-public class Jerk extends AbstractDoubleScalarRel<JerkUnit, Jerk>
+public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
 {
     /** */
     private static final long serialVersionUID = 1L;

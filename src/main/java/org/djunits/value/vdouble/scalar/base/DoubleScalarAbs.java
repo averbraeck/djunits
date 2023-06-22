@@ -19,9 +19,9 @@ import org.djunits.value.util.ValueUtil;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends AbstractDoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalar<AU, A>
+public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
+        A extends DoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
+        R extends DoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalar<AU, A>
         implements Absolute<AU, A, RU, R>
 {
     /**  */
@@ -32,7 +32,7 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
      * @param value double; the value of the new Absolute Immutable DoubleScalar
      * @param unit AU; the unit of the new Absolute Immutable DoubleScalar
      */
-    public AbstractDoubleScalarAbs(final double value, final AU unit)
+    public DoubleScalarAbs(final double value, final AU unit)
     {
         super(unit, unit.isBaseSIUnit() ? value : ValueUtil.expressAsSIUnit(value, unit));
     }
@@ -41,7 +41,7 @@ public abstract class AbstractDoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, 
      * Construct a new Absolute Immutable DoubleScalar from an existing Absolute Immutable DoubleScalar.
      * @param value A, an absolute typed DoubleScalar; the reference
      */
-    public AbstractDoubleScalarAbs(final A value)
+    public DoubleScalarAbs(final A value)
     {
         super(value.getDisplayUnit(), value.getSI());
     }

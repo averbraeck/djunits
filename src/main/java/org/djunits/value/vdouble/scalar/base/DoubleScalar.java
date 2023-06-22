@@ -435,8 +435,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @return A; an absolute typed DoubleScalar; the sum of the values as an Absolute value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractDoubleScalarAbs<AU, A, RU, R>> A plus(final A left, final R right)
+            R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
+            A extends DoubleScalarAbs<AU, A, RU, R>> A plus(final A left, final R right)
     {
         return left.plus(right);
     }
@@ -453,8 +453,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @return A; an absolute typed DoubleScalar; the sum of the values as an Absolute value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractDoubleScalarAbs<AU, A, RU, R>> A plus(final R left, final A right)
+            R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
+            A extends DoubleScalarAbs<AU, A, RU, R>> A plus(final R left, final A right)
     {
         return right.plus(left);
     }
@@ -468,7 +468,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param <R> the relative type
      * @return R; a relative typed DoubleScalar; the sum of the values as a Relative value
      */
-    public static <U extends Unit<U>, R extends AbstractDoubleScalarRel<U, R>> R plus(final R left, final R right)
+    public static <U extends Unit<U>, R extends DoubleScalarRel<U, R>> R plus(final R left, final R right)
     {
         return left.plus(right);
     }
@@ -485,8 +485,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @return A; an absolute typed DoubleScalar; the resulting value as an absolute value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractDoubleScalarAbs<AU, A, RU, R>> A minus(final A left, final R right)
+            R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
+            A extends DoubleScalarAbs<AU, A, RU, R>> A minus(final A left, final R right)
     {
         return left.minus(right);
     }
@@ -500,7 +500,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param <R> the relative type
      * @return R; a relative typed DoubleScalar; the resulting value as a relative value
      */
-    public static <U extends Unit<U>, R extends AbstractDoubleScalarRel<U, R>> R minus(final R left, final R right)
+    public static <U extends Unit<U>, R extends DoubleScalarRel<U, R>> R minus(final R left, final R right)
     {
         return left.minus(right);
     }
@@ -517,8 +517,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @return R; a relative typed DoubleScalar; the difference of the two absolute values as a relative value
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractDoubleScalarAbs<AU, A, RU, R>> R minus(final A left, final A right)
+            R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
+            A extends DoubleScalarAbs<AU, A, RU, R>> R minus(final A left, final A right)
     {
         return left.minus(right);
     }
@@ -529,7 +529,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param right AbstractDoubleScalarRel&lt;?, ?&gt;; the right operand
      * @return AbstractDoubleScalarRel&lt;SIUnit&gt;; the product of the two values
      */
-    public static SIScalar multiply(final AbstractDoubleScalarRel<?, ?> left, final AbstractDoubleScalarRel<?, ?> right)
+    public static SIScalar multiply(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
     {
         SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
                 .plus(right.getDisplayUnit().getQuantity().getSiDimensions()));
@@ -542,7 +542,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param right AbstractDoubleScalarRel&lt;?, ?&gt;; the right operand
      * @return AbstractDoubleScalarRel&lt;SIUnit&gt;; the ratio of the two values
      */
-    public static SIScalar divide(final AbstractDoubleScalarRel<?, ?> left, final AbstractDoubleScalarRel<?, ?> right)
+    public static SIScalar divide(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
     {
         SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
                 .minus(right.getDisplayUnit().getQuantity().getSiDimensions()));
@@ -558,7 +558,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param <R> the relative type
      * @return R; an Absolute Scalar at the <code>ratio</code> between <code>zero</code> and <code>one</code>
      */
-    public static <U extends Unit<U>, R extends AbstractDoubleScalarRel<U, R>> R interpolate(final R zero, final R one,
+    public static <U extends Unit<U>, R extends DoubleScalarRel<U, R>> R interpolate(final R zero, final R one,
             final double ratio)
     {
         return zero.instantiateRel(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
@@ -577,8 +577,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      * @return R; a Relative Scalar at the <code>ratio</code> between <code>zero</code> and <code>one</code>
      */
     public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends AbstractDoubleScalarRelWithAbs<AU, A, RU, R>,
-            A extends AbstractDoubleScalarAbs<AU, A, RU, R>> A interpolate(final A zero, final A one, final double ratio)
+            R extends DoubleScalarRelWithAbs<AU, A, RU, R>,
+            A extends DoubleScalarAbs<AU, A, RU, R>> A interpolate(final A zero, final A one, final double ratio)
     {
         return zero.instantiateAbs(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());
