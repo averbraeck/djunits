@@ -47,13 +47,10 @@ import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
-import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.vector.FloatSIVector;
-import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Throw;
 
@@ -69,7 +66,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-22T21:38:04.910968700Z")
 public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSIVector, FloatSIMatrix>
 {
     /** */
@@ -173,27 +170,6 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**********************************************************************************/
     /******************************** 'CAST AS' METHODS *******************************/
     /**********************************************************************************/
-
-    /**
-     * Return the current matrix transformed to a matrix in the given unit. Of course the SI dimensionality has to match,
-     * otherwise the matrix cannot be transformed. The compiler will check the alignment between the return value and the unit.
-     * @param displayUnit KU; the unit in which the matrix needs to be expressed
-     * @return M; the matrix that has been transformed into the right matrix type and unit
-     * @param <U> the unit type
-     * @param <S> the scalar type
-     * @param <V> the vector type
-     * @param <M> the matrix type
-     */
-    public final <U extends Unit<U>, S extends FloatScalarRel<U, S>, V extends FloatVectorRel<U, S, V>,
-            M extends FloatMatrixRel<U, S, V, M>> M as(final U displayUnit)
-    {
-        Throw.when(!(getDisplayUnit().getQuantity().getSiDimensions().equals(displayUnit.getQuantity().getSiDimensions())),
-                UnitRuntimeException.class, "FloatSIMatrix with unit %s cannot be converted to a FloatMatrix with unit %s",
-                getDisplayUnit(), displayUnit);
-        M result = FloatMatrix.instantiate(this.data, displayUnit.getStandardUnit());
-        result.setDisplayUnit(displayUnit);
-        return result;
-    }
 
     /**
      * Return the current matrix as a absorbeddose matrix.

@@ -1,7 +1,11 @@
 package org.djunits.value.vfloat.matrix;
 
+import java.util.Collection;
+
 import org.djunits.unit.LinearDensityUnit;
+import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatLinearDensity;
 import org.djunits.value.vfloat.vector.FloatLinearDensityVector;
@@ -18,21 +22,179 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class FloatLinearDensityMatrix extends
-        FloatMatrixRel<LinearDensityUnit, FloatLinearDensity, FloatLinearDensityVector, FloatLinearDensityMatrix>
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-22T21:38:04.910968700Z")
+public class FloatLinearDensityMatrix
+        extends FloatMatrixRel<LinearDensityUnit, FloatLinearDensity, FloatLinearDensityVector, FloatLinearDensityMatrix>
 
 {
     /** */
     private static final long serialVersionUID = 20151109L;
 
     /**
-     * @param data FloatMatrixData; an internal data object
-     * @param unit LinearDensityUnit; the unit
+     * Construct a FloatLinearDensityMatrix from an internal data object.
+     * @param data FloatMatrixData; the internal data object for the matrix
+     * @param displayUnit LinearDensityUnit; the display unit of the matrix data
      */
-    public FloatLinearDensityMatrix(final FloatMatrixData data, final LinearDensityUnit unit)
+    public FloatLinearDensityMatrix(final FloatMatrixData data, final LinearDensityUnit displayUnit)
     {
-        super(data, unit);
+        super(data, displayUnit);
+    }
+
+    /* CONSTRUCTORS WITH float[][] */
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a float[][] object. The float values are expressed in the displayUnit, and will
+     * be printed using the displayUnit.
+     * @param data float[][]; the data for the matrix, expressed in the displayUnit
+     * @param displayUnit LinearDensityUnit; the unit of the values in the data array, and display unit when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     */
+    public FloatLinearDensityMatrix(final float[][] data, final LinearDensityUnit displayUnit, final StorageType storageType)
+    {
+        this(FloatMatrixData.instantiate(data, displayUnit.getScale(), storageType), displayUnit);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a float[][] object. The float values are expressed in the displayUnit. Assume
+     * that the StorageType is DENSE since we offer the data as an array of an array.
+     * @param data float[][]; the data for the matrix
+     * @param displayUnit LinearDensityUnit; the unit of the values in the data array, and display unit when printing
+     */
+    public FloatLinearDensityMatrix(final float[][] data, final LinearDensityUnit displayUnit)
+    {
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a float[][] object with SI-unit values.
+     * @param data float[][]; the data for the matrix, in SI units
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     */
+    public FloatLinearDensityMatrix(final float[][] data, final StorageType storageType)
+    {
+        this(data, LinearDensityUnit.SI, storageType);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a float[][] object with SI-unit values. Assume that the StorageType is DENSE
+     * since we offer the data as an array of an array.
+     * @param data float[][]; the data for the matrix, in SI units
+     */
+    public FloatLinearDensityMatrix(final float[][] data)
+    {
+        this(data, StorageType.DENSE);
+    }
+
+    /* CONSTRUCTORS WITH LinearDensity[][] */
+
+    /**
+     * Construct a FloatLinearDensityMatrix from an array of an array of FloatLinearDensity objects. The FloatLinearDensity
+     * values are each expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit
+     * when printing.
+     * @param data FloatLinearDensity[][]; the data for the matrix
+     * @param displayUnit LinearDensityUnit; the display unit of the values when printing
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     */
+    public FloatLinearDensityMatrix(final FloatLinearDensity[][] data, final LinearDensityUnit displayUnit,
+            final StorageType storageType)
+    {
+        this(FloatMatrixData.instantiate(data, storageType), displayUnit);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from an array of an array of FloatLinearDensity objects. The FloatLinearDensity
+     * values are each expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit
+     * when printing. Assume that the StorageType is DENSE since we offer the data as an array of an array.
+     * @param data FloatLinearDensity[][]; the data for the matrix
+     * @param displayUnit LinearDensityUnit; the display unit of the values when printing
+     */
+    public FloatLinearDensityMatrix(final FloatLinearDensity[][] data, final LinearDensityUnit displayUnit)
+    {
+        this(data, displayUnit, StorageType.DENSE);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from an array of an array of FloatLinearDensity objects. The FloatLinearDensity
+     * values are each expressed in their own unit, but will be internally stored as SI values, and expressed using SI units
+     * when printing. since we offer the data as an array of an array.
+     * @param data FloatLinearDensity[][]; the data for the matrix
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     */
+    public FloatLinearDensityMatrix(final FloatLinearDensity[][] data, final StorageType storageType)
+    {
+        this(data, LinearDensityUnit.SI, storageType);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from an array of an array of FloatLinearDensity objects. The FloatLinearDensity
+     * values are each expressed in their own unit, but will be internally stored as SI values, and expressed using SI units
+     * when printing. Assume that the StorageType is DENSE since we offer the data as an array of an array.
+     * @param data FloatLinearDensity[][]; the data for the matrix
+     */
+    public FloatLinearDensityMatrix(final FloatLinearDensity[][] data)
+    {
+        this(data, StorageType.DENSE);
+    }
+
+    /* CONSTRUCTORS WITH Collection<FloatSparseValue> */
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates
+     * the unit in which the values in the collection are expressed, as well as the unit in which they will be printed.
+     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
+     * @param displayUnit LinearDensityUnit; the display unit of the matrix data, and the unit of the data points
+     * @param rows int; the number of rows of the matrix
+     * @param cols int; the number of columns of the matrix
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     */
+    public FloatLinearDensityMatrix(final Collection<FloatSparseValue<LinearDensityUnit, FloatLinearDensity>> data,
+            final LinearDensityUnit displayUnit, final int rows, final int cols, final StorageType storageType)
+    {
+        this(FloatMatrixData.instantiate(data, rows, cols, storageType), displayUnit);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates
+     * the unit in which the values in the collection are expressed, as well as the unit in which they will be printed. Assume
+     * the storage type is SPARSE, since we offer the data as a collection.
+     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
+     * @param displayUnit LinearDensityUnit; the display unit of the matrix data, and the unit of the data points
+     * @param rows int; the number of rows of the matrix
+     * @param cols int; the number of columns of the matrix
+     */
+    public FloatLinearDensityMatrix(final Collection<FloatSparseValue<LinearDensityUnit, FloatLinearDensity>> data,
+            final LinearDensityUnit displayUnit, final int rows, final int cols)
+    {
+        this(data, displayUnit, rows, cols, StorageType.SPARSE);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates
+     * the unit in which the values in the collection are expressed, as well as the unit in which they will be printed. Use the
+     * SI unit or base unit as the displayUnit.
+     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
+     * @param rows int; the number of rows of the matrix
+     * @param cols int; the number of columns of the matrix
+     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     */
+    public FloatLinearDensityMatrix(final Collection<FloatSparseValue<LinearDensityUnit, FloatLinearDensity>> data,
+            final int rows, final int cols, final StorageType storageType)
+    {
+        this(data, LinearDensityUnit.SI, rows, cols, storageType);
+    }
+
+    /**
+     * Construct a FloatLinearDensityMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates
+     * the unit in which the values in the collection are expressed, as well as the unit in which they will be printed. Use the
+     * SI unit or base unit as the displayUnit. Assume the storage type is SPARSE, since we offer the data as a collection.
+     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
+     * @param rows int; the number of rows of the matrix
+     * @param cols int; the number of columns of the matrix
+     */
+    public FloatLinearDensityMatrix(final Collection<FloatSparseValue<LinearDensityUnit, FloatLinearDensity>> data,
+            final int rows, final int cols)
+    {
+        this(data, LinearDensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
     /** {@inheritDoc} */
