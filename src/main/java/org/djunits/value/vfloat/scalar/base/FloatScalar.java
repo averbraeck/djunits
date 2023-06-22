@@ -239,9 +239,9 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     /**
-     * Format this AbstractDoubleScalar in SI unit using prefixes when possible. If the value is too small or too large,
+     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large,
      * e-notation and the plain SI unit are used.
-     * @return String; formatted value of this AbstractDoubleScalar
+     * @return String; formatted value of this DoubleScalar
      */
     public String toStringSIPrefixed()
     {
@@ -249,11 +249,11 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     /**
-     * Format this AbstractDoubleScalar in SI unit using prefixes when possible and within the specified size range. If the
+     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the
      * value is too small or too large, e-notation and the plain SI unit are used.
      * @param smallestPower int; the smallest exponent value that will be written using an SI prefix
      * @param biggestPower int; the largest exponent value that will be written using an SI prefix
-     * @return String; formatted value of this AbstractDoubleScalar
+     * @return String; formatted value of this DoubleScalar
      */
     public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
     {
@@ -524,9 +524,9 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Multiply two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left AbstractFloatScalarRel&lt;?, ?&gt;; the left operand
-     * @param right AbstractFloatScalarRel&lt;?, ?&gt;; the right operand
-     * @return AbstractFloatScalarRel&lt;SIUnit&gt;; the product of the two values
+     * @param left FloatScalarRel&lt;?, ?&gt;; the left operand
+     * @param right FloatScalarRel&lt;?, ?&gt;; the right operand
+     * @return FloatScalarRel&lt;SIUnit&gt;; the product of the two values
      */
     public static FloatSIScalar multiply(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
     {
@@ -537,9 +537,9 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Divide two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left AbstractFloatScalarRel&lt;?, ?&gt;; the left operand
-     * @param right AbstractFloatScalarRel&lt;?, ?&gt;; the right operand
-     * @return AbstractFloatScalarRel&lt;SIUnit&gt;; the ratio of the two values
+     * @param left FloatScalarRel&lt;?, ?&gt;; the left operand
+     * @param right FloatScalarRel&lt;?, ?&gt;; the right operand
+     * @return FloatScalarRel&lt;SIUnit&gt;; the ratio of the two values
      */
     public static FloatSIScalar divide(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
     {
@@ -549,7 +549,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     /**
-     * Interpolate between two values. Made to be able to call e.g., Area a = AbstractFloatScalarinterpolate(a1, a2, 0.4);
+     * Interpolate between two values. Made to be able to call e.g., Area a = FloatScalarinterpolate(a1, a2, 0.4);
      * @param zero R; the low value
      * @param one R; the high value
      * @param ratio float; the ratio between 0 and 1, inclusive
@@ -565,7 +565,7 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     /**
-     * Interpolate between two values. Made to be able to call e.g., Time t = AbstractFloatScalarinterpolate(t1, t2, 0.4);
+     * Interpolate between two values. Made to be able to call e.g., Time t = FloatScalarinterpolate(t1, t2, 0.4);
      * @param zero A; the low value
      * @param one A; the high value
      * @param ratio float; the ratio between 0 and 1, inclusive

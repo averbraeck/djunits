@@ -78,7 +78,7 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Multiply this scalar by another scalar and create a new scalar.
-     * @param otherScalar AbstractFloatScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
+     * @param otherScalar FloatScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
      * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
     public FloatSIScalar times(final FloatScalarRel<?, ?> otherScalar)
@@ -94,7 +94,7 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
-     * @param otherScalar AbstractFloatScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
+     * @param otherScalar FloatScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
      * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
     public FloatSIScalar divide(final FloatScalarRel<?, ?> otherScalar)

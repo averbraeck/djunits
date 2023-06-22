@@ -37,8 +37,8 @@ public class FloatSIMatrixTest
     /*- TODO: replace with new constructors
     @SuppressWarnings("unchecked")
     @Test
-    public <U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>, V extends AbstractFloatVectorRel<U, S, V>,
-            M extends AbstractFloatMatrixRel<U, S, V, M>> void testAsAll()
+    public <U extends Unit<U>, S extends FloatScalarRel<U, S>, V extends FloatVectorRel<U, S, V>,
+            M extends FloatMatrixRel<U, S, V, M>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException
     {
@@ -56,11 +56,11 @@ public class FloatSIMatrixTest
             Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (U unit : quantity.getUnitsById().values())
             {
-                AbstractFloatMatrixRel<U, S, V, M> matrix = (AbstractFloatMatrixRel<U, S, V, M>) FloatMatrix
+                FloatMatrixRel<U, S, V, M> matrix = (FloatMatrixRel<U, S, V, M>) FloatMatrix
                         .instantiate(FloatMatrixData.instantiate(denseTestData, unit.getScale(), StorageType.DENSE), unit);
                 FloatSIMatrix mult = matrix.times(dimlessMatrix);
                 Method asMethod = FloatSIMatrix.class.getDeclaredMethod("as" + type);
-                AbstractFloatMatrixRel<U, S, V, M> asMatrix = (AbstractFloatMatrixRel<U, S, V, M>) asMethod.invoke(mult);
+                FloatMatrixRel<U, S, V, M> asMatrix = (FloatMatrixRel<U, S, V, M>) asMethod.invoke(mult);
                 assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
                 for (int row = 0; row < denseTestData.length; row++)
                 {
@@ -72,8 +72,8 @@ public class FloatSIMatrixTest
                 }
 
                 Method asMethodDisplayUnit = FloatSIMatrix.class.getDeclaredMethod("as" + type, unit.getClass());
-                AbstractFloatMatrixRel<U, S, V, M> asMatrixDisplayUnit =
-                        (AbstractFloatMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                FloatMatrixRel<U, S, V, M> asMatrixDisplayUnit =
+                        (FloatMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrixDisplayUnit.getDisplayUnit());
 
                 for (int row = 0; row < denseTestData.length; row++)
@@ -89,8 +89,8 @@ public class FloatSIMatrixTest
                 FloatSIMatrix cd4sr2 = FloatSIMatrix.instantiate(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
                 {
-                    AbstractFloatMatrixRel<U, S, V, M> asMatrixDim =
-                            (AbstractFloatMatrixRel<U, S, V, M>) asMethod.invoke(cd4sr2);
+                    FloatMatrixRel<U, S, V, M> asMatrixDim =
+                            (FloatMatrixRel<U, S, V, M>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asMatrixDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -100,8 +100,8 @@ public class FloatSIMatrixTest
 
                 try
                 {
-                    AbstractFloatMatrixRel<U, S, V, M> asMatrixDim =
-                            (AbstractFloatMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(cd4sr2, matrix.getDisplayUnit());
+                    FloatMatrixRel<U, S, V, M> asMatrixDim =
+                            (FloatMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(cd4sr2, matrix.getDisplayUnit());
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asMatrixDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)

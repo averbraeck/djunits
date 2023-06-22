@@ -78,7 +78,7 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Multiply this scalar by another scalar and create a new scalar.
-     * @param otherScalar AbstractDoubleScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
+     * @param otherScalar DoubleScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
      * @return DoubleScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
     public SIScalar times(final DoubleScalarRel<?, ?> otherScalar)
@@ -94,7 +94,7 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
-     * @param otherScalar AbstractDoubleScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
+     * @param otherScalar DoubleScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
      * @return DoubleScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
      */
     public SIScalar divide(final DoubleScalarRel<?, ?> otherScalar)

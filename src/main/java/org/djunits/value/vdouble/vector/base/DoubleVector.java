@@ -43,7 +43,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
     protected DoubleVectorData data;
 
     /**
-     * Construct a new AbstractDoubleVector.
+     * Construct a new DoubleVector.
      * @param data DoubleVectorData; an internal data object
      * @param unit U; the unit
      */

@@ -37,8 +37,8 @@ public class DoubleSIMatrixTest
     /*- TODO: replace with new instantiation
     @SuppressWarnings("unchecked")
     @Test
-    public <U extends Unit<U>, S extends AbstractDoubleScalarRel<U, S>, V extends AbstractDoubleVectorRel<U, S, V>,
-            M extends AbstractDoubleMatrixRel<U, S, V, M>> void testAsAll()
+    public <U extends Unit<U>, S extends DoubleScalarRel<U, S>, V extends DoubleVectorRel<U, S, V>,
+            M extends DoubleMatrixRel<U, S, V, M>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException
     {
@@ -56,11 +56,11 @@ public class DoubleSIMatrixTest
             Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (U unit : quantity.getUnitsById().values())
             {
-                AbstractDoubleMatrixRel<U, S, V, M> matrix = (AbstractDoubleMatrixRel<U, S, V, M>) DoubleMatrix
+                DoubleMatrixRel<U, S, V, M> matrix = (DoubleMatrixRel<U, S, V, M>) DoubleMatrix
                         .instantiate(DoubleMatrixData.instantiate(denseTestData, unit.getScale(), StorageType.DENSE), unit);
                 SIMatrix mult = matrix.times(dimlessMatrix);
                 Method asMethod = SIMatrix.class.getDeclaredMethod("as" + type);
-                AbstractDoubleMatrixRel<U, S, V, M> asMatrix = (AbstractDoubleMatrixRel<U, S, V, M>) asMethod.invoke(mult);
+                DoubleMatrixRel<U, S, V, M> asMatrix = (DoubleMatrixRel<U, S, V, M>) asMethod.invoke(mult);
                 assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
                 for (int row = 0; row < denseTestData.length; row++)
                 {
@@ -72,8 +72,8 @@ public class DoubleSIMatrixTest
                 }
 
                 Method asMethodDisplayUnit = SIMatrix.class.getDeclaredMethod("as" + type, unit.getClass());
-                AbstractDoubleMatrixRel<U, S, V, M> asMatrixDisplayUnit =
-                        (AbstractDoubleMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
+                DoubleMatrixRel<U, S, V, M> asMatrixDisplayUnit =
+                        (DoubleMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrixDisplayUnit.getDisplayUnit());
 
                 for (int row = 0; row < denseTestData.length; row++)
@@ -89,8 +89,8 @@ public class DoubleSIMatrixTest
                 SIMatrix cd4sr2 = SIMatrix.instantiate(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
                 {
-                    AbstractDoubleMatrixRel<U, S, V, M> asMatrixDim =
-                            (AbstractDoubleMatrixRel<U, S, V, M>) asMethod.invoke(cd4sr2);
+                    DoubleMatrixRel<U, S, V, M> asMatrixDim =
+                            (DoubleMatrixRel<U, S, V, M>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asMatrixDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -100,8 +100,8 @@ public class DoubleSIMatrixTest
 
                 try
                 {
-                    AbstractDoubleMatrixRel<U, S, V, M> asMatrixDim =
-                            (AbstractDoubleMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(cd4sr2, matrix.getDisplayUnit());
+                    DoubleMatrixRel<U, S, V, M> asMatrixDim =
+                            (DoubleMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(cd4sr2, matrix.getDisplayUnit());
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asMatrixDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)

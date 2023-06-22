@@ -525,9 +525,9 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Multiply two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left AbstractDoubleScalarRel&lt;?, ?&gt;; the left operand
-     * @param right AbstractDoubleScalarRel&lt;?, ?&gt;; the right operand
-     * @return AbstractDoubleScalarRel&lt;SIUnit&gt;; the product of the two values
+     * @param left DoubleScalarRel&lt;?, ?&gt;; the left operand
+     * @param right DoubleScalarRel&lt;?, ?&gt;; the right operand
+     * @return DoubleScalarRel&lt;SIUnit&gt;; the product of the two values
      */
     public static SIScalar multiply(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
     {
@@ -538,9 +538,9 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Divide two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left AbstractDoubleScalarRel&lt;?, ?&gt;; the left operand
-     * @param right AbstractDoubleScalarRel&lt;?, ?&gt;; the right operand
-     * @return AbstractDoubleScalarRel&lt;SIUnit&gt;; the ratio of the two values
+     * @param left DoubleScalarRel&lt;?, ?&gt;; the left operand
+     * @param right DoubleScalarRel&lt;?, ?&gt;; the right operand
+     * @return DoubleScalarRel&lt;SIUnit&gt;; the ratio of the two values
      */
     public static SIScalar divide(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
     {
