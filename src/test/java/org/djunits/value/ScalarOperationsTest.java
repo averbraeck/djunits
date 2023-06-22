@@ -205,6 +205,11 @@ public class ScalarOperationsTest
             // not interested in multiplying a scalar with a generic scalar.
             return;
         }
+        if (parameterClass.getSimpleName().endsWith("ScalarRel"))
+        {
+            // not interested in DoubleScalarRel paremeter
+            return;
+        }
         if (!relativeOrAbsoluteClass.isAssignableFrom(parameterClass))
         {
             // system.out.println("abs=" + abs + ", method=" + scalarClass.getName() + "." + method.getName() + " param="
