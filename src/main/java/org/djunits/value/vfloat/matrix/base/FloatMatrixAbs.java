@@ -29,15 +29,15 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <RM> the relative (immutable or mutable) matrix type with this unit
  */
 // @formatter:off
-public abstract class AbstractFloatMatrixAbs<
+public abstract class FloatMatrixAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
         A   extends AbstractFloatScalarAbs<AU, A, RU, R>,
         AV  extends AbstractFloatVectorAbs<AU, A, AV, RU, R, RV>,
-        AM  extends AbstractFloatMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
+        AM  extends FloatMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
         RU  extends Unit<RU>,
         R   extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>,
-        RM  extends AbstractFloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
+        RM  extends FloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
         extends FloatMatrix<AU, A, AV, AM>
         implements Absolute<AU, AM, RU, RM>
 // @formatter:on
@@ -50,7 +50,7 @@ public abstract class AbstractFloatMatrixAbs<
      * @param data FloatMatrixData; an internal data object
      * @param unit AU; the unit
      */
-    protected AbstractFloatMatrixAbs(final FloatMatrixData data, final AU unit)
+    protected FloatMatrixAbs(final FloatMatrixData data, final AU unit)
     {
         super(data.copy(), unit);
     }

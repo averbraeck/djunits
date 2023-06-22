@@ -27,16 +27,16 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <RM> the relative (immutable or mutable) matrix type with this unit
  */
 // @formatter:off
-public abstract class AbstractFloatMatrixRelWithAbs<
+public abstract class FloatMatrixRelWithAbs<
         AU  extends AbsoluteLinearUnit<AU, RU>, 
         A   extends AbstractFloatScalarAbs<AU, A, RU, R>,
         AV  extends AbstractFloatVectorAbs<AU, A, AV, RU, R, RV>,
-        AM  extends AbstractFloatMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
+        AM  extends FloatMatrixAbs<AU, A, AV, AM, RU, R, RV, RM>, 
         RU  extends Unit<RU>,
         R   extends AbstractFloatScalarRelWithAbs<AU, A, RU, R>,
         RV  extends AbstractFloatVectorRelWithAbs<AU, A, AV, RU, R, RV>,
-        RM  extends AbstractFloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
-        extends AbstractFloatMatrixRel<RU, R, RV, RM>
+        RM  extends FloatMatrixRelWithAbs<AU, A, AV, AM, RU, R, RV, RM>>
+        extends FloatMatrixRel<RU, R, RV, RM>
         implements RelWithAbs<AU, AM, RU, RM>
 // @formatter:on
 {
@@ -48,7 +48,7 @@ public abstract class AbstractFloatMatrixRelWithAbs<
      * @param data FloatMatrixData; an internal data object
      * @param unit RU; the unit
      */
-    protected AbstractFloatMatrixRelWithAbs(final FloatMatrixData data, final RU unit)
+    protected FloatMatrixRelWithAbs(final FloatMatrixData data, final RU unit)
     {
         // data will be copied in AbstractMutableFloatMatrixRel
         super(data, unit);

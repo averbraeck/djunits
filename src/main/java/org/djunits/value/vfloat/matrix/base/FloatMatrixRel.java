@@ -25,8 +25,8 @@ import org.djunits.value.vfloat.vector.base.FloatVector;
  * @param <RV> the relative vector type belonging to the relative matrix type
  * @param <RM> the relative matrix type with this unit
  */
-public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
-        RV extends AbstractFloatVectorRel<U, S, RV>, RM extends AbstractFloatMatrixRel<U, S, RV, RM>>
+public abstract class FloatMatrixRel<U extends Unit<U>, S extends AbstractFloatScalarRel<U, S>,
+        RV extends AbstractFloatVectorRel<U, S, RV>, RM extends FloatMatrixRel<U, S, RV, RM>>
         extends FloatMatrix<U, S, RV, RM> implements Relative<U, RM>
 {
     /** */
@@ -37,7 +37,7 @@ public abstract class AbstractFloatMatrixRel<U extends Unit<U>, S extends Abstra
      * @param data FloatMatrixData; an internal data object
      * @param unit U; the unit
      */
-    protected AbstractFloatMatrixRel(final FloatMatrixData data, final U unit)
+    protected FloatMatrixRel(final FloatMatrixData data, final U unit)
     {
         super(data.copy(), unit);
     }

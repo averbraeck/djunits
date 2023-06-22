@@ -1,6 +1,6 @@
 package org.djunits.userdefined;
 
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 
@@ -13,7 +13,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-public class FloatJerkMatrix extends AbstractFloatMatrixRel<JerkUnit, FloatJerk, FloatJerkVector, FloatJerkMatrix>
+public class FloatJerkMatrix extends FloatMatrixRel<JerkUnit, FloatJerk, FloatJerkVector, FloatJerkMatrix>
 
 {
     /** */

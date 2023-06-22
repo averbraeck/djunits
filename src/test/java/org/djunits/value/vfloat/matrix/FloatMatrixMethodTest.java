@@ -31,7 +31,7 @@ import org.djunits.value.vdouble.matrix.AreaMatrix;
 import org.djunits.value.vdouble.matrix.Determinant;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
@@ -783,8 +783,8 @@ public class FloatMatrixMethodTest
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         FloatSIMatrix matrix = FloatSIMatrix.instantiate(testValues, siUnit, storageType2);
                         Method asMethod = FloatSIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        AbstractFloatMatrixRel<U, ?, ?, ?> asMatrix =
-                                (AbstractFloatMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
+                        FloatMatrixRel<U, ?, ?, ?> asMatrix =
+                                (FloatMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
                         assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
                         siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
                         for (int row = 0; row < testValues.length; row++)

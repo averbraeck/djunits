@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.matrix;
 
 import org.djunits.unit.SolidAngleUnit;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatSolidAngle;
 import org.djunits.value.vfloat.vector.FloatSolidAngleVector;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class FloatSolidAngleMatrix
-        extends AbstractFloatMatrixRel<SolidAngleUnit, FloatSolidAngle, FloatSolidAngleVector, FloatSolidAngleMatrix>
+        extends FloatMatrixRel<SolidAngleUnit, FloatSolidAngle, FloatSolidAngleVector, FloatSolidAngleMatrix>
 
 {
     /** */

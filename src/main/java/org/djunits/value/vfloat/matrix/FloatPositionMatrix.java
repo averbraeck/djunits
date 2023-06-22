@@ -2,7 +2,7 @@ package org.djunits.value.vfloat.matrix;
 
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixAbs;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixAbs;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class FloatPositionMatrix extends AbstractFloatMatrixAbs<PositionUnit, FloatPosition, FloatPositionVector,
+public class FloatPositionMatrix extends FloatMatrixAbs<PositionUnit, FloatPosition, FloatPositionVector,
         FloatPositionMatrix, LengthUnit, FloatLength, FloatLengthVector, FloatLengthMatrix>
 {
     /** */

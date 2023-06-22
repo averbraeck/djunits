@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.matrix;
 
 import org.djunits.unit.DensityUnit;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatDensity;
 import org.djunits.value.vfloat.vector.FloatDensityVector;
@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class FloatDensityMatrix
-        extends AbstractFloatMatrixRel<DensityUnit, FloatDensity, FloatDensityVector, FloatDensityMatrix>
+        extends FloatMatrixRel<DensityUnit, FloatDensity, FloatDensityVector, FloatDensityMatrix>
 
 {
     /** */

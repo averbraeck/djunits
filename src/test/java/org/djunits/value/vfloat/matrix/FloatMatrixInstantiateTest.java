@@ -25,8 +25,8 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixAbs;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRelWithAbs;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixAbs;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRelWithAbs;
 import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
@@ -132,9 +132,9 @@ public class FloatMatrixInstantiateTest
             {
                 float[][] testValues = FLOATMATRIX.denseRectArrays(5, 10);
                 FloatMatrixData dmd = FloatMatrixData.instantiate(testValues, relStandardUnit.getScale(), storageType);
-                AbstractFloatMatrixRelWithAbs<AU, ?, ?, ?, RU, ?, ?, ?> relFloatMatrix = (AbstractFloatMatrixRelWithAbs<AU, ?,
+                FloatMatrixRelWithAbs<AU, ?, ?, ?, RU, ?, ?, ?> relFloatMatrix = (FloatMatrixRelWithAbs<AU, ?,
                         ?, ?, RU, ?, ?, ?>) FloatMatrix.instantiate(testValues, relStandardUnit, storageType);
-                AbstractFloatMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absFloatMatrix = (AbstractFloatMatrixAbs<AU, ?, ?, ?, RU, ?, ?,
+                FloatMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absFloatMatrix = (FloatMatrixAbs<AU, ?, ?, ?, RU, ?, ?,
                         ?>) FloatMatrix.instantiate(testValues, absStandardUnit, storageType);
 
                 FloatMatrix<AU, ?, ?, ?> absFloatMatrix2 = relFloatMatrix.instantiateMatrixAbs(dmd, absStandardUnit);

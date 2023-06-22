@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.matrix;
 
 import org.djunits.unit.ElectricalConductanceUnit;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatElectricalConductance;
 import org.djunits.value.vfloat.vector.FloatElectricalConductanceVector;
@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
-public class FloatElectricalConductanceMatrix extends AbstractFloatMatrixRel<ElectricalConductanceUnit,
+public class FloatElectricalConductanceMatrix extends FloatMatrixRel<ElectricalConductanceUnit,
         FloatElectricalConductance, FloatElectricalConductanceVector, FloatElectricalConductanceMatrix>
 
 {

@@ -3,7 +3,7 @@ package org.djunits.value.vfloat.matrix;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.value.function.DimensionlessFunctions;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.matrix.base.AbstractFloatMatrixRel;
+import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatDimensionless;
 import org.djunits.value.vfloat.vector.FloatDimensionlessVector;
@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 @Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
 public class FloatDimensionlessMatrix extends
-        AbstractFloatMatrixRel<DimensionlessUnit, FloatDimensionless, FloatDimensionlessVector, FloatDimensionlessMatrix>
+        FloatMatrixRel<DimensionlessUnit, FloatDimensionless, FloatDimensionlessVector, FloatDimensionlessMatrix>
         implements DimensionlessFunctions<DimensionlessUnit, FloatDimensionlessMatrix>
 {
     /** */
