@@ -77,13 +77,12 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
      * @param values double[][]; the values of the entries in the new Relative Double SIMatrix
      * @param unit SIUnit; the unit of the new Relative Double SIMatrix
      * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return SIMatrix; the SIMatrix of the given unit
      * @throws ValueRuntimeException when values is null
      */
-    public static SIMatrix instantiate(final double[][] values, final SIUnit unit, final StorageType storageType)
+    public SIMatrix(final double[][] values, final SIUnit unit, final StorageType storageType)
             throws ValueRuntimeException
     {
-        return new SIMatrix(DoubleMatrixData.instantiate(values, unit.getScale(), storageType), unit);
+        super(DoubleMatrixData.instantiate(values, unit.getScale(), storageType), unit);
     }
 
     /**
@@ -129,7 +128,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return SIMatrix.instantiate(values, unit, storageType);
+                return new SIMatrix(values, unit, storageType);
             }
         }
         catch (Exception exception)
