@@ -1,11 +1,9 @@
 package org.djunits.value.vdouble.matrix;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,35 +11,20 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
-import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.SpeedUnit;
-import org.djunits.unit.Unit;
-import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
-import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrixAbs;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrixRelWithAbs;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.Area;
 import org.djunits.value.vdouble.scalar.Length;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.Speed;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
-import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.vector.SIVector;
-import org.djunits.value.vdouble.vector.base.DoubleVector;
-import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
-import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
-import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
 
@@ -55,115 +38,6 @@ import org.junit.Test;
  */
 public class DoubleMatrixInstantiateTest
 {
-    /**
-     * Test the constructors of all matrix classes.
-     * @param <U> the unit type
-     */
-    @Test
-    public <U extends Unit<U>> void instatiateAllMatrixTypes()
-    {
-        // Force loading of all classes
-        LengthUnit length = UNITS.METER;
-        if (length == null)
-        {
-            fail();
-        }
-
-        for (String scalarName : CLASSNAMES.ALL_LIST)
-        {
-            @SuppressWarnings("unchecked")
-            Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(scalarName + "Unit");
-            U standardUnit = quantity.getStandardUnit();
-            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
-            {
-                double[][] testValues = DOUBLEMATRIX.denseRectArrays(5, 10);
-                DoubleMatrixData dmd = DoubleMatrixData.instantiate(testValues, standardUnit.getScale(), storageType);
-                DoubleMatrix<U, ?, ?, ?> doubleMatrix =
-                        DoubleMatrix.instantiate(testValues, standardUnit, storageType);
-                Class<?> scalarClass = doubleMatrix.getScalarClass();
-                assertEquals("scalar class should have the right name", scalarName, scalarClass.getSimpleName());
-                Class<?> vectorClass = doubleMatrix.getVectorClass();
-                assertEquals("vector class should have the right name", scalarName + "Vector", vectorClass.getSimpleName());
-                DoubleMatrix<U, ?, ?, ?> doubleMatrix2 = doubleMatrix.instantiateMatrix(dmd, standardUnit);
-                assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
-                        doubleMatrix, doubleMatrix2);
-                DoubleVectorData dvd =
-                        DoubleVectorData.instantiate(doubleMatrix.getRowSI(0), standardUnit.getScale(), storageType);
-                DoubleVector<U, ?, ?> doubleVector = doubleMatrix.instantiateVector(dvd, standardUnit);
-                assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-                        doubleVector.getValuesSI(), 0.001);
-                DoubleScalar<U, ?> doubleScalar = doubleMatrix.instantiateScalarSI(1.234, standardUnit);
-                assertEquals("Constructed scalar has correct value", 1.234, doubleScalar.getSI(), 0.001);
-                assertEquals("Constructed scalar has correct unit", standardUnit, doubleScalar.getDisplayUnit());
-            }
-        }
-    }
-
-    /**
-     * Test the extra methods that Absolute and Relative with Absolute matrices implement.
-     * @param <AU> the absolute unit type
-     * @param <RU> the relative unit type
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>> void instantiateRelAbsMatrixTypes()
-    {
-        // Force loading of all classes
-        LengthUnit length = UNITS.METER;
-        if (length == null)
-        {
-            fail();
-        }
-
-        for (int classIndex = 0; classIndex < CLASSNAMES.REL_WITH_ABS_LIST.size(); classIndex++)
-        {
-            String relScalarName = CLASSNAMES.REL_WITH_ABS_LIST.get(classIndex);
-            String absScalarName = CLASSNAMES.ABS_LIST.get(classIndex);
-            Quantity<RU> relQuantity = (Quantity<RU>) Quantities.INSTANCE.getQuantity(relScalarName + "Unit");
-            Quantity<AU> absQuantity = (Quantity<AU>) Quantities.INSTANCE.getQuantity(absScalarName + "Unit");
-            RU relStandardUnit = relQuantity.getStandardUnit();
-            AU absStandardUnit = absQuantity.getStandardUnit();
-            for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
-            {
-                double[][] testValues = DOUBLEMATRIX.denseRectArrays(5, 10);
-                DoubleMatrixData dmd = DoubleMatrixData.instantiate(testValues, relStandardUnit.getScale(), storageType);
-                DoubleMatrixRelWithAbs<AU, ?, ?, ?, RU, ?, ?, ?> relDoubleMatrix = (DoubleMatrixRelWithAbs<AU,
-                        ?, ?, ?, RU, ?, ?, ?>) DoubleMatrix.instantiate(testValues, relStandardUnit, storageType);
-                DoubleMatrixAbs<AU, ?, ?, ?, RU, ?, ?, ?> absDoubleMatrix = (DoubleMatrixAbs<AU, ?, ?, ?, RU, ?,
-                        ?, ?>) DoubleMatrix.instantiate(testValues, absStandardUnit, storageType);
-
-                DoubleMatrix<AU, ?, ?, ?> absDoubleMatrix2 =
-                        relDoubleMatrix.instantiateMatrixAbs(dmd, absStandardUnit);
-                assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
-                        absDoubleMatrix, absDoubleMatrix2);
-                DoubleVectorData dvd =
-                        DoubleVectorData.instantiate(relDoubleMatrix.getRowSI(0), relStandardUnit.getScale(), storageType);
-                DoubleVectorAbs<AU, ?, ?, RU, ?, ?> absDoubleVector =
-                        relDoubleMatrix.instantiateVectorAbs(dvd, absStandardUnit);
-                assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-                        absDoubleVector.getValuesSI(), 0.001);
-                DoubleScalarAbs<AU, ?, RU, ?> absDoubleScalar =
-                        relDoubleMatrix.instantiateScalarAbsSI(1.234, absStandardUnit);
-                assertEquals("Constructed scalar has correct value", 1.234, absDoubleScalar.si, 0.001);
-                assertEquals("Constructed scalar has correct unit", absStandardUnit, absDoubleScalar.getDisplayUnit());
-
-                DoubleMatrix<RU, ?, ?, ?> relDoubleMatrix2 =
-                        absDoubleMatrix.instantiateMatrixRel(dmd, relStandardUnit);
-                assertEquals("matrix constructed from DoubleMatrixData should be equal to matrix constructed from double[][]",
-                        relDoubleMatrix, relDoubleMatrix2);
-                dvd = DoubleVectorData.instantiate(absDoubleMatrix.getRowSI(0), absStandardUnit.getScale(), storageType);
-                DoubleVectorRelWithAbs<AU, ?, ?, RU, ?, ?> relDoubleVector =
-                        absDoubleMatrix.instantiateVectorRel(dvd, relStandardUnit);
-                assertArrayEquals("Double vector contains values from row 0", new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-                        relDoubleVector.getValuesSI(), 0.001);
-                DoubleScalarRelWithAbs<AU, ?, RU, ?> relDoubleScalar =
-                        absDoubleMatrix.instantiateScalarRelSI(1.234, relStandardUnit);
-                assertEquals("Constructed scalar has correct value", 1.234, relDoubleScalar.si, 0.001);
-                assertEquals("Constructed scalar has correct unit", relStandardUnit, relDoubleScalar.getDisplayUnit());
-
-            }
-        }
-    }
 
     /**
      * Test the instantiation of dense and sparse matrix types with dense data (no zeros).
@@ -171,16 +45,14 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiateSquareDenseData()
     {
-        LengthMatrix lmdkm10 =
-                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
+        LengthMatrix lmdkm10 = new LengthMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(10, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
         assertEquals(100, lmdkm10.cardinality());
         assertEquals(50 * 101 * 1000.0, lmdkm10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.KILOMETER, lmdkm10.getDisplayUnit());
 
-        LengthMatrix lmskm10 =
-                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
+        LengthMatrix lmskm10 = new LengthMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(10, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
         assertEquals(100, lmskm10.cardinality());
@@ -208,8 +80,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        LengthMatrix lmdsi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+        LengthMatrix lmdsi10 = new LengthMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
         assertEquals(10, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(100, lmdsi10.cardinality());
@@ -217,23 +88,23 @@ public class DoubleMatrixInstantiateTest
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
         LengthMatrix lmssi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+                new LengthMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
         assertEquals(10, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(100, lmssi10.cardinality());
         assertEquals(50 * 101, lmssi10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lmssi10.getDisplayUnit());
 
-        LengthMatrix lmdsc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Length.class),
-                LengthUnit.HECTOMETER, StorageType.DENSE);
+        LengthMatrix lmdsc10 = new LengthMatrix(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Length.class), LengthUnit.HECTOMETER,
+                StorageType.DENSE);
         assertEquals(10, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
         assertEquals(100, lmdsc10.cardinality());
         assertEquals(50 * 101, lmdsc10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.HECTOMETER, lmdsc10.getDisplayUnit());
 
-        LengthMatrix lmssc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Length.class),
-                LengthUnit.HECTOMETER, StorageType.SPARSE);
+        LengthMatrix lmssc10 = new LengthMatrix(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Length.class), LengthUnit.HECTOMETER,
+                StorageType.SPARSE);
         assertEquals(10, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
         assertEquals(100, lmssc10.cardinality());
@@ -247,8 +118,7 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiatSquareSparseData()
     {
-        LengthMatrix lmdkm10 =
-                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
+        LengthMatrix lmdkm10 = new LengthMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(10, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
         assertEquals(10, lmdkm10.cardinality());
@@ -256,7 +126,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(LengthUnit.KILOMETER, lmdkm10.getDisplayUnit());
 
         LengthMatrix lmskm10 =
-                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new LengthMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(10, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
         assertEquals(10, lmskm10.cardinality());
@@ -280,7 +150,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
         LengthMatrix lmdsi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+                new LengthMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
         assertEquals(10, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(10, lmdsi10.cardinality());
@@ -288,14 +158,14 @@ public class DoubleMatrixInstantiateTest
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
         LengthMatrix lmssi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+                new LengthMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
         assertEquals(10, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(10, lmssi10.cardinality());
         assertEquals(5 * 11, lmssi10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lmssi10.getDisplayUnit());
 
-        LengthMatrix lmdsc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Length.class),
+        LengthMatrix lmdsc10 = new LengthMatrix(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Length.class),
                 LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(10, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
@@ -303,7 +173,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(5 * 11, lmdsc10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.HECTOMETER, lmdsc10.getDisplayUnit());
 
-        LengthMatrix lmssc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Length.class),
+        LengthMatrix lmssc10 = new LengthMatrix(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Length.class),
                 LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(10, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
@@ -311,16 +181,16 @@ public class DoubleMatrixInstantiateTest
         assertEquals(5 * 11, lmssc10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.HECTOMETER, lmssc10.getDisplayUnit());
 
-        LengthMatrix lmdtu10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectTuples(10, 10, Length.class), 10, 10,
-                LengthUnit.NANOMETER, StorageType.DENSE);
+        LengthMatrix lmdtu10 = new LengthMatrix(DOUBLEMATRIX.sparseRectTuples(10, 10, Length.class), LengthUnit.NANOMETER, 10,
+                10, StorageType.DENSE);
         assertEquals(10, lmdtu10.rows());
         assertEquals(10, lmdtu10.cols());
         assertEquals(10, lmdtu10.cardinality());
         assertEquals(5 * 11, lmdtu10.zSum().getSI(), 0.001);
         assertEquals(LengthUnit.NANOMETER, lmdtu10.getDisplayUnit());
 
-        LengthMatrix lmstu10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectTuples(10, 10, Length.class), 10, 10,
-                LengthUnit.NANOMETER, StorageType.SPARSE);
+        LengthMatrix lmstu10 = new LengthMatrix(DOUBLEMATRIX.sparseRectTuples(10, 10, Length.class), LengthUnit.NANOMETER, 10,
+                10, StorageType.SPARSE);
         assertEquals(10, lmstu10.rows());
         assertEquals(10, lmstu10.cols());
         assertEquals(10, lmstu10.cardinality());
@@ -334,16 +204,15 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiateSquareDenseDataWithClass()
     {
-        AreaMatrix lmdkm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdkm10 = new AreaMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER, StorageType.DENSE);
         assertEquals(10, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
         assertEquals(100, lmdkm10.cardinality());
         assertEquals(50 * 101 * 1.0E6, lmdkm10.zSum().getSI(), 0.1);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
 
-        AreaMatrix lmskm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmskm10 =
+                new AreaMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER, StorageType.SPARSE);
         assertEquals(10, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
         assertEquals(100, lmskm10.cardinality());
@@ -366,32 +235,32 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        AreaMatrix lmdsi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdsi10 =
+                new AreaMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.DENSE);
         assertEquals(10, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(100, lmdsi10.cardinality());
         assertEquals(50 * 101, lmdsi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
 
-        AreaMatrix lmssi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmssi10 =
+                new AreaMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.SPARSE);
         assertEquals(10, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(100, lmssi10.cardinality());
         assertEquals(50 * 101, lmssi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
 
-        AreaMatrix lmdsc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdsc10 = new AreaMatrix(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Area.class), AreaUnit.SQUARE_HECTOMETER,
+                StorageType.DENSE);
         assertEquals(10, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
         assertEquals(100, lmdsc10.cardinality());
         assertEquals(50 * 101, lmdsc10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
 
-        AreaMatrix lmssc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmssc10 = new AreaMatrix(DOUBLEMATRIX.denseRectScalarArrays(10, 10, Area.class), AreaUnit.SQUARE_HECTOMETER,
+                StorageType.SPARSE);
         assertEquals(10, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
         assertEquals(100, lmssc10.cardinality());
@@ -405,16 +274,16 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiatSquareSparseDataWithClass()
     {
-        AreaMatrix lmdkm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdkm10 =
+                new AreaMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER, StorageType.DENSE);
         assertEquals(10, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
         assertEquals(10, lmdkm10.cardinality());
         assertEquals(5 * 11 * 1.0E6, lmdkm10.zSum().getSI(), 0.1);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
 
-        AreaMatrix lmskm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmskm10 =
+                new AreaMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER, StorageType.SPARSE);
         assertEquals(10, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
         assertEquals(10, lmskm10.cardinality());
@@ -437,48 +306,48 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        AreaMatrix lmdsi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdsi10 =
+                new AreaMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.DENSE);
         assertEquals(10, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(10, lmdsi10.cardinality());
         assertEquals(5 * 11, lmdsi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
 
-        AreaMatrix lmssi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmssi10 =
+                new AreaMatrix(DOUBLEMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.SPARSE);
         assertEquals(10, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(10, lmssi10.cardinality());
         assertEquals(5 * 11, lmssi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
 
-        AreaMatrix lmdsc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdsc10 = new AreaMatrix(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Area.class), AreaUnit.SQUARE_HECTOMETER,
+                StorageType.DENSE);
         assertEquals(10, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
         assertEquals(10, lmdsc10.cardinality());
         assertEquals(5 * 11, lmdsc10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
 
-        AreaMatrix lmssc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmssc10 = new AreaMatrix(DOUBLEMATRIX.sparseRectScalarArrays(10, 10, Area.class), AreaUnit.SQUARE_HECTOMETER,
+                StorageType.SPARSE);
         assertEquals(10, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
         assertEquals(10, lmssc10.cardinality());
         assertEquals(5 * 11, lmssc10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lmssc10.getDisplayUnit());
 
-        AreaMatrix lmdtu10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectTuples(10, 10, Area.class), 10, 10, AreaUnit.ACRE,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdtu10 =
+                new AreaMatrix(DOUBLEMATRIX.sparseRectTuples(10, 10, Area.class), AreaUnit.ACRE, 10, 10, StorageType.DENSE);
         assertEquals(10, lmdtu10.rows());
         assertEquals(10, lmdtu10.cols());
         assertEquals(10, lmdtu10.cardinality());
         assertEquals(5 * 11, lmdtu10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.ACRE, lmdtu10.getDisplayUnit());
 
-        AreaMatrix lmstu10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectTuples(10, 10, Area.class), 10, 10, AreaUnit.ACRE,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmstu10 =
+                new AreaMatrix(DOUBLEMATRIX.sparseRectTuples(10, 10, Area.class), AreaUnit.ACRE, 10, 10, StorageType.SPARSE);
         assertEquals(10, lmstu10.rows());
         assertEquals(10, lmstu10.cols());
         assertEquals(10, lmstu10.cardinality());
@@ -493,7 +362,7 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiateSquareSIUnit() throws UnitException
     {
-        SIMatrix si10dd = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
+        SIMatrix si10dd = new SIMatrix(DOUBLEMATRIX.denseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(10, si10dd.rows());
         assertEquals(10, si10dd.cols());
         assertEquals(100, si10dd.cardinality());
@@ -609,7 +478,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
         LengthMatrix lmdsi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
         assertEquals(20, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(200, lmdsi10.cardinality());
@@ -617,7 +486,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
         LengthMatrix lmssi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
         assertEquals(20, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(200, lmssi10.cardinality());
@@ -680,7 +549,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
         LengthMatrix lmdsi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
         assertEquals(20, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(10, lmdsi10.cardinality());
@@ -688,7 +557,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
         LengthMatrix lmssi10 =
-                DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
         assertEquals(20, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(10, lmssi10.cardinality());
@@ -734,16 +603,16 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiateRectDenseDataWithClass()
     {
-        AreaMatrix lmdkm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdkm10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER, StorageType.DENSE);
         assertEquals(20, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
         assertEquals(200, lmdkm10.cardinality());
         assertEquals(100 * 201 * 1.0E6, lmdkm10.zSum().getSI(), 0.1);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
 
-        AreaMatrix lmskm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmskm10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER, StorageType.SPARSE);
         assertEquals(20, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
         assertEquals(200, lmskm10.cardinality());
@@ -766,16 +635,16 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        AreaMatrix lmdsi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdsi10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.DENSE);
         assertEquals(20, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(200, lmdsi10.cardinality());
         assertEquals(100 * 201, lmdsi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
 
-        AreaMatrix lmssi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmssi10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.SPARSE);
         assertEquals(20, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(200, lmssi10.cardinality());
@@ -783,7 +652,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
 
         AreaMatrix lmdsc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectScalarArrays(20, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, AreaMatrix.class);
+                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE);
         assertEquals(20, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
         assertEquals(200, lmdsc10.cardinality());
@@ -791,7 +660,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
 
         AreaMatrix lmssc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.denseRectScalarArrays(20, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, AreaMatrix.class);
+                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE);
         assertEquals(20, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
         assertEquals(200, lmssc10.cardinality());
@@ -805,16 +674,16 @@ public class DoubleMatrixInstantiateTest
     @Test
     public void testInstantiatRectSparseDataWithClass()
     {
-        AreaMatrix lmdkm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdkm10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER, StorageType.DENSE);
         assertEquals(20, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
         assertEquals(10, lmdkm10.cardinality());
         assertEquals(5 * 11 * 1.0E6, lmdkm10.zSum().getSI(), 0.1);
         assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
 
-        AreaMatrix lmskm10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmskm10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER, StorageType.SPARSE);
         assertEquals(20, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
         assertEquals(10, lmskm10.cardinality());
@@ -837,16 +706,16 @@ public class DoubleMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        AreaMatrix lmdsi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, AreaMatrix.class);
+        AreaMatrix lmdsi10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.DENSE);
         assertEquals(20, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
         assertEquals(10, lmdsi10.cardinality());
         assertEquals(5 * 11, lmdsi10.zSum().getSI(), 0.001);
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
 
-        AreaMatrix lmssi10 = DoubleMatrix.instantiateSI(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, AreaMatrix.class);
+        AreaMatrix lmssi10 =
+                DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER, StorageType.SPARSE);
         assertEquals(20, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
         assertEquals(10, lmssi10.cardinality());
@@ -854,7 +723,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
 
         AreaMatrix lmdsc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectScalarArrays(20, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, AreaMatrix.class);
+                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE);
         assertEquals(20, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
         assertEquals(10, lmdsc10.cardinality());
@@ -862,7 +731,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
 
         AreaMatrix lmssc10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectScalarArrays(20, 10, Area.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, AreaMatrix.class);
+                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE);
         assertEquals(20, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
         assertEquals(10, lmssc10.cardinality());
@@ -870,7 +739,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(AreaUnit.SQUARE_HECTOMETER, lmssc10.getDisplayUnit());
 
         AreaMatrix lmdtu10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectTuples(20, 10, Area.class), 20, 10, AreaUnit.ACRE,
-                StorageType.DENSE, AreaMatrix.class);
+                StorageType.DENSE);
         assertEquals(20, lmdtu10.rows());
         assertEquals(10, lmdtu10.cols());
         assertEquals(10, lmdtu10.cardinality());
@@ -878,7 +747,7 @@ public class DoubleMatrixInstantiateTest
         assertEquals(AreaUnit.ACRE, lmdtu10.getDisplayUnit());
 
         AreaMatrix lmstu10 = DoubleMatrix.instantiate(DOUBLEMATRIX.sparseRectTuples(20, 10, Area.class), 20, 10, AreaUnit.ACRE,
-                StorageType.SPARSE, AreaMatrix.class);
+                StorageType.SPARSE);
         assertEquals(20, lmstu10.rows());
         assertEquals(10, lmstu10.cols());
         assertEquals(10, lmstu10.cardinality());

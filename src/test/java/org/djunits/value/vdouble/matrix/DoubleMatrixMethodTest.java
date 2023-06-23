@@ -28,7 +28,6 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
@@ -41,7 +40,6 @@ import org.djunits.value.vdouble.scalar.Position;
 import org.djunits.value.vdouble.scalar.Time;
 import org.djunits.value.vdouble.vector.AreaVector;
 import org.djunits.value.vfloat.matrix.FloatAreaMatrix;
-import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.vector.FLOATVECTOR;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
@@ -84,8 +82,7 @@ public class DoubleMatrixMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                AreaMatrix am =
-                        DoubleMatrix.instantiate(DoubleMatrixData.instantiate(testData, au.getScale(), storageType), au);
+                AreaMatrix am = new AreaMatrix(testData, au, storageType);
 
                 // INDEX CHECKING
                 for (int row : new int[] {-1, 0, denseTestData.length - 1, denseTestData.length})
@@ -158,8 +155,7 @@ public class DoubleMatrixMethodTest
                 assertEquals(am, am);
                 assertNotEquals(am, new Object());
                 assertNotEquals(am, null);
-                assertNotEquals(am, DoubleMatrix.instantiate(
-                        DoubleMatrixData.instantiate(testData, LengthUnit.METER.getScale(), storageType), LengthUnit.METER));
+                assertNotEquals(am, new LengthMatrix(testData, LengthUnit.METER, storageType));
                 assertNotEquals(am, am.divide(2.0d));
 
                 // MUTABLE
@@ -281,8 +277,7 @@ public class DoubleMatrixMethodTest
                 // GETROW(), GETCOLUMN(), GETDIAGONAL
                 double[][] squareData = storageType.equals(StorageType.DENSE) ? DOUBLEMATRIX.denseRectArrays(12, 12)
                         : DOUBLEMATRIX.sparseRectArrays(12, 12);
-                AreaMatrix amSquare =
-                        DoubleMatrix.instantiate(DoubleMatrixData.instantiate(squareData, au.getScale(), storageType), au);
+                AreaMatrix amSquare = new AreaMatrix(squareData, au, storageType);
                 double[] row2si = am.getRowSI(2);
                 double[] col2si = am.getColumnSI(2);
                 double[] diagsi = amSquare.getDiagonalSI();
@@ -370,8 +365,7 @@ public class DoubleMatrixMethodTest
                 }
 
                 double[][] testData4x4 = new double[][] {{2, 3, 5, 7}, {11, 13, 17, 19}, {23, 29, 31, 37}, {41, 43, 47, 49}};
-                AreaMatrix am4x4 =
-                        DoubleMatrix.instantiate(DoubleMatrixData.instantiate(testData4x4, au.getScale(), storageType), au);
+                AreaMatrix am4x4 = new AreaMatrix(testData4x4, au, storageType);
                 double det = am4x4.determinantSI();
                 double detCalc = Determinant.det(am4x4.getValuesSI());
                 double err = Math.max(det, detCalc) / 10000.0;
@@ -388,8 +382,7 @@ public class DoubleMatrixMethodTest
                     {
 
                         // PLUS and INCREMENTBY(MATRIX)
-                        AreaMatrix am2 = DoubleMatrix
-                                .instantiate(DoubleMatrixData.instantiate(testData2, au2.getScale(), storageType2), au2);
+                        AreaMatrix am2 = new AreaMatrix(testData2, au2, storageType2);
                         AreaMatrix amSum1 = am.plus(am2);
                         AreaMatrix amSum2 = am2.plus(am);
                         AreaMatrix amSum3 = am.mutable().incrementBy(am2).immutable();
@@ -484,8 +477,7 @@ public class DoubleMatrixMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                AreaMatrix am =
-                        DoubleMatrix.instantiate(DoubleMatrixData.instantiate(testData, au.getScale(), storageType), au);
+                AreaMatrix am = new AreaMatrix(testData, au, storageType);
                 am = am.immutable();
                 final AreaMatrix amPtr = am;
                 Area fa = Area.of(10.0d, "m^2");
@@ -524,8 +516,7 @@ public class DoubleMatrixMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 double[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                AreaMatrix am =
-                        DoubleMatrix.instantiate(DoubleMatrixData.instantiate(testData, au.getScale(), storageType), au);
+                AreaMatrix am = new AreaMatrix(testData, au, storageType);
                 String s1 = am.toString(); // non-verbose with unit
                 assertTrue(s1.contains(au.getDefaultTextualAbbreviation()));
                 String s2 = am.toString(AreaUnit.SQUARE_INCH); // non-verbose with unit
@@ -558,13 +549,11 @@ public class DoubleMatrixMethodTest
                 assertFalse(sNotVerbose.contains(au.getDefaultTextualAbbreviation()));
             }
         }
-        TimeMatrix tm = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
+        TimeMatrix tm = new TimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
         String st = tm.toString(TimeUnit.DEFAULT, true, true); // verbose with unit
         assertFalse(st.contains("Rel"));
         assertTrue(st.contains("Abs"));
-        LengthMatrix lm = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, LengthUnit.SI.getScale(), StorageType.DENSE), LengthUnit.SI);
+        LengthMatrix lm = new LengthMatrix(denseTestData, LengthUnit.SI, StorageType.DENSE);
         String sl = lm.toString(LengthUnit.SI, true, true); // verbose with unit
         assertTrue(sl.contains("Rel"));
         assertFalse(sl.contains("Abs"));
@@ -577,11 +566,8 @@ public class DoubleMatrixMethodTest
     public void testSpecialMatrixMethodsRelWithAbs()
     {
         double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10);
-        TimeMatrix tm = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        DurationMatrix dm = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
-                DurationUnit.SECOND);
+        TimeMatrix tm = new TimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
+        DurationMatrix dm = new DurationMatrix(denseTestData, DurationUnit.MINUTE, StorageType.DENSE);
         assertTrue(tm.isAbsolute());
         assertFalse(dm.isAbsolute());
         assertFalse(tm.isRelative());
@@ -597,8 +583,7 @@ public class DoubleMatrixMethodTest
                 halfDenseData[row][col] *= 0.5;
             }
         }
-        TimeMatrix halfTimeMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(halfDenseData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
+        TimeMatrix halfTimeMatrix = new TimeMatrix(halfDenseData, TimeUnit.DEFAULT, StorageType.DENSE);
         DurationMatrix absMinusAbs = tm.minus(halfTimeMatrix);
         TimeMatrix absDecByRelS = tm.mutable().decrementBy(Duration.of(1.0d, "min"));
         TimeMatrix absDecByRelM = tm.mutable().decrementBy(dm.divide(2.0d));
@@ -624,8 +609,7 @@ public class DoubleMatrixMethodTest
                     continue;
                 }
                 double[][] other = DOUBLEMATRIX.denseRectArrays(denseTestData.length + dRows, denseTestData[0].length + dCols);
-                TimeMatrix wrongTimeMatrix = DoubleMatrix.instantiate(
-                        DoubleMatrixData.instantiate(other, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
+                TimeMatrix wrongTimeMatrix = new TimeMatrix(other, TimeUnit.DEFAULT, StorageType.DENSE);
                 try
                 {
                     tm.mutable().minus(wrongTimeMatrix);
@@ -649,7 +633,7 @@ public class DoubleMatrixMethodTest
     @Test
     public void memoryTest()
     {
-        FloatAreaMatrix am = FloatMatrix.instantiate(new float[5][10], AreaUnit.SI, StorageType.SPARSE);
+        FloatAreaMatrix am = new FloatAreaMatrix(new float[5][10], AreaUnit.SI, StorageType.SPARSE);
         am = am.mutable();
         float nonZeroValue = 123.456f;
         // Initially the array is filled with zero values; we can skip the initialization phase
@@ -680,11 +664,8 @@ public class DoubleMatrixMethodTest
     public void testInstantiateAbs()
     {
         double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(10, 20);
-        TimeMatrix timeMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        DurationMatrix durationMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
-                DurationUnit.SECOND);
+        TimeMatrix timeMatrix = new TimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
+        DurationMatrix durationMatrix = new DurationMatrix(denseTestData, DurationUnit.MINUTE, StorageType.DENSE);
 
         float[] halfDenseData = FLOATVECTOR.denseArray(105);
         for (int index = 0; index < halfDenseData.length; index++)
@@ -703,11 +684,8 @@ public class DoubleMatrixMethodTest
         assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, time.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, time.si, 0.1);
 
-        AngleMatrix angleMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, AngleUnit.DEGREE.getScale(), StorageType.DENSE), AngleUnit.DEGREE);
-        DirectionMatrix directionMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, DirectionUnit.EAST_DEGREE.getScale(), StorageType.DENSE),
-                DirectionUnit.EAST_DEGREE);
+        AngleMatrix angleMatrix = new AngleMatrix(denseTestData, AngleUnit.DEGREE, StorageType.DENSE);
+        DirectionMatrix directionMatrix = new DirectionMatrix(denseTestData, DirectionUnit.EAST_DEGREE, StorageType.DENSE);
 
         DirectionMatrix relPlusAbsDirection = angleMatrix.plus(directionMatrix);
         for (int row = 0; row < denseTestData.length; row++)
@@ -722,12 +700,10 @@ public class DoubleMatrixMethodTest
         assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, direction.si, 0.1);
 
-        TemperatureMatrix temperatureMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT.getScale(), StorageType.DENSE),
-                TemperatureUnit.DEGREE_FAHRENHEIT);
-        AbsoluteTemperatureMatrix absoluteTemperatureMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, AbsoluteTemperatureUnit.KELVIN.getScale(), StorageType.DENSE),
-                AbsoluteTemperatureUnit.KELVIN);
+        TemperatureMatrix temperatureMatrix =
+                new TemperatureMatrix(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT, StorageType.DENSE);
+        AbsoluteTemperatureMatrix absoluteTemperatureMatrix =
+                new AbsoluteTemperatureMatrix(denseTestData, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
 
         AbsoluteTemperatureMatrix relPlusAbsTemperature = temperatureMatrix.plus(absoluteTemperatureMatrix);
         for (int row = 0; row < denseTestData.length; row++)
@@ -744,11 +720,8 @@ public class DoubleMatrixMethodTest
                 absoluteTemperature.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, absoluteTemperature.si, 0.1);
 
-        LengthMatrix lengthMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, LengthUnit.MILE.getScale(), StorageType.DENSE), LengthUnit.MILE);
-        PositionMatrix positionMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, PositionUnit.KILOMETER.getScale(), StorageType.DENSE),
-                PositionUnit.KILOMETER);
+        LengthMatrix lengthMatrix = new LengthMatrix(denseTestData, LengthUnit.MILE, StorageType.DENSE);
+        PositionMatrix positionMatrix = new PositionMatrix(denseTestData, PositionUnit.KILOMETER, StorageType.DENSE);
 
         PositionMatrix relPlusAbsPosition = lengthMatrix.plus(positionMatrix);
         for (int row = 0; row < denseTestData.length; row++)
@@ -793,8 +766,7 @@ public class DoubleMatrixMethodTest
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         SIMatrix matrix = SIMatrix.instantiate(testValues, siUnit, storageType2);
                         Method asMethod = SIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        DoubleMatrixRel<U, ?, ?, ?> asMatrix =
-                                (DoubleMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
+                        DoubleMatrixRel<U, ?, ?, ?> asMatrix = (DoubleMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
                         assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
                         siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
                         for (int row = 0; row < testValues.length; row++)

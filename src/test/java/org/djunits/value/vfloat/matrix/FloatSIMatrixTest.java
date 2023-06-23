@@ -6,7 +6,6 @@ import org.djunits.unit.DimensionlessUnit;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.junit.Test;
 
 /**
@@ -44,7 +43,7 @@ public class FloatSIMatrixTest
     {
         // load all classes
         assertEquals("m", UNITS.METER.getId());
-
+    
         float[][] denseTestData = FLOATMATRIX.denseRectArrays(5, 10);
         FloatDimensionlessMatrix dimlessMatrix = FloatMatrix.instantiate(
                 FloatMatrixData.instantiate(denseTestData, DimensionlessUnit.SI.getScale(), StorageType.DENSE),
@@ -70,12 +69,12 @@ public class FloatSIMatrixTest
                                 asMatrix.getSI(row, col), matrix.getSI(row, col) / 1000.0);
                     }
                 }
-
+    
                 Method asMethodDisplayUnit = FloatSIMatrix.class.getDeclaredMethod("as" + type, unit.getClass());
                 FloatMatrixRel<U, S, V, M> asMatrixDisplayUnit =
                         (FloatMatrixRel<U, S, V, M>) asMethodDisplayUnit.invoke(mult, unit.getStandardUnit());
                 assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrixDisplayUnit.getDisplayUnit());
-
+    
                 for (int row = 0; row < denseTestData.length; row++)
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
@@ -84,7 +83,7 @@ public class FloatSIMatrixTest
                                 asMatrixDisplayUnit.getSI(row, col), matrix.getSI(row, col) / 1000.0);
                     }
                 }
-
+    
                 // test exception for wrong 'as'
                 FloatSIMatrix cd4sr2 = FloatSIMatrix.instantiate(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
@@ -97,7 +96,7 @@ public class FloatSIMatrixTest
                 {
                     // ok
                 }
-
+    
                 try
                 {
                     FloatMatrixRel<U, S, V, M> asMatrixDim =
@@ -118,7 +117,7 @@ public class FloatSIMatrixTest
                                 sim.getInUnit(row, col), 0.001);
                     }
                 }
-
+    
             }
         }
     }
@@ -136,7 +135,7 @@ public class FloatSIMatrixTest
         // put a zero value in the test data
         denseTestData[10][10] = 0f;
         FloatDimensionlessMatrix dlm =
-                FloatMatrix.instantiate(denseTestData, DimensionlessUnit.BASE.getStandardUnit(), StorageType.DENSE);
+                new FloatDimensionlessMatrix(denseTestData, DimensionlessUnit.BASE.getStandardUnit(), StorageType.DENSE);
         verifyDimensionLessMatrix(denseTestData, new FloatFunction()
         {
             @Override

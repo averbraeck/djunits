@@ -29,9 +29,7 @@ import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.matrix.AreaMatrix;
 import org.djunits.value.vdouble.matrix.Determinant;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
@@ -84,8 +82,7 @@ public class FloatMatrixMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                FloatAreaMatrix am =
-                        FloatMatrix.instantiate(FloatMatrixData.instantiate(testData, au.getScale(), storageType), au);
+                FloatAreaMatrix am = new FloatAreaMatrix(testData, au, storageType);
 
                 // INDEX CHECKING
                 for (int row : new int[] {-1, 0, denseTestData.length - 1, denseTestData.length})
@@ -158,8 +155,7 @@ public class FloatMatrixMethodTest
                 assertEquals(am, am);
                 assertNotEquals(am, new Object());
                 assertNotEquals(am, null);
-                assertNotEquals(am, FloatMatrix.instantiate(
-                        FloatMatrixData.instantiate(testData, LengthUnit.METER.getScale(), storageType), LengthUnit.METER));
+                assertNotEquals(am, new FloatLengthMatrix(testData, LengthUnit.METER, storageType));
                 assertNotEquals(am, am.divide(2.0f));
 
                 // MUTABLE
@@ -281,8 +277,7 @@ public class FloatMatrixMethodTest
                 // GETROW(), GETCOLUMN(), GETDIAGONAL
                 float[][] squareData = storageType.equals(StorageType.DENSE) ? FLOATMATRIX.denseRectArrays(12, 12)
                         : FLOATMATRIX.sparseRectArrays(12, 12);
-                FloatAreaMatrix amSquare =
-                        FloatMatrix.instantiate(FloatMatrixData.instantiate(squareData, au.getScale(), storageType), au);
+                FloatAreaMatrix amSquare = new FloatAreaMatrix(squareData, au, storageType);
                 float[] row2si = am.getRowSI(2);
                 float[] col2si = am.getColumnSI(2);
                 float[] diagsi = amSquare.getDiagonalSI();
@@ -370,8 +365,7 @@ public class FloatMatrixMethodTest
                 }
 
                 float[][] testData4x4 = new float[][] {{2, 3, 5, 7}, {11, 13, 17, 19}, {23, 29, 31, 37}, {41, 43, 47, 49}};
-                FloatAreaMatrix am4x4 =
-                        FloatMatrix.instantiate(FloatMatrixData.instantiate(testData4x4, au.getScale(), storageType), au);
+                FloatAreaMatrix am4x4 = new FloatAreaMatrix(testData4x4, au, storageType);
                 float det = am4x4.determinantSI();
                 float detCalc = Determinant.det(am4x4.getValuesSI());
                 float err = Math.max(det, detCalc) / 1000.0f;
@@ -388,8 +382,7 @@ public class FloatMatrixMethodTest
                     {
 
                         // PLUS and INCREMENTBY(MATRIX)
-                        FloatAreaMatrix am2 = FloatMatrix
-                                .instantiate(FloatMatrixData.instantiate(testData2, au2.getScale(), storageType2), au2);
+                        FloatAreaMatrix am2 = new FloatAreaMatrix(testData2, au2, storageType2);
                         FloatAreaMatrix amSum1 = am.plus(am2);
                         FloatAreaMatrix amSum2 = am2.plus(am);
                         FloatAreaMatrix amSum3 = am.mutable().incrementBy(am2).immutable();
@@ -474,8 +467,7 @@ public class FloatMatrixMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                FloatAreaMatrix am =
-                        FloatMatrix.instantiate(FloatMatrixData.instantiate(testData, au.getScale(), storageType), au);
+                FloatAreaMatrix am = new FloatAreaMatrix(testData, au, storageType);
                 am = am.immutable();
                 final FloatAreaMatrix amPtr = am;
                 FloatArea fa = FloatArea.of(10.0f, "m^2");
@@ -514,8 +506,7 @@ public class FloatMatrixMethodTest
             for (AreaUnit au : new AreaUnit[] {AreaUnit.SQUARE_METER, AreaUnit.ACRE})
             {
                 float[][] testData = storageType.equals(StorageType.DENSE) ? denseTestData : sparseTestData;
-                FloatAreaMatrix am =
-                        FloatMatrix.instantiate(FloatMatrixData.instantiate(testData, au.getScale(), storageType), au);
+                FloatAreaMatrix am = new FloatAreaMatrix(testData, au, storageType);
                 String s1 = am.toString(); // non-verbose with unit
                 assertTrue(s1.contains(au.getDefaultTextualAbbreviation()));
                 String s2 = am.toString(AreaUnit.SQUARE_INCH); // non-verbose with unit
@@ -548,13 +539,11 @@ public class FloatMatrixMethodTest
                 assertFalse(sNotVerbose.contains(au.getDefaultTextualAbbreviation()));
             }
         }
-        FloatTimeMatrix tm = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
+        FloatTimeMatrix tm = new FloatTimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
         String st = tm.toString(TimeUnit.DEFAULT, true, true); // verbose with unit
         assertFalse(st.contains("Rel"));
         assertTrue(st.contains("Abs"));
-        FloatLengthMatrix lm = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, LengthUnit.SI.getScale(), StorageType.DENSE), LengthUnit.SI);
+        FloatLengthMatrix lm = new FloatLengthMatrix(denseTestData, LengthUnit.SI, StorageType.DENSE);
         String sl = lm.toString(LengthUnit.SI, true, true); // verbose with unit
         assertTrue(sl.contains("Rel"));
         assertFalse(sl.contains("Abs"));
@@ -567,11 +556,8 @@ public class FloatMatrixMethodTest
     public void testSpecialMatrixMethodsRelWithAbs()
     {
         float[][] denseTestData = FLOATMATRIX.denseRectArrays(5, 10);
-        FloatTimeMatrix tm = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        FloatDurationMatrix dm = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
-                DurationUnit.SECOND);
+        FloatTimeMatrix tm = new FloatTimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
+        FloatDurationMatrix dm = new FloatDurationMatrix(denseTestData, DurationUnit.MINUTE, StorageType.DENSE);
         assertTrue(tm.isAbsolute());
         assertFalse(dm.isAbsolute());
         assertFalse(tm.isRelative());
@@ -587,8 +573,7 @@ public class FloatMatrixMethodTest
                 halfDenseData[row][col] *= 0.5;
             }
         }
-        FloatTimeMatrix halfTimeMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(halfDenseData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
+        FloatTimeMatrix halfTimeMatrix = new FloatTimeMatrix(halfDenseData, TimeUnit.DEFAULT, StorageType.DENSE);
         FloatDurationMatrix absMinusAbs = tm.minus(halfTimeMatrix);
         FloatTimeMatrix absDecByRelS = tm.mutable().decrementBy(FloatDuration.of(1.0f, "min"));
         FloatTimeMatrix absDecByRelM = tm.mutable().decrementBy(dm.divide(2.0f));
@@ -614,8 +599,7 @@ public class FloatMatrixMethodTest
                     continue;
                 }
                 float[][] other = FLOATMATRIX.denseRectArrays(denseTestData.length + dRows, denseTestData[0].length + dCols);
-                FloatTimeMatrix wrongTimeMatrix = FloatMatrix.instantiate(
-                        FloatMatrixData.instantiate(other, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
+                FloatTimeMatrix wrongTimeMatrix = new FloatTimeMatrix(other, TimeUnit.DEFAULT, StorageType.DENSE);
                 try
                 {
                     tm.mutable().minus(wrongTimeMatrix);
@@ -639,7 +623,7 @@ public class FloatMatrixMethodTest
     @Test
     public void memoryTest()
     {
-        AreaMatrix am = DoubleMatrix.instantiate(new double[5][10], AreaUnit.SI, StorageType.SPARSE);
+        AreaMatrix am = new AreaMatrix(new double[5][10], AreaUnit.SI, StorageType.SPARSE);
         am = am.mutable();
         double nonZeroValue = 123.456;
         // Initially the array is filled with zero values; we can skip the initialization phase
@@ -670,11 +654,8 @@ public class FloatMatrixMethodTest
     public void testInstantiateAbs()
     {
         float[][] denseTestData = FLOATMATRIX.denseRectArrays(10, 20);
-        FloatTimeMatrix timeMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE), TimeUnit.DEFAULT);
-        FloatDurationMatrix durationMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, DurationUnit.MINUTE.getScale(), StorageType.DENSE),
-                DurationUnit.SECOND);
+        FloatTimeMatrix timeMatrix = new FloatTimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
+        FloatDurationMatrix durationMatrix = new FloatDurationMatrix(denseTestData, DurationUnit.MINUTE, StorageType.DENSE);
 
         float[] halfDenseData = FLOATVECTOR.denseArray(105);
         for (int index = 0; index < halfDenseData.length; index++)
@@ -693,11 +674,9 @@ public class FloatMatrixMethodTest
         assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, floatTime.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatTime.si, 0.1);
 
-        FloatAngleMatrix angleMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, AngleUnit.DEGREE.getScale(), StorageType.DENSE), AngleUnit.DEGREE);
-        FloatDirectionMatrix directionMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, DirectionUnit.EAST_DEGREE.getScale(), StorageType.DENSE),
-                DirectionUnit.EAST_DEGREE);
+        FloatAngleMatrix angleMatrix = new FloatAngleMatrix(denseTestData, AngleUnit.DEGREE, StorageType.DENSE);
+        FloatDirectionMatrix directionMatrix =
+                new FloatDirectionMatrix(denseTestData, DirectionUnit.EAST_DEGREE, StorageType.DENSE);
 
         FloatDirectionMatrix relPlusAbsDirection = angleMatrix.plus(directionMatrix);
         for (int row = 0; row < denseTestData.length; row++)
@@ -712,12 +691,10 @@ public class FloatMatrixMethodTest
         assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, floatDirection.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatDirection.si, 0.1);
 
-        FloatTemperatureMatrix temperatureMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT.getScale(), StorageType.DENSE),
-                TemperatureUnit.DEGREE_FAHRENHEIT);
-        FloatAbsoluteTemperatureMatrix absoluteTemperatureMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, AbsoluteTemperatureUnit.KELVIN.getScale(), StorageType.DENSE),
-                AbsoluteTemperatureUnit.KELVIN);
+        FloatTemperatureMatrix temperatureMatrix =
+                new FloatTemperatureMatrix(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT, StorageType.DENSE);
+        FloatAbsoluteTemperatureMatrix absoluteTemperatureMatrix =
+                new FloatAbsoluteTemperatureMatrix(denseTestData, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
 
         FloatAbsoluteTemperatureMatrix relPlusAbsTemperature = temperatureMatrix.plus(absoluteTemperatureMatrix);
         for (int row = 0; row < denseTestData.length; row++)
@@ -734,11 +711,8 @@ public class FloatMatrixMethodTest
                 floatAbsoluteTemperature.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, floatAbsoluteTemperature.si, 0.1);
 
-        FloatLengthMatrix lengthMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, LengthUnit.MILE.getScale(), StorageType.DENSE), LengthUnit.MILE);
-        FloatPositionMatrix positionMatrix = FloatMatrix.instantiate(
-                FloatMatrixData.instantiate(denseTestData, PositionUnit.KILOMETER.getScale(), StorageType.DENSE),
-                PositionUnit.KILOMETER);
+        FloatLengthMatrix lengthMatrix = new FloatLengthMatrix(denseTestData, LengthUnit.MILE, StorageType.DENSE);
+        FloatPositionMatrix positionMatrix = new FloatPositionMatrix(denseTestData, PositionUnit.KILOMETER, StorageType.DENSE);
 
         FloatPositionMatrix relPlusAbsPosition = lengthMatrix.plus(positionMatrix);
         for (int row = 0; row < denseTestData.length; row++)
@@ -783,8 +757,7 @@ public class FloatMatrixMethodTest
                         SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
                         FloatSIMatrix matrix = FloatSIMatrix.instantiate(testValues, siUnit, storageType2);
                         Method asMethod = FloatSIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        FloatMatrixRel<U, ?, ?, ?> asMatrix =
-                                (FloatMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
+                        FloatMatrixRel<U, ?, ?, ?> asMatrix = (FloatMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
                         assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
                         siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
                         for (int row = 0; row < testValues.length; row++)

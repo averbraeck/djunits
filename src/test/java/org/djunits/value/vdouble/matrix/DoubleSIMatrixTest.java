@@ -6,7 +6,6 @@ import org.djunits.unit.DimensionlessUnit;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.junit.Test;
 
 /**
@@ -135,7 +134,7 @@ public class DoubleSIMatrixTest
         // put a zero value in the test data
         denseTestData[10][10] = 0d;
         DimensionlessMatrix dlm =
-                DoubleMatrix.instantiate(denseTestData, DimensionlessUnit.BASE.getStandardUnit(), StorageType.DENSE);
+                new DimensionlessMatrix(denseTestData, DimensionlessUnit.BASE.getStandardUnit(), StorageType.DENSE);
         verifyDimensionLessMatrix(denseTestData, new DoubleFunction()
         {
             @Override
