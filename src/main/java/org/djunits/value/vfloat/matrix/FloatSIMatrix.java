@@ -73,26 +73,37 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     private static final long serialVersionUID = 20150901L;
 
     /**
-     * Construct a new Relative Float FloatSIMatrix.
-     * @param values float[][]; the values of the entries in the new Relative Float FloatSIMatrix
-     * @param unit SIUnit; the unit of the new Relative Float FloatSIMatrix
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
-     * @return FloatSIMatrix; the FloatSIMatrix of the given unit
-     * @throws ValueRuntimeException when values is null
+     * Construct a new Relative FloatSIMatrix on the basis of a data object.
+     * @param data FloatMatrixData; an internal data object
+     * @param displayUnit SIUnit; the display unit
      */
-    public static FloatSIMatrix instantiate(final float[][] values, final SIUnit unit, final StorageType storageType)
-            throws ValueRuntimeException
+    public FloatSIMatrix(final FloatMatrixData data, final SIUnit displayUnit)
     {
-        return new FloatSIMatrix(FloatMatrixData.instantiate(values, unit.getScale(), storageType), unit);
+        super(data, displayUnit);
     }
 
     /**
-     * @param data FloatMatrixData; an internal data object
-     * @param unit SIUnit; the unit
+     * Construct a new Relative FloatSIMatrix with a unit for the float values that will also be used for the displayUnit.
+     * @param values float[][]; the values of the entries in the new Relative FloatSIMatrix
+     * @param unit SIUnit; the unit of the new Relative FloatSIMatrix
+     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
+     * @throws ValueRuntimeException when values is null
      */
-    public FloatSIMatrix(final FloatMatrixData data, final SIUnit unit)
+    public FloatSIMatrix(final float[][] values, final SIUnit unit, final StorageType storageType) throws ValueRuntimeException
     {
-        super(data, unit);
+        this(FloatMatrixData.instantiate(values, unit.getScale(), storageType), unit);
+    }
+
+    /**
+     * Construct a new Relative FloatSIMatrix with a unit for the float values that will also be used for the displayUnit.
+     * Assume the StorageType is DENSE since we offer the content as an array.
+     * @param values float[][]; the values of the entries in the new Relative FloatSIMatrix
+     * @param unit SIUnit; the unit of the new Relative FloatSIMatrix
+     * @throws ValueRuntimeException when values is null
+     */
+    public FloatSIMatrix(final float[][] values, final SIUnit unit) throws ValueRuntimeException
+    {
+        this(values, unit, StorageType.DENSE);
     }
 
     /** {@inheritDoc} */
@@ -129,7 +140,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
             if (unit != null)
             {
-                return FloatSIMatrix.instantiate(values, unit, storageType);
+                return new FloatSIMatrix(values, unit, storageType);
             }
         }
         catch (Exception exception)
