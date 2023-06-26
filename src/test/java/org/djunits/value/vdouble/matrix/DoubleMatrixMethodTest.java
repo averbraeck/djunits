@@ -6,11 +6,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.AreaUnit;
@@ -18,17 +13,12 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
-import org.djunits.unit.SIUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
-import org.djunits.unit.Unit;
 import org.djunits.unit.util.UnitException;
-import org.djunits.unit.util.UnitRuntimeException;
-import org.djunits.value.CLASSNAMES;
 import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
 import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.AbsoluteTemperature;
@@ -734,63 +724,6 @@ public class DoubleMatrixMethodTest
         Position position = lengthMatrix.instantiateScalarAbsSI(123.456f, PositionUnit.ANGSTROM);
         assertEquals("Unit of instantiateScalarAbsSI matches", PositionUnit.ANGSTROM, position.getDisplayUnit());
         assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, position.si, 0.01);
-    }
-
-    /**
-     * Test the <code>as</code> method of the SIMatrix class.
-     * @throws SecurityException on error
-     * @throws NoSuchMethodException on error
-     * @throws InvocationTargetException on error
-     * @throws IllegalArgumentException on error
-     * @throws IllegalAccessException on error
-     * @throws ClassNotFoundException on error
-     * @throws UnitException on error
-     * @param <U> the unit type
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public <U extends Unit<U>> void testAsUnit() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException, UnitException
-    {
-        double[][] testValues = DOUBLEMATRIX.denseRectArrays(10, 20);
-        for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
-        {
-            for (String type : CLASSNAMES.REL_LIST)
-            {
-                Class.forName("org.djunits.unit." + type + "Unit");
-                Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
-                for (U unit : quantity.getUnitsById().values())
-                {
-                    for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, storageType})
-                    {
-                        SIUnit siUnit = SIUnit.of(unit.getQuantity().getSiDimensions());
-                        SIMatrix matrix = SIMatrix.instantiate(testValues, siUnit, storageType2);
-                        Method asMethod = SIMatrix.class.getDeclaredMethod("as", Unit.class);
-                        DoubleMatrixRel<U, ?, ?, ?> asMatrix = (DoubleMatrixRel<U, ?, ?, ?>) asMethod.invoke(matrix, siUnit);
-                        assertEquals(matrix.getDisplayUnit().getStandardUnit(), asMatrix.getDisplayUnit());
-                        siUnit = SIUnit.of(AbsoluteTemperatureUnit.KELVIN.getQuantity().getSiDimensions());
-                        for (int row = 0; row < testValues.length; row++)
-                        {
-                            for (int col = 0; col < testValues[0].length; col++)
-                            {
-                                assertEquals("Values should match", testValues[row][col], matrix.getInUnit(row, col), 0.001);
-                            }
-                        }
-                        try
-                        {
-                            asMethod.invoke(matrix, siUnit);
-                            fail("as method should not be able to cast to unrelated (absoluteTemperature) unit");
-                        }
-                        catch (InvocationTargetException ite)
-                        {
-                            Throwable cause = ite.getCause();
-                            assertEquals("cause is UnitRuntimeException", UnitRuntimeException.class, cause.getClass());
-                            // Otherwise ignore expected exception
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**

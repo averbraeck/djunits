@@ -1,5 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
+import java.util.Arrays;
+
 /**
  * Compute the determinant of a matrix.
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
@@ -104,18 +106,18 @@ public final class Determinant
      */
     public static void main(final String[] args)
     {
-        double[][] testData1 = new double[][] { { 2.0 } };
-        double[][] testData2 = new double[][] { { 2, 3 }, { 5, 7 } };
-        double[][] testData3 = new double[][] { { 2, 3, 5 }, { 7, 11, 13 }, { 17, 19, 23 } };
-        double[][] testData4 = new double[][] { { 2, 3, 5, 7 }, { 11, 13, 17, 19 }, { 23, 29, 31, 37 }, { 41, 43, 47, 49 } };
-        // system.out.println(Arrays.deepToString(testData1));
-        // system.out.println("det=" + det(testData1));
-        // system.out.println(Arrays.deepToString(testData2));
-        // system.out.println("det=" + det(testData2));
-        // system.out.println(Arrays.deepToString(testData3));
-        // system.out.println("det=" + det(testData3));
-        // system.out.println(Arrays.deepToString(testData4));
-        // system.out.println("det=" + det(testData4));
+        double[][] testData1 = new double[][] {{2.0}};
+        double[][] testData2 = new double[][] {{2, 3}, {5, 7}};
+        double[][] testData3 = new double[][] {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
+        double[][] testData4 = new double[][] {{2, 3, 5, 7}, {11, 13, 17, 19}, {23, 29, 31, 37}, {41, 43, 47, 49}};
+        System.out.println(Arrays.deepToString(testData1));
+        System.out.println("det=" + det(testData1));
+        System.out.println(Arrays.deepToString(testData2));
+        System.out.println("det=" + det(testData2));
+        System.out.println(Arrays.deepToString(testData3));
+        System.out.println("det=" + det(testData3));
+        System.out.println(Arrays.deepToString(testData4));
+        System.out.println("det=" + det(testData4));
     }
 
 }

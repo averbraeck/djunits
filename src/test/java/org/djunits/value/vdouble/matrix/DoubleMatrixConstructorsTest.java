@@ -143,6 +143,7 @@ public class DoubleMatrixConstructorsTest
                                 "index just above range should have thrown an exception", ValueRuntimeException.class);
                         mutable.setSI(testValues.length - 1, 0, 0);
                         mutable.setSI(0, testValues.length - 1, 0);
+                        mutable = doubleMatrix.mutable();
                         mutable.ceil();
                         for (int i = 0; i < testValues.length; i++)
                         {
@@ -220,16 +221,16 @@ public class DoubleMatrixConstructorsTest
                 double[][] testValues =
                         dataset == 1 ? DOUBLEMATRIX.denseRectArrays(50, 50) : DOUBLEMATRIX.sparseRectArrays(50, 50);
                 Class<?> scalarClass = CLASSNAMES.doubleScalarClass(scalarName);
-                Object[][] testValues = (Object[][]) Array.newInstance(scalarClass, doubleValues.length);
+                Object[][] scalarValues = (Object[][]) Array.newInstance(scalarClass, testValues.length, testValues[0].length);
                 Class<?> scalarArrayClass = testValues.getClass();
                 Constructor<DoubleScalar<?, ?>> constructorScalar =
                         (Constructor<DoubleScalar<?, ?>>) scalarClass.getConstructor(double.class, unitClass);
 
                 int cardinality = 0;
                 double zSum = 0.0;
-                for (int index = 0; index < doubleValues.length; index++)
+                for (int index = 0; index < scalarValues.length; index++)
                 {
-                    double value = doubleValues[index];
+                    double value = scalarValues[index];
                     Array.set(testValues, index, constructorScalar.newInstance(value, standardUnit));
                     if (0.0 != value)
                     {
@@ -262,7 +263,7 @@ public class DoubleMatrixConstructorsTest
 
                     for (DoubleMatrix<?, ?, ?, ?> doubleMatrix : new DoubleMatrix[] {vLUS, vLU, vLS, vL})
                     {
-                        compareValuesWithScale(standardUnit.getScale(), doubleValues, doubleMatrix.getValuesSI());
+                        compareValuesWithScale(standardUnit.getScale(), scalarValues, doubleMatrix.getValuesSI());
                         assertEquals("Unit must match", standardUnit, doubleMatrix.getDisplayUnit());
                         assertEquals("Cardinality", cardinality, doubleMatrix.cardinality());
                         if (doubleMatrix instanceof Relative)
@@ -273,8 +274,8 @@ public class DoubleMatrixConstructorsTest
                         Method instantiateMethod = doubleMatrix.getClass().getDeclaredMethod("instantiateMatrix",
                                 DoubleMatrixData.class, unitClass);
                         DoubleMatrix<?, ?, ?, ?> vData = (DoubleMatrix<?, ?, ?, ?>) instantiateMethod.invoke(doubleMatrix,
-                                DoubleMatrixData.instantiate(doubleValues, IdentityScale.SCALE, storageType), standardUnit);
-                        compareValuesWithScale(standardUnit.getScale(), doubleValues, vData.getValuesSI());
+                                DoubleMatrixData.instantiate(scalarValues, IdentityScale.SCALE, storageType), standardUnit);
+                        compareValuesWithScale(standardUnit.getScale(), scalarValues, vData.getValuesSI());
 
                         Try.testFail(() -> doubleMatrix.setSI(0, 0), "double matrix should be immutable",
                                 ValueRuntimeException.class);
@@ -288,13 +289,13 @@ public class DoubleMatrixConstructorsTest
                         mutable.setInUnit(0, 0);
                         Try.testFail(() -> doubleMatrix.mutable().setSI(-1, 0),
                                 "negative index should have thrown an exception", ValueRuntimeException.class);
-                        Try.testFail(() -> doubleMatrix.mutable().setSI(doubleValues.length, 0),
+                        Try.testFail(() -> doubleMatrix.mutable().setSI(scalarValues.length, 0),
                                 "index just above range should have thrown an exception", ValueRuntimeException.class);
-                        mutable.setSI(doubleValues.length - 1, 0);
+                        mutable.setSI(scalarValues.length - 1, 0);
                         mutable.ceil();
-                        for (int index = 0; index < doubleValues.length; index++)
+                        for (int index = 0; index < scalarValues.length; index++)
                         {
-                            assertEquals("ceil", Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                            assertEquals("ceil", Math.ceil(scalarValues[index]), mutable.getInUnit(index), 0.001);
                         }
                         DoubleMatrix<?, ?, ?, ?> immutable = mutable.immutable();
                         Try.testFail(() -> immutable.ceil(), "double matrix should be immutable", ValueRuntimeException.class);
@@ -303,21 +304,21 @@ public class DoubleMatrixConstructorsTest
                         Try.testFail(() -> immutable.neg(), "double matrix should be immutable", ValueRuntimeException.class);
                         mutable = doubleMatrix.mutable().mutable();
                         mutable.floor();
-                        for (int index = 0; index < doubleValues.length; index++)
+                        for (int index = 0; index < scalarValues.length; index++)
                         {
-                            assertEquals("floor", Math.floor(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                            assertEquals("floor", Math.floor(scalarValues[index]), mutable.getInUnit(index), 0.001);
                         }
                         mutable = doubleMatrix.mutable();
                         mutable.rint();
-                        for (int index = 0; index < doubleValues.length; index++)
+                        for (int index = 0; index < scalarValues.length; index++)
                         {
-                            assertEquals("rint", Math.rint(doubleValues[index]), mutable.getInUnit(index), 0.001);
+                            assertEquals("rint", Math.rint(scalarValues[index]), mutable.getInUnit(index), 0.001);
                         }
                         mutable = doubleMatrix.mutable();
                         mutable.neg();
-                        for (int index = 0; index < doubleValues.length; index++)
+                        for (int index = 0; index < scalarValues.length; index++)
                         {
-                            assertEquals("neg", -doubleValues[index], mutable.getInUnit(index), 0.001);
+                            assertEquals("neg", -scalarValues[index], mutable.getInUnit(index), 0.001);
                         }
                     }
                 }
@@ -742,8 +743,6 @@ public class DoubleMatrixConstructorsTest
         Quantity<?> quantity = Quantities.INSTANCE.getQuantity("AbsoluteTemperature" + "Unit");
         new SIMatrix(testValues, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
         Try.testFail(() -> new SIMatrix((double[][]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
-                "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SIMatrix((List<Double>) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
         Try.testFail(() -> new SIMatrix(testValues, null, StorageType.DENSE), "null pointer should have thrown an exception",
                 NullPointerException.class);

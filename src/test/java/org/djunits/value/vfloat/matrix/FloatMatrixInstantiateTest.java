@@ -1,11 +1,9 @@
 package org.djunits.value.vfloat.matrix;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,35 +11,17 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
-import org.djunits.unit.AbsoluteLinearUnit;
-import org.djunits.unit.AreaUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.SpeedUnit;
-import org.djunits.unit.Unit;
-import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
-import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
-import org.djunits.value.vfloat.matrix.base.FloatMatrix;
-import org.djunits.value.vfloat.matrix.base.FloatMatrixAbs;
-import org.djunits.value.vfloat.matrix.base.FloatMatrixRelWithAbs;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
 import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
-import org.djunits.value.vfloat.scalar.FloatArea;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
-import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
-import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.vector.FloatSIVector;
-import org.djunits.value.vfloat.vector.base.FloatVector;
-import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
-import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
-import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
 
@@ -63,19 +43,25 @@ public class FloatMatrixInstantiateTest
     public void testInstantiateSquareDenseData()
     {
         FloatLengthMatrix lmdkm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
+                new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(10, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmdkm10.get(0, 0));
         assertEquals(100, lmdkm10.cardinality());
-        assertEquals(50 * 101 * 1000.0, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 100 * 101 / 2, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, lmdkm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmdkm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmdkm10.getDisplayUnit());
 
         FloatLengthMatrix lmskm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(10, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmskm10.get(0, 0));
         assertEquals(100, lmskm10.cardinality());
-        assertEquals(50 * 101 * 1000.0, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 100 * 101 / 2, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, lmskm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmskm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmskm10.getDisplayUnit());
 
         assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
@@ -87,6 +73,9 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmdkm10, lmdkm10.toDense());
         assertEquals(lmskm10, lmskm10.toSparse());
 
+        assertTrue(lmdkm10.isDense());
+        assertTrue(lmskm10.isSparse());
+
         assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
         assertEquals(lmdkm10.hashCode(), lmskm10.toDense().hashCode());
@@ -96,40 +85,74 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        assertTrue(lmdkm10.isDense());
-        assertTrue(lmskm10.isSparse());
-
-        FloatLengthMatrix lmdsi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsi10 = new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(10, 10), StorageType.DENSE);
+        lmdsi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(10, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmdsi10.get(0, 0));
         assertEquals(100, lmdsi10.cardinality());
-        assertEquals(50 * 101, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 100 * 101 / 2, lmdsi10.zSum().getInUnit(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
-        FloatLengthMatrix lmssi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssi10 = new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(10, 10), StorageType.SPARSE);
+        lmssi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(10, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmssi10.get(0, 0));
         assertEquals(100, lmssi10.cardinality());
-        assertEquals(50 * 101, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 100 * 101 / 2, lmssi10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.CENTIMETER, lmssi10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.CENTIMETER, lmssi10.getDisplayUnit());
 
-        FloatLengthMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(10, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsc10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectScalarArrays(10, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(10, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmdsc10.get(0, 0));
         assertEquals(100, lmdsc10.cardinality());
-        assertEquals(50 * 101, lmdsc10.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, lmdsc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmdsc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmdsc10.getDisplayUnit());
 
-        FloatLengthMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(10, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssc10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectScalarArrays(10, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(10, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmssc10.get(0, 0));
         assertEquals(100, lmssc10.cardinality());
-        assertEquals(50 * 101, lmssc10.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, lmssc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmssc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmssc10.getDisplayUnit());
+
+        FloatLengthMatrix lmdtu10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectTuples(10, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 10, 10, StorageType.DENSE);
+        assertEquals(10, lmdtu10.rows());
+        assertEquals(10, lmdtu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmdtu10.get(0, 0));
+        assertEquals(new FloatLength(2, LengthUnit.NANOMETER), lmdtu10.get(0, 1));
+        assertEquals(new FloatLength(3, LengthUnit.NANOMETER), lmdtu10.get(0, 2));
+        assertEquals(100, lmdtu10.cardinality());
+        assertEquals(100 * 101 / 2, lmdtu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmdtu10.zSum().getDisplayUnit());
+        assertEquals(LengthUnit.NANOMETER, lmdtu10.getDisplayUnit());
+
+        FloatLengthMatrix lmstu10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectTuples(10, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 10, 10, StorageType.SPARSE);
+        assertEquals(10, lmstu10.rows());
+        assertEquals(10, lmstu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmstu10.get(0, 0));
+        assertEquals(new FloatLength(2, LengthUnit.NANOMETER), lmstu10.get(0, 1));
+        assertEquals(new FloatLength(3, LengthUnit.NANOMETER), lmstu10.get(0, 2));
+        assertEquals(100, lmstu10.cardinality());
+        assertEquals(100 * 101 / 2, lmstu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmstu10.zSum().getDisplayUnit());
+        assertEquals(LengthUnit.NANOMETER, lmstu10.getDisplayUnit());
     }
 
     /**
@@ -139,19 +162,25 @@ public class FloatMatrixInstantiateTest
     public void testInstantiatSquareSparseData()
     {
         FloatLengthMatrix lmdkm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(10, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmdkm10.get(0, 0));
         assertEquals(10, lmdkm10.cardinality());
-        assertEquals(5 * 11 * 1000.0, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 10 * 11 / 2, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdkm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmdkm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmdkm10.getDisplayUnit());
 
         FloatLengthMatrix lmskm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(10, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(10, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmskm10.get(0, 0));
         assertEquals(10, lmskm10.cardinality());
-        assertEquals(5 * 11 * 1000.0, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 10 * 11 / 2, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmskm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmskm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmskm10.getDisplayUnit());
 
         assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
@@ -160,6 +189,11 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmskm10, lmdkm10.toSparse());
         assertEquals(lmdkm10, lmdkm10.toSparse()); // dense and sparse are the same if content is the same
         assertEquals(lmskm10, lmskm10.toDense()); // dense and sparse are the same if content is the same
+        assertEquals(lmdkm10, lmdkm10.toDense());
+        assertEquals(lmskm10, lmskm10.toSparse());
+
+        assertTrue(lmdkm10.isDense());
+        assertTrue(lmskm10.isSparse());
 
         assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
@@ -167,208 +201,77 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmskm10.hashCode(), lmdkm10.toSparse().hashCode());
         assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toDense().hashCode());
+        assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
+        assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        FloatLengthMatrix lmdsi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsi10 = new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(10, 10), StorageType.DENSE);
+        lmdsi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(10, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmdsi10.get(0, 0));
         assertEquals(10, lmdsi10.cardinality());
-        assertEquals(5 * 11, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 10 * 11 / 2, lmdsi10.zSum().getInUnit(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
-        FloatLengthMatrix lmssi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(10, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssi10 = new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(10, 10), StorageType.SPARSE);
+        lmssi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(10, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmssi10.get(0, 0));
         assertEquals(10, lmssi10.cardinality());
-        assertEquals(5 * 11, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 10 * 11 / 2, lmssi10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.CENTIMETER, lmssi10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.CENTIMETER, lmssi10.getDisplayUnit());
 
-        FloatLengthMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(10, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsc10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectScalarArrays(10, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(10, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmdsc10.get(0, 0));
         assertEquals(10, lmdsc10.cardinality());
-        assertEquals(5 * 11, lmdsc10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdsc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmdsc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmdsc10.getDisplayUnit());
 
-        FloatLengthMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(10, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssc10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectScalarArrays(10, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(10, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmssc10.get(0, 0));
         assertEquals(10, lmssc10.cardinality());
-        assertEquals(5 * 11, lmssc10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmssc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmssc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmssc10.getDisplayUnit());
 
-        FloatLengthMatrix lmdtu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(10, 10, FloatLength.class), 10, 10,
-                LengthUnit.NANOMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdtu10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectTuples(10, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 10, 10, StorageType.DENSE);
         assertEquals(10, lmdtu10.rows());
         assertEquals(10, lmdtu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmdtu10.get(0, 0));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmdtu10.get(0, 1));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmdtu10.get(1, 0));
         assertEquals(10, lmdtu10.cardinality());
-        assertEquals(5 * 11, lmdtu10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdtu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmdtu10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.NANOMETER, lmdtu10.getDisplayUnit());
 
-        FloatLengthMatrix lmstu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(10, 10, FloatLength.class), 10, 10,
-                LengthUnit.NANOMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmstu10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectTuples(10, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 10, 10, StorageType.SPARSE);
         assertEquals(10, lmstu10.rows());
         assertEquals(10, lmstu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmstu10.get(0, 0));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmstu10.get(0, 1));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmstu10.get(1, 0));
         assertEquals(10, lmstu10.cardinality());
-        assertEquals(5 * 11, lmstu10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmstu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmstu10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.NANOMETER, lmstu10.getDisplayUnit());
-    }
-
-    /**
-     * Test the instantiation of dense and sparse matrix types with dense data (no zeros).
-     */
-    @Test
-    public void testInstantiateSquareDenseDataWithClass()
-    {
-        FloatAreaMatrix lmdkm10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdkm10.rows());
-        assertEquals(10, lmdkm10.cols());
-        assertEquals(100, lmdkm10.cardinality());
-        assertEquals(50 * 101 * 1.0E6, lmdkm10.zSum().getSI(), 1000);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
-
-        FloatAreaMatrix lmskm10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmskm10.rows());
-        assertEquals(10, lmskm10.cols());
-        assertEquals(100, lmskm10.cardinality());
-        assertEquals(50 * 101 * 1.0E6, lmskm10.zSum().getSI(), 1000);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmskm10.getDisplayUnit());
-
-        assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
-        assertEquals(lmskm10, lmskm10.toDense().toSparse());
-        assertEquals(lmdkm10, lmskm10.toDense());
-        assertEquals(lmskm10, lmdkm10.toSparse());
-        assertEquals(lmdkm10, lmdkm10.toSparse()); // dense and sparse are the same if content is the same
-        assertEquals(lmskm10, lmskm10.toDense()); // dense and sparse are the same if content is the same
-
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmskm10.toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().hashCode());
-
-        FloatAreaMatrix lmdsi10 = FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdsi10.rows());
-        assertEquals(10, lmdsi10.cols());
-        assertEquals(100, lmdsi10.cardinality());
-        assertEquals(50 * 101, lmdsi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
-
-        FloatAreaMatrix lmssi10 = FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmssi10.rows());
-        assertEquals(10, lmssi10.cols());
-        assertEquals(100, lmssi10.cardinality());
-        assertEquals(50 * 101, lmssi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
-
-        FloatAreaMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(10, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdsc10.rows());
-        assertEquals(10, lmdsc10.cols());
-        assertEquals(100, lmdsc10.cardinality());
-        assertEquals(50 * 101, lmdsc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
-
-        FloatAreaMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(10, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmssc10.rows());
-        assertEquals(10, lmssc10.cols());
-        assertEquals(100, lmssc10.cardinality());
-        assertEquals(50 * 101, lmssc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmssc10.getDisplayUnit());
-    }
-
-    /**
-     * Test the instantiation of dense and sparse matrix types with sparse data (90% zeros).
-     */
-    @Test
-    public void testInstantiatSquareSparseDataWithClass()
-    {
-        FloatAreaMatrix lmdkm10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdkm10.rows());
-        assertEquals(10, lmdkm10.cols());
-        assertEquals(10, lmdkm10.cardinality());
-        assertEquals(5 * 11 * 1.0E6, lmdkm10.zSum().getSI(), 0.1);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
-
-        FloatAreaMatrix lmskm10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmskm10.rows());
-        assertEquals(10, lmskm10.cols());
-        assertEquals(10, lmskm10.cardinality());
-        assertEquals(5 * 11 * 1.0E6, lmskm10.zSum().getSI(), 0.1);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmskm10.getDisplayUnit());
-
-        assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
-        assertEquals(lmskm10, lmskm10.toDense().toSparse());
-        assertEquals(lmdkm10, lmskm10.toDense());
-        assertEquals(lmskm10, lmdkm10.toSparse());
-        assertEquals(lmdkm10, lmdkm10.toSparse()); // dense and sparse are the same if content is the same
-        assertEquals(lmskm10, lmskm10.toDense()); // dense and sparse are the same if content is the same
-
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmskm10.toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().hashCode());
-
-        FloatAreaMatrix lmdsi10 = FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdsi10.rows());
-        assertEquals(10, lmdsi10.cols());
-        assertEquals(10, lmdsi10.cardinality());
-        assertEquals(5 * 11, lmdsi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
-
-        FloatAreaMatrix lmssi10 = FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(10, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmssi10.rows());
-        assertEquals(10, lmssi10.cols());
-        assertEquals(10, lmssi10.cardinality());
-        assertEquals(5 * 11, lmssi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
-
-        FloatAreaMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(10, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdsc10.rows());
-        assertEquals(10, lmdsc10.cols());
-        assertEquals(10, lmdsc10.cardinality());
-        assertEquals(5 * 11, lmdsc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
-
-        FloatAreaMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(10, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmssc10.rows());
-        assertEquals(10, lmssc10.cols());
-        assertEquals(10, lmssc10.cardinality());
-        assertEquals(5 * 11, lmssc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmssc10.getDisplayUnit());
-
-        FloatAreaMatrix lmdtu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(10, 10, FloatArea.class), 10, 10,
-                AreaUnit.ACRE, StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(10, lmdtu10.rows());
-        assertEquals(10, lmdtu10.cols());
-        assertEquals(10, lmdtu10.cardinality());
-        assertEquals(5 * 11, lmdtu10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.ACRE, lmdtu10.getDisplayUnit());
-
-        FloatAreaMatrix lmstu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(10, 10, FloatArea.class), 10, 10,
-                AreaUnit.ACRE, StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(10, lmstu10.rows());
-        assertEquals(10, lmstu10.cols());
-        assertEquals(10, lmstu10.cardinality());
-        assertEquals(5 * 11, lmstu10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.ACRE, lmstu10.getDisplayUnit());
     }
 
     /**
@@ -378,36 +281,34 @@ public class FloatMatrixInstantiateTest
     @Test
     public void testInstantiateSquareSIUnit() throws UnitException
     {
-        FloatSIMatrix si10dd =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
+        FloatSIMatrix si10dd = new FloatSIMatrix(FLOATMATRIX.denseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(10, si10dd.rows());
         assertEquals(10, si10dd.cols());
         assertEquals(100, si10dd.cardinality());
-        assertEquals(50 * 101, si10dd.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, si10dd.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10dd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
+        assertEquals("getScalarClass returns FloatSIScalar", FloatSIScalar.class, si10dd.getScalarClass());
+        assertEquals("getVectorClass returns FloatSIVector", FloatSIVector.class, si10dd.getVectorClass());
 
-        FloatSIMatrix si10ds =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
+        FloatSIMatrix si10ds = new FloatSIMatrix(FLOATMATRIX.denseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(10, si10ds.rows());
         assertEquals(10, si10ds.cols());
         assertEquals(100, si10ds.cardinality());
-        assertEquals(50 * 101, si10ds.zSum().getSI(), 0.001);
+        assertEquals(100 * 101 / 2, si10ds.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10ds.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
-        FloatSIMatrix si10sd =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
+        FloatSIMatrix si10sd = new FloatSIMatrix(FLOATMATRIX.sparseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(10, si10sd.rows());
         assertEquals(10, si10sd.cols());
         assertEquals(10, si10sd.cardinality());
-        assertEquals(5 * 11, si10sd.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, si10sd.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10sd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
-        FloatSIMatrix si10ss =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
+        FloatSIMatrix si10ss = new FloatSIMatrix(FLOATMATRIX.sparseRectArrays(10, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(10, si10ss.rows());
         assertEquals(10, si10ss.cols());
         assertEquals(10, si10ss.cardinality());
-        assertEquals(5 * 11, si10ss.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, si10ss.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10ss.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
         assertEquals(si10dd, si10ds.toDense());
@@ -416,6 +317,17 @@ public class FloatMatrixInstantiateTest
         assertEquals(si10ds, si10ds.toSparse());
         assertEquals(si10dd, si10dd.toSparse().toDense());
         assertEquals(si10ds, si10ds.toDense().toSparse());
+        assertEquals(si10dd, si10dd.toSparse());
+        assertEquals(si10ds, si10ds.toDense());
+
+        assertEquals(si10sd, si10ss.toDense());
+        assertEquals(si10ss, si10sd.toSparse());
+        assertEquals(si10sd, si10sd.toDense());
+        assertEquals(si10ss, si10ss.toSparse());
+        assertEquals(si10sd, si10sd.toSparse().toDense());
+        assertEquals(si10ss, si10ss.toDense().toSparse());
+        assertEquals(si10sd, si10sd.toSparse());
+        assertEquals(si10ss, si10ss.toDense());
 
         assertEquals(si10dd.hashCode(), si10ds.toDense().hashCode());
         assertEquals(si10ds.hashCode(), si10dd.toSparse().hashCode());
@@ -425,13 +337,6 @@ public class FloatMatrixInstantiateTest
         assertEquals(si10ds.hashCode(), si10ds.toDense().toSparse().hashCode());
         assertEquals(si10dd.hashCode(), si10dd.toSparse().hashCode());
         assertEquals(si10ds.hashCode(), si10ds.toDense().hashCode());
-
-        assertEquals(si10sd, si10ss.toDense());
-        assertEquals(si10ss, si10sd.toSparse());
-        assertEquals(si10sd, si10sd.toDense());
-        assertEquals(si10ss, si10ss.toSparse());
-        assertEquals(si10sd, si10sd.toSparse().toDense());
-        assertEquals(si10ss, si10ss.toDense().toSparse());
 
         assertEquals(si10sd.hashCode(), si10ss.toDense().hashCode());
         assertEquals(si10ss.hashCode(), si10sd.toSparse().hashCode());
@@ -443,7 +348,7 @@ public class FloatMatrixInstantiateTest
         assertEquals(si10ss.hashCode(), si10ss.toDense().hashCode());
     }
 
-    // =============================================== RECTANGULAR MATRICES ===================================================
+    /* =========================================== RECTANGULAR MATRICES =============================================== */
 
     /**
      * Test the instantiation of dense and sparse matrix types with dense data (no zeros).
@@ -452,19 +357,25 @@ public class FloatMatrixInstantiateTest
     public void testInstantiateRectDenseData()
     {
         FloatLengthMatrix lmdkm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.DENSE);
+                new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(20, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmdkm10.get(0, 0));
         assertEquals(200, lmdkm10.cardinality());
-        assertEquals(100 * 201 * 1000.0, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 200 * 201 / 2, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, lmdkm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmdkm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmdkm10.getDisplayUnit());
 
         FloatLengthMatrix lmskm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(20, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmskm10.get(0, 0));
         assertEquals(200, lmskm10.cardinality());
-        assertEquals(100 * 201 * 1000.0, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 200 * 201 / 2, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, lmskm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmskm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmskm10.getDisplayUnit());
 
         assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
@@ -488,37 +399,74 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        FloatLengthMatrix lmdsi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsi10 = new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(20, 10), StorageType.DENSE);
+        lmdsi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(20, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmdsi10.get(0, 0));
         assertEquals(200, lmdsi10.cardinality());
-        assertEquals(100 * 201, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 200 * 201 / 2, lmdsi10.zSum().getInUnit(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
-        FloatLengthMatrix lmssi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssi10 = new FloatLengthMatrix(FLOATMATRIX.denseRectArrays(20, 10), StorageType.SPARSE);
+        lmssi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(20, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmssi10.get(0, 0));
         assertEquals(200, lmssi10.cardinality());
-        assertEquals(100 * 201, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 200 * 201 / 2, lmssi10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.CENTIMETER, lmssi10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.CENTIMETER, lmssi10.getDisplayUnit());
 
-        FloatLengthMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(20, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsc10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectScalarArrays(20, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(20, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmdsc10.get(0, 0));
         assertEquals(200, lmdsc10.cardinality());
-        assertEquals(100 * 201, lmdsc10.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, lmdsc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmdsc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmdsc10.getDisplayUnit());
 
-        FloatLengthMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(20, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssc10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectScalarArrays(20, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(20, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmssc10.get(0, 0));
         assertEquals(200, lmssc10.cardinality());
-        assertEquals(100 * 201, lmssc10.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, lmssc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmssc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmssc10.getDisplayUnit());
+
+        FloatLengthMatrix lmdtu10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectTuples(20, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 20, 10, StorageType.DENSE);
+        assertEquals(20, lmdtu10.rows());
+        assertEquals(10, lmdtu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmdtu10.get(0, 0));
+        assertEquals(new FloatLength(2, LengthUnit.NANOMETER), lmdtu10.get(0, 1));
+        assertEquals(new FloatLength(3, LengthUnit.NANOMETER), lmdtu10.get(0, 2));
+        assertEquals(200, lmdtu10.cardinality());
+        assertEquals(200 * 201 / 2, lmdtu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmdtu10.zSum().getDisplayUnit());
+        assertEquals(LengthUnit.NANOMETER, lmdtu10.getDisplayUnit());
+
+        FloatLengthMatrix lmstu10 =
+                new FloatLengthMatrix(FLOATMATRIX.denseRectTuples(20, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 20, 10, StorageType.SPARSE);
+        assertEquals(20, lmstu10.rows());
+        assertEquals(10, lmstu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmstu10.get(0, 0));
+        assertEquals(new FloatLength(2, LengthUnit.NANOMETER), lmstu10.get(0, 1));
+        assertEquals(new FloatLength(3, LengthUnit.NANOMETER), lmstu10.get(0, 2));
+        assertEquals(200, lmstu10.cardinality());
+        assertEquals(200 * 201 / 2, lmstu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmstu10.zSum().getDisplayUnit());
+        assertEquals(LengthUnit.NANOMETER, lmstu10.getDisplayUnit());
     }
 
     /**
@@ -528,19 +476,25 @@ public class FloatMatrixInstantiateTest
     public void testInstantiatRectSparseData()
     {
         FloatLengthMatrix lmdkm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.DENSE);
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.DENSE);
         assertEquals(20, lmdkm10.rows());
         assertEquals(10, lmdkm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmdkm10.get(0, 0));
         assertEquals(10, lmdkm10.cardinality());
-        assertEquals(5 * 11 * 1000.0, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 10 * 11 / 2, lmdkm10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdkm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmdkm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmdkm10.getDisplayUnit());
 
         FloatLengthMatrix lmskm10 =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(20, 10), LengthUnit.KILOMETER, StorageType.SPARSE);
         assertEquals(20, lmskm10.rows());
         assertEquals(10, lmskm10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.KILOMETER), lmskm10.get(0, 0));
         assertEquals(10, lmskm10.cardinality());
-        assertEquals(5 * 11 * 1000.0, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(1000 * 10 * 11 / 2, lmskm10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmskm10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.KILOMETER, lmskm10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.KILOMETER, lmskm10.getDisplayUnit());
 
         assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
@@ -549,6 +503,11 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmskm10, lmdkm10.toSparse());
         assertEquals(lmdkm10, lmdkm10.toSparse()); // dense and sparse are the same if content is the same
         assertEquals(lmskm10, lmskm10.toDense()); // dense and sparse are the same if content is the same
+        assertEquals(lmdkm10, lmdkm10.toDense());
+        assertEquals(lmskm10, lmskm10.toSparse());
+
+        assertTrue(lmdkm10.isDense());
+        assertTrue(lmskm10.isSparse());
 
         assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
@@ -559,229 +518,74 @@ public class FloatMatrixInstantiateTest
         assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
         assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
 
-        FloatLengthMatrix lmdsi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsi10 = new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(20, 10), StorageType.DENSE);
+        lmdsi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(20, lmdsi10.rows());
         assertEquals(10, lmdsi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmdsi10.get(0, 0));
         assertEquals(10, lmdsi10.cardinality());
-        assertEquals(5 * 11, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdsi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 10 * 11 / 2, lmdsi10.zSum().getInUnit(), 0.001);
         assertEquals(LengthUnit.CENTIMETER, lmdsi10.getDisplayUnit());
 
-        FloatLengthMatrix lmssi10 =
-                FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(20, 10), LengthUnit.CENTIMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssi10 = new FloatLengthMatrix(FLOATMATRIX.sparseRectArrays(20, 10), StorageType.SPARSE);
+        lmssi10.setDisplayUnit(LengthUnit.CENTIMETER);
         assertEquals(20, lmssi10.rows());
         assertEquals(10, lmssi10.cols());
+        assertEquals(new FloatLength(100, LengthUnit.CENTIMETER), lmssi10.get(0, 0));
         assertEquals(10, lmssi10.cardinality());
-        assertEquals(5 * 11, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmssi10.zSum().getSI(), 0.001);
+        assertEquals(100 * 10 * 11 / 2, lmssi10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.CENTIMETER, lmssi10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.CENTIMETER, lmssi10.getDisplayUnit());
 
-        FloatLengthMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(20, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdsc10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectScalarArrays(20, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.DENSE);
         assertEquals(20, lmdsc10.rows());
         assertEquals(10, lmdsc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmdsc10.get(0, 0));
         assertEquals(10, lmdsc10.cardinality());
-        assertEquals(5 * 11, lmdsc10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdsc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmdsc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmdsc10.getDisplayUnit());
 
-        FloatLengthMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(20, 10, FloatLength.class),
-                LengthUnit.HECTOMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmssc10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectScalarArrays(20, 10, FloatLength.class, LengthUnit.HECTOMETER),
+                        LengthUnit.HECTOMETER, StorageType.SPARSE);
         assertEquals(20, lmssc10.rows());
         assertEquals(10, lmssc10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.HECTOMETER), lmssc10.get(0, 0));
         assertEquals(10, lmssc10.cardinality());
-        assertEquals(5 * 11, lmssc10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmssc10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.HECTOMETER, lmssc10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.HECTOMETER, lmssc10.getDisplayUnit());
 
-        FloatLengthMatrix lmdtu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(20, 10, FloatLength.class), 20, 10,
-                LengthUnit.NANOMETER, StorageType.DENSE);
+        FloatLengthMatrix lmdtu10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectTuples(20, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 20, 10, StorageType.DENSE);
         assertEquals(20, lmdtu10.rows());
         assertEquals(10, lmdtu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmdtu10.get(0, 0));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmdtu10.get(0, 1));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmdtu10.get(1, 0));
         assertEquals(10, lmdtu10.cardinality());
-        assertEquals(5 * 11, lmdtu10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmdtu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmdtu10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.NANOMETER, lmdtu10.getDisplayUnit());
 
-        FloatLengthMatrix lmstu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(20, 10, FloatLength.class), 20, 10,
-                LengthUnit.NANOMETER, StorageType.SPARSE);
+        FloatLengthMatrix lmstu10 =
+                new FloatLengthMatrix(FLOATMATRIX.sparseRectTuples(20, 10, FloatLength.class, LengthUnit.NANOMETER),
+                        LengthUnit.NANOMETER, 20, 10, StorageType.SPARSE);
         assertEquals(20, lmstu10.rows());
         assertEquals(10, lmstu10.cols());
+        assertEquals(new FloatLength(1, LengthUnit.NANOMETER), lmstu10.get(0, 0));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmstu10.get(0, 1));
+        assertEquals(new FloatLength(0, LengthUnit.NANOMETER), lmstu10.get(1, 0));
         assertEquals(10, lmstu10.cardinality());
-        assertEquals(5 * 11, lmstu10.zSum().getSI(), 0.001);
+        assertEquals(10 * 11 / 2, lmstu10.zSum().getInUnit(), 0.001);
+        assertEquals(LengthUnit.NANOMETER, lmstu10.zSum().getDisplayUnit());
         assertEquals(LengthUnit.NANOMETER, lmstu10.getDisplayUnit());
-    }
-
-    /**
-     * Test the instantiation of dense and sparse matrix types with dense data (no zeros).
-     */
-    @Test
-    public void testInstantiateRectDenseDataWithClass()
-    {
-        FloatAreaMatrix lmdkm10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdkm10.rows());
-        assertEquals(10, lmdkm10.cols());
-        assertEquals(200, lmdkm10.cardinality());
-        assertEquals(100 * 201 * 1.0E6, lmdkm10.zSum().getSI(), 1000);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
-
-        FloatAreaMatrix lmskm10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmskm10.rows());
-        assertEquals(10, lmskm10.cols());
-        assertEquals(200, lmskm10.cardinality());
-        assertEquals(100 * 201 * 1.0E6, lmskm10.zSum().getSI(), 1000);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmskm10.getDisplayUnit());
-
-        assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
-        assertEquals(lmskm10, lmskm10.toDense().toSparse());
-        assertEquals(lmdkm10, lmskm10.toDense());
-        assertEquals(lmskm10, lmdkm10.toSparse());
-        assertEquals(lmdkm10, lmdkm10.toSparse()); // dense and sparse are the same if content is the same
-        assertEquals(lmskm10, lmskm10.toDense()); // dense and sparse are the same if content is the same
-
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmskm10.toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
-
-        FloatAreaMatrix lmdsi10 = FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdsi10.rows());
-        assertEquals(10, lmdsi10.cols());
-        assertEquals(200, lmdsi10.cardinality());
-        assertEquals(100 * 201, lmdsi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
-
-        FloatAreaMatrix lmssi10 = FloatMatrix.instantiateSI(FLOATMATRIX.denseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmssi10.rows());
-        assertEquals(10, lmssi10.cols());
-        assertEquals(200, lmssi10.cardinality());
-        assertEquals(100 * 201, lmssi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
-
-        FloatAreaMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(20, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdsc10.rows());
-        assertEquals(10, lmdsc10.cols());
-        assertEquals(200, lmdsc10.cardinality());
-        assertEquals(100 * 201, lmdsc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
-
-        FloatAreaMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.denseRectScalarArrays(20, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmssc10.rows());
-        assertEquals(10, lmssc10.cols());
-        assertEquals(200, lmssc10.cardinality());
-        assertEquals(100 * 201, lmssc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmssc10.getDisplayUnit());
-    }
-
-    /**
-     * Test the instantiation of dense and sparse matrix types with sparse data (90% zeros).
-     */
-    @Test
-    public void testInstantiatRectSparseDataWithClass()
-    {
-        FloatAreaMatrix lmdkm10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdkm10.rows());
-        assertEquals(10, lmdkm10.cols());
-        assertEquals(10, lmdkm10.cardinality());
-        assertEquals(5 * 11 * 1.0E6, lmdkm10.zSum().getSI(), 0.1);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmdkm10.getDisplayUnit());
-
-        FloatAreaMatrix lmskm10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_KILOMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmskm10.rows());
-        assertEquals(10, lmskm10.cols());
-        assertEquals(10, lmskm10.cardinality());
-        assertEquals(5 * 11 * 1.0E6, lmskm10.zSum().getSI(), 0.1);
-        assertEquals(AreaUnit.SQUARE_KILOMETER, lmskm10.getDisplayUnit());
-
-        assertEquals(lmdkm10, lmdkm10.toSparse().toDense());
-        assertEquals(lmskm10, lmskm10.toDense().toSparse());
-        assertEquals(lmdkm10, lmskm10.toDense());
-        assertEquals(lmskm10, lmdkm10.toSparse());
-        assertEquals(lmdkm10, lmdkm10.toSparse()); // dense and sparse are the same if content is the same
-        assertEquals(lmskm10, lmskm10.toDense()); // dense and sparse are the same if content is the same
-
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmskm10.toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toSparse().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toDense().hashCode());
-        assertEquals(lmdkm10.hashCode(), lmdkm10.toDense().hashCode());
-        assertEquals(lmskm10.hashCode(), lmskm10.toSparse().hashCode());
-
-        FloatAreaMatrix lmdsi10 = FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdsi10.rows());
-        assertEquals(10, lmdsi10.cols());
-        assertEquals(10, lmdsi10.cardinality());
-        assertEquals(5 * 11, lmdsi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmdsi10.getDisplayUnit());
-
-        FloatAreaMatrix lmssi10 = FloatMatrix.instantiateSI(FLOATMATRIX.sparseRectArrays(20, 10), AreaUnit.SQUARE_CENTIMETER,
-                StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmssi10.rows());
-        assertEquals(10, lmssi10.cols());
-        assertEquals(10, lmssi10.cardinality());
-        assertEquals(5 * 11, lmssi10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_CENTIMETER, lmssi10.getDisplayUnit());
-
-        FloatAreaMatrix lmdsc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(20, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdsc10.rows());
-        assertEquals(10, lmdsc10.cols());
-        assertEquals(10, lmdsc10.cardinality());
-        assertEquals(5 * 11, lmdsc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmdsc10.getDisplayUnit());
-
-        FloatAreaMatrix lmssc10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectScalarArrays(20, 10, FloatArea.class),
-                AreaUnit.SQUARE_HECTOMETER, StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmssc10.rows());
-        assertEquals(10, lmssc10.cols());
-        assertEquals(10, lmssc10.cardinality());
-        assertEquals(5 * 11, lmssc10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.SQUARE_HECTOMETER, lmssc10.getDisplayUnit());
-
-        FloatAreaMatrix lmdtu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(20, 10, FloatArea.class), 20, 10,
-                AreaUnit.ACRE, StorageType.DENSE, FloatAreaMatrix.class);
-        assertEquals(20, lmdtu10.rows());
-        assertEquals(10, lmdtu10.cols());
-        assertEquals(10, lmdtu10.cardinality());
-        assertEquals(5 * 11, lmdtu10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.ACRE, lmdtu10.getDisplayUnit());
-
-        FloatAreaMatrix lmstu10 = FloatMatrix.instantiate(FLOATMATRIX.sparseRectTuples(20, 10, FloatArea.class), 20, 10,
-                AreaUnit.ACRE, StorageType.SPARSE, FloatAreaMatrix.class);
-        assertEquals(20, lmstu10.rows());
-        assertEquals(10, lmstu10.cols());
-        assertEquals(10, lmstu10.cardinality());
-        assertEquals(5 * 11, lmstu10.zSum().getSI(), 0.001);
-        assertEquals(AreaUnit.ACRE, lmstu10.getDisplayUnit());
-
-        assertNotEquals(lmdkm10, lmdsi10);
-        assertNotEquals(lmdkm10, lmssi10);
-        assertNotEquals(lmskm10, lmdsi10);
-        assertNotEquals(lmskm10, lmssi10);
-        assertNotEquals(lmdkm10, lmdtu10);
-        assertNotEquals(lmdkm10, lmstu10);
-        assertNotEquals(lmskm10, lmdtu10);
-        assertNotEquals(lmskm10, lmstu10);
-
-        assertNotEquals(lmdkm10.hashCode(), lmdsi10.hashCode());
-        assertNotEquals(lmdkm10.hashCode(), lmssi10.hashCode());
-        assertNotEquals(lmskm10.hashCode(), lmdsi10.hashCode());
-        assertNotEquals(lmskm10.hashCode(), lmssi10.hashCode());
-        assertNotEquals(lmdkm10.hashCode(), lmdtu10.hashCode());
-        assertNotEquals(lmdkm10.hashCode(), lmstu10.hashCode());
-        assertNotEquals(lmskm10.hashCode(), lmdtu10.hashCode());
-        assertNotEquals(lmskm10.hashCode(), lmstu10.hashCode());
     }
 
     /**
@@ -791,38 +595,34 @@ public class FloatMatrixInstantiateTest
     @Test
     public void testInstantiateRectSIUnit() throws UnitException
     {
-        FloatSIMatrix si10dd =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
+        FloatSIMatrix si10dd = new FloatSIMatrix(FLOATMATRIX.denseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(20, si10dd.rows());
         assertEquals(10, si10dd.cols());
         assertEquals(200, si10dd.cardinality());
-        assertEquals(100 * 201, si10dd.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, si10dd.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10dd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
         assertEquals("getScalarClass returns FloatSIScalar", FloatSIScalar.class, si10dd.getScalarClass());
         assertEquals("getVectorClass returns FloatSIVector", FloatSIVector.class, si10dd.getVectorClass());
 
-        FloatSIMatrix si10ds =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
+        FloatSIMatrix si10ds = new FloatSIMatrix(FLOATMATRIX.denseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(20, si10ds.rows());
         assertEquals(10, si10ds.cols());
         assertEquals(200, si10ds.cardinality());
-        assertEquals(100 * 201, si10ds.zSum().getSI(), 0.001);
+        assertEquals(200 * 201 / 2, si10ds.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10ds.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
-        FloatSIMatrix si10sd =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
+        FloatSIMatrix si10sd = new FloatSIMatrix(FLOATMATRIX.sparseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.DENSE);
         assertEquals(20, si10sd.rows());
         assertEquals(10, si10sd.cols());
         assertEquals(10, si10sd.cardinality());
-        assertEquals(5 * 11, si10sd.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, si10sd.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10sd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
-        FloatSIMatrix si10ss =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
+        FloatSIMatrix si10ss = new FloatSIMatrix(FLOATMATRIX.sparseRectArrays(20, 10), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(20, si10ss.rows());
         assertEquals(10, si10ss.cols());
         assertEquals(10, si10ss.cardinality());
-        assertEquals(5 * 11, si10ss.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, si10ss.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10ss.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
 
         assertEquals(si10dd, si10ds.toDense());
@@ -831,6 +631,8 @@ public class FloatMatrixInstantiateTest
         assertEquals(si10ds, si10ds.toSparse());
         assertEquals(si10dd, si10dd.toSparse().toDense());
         assertEquals(si10ds, si10ds.toDense().toSparse());
+        assertEquals(si10dd, si10dd.toSparse());
+        assertEquals(si10ds, si10ds.toDense());
 
         assertEquals(si10sd, si10ss.toDense());
         assertEquals(si10ss, si10sd.toSparse());
@@ -838,6 +640,8 @@ public class FloatMatrixInstantiateTest
         assertEquals(si10ss, si10ss.toSparse());
         assertEquals(si10sd, si10sd.toSparse().toDense());
         assertEquals(si10ss, si10ss.toDense().toSparse());
+        assertEquals(si10sd, si10sd.toSparse());
+        assertEquals(si10ss, si10ss.toDense());
 
         assertEquals(si10dd.hashCode(), si10ds.toDense().hashCode());
         assertEquals(si10ds.hashCode(), si10dd.toSparse().hashCode());
@@ -852,85 +656,87 @@ public class FloatMatrixInstantiateTest
         assertEquals(si10ss.hashCode(), si10sd.toSparse().hashCode());
         assertEquals(si10sd.hashCode(), si10sd.toDense().hashCode());
         assertEquals(si10ss.hashCode(), si10ss.toSparse().hashCode());
+        assertEquals(si10sd.hashCode(), si10sd.toSparse().toDense().hashCode());
+        assertEquals(si10ss.hashCode(), si10ss.toDense().toSparse().hashCode());
         assertEquals(si10sd.hashCode(), si10sd.toSparse().hashCode());
         assertEquals(si10ss.hashCode(), si10ss.toDense().hashCode());
     }
 
-    // =============================================== EDGE CASE MATRICES ===================================================
+    /* =========================================== EDGE CASE MATRICES ================================================= */
 
     /**
      * Test the instantiation of dense and sparse matrix types with one row or one column, and errors with null pointers.
      */
     @Test
-    @SuppressWarnings({"checkstyle:methodlength", "checkstyle:localvariablename"})
+    @SuppressWarnings({"checkstyle:localvariablename", "checkstyle:methodlength"})
     public void testInstantiateEdgeCases()
     {
         // DENSE DATA
 
         FloatSpeedMatrix row1dd =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, row1dd.rows());
         assertEquals(10, row1dd.cols());
         assertEquals(10, row1dd.cardinality());
-        assertEquals(5 * 11, row1dd.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, row1dd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row1dd.getDisplayUnit());
 
         FloatSpeedMatrix col1dd =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(10, col1dd.rows());
         assertEquals(1, col1dd.cols());
         assertEquals(10, col1dd.cardinality());
-        assertEquals(5 * 11, col1dd.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, col1dd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col1dd.getDisplayUnit());
 
         FloatSpeedMatrix row1ds =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, row1ds.rows());
         assertEquals(10, row1ds.cols());
         assertEquals(10, row1ds.cardinality());
-        assertEquals(5 * 11, row1ds.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, row1ds.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row1ds.getDisplayUnit());
 
         FloatSpeedMatrix col1ds =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(10, col1ds.rows());
         assertEquals(1, col1ds.cols());
         assertEquals(10, col1ds.cardinality());
-        assertEquals(5 * 11, col1ds.zSum().getSI(), 0.001);
+        assertEquals(5 * 11, col1ds.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col1ds.getDisplayUnit());
 
         // SPARSE DATA
 
         FloatSpeedMatrix row1sd =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, row1sd.rows());
         assertEquals(10, row1sd.cols());
         assertEquals(1, row1sd.cardinality());
-        assertEquals(1, row1sd.zSum().getSI(), 0.001);
+        assertEquals(1, row1sd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row1sd.getDisplayUnit());
 
         FloatSpeedMatrix col1sd =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(10, col1sd.rows());
         assertEquals(1, col1sd.cols());
         assertEquals(1, col1sd.cardinality());
-        assertEquals(1, col1sd.zSum().getSI(), 0.001);
+        assertEquals(1, col1sd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col1sd.getDisplayUnit());
 
         FloatSpeedMatrix row1ss =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(1, 10), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, row1ss.rows());
         assertEquals(10, row1ss.cols());
         assertEquals(1, row1ss.cardinality());
-        assertEquals(1, row1ss.zSum().getSI(), 0.001);
+        assertEquals(1, row1ss.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row1ss.getDisplayUnit());
 
         FloatSpeedMatrix col1ss =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(10, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(10, col1ss.rows());
         assertEquals(1, col1ss.cols());
         assertEquals(1, col1ss.cardinality());
-        assertEquals(1, col1ss.zSum().getSI(), 0.001);
+        assertEquals(1, col1ss.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col1ss.getDisplayUnit());
 
         // equals
@@ -954,91 +760,72 @@ public class FloatMatrixInstantiateTest
         assertNotEquals(row1sd, col1ds);
         assertNotEquals(col1sd, row1ds);
 
-        assertEquals(row1dd.hashCode(), row1dd.hashCode());
-        assertEquals(row1ss.hashCode(), row1ss.hashCode());
-        assertEquals(row1dd.hashCode(), row1ds.hashCode());
-        assertEquals(col1dd.hashCode(), col1ds.hashCode());
-        assertEquals(row1sd.hashCode(), row1ss.hashCode());
-        assertEquals(col1sd.hashCode(), col1ss.hashCode());
-        assertEquals(row1ds.hashCode(), row1dd.hashCode());
-        assertEquals(col1ds.hashCode(), col1dd.hashCode());
-        assertEquals(row1ss.hashCode(), row1sd.hashCode());
-        assertEquals(col1ss.hashCode(), col1sd.hashCode());
-        assertNotEquals(row1dd.hashCode(), col1dd.hashCode());
-        assertNotEquals(col1dd.hashCode(), row1dd.hashCode());
-        assertNotEquals(row1ss.hashCode(), col1ss.hashCode());
-        assertNotEquals(col1ss.hashCode(), row1ss.hashCode());
-        assertNotEquals(row1ds.hashCode(), col1sd.hashCode());
-        assertNotEquals(col1ds.hashCode(), row1sd.hashCode());
-        assertNotEquals(row1sd.hashCode(), col1ds.hashCode());
-        assertNotEquals(col1sd.hashCode(), row1ds.hashCode());
-
         // 1 x 1 DENSE DATA
 
         FloatSpeedMatrix row11dd =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, row11dd.rows());
         assertEquals(1, row11dd.cols());
         assertEquals(1, row11dd.cardinality());
-        assertEquals(1, row11dd.zSum().getSI(), 0.001);
+        assertEquals(1, row11dd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row11dd.getDisplayUnit());
 
         FloatSpeedMatrix col11dd =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, col11dd.rows());
         assertEquals(1, col11dd.cols());
         assertEquals(1, col11dd.cardinality());
-        assertEquals(1, col11dd.zSum().getSI(), 0.001);
+        assertEquals(1, col11dd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col11dd.getDisplayUnit());
 
         FloatSpeedMatrix row11ds =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, row11ds.rows());
         assertEquals(1, row11ds.cols());
         assertEquals(1, row11ds.cardinality());
-        assertEquals(1, row11ds.zSum().getSI(), 0.001);
+        assertEquals(1, row11ds.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row11ds.getDisplayUnit());
 
         FloatSpeedMatrix col11ds =
-                FloatMatrix.instantiate(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.denseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, col11ds.rows());
         assertEquals(1, col11ds.cols());
         assertEquals(1, col11ds.cardinality());
-        assertEquals(1, col11ds.zSum().getSI(), 0.001);
+        assertEquals(1, col11ds.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col11ds.getDisplayUnit());
 
         // 1 x 1 SPARSE DATA
 
         FloatSpeedMatrix row11sd =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, row11sd.rows());
         assertEquals(1, row11sd.cols());
         assertEquals(1, row11sd.cardinality());
-        assertEquals(1, row11sd.zSum().getSI(), 0.001);
+        assertEquals(1, row11sd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row11sd.getDisplayUnit());
 
         FloatSpeedMatrix col11sd =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.DENSE);
         assertEquals(1, col11sd.rows());
         assertEquals(1, col11sd.cols());
         assertEquals(1, col11sd.cardinality());
-        assertEquals(1, col11sd.zSum().getSI(), 0.001);
+        assertEquals(1, col11sd.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col11sd.getDisplayUnit());
 
         FloatSpeedMatrix row11ss =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, row11ss.rows());
         assertEquals(1, row11ss.cols());
         assertEquals(1, row11ss.cardinality());
-        assertEquals(1, row11ss.zSum().getSI(), 0.001);
+        assertEquals(1, row11ss.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, row11ss.getDisplayUnit());
 
         FloatSpeedMatrix col11ss =
-                FloatMatrix.instantiate(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
+                new FloatSpeedMatrix(FLOATMATRIX.sparseRectArrays(1, 1), SpeedUnit.METER_PER_SECOND, StorageType.SPARSE);
         assertEquals(1, col11ss.rows());
         assertEquals(1, col11ss.cols());
         assertEquals(1, col11ss.cardinality());
-        assertEquals(1, col11ss.zSum().getSI(), 0.001);
+        assertEquals(1, col11ss.zSum().getInUnit(), 0.001);
         assertEquals(SpeedUnit.METER_PER_SECOND, col11ss.getDisplayUnit());
 
         // NULL
@@ -1046,11 +833,11 @@ public class FloatMatrixInstantiateTest
         float[][] d1_1 = new float[1][];
         d1_1[0] = new float[1];
 
-        Try.testFail(() -> FloatMatrix.instantiate((float[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+        Try.testFail(() -> new FloatSpeedMatrix((float[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
                 "constructing matrix with null input should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> FloatMatrix.instantiate(d1_1, null, StorageType.DENSE),
+        Try.testFail(() -> new FloatSpeedMatrix(d1_1, null, StorageType.DENSE),
                 "constructing matrix with null unit should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> FloatMatrix.instantiate(d1_1, SpeedUnit.METER_PER_SECOND, null),
+        Try.testFail(() -> new FloatSpeedMatrix(d1_1, SpeedUnit.METER_PER_SECOND, null),
                 "constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
     }
 
@@ -1069,33 +856,33 @@ public class FloatMatrixInstantiateTest
         Collection<FloatSparseValue<SpeedUnit, FloatSpeed>> speedList = new ArrayList<>();
         SortedMap<Integer, FloatSpeedMatrix> smMap = new TreeMap<>();
         smMap.put(0,
-                FloatMatrix.instantiate(
+                new FloatSpeedMatrix(
                         FloatMatrixData.instantiate(floatMatrix00, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.DENSE),
                         SpeedUnit.KM_PER_HOUR));
         smMap.put(1,
-                FloatMatrix.instantiate(
+                new FloatSpeedMatrix(
                         FloatMatrixData.instantiate(floatMatrix00, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
         smMap.put(2,
-                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix00, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
+                new FloatSpeedMatrix(FloatMatrixData.instantiate(speedMatrix00, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
         smMap.put(3,
-                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix00, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
-        smMap.put(4, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedList, 0, 0, StorageType.DENSE),
-                SpeedUnit.KM_PER_HOUR));
-        smMap.put(5, FloatMatrix.instantiate(FloatMatrixData.instantiate(speedList, 0, 0, StorageType.SPARSE),
-                SpeedUnit.KM_PER_HOUR));
+                new FloatSpeedMatrix(FloatMatrixData.instantiate(speedMatrix00, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
+        smMap.put(4,
+                new FloatSpeedMatrix(FloatMatrixData.instantiate(speedList, 0, 0, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
+        smMap.put(5,
+                new FloatSpeedMatrix(FloatMatrixData.instantiate(speedList, 0, 0, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
         smMap.put(6,
-                FloatMatrix.instantiate(
+                new FloatSpeedMatrix(
                         FloatMatrixData.instantiate(floatMatrix10, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.DENSE),
                         SpeedUnit.KM_PER_HOUR));
         smMap.put(7,
-                FloatMatrix.instantiate(
+                new FloatSpeedMatrix(
                         FloatMatrixData.instantiate(floatMatrix10, SpeedUnit.KM_PER_HOUR.getScale(), StorageType.SPARSE),
                         SpeedUnit.KM_PER_HOUR));
         smMap.put(8,
-                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix10, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
+                new FloatSpeedMatrix(FloatMatrixData.instantiate(speedMatrix10, StorageType.DENSE), SpeedUnit.KM_PER_HOUR));
         smMap.put(9,
-                FloatMatrix.instantiate(FloatMatrixData.instantiate(speedMatrix10, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
+                new FloatSpeedMatrix(FloatMatrixData.instantiate(speedMatrix10, StorageType.SPARSE), SpeedUnit.KM_PER_HOUR));
 
         for (Map.Entry<Integer, FloatSpeedMatrix> entry : smMap.entrySet())
         {

@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.matrix;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -73,23 +73,24 @@ public final class FLOATMATRIX
      * @param rows the number of rows
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
+     * @param unit U; the unit to use for construction
      * @return an array with all nonzero values
      * @param <U> the unit type
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] denseRectScalarArrays(final int rows,
-            final int cols, final Class<S> scalarClass)
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] denseRectScalarArrays(final int rows, final int cols,
+            final Class<S> scalarClass, final U unit)
     {
         try
         {
             S[][] array = (S[][]) Array.newInstance(scalarClass, rows, cols);
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] { float.class });
-            for (int i = 0; i < rows; i++)
+            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            for (int r = 0; r < rows; r++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int c = 0; c < cols; c++)
                 {
-                    array[i][j] = (S) instantiateSI.invoke(null, cols * i + j + 1.0f);
+                    array[r][c] = (S) instantiateSI.newInstance((float) (cols * r + c + 1.0f), unit);
                 }
             }
             return array;
@@ -105,23 +106,25 @@ public final class FLOATMATRIX
      * @param rows the number of rows
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
+     * @param unit U; the unit to use for construction
      * @return an array with only nonzero values on the diagonal
      * @param <U> the unit type
      * @param <S> the scalar type
      */
     @SuppressWarnings("unchecked")
-    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] sparseRectScalarArrays(final int rows,
-            final int cols, final Class<S> scalarClass)
+    public static <U extends Unit<U>, S extends FloatScalar<U, S>> S[][] sparseRectScalarArrays(final int rows, final int cols,
+            final Class<S> scalarClass, final U unit)
     {
         try
         {
             S[][] array = (S[][]) Array.newInstance(scalarClass, rows, cols);
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] { float.class });
-            for (int i = 0; i < rows; i++)
+            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            for (int r = 0; r < rows; r++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int c = 0; c < cols; c++)
                 {
-                    array[i][j] = (i == j) ? (S) instantiateSI.invoke(null, i + 1) : (S) instantiateSI.invoke(null, 0.0f);
+                    array[r][c] = (r == c) ? (S) instantiateSI.newInstance((float) (r + 1), unit)
+                            : (S) instantiateSI.newInstance(0.0f, unit);
                 }
             }
             return array;
@@ -133,28 +136,28 @@ public final class FLOATMATRIX
     }
 
     /**
-     * Return a rectangular array with all values != 0.
+     * Return a collection of tuples with all values != 0.
      * @param rows the number of rows
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
-     * @return an array with all nonzero values
+     * @param unit U the unit
+     * @return a collection with all nonzero values
      * @param <U> the unit type
      * @param <S> the scalar type
      */
-    @SuppressWarnings("unchecked")
     public static <U extends Unit<U>, S extends FloatScalar<U, S>> Collection<FloatSparseValue<U, S>> denseRectTuples(
-            final int rows, final int cols, final Class<S> scalarClass)
+            final int rows, final int cols, final Class<S> scalarClass, final U unit)
     {
         try
         {
             List<FloatSparseValue<U, S>> matrixList = new ArrayList<>();
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] { float.class });
-            for (int i = 0; i < rows; i++)
+            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            for (int r = 0; r < rows; r++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int c = 0; c < cols; c++)
                 {
-                    S v = (S) instantiateSI.invoke(null, cols * i + j + 1.0f);
-                    FloatSparseValue<U, S> dsv = new FloatSparseValue<U, S>(i, j, v);
+                    S v = (S) instantiateSI.newInstance((float) (cols * r + c + 1.0f), unit);
+                    FloatSparseValue<U, S> dsv = new FloatSparseValue<U, S>(r, c, v);
                     matrixList.add(dsv);
                 }
             }
@@ -167,28 +170,30 @@ public final class FLOATMATRIX
     }
 
     /**
-     * Return a rectangular array with only nonzero values on the diagonal.
+     * Return a collection of tuples with only nonzero values on the diagonal.
      * @param rows the number of rows
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
-     * @return an array with only nonzero values on the diagonal
+     * @param unit U the unit
+     * @return a collection with only nonzero values on the diagonal
      * @param <U> the unit type
      * @param <S> the scalar type
      */
     public static <U extends Unit<U>, S extends FloatScalar<U, S>> Collection<FloatSparseValue<U, S>> sparseRectTuples(
-            final int rows, final int cols, final Class<S> scalarClass)
+            final int rows, final int cols, final Class<S> scalarClass, final U unit)
     {
         try
         {
             List<FloatSparseValue<U, S>> matrixList = new ArrayList<>();
-            for (int i = 0; i < rows; i++)
+            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            for (int r = 0; r < rows; r++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int c = 0; c < cols; c++)
                 {
-                    if (i == j)
+                    if (r == c)
                     {
-                        float v = i + 1;
-                        FloatSparseValue<U, S> dsv = new FloatSparseValue<U, S>(i, j, v);
+                        S v = (S) instantiateSI.newInstance((float) (r + 1), unit);
+                        FloatSparseValue<U, S> dsv = new FloatSparseValue<U, S>(r, c, v);
                         matrixList.add(dsv);
                     }
                 }
