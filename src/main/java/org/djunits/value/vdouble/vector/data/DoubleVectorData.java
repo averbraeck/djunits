@@ -3,7 +3,7 @@ package org.djunits.value.vdouble.vector.data;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.djunits.unit.Unit;
@@ -243,7 +243,7 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param valueMap SortedMap&lt;Integer,? extends Number&gt;; the Number or Scalar values to store
+     * @param valueMap Map&lt;Integer,? extends Number&gt;; the Number or Scalar values to store
      * @param size int; the size of the vector to pad with 0 after last entry in map
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
@@ -251,7 +251,7 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
      * @throws ValueRuntimeException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
      */
-    public static DoubleVectorData instantiate(final SortedMap<Integer, ? extends Number> valueMap, final int size,
+    public static DoubleVectorData instantiate(final Map<Integer, ? extends Number> valueMap, final int size,
             final Scale scale, final StorageType storageType) throws ValueRuntimeException
     {
         Throw.whenNull(valueMap, "DoubleVectorData.instantiate: values is null");

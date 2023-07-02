@@ -3,7 +3,7 @@ package org.djunits.value.vfloat.vector.data;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.djunits.unit.Unit;
@@ -141,7 +141,7 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param valueMap SortedMap&lt;Integer,? extends Number&gt;; the values to store; either Numbers or FloatScalars
+     * @param valueMap Map&lt;Integer,? extends Number&gt;; the values to store; either Numbers or FloatScalars
      * @param size int; the size of the vector to pad with 0 after last entry in map
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
@@ -149,7 +149,7 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
      * @throws ValueRuntimeException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
      */
-    public static FloatVectorData instantiate(final SortedMap<Integer, ? extends Number> valueMap, final int size,
+    public static FloatVectorData instantiate(final Map<Integer, ? extends Number> valueMap, final int size,
             final Scale scale, final StorageType storageType) throws ValueRuntimeException
     {
         Throw.whenNull(valueMap, "FloatVectorData.instantiate: values is null");
