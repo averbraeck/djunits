@@ -129,7 +129,7 @@ public class FloatSIMatrixTest
     @Test
     public void testDimensionLess()
     {
-        float[][] denseTestData = FLOATMATRIX.denseRectArrays(12, 23);
+        float[][] denseTestData = FLOATMATRIX.denseRectArrays(12, 23, false);
         // put at least one negative value in the test data
         denseTestData[5][5] = -123f;
         // put a zero value in the test data
