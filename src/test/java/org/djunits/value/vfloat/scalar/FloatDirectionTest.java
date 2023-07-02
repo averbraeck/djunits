@@ -2,6 +2,8 @@ package org.djunits.value.vfloat.scalar;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Locale;
+
 import org.djunits.unit.DirectionUnit;
 import org.junit.Test;
 
@@ -33,6 +35,8 @@ public class FloatDirectionTest
     @Test
     public final void testFloatDirectionStringConversions()
     {
+        Locale.setDefault(Locale.US);
+        
         assertEquals(0.0, FloatDirection.valueOf("0.0 deg(E)").getSI(), 0.0001);
         assertEquals(Math.PI, FloatDirection.valueOf("180 deg(E)").getSI(), 0.0001);
         assertEquals(0.0, FloatDirection.valueOf("0.0deg(E)").getSI(), 0.0001);

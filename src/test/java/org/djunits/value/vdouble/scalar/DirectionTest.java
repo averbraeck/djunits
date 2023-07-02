@@ -2,6 +2,8 @@ package org.djunits.value.vdouble.scalar;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Locale;
+
 import org.djunits.unit.DirectionUnit;
 import org.junit.Test;
 
@@ -33,6 +35,8 @@ public class DirectionTest
     @Test
     public final void testDirectionStringConversions()
     {
+        Locale.setDefault(Locale.US);
+        
         assertEquals(0.0, Direction.valueOf("0.0 deg(E)").getSI(), 0.0001);
         assertEquals(Math.PI, Direction.valueOf("180 deg(E)").getSI(), 0.0001);
         assertEquals(0.0, Direction.valueOf("0.0deg(E)").getSI(), 0.0001);
