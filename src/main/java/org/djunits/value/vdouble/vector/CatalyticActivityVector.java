@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.vector;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 import org.djunits.unit.CatalyticActivityUnit;
 import org.djunits.unit.scale.IdentityScale;
@@ -21,9 +21,8 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class CatalyticActivityVector
-        extends DoubleVectorRel<CatalyticActivityUnit, CatalyticActivity, CatalyticActivityVector>
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-02T12:23:58.164358800Z")
+public class CatalyticActivityVector extends DoubleVectorRel<CatalyticActivityUnit, CatalyticActivity, CatalyticActivityVector>
 
 {
     /** */
@@ -203,7 +202,7 @@ public class CatalyticActivityVector
         this(data, StorageType.DENSE);
     }
 
-    /* CONSTRUCTORS WITH SortedMap<Integer, Double> or SortedMap<Integer, CatalyticActivity> */
+    /* CONSTRUCTORS WITH Map<Integer, Double> or Map<Integer, CatalyticActivity> */
 
     /**
      * Construct an CatalyticActivityVector from a (sparse) map of index values to Number objects or a (sparse) map of index
@@ -214,17 +213,17 @@ public class CatalyticActivityVector
      * expressed, as well as the unit in which they will be printed. In case the map contains CatalyticActivity objects, each
      * CatalyticActivity has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, CatalyticActivity&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, CatalyticActivity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit CatalyticActivityUnit; the display unit of the vector data, and the unit of the data points when the
      *            data is expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public CatalyticActivityVector(final SortedMap<Integer, ? extends Number> data, final int size,
+    public CatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size,
             final CatalyticActivityUnit displayUnit, final StorageType storageType)
     {
         this(data.size() == 0 ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
-                : data.get(data.firstKey()) instanceof CatalyticActivity
+                : data.values().iterator().next() instanceof CatalyticActivity
                         ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
                         : DoubleVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
                 displayUnit);
@@ -240,12 +239,12 @@ public class CatalyticActivityVector
      * CatalyticActivity has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is SPARSE since we offer the data as a Map.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, CatalyticActivity&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, CatalyticActivity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit CatalyticActivityUnit; the display unit of the vector data, and the unit of the data points when the
      *            data is expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
-    public CatalyticActivityVector(final SortedMap<Integer, ? extends Number> data, final int size,
+    public CatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size,
             final CatalyticActivityUnit displayUnit)
     {
         this(data, size, displayUnit, StorageType.SPARSE);
@@ -258,12 +257,11 @@ public class CatalyticActivityVector
      * such as Double, assume that they are expressed using SI units. When the data consists of CatalyticActivity objects, they
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, CatalyticActivity&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, CatalyticActivity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public CatalyticActivityVector(final SortedMap<Integer, ? extends Number> data, final int size,
-            final StorageType storageType)
+    public CatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
         this(data, size, CatalyticActivityUnit.SI, storageType);
     }
@@ -276,10 +274,10 @@ public class CatalyticActivityVector
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is SPARSE since we offer the data as a Map.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, CatalyticActivity&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, CatalyticActivity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      */
-    public CatalyticActivityVector(final SortedMap<Integer, ? extends Number> data, final int size)
+    public CatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size)
     {
         this(data, size, StorageType.SPARSE);
     }

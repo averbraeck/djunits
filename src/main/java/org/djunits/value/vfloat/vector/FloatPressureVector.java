@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.vector;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 import org.djunits.unit.PressureUnit;
 import org.djunits.unit.scale.IdentityScale;
@@ -13,7 +13,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import jakarta.annotation.Generated;
 
 /**
- * Immutable Float FloatPressureVector, a vector of values with a PressureUnit. 
+ * Immutable Float FloatPressureVector, a vector of values with a PressureUnit.
  * <p>
  * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-02T12:25:19.834415900Z")
 public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPressure, FloatPressureVector>
 
 {
@@ -86,8 +86,8 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     /* CONSTRUCTORS WITH FloatPressure[] */
 
     /**
-     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in their own
-     * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
+     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in
+     * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
      * @param data FloatPressure[]; the data for the vector
      * @param displayUnit PressureUnit; the display unit of the values when printing
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
@@ -98,9 +98,9 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     }
 
     /**
-     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in their own
-     * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
-     * StorageType is DENSE since we offer the data as an array.
+     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in
+     * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that
+     * the StorageType is DENSE since we offer the data as an array.
      * @param data FloatPressure[]; the data for the vector
      * @param displayUnit PressureUnit; the display unit of the values when printing
      */
@@ -110,9 +110,9 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     }
 
     /**
-     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in their own
-     * unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data as
-     * an array.
+     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in
+     * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer
+     * the data as an array.
      * @param data FloatPressure[]; the data for the vector
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -122,9 +122,9 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     }
 
     /**
-     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in their own
-     * unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the StorageType
-     * is DENSE since we offer the data as an array.
+     * Construct a FloatPressureVector from an array of FloatPressure objects. The FloatPressure values are each expressed in
+     * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
+     * StorageType is DENSE since we offer the data as an array.
      * @param data FloatPressure[]; the data for the vector
      */
     public FloatPressureVector(final FloatPressure[] data)
@@ -135,12 +135,12 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     /* CONSTRUCTORS WITH List<Float> or List<Pressure> */
 
     /**
-     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. Note that the displayUnit has
-     * a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatPressure objects. In
-     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
-     * as well as the unit in which they will be printed. In case the list contains FloatPressure objects, each FloatPressure has its
-     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing.
+     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. Note that the
+     * displayUnit has a different meaning depending on whether the list contains Number objects (e.g., Float objects) or
+     * FloatPressure objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values
+     * in the list are expressed, as well as the unit in which they will be printed. In case the list contains FloatPressure
+     * objects, each FloatPressure has its own unit, and the displayUnit is just used for printing. The values but will always
+     * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
      * @param data List&lt;Float&gt; or List&lt;Pressure&gt;; the data for the vector
      * @param displayUnit PressureUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
@@ -155,13 +155,13 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     }
 
     /**
-     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. Note that the displayUnit has
-     * a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatPressure objects. In
-     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
-     * as well as the unit in which they will be printed. In case the list contains FloatPressure objects, each FloatPressure has its
-     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we
-     * offer the data as a List.
+     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. Note that the
+     * displayUnit has a different meaning depending on whether the list contains Number objects (e.g., Float objects) or
+     * FloatPressure objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values
+     * in the list are expressed, as well as the unit in which they will be printed. In case the list contains FloatPressure
+     * objects, each FloatPressure has its own unit, and the displayUnit is just used for printing. The values but will always
+     * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
+     * the storage type is DENSE since we offer the data as a List.
      * @param data List&lt;Float&gt; or List&lt;Pressure&gt;; the data for the vector
      * @param displayUnit PressureUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
@@ -172,10 +172,10 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     }
 
     /**
-     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. When data contains numbers
-     * such as Float, assume that they are expressed using SI units. When the data consists of FloatPressure objects, they each have
-     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
-     * values or base values, and expressed using the display unit or base unit when printing.
+     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. When data contains
+     * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatPressure objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing.
      * @param data List&lt;Float&gt; or List&lt;Pressure&gt;; the data for the vector
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -185,11 +185,11 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     }
 
     /**
-     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. When data contains numbers
-     * such as Float, assume that they are expressed using SI units. When the data consists of FloatPressure objects, they each have
-     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
-     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE
-     * since we offer the data as a List.
+     * Construct a FloatPressureVector from a list of Number objects or a list of FloatPressure objects. When data contains
+     * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatPressure objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
+     * type is DENSE since we offer the data as a List.
      * @param data List&lt;Float&gt; or List&lt;Pressure&gt;; the data for the vector
      */
     public FloatPressureVector(final List<? extends Number> data)
@@ -197,81 +197,81 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
         this(data, StorageType.DENSE);
     }
 
-    /* CONSTRUCTORS WITH SortedMap<Integer, Float> or SortedMap<Integer, FloatPressure> */
+    /* CONSTRUCTORS WITH Map<Integer, Float> or Map<Integer, FloatPressure> */
 
     /**
-     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
-     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatPressure objects. In case the map
-     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
-     * unit in which they will be printed. In case the map contains FloatPressure objects, each FloatPressure has its own unit, and the
-     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
-     * expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatPressure&gt;; the data for the vector
+     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatPressure objects. In
+     * case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as
+     * well as the unit in which they will be printed. In case the map contains FloatPressure objects, each FloatPressure has
+     * its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values
+     * or base values, and expressed using the display unit or base unit when printing.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatPressure&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit PressureUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatPressureVector(final SortedMap<Integer, ? extends Number> data, final int size, final PressureUnit displayUnit,
+    public FloatPressureVector(final Map<Integer, ? extends Number> data, final int size, final PressureUnit displayUnit,
             final StorageType storageType)
     {
         this(data.size() == 0 ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
-                : data.get(data.firstKey()) instanceof FloatPressure
+                : data.values().iterator().next() instanceof FloatPressure
                         ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
                         : FloatVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
                 displayUnit);
     }
 
     /**
-     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
-     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatPressure objects. In case the map
-     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
-     * unit in which they will be printed. In case the map contains FloatPressure objects, each FloatPressure has its own unit, and the
-     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
-     * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
-     * a Map.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatPressure&gt;; the data for the vector
+     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatPressure objects. In
+     * case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as
+     * well as the unit in which they will be printed. In case the map contains FloatPressure objects, each FloatPressure has
+     * its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values
+     * or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since
+     * we offer the data as a Map.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatPressure&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit PressureUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
-    public FloatPressureVector(final SortedMap<Integer, ? extends Number> data, final int size, final PressureUnit displayUnit)
+    public FloatPressureVector(final Map<Integer, ? extends Number> data, final int size, final PressureUnit displayUnit)
     {
         this(data, size, displayUnit, StorageType.SPARSE);
     }
 
     /**
-     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. When data contains numbers such as Float,
-     * assume that they are expressed using SI units. When the data consists of FloatPressure objects, they each have their own
-     * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatPressure&gt;; the data for the vector
+     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Float, assume that they are expressed using SI units. When the data consists of FloatPressure objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatPressure&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatPressureVector(final SortedMap<Integer, ? extends Number> data, final int size, final StorageType storageType)
+    public FloatPressureVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
         this(data, size, PressureUnit.SI, storageType);
     }
 
     /**
-     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. When data contains numbers such as Float,
-     * assume that they are expressed using SI units. When the data consists of FloatPressure objects, they each have their own
-     * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we
-     * offer the data as a Map.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatPressure&gt;; the data for the vector
+     * Construct a FloatPressureVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatPressure objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Float, assume that they are expressed using SI units. When the data consists of FloatPressure objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
+     * since we offer the data as a Map.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatPressure&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      */
-    public FloatPressureVector(final SortedMap<Integer, ? extends Number> data, final int size)
+    public FloatPressureVector(final Map<Integer, ? extends Number> data, final int size)
     {
         this(data, size, StorageType.SPARSE);
     }
@@ -284,7 +284,7 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
     {
         return FloatPressure.class;
     }
-        
+
     /** {@inheritDoc} */
     @Override
     public FloatPressureVector instantiateVector(final FloatVectorData fvd, final PressureUnit displayUnit)
@@ -301,7 +301,4 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
         return result;
     }
 
-   
 }
-
-

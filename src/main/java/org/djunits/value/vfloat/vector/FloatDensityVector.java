@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.vector;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 import org.djunits.unit.DensityUnit;
 import org.djunits.unit.scale.IdentityScale;
@@ -13,7 +13,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import jakarta.annotation.Generated;
 
 /**
- * Immutable Float FloatDensityVector, a vector of values with a DensityUnit. 
+ * Immutable Float FloatDensityVector, a vector of values with a DensityUnit.
  * <p>
  * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-02T12:25:19.834415900Z")
 public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity, FloatDensityVector>
 
 {
@@ -86,8 +86,8 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     /* CONSTRUCTORS WITH FloatDensity[] */
 
     /**
-     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their own
-     * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
+     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their
+     * own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
      * @param data FloatDensity[]; the data for the vector
      * @param displayUnit DensityUnit; the display unit of the values when printing
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
@@ -98,8 +98,8 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     }
 
     /**
-     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their own
-     * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
+     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their
+     * own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array.
      * @param data FloatDensity[]; the data for the vector
      * @param displayUnit DensityUnit; the display unit of the values when printing
@@ -110,9 +110,9 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     }
 
     /**
-     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their own
-     * unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data as
-     * an array.
+     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their
+     * own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data
+     * as an array.
      * @param data FloatDensity[]; the data for the vector
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -122,9 +122,9 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     }
 
     /**
-     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their own
-     * unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the StorageType
-     * is DENSE since we offer the data as an array.
+     * Construct a FloatDensityVector from an array of FloatDensity objects. The FloatDensity values are each expressed in their
+     * own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
+     * StorageType is DENSE since we offer the data as an array.
      * @param data FloatDensity[]; the data for the vector
      */
     public FloatDensityVector(final FloatDensity[] data)
@@ -135,12 +135,12 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     /* CONSTRUCTORS WITH List<Float> or List<Density> */
 
     /**
-     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. Note that the displayUnit has
-     * a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatDensity objects. In
-     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
-     * as well as the unit in which they will be printed. In case the list contains FloatDensity objects, each FloatDensity has its
-     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing.
+     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. Note that the displayUnit
+     * has a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatDensity
+     * objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are
+     * expressed, as well as the unit in which they will be printed. In case the list contains FloatDensity objects, each
+     * FloatDensity has its own unit, and the displayUnit is just used for printing. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing.
      * @param data List&lt;Float&gt; or List&lt;Density&gt;; the data for the vector
      * @param displayUnit DensityUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
@@ -155,13 +155,13 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     }
 
     /**
-     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. Note that the displayUnit has
-     * a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatDensity objects. In
-     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
-     * as well as the unit in which they will be printed. In case the list contains FloatDensity objects, each FloatDensity has its
-     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we
-     * offer the data as a List.
+     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. Note that the displayUnit
+     * has a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatDensity
+     * objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are
+     * expressed, as well as the unit in which they will be printed. In case the list contains FloatDensity objects, each
+     * FloatDensity has its own unit, and the displayUnit is just used for printing. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
+     * type is DENSE since we offer the data as a List.
      * @param data List&lt;Float&gt; or List&lt;Density&gt;; the data for the vector
      * @param displayUnit DensityUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
@@ -172,10 +172,10 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     }
 
     /**
-     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. When data contains numbers
-     * such as Float, assume that they are expressed using SI units. When the data consists of FloatDensity objects, they each have
-     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
-     * values or base values, and expressed using the display unit or base unit when printing.
+     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. When data contains
+     * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatDensity objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing.
      * @param data List&lt;Float&gt; or List&lt;Density&gt;; the data for the vector
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -185,11 +185,11 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     }
 
     /**
-     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. When data contains numbers
-     * such as Float, assume that they are expressed using SI units. When the data consists of FloatDensity objects, they each have
-     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
-     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE
-     * since we offer the data as a List.
+     * Construct a FloatDensityVector from a list of Number objects or a list of FloatDensity objects. When data contains
+     * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatDensity objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
+     * type is DENSE since we offer the data as a List.
      * @param data List&lt;Float&gt; or List&lt;Density&gt;; the data for the vector
      */
     public FloatDensityVector(final List<? extends Number> data)
@@ -197,28 +197,28 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
         this(data, StorageType.DENSE);
     }
 
-    /* CONSTRUCTORS WITH SortedMap<Integer, Float> or SortedMap<Integer, FloatDensity> */
+    /* CONSTRUCTORS WITH Map<Integer, Float> or Map<Integer, FloatDensity> */
 
     /**
      * Construct a FloatDensityVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
-     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDensity objects. In case the map
-     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
-     * unit in which they will be printed. In case the map contains FloatDensity objects, each FloatDensity has its own unit, and the
-     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
-     * expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDensity&gt;; the data for the vector
+     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the
+     * size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDensity objects. In
+     * case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as
+     * well as the unit in which they will be printed. In case the map contains FloatDensity objects, each FloatDensity has its
+     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
+     * base values, and expressed using the display unit or base unit when printing.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDensity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit DensityUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatDensityVector(final SortedMap<Integer, ? extends Number> data, final int size, final DensityUnit displayUnit,
+    public FloatDensityVector(final Map<Integer, ? extends Number> data, final int size, final DensityUnit displayUnit,
             final StorageType storageType)
     {
         this(data.size() == 0 ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
-                : data.get(data.firstKey()) instanceof FloatDensity
+                : data.values().iterator().next() instanceof FloatDensity
                         ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
                         : FloatVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
                 displayUnit);
@@ -226,52 +226,52 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
 
     /**
      * Construct a FloatDensityVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
-     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDensity objects. In case the map
-     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
-     * unit in which they will be printed. In case the map contains FloatDensity objects, each FloatDensity has its own unit, and the
-     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
-     * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
-     * a Map.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDensity&gt;; the data for the vector
+     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the
+     * size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDensity objects. In
+     * case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as
+     * well as the unit in which they will be printed. In case the map contains FloatDensity objects, each FloatDensity has its
+     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
+     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we
+     * offer the data as a Map.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDensity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit DensityUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
-    public FloatDensityVector(final SortedMap<Integer, ? extends Number> data, final int size, final DensityUnit displayUnit)
+    public FloatDensityVector(final Map<Integer, ? extends Number> data, final int size, final DensityUnit displayUnit)
     {
         this(data, size, displayUnit, StorageType.SPARSE);
     }
 
     /**
      * Construct a FloatDensityVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. When data contains numbers such as Float,
-     * assume that they are expressed using SI units. When the data consists of FloatDensity objects, they each have their own
-     * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDensity&gt;; the data for the vector
+     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the
+     * size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Float, assume that they are expressed using SI units. When the data consists of FloatDensity objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDensity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatDensityVector(final SortedMap<Integer, ? extends Number> data, final int size, final StorageType storageType)
+    public FloatDensityVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
         this(data, size, DensityUnit.SI, storageType);
     }
 
     /**
      * Construct a FloatDensityVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. When data contains numbers such as Float,
-     * assume that they are expressed using SI units. When the data consists of FloatDensity objects, they each have their own
-     * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we
-     * offer the data as a Map.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDensity&gt;; the data for the vector
+     * of FloatDensity objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the
+     * size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Float, assume that they are expressed using SI units. When the data consists of FloatDensity objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
+     * since we offer the data as a Map.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDensity&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      */
-    public FloatDensityVector(final SortedMap<Integer, ? extends Number> data, final int size)
+    public FloatDensityVector(final Map<Integer, ? extends Number> data, final int size)
     {
         this(data, size, StorageType.SPARSE);
     }
@@ -284,7 +284,7 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
     {
         return FloatDensity.class;
     }
-        
+
     /** {@inheritDoc} */
     @Override
     public FloatDensityVector instantiateVector(final FloatVectorData fvd, final DensityUnit displayUnit)
@@ -301,7 +301,4 @@ public class FloatDensityVector extends FloatVectorRel<DensityUnit, FloatDensity
         return result;
     }
 
-   
 }
-
-

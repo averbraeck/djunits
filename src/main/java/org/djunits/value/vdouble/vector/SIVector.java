@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.vector;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 import org.djunits.unit.AbsorbedDoseUnit;
 import org.djunits.unit.AccelerationUnit;
@@ -67,7 +67,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-02T12:25:19.834415900Z")
 public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 {
     /** */
@@ -173,7 +173,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
         this(data, displayUnit, StorageType.DENSE);
     }
 
-    /* ******************** CONSTRUCTORS WITH SortedMap<Integer, Double> or SortedMap<Integer, SIScalar> ******************** */
+    /* ******************** CONSTRUCTORS WITH Map<Integer, Double> or Map<Integer, SIScalar> ******************** */
 
     /**
      * Construct an SIVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to of
@@ -184,17 +184,17 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * unit in which they will be printed. In case the map contains SIScalar objects, each SIScalar has its own unit, and the
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, SIScalar&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SIScalar&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public SIVector(final SortedMap<Integer, ? extends Number> data, final int size, final SIUnit displayUnit,
+    public SIVector(final Map<Integer, ? extends Number> data, final int size, final SIUnit displayUnit,
             final StorageType storageType)
     {
         this(data.size() == 0 ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
-                : data.get(data.firstKey()) instanceof SIScalar
+                : data.values().iterator().next() instanceof SIScalar
                         ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
                         : DoubleVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
                 displayUnit);
@@ -210,12 +210,12 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
      * a Map.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, SIScalar&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SIScalar&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
-    public SIVector(final SortedMap<Integer, ? extends Number> data, final int size, final SIUnit displayUnit)
+    public SIVector(final Map<Integer, ? extends Number> data, final int size, final SIUnit displayUnit)
     {
         this(data, size, displayUnit, StorageType.SPARSE);
     }
@@ -291,7 +291,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Returns an SIVector based on a (sparse) map of values and the textual representation of the unit.
-     * @param valueMap SortedMap&lt;Integer, Double&gt;; the values to use
+     * @param valueMap Map&lt;Integer, Double&gt;; the values to use
      * @param unitString String; the textual representation of the unit
      * @param length int; the size of the vector
      * @param storageType StorageType; the storage type to use
@@ -299,7 +299,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static SIVector of(final SortedMap<Integer, Double> valueMap, final String unitString, final int length,
+    public static SIVector of(final Map<Integer, Double> valueMap, final String unitString, final int length,
             final StorageType storageType)
     {
         Throw.whenNull(valueMap, "Error parsing SIVector: valueMap is null");

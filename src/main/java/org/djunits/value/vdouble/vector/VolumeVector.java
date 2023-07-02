@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.vector;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 import org.djunits.unit.VolumeUnit;
 import org.djunits.unit.scale.IdentityScale;
@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-02T12:23:58.164358800Z")
 public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVector>
 
 {
@@ -196,7 +196,7 @@ public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVect
         this(data, StorageType.DENSE);
     }
 
-    /* CONSTRUCTORS WITH SortedMap<Integer, Double> or SortedMap<Integer, Volume> */
+    /* CONSTRUCTORS WITH Map<Integer, Double> or Map<Integer, Volume> */
 
     /**
      * Construct an VolumeVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to of
@@ -207,17 +207,17 @@ public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVect
      * unit in which they will be printed. In case the map contains Volume objects, each Volume has its own unit, and the
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Volume&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Volume&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit VolumeUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public VolumeVector(final SortedMap<Integer, ? extends Number> data, final int size, final VolumeUnit displayUnit,
+    public VolumeVector(final Map<Integer, ? extends Number> data, final int size, final VolumeUnit displayUnit,
             final StorageType storageType)
     {
         this(data.size() == 0 ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
-                : data.get(data.firstKey()) instanceof Volume
+                : data.values().iterator().next() instanceof Volume
                         ? DoubleVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
                         : DoubleVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
                 displayUnit);
@@ -233,12 +233,12 @@ public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVect
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
      * a Map.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Volume&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Volume&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit VolumeUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
-    public VolumeVector(final SortedMap<Integer, ? extends Number> data, final int size, final VolumeUnit displayUnit)
+    public VolumeVector(final Map<Integer, ? extends Number> data, final int size, final VolumeUnit displayUnit)
     {
         this(data, size, displayUnit, StorageType.SPARSE);
     }
@@ -250,11 +250,11 @@ public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVect
      * assume that they are expressed using SI units. When the data consists of Volume objects, they each have their own unit,
      * but will be printed using SI units or base units. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Volume&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Volume&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public VolumeVector(final SortedMap<Integer, ? extends Number> data, final int size, final StorageType storageType)
+    public VolumeVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
         this(data, size, VolumeUnit.SI, storageType);
     }
@@ -267,10 +267,10 @@ public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVect
      * but will be printed using SI units or base units. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer
      * the data as a Map.
-     * @param data SortedMap&lt;Integer, Double&gt; or SortedMap&lt;Integer, Volume&gt;; the data for the vector
+     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Volume&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      */
-    public VolumeVector(final SortedMap<Integer, ? extends Number> data, final int size)
+    public VolumeVector(final Map<Integer, ? extends Number> data, final int size)
     {
         this(data, size, StorageType.SPARSE);
     }

@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.vector;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.DirectionUnit;
@@ -23,9 +23,9 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-06-17T20:24:57.123282Z")
-public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDirection, FloatDirectionVector,
-    AngleUnit, FloatAngle, FloatAngleVector>
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-02T12:25:19.834415900Z")
+public class FloatDirectionVector
+        extends FloatVectorAbs<DirectionUnit, FloatDirection, FloatDirectionVector, AngleUnit, FloatAngle, FloatAngleVector>
 {
     /** */
     private static final long serialVersionUID = 20151003L;
@@ -55,8 +55,8 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from a float[] object. The Float values are expressed in the displayUnit. Assume that the
-     * StorageType is DENSE since we offer the data as an array.
+     * Construct a FloatDirectionVector from a float[] object. The Float values are expressed in the displayUnit. Assume that
+     * the StorageType is DENSE since we offer the data as an array.
      * @param data float[]; the data for the vector
      * @param displayUnit DirectionUnit; the unit of the values in the data array, and display unit when printing
      */
@@ -88,8 +88,8 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     /* CONSTRUCTORS WITH FloatDirection[] */
 
     /**
-     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in their own
-     * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
+     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in
+     * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
      * @param data FloatDirection[]; the data for the vector
      * @param displayUnit DirectionUnit; the display unit of the values when printing
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
@@ -100,9 +100,9 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in their own
-     * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
-     * StorageType is DENSE since we offer the data as an array.
+     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in
+     * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that
+     * the StorageType is DENSE since we offer the data as an array.
      * @param data FloatDirection[]; the data for the vector
      * @param displayUnit DirectionUnit; the display unit of the values when printing
      */
@@ -112,9 +112,9 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in their own
-     * unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data as
-     * an array.
+     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in
+     * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer
+     * the data as an array.
      * @param data FloatDirection[]; the data for the vector
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -124,9 +124,9 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in their own
-     * unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the StorageType
-     * is DENSE since we offer the data as an array.
+     * Construct a FloatDirectionVector from an array of FloatDirection objects. The FloatDirection values are each expressed in
+     * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
+     * StorageType is DENSE since we offer the data as an array.
      * @param data FloatDirection[]; the data for the vector
      */
     public FloatDirectionVector(final FloatDirection[] data)
@@ -137,18 +137,19 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     /* CONSTRUCTORS WITH List<Float> or List<Direction> */
 
     /**
-     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. Note that the displayUnit has
-     * a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatDirection objects. In
-     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
-     * as well as the unit in which they will be printed. In case the list contains FloatDirection objects, each FloatDirection has its
-     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing.
+     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. Note that the
+     * displayUnit has a different meaning depending on whether the list contains Number objects (e.g., Float objects) or
+     * FloatDirection objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values
+     * in the list are expressed, as well as the unit in which they will be printed. In case the list contains FloatDirection
+     * objects, each FloatDirection has its own unit, and the displayUnit is just used for printing. The values but will always
+     * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
      * @param data List&lt;Float&gt; or List&lt;Direction&gt;; the data for the vector
      * @param displayUnit DirectionUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatDirectionVector(final List<? extends Number> data, final DirectionUnit displayUnit, final StorageType storageType)
+    public FloatDirectionVector(final List<? extends Number> data, final DirectionUnit displayUnit,
+            final StorageType storageType)
     {
         this(data.size() == 0 ? FloatVectorData.instantiate(new float[] {}, IdentityScale.SCALE, storageType)
                 : data.get(0) instanceof FloatDirection ? FloatVectorData.instantiate(data, IdentityScale.SCALE, storageType)
@@ -157,13 +158,13 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. Note that the displayUnit has
-     * a different meaning depending on whether the list contains Number objects (e.g., Float objects) or FloatDirection objects. In
-     * case the list contains Number objects, the displayUnit indicates the unit in which the values in the list are expressed,
-     * as well as the unit in which they will be printed. In case the list contains FloatDirection objects, each FloatDirection has its
-     * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we
-     * offer the data as a List.
+     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. Note that the
+     * displayUnit has a different meaning depending on whether the list contains Number objects (e.g., Float objects) or
+     * FloatDirection objects. In case the list contains Number objects, the displayUnit indicates the unit in which the values
+     * in the list are expressed, as well as the unit in which they will be printed. In case the list contains FloatDirection
+     * objects, each FloatDirection has its own unit, and the displayUnit is just used for printing. The values but will always
+     * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
+     * the storage type is DENSE since we offer the data as a List.
      * @param data List&lt;Float&gt; or List&lt;Direction&gt;; the data for the vector
      * @param displayUnit DirectionUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
@@ -174,10 +175,10 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. When data contains numbers
-     * such as Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have
-     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
-     * values or base values, and expressed using the display unit or base unit when printing.
+     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. When data contains
+     * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing.
      * @param data List&lt;Float&gt; or List&lt;Direction&gt;; the data for the vector
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -187,11 +188,11 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     }
 
     /**
-     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. When data contains numbers
-     * such as Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have
-     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
-     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE
-     * since we offer the data as a List.
+     * Construct a FloatDirectionVector from a list of Number objects or a list of FloatDirection objects. When data contains
+     * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects,
+     * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
+     * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
+     * type is DENSE since we offer the data as a List.
      * @param data List&lt;Float&gt; or List&lt;Direction&gt;; the data for the vector
      */
     public FloatDirectionVector(final List<? extends Number> data)
@@ -199,81 +200,81 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
         this(data, StorageType.DENSE);
     }
 
-    /* CONSTRUCTORS WITH SortedMap<Integer, Float> or SortedMap<Integer, FloatDirection> */
+    /* CONSTRUCTORS WITH Map<Integer, Float> or Map<Integer, FloatDirection> */
 
     /**
-     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
-     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDirection objects. In case the map
-     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
-     * unit in which they will be printed. In case the map contains FloatDirection objects, each FloatDirection has its own unit, and the
-     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
-     * expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDirection&gt;; the data for the vector
+     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDirection objects.
+     * In case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed,
+     * as well as the unit in which they will be printed. In case the map contains FloatDirection objects, each FloatDirection
+     * has its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit DirectionUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatDirectionVector(final SortedMap<Integer, ? extends Number> data, final int size, final DirectionUnit displayUnit,
+    public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size, final DirectionUnit displayUnit,
             final StorageType storageType)
     {
         this(data.size() == 0 ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
-                : data.get(data.firstKey()) instanceof FloatDirection
+                : data.values().iterator().next() instanceof FloatDirection
                         ? FloatVectorData.instantiate(data, size, IdentityScale.SCALE, storageType)
                         : FloatVectorData.instantiate(data, size, displayUnit.getScale(), storageType),
                 displayUnit);
     }
 
     /**
-     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a different
-     * meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDirection objects. In case the map
-     * contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed, as well as the
-     * unit in which they will be printed. In case the map contains FloatDirection objects, each FloatDirection has its own unit, and the
-     * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
-     * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
-     * a Map.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDirection&gt;; the data for the vector
+     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. Note that the displayUnit has a
+     * different meaning depending on whether the map contains Number objects (e.g., Float objects) or FloatDirection objects.
+     * In case the map contains Number objects, the displayUnit indicates the unit in which the values in the map are expressed,
+     * as well as the unit in which they will be printed. In case the map contains FloatDirection objects, each FloatDirection
+     * has its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
+     * since we offer the data as a Map.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param displayUnit DirectionUnit; the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
-    public FloatDirectionVector(final SortedMap<Integer, ? extends Number> data, final int size, final DirectionUnit displayUnit)
+    public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size, final DirectionUnit displayUnit)
     {
         this(data, size, displayUnit, StorageType.SPARSE);
     }
 
     /**
-     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. When data contains numbers such as Float,
-     * assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have their own
-     * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDirection&gt;; the data for the vector
+     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
-    public FloatDirectionVector(final SortedMap<Integer, ? extends Number> data, final int size, final StorageType storageType)
+    public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
         this(data, size, DirectionUnit.DEFAULT, storageType);
     }
 
     /**
-     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values to
-     * of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates the size
-     * of the vector, since the largest index does not have to be part of the map. When data contains numbers such as Float,
-     * assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have their own
-     * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
-     * base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we
-     * offer the data as a Map.
-     * @param data SortedMap&lt;Integer, Float&gt; or SortedMap&lt;Integer, FloatDirection&gt;; the data for the vector
+     * Construct a FloatDirectionVector from a (sparse) map of index values to Number objects or a (sparse) map of index values
+     * to of FloatDirection objects. Using index values is particularly useful for sparse vectors. The size parameter indicates
+     * the size of the vector, since the largest index does not have to be part of the map. When data contains numbers such as
+     * Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have
+     * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
+     * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
+     * since we offer the data as a Map.
+     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;; the data for the vector
      * @param size int; the size off the vector, i.e., the highest index
      */
-    public FloatDirectionVector(final SortedMap<Integer, ? extends Number> data, final int size)
+    public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size)
     {
         this(data, size, StorageType.SPARSE);
     }
@@ -284,7 +285,7 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
     @Override
     public Class<FloatDirection>
 
-    getScalarClass()
+            getScalarClass()
     {
         return FloatDirection.class;
     }
@@ -321,5 +322,4 @@ public class FloatDirectionVector extends FloatVectorAbs<DirectionUnit, FloatDir
         return result;
     }
 
-   
-}
+}
