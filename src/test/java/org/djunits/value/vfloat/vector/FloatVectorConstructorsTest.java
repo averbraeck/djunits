@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.SortedMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 import org.djunits.quantity.Quantities;
@@ -674,7 +674,7 @@ public class FloatVectorConstructorsTest
             float[] floatValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0};
             float[] allValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0, 0, 0, 0};
             int size = 10;
-            SortedMap<Integer, Float> testValues = new TreeMap<>();
+            Map<Integer, Float> testValues = new TreeMap<>();
 
             int cardinality = 0;
             float zSum = 0.0f;
@@ -693,13 +693,13 @@ public class FloatVectorConstructorsTest
             {
                 // get the constructors
                 Constructor<FloatVector<?, ?, ?>> constructorMUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class, unitClass, StorageType.class);
                 Constructor<FloatVector<?, ?, ?>> constructorMU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class, unitClass);
                 Constructor<FloatVector<?, ?, ?>> constructorMS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, StorageType.class);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class, StorageType.class);
                 Constructor<FloatVector<?, ?, ?>> constructorM = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
@@ -856,7 +856,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test SortedMap<Integer, Scalar> constructors
+     * test Map<Integer, Scalar> constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -884,7 +884,7 @@ public class FloatVectorConstructorsTest
             float[] floatValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0};
             float[] allValues = new float[] {0, 123.456f, 0, 0, 234.567f, 0, 0, 0, 0, 0};
             int size = 10;
-            SortedMap<Integer, FloatScalar<?, ?>> testValues = new TreeMap<>();
+            Map<Integer, FloatScalar<?, ?>> testValues = new TreeMap<>();
             Constructor<FloatScalar<?, ?>> constructorScalar = (Constructor<FloatScalar<?, ?>>) CLASSNAMES
                     .floatScalarClass(scalarName).getConstructor(float.class, unitClass);
 
@@ -905,13 +905,13 @@ public class FloatVectorConstructorsTest
             {
                 // get the constructors
                 Constructor<FloatVector<?, ?, ?>> constructorMUS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class, unitClass, StorageType.class);
                 Constructor<FloatVector<?, ?, ?>> constructorMU = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, unitClass);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class, unitClass);
                 Constructor<FloatVector<?, ?, ?>> constructorMS = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class, StorageType.class);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class, StorageType.class);
                 Constructor<FloatVector<?, ?, ?>> constructorM = (Constructor<FloatVector<?, ?, ?>>) CLASSNAMES
-                        .floatVectorClass(scalarName).getConstructor(SortedMap.class, int.class);
+                        .floatVectorClass(scalarName).getConstructor(Map.class, int.class);
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
@@ -1095,7 +1095,7 @@ public class FloatVectorConstructorsTest
             int cardinality = 0;
             float zSum = 0;
             List<Float> list = new ArrayList<>();
-            SortedMap<Integer, Float> map = new TreeMap<>();
+            Map<Integer, Float> map = new TreeMap<>();
             for (int index = 0; index < testValues.length; index++)
             {
                 float value = testValues[index];
@@ -1214,7 +1214,7 @@ public class FloatVectorConstructorsTest
         float[] testValues = new float[] {0, 123.456f, 0, -273.15f, -273.15f, 0, -273.15f, 234.567f, 0, 0};
         FloatAbsoluteTemperature[] at = new FloatAbsoluteTemperature[testValues.length];
         List<FloatAbsoluteTemperature> al = new ArrayList<>();
-        SortedMap<Integer, FloatAbsoluteTemperature> map = new TreeMap<>();
+        Map<Integer, FloatAbsoluteTemperature> map = new TreeMap<>();
         for (int i = 0; i < testValues.length; i++)
         {
             FloatAbsoluteTemperature value = new FloatAbsoluteTemperature(testValues[i], AbsoluteTemperatureUnit.KELVIN);
@@ -1254,10 +1254,10 @@ public class FloatVectorConstructorsTest
                 "null pointer should have thrown an exception", NullPointerException.class);
 
         Try.testFail(
-                () -> new FloatAbsoluteTemperatureVector((SortedMap<Integer, FloatAbsoluteTemperature>) null, 10,
+                () -> new FloatAbsoluteTemperatureVector((Map<Integer, FloatAbsoluteTemperature>) null, 10,
                         AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureVector((SortedMap<Integer, Float>) null, 10,
+        Try.testFail(() -> new FloatAbsoluteTemperatureVector((Map<Integer, Float>) null, 10,
                 AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE), "null pointer should have thrown an exception",
                 NullPointerException.class);
         Try.testFail(() -> new FloatAbsoluteTemperatureVector(map, 10, null, StorageType.DENSE),
@@ -1301,7 +1301,7 @@ public class FloatVectorConstructorsTest
         }
         List<FloatAbsoluteTemperature> al = new ArrayList<>();
         List<Float> dl = new ArrayList<>();
-        SortedMap<Integer, FloatAbsoluteTemperature> map = new TreeMap<>();
+        Map<Integer, FloatAbsoluteTemperature> map = new TreeMap<>();
         FloatAbsoluteTemperature[] at = new FloatAbsoluteTemperature[testValues.length];
         for (int i = 0; i < testValues.length; i++)
         {

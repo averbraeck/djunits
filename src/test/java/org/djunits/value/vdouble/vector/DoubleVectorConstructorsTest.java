@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.SortedMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 import org.djunits.quantity.Quantities;
@@ -689,7 +689,7 @@ public class DoubleVectorConstructorsTest
             double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
             double[] allValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0, 0, 0, 0};
             int size = 10;
-            SortedMap<Integer, Double> testValues = new TreeMap<>();
+            Map<Integer, Double> testValues = new TreeMap<>();
 
             int cardinality = 0;
             double zSum = 0.0;
@@ -709,16 +709,16 @@ public class DoubleVectorConstructorsTest
                 // get the constructors
                 Constructor<DoubleVector<?, ?, ?>> constructorMUS =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                                .getConstructor(Map.class, int.class, unitClass, StorageType.class);
                 Constructor<DoubleVector<?, ?, ?>> constructorMU =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass);
+                                .getConstructor(Map.class, int.class, unitClass);
                 Constructor<DoubleVector<?, ?, ?>> constructorMS =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, StorageType.class);
+                                .getConstructor(Map.class, int.class, StorageType.class);
                 Constructor<DoubleVector<?, ?, ?>> constructorM =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class);
+                                .getConstructor(Map.class, int.class);
 
                 // initialize vectors
                 DoubleVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
@@ -875,7 +875,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test SortedMap<Integer, Scalar> constructors
+     * test Map<Integer, Scalar> constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -903,7 +903,7 @@ public class DoubleVectorConstructorsTest
             double[] doubleValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0};
             double[] allValues = new double[] {0, 123.456d, 0, 0, 234.567d, 0, 0, 0, 0, 0};
             int size = 10;
-            SortedMap<Integer, DoubleScalar<?, ?>> testValues = new TreeMap<>();
+            Map<Integer, DoubleScalar<?, ?>> testValues = new TreeMap<>();
             Constructor<DoubleScalar<?, ?>> constructorScalar = (Constructor<DoubleScalar<?, ?>>) CLASSNAMES
                     .doubleScalarClass(scalarName).getConstructor(double.class, unitClass);
 
@@ -925,16 +925,16 @@ public class DoubleVectorConstructorsTest
                 // get the constructors
                 Constructor<DoubleVector<?, ?, ?>> constructorMUS =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass, StorageType.class);
+                                .getConstructor(Map.class, int.class, unitClass, StorageType.class);
                 Constructor<DoubleVector<?, ?, ?>> constructorMU =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, unitClass);
+                                .getConstructor(Map.class, int.class, unitClass);
                 Constructor<DoubleVector<?, ?, ?>> constructorMS =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class, StorageType.class);
+                                .getConstructor(Map.class, int.class, StorageType.class);
                 Constructor<DoubleVector<?, ?, ?>> constructorM =
                         (Constructor<DoubleVector<?, ?, ?>>) CLASSNAMES.doubleVectorClass(scalarName)
-                                .getConstructor(SortedMap.class, int.class);
+                                .getConstructor(Map.class, int.class);
 
                 // initialize vectors
                 DoubleVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
@@ -1120,7 +1120,7 @@ public class DoubleVectorConstructorsTest
             int cardinality = 0;
             double zSum = 0;
             List<Double> list = new ArrayList<>();
-            SortedMap<Integer, Double> map = new TreeMap<>();
+            Map<Integer, Double> map = new TreeMap<>();
             for (int index = 0; index < testValues.length; index++)
             {
                 double value = testValues[index];
@@ -1238,7 +1238,7 @@ public class DoubleVectorConstructorsTest
         double[] testValues = new double[] {0, 123.456d, 0, -273.15, -273.15, 0, -273.15, 234.567d, 0, 0};
         AbsoluteTemperature[] at = new AbsoluteTemperature[testValues.length];
         List<AbsoluteTemperature> al = new ArrayList<>();
-        SortedMap<Integer, AbsoluteTemperature> map = new TreeMap<>();
+        Map<Integer, AbsoluteTemperature> map = new TreeMap<>();
         for (int i = 0; i < testValues.length; i++)
         {
             AbsoluteTemperature value = new AbsoluteTemperature(testValues[i], AbsoluteTemperatureUnit.KELVIN);
@@ -1276,10 +1276,10 @@ public class DoubleVectorConstructorsTest
                 "null pointer should have thrown an exception", NullPointerException.class);
 
         Try.testFail(
-                () -> new AbsoluteTemperatureVector((SortedMap<Integer, AbsoluteTemperature>) null, 10,
+                () -> new AbsoluteTemperatureVector((Map<Integer, AbsoluteTemperature>) null, 10,
                         AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector((SortedMap<Integer, Double>) null, 10, AbsoluteTemperatureUnit.KELVIN,
+        Try.testFail(() -> new AbsoluteTemperatureVector((Map<Integer, Double>) null, 10, AbsoluteTemperatureUnit.KELVIN,
                 StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
         Try.testFail(() -> new AbsoluteTemperatureVector(map, 10, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
@@ -1323,7 +1323,7 @@ public class DoubleVectorConstructorsTest
         }
         List<AbsoluteTemperature> al = new ArrayList<>();
         List<Double> dl = new ArrayList<>();
-        SortedMap<Integer, AbsoluteTemperature> map = new TreeMap<>();
+        Map<Integer, AbsoluteTemperature> map = new TreeMap<>();
         AbsoluteTemperature[] at = new AbsoluteTemperature[testValues.length];
         for (int i = 0; i < testValues.length; i++)
         {
