@@ -28,6 +28,7 @@ import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
+import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
 import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
@@ -263,9 +264,9 @@ public class FloatSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<FloatVectorRel> constructor = (Constructor<FloatVectorRel>) CLASSNAMES
+                        Constructor<FloatVector> constructor = (Constructor<FloatVector>) CLASSNAMES
                                 .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
-                        FloatVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        FloatVectorRel vector = (FloatVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         FloatSIVector mult = vector.times(allVector);
                         Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);
                         FloatVectorRel<U, ?, ?> asVector = (FloatVectorRel<U, ?, ?>) asMethod.invoke(mult);

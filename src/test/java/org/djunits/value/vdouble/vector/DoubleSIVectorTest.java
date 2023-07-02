@@ -28,6 +28,7 @@ import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
+import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
@@ -263,9 +264,9 @@ public class DoubleSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<DoubleVectorRel> constructor = (Constructor<DoubleVectorRel>) CLASSNAMES
+                        Constructor<DoubleVector> constructor = (Constructor<DoubleVector>) CLASSNAMES
                                 .doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
-                        DoubleVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        DoubleVectorRel vector = (DoubleVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         SIVector mult = vector.times(allVector);
                         Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
                         DoubleVectorRel<U, ?, ?> asVector = (DoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
