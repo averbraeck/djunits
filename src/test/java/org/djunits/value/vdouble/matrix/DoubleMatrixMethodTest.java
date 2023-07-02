@@ -49,8 +49,8 @@ public class DoubleMatrixMethodTest
     @SuppressWarnings("checkstyle:methodlength")
     public void testMatrixMethods() throws ValueRuntimeException, UnitException
     {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(10, 20);
-        double[][] sparseTestData = DOUBLEMATRIX.sparseRectArrays(10, 20);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(10, 20, false);
+        double[][] sparseTestData = DOUBLEMATRIX.sparseRectArrays(10, 20, false);
         double[][] reverseSparseTestData = new double[sparseTestData.length][];
         // sparseTestData and reverseSparseTestData should not "run out of values" at the same index
         for (int index = 0; index < sparseTestData.length; index++)
@@ -265,8 +265,8 @@ public class DoubleMatrixMethodTest
                 assertEquals("setInUnit(unit)", 15000.0d, famChange.get(2, 2).si, 1.0d);
 
                 // GETROW(), GETCOLUMN(), GETDIAGONAL
-                double[][] squareData = storageType.equals(StorageType.DENSE) ? DOUBLEMATRIX.denseRectArrays(12, 12)
-                        : DOUBLEMATRIX.sparseRectArrays(12, 12);
+                double[][] squareData = storageType.equals(StorageType.DENSE) ? DOUBLEMATRIX.denseRectArrays(12, 12, false)
+                        : DOUBLEMATRIX.sparseRectArrays(12, 12, false);
                 AreaMatrix amSquare = new AreaMatrix(squareData, au, storageType);
                 double[] row2si = am.getRowSI(2);
                 double[] col2si = am.getColumnSI(2);
@@ -459,8 +459,8 @@ public class DoubleMatrixMethodTest
     @Test
     public void testImmutableMatrix()
     {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10);
-        double[][] sparseTestData = DOUBLEMATRIX.sparseRectArrays(5, 10);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10, false);
+        double[][] sparseTestData = DOUBLEMATRIX.sparseRectArrays(5, 10, false);
 
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
@@ -498,8 +498,8 @@ public class DoubleMatrixMethodTest
     @Test
     public void testMatrixToString()
     {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10);
-        double[][] sparseTestData = DOUBLEMATRIX.sparseRectArrays(5, 10);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10, false);
+        double[][] sparseTestData = DOUBLEMATRIX.sparseRectArrays(5, 10, false);
 
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
@@ -555,7 +555,7 @@ public class DoubleMatrixMethodTest
     @Test
     public void testSpecialMatrixMethodsRelWithAbs()
     {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10, false);
         TimeMatrix tm = new TimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
         DurationMatrix dm = new DurationMatrix(denseTestData, DurationUnit.MINUTE, StorageType.DENSE);
         assertTrue(tm.isAbsolute());
@@ -565,7 +565,7 @@ public class DoubleMatrixMethodTest
 
         TimeMatrix absPlusRel = tm.plus(dm);
         TimeMatrix absMinusRel = tm.minus(dm);
-        double[][] halfDenseData = DOUBLEMATRIX.denseRectArrays(5, 10);
+        double[][] halfDenseData = DOUBLEMATRIX.denseRectArrays(5, 10, false);
         for (int row = 0; row < halfDenseData.length; row++)
         {
             for (int col = 0; col < halfDenseData[row].length; col++)
@@ -598,7 +598,8 @@ public class DoubleMatrixMethodTest
                 {
                     continue;
                 }
-                double[][] other = DOUBLEMATRIX.denseRectArrays(denseTestData.length + dRows, denseTestData[0].length + dCols);
+                double[][] other =
+                        DOUBLEMATRIX.denseRectArrays(denseTestData.length + dRows, denseTestData[0].length + dCols, false);
                 TimeMatrix wrongTimeMatrix = new TimeMatrix(other, TimeUnit.DEFAULT, StorageType.DENSE);
                 try
                 {
@@ -653,7 +654,7 @@ public class DoubleMatrixMethodTest
     @Test
     public void testInstantiateAbs()
     {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(10, 20);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(10, 20, false);
         TimeMatrix timeMatrix = new TimeMatrix(denseTestData, TimeUnit.DEFAULT, StorageType.DENSE);
         DurationMatrix durationMatrix = new DurationMatrix(denseTestData, DurationUnit.MINUTE, StorageType.DENSE);
 
@@ -733,7 +734,7 @@ public class DoubleMatrixMethodTest
     @Test
     public void testEquals()
     {
-        double[][] testData = DOUBLEMATRIX.denseRectArrays(12, 34);
+        double[][] testData = DOUBLEMATRIX.denseRectArrays(12, 34, false);
         testData[2][2] = 0;
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
@@ -749,17 +750,17 @@ public class DoubleMatrixMethodTest
                 assertEquals(
                         "Double matrix data is equal to other double vector containing same values regardless of storage type",
                         dmd, dvd2);
-                double[][] testData2 = DOUBLEMATRIX.denseRectArrays(12, 33);
+                double[][] testData2 = DOUBLEMATRIX.denseRectArrays(12, 33, false);
                 testData2[2][2] = 0;
                 dvd2 = DoubleMatrixData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertFalse("Double matrix data is not equal to other double vector containing same values except last one",
                         dmd.equals(dvd2));
-                testData2 = DOUBLEMATRIX.denseRectArrays(13, 34);
+                testData2 = DOUBLEMATRIX.denseRectArrays(13, 34, false);
                 testData2[2][2] = 0;
                 dvd2 = DoubleMatrixData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertFalse("Double matrix data is not equal to other double vector containing same values except last one",
                         dmd.equals(dvd2));
-                testData2 = DOUBLEMATRIX.denseRectArrays(12, 34);
+                testData2 = DOUBLEMATRIX.denseRectArrays(12, 34, false);
                 dvd2 = DoubleMatrixData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
                 assertFalse("Double matrix data is not equal to other double vector containing same values except for one zero",
                         dmd.equals(dvd2));

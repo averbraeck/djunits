@@ -128,7 +128,7 @@ public class DoubleSIMatrixTest
     @Test
     public void testDimensionLess()
     {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(12, 23);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(12, 23, false);
         // put at least one negative value in the test data
         denseTestData[5][5] = -123d;
         // put a zero value in the test data
