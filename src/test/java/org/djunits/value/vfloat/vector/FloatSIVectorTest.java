@@ -28,7 +28,6 @@ import org.djunits.value.vfloat.function.FloatMathFunctions;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
-import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
 import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
@@ -65,8 +64,7 @@ public class FloatSIVectorTest
     @SuppressWarnings("unchecked")
     @Test
     public <AU extends AbsoluteLinearUnit<AU, RU>, A extends FloatScalarAbs<AU, A, RU, R>,
-            AV extends FloatVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>,
-            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
+            AV extends FloatVectorAbs<AU, A, AV, RU, R, RV>, RU extends Unit<RU>, R extends FloatScalarRelWithAbs<AU, A, RU, R>,
             RV extends FloatVectorRelWithAbs<AU, A, AV, RU, R, RV>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
                     InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
@@ -84,9 +82,8 @@ public class FloatSIVectorTest
             Quantity<RU> quantity = (Quantity<RU>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (RU unit : quantity.getUnitsById().values())
             {
-                Constructor<FloatVectorRel<RU, R, RV>> constructor =
-                        (Constructor<FloatVectorRel<RU, R, RV>>) CLASSNAMES.floatVectorClass(type)
-                                .getConstructor(float[].class, unitClass, StorageType.class);
+                Constructor<FloatVectorRel<RU, R, RV>> constructor = (Constructor<FloatVectorRel<RU, R, RV>>) CLASSNAMES
+                        .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
                 FloatVectorRel<RU, R, RV> vector = constructor.newInstance(denseTestData, unit, StorageType.DENSE);
                 FloatVectorRel<RU, R, RV> sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
@@ -264,8 +261,8 @@ public class FloatSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<FloatVector> constructor = (Constructor<FloatVector>) CLASSNAMES
-                                .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
+                        Constructor<?> constructor =
+                                CLASSNAMES.floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
                         FloatVectorRel vector = (FloatVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         FloatSIVector mult = vector.times(allVector);
                         Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);

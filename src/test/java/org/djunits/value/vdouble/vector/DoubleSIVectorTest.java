@@ -28,7 +28,6 @@ import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
-import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
@@ -83,9 +82,8 @@ public class DoubleSIVectorTest
             Quantity<RU> quantity = (Quantity<RU>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (RU unit : quantity.getUnitsById().values())
             {
-                Constructor<DoubleVectorRel<RU, R, RV>> constructor =
-                        (Constructor<DoubleVectorRel<RU, R, RV>>) CLASSNAMES.doubleVectorClass(type)
-                                .getConstructor(double[].class, unitClass, StorageType.class);
+                Constructor<DoubleVectorRel<RU, R, RV>> constructor = (Constructor<DoubleVectorRel<RU, R, RV>>) CLASSNAMES
+                        .doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
                 DoubleVectorRel<RU, R, RV> vector = constructor.newInstance(denseTestData, unit, StorageType.DENSE);
                 DoubleVectorRel<RU, R, RV> sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
@@ -118,8 +116,7 @@ public class DoubleSIVectorTest
                 SIVector cd4sr2 = new SIVector(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
                 {
-                    DoubleVectorRel<RU, R, RV> asVectorDim =
-                            (DoubleVectorRel<RU, R, RV>) asMethod.invoke(cd4sr2);
+                    DoubleVectorRel<RU, R, RV> asVectorDim = (DoubleVectorRel<RU, R, RV>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asVectorDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -264,8 +261,8 @@ public class DoubleSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<DoubleVector> constructor = (Constructor<DoubleVector>) CLASSNAMES
-                                .doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
+                        Constructor<?> constructor =
+                                CLASSNAMES.doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
                         DoubleVectorRel vector = (DoubleVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         SIVector mult = vector.times(allVector);
                         Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
