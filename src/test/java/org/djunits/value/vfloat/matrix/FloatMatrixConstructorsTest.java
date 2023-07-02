@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
@@ -30,9 +32,11 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.matrix.base.FloatSparseValue;
+import org.djunits.value.vfloat.matrix.data.FloatMatrixData;
 import org.djunits.value.vfloat.scalar.FloatAbsoluteTemperature;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
 
@@ -49,11 +53,12 @@ public class FloatMatrixConstructorsTest
      * @throws IllegalArgumentException on error
      * @throws IllegalAccessException on error
      * @throws InstantiationException on error
+     * @throws ClassNotFoundException on error
      */
     @SuppressWarnings("unchecked")
     @Test
     public void testFloatConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException
     {
         // Force loading of all classes
         LengthUnit length = UNITS.METER;
@@ -67,6 +72,8 @@ public class FloatMatrixConstructorsTest
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
             Unit<?> standardUnit = quantity.getStandardUnit();
             Class<?> unitClass = standardUnit.getClass();
+            Class<?> scalarClass = Class.forName("org.djunits.value.vfloat.scalar.Float" + scalarName);
+            Class<?> vectorClass = Class.forName("org.djunits.value.vfloat.vector.Float" + scalarName + "Vector");
             for (int dataset : new int[] {1, 2})
             {
                 float[][] testValues =
@@ -114,6 +121,22 @@ public class FloatMatrixConstructorsTest
                         compareValuesWithScale(standardUnit.getScale(), testValues, floatMatrix.getValuesSI());
                         assertEquals("Unit must match", standardUnit, floatMatrix.getDisplayUnit());
                         assertEquals("Cardinality", cardinality, floatMatrix.cardinality());
+                        
+                        assertEquals("VectorClass must match", vectorClass, floatMatrix.getVectorClass());
+                        assertEquals("ScalarClass must match", scalarClass, floatMatrix.getScalarClass());
+                        Method imMethod =
+                                floatMatrix.getClass().getMethod("instantiateMatrix", FloatMatrixData.class, unitClass);
+                        assertEquals("instantiateMatrix must match", floatMatrix, imMethod.invoke(floatMatrix,
+                                FloatMatrixData.instantiate(testValues, IdentityScale.SCALE, storageType), standardUnit));
+                        Method ivMethod =
+                                floatMatrix.getClass().getMethod("instantiateVector", FloatVectorData.class, unitClass);
+                        assertEquals("instantiateVector class must match", vectorClass, ivMethod.invoke(floatMatrix,
+                                FloatVectorData.instantiate(new float[] {1f, 2f, 0f, 0f, 3f, 4f}, IdentityScale.SCALE, storageType),
+                                standardUnit).getClass());
+                        Method isMethod = floatMatrix.getClass().getMethod("instantiateScalarSI", float.class, unitClass);
+                        assertEquals("instantiateScalarSI class must match", scalarClass,
+                                isMethod.invoke(floatMatrix, 3.14f, standardUnit).getClass());
+
                         if (floatMatrix instanceof Relative)
                         {
                             assertEquals("zSum", zSum, ((FloatMatrixRel<?, ?, ?, ?>) floatMatrix).zSum().getSI(),
@@ -217,7 +240,7 @@ public class FloatMatrixConstructorsTest
                         dataset == 1 ? FLOATMATRIX.denseRectArrays(50, 50, true) : FLOATMATRIX.sparseRectArrays(50, 50, true);
                 Class<?> scalarClass = CLASSNAMES.floatScalarClass(scalarName);
                 Object[][] scalarValues = (Object[][]) Array.newInstance(scalarClass, testValues.length, testValues[0].length);
-                Class<?> scalarArrayClass = testValues.getClass();
+                Class<?> scalarArrayClass = scalarValues.getClass();
                 Constructor<FloatScalar<?, ?>> constructorScalar =
                         (Constructor<FloatScalar<?, ?>>) scalarClass.getConstructor(float.class, unitClass);
 
@@ -250,13 +273,13 @@ public class FloatMatrixConstructorsTest
                             .floatMatrixClass(scalarName).getConstructor(scalarArrayClass);
 
                     // initialize matrices
-                    FloatMatrix<?, ?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                    FloatMatrix<?, ?, ?, ?> vLUS = constructorLUS.newInstance(scalarValues, standardUnit, storageType);
                     assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                    FloatMatrix<?, ?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                    FloatMatrix<?, ?, ?, ?> vLU = constructorLU.newInstance(scalarValues, standardUnit);
                     assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                    FloatMatrix<?, ?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                    FloatMatrix<?, ?, ?, ?> vLS = constructorLS.newInstance(scalarValues, storageType);
                     assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                    FloatMatrix<?, ?, ?, ?> vL = constructorL.newInstance(new Object[] {testValues});
+                    FloatMatrix<?, ?, ?, ?> vL = constructorL.newInstance(new Object[] {scalarValues});
                     assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
 
                     for (FloatMatrix<?, ?, ?, ?> floatMatrix : new FloatMatrix[] {vLUS, vLU, vLS, vL})

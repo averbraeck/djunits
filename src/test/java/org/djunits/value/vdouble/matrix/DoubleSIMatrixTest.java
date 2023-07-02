@@ -1,11 +1,27 @@
 package org.djunits.value.vdouble.matrix;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.djunits.quantity.Quantities;
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.DimensionlessUnit;
+import org.djunits.unit.SIUnit;
+import org.djunits.unit.Unit;
+import org.djunits.unit.util.UNITS;
+import org.djunits.unit.util.UnitException;
+import org.djunits.unit.util.UnitRuntimeException;
+import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
-import org.djunits.value.vdouble.function.DoubleFunction;
-import org.djunits.value.vdouble.function.DoubleMathFunctions;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
+import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
+import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
+import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
+import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.junit.Test;
 
 /**
@@ -19,7 +35,7 @@ import org.junit.Test;
 public class DoubleSIMatrixTest
 {
 
-    /*-
+    /**
      * Test all "asXX" methods.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
@@ -28,26 +44,24 @@ public class DoubleSIMatrixTest
      * @throws IllegalAccessException on error
      * @throws ClassNotFoundException on error
      * @throws UnitException on error
+     * @throws InstantiationException on error
      * @param <U> the unit type
      * @param <S> the scalar type
      * @param <V> the vector type
      * @param <M> the matrix type
      */
-    /*- TODO: replace with new instantiation
     @SuppressWarnings("unchecked")
     @Test
     public <U extends Unit<U>, S extends DoubleScalarRel<U, S>, V extends DoubleVectorRel<U, S, V>,
             M extends DoubleMatrixRel<U, S, V, M>> void testAsAll()
                     throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-                    InvocationTargetException, ClassNotFoundException, UnitException
+                    InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
     {
         // load all classes
         assertEquals("m", UNITS.METER.getId());
 
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10);
-        DimensionlessMatrix dimlessMatrix = DoubleMatrix.instantiate(
-                DoubleMatrixData.instantiate(denseTestData, DimensionlessUnit.SI.getScale(), StorageType.DENSE),
-                DimensionlessUnit.SI);
+        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(5, 10, false);
+        DimensionlessMatrix dimlessMatrix = new DimensionlessMatrix(denseTestData, DimensionlessUnit.SI, StorageType.DENSE);
         dimlessMatrix = dimlessMatrix.mutable().divide(dimlessMatrix).asDimensionless(); // unit matrix
         for (String type : CLASSNAMES.REL_ALL_LIST)
         {
@@ -55,8 +69,10 @@ public class DoubleSIMatrixTest
             Quantity<U> quantity = (Quantity<U>) Quantities.INSTANCE.getQuantity(type + "Unit");
             for (U unit : quantity.getUnitsById().values())
             {
-                DoubleMatrixRel<U, S, V, M> matrix = (DoubleMatrixRel<U, S, V, M>) DoubleMatrix
-                        .instantiate(DoubleMatrixData.instantiate(denseTestData, unit.getScale(), StorageType.DENSE), unit);
+                Constructor<DoubleMatrix<U, S, V, M>> constructorDUS = (Constructor<DoubleMatrix<U, S, V, M>>) CLASSNAMES
+                        .doubleMatrixClass(type).getConstructor(double[][].class, unit.getClass(), StorageType.class);
+                DoubleMatrixRel<U, S, V, M> matrix =
+                        (DoubleMatrixRel<U, S, V, M>) constructorDUS.newInstance(denseTestData, unit, StorageType.DENSE);
                 SIMatrix mult = matrix.times(dimlessMatrix);
                 Method asMethod = SIMatrix.class.getDeclaredMethod("as" + type);
                 DoubleMatrixRel<U, S, V, M> asMatrix = (DoubleMatrixRel<U, S, V, M>) asMethod.invoke(mult);
@@ -85,11 +101,10 @@ public class DoubleSIMatrixTest
                 }
 
                 // test exception for wrong 'as'
-                SIMatrix cd4sr2 = SIMatrix.instantiate(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
+                SIMatrix cd4sr2 = new SIMatrix(denseTestData, SIUnit.of("cd4/sr2"), StorageType.DENSE);
                 try
                 {
-                    DoubleMatrixRel<U, S, V, M> asMatrixDim =
-                            (DoubleMatrixRel<U, S, V, M>) asMethod.invoke(cd4sr2);
+                    DoubleMatrixRel<U, S, V, M> asMatrixDim = (DoubleMatrixRel<U, S, V, M>) asMethod.invoke(cd4sr2);
                     fail("should not be able to carry out 'as'" + type + " on cd4/sr2 SI unit -- resulted in " + asMatrixDim);
                 }
                 catch (InvocationTargetException | UnitRuntimeException e)
@@ -117,80 +132,6 @@ public class DoubleSIMatrixTest
                                 sim.getInUnit(row, col), 0.001);
                     }
                 }
-            }
-        }
-    }
-    */
-
-    /**
-     * Test the methods that are only implemented in DimensionLess matrices.
-     */
-    @Test
-    public void testDimensionLess()
-    {
-        double[][] denseTestData = DOUBLEMATRIX.denseRectArrays(12, 23, false);
-        // put at least one negative value in the test data
-        denseTestData[5][5] = -123d;
-        // put a zero value in the test data
-        denseTestData[10][10] = 0d;
-        DimensionlessMatrix dlm =
-                new DimensionlessMatrix(denseTestData, DimensionlessUnit.BASE.getStandardUnit(), StorageType.DENSE);
-        verifyDimensionLessMatrix(denseTestData, new DoubleFunction()
-        {
-            @Override
-            public double apply(final double value)
-            {
-                return value;
-            }
-        }, dlm);
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.ABS, dlm.mutable().abs());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.ACOS, dlm.mutable().acos());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.ASIN, dlm.mutable().asin());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.ATAN, dlm.mutable().atan());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.CBRT, dlm.mutable().cbrt());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.CEIL, dlm.mutable().ceil());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.COS, dlm.mutable().cos());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.COSH, dlm.mutable().cosh());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.EXP, dlm.mutable().exp());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.EXPM1, dlm.mutable().expm1());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.FLOOR, dlm.mutable().floor());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.INV, dlm.mutable().inv());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.LOG, dlm.mutable().log());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.LOG10, dlm.mutable().log10());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.LOG1P, dlm.mutable().log1p());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.NEG, dlm.mutable().neg());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.RINT, dlm.mutable().rint());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.SIGNUM, dlm.mutable().signum());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.SIN, dlm.mutable().sin());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.SINH, dlm.mutable().sinh());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.SQRT, dlm.mutable().sqrt());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.TAN, dlm.mutable().tan());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.TANH, dlm.mutable().tanh());
-        verifyDimensionLessMatrix(denseTestData, DoubleMathFunctions.POW((float) Math.PI), dlm.mutable().pow(Math.PI));
-    }
-
-    /**
-     * Verify the contents of a FloatDimensionlessVector.
-     * @param reference double[]; the values on which the <code>operation</code> needs to be applied to get the values that must
-     *            be verified
-     * @param operation FloatFunction; the operation that converts the <code>reference</code> values to the values that must be
-     *            verified
-     * @param got DimensionlessMatrix; the values that must be verified
-     */
-    public static void verifyDimensionLessMatrix(final double[][] reference, final DoubleFunction operation,
-            final DimensionlessMatrix got)
-    {
-        assertEquals("row count matches", reference.length, got.rows());
-        assertEquals("column count matches", reference[0].length, got.cols());
-        assertEquals("unit is DimensionLessUnit", DimensionlessUnit.BASE.getStandardUnit(),
-                got.getDisplayUnit().getStandardUnit());
-        for (int row = 0; row < reference.length; row++)
-        {
-            for (int col = 0; col < reference.length; col++)
-            {
-                double expect = operation.apply(reference[row][col]);
-                double tolerance = Math.abs(expect / 10000d);
-                assertEquals("value must match", expect, got.getSI(row, col), tolerance);
             }
         }
     }

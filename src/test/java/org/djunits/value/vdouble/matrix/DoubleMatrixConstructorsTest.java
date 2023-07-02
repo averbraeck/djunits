@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
@@ -30,9 +32,11 @@ import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
 import org.djunits.value.vdouble.matrix.base.DoubleSparseValue;
+import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.AbsoluteTemperature;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
+import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
 import org.junit.Test;
 
@@ -49,11 +53,12 @@ public class DoubleMatrixConstructorsTest
      * @throws IllegalArgumentException on error
      * @throws IllegalAccessException on error
      * @throws InstantiationException on error
+     * @throws ClassNotFoundException on error
      */
     @SuppressWarnings("unchecked")
     @Test
     public void testDoubleConstructors() throws NoSuchMethodException, SecurityException, InstantiationException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException
     {
         // Force loading of all classes
         LengthUnit length = UNITS.METER;
@@ -67,6 +72,8 @@ public class DoubleMatrixConstructorsTest
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(scalarName + "Unit");
             Unit<?> standardUnit = quantity.getStandardUnit();
             Class<?> unitClass = standardUnit.getClass();
+            Class<?> scalarClass = Class.forName("org.djunits.value.vdouble.scalar." + scalarName);
+            Class<?> vectorClass = Class.forName("org.djunits.value.vdouble.vector." + scalarName + "Vector");
             for (int dataset : new int[] {1, 2})
             {
                 double[][] testValues =
@@ -114,6 +121,22 @@ public class DoubleMatrixConstructorsTest
                         compareValuesWithScale(standardUnit.getScale(), testValues, doubleMatrix.getValuesSI());
                         assertEquals("Unit must match", standardUnit, doubleMatrix.getDisplayUnit());
                         assertEquals("Cardinality", cardinality, doubleMatrix.cardinality());
+                        
+                        assertEquals("VectorClass must match", vectorClass, doubleMatrix.getVectorClass());
+                        assertEquals("ScalarClass must match", scalarClass, doubleMatrix.getScalarClass());
+                        Method imMethod =
+                                doubleMatrix.getClass().getMethod("instantiateMatrix", DoubleMatrixData.class, unitClass);
+                        assertEquals("instantiateMatrix must match", doubleMatrix, imMethod.invoke(doubleMatrix,
+                                DoubleMatrixData.instantiate(testValues, IdentityScale.SCALE, storageType), standardUnit));
+                        Method ivMethod =
+                                doubleMatrix.getClass().getMethod("instantiateVector", DoubleVectorData.class, unitClass);
+                        assertEquals("instantiateVector class must match", vectorClass, ivMethod.invoke(doubleMatrix,
+                                DoubleVectorData.instantiate(new double[] {1, 2, 0, 0, 3, 4}, IdentityScale.SCALE, storageType),
+                                standardUnit).getClass());
+                        Method isMethod = doubleMatrix.getClass().getMethod("instantiateScalarSI", double.class, unitClass);
+                        assertEquals("instantiateScalarSI class must match", scalarClass,
+                                isMethod.invoke(doubleMatrix, 3.14, standardUnit).getClass());
+                        
                         if (doubleMatrix instanceof Relative)
                         {
                             assertEquals("zSum", zSum, ((DoubleMatrixRel<?, ?, ?, ?>) doubleMatrix).zSum().getSI(), 0.001);
@@ -217,7 +240,7 @@ public class DoubleMatrixConstructorsTest
                         dataset == 1 ? DOUBLEMATRIX.denseRectArrays(50, 50, true) : DOUBLEMATRIX.sparseRectArrays(50, 50, true);
                 Class<?> scalarClass = CLASSNAMES.doubleScalarClass(scalarName);
                 Object[][] scalarValues = (Object[][]) Array.newInstance(scalarClass, testValues.length, testValues[0].length);
-                Class<?> scalarArrayClass = testValues.getClass();
+                Class<?> scalarArrayClass = scalarValues.getClass();
                 Constructor<DoubleScalar<?, ?>> constructorScalar =
                         (Constructor<DoubleScalar<?, ?>>) scalarClass.getConstructor(double.class, unitClass);
 
@@ -250,13 +273,13 @@ public class DoubleMatrixConstructorsTest
                             .doubleMatrixClass(scalarName).getConstructor(scalarArrayClass);
 
                     // initialize matrices
-                    DoubleMatrix<?, ?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
+                    DoubleMatrix<?, ?, ?, ?> vLUS = constructorLUS.newInstance(scalarValues, standardUnit, storageType);
                     assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                    DoubleMatrix<?, ?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
+                    DoubleMatrix<?, ?, ?, ?> vLU = constructorLU.newInstance(scalarValues, standardUnit);
                     assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                    DoubleMatrix<?, ?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
+                    DoubleMatrix<?, ?, ?, ?> vLS = constructorLS.newInstance(scalarValues, storageType);
                     assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                    DoubleMatrix<?, ?, ?, ?> vL = constructorL.newInstance(new Object[] {testValues});
+                    DoubleMatrix<?, ?, ?, ?> vL = constructorL.newInstance(new Object[] {scalarValues});
                     assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
 
                     for (DoubleMatrix<?, ?, ?, ?> doubleMatrix : new DoubleMatrix[] {vLUS, vLU, vLS, vL})
