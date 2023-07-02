@@ -339,9 +339,9 @@ public class FloatSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<FloatVectorRel> constructor = (Constructor<FloatVectorRel>) CLASSNAMES
+                        Constructor<?> constructor = CLASSNAMES
                                 .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
-                        FloatVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        FloatVectorRel vector = (FloatVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         FloatSIVector mult = vector.times(dimless);
                         Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);
                         FloatVectorRel<U, ?, ?> asVector = (FloatVectorRel<U, ?, ?>) asMethod.invoke(mult);

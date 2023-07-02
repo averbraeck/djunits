@@ -339,9 +339,9 @@ public class DoubleSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<DoubleVectorRel> constructor = (Constructor<DoubleVectorRel>) CLASSNAMES
-                                .doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
-                        DoubleVectorRel vector = constructor.newInstance(testValues, unit, storageType2);
+                        Constructor<?> constructor =
+                                CLASSNAMES.doubleVectorClass(type).getConstructor(double[].class, unitClass, StorageType.class);
+                        DoubleVectorRel vector = (DoubleVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         SIVector mult = vector.times(dimless);
                         Method asMethod = SIVector.class.getDeclaredMethod("as" + type);
                         DoubleVectorRel<U, ?, ?> asVector = (DoubleVectorRel<U, ?, ?>) asMethod.invoke(mult);
