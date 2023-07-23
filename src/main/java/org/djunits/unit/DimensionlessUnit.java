@@ -21,9 +21,9 @@ public final class DimensionlessUnit extends Unit<DimensionlessUnit>
     /** The base, with the empty SI signature. */
     public static final Quantity<DimensionlessUnit> BASE = new Quantity<>("Dimensionless", "");
 
-    /** The SI unit for a dimension less unit is "1" or N/A. */
+    /** The SI unit for a dimension less unit is "". */
     public static final DimensionlessUnit SI =
-            new DimensionlessUnit().build(new Unit.Builder<DimensionlessUnit>().setQuantity(BASE).setId("unit").setName("unit")
+            new DimensionlessUnit().build(new Unit.Builder<DimensionlessUnit>().setQuantity(BASE).setId("").setName("")
                     .setUnitSystem(UnitSystem.OTHER).setSiPrefixes(SIPrefixes.NONE, 1.0).setScale(IdentityScale.SCALE));
 
 }
