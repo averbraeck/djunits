@@ -50,6 +50,8 @@ public class SIDimensionsTest
         illegal("kg-m/s");
         illegal("kgm/s-");
         illegal("kgm/");
+        illegal("1/");
+        illegal("/");
 
         // legal "of" instances:
         SIDimensions.of("rad/s2");
@@ -59,6 +61,13 @@ public class SIDimensionsTest
         SIDimensions.of("1/1");
         SIDimensions.of("1");
         SIDimensions.of("/1");
+        SIDimensions.of("");
+        
+        // check that SIDimensions for Dimensionless are okay
+        assertEquals("1/1 == DIMLESS", SIDimensions.DIMLESS, SIDimensions.of("1/1"));
+        assertEquals("1 == DIMLESS", SIDimensions.DIMLESS, SIDimensions.of("1"));
+        assertEquals("/1 == DIMLESS", SIDimensions.DIMLESS, SIDimensions.of("/1"));
+        assertEquals("'' == DIMLESS", SIDimensions.DIMLESS, SIDimensions.of(""));
 
         SIDimensions si5 = SIDimensions.add(si1, si2);
         assertEquals("[0, 0, 2, 2, -4, 0, 0, 0, 0]", si5.toString());
