@@ -13,21 +13,22 @@ import jakarta.annotation.Generated;
 /**
  * Easy access methods for the FloatTime FloatScalar.
  * <p>
+ * Note that when the offset of a stored absolute FloatTime becomes large, precision of a float might not be enough for the
+ * required resolution of a Time. A float has around 7 significant digits (23 bit mantissa). This means that when we need to
+ * have a float time that is precise to microseconds, the FloatTime value should not go above 2^22 = 4.0E6. This is <b>not</b>
+ * enough to store Epoch values that are in the order of magnitude of 2E12 ms! So feeding System.TimeInMillis() to a FloatTime
+ * with TimeUnit.BASE as its unit is not having the required precision. At best, a FloatTime can store TimeUnit.BASE or
+ * TimeUnit.EPOCH values with real calendar values with a precision of several minutes.
+ * </p>
+ * <p>
  * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
  * All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
- * <p>
- * Note that when the offset of a stored absolute Time becomes large, precision of a float might not be enough for the required
- * resolution of a Time. A float has around 7 significant digits (23 bit mantissa). This means that when we need to have a float
- * time that is precise to microseconds, the Time value should not go above 2^22 = 4.0E6. This is <b>not</b> enough to store
- * Epoch values that are in the order of magnitude of 2E12 ms! So feeding System.TimeInMillis() to a FloatTime with
- * TimeUnit.BASE as its unit is not having the required precision. At best, a FloatTime can store TimeUnit.BASE or
- * TimeUnit.EPOCH values with real calendar values with a precision of several minutes.
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
 public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit, FloatDuration>
 {
     /** */

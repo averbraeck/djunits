@@ -13,20 +13,21 @@ import jakarta.annotation.Generated;
 /**
  * Easy access methods for the Absolute Time DoubleScalar.
  * <p>
- * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
- * All rights reserved. <br>
- * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
- * <p>
  * Note that when the offset of a stored absolute Time becomes large, precision of a double might not be enough for the required
  * resolution of a Time. A double has around 16 significant digits (52 bit mantissa). This means that when we need to have a
  * double Time with TimeUnit.BASE as its unit, the largest value where the ms precision is reached is 2^51 = 2.3E15, which is
  * around 71000 years. This is sufficient to store a date in the 21st Century with a BASE or an Epoch offset precise to a
  * microsecond.
  * </p>
+ * <p>
+ * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
+ * All rights reserved. <br>
+ * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
+ * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
 public class Time extends DoubleScalarAbs<TimeUnit, Time, DurationUnit, Duration>
 {
     /** */
