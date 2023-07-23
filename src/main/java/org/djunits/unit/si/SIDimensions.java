@@ -427,6 +427,10 @@ public class SIDimensions implements Serializable
                 }
             }
         }
+        if (s.toString().equals("1"))
+        {
+            return "";
+        }
         return s.toString();
     }
 
