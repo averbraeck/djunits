@@ -231,7 +231,6 @@ public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
     public static SIScalar of(final double value, final String unitString)
     {
         Throw.whenNull(unitString, "Error parsing SIScalar: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SIScalar: empty unitString");
         try
         {
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));

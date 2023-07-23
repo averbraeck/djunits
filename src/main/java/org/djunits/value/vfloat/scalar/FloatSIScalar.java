@@ -231,7 +231,6 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     public static FloatSIScalar of(final float value, final String unitString)
     {
         Throw.whenNull(unitString, "Error parsing FloatSIScalar: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatSIScalar: empty unitString");
         try
         {
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
