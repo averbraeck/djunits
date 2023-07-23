@@ -291,7 +291,7 @@ public class DoubleVectorMethodTest
                         SIVector amDiv = am.divide(am2);
                         assertEquals("unit of m2 * m2 should be m4", "m4",
                                 amTim.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
-                        assertEquals("unit of m2 / m2 should be 1", "1",
+                        assertEquals("unit of m2 / m2 should be empty string", "",
                                 amDiv.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
                         for (int index = 0; index < testData.length; index++)
                         {

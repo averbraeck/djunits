@@ -130,10 +130,12 @@ public class DoubleValueOfTest
         // test if the . in 10.0 is not removed...
         assertEquals(SIScalar.instantiateSI(10.0, m2), SIScalar.valueOf("10.0 m^2"));
 
+        legal(SIScalar.class, 10.0, "");
+        assertEquals(SIScalar.instantiateSI(10.0, SIUnit.DIMLESS), SIScalar.valueOf("10.0"));
+
         legal(SIScalar.class, 10.0, "m2");
         legal(SIScalar.class, "10.0 m2");
         illegal(SIScalar.class, 10.0, null);
-        illegal(SIScalar.class, 10.0, "");
         illegal(SIScalar.class, null);
         illegal(SIScalar.class, "");
         // illegal(SIScalar.class, "1.0.0 m2"); // formatter.parse() does not use the whole number string

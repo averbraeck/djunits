@@ -30,8 +30,7 @@ public class FloatValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void legal(final Class<? extends FloatScalar<?, ?>> scalarClass, final float value,
-            final String unitString)
+    private void legal(final Class<? extends FloatScalar<?, ?>> scalarClass, final float value, final String unitString)
     {
         try
         {
@@ -68,8 +67,7 @@ public class FloatValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void illegal(final Class<? extends FloatScalar<?, ?>> scalarClass, final float value,
-            final String unitString)
+    private void illegal(final Class<? extends FloatScalar<?, ?>> scalarClass, final float value, final String unitString)
     {
         try
         {
@@ -125,10 +123,12 @@ public class FloatValueOfTest
         // test if the . in 10.0 is not removed...
         assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.valueOf("10.0 m^2"));
 
+        legal(FloatSIScalar.class, 10.0f, "");
+        assertEquals(FloatSIScalar.instantiateSI(10.0f, SIUnit.DIMLESS), FloatSIScalar.valueOf("10.0"));
+
         legal(FloatSIScalar.class, 10.0f, "m2");
         legal(FloatSIScalar.class, "10.0 m2");
         illegal(FloatSIScalar.class, 10.0f, null);
-        illegal(FloatSIScalar.class, 10.0f, "");
         illegal(FloatSIScalar.class, null);
         illegal(FloatSIScalar.class, "");
         // illegal(FloatSIScalar.class, "1.0.0 m2"); // formatter.pasrse() does not use the whole number string
@@ -143,7 +143,7 @@ public class FloatValueOfTest
         {
             // Ignore expected exception
         }
-        
+
         try
         {
             FloatSIScalar.valueOf("xyzuvw");
