@@ -87,6 +87,10 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
      * not set, the defaultAbbreviation gets the value of defaultTextualAbbreviation. When neither the
      * defaultTextualAbbreviation, nor the defaultAbbreviation are set, both get the value of the unitId provided in the
      * builder.
+     * <p>
+     * Note that the unit's name and id can be blank, as long as the SI units show that the unit is dimensionless, and the scale
+     * is the IdentityScale.
+     * </p>
      * @param builder Builder&lt;U&gt;; Builder&lt;U&gt; the object that contains the information about the construction of the
      *            class
      * @return U; the constructed unit
@@ -98,13 +102,17 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         // Check the validity
         String cName = getClass().getSimpleName();
         Throw.whenNull(builder.getId(), "Constructing unit %s: id cannot be null", cName);
-        Throw.when(builder.getId().length() == 0, UnitRuntimeException.class, "Constructing unit %s: id.length cannot be 0",
-                cName);
+        Throw.when(
+                builder.getId().length() == 0
+                        && !(builder.getSiPrefixes().equals(SIPrefixes.NONE) && builder.getScale().equals(IdentityScale.SCALE)),
+                UnitRuntimeException.class, "Constructing unit %s: id.length cannot be 0", cName);
         String unitId = builder.getId();
         Throw.whenNull(builder.getQuantity(), "Constructing unit %s.%s: baseUnit cannot be null", cName, unitId);
         Throw.whenNull(builder.getName(), "Constructing unit %s.%s: name cannot be null", cName, unitId);
-        Throw.when(builder.getName().length() == 0, UnitRuntimeException.class,
-                "Constructing unit %s.%s: name.length cannot be 0", cName, unitId);
+        Throw.when(
+                builder.getName().length() == 0
+                        && !(builder.getSiPrefixes().equals(SIPrefixes.NONE) && builder.getScale().equals(IdentityScale.SCALE)),
+                UnitRuntimeException.class, "Constructing unit %s.%s: name.length cannot be 0", cName, unitId);
         Throw.whenNull(builder.getScale(), "Constructing unit %s.%s: scale cannot be null", cName, unitId);
         Throw.whenNull(builder.getUnitSystem(), "Constructing unit %s.%s: unitSystem cannot be null", cName, unitId);
 
