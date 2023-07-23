@@ -56,7 +56,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
 public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionless>
         implements DimensionlessFunctions<DimensionlessUnit, Dimensionless>
 {
@@ -214,10 +214,9 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
             NumberParser numberParser = new NumberParser().lenient().trailing();
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            DimensionlessUnit unit = DimensionlessUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
-            return new Dimensionless(d, unit);
+            if (unitString.length() != 0)
+                throw new IllegalArgumentException("Unit " + unitString + " not found for Dimensionless");
+            return new Dimensionless(d, DimensionlessUnit.SI);
         }
         catch (Exception exception)
         {
@@ -238,13 +237,10 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
     public static Dimensionless of(final double value, final String unitString)
     {
         Throw.whenNull(unitString, "Error parsing Dimensionless: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Dimensionless: empty unitString");
-        DimensionlessUnit unit = DimensionlessUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new Dimensionless(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing Dimensionless with unit " + unitString);
+        Throw.when(unitString.length() != 0, IllegalArgumentException.class,
+                "Error parsing Dimensionless: non-empty unitString");
+        DimensionlessUnit unit = DimensionlessUnit.SI;
+        return new Dimensionless(value, unit);
     }
 
     /** {@inheritDoc} */

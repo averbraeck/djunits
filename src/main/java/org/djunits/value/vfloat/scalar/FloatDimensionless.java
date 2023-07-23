@@ -56,7 +56,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-04-30T13:59:27.633664900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
 public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatDimensionless>
         implements DimensionlessFunctions<DimensionlessUnit, FloatDimensionless>
 {
@@ -228,10 +228,9 @@ public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatD
             NumberParser numberParser = new NumberParser().lenient().trailing();
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            DimensionlessUnit unit = DimensionlessUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
-            return new FloatDimensionless(f, unit);
+            if (unitString.length() != 0)
+                throw new IllegalArgumentException("Unit " + unitString + " not found for Dimensionless");
+            return new FloatDimensionless(f, DimensionlessUnit.SI);
         }
         catch (Exception exception)
         {
@@ -251,14 +250,10 @@ public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatD
     public static FloatDimensionless of(final float value, final String unitString)
     {
         Throw.whenNull(unitString, "Error parsing FloatDimensionless: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class,
-                "Error parsing FloatDimensionless: empty unitString");
-        DimensionlessUnit unit = DimensionlessUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new FloatDimensionless(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing FloatDimensionless with unit " + unitString);
+        Throw.when(unitString.trim().length() != 0, IllegalArgumentException.class,
+                "Error parsing FloatDimensionless: non-empty unitString");
+        DimensionlessUnit unit = DimensionlessUnit.SI;
+        return new FloatDimensionless(value, unit);
     }
 
     /** {@inheritDoc} */
