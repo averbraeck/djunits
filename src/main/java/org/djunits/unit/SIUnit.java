@@ -15,7 +15,7 @@ public class SIUnit extends Unit<SIUnit>
 {
     /** */
     private static final long serialVersionUID = 20190829L;
-
+    
     static
     {
         // make sure all predefined unit types get registered before we start using SIScalars.
@@ -44,9 +44,8 @@ public class SIUnit extends Unit<SIUnit>
      * Instantiate an SI unit 'of' a SIDimensions.
      * @param siDimensions SIDimensions; the SI dimensions
      * @return the SIUnit based on the SI dimensionality
-     * @throws UnitException when the SI string is not according to the rules
      */
-    public static SIUnit of(final SIDimensions siDimensions) throws UnitException
+    public static SIUnit of(final SIDimensions siDimensions)
     {
         return Unit.lookupOrCreateUnitWithSIDimensions(siDimensions);
     }
