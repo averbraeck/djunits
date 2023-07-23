@@ -16,6 +16,9 @@ public class SIUnit extends Unit<SIUnit>
     /** */
     private static final long serialVersionUID = 20190829L;
     
+    /** the SI Unit for dimensionless. */
+    public static SIUnit DIMLESS = SIUnit.of(new SIDimensions(0, 0, 0, 0, 0, 0, 0, 0, 0));
+
     static
     {
         // make sure all predefined unit types get registered before we start using SIScalars.
