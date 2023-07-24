@@ -242,7 +242,6 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     {
         Throw.whenNull(value, "Error parsing SIVector: value is null");
         Throw.whenNull(unitString, "Error parsing SIVector: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SIVector: empty unitString");
         Throw.whenNull(storageType, "Error parsing SIVector: storageType is null");
         try
         {
@@ -272,7 +271,6 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     {
         Throw.whenNull(valueList, "Error parsing SIVector: valueList is null");
         Throw.whenNull(unitString, "Error parsing SIVector: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SIVector: empty unitString");
         Throw.whenNull(storageType, "Error parsing SIVector: storageType is null");
         try
         {
@@ -304,7 +302,6 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     {
         Throw.whenNull(valueMap, "Error parsing SIVector: valueMap is null");
         Throw.whenNull(unitString, "Error parsing SIVector: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SIVector: empty unitString");
         Throw.whenNull(storageType, "Error parsing SIVector: storageType is null");
         try
         {

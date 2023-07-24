@@ -133,7 +133,6 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     {
         Throw.whenNull(values, "Error parsing FloatSIMatrix: value is null");
         Throw.whenNull(unitString, "Error parsing FloatSIMatrix: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatSIMatrix: empty unitString");
         Throw.whenNull(storageType, "Error parsing FloatSIMatrix: storageType is null");
         try
         {

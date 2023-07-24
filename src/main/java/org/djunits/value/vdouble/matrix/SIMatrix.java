@@ -133,7 +133,6 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     {
         Throw.whenNull(values, "Error parsing SIMatrix: value is null");
         Throw.whenNull(unitString, "Error parsing SIMatrix: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SIMatrix: empty unitString");
         Throw.whenNull(storageType, "Error parsing SIMatrix: storageType is null");
         try
         {
