@@ -201,7 +201,7 @@ public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
     public static SIScalar valueOf(final String text)
     {
         Throw.whenNull(text, "Error parsing SIScalar: unitString is null");
-        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing SIScalar: empty unitString");
+        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing SIScalar: empty string to parse");
         try
         {
             NumberParser numberParser = new NumberParser().lenient().trailing();
