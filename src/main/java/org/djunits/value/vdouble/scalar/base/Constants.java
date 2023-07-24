@@ -104,8 +104,17 @@ public final class Constants
      */
     public static final SIScalar LUMINOUS_EFFICACY_540THZ = SIScalar.of(683d, "cdsrs3/kg");
 
+    /** Ratio of a half circumference of a circle and its radius. */
+    public static final Dimensionless PI = new Dimensionless(Math.PI, DimensionlessUnit.SI);
+
     /** Ratio of circumference of circle and its radius. */
     public static final Dimensionless TAU = new Dimensionless(Math.PI * 2, DimensionlessUnit.SI);
+
+    /** Euler's constant. */
+    public static final Dimensionless E = new Dimensionless(Math.E, DimensionlessUnit.SI);
+
+    /** Golden ratio. */
+    public static final Dimensionless PHI = new Dimensionless(1.0 + 0.5 * Math.sqrt(5), DimensionlessUnit.SI);
 
     /** Reduced Planck constant, a.k.a. angular Planck constant; Planck constant divided by 2 pi. */
     public static final SIScalar PLANKREDUCED = PLANCK.divide(TAU);
