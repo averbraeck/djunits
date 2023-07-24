@@ -154,7 +154,7 @@ public class SIDimensions implements Serializable
      * Translate a string representing SI dimensions to an SIDimensions object. Example: SIDimensions.of("kgm2") is translated
      * to a vector {0,0,1,2,0,0,0,0,0}. It is allowed to use 0 or 1 for the dimensions. Dimensions between -9 and 9 are allowed.
      * The parsing is quite lenient: periods and carets (^) are taken out, and the order can be arbitrary, so "kgms-2" is
-     * accepted as well as "m.s^-2.kg"
+     * accepted as well as "m.s^-2.kg". Note that the empty string parses to the dimensionless unit.
      * @param siString String; concatenation of SI units with positive or negative dimensions. No divisions sign is allowed.
      * @return byte[]; a vector of length <code>NUMBER_DIMENSIONS</code> with the dimensions for the SI units
      * @throws UnitException when the String cannot be parsed, e.g. due to units not being recognized
