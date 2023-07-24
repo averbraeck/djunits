@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.Unit;
 import org.junit.Test;
 
@@ -84,22 +85,16 @@ public class SIRuntimeExceptionTest
     @Test
     public void testUnitGetUnit()
     {
+        assertTrue(Unit.getUnit("").getQuantity().getSiDimensions().equals(SIDimensions.DIMLESS));
+        assertTrue(Unit.getUnit("m/s").getQuantity().getSiDimensions()
+                .equals(SpeedUnit.METER_PER_SECOND.getQuantity().getSiDimensions()));
+
         try
         {
             Unit.getUnit(null);
             fail("null unit string should have thrown a NullPointerException");
         }
         catch (NullPointerException npe)
-        {
-            assertTrue("Exception describes the parameter that has the problem", npe.getMessage().contains("unitString"));
-        }
-
-        try
-        {
-            Unit.getUnit("");
-            fail("empty string should have thrown a IllegalArgumentException");
-        }
-        catch (IllegalArgumentException npe)
         {
             assertTrue("Exception describes the parameter that has the problem", npe.getMessage().contains("unitString"));
         }
