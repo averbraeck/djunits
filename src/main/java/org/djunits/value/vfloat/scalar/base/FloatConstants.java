@@ -113,7 +113,7 @@ public final class FloatConstants
     public static final FloatDimensionless E = new FloatDimensionless(Math.E, DimensionlessUnit.SI);
 
     /** Golden ratio. */
-    public static final FloatDimensionless PHI = new FloatDimensionless(1.0 + 0.5 * Math.sqrt(5.0), DimensionlessUnit.SI);
+    public static final FloatDimensionless PHI = new FloatDimensionless(0.5 + 0.5 * Math.sqrt(5.0), DimensionlessUnit.SI);
 
 
     /** Reduced Planck constant, a.k.a. angular Planck constant; Planck constant divided by 2 pi. */

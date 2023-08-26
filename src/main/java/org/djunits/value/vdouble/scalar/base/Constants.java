@@ -114,7 +114,7 @@ public final class Constants
     public static final Dimensionless E = new Dimensionless(Math.E, DimensionlessUnit.SI);
 
     /** Golden ratio. */
-    public static final Dimensionless PHI = new Dimensionless(1.0 + 0.5 * Math.sqrt(5), DimensionlessUnit.SI);
+    public static final Dimensionless PHI = new Dimensionless((1.0 + Math.sqrt(5.0)) / 2.0, DimensionlessUnit.SI);
 
     /** Reduced Planck constant, a.k.a. angular Planck constant; Planck constant divided by 2 pi. */
     public static final SIScalar PLANKREDUCED = PLANCK.divide(TAU);

@@ -44,8 +44,10 @@ public class ConstantsTest
         assertEquals("Tau", Math.PI * 2.0f, FloatConstants.TAU.si, Math.ulp((float) Math.PI * 2.0f));
         assertEquals("E", Math.E, Constants.E.si, 0);
         assertEquals("E", Math.E, FloatConstants.E.si, Math.ulp((float) Math.E * 1.0f));
-        assertEquals("Phi", 1.0 + 0.5 * Math.sqrt(5.0), Constants.PHI.si, 0);
-        assertEquals("Phi", 1.0 + 0.5 * Math.sqrt(5.0), FloatConstants.PHI.si, Math.ulp((float) (1.0 + 0.5 * Math.sqrt(5.0))));
+        assertEquals("Phi", 1.61803398874989484820, Constants.PHI.si, Math.ulp(1.61803398874989484820));
+        assertEquals("Phi", 1.61803398874989484820, FloatConstants.PHI.si, Math.ulp(1.61803398874989484820f));
+        assertEquals("Phi", 1.0 + 1.0 / Constants.PHI.si, Constants.PHI.si, Math.ulp(1.61803398874989484820));
+        assertEquals("Phi", 1.0f + 1.0f / FloatConstants.PHI.si, FloatConstants.PHI.si, Math.ulp(1.61803398874989484820f));
         assertEquals("Reduced Planck", Constants.PLANCK.si / 2 / Math.PI, Constants.PLANKREDUCED.si, 0);
         assertEquals("Reduced Planck", Constants.PLANCK.si / 2f / Math.PI, FloatConstants.PLANKREDUCED.si,
                 Math.ulp(FloatConstants.PLANCK.si / 2.0f / (float) Math.PI));
