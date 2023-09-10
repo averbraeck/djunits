@@ -48,8 +48,8 @@ public class ConstantsTest
         assertEquals(1.61803398874989484820, FloatConstants.PHI.si, Math.ulp(1.61803398874989484820f), "Phi");
         assertEquals(1.0 + 1.0 / Constants.PHI.si, Constants.PHI.si, Math.ulp(1.61803398874989484820), "Phi");
         assertEquals(1.0f + 1.0f / FloatConstants.PHI.si, FloatConstants.PHI.si, Math.ulp(1.61803398874989484820f), "Phi");
-        assertEquals(Constants.PLANCK.si / 2 / Math.PI, Constants.PLANKREDUCED.si, 0, "Reduced Planck");
-        assertEquals(Constants.PLANCK.si / 2f / Math.PI, FloatConstants.PLANKREDUCED.si,
+        assertEquals(Constants.PLANCK.si / 2 / Math.PI, Constants.PLANCKREDUCED.si, 0, "Reduced Planck");
+        assertEquals(Constants.PLANCK.si / 2f / Math.PI, FloatConstants.PLANCKREDUCED.si,
                 Math.ulp(FloatConstants.PLANCK.si / 2.0f / (float) Math.PI), "Reduced Planck");
         // These constants have a non-zero tolerance. The tolerances used are the precision at which these constants are
         // currently known. This should ensure that these test will still succeed when the values are refined in the future.

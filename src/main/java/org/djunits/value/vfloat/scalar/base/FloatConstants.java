@@ -117,6 +117,6 @@ public final class FloatConstants
 
 
     /** Reduced Planck constant, a.k.a. angular Planck constant; Planck constant divided by 2 pi. */
-    public static final FloatSIScalar PLANKREDUCED = PLANCK.divide(TAU);
+    public static final FloatSIScalar PLANCKREDUCED = PLANCK.divide(TAU);
 
 }
