@@ -1,13 +1,13 @@
 package org.djunits.value;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
 import org.djunits.value.vfloat.function.FloatFunction;
 import org.djunits.value.vfloat.function.FloatMathFunctions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the math functions.
@@ -25,7 +25,7 @@ public class MathFunctionsTest
     @Test
     public void mathFunctionsTest()
     {
-        double[] testValues = { -100, -10, -1, -0.1, 0, 0.1, 1, 10, 100, -Math.PI, Math.PI };
+        double[] testValues = {-100, -10, -1, -0.1, 0, 0.1, 1, 10, 100, -Math.PI, Math.PI};
         for (double testValue : testValues)
         {
             // System.out.println("Testing math functions with test value " + testValue);
@@ -74,7 +74,7 @@ public class MathFunctionsTest
         else if (Double.isFinite(expectedResult))
         {
             double margin = Math.abs(expectedResult / 100000);
-            assertEquals("double function " + functionName, expectedResult, got, margin);
+            assertEquals(expectedResult, got, margin, "double function " + functionName);
         }
         float gotF = ff.apply((float) testValue);
         if (Double.isNaN(expectedResult))
@@ -88,7 +88,7 @@ public class MathFunctionsTest
             {
                 margin = 0.0000001f;
             }
-            assertEquals("float function " + functionName, (float) expectedResult, gotF, margin);
+            assertEquals((float) expectedResult, gotF, margin, "float function " + functionName);
         }
     }
 

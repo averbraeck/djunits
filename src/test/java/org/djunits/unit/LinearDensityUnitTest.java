@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensityU
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,10 +38,10 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensityU
         checkUnitRatioNameAndAbbreviation(LinearDensityUnit.PER_KILOMETER, 0.001, 0.0000001, "per kilometer", "/km");
         checkUnitRatioNameAndAbbreviation(LinearDensityUnit.PER_MILLIMETER, 1000, 0.01, "per millimeter", "/mm");
         // Check two conversions between non-standard units
-        assertEquals("one per millimeter is 1000000 per kilometer", 1000000,
-                getMultiplicationFactorTo(LinearDensityUnit.PER_MILLIMETER, LinearDensityUnit.PER_KILOMETER), 0.1);
-        assertEquals("one per kilometer is 0.000001 per millimeter", 0.000001,
-                getMultiplicationFactorTo(LinearDensityUnit.PER_KILOMETER, LinearDensityUnit.PER_MILLIMETER), 0.00000005);
+        assertEquals(1000000, getMultiplicationFactorTo(LinearDensityUnit.PER_MILLIMETER, LinearDensityUnit.PER_KILOMETER), 0.1,
+                "one per millimeter is 1000000 per kilometer");
+        assertEquals(0.000001, getMultiplicationFactorTo(LinearDensityUnit.PER_KILOMETER, LinearDensityUnit.PER_MILLIMETER),
+                0.00000005, "one per kilometer is 0.000001 per millimeter");
     }
 
     /**
@@ -51,7 +51,7 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensityU
     public final void createLinearDensityUnit()
     {
         LinearDensityUnit muLDU = LinearDensityUnit.PER_METER.deriveLinear(2.54 / 100, "perin", "PerInch", UnitSystem.OTHER);
-        assertTrue("Can create a new LinearDensityUnit", null != muLDU);
+        assertTrue(null != muLDU, "Can create a new LinearDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "PerInch", "perin");
         LinearDensityUnit.BASE.unregister(muLDU);
     }

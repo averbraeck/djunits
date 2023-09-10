@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class PowerUnitTest extends AbstractLinearUnitTest<PowerUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -40,12 +40,11 @@ public class PowerUnitTest extends AbstractLinearUnitTest<PowerUnit>
         checkUnitRatioNameAndAbbreviation(PowerUnit.FOOT_POUND_FORCE_PER_MINUTE, 0.022596965, 0.000001,
                 "foot pound-force per minute", "ft.lbf/min");
         // Check two conversions between non-standard units
-        assertEquals("one FOOT POUND FORCE PER HOUR is about 0.0166667 FOOT POUND FORCE PER MINUTE", 0.01666667,
+        assertEquals(0.01666667,
                 getMultiplicationFactorTo(PowerUnit.FOOT_POUND_FORCE_PER_HOUR, PowerUnit.FOOT_POUND_FORCE_PER_MINUTE),
-                0.0000001);
-        assertEquals("one FOOT POUND FORCE PER MINUTE is 60 FOOT POUND FORCE PER HOUR", 60,
-                getMultiplicationFactorTo(PowerUnit.FOOT_POUND_FORCE_PER_MINUTE, PowerUnit.FOOT_POUND_FORCE_PER_HOUR),
-                0.000001);
+                0.0000001, "one FOOT POUND FORCE PER HOUR is about 0.0166667 FOOT POUND FORCE PER MINUTE");
+        assertEquals(60, getMultiplicationFactorTo(PowerUnit.FOOT_POUND_FORCE_PER_MINUTE, PowerUnit.FOOT_POUND_FORCE_PER_HOUR),
+                0.000001, "one FOOT POUND FORCE PER MINUTE is 60 FOOT POUND FORCE PER HOUR");
         // Check conversion factor to standard unit for all remaining time units
         checkUnitRatioNameAndAbbreviation(PowerUnit.KILOWATT, 1000, 0.001, "kilowatt", "kW");
         checkUnitRatioNameAndAbbreviation(PowerUnit.MEGAWATT, 1000000, 1, "megawatt", "MW");
@@ -62,7 +61,7 @@ public class PowerUnitTest extends AbstractLinearUnitTest<PowerUnit>
     public final void createPowerUnitUnit()
     {
         PowerUnit myMU = PowerUnit.WATT.deriveLinear(250, "pnp", "Person", UnitSystem.OTHER);
-        assertTrue("Can create a new PowerUnit", null != myMU);
+        assertTrue(null != myMU, "Can create a new PowerUnit");
         checkUnitRatioNameAndAbbreviation(myMU, 250, 1, "Person", "pnp");
         PowerUnit.BASE.unregister(myMU);
     }

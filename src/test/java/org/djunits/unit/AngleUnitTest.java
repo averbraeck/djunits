@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class AngleUnitTest extends AbstractLinearUnitTest<AngleUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -39,11 +39,11 @@ public class AngleUnitTest extends AbstractLinearUnitTest<AngleUnit>
             final double precision, final String expectedName, final String expectedAbbreviation)
     {
         assertEquals("rad", AngleUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        assertEquals(String.format("one %s is about %f reference unit", au.getId(), expectedValue), expectedValue,
-                au.getScale().toStandardUnit(1.0), precision);
-        assertEquals(String.format("Name of %s is %s", au.getId(), expectedName), expectedName, au.getName());
-        assertEquals(String.format("Abbreviation of %s is %s", au.getId(), expectedAbbreviation), expectedAbbreviation,
-                au.getDefaultDisplayAbbreviation());
+        assertEquals(expectedValue, au.getScale().toStandardUnit(1.0), precision,
+                String.format("one %s is about %f reference unit", au.getId(), expectedValue));
+        assertEquals(expectedName, au.getName(), String.format("Name of %s is %s", au.getId(), expectedName));
+        assertEquals(expectedAbbreviation, au.getDefaultDisplayAbbreviation(),
+                String.format("Abbreviation of %s is %s", au.getId(), expectedAbbreviation));
     }
 
     /**
@@ -56,9 +56,9 @@ public class AngleUnitTest extends AbstractLinearUnitTest<AngleUnit>
         checkUnitValueNameAndAbbreviation(AngleUnit.ARCMINUTE, 2 * Math.PI / 360 / 60, 0.0001, "arcminute", "\'");
         checkUnitValueNameAndAbbreviation(AngleUnit.GRAD, 2 * Math.PI / 400, 0.00001, "gradian", "grad");
         // TODO Check two conversions between non-standard Angle units
-        assertEquals("one GRAD is about 54 ARCMINUTE", 54, getMultiplicationFactorTo(AngleUnit.GRAD, AngleUnit.ARCMINUTE), 0.5);
-        assertEquals("one ARCMINUTE is about 0.0185 GRAD", 0.0185,
-                getMultiplicationFactorTo(AngleUnit.ARCMINUTE, AngleUnit.GRAD), 0.0001);
+        assertEquals(54, getMultiplicationFactorTo(AngleUnit.GRAD, AngleUnit.ARCMINUTE), 0.5, "one GRAD is about 54 ARCMINUTE");
+        assertEquals(0.0185, getMultiplicationFactorTo(AngleUnit.ARCMINUTE, AngleUnit.GRAD), 0.0001,
+                "one ARCMINUTE is about 0.0185 GRAD");
         // Check conversion factor to standard unit for all remaining time units
         checkUnitValueNameAndAbbreviation(AngleUnit.CENTESIMAL_ARCMINUTE, 0.00015708, 0.0000001, "centesimal arcminute", "c\'");
         checkUnitValueNameAndAbbreviation(AngleUnit.CENTESIMAL_ARCSECOND, 1.57079e-6, 0.1, "centesimal arcsecond", "c\"");
@@ -72,7 +72,7 @@ public class AngleUnitTest extends AbstractLinearUnitTest<AngleUnit>
     public final void createAngleUnit()
     {
         AngleUnit myAPU = AngleUnit.RADIAN.deriveLinear(0.19634954085, "pt", "point", UnitSystem.OTHER);
-        assertTrue("Can create a new AngleUnit", null != myAPU);
+        assertTrue(null != myAPU, "Can create a new AngleUnit");
         checkUnitValueNameAndAbbreviation(myAPU, 0.19634954085, 0.0000001, "point", "pt");
         AngleUnit.BASE.unregister(myAPU);
     }

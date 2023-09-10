@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class PressureUnitTest extends AbstractLinearUnitTest<PressureUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,10 +38,10 @@ public class PressureUnitTest extends AbstractLinearUnitTest<PressureUnit>
         checkUnitRatioNameAndAbbreviation(PressureUnit.ATMOSPHERE_STANDARD, 101325, 0.5, "atmosphere (standard)", "atm");
         checkUnitRatioNameAndAbbreviation(PressureUnit.ATMOSPHERE_TECHNICAL, 98066.5, 0.1, "atmosphere (technical)", "at");
         // Check two conversions between non-standard units
-        assertEquals("one ATMOSPHERE STANDARD is about 1.03327 ATMOSPHERE TECHNICAL", 1 / 0.9678,
-                getMultiplicationFactorTo(PressureUnit.ATMOSPHERE_STANDARD, PressureUnit.ATMOSPHERE_TECHNICAL), 0.0001);
-        assertEquals("one ATMOSPHERE TECHNICAL is 0.9678 ATMOSPHERE STANDARD", 0.9678,
-                getMultiplicationFactorTo(PressureUnit.ATMOSPHERE_TECHNICAL, PressureUnit.ATMOSPHERE_STANDARD), 0.0001);
+        assertEquals(1 / 0.9678, getMultiplicationFactorTo(PressureUnit.ATMOSPHERE_STANDARD, PressureUnit.ATMOSPHERE_TECHNICAL),
+                0.0001, "one ATMOSPHERE STANDARD is about 1.03327 ATMOSPHERE TECHNICAL");
+        assertEquals(0.9678, getMultiplicationFactorTo(PressureUnit.ATMOSPHERE_TECHNICAL, PressureUnit.ATMOSPHERE_STANDARD),
+                0.0001, "one ATMOSPHERE TECHNICAL is 0.9678 ATMOSPHERE STANDARD");
         // Check conversion factor to standard unit for all remaining time units
         checkUnitRatioNameAndAbbreviation(PressureUnit.HECTOPASCAL, 100, 0.0001, "hectopascal", "hPa");
         checkUnitRatioNameAndAbbreviation(PressureUnit.KILOPASCAL, 1000, 0.001, "kilopascal", "kPa");
@@ -66,7 +66,7 @@ public class PressureUnitTest extends AbstractLinearUnitTest<PressureUnit>
     public final void createPressureUnit()
     {
         PressureUnit myPU = PressureUnit.MILLIMETER_MERCURY.deriveLinear(106, "hhhp", "HealthyHumanHeart", UnitSystem.OTHER);
-        assertTrue("Can create a new PowerUnit", null != myPU);
+        assertTrue(null != myPU, "Can create a new PowerUnit");
         checkUnitRatioNameAndAbbreviation(myPU, 14132.1711, 0.01, "HealthyHumanHeart", "hhhp");
         PressureUnit.BASE.unregister(myPU);
     }

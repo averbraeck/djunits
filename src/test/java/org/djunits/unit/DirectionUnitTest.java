@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class DirectionUnitTest extends AbstractUnitTest<DirectionUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -39,11 +39,11 @@ public class DirectionUnitTest extends AbstractUnitTest<DirectionUnit>
             final double precision, final String expectedName, final String expectedAbbreviation)
     {
         assertEquals("rad", DirectionUnit.DEFAULT.getQuantity().getSiDimensions().toString(true, false));
-        assertEquals(String.format("one %s is about %f reference unit", au.getId(), expectedValue), expectedValue,
-                au.getScale().toStandardUnit(1.0), precision);
-        assertEquals(String.format("Name of %s is %s", au.getId(), expectedName), expectedName, au.getName());
-        assertEquals(String.format("Abbreviation of %s is %s", au.getId(), expectedAbbreviation), expectedAbbreviation,
-                au.getDefaultDisplayAbbreviation());
+        assertEquals(expectedValue, au.getScale().toStandardUnit(1.0), precision,
+                String.format("one %s is about %f reference unit", au.getId(), expectedValue));
+        assertEquals(expectedName, au.getName(), String.format("Name of %s is %s", au.getId(), expectedName));
+        assertEquals(expectedAbbreviation, au.getDefaultDisplayAbbreviation(),
+                String.format("Abbreviation of %s is %s", au.getId(), expectedAbbreviation));
     }
 
     /**
@@ -69,7 +69,7 @@ public class DirectionUnitTest extends AbstractUnitTest<DirectionUnit>
         // clockwise degrees from 0 EAST
         DirectionUnit myAPU = DirectionUnit.EAST_RADIAN.deriveLinearOffset(-Math.PI / 180.0, -0.0, AngleUnit.RADIAN, "cDE",
                 "clockDegE", UnitSystem.OTHER);
-        assertTrue("Can create a new DirectionUnit", null != myAPU);
+        assertTrue(null != myAPU, "Can create a new DirectionUnit");
         checkUnitValueNameAndAbbreviation(myAPU, -Math.PI / 180.0, 0.0001, "clockDegE", "cDE");
         DirectionUnit.BASE.unregister(myAPU);
     }
@@ -83,7 +83,7 @@ public class DirectionUnitTest extends AbstractUnitTest<DirectionUnit>
         // clockwise degrees from 0 NORTH (compass)
         DirectionUnit myAPU = DirectionUnit.EAST_RADIAN.deriveLinearOffset(-Math.PI / 180.0, -90.0, AngleUnit.DEGREE, "cDN",
                 "compass", UnitSystem.OTHER);
-        assertTrue("Can create a new DirectionUnit", null != myAPU);
+        assertTrue(null != myAPU, "Can create a new DirectionUnit");
         checkUnitValueNameAndAbbreviation(myAPU, Math.PI / 2.0 - Math.PI / 180.0, 0.0001, "compass", "cDN");
         DirectionUnit.BASE.unregister(myAPU);
     }

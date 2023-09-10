@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class SolidAngleUnitTest extends AbstractLinearUnitTest<SolidAngleUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -37,10 +37,10 @@ public class SolidAngleUnitTest extends AbstractLinearUnitTest<SolidAngleUnit>
         checkUnitRatioNameAndAbbreviation(SolidAngleUnit.STERADIAN, 1, 0.0000001, "steradian", "sr");
         checkUnitRatioNameAndAbbreviation(SolidAngleUnit.SQUARE_DEGREE, 1.0 / 3283, 0.0005, "square degree", "sq.deg");
         // Check two conversions between units
-        assertEquals("one STERADIAN is about 3283 SQUARE_DEGREE", 3283,
-                getMultiplicationFactorTo(SolidAngleUnit.STERADIAN, SolidAngleUnit.SQUARE_DEGREE), 0.5);
-        assertEquals("one SQUARE_DEGREE is about 0.0003045 STERADIAN", 0.0003045,
-                getMultiplicationFactorTo(SolidAngleUnit.SQUARE_DEGREE, SolidAngleUnit.STERADIAN), 0.0000005);
+        assertEquals(3283, getMultiplicationFactorTo(SolidAngleUnit.STERADIAN, SolidAngleUnit.SQUARE_DEGREE), 0.5,
+                "one STERADIAN is about 3283 SQUARE_DEGREE");
+        assertEquals(0.0003045, getMultiplicationFactorTo(SolidAngleUnit.SQUARE_DEGREE, SolidAngleUnit.STERADIAN), 0.0000005,
+                "one SQUARE_DEGREE is about 0.0003045 STERADIAN");
     }
 
     /**
@@ -50,7 +50,7 @@ public class SolidAngleUnitTest extends AbstractLinearUnitTest<SolidAngleUnit>
     public final void createSolidAngleUnit()
     {
         SolidAngleUnit myAPU = SolidAngleUnit.STERADIAN.deriveLinear(0.19634954085, "pt", "point", UnitSystem.OTHER);
-        assertTrue("Can create a new TimeUnit", null != myAPU);
+        assertTrue(null != myAPU, "Can create a new TimeUnit");
         checkUnitRatioNameAndAbbreviation(myAPU, 0.19634954085, 0.0000001, "point", "pt");
         SolidAngleUnit.BASE.unregister(myAPU);
     }

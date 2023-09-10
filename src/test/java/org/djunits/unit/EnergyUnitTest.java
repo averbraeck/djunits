@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class EnergyUnitTest extends AbstractLinearUnitTest<EnergyUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,8 +38,8 @@ public class EnergyUnitTest extends AbstractLinearUnitTest<EnergyUnit>
         checkUnitRatioNameAndAbbreviation(EnergyUnit.FOOT_POUND_FORCE, 1.35581794833, 0.0000005, "foot pound-force", "ft.lbf");
         checkUnitRatioNameAndAbbreviation(EnergyUnit.BTU_ISO, 1054.5, 0.001, "British thermal unit (ISO)", "BTU(ISO)");
         // Check two conversions between non-standard units
-        assertEquals("one FOOT POUND FORCE is about 0.0013 BTU ISO", 0.0013,
-                getMultiplicationFactorTo(EnergyUnit.FOOT_POUND_FORCE, EnergyUnit.BTU_ISO), 0.0001);
+        assertEquals(0.0013, getMultiplicationFactorTo(EnergyUnit.FOOT_POUND_FORCE, EnergyUnit.BTU_ISO), 0.0001,
+                "one FOOT POUND FORCE is about 0.0013 BTU ISO");
         // Check conversion factor to standard unit for all remaining acceleration units
         checkUnitRatioNameAndAbbreviation(EnergyUnit.INCH_POUND_FORCE, 0.112984829, 0.000000001, "inch pound-force", "in.lbf");
         checkUnitRatioNameAndAbbreviation(EnergyUnit.BTU_IT, 1055.05585262, 0.000001,
@@ -56,7 +56,7 @@ public class EnergyUnitTest extends AbstractLinearUnitTest<EnergyUnit>
     public final void createEnergyUnit()
     {
         EnergyUnit myUnit = EnergyUnit.SI.deriveLinear(1.23, "my", "myEnergy", UnitSystem.OTHER);
-        assertTrue("Can create a new EnergyUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new EnergyUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myEnergy", "my");
         EnergyUnit.BASE.unregister(myUnit);
     }

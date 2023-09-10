@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.matrix;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -19,10 +19,9 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrix;
 import org.djunits.value.vdouble.matrix.base.DoubleMatrixRel;
-import org.djunits.value.vdouble.matrix.data.DoubleMatrixData;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test.java.
@@ -81,8 +80,8 @@ public class DoubleSIMatrixTest
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
                     {
-                        assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), matrix.getSI(row, col),
-                                asMatrix.getSI(row, col), matrix.getSI(row, col) / 1000.0);
+                        assertEquals(matrix.getSI(row, col), asMatrix.getSI(row, col), matrix.getSI(row, col) / 1000.0,
+                                type + ", unit: " + unit.getDefaultTextualAbbreviation());
                     }
                 }
 
@@ -95,8 +94,8 @@ public class DoubleSIMatrixTest
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
                     {
-                        assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), matrix.getSI(row, col),
-                                asMatrixDisplayUnit.getSI(row, col), matrix.getSI(row, col) / 1000.0);
+                        assertEquals(matrix.getSI(row, col), asMatrixDisplayUnit.getSI(row, col),
+                                matrix.getSI(row, col) / 1000.0, type + ", unit: " + unit.getDefaultTextualAbbreviation());
                     }
                 }
 
@@ -128,8 +127,8 @@ public class DoubleSIMatrixTest
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
                     {
-                        assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), denseTestData[row][col],
-                                sim.getInUnit(row, col), 0.001);
+                        assertEquals(denseTestData[row][col], sim.getInUnit(row, col), 0.001,
+                                type + ", unit: " + unit.getDefaultTextualAbbreviation());
                     }
                 }
             }

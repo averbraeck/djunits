@@ -1,10 +1,10 @@
 package org.djunits.value.vdouble.vector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
@@ -27,7 +27,7 @@ import org.djunits.value.vdouble.scalar.Position;
 import org.djunits.value.vdouble.scalar.Time;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the incrementBy, etc. methods.
@@ -110,12 +110,12 @@ public class DoubleVectorMethodTest
                 {
                     if (ammut2.getSI(index) == 0)
                     {
-                        assertTrue("Value should be NaN", Double.isNaN(ammut3.getSI(index)));
+                        assertTrue(Double.isNaN(ammut3.getSI(index)), "Value should be NaN");
 
                     }
                     else
                     {
-                        assertTrue("Value should be Infinite", Double.isInfinite(ammut3.getSI(index)));
+                        assertTrue(Double.isInfinite(ammut3.getSI(index)), "Value should be Infinite");
                     }
                 }
 
@@ -128,8 +128,8 @@ public class DoubleVectorMethodTest
                     sum += testData[index];
                     card += testData[index] == 0.0d ? 0 : 1;
                 }
-                assertEquals("zSum", sum, zSum.getInUnit(), 0.1);
-                assertEquals("cardinality", card, am.cardinality());
+                assertEquals(sum, zSum.getInUnit(), 0.1, "zSum");
+                assertEquals(card, am.cardinality(), "cardinality");
 
                 // INCREMENTBY(SCALAR) and DECREMENTBY(SCALAR)
                 AreaVector amold = am.clone();
@@ -137,15 +137,15 @@ public class DoubleVectorMethodTest
                 AreaVector aminc = am.mutable().incrementBy(fa).immutable();
                 AreaVector amdec = am.mutable().decrementBy(fa).immutable();
                 AreaVector amid = aminc.mutable().decrementBy(fa);
-                assertEquals("immutable vector should not change when converted to mutable", am, amold);
+                assertEquals(am, amold, "immutable vector should not change when converted to mutable");
                 for (int index = 0; index < testData.length; index++)
                 {
-                    assertEquals("increment and decrement with scalar should result in same vector", am.getSI(index),
-                            amid.getSI(index), 0.1);
-                    assertEquals("m + s = (m+s)", au.getScale().toStandardUnit(testData[index]) + 10.0, aminc.getSI(index),
-                            0.1);
-                    assertEquals("m - s = (m-s)", au.getScale().toStandardUnit(testData[index]) - 10.0, amdec.getSI(index),
-                            0.1);
+                    assertEquals(am.getSI(index), amid.getSI(index), 0.1,
+                            "increment and decrement with scalar should result in same vector");
+                    assertEquals(au.getScale().toStandardUnit(testData[index]) + 10.0, aminc.getSI(index), 0.1,
+                            "m + s = (m+s)");
+                    assertEquals(au.getScale().toStandardUnit(testData[index]) - 10.0, amdec.getSI(index), 0.1,
+                            "m - s = (m-s)");
                 }
 
                 // MULTIPLYBY() and DIVIDEBY(), TIMES(), DIVIDE()
@@ -158,40 +158,39 @@ public class DoubleVectorMethodTest
                 AreaVector amdivF = am.divide(5.0f);
                 for (int index = 0; index < testData.length; index++)
                 {
-                    assertEquals("times followed by divide with constant should result in same vector", am.getSI(index),
-                            amtd.getSI(index), 0.1);
-                    assertEquals("m * 5.0 = (m*5.0)", au.getScale().toStandardUnit(testData[index]) * 5.0d, amt5.getSI(index),
-                            0.1);
-                    assertEquals("m / 5.0 = (m/5.0)", au.getScale().toStandardUnit(testData[index]) / 5.0d, amd5.getSI(index),
-                            0.1);
-                    assertEquals("amtimD", amt5.getSI(index), amtimD.getSI(index), 0.1d);
-                    assertEquals("amtimF", amt5.getSI(index), amtimF.getSI(index), 0.1d);
-                    assertEquals("amdivD", amd5.getSI(index), amdivD.getSI(index), 0.01d);
-                    assertEquals("amdivD", amd5.getSI(index), amdivF.getSI(index), 0.01d);
+                    assertEquals(am.getSI(index), amtd.getSI(index), 0.1,
+                            "times followed by divide with constant should result in same vector");
+                    assertEquals(au.getScale().toStandardUnit(testData[index]) * 5.0d, amt5.getSI(index), 0.1,
+                            "m * 5.0 = (m*5.0)");
+                    assertEquals(au.getScale().toStandardUnit(testData[index]) / 5.0d, amd5.getSI(index), 0.1,
+                            "m / 5.0 = (m/5.0)");
+                    assertEquals(amt5.getSI(index), amtimD.getSI(index), 0.1d, "amtimD");
+                    assertEquals(amt5.getSI(index), amtimF.getSI(index), 0.1d, "amtimF");
+                    assertEquals(amd5.getSI(index), amdivD.getSI(index), 0.01d, "amdivD");
+                    assertEquals(amd5.getSI(index), amdivF.getSI(index), 0.01d, "amdivD");
                 }
 
                 // GET(), GETINUNIT()
-                assertEquals("get()", new Area(testData[2], au), am.get(2));
-                assertEquals("getSI()", au.getScale().toStandardUnit(testData[2]), am.getSI(2), 0.1);
-                assertEquals("getInUnit()", testData[2], am.getInUnit(2), 0.1);
-                assertEquals("getInUnit(unit)",
-                        AreaUnit.SQUARE_YARD.getScale().fromStandardUnit(au.getScale().toStandardUnit(testData[2])),
-                        am.getInUnit(2, AreaUnit.SQUARE_YARD), 0.1);
+                assertEquals(new Area(testData[2], au), am.get(2), "get()");
+                assertEquals(au.getScale().toStandardUnit(testData[2]), am.getSI(2), 0.1, "getSI()");
+                assertEquals(testData[2], am.getInUnit(2), 0.1, "getInUnit()");
+                assertEquals(AreaUnit.SQUARE_YARD.getScale().fromStandardUnit(au.getScale().toStandardUnit(testData[2])),
+                        am.getInUnit(2, AreaUnit.SQUARE_YARD), 0.1, "getInUnit(unit)");
 
                 // SET(), SETINUNIT()
                 Area fasqft = new Area(10.5d, AreaUnit.SQUARE_FOOT);
                 AreaVector famChange = am.clone().mutable();
                 famChange.set(2, fasqft);
-                assertEquals("set()", fasqft.si, famChange.get(2).si, 0.1d);
+                assertEquals(fasqft.si, famChange.get(2).si, 0.1d, "set()");
                 famChange = am.clone().mutable();
                 famChange.setSI(2, 123.4d);
-                assertEquals("setSI()", 123.4d, famChange.get(2).si, 0.1d);
+                assertEquals(123.4d, famChange.get(2).si, 0.1d, "setSI()");
                 famChange = am.clone().mutable();
                 famChange.setInUnit(2, 1.2d);
-                assertEquals("setInUnit()", 1.2d, famChange.getInUnit(2), 0.1d);
+                assertEquals(1.2d, famChange.getInUnit(2), 0.1d, "setInUnit()");
                 famChange = am.clone().mutable();
                 famChange.setInUnit(2, 1.5d, AreaUnit.HECTARE);
-                assertEquals("setInUnit(unit)", 15000.0d, famChange.get(2).si, 1.0d);
+                assertEquals(15000.0d, famChange.get(2).si, 1.0d, "setInUnit(unit)");
 
                 // GETVALUES(), GETSCALARS()
                 double[] valsi = am.getValuesSI();
@@ -200,13 +199,13 @@ public class DoubleVectorMethodTest
                 Area[] valscalars = am.getScalars();
                 for (int index = 0; index < testData.length; index++)
                 {
-                    assertEquals("getValuesSI()", au.getScale().toStandardUnit(testData[index]), valsi[index], 0.1);
-                    assertEquals("getValuesInUnit()", testData[index], valunit[index], 0.1);
-                    assertEquals("getValuesInUnit(unit)",
+                    assertEquals(au.getScale().toStandardUnit(testData[index]), valsi[index], 0.1, "getValuesSI()");
+                    assertEquals(testData[index], valunit[index], 0.1, "getValuesInUnit()");
+                    assertEquals(
                             AreaUnit.SQUARE_YARD.getScale().fromStandardUnit(au.getScale().toStandardUnit(testData[index])),
-                            valsqft[index], 0.1);
-                    assertEquals("getValuesInUnit(unit)", au.getScale().toStandardUnit(testData[index]), valscalars[index].si,
-                            0.1);
+                            valsqft[index], 0.1, "getValuesInUnit(unit)");
+                    assertEquals(au.getScale().toStandardUnit(testData[index]), valscalars[index].si, 0.1,
+                            "getValuesInUnit(unit)");
                 }
 
                 // ASSIGN FUNCTION ABS, CEIL, FLOOR, NEG, RINT
@@ -231,16 +230,16 @@ public class DoubleVectorMethodTest
                 for (int index = 0; index < testData.length; index++)
                 {
                     // TODO: Should be rounded IN THE UNIT rather than BY SI VALUES
-                    assertEquals("div2", au.getScale().toStandardUnit(testData[index]) / 2.0d, amdiv2.getSI(index), 0.1d);
-                    assertEquals("abs", Math.abs(au.getScale().toStandardUnit(testData[index]) / 2.0d), amAbs.getSI(index),
-                            0.1d);
-                    assertEquals("ceil", Math.ceil(au.getScale().toStandardUnit(testData[index]) / 2.0d), amCeil.getSI(index),
-                            0.1d);
-                    assertEquals("floor", Math.floor(au.getScale().toStandardUnit(testData[index]) / 2.0d),
-                            amFloor.getSI(index), 0.1d);
-                    assertEquals("neg", -au.getScale().toStandardUnit(testData[index]) / 2.0d, amNeg.getSI(index), 0.1d);
-                    assertEquals("rint", Math.rint(au.getScale().toStandardUnit(testData[index]) / 2.0d), amRint.getSI(index),
-                            0.1d);
+                    assertEquals(au.getScale().toStandardUnit(testData[index]) / 2.0d, amdiv2.getSI(index), 0.1d, "div2");
+                    assertEquals(Math.abs(au.getScale().toStandardUnit(testData[index]) / 2.0d), amAbs.getSI(index), 0.1d,
+                            "abs");
+                    assertEquals(Math.ceil(au.getScale().toStandardUnit(testData[index]) / 2.0d), amCeil.getSI(index), 0.1d,
+                            "ceil");
+                    assertEquals(Math.floor(au.getScale().toStandardUnit(testData[index]) / 2.0d), amFloor.getSI(index), 0.1d,
+                            "floor");
+                    assertEquals(-au.getScale().toStandardUnit(testData[index]) / 2.0d, amNeg.getSI(index), 0.1d, "neg");
+                    assertEquals(Math.rint(au.getScale().toStandardUnit(testData[index]) / 2.0d), amRint.getSI(index), 0.1d,
+                            "rint");
                 }
 
                 // TEST METHODS THAT INVOLVE TWO VECTOR INSTANCES
@@ -258,15 +257,17 @@ public class DoubleVectorMethodTest
                         AreaVector amSum3 = am.mutable().incrementBy(am2).immutable();
                         // different order of running out of nonzero values
                         AreaVector amSum4 = am2.mutable().incrementBy(am).immutable();
-                        assertEquals("a+b == b+a", amSum1, amSum2);
-                        assertEquals("a+b == b+a", amSum1, amSum3);
-                        assertEquals("a+c == c+a", amSum1, amSum4);
+                        assertEquals(amSum1, amSum2, "a+b == b+a");
+                        assertEquals(amSum1, amSum3, "a+b == b+a");
+                        assertEquals(amSum1, amSum4, "a+c == c+a");
                         for (int index = 0; index < testData.length; index++)
                         {
                             double tolerance =
                                     Double.isFinite(amSum1.getSI(index)) ? Math.abs(amSum1.getSI(index) / 10000.0d) : 0.1d;
-                            assertEquals("value in vector matches", au.getScale().toStandardUnit(testData[index])
-                                    + au2.getScale().toStandardUnit(testData2[index]), amSum1.getSI(index), tolerance);
+                            assertEquals(
+                                    au.getScale().toStandardUnit(testData[index])
+                                            + au2.getScale().toStandardUnit(testData2[index]),
+                                    amSum1.getSI(index), tolerance, "value in vector matches");
                         }
 
                         // MINUS and DECREMENTBY(VECTOR)
@@ -275,35 +276,39 @@ public class DoubleVectorMethodTest
                         AreaVector amDiff3 = am.mutable().decrementBy(am2).immutable();
                         // different order of running out of nonzero values
                         AreaVector amDiff4 = am2.mutable().decrementBy(am).neg().immutable();
-                        assertEquals("a-b == -(b-a)", amDiff1, amDiff2);
-                        assertEquals("a-b == -(b-a)", amDiff1, amDiff3);
-                        assertEquals("a-c == -(c-a)", amDiff1, amDiff4);
+                        assertEquals(amDiff1, amDiff2, "a-b == -(b-a)");
+                        assertEquals(amDiff1, amDiff3, "a-b == -(b-a)");
+                        assertEquals(amDiff1, amDiff4, "a-c == -(c-a)");
                         for (int index = 0; index < testData.length; index++)
                         {
                             double tolerance =
                                     Double.isFinite(amDiff1.getSI(index)) ? Math.abs(amDiff1.getSI(index) / 10000.0d) : 0.1d;
-                            assertEquals("value in vector matches", au.getScale().toStandardUnit(testData[index])
-                                    - au2.getScale().toStandardUnit(testData2[index]), amDiff1.getSI(index), tolerance);
+                            assertEquals(
+                                    au.getScale().toStandardUnit(testData[index])
+                                            - au2.getScale().toStandardUnit(testData2[index]),
+                                    amDiff1.getSI(index), tolerance, "value in vector matches");
                         }
 
                         // TIMES(VECTOR) and DIVIDE(VECTOR)
                         SIVector amTim = am.times(am2);
                         SIVector amDiv = am.divide(am2);
-                        assertEquals("unit of m2 * m2 should be m4", "m4",
-                                amTim.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
-                        assertEquals("unit of m2 / m2 should be empty string", "",
-                                amDiv.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
+                        assertEquals("m4", amTim.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false),
+                                "unit of m2 * m2 should be m4");
+                        assertEquals("", amDiv.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false),
+                                "unit of m2 / m2 should be empty string");
                         for (int index = 0; index < testData.length; index++)
                         {
                             double tolerance =
                                     Double.isFinite(amTim.getSI(index)) ? Math.abs(amTim.getSI(index) / 10000.0d) : 0.1d;
-                            assertEquals("value in m2 * m2 matches", au.getScale().toStandardUnit(testData[index])
-                                    * au2.getScale().toStandardUnit(testData2[index]), amTim.getSI(index), tolerance);
-                            tolerance = Double.isFinite(amTim.getSI(index)) ? Math.abs(amDiv.getSI(index) / 10000.0d) : 0.1d;
-                            assertEquals("value in m2 / m2 matches (could be NaN)",
+                            assertEquals(
+                                    au.getScale().toStandardUnit(testData[index])
+                                            * au2.getScale().toStandardUnit(testData2[index]),
+                                    amTim.getSI(index), tolerance, "value in m2 * m2 matches");
+                            tolerance = Double.isFinite(amDiv.getSI(index)) ? Math.abs(amDiv.getSI(index) / 10000.0d) : 0.1d;
+                            assertEquals(
                                     au.getScale().toStandardUnit(testData[index])
                                             / au2.getScale().toStandardUnit(testData2[index]),
-                                    amDiv.getSI(index), tolerance);
+                                    amDiv.getSI(index), tolerance, "value in m2 / m2 matches (could be NaN)");
                         }
                         // This does not compile: SIVector amTim2 = am.immutable().multiplyBy(am2).immutable();
                     }
@@ -442,12 +447,12 @@ public class DoubleVectorMethodTest
         TimeVector relPlusAbs = dm.plus(tm);
         for (int index = 0; index < denseTestData.length; index++)
         {
-            assertEquals("absPlusRel", 61.0 * denseTestData[index], absPlusRel.getSI(index), 0.01);
-            assertEquals("absMinusRel", -59.0 * denseTestData[index], absMinusRel.getSI(index), 0.01);
-            assertEquals("absMinusAbs", denseTestData[index] / 2.0, absMinusAbs.getSI(index), 0.01);
-            assertEquals("absDecByRelS", denseTestData[index] - 60.0, absDecByRelS.getSI(index), 0.01);
-            assertEquals("absDecByRelM", -29.0 * denseTestData[index], absDecByRelM.getSI(index), 0.01);
-            assertEquals("relPlusAbs", 61.0 * denseTestData[index], relPlusAbs.getSI(index), 0.01);
+            assertEquals(61.0 * denseTestData[index], absPlusRel.getSI(index), 0.01, "absPlusRel");
+            assertEquals(-59.0 * denseTestData[index], absMinusRel.getSI(index), 0.01, "absMinusRel");
+            assertEquals(denseTestData[index] / 2.0, absMinusAbs.getSI(index), 0.01, "absMinusAbs");
+            assertEquals(denseTestData[index] - 60.0, absDecByRelS.getSI(index), 0.01, "absDecByRelS");
+            assertEquals(-29.0 * denseTestData[index], absDecByRelM.getSI(index), 0.01, "absDecByRelM");
+            assertEquals(61.0 * denseTestData[index], relPlusAbs.getSI(index), 0.01, "relPlusAbs");
         }
         for (int dLength : new int[] {-1, 1})
         {
@@ -464,9 +469,8 @@ public class DoubleVectorMethodTest
                 // Ignore expected exception
             }
         }
-        assertTrue("toString returns something informative",
-                DoubleVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE).toString()
-                        .startsWith("DoubleVectorData"));
+        assertTrue(DoubleVectorData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE).toString()
+                .startsWith("DoubleVectorData"), "toString returns something informative");
     }
 
     /**
@@ -490,11 +494,11 @@ public class DoubleVectorMethodTest
         TimeVector relPlusAbsTime = durationVector.plus(timeVector);
         for (int index = 0; index < denseTestData.length; index++)
         {
-            assertEquals("relPlusAbsTime", 61.0 * denseTestData[index], relPlusAbsTime.getSI(index), 0.01);
+            assertEquals(61.0 * denseTestData[index], relPlusAbsTime.getSI(index), 0.01, "relPlusAbsTime");
         }
         Time time = durationVector.instantiateScalarAbsSI(123.456f, TimeUnit.EPOCH_DAY);
-        assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, time.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, time.si, 0.1);
+        assertEquals(TimeUnit.EPOCH_DAY, time.getDisplayUnit(), "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, time.si, 0.1, "Value of instantiateScalarAbsSI matches");
 
         AngleVector angleVector = new AngleVector(
                 DoubleVectorData.instantiate(denseTestData, AngleUnit.DEGREE.getScale(), StorageType.DENSE), AngleUnit.DEGREE);
@@ -505,12 +509,12 @@ public class DoubleVectorMethodTest
         DirectionVector relPlusAbsDirection = angleVector.plus(directionVector);
         for (int index = 0; index < denseTestData.length; index++)
         {
-            assertEquals("relPlusAbsDirection", 2.0 / 180 * Math.PI * denseTestData[index], relPlusAbsDirection.getSI(index),
-                    0.01);
+            assertEquals(2.0 / 180 * Math.PI * denseTestData[index], relPlusAbsDirection.getSI(index), 0.01,
+                    "relPlusAbsDirection");
         }
         Direction direction = angleVector.instantiateScalarAbsSI(123.456f, DirectionUnit.NORTH_RADIAN);
-        assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, direction.si, 0.1);
+        assertEquals(DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit(), "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, direction.si, 0.1, "Value of instantiateScalarAbsSI matches");
 
         TemperatureVector temperatureVector = new TemperatureVector(
                 DoubleVectorData.instantiate(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT.getScale(), StorageType.DENSE),
@@ -522,14 +526,14 @@ public class DoubleVectorMethodTest
         AbsoluteTemperatureVector relPlusAbsTemperature = temperatureVector.plus(absoluteTemperatureVector);
         for (int index = 0; index < denseTestData.length; index++)
         {
-            assertEquals("relPlusAbsTemperature", (1.0 + 5.0 / 9.0) * denseTestData[index], relPlusAbsTemperature.getSI(index),
-                    0.01);
+            assertEquals((1.0 + 5.0 / 9.0) * denseTestData[index], relPlusAbsTemperature.getSI(index), 0.01,
+                    "relPlusAbsTemperature");
         }
         AbsoluteTemperature absoluteTemperature =
                 temperatureVector.instantiateScalarAbsSI(123.456f, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-        assertEquals("Unit of instantiateScalarAbsSI matches", AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT,
-                absoluteTemperature.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, absoluteTemperature.si, 0.1);
+        assertEquals(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT, absoluteTemperature.getDisplayUnit(),
+                "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, absoluteTemperature.si, 0.1, "Value of instantiateScalarAbsSI matches");
 
         LengthVector lengthVector = new LengthVector(
                 DoubleVectorData.instantiate(denseTestData, LengthUnit.MILE.getScale(), StorageType.DENSE), LengthUnit.MILE);
@@ -540,11 +544,11 @@ public class DoubleVectorMethodTest
         PositionVector relPlusAbsPosition = lengthVector.plus(positionVector);
         for (int index = 0; index < denseTestData.length; index++)
         {
-            assertEquals("relPlusAbsPosition", 2609.344 * denseTestData[index], relPlusAbsPosition.getSI(index), 1);
+            assertEquals(2609.344 * denseTestData[index], relPlusAbsPosition.getSI(index), 1, "relPlusAbsPosition");
         }
         Position position = lengthVector.instantiateScalarAbsSI(123.456f, PositionUnit.ANGSTROM);
-        assertEquals("Unit of instantiateScalarAbsSI matches", PositionUnit.ANGSTROM, position.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, position.si, 0.1);
+        assertEquals(PositionUnit.ANGSTROM, position.getDisplayUnit(), "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, position.si, 0.1, "Value of instantiateScalarAbsSI matches");
     }
 
     /**
@@ -559,26 +563,25 @@ public class DoubleVectorMethodTest
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             DoubleVectorData dvd = DoubleVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
-            assertTrue("Double vector data is equal to itself", dvd.equals(dvd));
-            assertFalse("Double vector data is not equal to null", dvd.equals(null));
-            assertFalse("Double vector data is not equal to some string", dvd.equals("some string"));
-            assertTrue("Double vector is equal to sparse version of itself", dvd.equals(dvd.toSparse()));
-            assertTrue("Double vector is equal to dense version of itself", dvd.equals(dvd.toDense()));
+            assertTrue(dvd.equals(dvd), "Double vector data is equal to itself");
+            assertFalse(dvd.equals(null), "Double vector data is not equal to null");
+            assertFalse(dvd.equals("some string"), "Double vector data is not equal to some string");
+            assertTrue(dvd.equals(dvd.toSparse()), "Double vector is equal to sparse version of itself");
+            assertTrue(dvd.equals(dvd.toDense()), "Double vector is equal to dense version of itself");
             for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 DoubleVectorData dvd2 = DoubleVectorData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertEquals(
-                        "Double vector data is equal to other double vector containing same values regardless of storage type",
-                        dvd, dvd2);
+                assertEquals(dvd, dvd2,
+                        "Double vector data is equal to other double vector containing same values regardless of storage type");
                 double[] testData2 = DOUBLEVECTOR.denseArray(122);
                 testData2[2] = 0;
                 dvd2 = DoubleVectorData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Double vector data is not equal to other double vector containing same values except last one",
-                        dvd.equals(dvd2));
+                assertFalse(dvd.equals(dvd2),
+                        "Double vector data is not equal to other double vector containing same values except last one");
                 testData2 = DOUBLEVECTOR.denseArray(123);
                 dvd2 = DoubleVectorData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Double vector data is not equal to other double vector containing same values except for one zero",
-                        dvd.equals(dvd2));
+                assertFalse(dvd.equals(dvd2),
+                        "Double vector data is not equal to other double vector containing same values except for one zero");
             }
         }
     }
@@ -613,29 +616,29 @@ public class DoubleVectorMethodTest
                                 atv.getValuesInUnit(AbsoluteTemperatureUnit.KELVIN));
 
                         String s = atv.toString(temperatureUnit);
-                        assertTrue("toString returns something sensible", s.startsWith("["));
-                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
+                        assertTrue(s.startsWith("["), "toString returns something sensible");
+                        assertTrue(s.endsWith("] " + temperatureUnit.toString()), "toString returns something sensible");
                         // System.out.println(atv.toString(true, true));
                         s = atv.toString(true, true);
-                        assertTrue("toString includes Immutable", s.contains("Immutable"));
-                        assertTrue("toString includes Abs", s.contains("Abs"));
-                        assertTrue("toString includes Dense or Sparse", s.contains(atv.isDense() ? "Dense" : "Sparse"));
-                        assertTrue("toString returns something sensible", s.endsWith("] " + temperatureUnit.toString()));
+                        assertTrue(s.contains("Immutable"), "toString includes Immutable");
+                        assertTrue(s.contains("Abs"), "toString includes Abs");
+                        assertTrue(s.contains(atv.isDense() ? "Dense" : "Sparse"), "toString includes Dense or Sparse");
+                        assertTrue(s.endsWith("] " + temperatureUnit.toString()), "toString returns something sensible");
                         s = atv.mutable().toString(true, true);
-                        assertTrue("toString includes Mutable", s.contains("Mutable"));
+                        assertTrue(s.contains("Mutable"), "toString includes Mutable");
 
                         s = rtv.toString();
-                        assertTrue("toString returns something sensible", s.startsWith("["));
-                        assertTrue("toString returns something sensible",
-                                s.endsWith("] " + relativeTemperatureUnit.toString()));
+                        assertTrue(s.startsWith("["), "toString returns something sensible");
+                        assertTrue(s.endsWith("] " + relativeTemperatureUnit.toString()),
+                                "toString returns something sensible");
                         s = rtv.toString(true, true);
-                        assertTrue("toString includes Immutable", s.contains("Immutable"));
-                        assertTrue("toString includes Rel", s.contains("Rel"));
-                        assertTrue("toString includes Dense or Sparse", s.contains(rtv.isDense() ? "Dense" : "Sparse"));
-                        assertTrue("toString returns something sensible",
-                                s.endsWith("] " + relativeTemperatureUnit.toString()));
+                        assertTrue(s.contains("Immutable"), "toString includes Immutable");
+                        assertTrue(s.contains("Rel"), "toString includes Rel");
+                        assertTrue(s.contains(rtv.isDense() ? "Dense" : "Sparse"), "toString includes Dense or Sparse");
+                        assertTrue(s.endsWith("] " + relativeTemperatureUnit.toString()),
+                                "toString returns something sensible");
                         s = rtv.mutable().toString(true, true);
-                        assertTrue("toString includes Mutable", s.contains("Mutable"));
+                        assertTrue(s.contains("Mutable"), "toString includes Mutable");
 
                     }
                 }
@@ -651,11 +654,11 @@ public class DoubleVectorMethodTest
      */
     public void compareSum(final double[] left, final double[] right, final double[] sum)
     {
-        assertEquals("length of left must equal length of sum", left.length, sum.length);
-        assertEquals("length of right must equal length of sum", right.length, sum.length);
+        assertEquals(left.length, sum.length, "length of left must equal length of sum");
+        assertEquals(right.length, sum.length, "length of right must equal length of sum");
         for (int i = 0; i < sum.length; i++)
         {
-            assertEquals("left plus right is sum", left[i] + right[i], sum[i], 0.001);
+            assertEquals(left[i] + right[i], sum[i], 0.001, "left plus right is sum");
         }
     }
 

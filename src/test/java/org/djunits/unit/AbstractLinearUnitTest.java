@@ -1,6 +1,6 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>
@@ -23,11 +23,11 @@ public abstract class AbstractLinearUnitTest<U extends Unit<U>> extends Abstract
     protected final void checkUnitRatioNameAndAbbreviation(final U u, final double expectedRatio, final double precision,
             final String expectedName, final String expectedAbbreviation)
     {
-        assertEquals(String.format("one %s is about %f reference unit", u.getId(), expectedRatio), expectedRatio,
-                u.getScale().toStandardUnit(1.0), precision);
-        assertEquals(String.format("Name of %s is %s", u.getId(), expectedName), expectedName, u.getName());
-        assertEquals(String.format("Abbreviation of %s is %s", u.getId(), expectedAbbreviation), expectedAbbreviation,
-                u.getDefaultDisplayAbbreviation());
+        assertEquals(expectedRatio, u.getScale().toStandardUnit(1.0), precision,
+                String.format("one %s is about %f reference unit", u.getId(), expectedRatio));
+        assertEquals(expectedName, u.getName(), String.format("Name of %s is %s", u.getId(), expectedName));
+        assertEquals(expectedAbbreviation, u.getDefaultDisplayAbbreviation(),
+                String.format("Abbreviation of %s is %s", u.getId(), expectedAbbreviation));
     }
 
     /**

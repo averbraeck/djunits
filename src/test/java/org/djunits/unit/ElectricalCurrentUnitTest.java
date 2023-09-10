@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class ElectricalCurrentUnitTest extends AbstractLinearUnitTest<Electrical
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -37,10 +37,10 @@ public class ElectricalCurrentUnitTest extends AbstractLinearUnitTest<Electrical
         checkUnitRatioNameAndAbbreviation(ElectricalCurrentUnit.AMPERE, 1, 0.00000001, "ampere", "A");
         checkUnitRatioNameAndAbbreviation(ElectricalCurrentUnit.MILLIAMPERE, 0.001, 0.000000001, "milliampere", "mA");
         // Check two conversions between two units
-        assertEquals("one AMPERE is 1000 MILLI AMPERE", 1000,
-                getMultiplicationFactorTo(ElectricalCurrentUnit.AMPERE, ElectricalCurrentUnit.MILLIAMPERE), 0.01);
-        assertEquals("one MILLI AMPERE is 0.001 AMPERE", 0.001,
-                getMultiplicationFactorTo(ElectricalCurrentUnit.MILLIAMPERE, ElectricalCurrentUnit.AMPERE), 0.0001);
+        assertEquals(1000, getMultiplicationFactorTo(ElectricalCurrentUnit.AMPERE, ElectricalCurrentUnit.MILLIAMPERE), 0.01,
+                "one AMPERE is 1000 MILLI AMPERE");
+        assertEquals(0.001, getMultiplicationFactorTo(ElectricalCurrentUnit.MILLIAMPERE, ElectricalCurrentUnit.AMPERE), 0.0001,
+                "one MILLI AMPERE is 0.001 AMPERE");
     }
 
     /**
@@ -51,7 +51,7 @@ public class ElectricalCurrentUnitTest extends AbstractLinearUnitTest<Electrical
     {
         ElectricalCurrentUnit myUnit =
                 ElectricalCurrentUnit.SI.deriveLinear(1.23, "my", "myElectricalCurrent", UnitSystem.OTHER);
-        assertTrue("Can create a new ElectricalCurrentUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new ElectricalCurrentUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myElectricalCurrent", "my");
         ElectricalCurrentUnit.BASE.unregister(myUnit);
     }

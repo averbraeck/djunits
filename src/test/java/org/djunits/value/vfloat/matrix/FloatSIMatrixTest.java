@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.matrix;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +21,7 @@ import org.djunits.value.vfloat.matrix.base.FloatMatrix;
 import org.djunits.value.vfloat.matrix.base.FloatMatrixRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djunits.value.vfloat.vector.base.FloatVectorRel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test.java.
@@ -60,7 +60,8 @@ public class FloatSIMatrixTest
         assertEquals("m", UNITS.METER.getId());
 
         float[][] denseTestData = FLOATMATRIX.denseRectArrays(5, 10, false);
-        FloatDimensionlessMatrix dimlessMatrix = new FloatDimensionlessMatrix(denseTestData, DimensionlessUnit.SI, StorageType.DENSE);
+        FloatDimensionlessMatrix dimlessMatrix =
+                new FloatDimensionlessMatrix(denseTestData, DimensionlessUnit.SI, StorageType.DENSE);
         dimlessMatrix = dimlessMatrix.mutable().divide(dimlessMatrix).asDimensionless(); // unit matrix
         for (String type : CLASSNAMES.REL_ALL_LIST)
         {
@@ -80,8 +81,8 @@ public class FloatSIMatrixTest
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
                     {
-                        assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), matrix.getSI(row, col),
-                                asMatrix.getSI(row, col), matrix.getSI(row, col) / 1000.0);
+                        assertEquals(matrix.getSI(row, col), asMatrix.getSI(row, col), matrix.getSI(row, col) / 1000.0,
+                                type + ", unit: " + unit.getDefaultTextualAbbreviation());
                     }
                 }
 
@@ -94,8 +95,8 @@ public class FloatSIMatrixTest
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
                     {
-                        assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), matrix.getSI(row, col),
-                                asMatrixDisplayUnit.getSI(row, col), matrix.getSI(row, col) / 1000.0);
+                        assertEquals(matrix.getSI(row, col), asMatrixDisplayUnit.getSI(row, col),
+                                matrix.getSI(row, col) / 1000.0, type + ", unit: " + unit.getDefaultTextualAbbreviation());
                     }
                 }
 
@@ -127,8 +128,8 @@ public class FloatSIMatrixTest
                 {
                     for (int col = 0; col < denseTestData[0].length; col++)
                     {
-                        assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), denseTestData[row][col],
-                                sim.getInUnit(row, col), 0.001);
+                        assertEquals(denseTestData[row][col], sim.getInUnit(row, col), 0.001,
+                                type + ", unit: " + unit.getDefaultTextualAbbreviation());
                     }
                 }
 

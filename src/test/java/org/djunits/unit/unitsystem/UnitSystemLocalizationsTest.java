@@ -1,6 +1,6 @@
 package org.djunits.unit.unitsystem;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.djunits.AvailableLocalizations;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -52,11 +52,11 @@ public class UnitSystemLocalizationsTest
             for (UnitSystem us : unitSystems)
             {
                 String nameKey = us.getNameKey();
-                assertTrue("nameKey is non null", null != nameKey);
-                assertTrue("Name key must be non-empty", nameKey.length() > 0);
+                assertTrue(null != nameKey, "nameKey is non null");
+                assertTrue(nameKey.length() > 0, "Name key must be non-empty");
                 String abbreviationKey = us.getAbbreviationKey();
-                assertTrue("abbreviationKey is non null", null != abbreviationKey);
-                assertTrue("Abbreviation key must be non-empty", abbreviationKey.length() > 0);
+                assertTrue(null != abbreviationKey, "abbreviationKey is non null");
+                assertTrue(abbreviationKey.length() > 0, "Abbreviation key must be non-empty");
                 String name = us.getName();
                 String abbreviation = us.getAbbreviation();
                 if (abbreviation.startsWith("!") && abbreviation.endsWith("!"))
@@ -73,7 +73,7 @@ public class UnitSystemLocalizationsTest
         {
             // system.out.println(s);
         }
-        assertTrue("Errors in UnitSystemLocalizations: " + errors, errors.isEmpty());
+        assertTrue(errors.isEmpty(), "Errors in UnitSystemLocalizations: " + errors);
     }
 
 }

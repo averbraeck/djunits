@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class AreaUnitTest extends AbstractLinearUnitTest<AreaUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,7 +38,7 @@ public class AreaUnitTest extends AbstractLinearUnitTest<AreaUnit>
         checkUnitRatioNameAndAbbreviation(AreaUnit.SQUARE_KILOMETER, 1000000, 0.05, "square kilometer", "km^2");
         checkUnitRatioNameAndAbbreviation(AreaUnit.SQUARE_MILE, 2589990, 2, "square mile", "mi^2");
         // Check two conversions between non-standard units
-        assertEquals("one SQUARE MILE is 640 ACRE", 640, getMultiplicationFactorTo(AreaUnit.SQUARE_MILE, AreaUnit.ACRE), 0.1);
+        assertEquals(640, getMultiplicationFactorTo(AreaUnit.SQUARE_MILE, AreaUnit.ACRE), 0.1, "one SQUARE MILE is 640 ACRE");
         // Check conversion factor to standard unit for all remaining area units
         checkUnitRatioNameAndAbbreviation(AreaUnit.ARE, 100, 0.001, "are", "a");
         checkUnitRatioNameAndAbbreviation(AreaUnit.HECTARE, 10000, 0.01, "hectare", "ha");
@@ -55,7 +55,7 @@ public class AreaUnitTest extends AbstractLinearUnitTest<AreaUnit>
     public final void createAreaUnit()
     {
         AreaUnit myUnit = AreaUnit.SI.deriveLinear(1.23, "my", "myArea", UnitSystem.OTHER);
-        assertTrue("Can create a new AreaUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new AreaUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myArea", "my");
         AreaUnit.BASE.unregister(myUnit);
     }

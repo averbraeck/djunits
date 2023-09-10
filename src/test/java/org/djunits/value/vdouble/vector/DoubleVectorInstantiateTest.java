@@ -1,9 +1,9 @@
 package org.djunits.value.vdouble.vector;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.Speed;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import org.djutils.exceptions.Try;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * DoubleVectorInstantiateTest.java.
@@ -260,7 +260,7 @@ public class DoubleVectorInstantiateTest
         assertEquals(100, si10dd.cardinality());
         assertEquals(50 * 101, si10dd.zSum().getSI(), 0.001);
         assertEquals("m2/s3", si10dd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
-        assertEquals("getScalarClass returns SIScalar", SIScalar.class, si10dd.getScalarClass());
+        assertEquals(SIScalar.class, si10dd.getScalarClass(), "getScalarClass returns SIScalar");
 
         SIVector si10ds = new SIVector(DOUBLEVECTOR.denseArray(100), SIUnit.of("m2/s3"), StorageType.SPARSE);
         assertEquals(100, si10ds.size());
@@ -398,14 +398,14 @@ public class DoubleVectorInstantiateTest
             assertEquals(0, sv.cardinality());
             assertEquals(0, sv.getScalars().length);
             assertEquals(SpeedUnit.KM_PER_HOUR, sv.getDisplayUnit());
-            assertEquals("DENSE/SPARSE: key = " + key, sv.getStorageType(),
-                    key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE);
+            assertEquals(sv.getStorageType(), key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE,
+                    "DENSE/SPARSE: key = " + key);
             assertFalse(sv.isMutable());
             SpeedVector svm = sv.mutable();
             assertTrue(svm.isMutable());
             assertEquals(SpeedUnit.KM_PER_HOUR, svm.getDisplayUnit());
-            assertEquals("DENSE/SPARSE: key = " + key, svm.getStorageType(),
-                    key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE);
+            assertEquals(svm.getStorageType(), key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE,
+                    "DENSE/SPARSE: key = " + key);
             SpeedVector svr = svm.abs();
             assertEquals(0, svr.size());
             assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
@@ -421,8 +421,8 @@ public class DoubleVectorInstantiateTest
             svr = svm.plus(sv);
             assertEquals(0, svr.size());
             assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
-            assertEquals("DENSE/SPARSE: key = " + key, svr.getStorageType(),
-                    key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE);
+            assertEquals(svr.getStorageType(), key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE,
+                    "DENSE/SPARSE: key = " + key);
             svr = sv.toDense();
             assertEquals(StorageType.DENSE, svr.getStorageType());
             svr = sv.toSparse();

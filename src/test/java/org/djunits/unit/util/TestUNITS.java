@@ -1,13 +1,13 @@
 package org.djunits.unit.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
 
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * TestUNITS.java.
@@ -41,7 +41,7 @@ public class TestUNITS
             {
                 fail("constant for field " + constantField.getName() + " is null");
             }
-            assertEquals("types of fields differ for " + constantField.getName(), constant.getClass(), constantField.getType());
+            assertEquals(constant.getClass(), constantField.getType(), "types of fields differ for " + constantField.getName());
             if (constant.getId().contains("eV"))
             {
                 continue;
@@ -65,7 +65,7 @@ public class TestUNITS
             Field unitField = constant.getClass().getDeclaredField(constantField.getName());
             Unit<?> unitConstant = (Unit<?>) unitField.get(constant.getClass());
             // see if this is the same field with the same content
-            assertEquals("fields differ for " + constantField.getName(), constant, unitConstant);
+            assertEquals(constant, unitConstant, "fields differ for " + constantField.getName());
         }
     }
 }

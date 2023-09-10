@@ -1,6 +1,6 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>
@@ -20,9 +20,9 @@ public abstract class AbstractUnitTest<U extends Unit<U>>
      */
     protected final void checkUnitNameAndAbbreviation(final U u, final String expectedName, final String expectedAbbreviation)
     {
-        assertEquals(String.format("Name of %s is %s", u.getId(), expectedName), expectedName, u.getName());
-        assertEquals(String.format("Abbreviation of %s is %s", u.getId(), expectedAbbreviation), expectedAbbreviation,
-                u.getDefaultDisplayAbbreviation());
+        assertEquals(expectedName, u.getName(), String.format("Name of %s is %s", u.getId(), expectedName));
+        assertEquals(expectedAbbreviation, u.getDefaultDisplayAbbreviation(),
+                String.format("Abbreviation of %s is %s", u.getId(), expectedAbbreviation));
     }
 
 }

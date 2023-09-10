@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<AccelerationUni
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -41,8 +41,8 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<AccelerationUni
         checkUnitRatioNameAndAbbreviation(AccelerationUnit.FOOT_PER_SECOND_2, 0.3048, 0.00001, "foot per second squared",
                 "ft/s2");
         // Check two conversions between non-standard units
-        assertEquals("one FOOT PER SECOND PER SECOND is ??? KM PER HOUR PER HOUR", 3950.208,
-                getMultiplicationFactorTo(AccelerationUnit.FOOT_PER_SECOND_2, AccelerationUnit.KM_PER_HOUR_2), 0.01);
+        assertEquals(3950.208, getMultiplicationFactorTo(AccelerationUnit.FOOT_PER_SECOND_2, AccelerationUnit.KM_PER_HOUR_2),
+                0.01, "one FOOT PER SECOND PER SECOND is ??? KM PER HOUR PER HOUR");
         // Check conversion factor to standard unit for all remaining acceleration units
         checkUnitRatioNameAndAbbreviation(AccelerationUnit.INCH_PER_SECOND_2, 0.0254, 0.0000000001, "inch per second squared",
                 "in/s2");
@@ -71,7 +71,7 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<AccelerationUni
     public final void createAccelerationUnit()
     {
         AccelerationUnit myUnit = AccelerationUnit.SI.deriveLinear(1.23, "my", "myAcceleration", UnitSystem.OTHER);
-        assertTrue("Can create a new AccelerationUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new AccelerationUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myAcceleration", "my");
         AccelerationUnit.BASE.unregister(myUnit);
     }

@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class ElectricalChargeUnitTest extends AbstractLinearUnitTest<ElectricalC
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,8 +38,9 @@ public class ElectricalChargeUnitTest extends AbstractLinearUnitTest<ElectricalC
         checkUnitRatioNameAndAbbreviation(ElectricalChargeUnit.MILLIAMPERE_HOUR, 3.6, 0.000000005, "milliampere hour", "mAh");
         checkUnitRatioNameAndAbbreviation(ElectricalChargeUnit.FARADAY, 96485.3365, 0.005, "faraday", "F");
         // Check two conversions between non-standard units
-        assertEquals("one MILLIAMPERE_HOUR is about 0.00003731137 FARADAY", 0.00003731137,
-                getMultiplicationFactorTo(ElectricalChargeUnit.MILLIAMPERE_HOUR, ElectricalChargeUnit.FARADAY), 0.000000001);
+        assertEquals(0.00003731137,
+                getMultiplicationFactorTo(ElectricalChargeUnit.MILLIAMPERE_HOUR, ElectricalChargeUnit.FARADAY), 0.000000001,
+                "one MILLIAMPERE_HOUR is about 0.00003731137 FARADAY");
         // Test the other units
         checkUnitRatioNameAndAbbreviation(ElectricalChargeUnit.ATOMIC_UNIT, 1.60217653e-19, 1e-25, "elementary unit of charge",
                 "e");
@@ -52,7 +53,7 @@ public class ElectricalChargeUnitTest extends AbstractLinearUnitTest<ElectricalC
     public final void createElectricalChargeUnit()
     {
         ElectricalChargeUnit myUnit = ElectricalChargeUnit.SI.deriveLinear(1.23, "my", "myElectricalCharge", UnitSystem.OTHER);
-        assertTrue("Can create a new ElectricalChargeUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new ElectricalChargeUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myElectricalCharge", "my");
         ElectricalChargeUnit.BASE.unregister(myUnit);
     }

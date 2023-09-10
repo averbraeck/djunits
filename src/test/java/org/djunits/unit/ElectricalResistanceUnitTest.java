@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,8 +38,8 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
         checkUnitRatioNameAndAbbreviation(ElectricalResistanceUnit.MILLIOHM, 0.001, 0.00000000001, "milliohm", "m\u03A9");
         checkUnitRatioNameAndAbbreviation(ElectricalResistanceUnit.KILOOHM, 1000, 0.005, "kiloohm", "k\u03A9");
         // Check two conversions between non-standard units
-        assertEquals("one KILOOHM is 1000000 MILLIOHM", 1000000,
-                getMultiplicationFactorTo(ElectricalResistanceUnit.KILOOHM, ElectricalResistanceUnit.MILLIOHM), 0.0001);
+        assertEquals(1000000, getMultiplicationFactorTo(ElectricalResistanceUnit.KILOOHM, ElectricalResistanceUnit.MILLIOHM),
+                0.0001, "one KILOOHM is 1000000 MILLIOHM");
     }
 
     /**
@@ -49,7 +49,7 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
     public final void createElectricalResistanceUnit()
     {
         ElectricalResistanceUnit myERU = ElectricalResistanceUnit.OHM.deriveLinear(1.0E9, "GigOhm", "GigaOhm");
-        assertTrue("Can create a new ElectricalResistanceUnit", null != myERU);
+        assertTrue(null != myERU, "Can create a new ElectricalResistanceUnit");
         checkUnitRatioNameAndAbbreviation(myERU, 1e9, 0.1, "GigaOhm", "GigOhm");
         ElectricalResistanceUnit.BASE.unregister(myERU);
 
@@ -58,7 +58,7 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
                         ElectricalPotentialUnit.ABVOLT.getScale().toStandardUnit(1.0)
                                 / ElectricalCurrentUnit.ABAMPERE.getScale().toStandardUnit(1.0),
                         "abOO", "abOhm(CGS)", UnitSystem.CGS);
-        assertTrue("Can create Abohm unit", null != abOhm);
+        assertTrue(null != abOhm, "Can create Abohm unit");
         checkUnitRatioNameAndAbbreviation(abOhm, 1e-9, 1e-12, "abOhm(CGS)", "abOO");
         ElectricalResistanceUnit.BASE.unregister(myERU);
     }

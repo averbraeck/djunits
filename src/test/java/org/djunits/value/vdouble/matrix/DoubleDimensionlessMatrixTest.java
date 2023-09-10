@@ -1,12 +1,12 @@
 package org.djunits.value.vdouble.matrix;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.value.storage.StorageType;
 import org.djunits.value.vdouble.function.DoubleFunction;
 import org.djunits.value.vdouble.function.DoubleMathFunctions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test.java.
@@ -77,17 +77,17 @@ public class DoubleDimensionlessMatrixTest
     public static void verifyDimensionLessMatrix(final double[][] reference, final DoubleFunction operation,
             final DimensionlessMatrix got)
     {
-        assertEquals("row count matches", reference.length, got.rows());
-        assertEquals("column count matches", reference[0].length, got.cols());
-        assertEquals("unit is DimensionLessUnit", DimensionlessUnit.BASE.getStandardUnit(),
-                got.getDisplayUnit().getStandardUnit());
+        assertEquals(reference.length, got.rows(), "row count matches");
+        assertEquals(reference[0].length, got.cols(), "column count matches");
+        assertEquals(DimensionlessUnit.BASE.getStandardUnit(), got.getDisplayUnit().getStandardUnit(),
+                "unit is DimensionLessUnit");
         for (int row = 0; row < reference.length; row++)
         {
             for (int col = 0; col < reference.length; col++)
             {
                 double expect = operation.apply(reference[row][col]);
-                double tolerance = Math.abs(expect / 10000d);
-                assertEquals("value must match", expect, got.getSI(row, col), tolerance);
+                double tolerance = Double.isNaN(expect) ? 0.1 : Math.abs(expect / 10000d);
+                assertEquals(expect, got.getSI(row, col), tolerance, "value must match");
             }
         }
     }

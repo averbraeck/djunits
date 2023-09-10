@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class AbsoluteTemperatureUnitTest extends AbstractOffsetUnitTest<Absolute
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -40,17 +40,21 @@ public class AbsoluteTemperatureUnitTest extends AbstractOffsetUnitTest<Absolute
         checkUnitRatioOffsetNameAndAbbreviation(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT, 5.0 / 9.0, 459.67, 0.00001,
                 "degree Fahrenheit", "\u00B0F");
         // Check two conversions between non-standard units
-        assertEquals("one DEGREE CELSIUS is 9/5 DEGREE FAHRENHEIT", 9.0 / 5.0,
+        assertEquals(9.0 / 5.0,
                 getMultiplicationFactorTo(AbsoluteTemperatureUnit.DEGREE_CELSIUS, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT),
-                0.0001);
-        assertEquals("zero DEGREE CELSIUS is 32 DEGREE FAHRENHEIT", 32, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT.getScale()
-                .fromStandardUnit(AbsoluteTemperatureUnit.DEGREE_CELSIUS.getScale().toStandardUnit(0.0)), 0.0001);
-        assertEquals("100 DEGREE CELSIUS is 212 DEGREE FAHRENHEIT", 212, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT.getScale()
-                .fromStandardUnit(AbsoluteTemperatureUnit.DEGREE_CELSIUS.getScale().toStandardUnit(100.0)), 0.0001);
-        assertEquals(
-                "zero DEGREE FAHRENHEIT is about -17.7778 DEGREE CELSIUS", -17.7778, AbsoluteTemperatureUnit.DEGREE_CELSIUS
-                        .getScale().fromStandardUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT.getScale().toStandardUnit(0.0)),
-                0.0001);
+                0.0001, "one DEGREE CELSIUS is 9/5 DEGREE FAHRENHEIT");
+        assertEquals(32,
+                AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT.getScale()
+                        .fromStandardUnit(AbsoluteTemperatureUnit.DEGREE_CELSIUS.getScale().toStandardUnit(0.0)),
+                0.0001, "zero DEGREE CELSIUS is 32 DEGREE FAHRENHEIT");
+        assertEquals(212,
+                AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT.getScale()
+                        .fromStandardUnit(AbsoluteTemperatureUnit.DEGREE_CELSIUS.getScale().toStandardUnit(100.0)),
+                0.0001, "100 DEGREE CELSIUS is 212 DEGREE FAHRENHEIT");
+        assertEquals(-17.7778,
+                AbsoluteTemperatureUnit.DEGREE_CELSIUS.getScale()
+                        .fromStandardUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT.getScale().toStandardUnit(0.0)),
+                0.0001, "zero DEGREE FAHRENHEIT is about -17.7778 DEGREE CELSIUS");
         checkUnitRatioOffsetNameAndAbbreviation(AbsoluteTemperatureUnit.DEGREE_RANKINE, 5. / 9., 0, 0.0001, "degree Rankine",
                 "\u00B0R");
         checkUnitRatioOffsetNameAndAbbreviation(AbsoluteTemperatureUnit.DEGREE_REAUMUR, 0.8, 273.15, 0.000001, "degree Reaumur",
@@ -65,7 +69,7 @@ public class AbsoluteTemperatureUnitTest extends AbstractOffsetUnitTest<Absolute
     {
         AbsoluteTemperatureUnit myTU = AbsoluteTemperatureUnit.KELVIN.deriveLinearOffset(3.0, 273.15, TemperatureUnit.KELVIN,
                 "N", "Newton", UnitSystem.OTHER);
-        assertTrue("Can create a new AbsoluteTempteratureUnit", null != myTU);
+        assertTrue(null != myTU, "Can create a new AbsoluteTempteratureUnit");
         checkUnitRatioOffsetNameAndAbbreviation(myTU, 3, 273.15, 0.0001, "Newton", "N");
         AbsoluteTemperatureUnit.BASE.unregister(myTU);
     }

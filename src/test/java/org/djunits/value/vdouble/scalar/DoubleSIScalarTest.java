@@ -1,10 +1,10 @@
 package org.djunits.value.vdouble.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,7 +23,7 @@ import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test.java.
@@ -44,8 +44,8 @@ public class DoubleSIScalarTest
         Length l = Length.valueOf("50.0 m");
         SIScalar pace = DoubleScalar.divide(d, l);
         // system.out.println("pace = " + pace);
-        assertEquals("pace has as unit " + pace.getDisplayUnit().toString() + " instead of s/m", "s/m",
-                pace.getDisplayUnit().toString());
+        assertEquals("s/m", pace.getDisplayUnit().toString(),
+                "pace has as unit " + pace.getDisplayUnit().toString() + " instead of s/m");
         assertEquals(0.2, pace.getSI(), 0.00001);
         assertTrue(pace.toString().startsWith("0.200"));
         assertTrue(pace.toString().endsWith("s/m"));
@@ -68,8 +68,8 @@ public class DoubleSIScalarTest
         assertEquals(5.0, speed.getSI(), 0.00001);
         assertTrue(speed.toString().startsWith("5.000"));
         assertTrue(speed.toString().endsWith("m/s"));
-        assertTrue("toString with display unit contains display unit",
-                speed.toString(SpeedUnit.FOOT_PER_HOUR).indexOf("ft/h") > 0);
+        assertTrue(speed.toString(SpeedUnit.FOOT_PER_HOUR).indexOf("ft/h") > 0,
+                "toString with display unit contains display unit");
 
         Speed speedKmh = pace.reciprocal().as(SpeedUnit.KM_PER_HOUR);
         // system.out.println("speedKm/h = " + speedKmh);
@@ -121,16 +121,14 @@ public class DoubleSIScalarTest
                 SIDimensions siDim2 = quantity2.getSiDimensions();
                 for (Unit<?> unit2 : quantity2.getUnitsById().values())
                 {
-                    DoubleScalarRel<?, ?> scalar1 =
-                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
-                    DoubleScalarRel<?, ?> scalar2 =
-                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
+                    DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
+                    DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
                     SIScalar scalar12a = DoubleScalar.multiply(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.times(scalar2);
                     SIScalar scalar12c = scalar2.times(scalar1);
                     assertEquals(scalar12a.si, scalar12b.si, scalar12a.si / 10000.0);
-                    assertEquals("scalar12a.getUnit(): [" + scalar12a.getDisplayUnit() + "] != scalar12b.getUnit(): ["
-                            + scalar12b.getDisplayUnit() + "]", scalar12a.getDisplayUnit(), scalar12b.getDisplayUnit());
+                    assertEquals(scalar12a.getDisplayUnit(), scalar12b.getDisplayUnit(), "scalar12a.getUnit(): ["
+                            + scalar12a.getDisplayUnit() + "] != scalar12b.getUnit(): [" + scalar12b.getDisplayUnit() + "]");
                     assertEquals(scalar12a.si, scalar12c.si, scalar12a.si / 10000.0);
                     assertEquals(scalar12a.getDisplayUnit(), scalar12c.getDisplayUnit());
                     assertEquals(siDim1.plus(siDim2), scalar12a.getDisplayUnit().getQuantity().getSiDimensions());
@@ -164,16 +162,14 @@ public class DoubleSIScalarTest
                 SIDimensions siDim2 = quantity2.getSiDimensions();
                 for (Unit<?> unit2 : quantity2.getUnitsById().values())
                 {
-                    DoubleScalarRel<?, ?> scalar1 =
-                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
-                    DoubleScalarRel<?, ?> scalar2 =
-                            (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
+                    DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
+                    DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
                     SIScalar scalar12a = DoubleScalar.divide(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.divide(scalar2);
                     SIScalar scalar12c = scalar2.divide(scalar1);
                     assertEquals(scalar12a.si, scalar12b.si, scalar12a.si / 10000.0);
-                    assertEquals("scalar12a.getUnit(): [" + scalar12a.getDisplayUnit() + "] != scalar12b.getUnit(): ["
-                            + scalar12b.getDisplayUnit() + "]", scalar12a.getDisplayUnit(), scalar12b.getDisplayUnit());
+                    assertEquals(scalar12a.getDisplayUnit(), scalar12b.getDisplayUnit(), "scalar12a.getUnit(): ["
+                            + scalar12a.getDisplayUnit() + "] != scalar12b.getUnit(): [" + scalar12b.getDisplayUnit() + "]");
                     assertEquals(siDim1.minus(siDim2), scalar12b.getDisplayUnit().getQuantity().getSiDimensions());
                     assertEquals(siDim2.minus(siDim1), scalar12c.getDisplayUnit().getQuantity().getSiDimensions());
                     assertFalse(scalar12a.si == 0.0);
@@ -208,8 +204,7 @@ public class DoubleSIScalarTest
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(type + "Unit");
             for (Unit<?> unit : quantity.getUnitsById().values())
             {
-                DoubleScalarRel<?, ?> scalar =
-                        (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit);
+                DoubleScalarRel<?, ?> scalar = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit);
                 SIScalar mult = scalar.times(dimless);
                 Method asMethod = SIScalar.class.getDeclaredMethod("as" + type);
                 DoubleScalarRel<?, ?> asScalar = (DoubleScalarRel<?, ?>) asMethod.invoke(mult);
@@ -270,33 +265,33 @@ public class DoubleSIScalarTest
         SIScalar pace4 = SIScalar.interpolate(pace1, pace7, 0.5);
         assertEquals(4.0, pace4.si, 0.001);
 
-        assertTrue("ne0", pace1.ne0());
-        assertTrue("ge0", pace1.ge0());
-        assertTrue("gt0", pace1.gt0());
-        assertFalse("le0", pace1.le0());
-        assertFalse("eq0", pace1.eq0());
-        assertFalse("lt0", pace1.lt0());
+        assertTrue(pace1.ne0(), "ne0");
+        assertTrue(pace1.ge0(), "ge0");
+        assertTrue(pace1.gt0(), "gt0");
+        assertFalse(pace1.le0(), "le0");
+        assertFalse(pace1.eq0(), "eq0");
+        assertFalse(pace1.lt0(), "lt0");
 
         SIScalar pace0 = pace1.minus(pace1);
-        assertEquals("0", 0.0, pace0.si, 0);
-        assertFalse("ne0", pace0.ne0());
-        assertTrue("ge0", pace0.ge0());
-        assertFalse("gt0", pace0.gt0());
-        assertTrue("le0", pace0.le0());
-        assertTrue("eq0", pace0.eq0());
-        assertFalse("lt0", pace0.lt0());
+        assertEquals(0.0, pace0.si, 0, "0");
+        assertFalse(pace0.ne0(), "ne0");
+        assertTrue(pace0.ge0(), "ge0");
+        assertFalse(pace0.gt0(), "gt0");
+        assertTrue(pace0.le0(), "le0");
+        assertTrue(pace0.eq0(), "eq0");
+        assertFalse(pace0.lt0(), "lt0");
 
         SIScalar negativePace = pace0.minus(pace1);
-        assertTrue("ne0", negativePace.ne0());
-        assertFalse("ge0", negativePace.ge0());
-        assertFalse("gt0", negativePace.gt0());
-        assertTrue("le0", negativePace.le0());
-        assertFalse("eq0", negativePace.eq0());
-        assertTrue("lt0", negativePace.lt0());
+        assertTrue(negativePace.ne0(), "ne0");
+        assertFalse(negativePace.ge0(), "ge0");
+        assertFalse(negativePace.gt0(), "gt0");
+        assertTrue(negativePace.le0(), "le0");
+        assertFalse(negativePace.eq0(), "eq0");
+        assertTrue(negativePace.lt0(), "lt0");
 
-        assertEquals("compareto same", 0, pace1.compareTo(pace1));
-        assertEquals("compareto bigger", -1, pace0.compareTo(pace1));
-        assertEquals("compareto smaller", 1, pace0.compareTo(negativePace));
+        assertEquals(0, pace1.compareTo(pace1), "compareto same");
+        assertEquals(-1, pace0.compareTo(pace1), "compareto bigger");
+        assertEquals(1, pace0.compareTo(negativePace), "compareto smaller");
 
         assertNotEquals(pace1, pace2);
         assertNotEquals(pace1, null);

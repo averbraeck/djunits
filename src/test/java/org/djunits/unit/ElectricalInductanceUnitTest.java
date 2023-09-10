@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class ElectricalInductanceUnitTest extends AbstractLinearUnitTest<Electri
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -45,7 +45,7 @@ public class ElectricalInductanceUnitTest extends AbstractLinearUnitTest<Electri
     {
         ElectricalInductanceUnit myUnit =
                 ElectricalInductanceUnit.SI.deriveLinear(1.23, "my", "myElectricalInductance", UnitSystem.OTHER);
-        assertTrue("Can create a new ElectricalInductanceUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new ElectricalInductanceUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myElectricalInductance", "my");
         ElectricalInductanceUnit.BASE.unregister(myUnit);
     }

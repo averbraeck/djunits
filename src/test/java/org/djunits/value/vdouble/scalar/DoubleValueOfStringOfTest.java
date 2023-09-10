@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +12,7 @@ import org.djunits.unit.Unit;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.base.Scalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the DoubleScalar and FloatScalar classes for the valueOf and toString methods.

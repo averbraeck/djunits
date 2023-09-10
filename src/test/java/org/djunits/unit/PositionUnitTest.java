@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class PositionUnitTest extends AbstractOffsetUnitTest<PositionUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,10 +38,10 @@ public class PositionUnitTest extends AbstractOffsetUnitTest<PositionUnit>
         checkUnitRatioOffsetNameAndAbbreviation(PositionUnit.MILE, 1609.34, 0.0, 0.05, "mile", "mi");
         checkUnitRatioOffsetNameAndAbbreviation(PositionUnit.FOOT, 0.3048, 0.0, 0.001, "foot", "ft");
         // Check two conversions between non-standard units
-        assertEquals("one FOOT is 0.3048 METER", 0.3048, getMultiplicationFactorTo(PositionUnit.FOOT, PositionUnit.METER),
-                0.0001);
-        assertEquals("one LIGHTYEAR is about 9.461E12 KILOMETER", 9.461E12,
-                getMultiplicationFactorTo(PositionUnit.LIGHTYEAR, PositionUnit.KILOMETER), 1E9);
+        assertEquals(0.3048, getMultiplicationFactorTo(PositionUnit.FOOT, PositionUnit.METER), 0.0001,
+                "one FOOT is 0.3048 METER");
+        assertEquals(9.461E12, getMultiplicationFactorTo(PositionUnit.LIGHTYEAR, PositionUnit.KILOMETER), 1E9,
+                "one LIGHTYEAR is about 9.461E12 KILOMETER");
 
         // TODO: other units
     }
@@ -54,7 +54,7 @@ public class PositionUnitTest extends AbstractOffsetUnitTest<PositionUnit>
     {
         PositionUnit myUnit =
                 PositionUnit.DEFAULT.deriveLinearOffset(1.23, 0.0, LengthUnit.METER, "my", "myPosition", UnitSystem.OTHER);
-        assertTrue("Can create a new PositionUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new PositionUnit");
         checkUnitRatioOffsetNameAndAbbreviation(myUnit, 1.23, 0.0, 0.0001, "myPosition", "my");
         PositionUnit.BASE.unregister(myUnit);
     }

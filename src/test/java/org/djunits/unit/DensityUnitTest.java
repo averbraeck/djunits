@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class DensityUnitTest extends AbstractLinearUnitTest<DensityUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,8 +38,8 @@ public class DensityUnitTest extends AbstractLinearUnitTest<DensityUnit>
         checkUnitRatioNameAndAbbreviation(DensityUnit.GRAM_PER_CENTIMETER_3, 1000, 0.0001, "gram per cubic centimeter",
                 "g/cm^3");
         // Check two conversions between two units
-        assertEquals("one KG PER CUBIC METER is 0.0001 GRAM PER CUBIC CENTIMETER", 0.001,
-                getMultiplicationFactorTo(DensityUnit.KG_PER_METER_3, DensityUnit.GRAM_PER_CENTIMETER_3), 0.000000001);
+        assertEquals(0.001, getMultiplicationFactorTo(DensityUnit.KG_PER_METER_3, DensityUnit.GRAM_PER_CENTIMETER_3),
+                0.000000001, "one KG PER CUBIC METER is 0.0001 GRAM PER CUBIC CENTIMETER");
     }
 
     /**
@@ -49,7 +49,7 @@ public class DensityUnitTest extends AbstractLinearUnitTest<DensityUnit>
     public final void createDensityUnit()
     {
         DensityUnit myDU = DensityUnit.KG_PER_METER_3.deriveLinear(515.317882, "SPCF", "DensityUnit", UnitSystem.SI_DERIVED);
-        assertTrue("Can create a new DensityUnit", null != myDU);
+        assertTrue(null != myDU, "Can create a new DensityUnit");
         checkUnitRatioNameAndAbbreviation(myDU, 515.3, 0.1, "DensityUnit", "SPCF");
         DensityUnit.BASE.unregister(myDU);
     }

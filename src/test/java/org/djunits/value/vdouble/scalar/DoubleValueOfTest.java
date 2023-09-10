@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,7 +17,7 @@ import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.base.Scalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * ValueOfTest.java.
@@ -35,8 +35,7 @@ public class DoubleValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void legal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final double value,
-            final String unitString)
+    private void legal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final double value, final String unitString)
     {
         try
         {
@@ -73,8 +72,7 @@ public class DoubleValueOfTest
      * @param value the value to enter
      * @param unitString the unit String to use
      */
-    private void illegal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final double value,
-            final String unitString)
+    private void illegal(final Class<? extends DoubleScalar<?, ?>> scalarClass, final double value, final String unitString)
     {
         try
         {
@@ -234,7 +232,7 @@ public class DoubleValueOfTest
                 legal(scalarClass, -10.0, abb);
                 legal(scalarClass, -10.0E-10, abb);
                 legal(scalarClass, 10.0E10, abb);
-                
+
                 legal(scalarClass, "10" + abb);
                 legal(scalarClass, "10 " + abb);
                 legal(scalarClass, "10.0" + abb);
@@ -360,7 +358,7 @@ public class DoubleValueOfTest
                 legal(scalarClass, -10.0, abb);
                 legal(scalarClass, -10.0E-10, abb);
                 legal(scalarClass, 10.0E10, abb);
-                
+
                 legal(scalarClass, "10" + abb);
                 legal(scalarClass, "10 " + abb);
                 legal(scalarClass, "10,0" + abb);

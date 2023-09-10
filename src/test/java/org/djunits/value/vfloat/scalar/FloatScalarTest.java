@@ -1,8 +1,8 @@
 package org.djunits.value.vfloat.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +21,7 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the FloatScalar class.
@@ -47,11 +47,11 @@ public class FloatScalarTest
     private static void checkContentsAndType(final FloatScalar<?, ?> ds, final float reference, final float precision,
             final Unit<?> u, final boolean expectAbsolute)
     {
-        assertTrue("FloatScalar should not be null", null != ds);
-        assertEquals("Value should match", reference, ds.getInUnit(), precision);
-        assertEquals("Unit should be " + u.toString(), u, ds.getDisplayUnit());
-        assertTrue("Should be " + (expectAbsolute ? "Absolute" : "Relative"),
-                expectAbsolute ? ds.isAbsolute() : ds.isRelative());
+        assertTrue(null != ds, "FloatScalar should not be null");
+        assertEquals(reference, ds.getInUnit(), precision, "Value should match");
+        assertEquals(u, ds.getDisplayUnit(), "Unit should be " + u.toString());
+        assertTrue(expectAbsolute ? ds.isAbsolute() : ds.isRelative(),
+                "Should be " + (expectAbsolute ? "Absolute" : "Relative"));
     }
 
     /**
@@ -64,8 +64,8 @@ public class FloatScalarTest
         float value = 38.0f;
         FloatAbsoluteTemperature ds = new FloatAbsoluteTemperature(value, tempUnit);
         String result = ds.toString(true, true);
-        assertTrue("toString result contains \"Abs \"", result.contains("Abs "));
-        assertTrue("toString result contains \"K\"", result.contains("K"));
+        assertTrue(result.contains("Abs "), "toString result contains \"Abs \"");
+        assertTrue(result.contains("K"), "toString result contains \"K\"");
     }
 
     /**
@@ -78,24 +78,24 @@ public class FloatScalarTest
         float value = 38.0f;
         FloatAbsoluteTemperature temperatureDS = new FloatAbsoluteTemperature(value, tempUnit);
         checkContentsAndType(temperatureDS, value, 0.001f, tempUnit, true);
-        assertEquals("Value in SI is equivalent in Kelvin", 311.15f, temperatureDS.getSI(), 0.05);
-        assertEquals("Value in Fahrenheit", 100.4f, temperatureDS.getInUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT), 0.1);
+        assertEquals(311.15f, temperatureDS.getSI(), 0.05, "Value in SI is equivalent in Kelvin");
+        assertEquals(100.4f, temperatureDS.getInUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT), 0.1, "Value in Fahrenheit");
         float out = temperatureDS.getInUnit();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
         FloatAbsoluteTemperature mds = new FloatAbsoluteTemperature(value, tempUnit);
         checkContentsAndType(mds, value, 0.001f, tempUnit, true);
         mds = new FloatAbsoluteTemperature(-200f, tempUnit);
-        assertEquals("-200 Celsius roughly equivalent to 73 Kelvin", 73.0d, mds.getSI(), 1.0d);
+        assertEquals(73.0d, mds.getSI(), 1.0d, "-200 Celsius roughly equivalent to 73 Kelvin");
         mds = new FloatAbsoluteTemperature(temperatureDS);
         checkContentsAndType(mds, value, 0.001f, tempUnit, true);
         FloatAbsoluteTemperature temperature2DS = new FloatAbsoluteTemperature(temperatureDS);
-        assertTrue("temperature2DS should be equal to temperatureDS", temperature2DS.equals(temperatureDS));
-        assertTrue("Value is Absolute", temperatureDS.isAbsolute());
-        assertFalse("Value is not Relative", temperatureDS.isRelative());
+        assertTrue(temperature2DS.equals(temperatureDS), "temperature2DS should be equal to temperatureDS");
+        assertTrue(temperatureDS.isAbsolute(), "Value is Absolute");
+        assertFalse(temperatureDS.isRelative(), "Value is not Relative");
         temperatureDS = new FloatAbsoluteTemperature(value, AbsoluteTemperatureUnit.KELVIN);
         checkContentsAndType(temperatureDS, value, 0.001f, AbsoluteTemperatureUnit.KELVIN, true);
         out = temperatureDS.getSI();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
     }
 
     /**
@@ -127,11 +127,11 @@ public class FloatScalarTest
                 for (String unitAbbreviation : unit.getDefaultAbbreviations())
                 {
                     FloatScalar<?, ?> scalar = (FloatScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
-                    assertEquals("unit was not parsed correctly", scalar.getDisplayUnit().getId(), unit.getId());
+                    assertEquals(scalar.getDisplayUnit().getId(), unit.getId(), "unit was not parsed correctly");
                     if (Float.isFinite(scalar.getInUnit()) && scalar.getInUnit() != 0.0f && scalar.getInUnit() != -0.0f
                             && (!unitAbbreviation.contains("(Y")))
                     {
-                        assertEquals("value was not parsed correctly", testValue, scalar.getInUnit(), 0.5);
+                        assertEquals(testValue, scalar.getInUnit(), 0.5, "value was not parsed correctly");
                     }
                 }
                 try
@@ -140,8 +140,8 @@ public class FloatScalarTest
                 }
                 catch (InvocationTargetException ite)
                 {
-                    assertTrue("Exception is an IllegalArgumentException",
-                            ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"));
+                    assertTrue(ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"),
+                            "Exception is an IllegalArgumentException");
                 }
 
                 try
@@ -150,8 +150,8 @@ public class FloatScalarTest
                 }
                 catch (InvocationTargetException ite)
                 {
-                    assertTrue("Exception is an IllegalArgumentException",
-                            ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"));
+                    assertTrue(ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"),
+                            "Exception is an IllegalArgumentException");
                 }
             }
         }
@@ -173,7 +173,7 @@ public class FloatScalarTest
     {
         // load all classes
         assertEquals("m", UNITS.METER.getId());
-        assertEquals("type lists have same size", CLASSNAMES.REL_WITH_ABS_LIST.size(), CLASSNAMES.ABS_LIST.size());
+        assertEquals(CLASSNAMES.REL_WITH_ABS_LIST.size(), CLASSNAMES.ABS_LIST.size(), "type lists have same size");
 
         for (int typeIndex = 0; typeIndex < CLASSNAMES.REL_WITH_ABS_LIST.size(); typeIndex++)
         {
@@ -185,8 +185,7 @@ public class FloatScalarTest
             for (Unit<?> relativeUnit : Quantities.INSTANCE.getQuantity(relativeType + "Unit").getUnitsById().values())
             {
                 Constructor<?> relConstructor = scalarClass.getConstructor(float.class, relativeUnit.getClass());
-                FloatScalarRel<?, ?> relScalar =
-                        (FloatScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
+                FloatScalarRel<?, ?> relScalar = (FloatScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
                 float absValue = 234.567f;
                 Quantity<?> quantity = Quantities.INSTANCE.getQuantity(absoluteType + "Unit");
                 for (Unit<?> absoluteUnit : quantity.getUnitsById().values())
@@ -198,11 +197,10 @@ public class FloatScalarTest
                             (FloatScalarAbs<?, ?, ?, ?>) instantiateAbsMethod.invoke(relScalar, absValue, absoluteUnit);
                     // method "plus" cannot be found with getMethod() for absScalar.getClass().
                     Method plusMethod = scalarClass.getMethod("plus", absScalar.getClass().getSuperclass());
-                    FloatScalarAbs<?, ?, ?, ?> sum =
-                            (FloatScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
+                    FloatScalarAbs<?, ?, ?, ?> sum = (FloatScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
                     // system.out.println("rel=" + relScalar + ", abs=" + absScalar + ", sum=" + sum);
-                    assertEquals("sum in SI equals sum of SI values", absScalar.getSI() + relScalar.getSI(), sum.getSI(),
-                            sum.getSI() / 1e7);
+                    assertEquals(absScalar.getSI() + relScalar.getSI(), sum.getSI(), Math.abs(sum.getSI() / 1e7),
+                            "sum in SI equals sum of SI values");
                 }
             }
         }
@@ -218,19 +216,19 @@ public class FloatScalarTest
         PositionUnit positionUnit = PositionUnit.DEFAULT;
         float value = 38.0f;
         FloatPosition ds = new FloatPosition(value, positionUnit);
-        assertTrue("Equal to itself", ds.equals(ds));
-        assertFalse("Not equal to null", ds.equals(null));
-        assertFalse("Not equal to some other kind of object; e.g. a String", ds.equals(new String("abc")));
+        assertTrue(ds.equals(ds), "Equal to itself");
+        assertFalse(ds.equals(null), "Not equal to null");
+        assertFalse(ds.equals(new String("abc")), "Not equal to some other kind of object; e.g. a String");
         FloatLength dsCounterPart = new FloatLength(value, lengthUnit);
-        assertFalse("Not equal if one Absolute and other Relative", ds.equals(dsCounterPart));
+        assertFalse(ds.equals(dsCounterPart), "Not equal if one Absolute and other Relative");
         FloatAbsoluteTemperature dsWrongBaseUnit = new FloatAbsoluteTemperature(value, AbsoluteTemperatureUnit.KELVIN);
-        assertEquals("The underlying SI values are the same", ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001);
-        assertFalse("Not equals because the standard SI unit differs", ds.equals(dsWrongBaseUnit));
+        assertEquals(ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001, "The underlying SI values are the same");
+        assertFalse(ds.equals(dsWrongBaseUnit), "Not equals because the standard SI unit differs");
         FloatPosition dsCompatibleUnit = new FloatPosition(38000.0f, PositionUnit.MILLIMETER);
-        assertFalse("Units are different", ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()));
-        assertTrue("equals returns true", ds.equals(dsCompatibleUnit));
+        assertFalse(ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()), "Units are different");
+        assertTrue(ds.equals(dsCompatibleUnit), "equals returns true");
         FloatPosition dsDifferentValue = new FloatPosition(123.456f, PositionUnit.MILLIMETER);
-        assertFalse("Different value makes equals return false", ds.equals(dsDifferentValue));
+        assertFalse(ds.equals(dsDifferentValue), "Different value makes equals return false");
     }
 
     /**
@@ -243,24 +241,24 @@ public class FloatScalarTest
         FloatPosition same = new FloatPosition(123000, PositionUnit.METER);
         FloatPosition smaller = new FloatPosition(122999, PositionUnit.METER);
         FloatPosition larger = new FloatPosition(123001, PositionUnit.METER);
-        assertFalse("123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertTrue("123km == 123000m", base.eq(same));
-        assertFalse("NOT 123km != 123000m", base.ne(same));
-        assertTrue("123km < 123001m", base.lt(larger));
-        assertTrue("123km > 122999m", base.gt(smaller));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertFalse("NOT 123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km != 123001m", base.ne(larger));
-        assertFalse("NOT 123km == 123001m", base.eq(larger));
-        assertTrue("123km != 122999m", base.ne(smaller));
-        assertFalse("NOT 123km == 122999m", base.eq(smaller));
-        assertFalse("NOT 123km >= 123001m", base.ge(larger));
-        assertFalse("NOT 123km <= 122999m", base.le(smaller));
+        assertFalse(base.lt(same), "123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertTrue(base.eq(same), "123km == 123000m");
+        assertFalse(base.ne(same), "NOT 123km != 123000m");
+        assertTrue(base.lt(larger), "123km < 123001m");
+        assertTrue(base.gt(smaller), "123km > 122999m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertFalse(base.lt(same), "NOT 123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ne(larger), "123km != 123001m");
+        assertFalse(base.eq(larger), "NOT 123km == 123001m");
+        assertTrue(base.ne(smaller), "123km != 122999m");
+        assertFalse(base.eq(smaller), "NOT 123km == 122999m");
+        assertFalse(base.ge(larger), "NOT 123km >= 123001m");
+        assertFalse(base.le(smaller), "NOT 123km <= 122999m");
     }
 
     /**
@@ -342,12 +340,12 @@ public class FloatScalarTest
         FloatPosition left = new FloatPosition(leftValue, PositionUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
         FloatPosition result = FloatScalar.plus(left, right);
-        assertEquals("value of element should be SI plus of contributing elements", left.getSI() + right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI plus of contributing elements");
         // Reverse parameters
         result = FloatScalar.plus(right, left);
-        assertEquals("value of element should be SI plus of contributing elements", left.getSI() + right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI plus of contributing elements");
     }
 
     /**
@@ -361,8 +359,8 @@ public class FloatScalarTest
         FloatPosition left = new FloatPosition(leftValue, PositionUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
         FloatPosition result = FloatScalar.minus(left, right);
-        assertEquals("value of element should be SI minus of contributing elements", left.getSI() - right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI minus of contributing elements");
     }
 
     /**
@@ -376,8 +374,8 @@ public class FloatScalarTest
         FloatPosition left = new FloatPosition(leftValue, PositionUnit.MILE);
         FloatPosition right = new FloatPosition(rightValue, PositionUnit.MILE);
         FloatLength result = FloatScalar.minus(left, right);
-        assertEquals("value of element should be SI minus of contributing elements", left.getSI() - right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI minus of contributing elements");
     }
 
     /**
@@ -395,36 +393,36 @@ public class FloatScalarTest
         FloatPosition highestPosition = new FloatPosition(highest, PositionUnit.FOOT);
 
         FloatPosition max = FloatScalar.max(lowestPosition, highestPosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         // Reverse arguments
         max = FloatScalar.max(highestPosition, lowestPosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         // Three arguments
         max = FloatScalar.max(lowestPosition, middlePosition, highestPosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         max = FloatScalar.max(highestPosition, lowestPosition, middlePosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         max = FloatScalar.max(lowestPosition, highestPosition, middlePosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         // Lots of arguments
         max = FloatScalar.max(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
 
         FloatPosition min = FloatScalar.min(lowestPosition, highestPosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         // Reverse arguments
         min = FloatScalar.min(highestPosition, lowestPosition);
-        assertEquals("min returns highest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns highest");
         // Three arguments
         min = FloatScalar.min(lowestPosition, middlePosition, highestPosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         min = FloatScalar.min(highestPosition, lowestPosition, middlePosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         min = FloatScalar.min(highestPosition, middlePosition, lowestPosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         // Lots of arguments
         min = FloatScalar.min(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
     }
 
     /**
@@ -437,8 +435,8 @@ public class FloatScalarTest
         float value = 38.0f;
         FloatTemperature ds = new FloatTemperature(value, tempUnit);
         String result = ds.toString(true, true);
-        assertTrue("toString result contains \"Rel \"", result.contains("Rel "));
-        assertTrue("toString result contains \"K\"", result.contains("K"));
+        assertTrue(result.contains("Rel "), "toString result contains \"Rel \"");
+        assertTrue(result.contains("K"), "toString result contains \"K\"");
     }
 
     /**
@@ -451,20 +449,20 @@ public class FloatScalarTest
         float value = 38.0f;
         FloatTemperature temperatureDS = new FloatTemperature(value, tempUnit);
         checkContentsAndType(temperatureDS, value, 0.001f, tempUnit, false);
-        assertEquals("Value in SI is equivalent in Kelvin", 38.0, temperatureDS.getSI(), 0.05);
-        assertEquals("Value in Fahrenheit", 38.0 * 9.0 / 5.0, temperatureDS.getInUnit(TemperatureUnit.DEGREE_FAHRENHEIT), 0.1);
+        assertEquals(38.0, temperatureDS.getSI(), 0.05, "Value in SI is equivalent in Kelvin");
+        assertEquals(38.0 * 9.0 / 5.0, temperatureDS.getInUnit(TemperatureUnit.DEGREE_FAHRENHEIT), 0.1, "Value in Fahrenheit");
         float out = temperatureDS.getInUnit();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
         FloatTemperature mds = new FloatTemperature(value, tempUnit);
         checkContentsAndType(mds, value, 0.001f, tempUnit, false);
         FloatTemperature temperature2DS = new FloatTemperature(temperatureDS);
-        assertTrue("temperature2DS should be equal to temperatureDS", temperature2DS.equals(temperatureDS));
-        assertTrue("Value is Relative", temperatureDS.isRelative());
-        assertFalse("Value is not Absolute", temperatureDS.isAbsolute());
+        assertTrue(temperature2DS.equals(temperatureDS), "temperature2DS should be equal to temperatureDS");
+        assertTrue(temperatureDS.isRelative(), "Value is Relative");
+        assertFalse(temperatureDS.isAbsolute(), "Value is not Absolute");
         temperatureDS = new FloatTemperature(value, TemperatureUnit.KELVIN);
         checkContentsAndType(temperatureDS, value, 0.001f, TemperatureUnit.KELVIN, false);
         out = temperatureDS.getSI();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
     }
 
     /**
@@ -477,19 +475,19 @@ public class FloatScalarTest
         PositionUnit positionUnit = PositionUnit.DEFAULT;
         float value = 38.0f;
         FloatLength ds = new FloatLength(value, lengthUnit);
-        assertTrue("Equal to itself", ds.equals(ds));
-        assertFalse("Not equal to null", ds.equals(null));
-        assertFalse("Not equal to some other kind of object; e.g. a String", ds.equals(new String("abc")));
+        assertTrue(ds.equals(ds), "Equal to itself");
+        assertFalse(ds.equals(null), "Not equal to null");
+        assertFalse(ds.equals(new String("abc")), "Not equal to some other kind of object; e.g. a String");
         FloatPosition dsCounterPart = new FloatPosition(value, positionUnit);
-        assertFalse("Not equal if one Absolute and other Relative", ds.equals(dsCounterPart));
+        assertFalse(ds.equals(dsCounterPart), "Not equal if one Absolute and other Relative");
         FloatTemperature dsWrongBaseUnit = new FloatTemperature(value, TemperatureUnit.KELVIN);
-        assertEquals("The underlying SI values are the same", ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001);
-        assertFalse("Not equals because the standard SI unit differs", ds.equals(dsWrongBaseUnit));
+        assertEquals(ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001, "The underlying SI values are the same");
+        assertFalse(ds.equals(dsWrongBaseUnit), "Not equals because the standard SI unit differs");
         FloatLength dsCompatibleUnit = new FloatLength(38000.0, LengthUnit.MILLIMETER);
-        assertFalse("Units are different", ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()));
-        assertTrue("equals returns true", ds.equals(dsCompatibleUnit));
+        assertFalse(ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()), "Units are different");
+        assertTrue(ds.equals(dsCompatibleUnit), "equals returns true");
         FloatLength dsDifferentValue = new FloatLength(123.456, LengthUnit.MILLIMETER);
-        assertFalse("Different value makes equals return false", ds.equals(dsDifferentValue));
+        assertFalse(ds.equals(dsDifferentValue), "Different value makes equals return false");
     }
 
     /**
@@ -502,24 +500,24 @@ public class FloatScalarTest
         FloatLength same = new FloatLength(123000, LengthUnit.METER);
         FloatLength smaller = new FloatLength(122999, LengthUnit.METER);
         FloatLength larger = new FloatLength(123001, LengthUnit.METER);
-        assertFalse("123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertTrue("123km == 123000m", base.eq(same));
-        assertFalse("NOT 123km != 123000m", base.ne(same));
-        assertTrue("123km < 123001m", base.lt(larger));
-        assertTrue("123km > 122999m", base.gt(smaller));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertFalse("NOT 123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km != 123001m", base.ne(larger));
-        assertFalse("NOT 123km == 123001m", base.eq(larger));
-        assertTrue("123km != 122999m", base.ne(smaller));
-        assertFalse("NOT 123km == 122999m", base.eq(smaller));
-        assertFalse("NOT 123km >= 123001m", base.ge(larger));
-        assertFalse("NOT 123km <= 122999m", base.le(smaller));
+        assertFalse(base.lt(same), "123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertTrue(base.eq(same), "123km == 123000m");
+        assertFalse(base.ne(same), "NOT 123km != 123000m");
+        assertTrue(base.lt(larger), "123km < 123001m");
+        assertTrue(base.gt(smaller), "123km > 122999m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertFalse(base.lt(same), "NOT 123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ne(larger), "123km != 123001m");
+        assertFalse(base.eq(larger), "NOT 123km == 123001m");
+        assertTrue(base.ne(smaller), "123km != 122999m");
+        assertFalse(base.eq(smaller), "NOT 123km == 122999m");
+        assertFalse(base.ge(larger), "NOT 123km >= 123001m");
+        assertFalse(base.le(smaller), "NOT 123km <= 122999m");
     }
 
     /**
@@ -583,8 +581,8 @@ public class FloatScalarTest
         FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
         FloatLength result = FloatScalar.plus(left, right);
-        assertEquals("value of element should be SI plus of contributing elements", left.getSI() + right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI plus of contributing elements");
     }
 
     /**
@@ -598,8 +596,8 @@ public class FloatScalarTest
         FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
         FloatLength result = FloatScalar.minus(left, right);
-        assertEquals("value of element should be SI minus of contributing elements", left.getSI() - right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI minus of contributing elements");
     }
 
     /**
@@ -613,8 +611,8 @@ public class FloatScalarTest
         FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
         FloatSIScalar result = FloatScalar.multiply(left, right);
-        assertEquals("value of element should be SI multiply of contributing elements", left.getSI() * right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() * right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI multiply of contributing elements");
     }
 
     /**
@@ -628,8 +626,8 @@ public class FloatScalarTest
         FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
         FloatSIScalar result = FloatScalar.divide(left, right);
-        assertEquals("value of element should be SI divide of contributing elements", left.getSI() / right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() / right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI divide of contributing elements");
     }
 
     /** */
@@ -661,7 +659,7 @@ public class FloatScalarTest
             String description = String.format("%s(%f->%f should be equal to %f with precision %f", operation, inputValue,
                     expectedResult, got, precision);
             // System.out.println(description);
-            assertEquals(description, expectedResult, got, precision);
+            assertEquals(expectedResult, got, precision, description);
         }
 
     }

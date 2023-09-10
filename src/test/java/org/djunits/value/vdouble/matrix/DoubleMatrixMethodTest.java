@@ -1,10 +1,10 @@
 package org.djunits.value.vdouble.matrix;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
@@ -32,7 +32,7 @@ import org.djunits.value.vdouble.vector.AreaVector;
 import org.djunits.value.vfloat.matrix.FloatAreaMatrix;
 import org.djunits.value.vfloat.vector.FLOATVECTOR;
 import org.djutils.exceptions.Try;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * ...
@@ -168,12 +168,12 @@ public class DoubleMatrixMethodTest
                     {
                         if (ammut2.getSI(row, col) == 0)
                         {
-                            assertTrue("Value should be NaN", Double.isNaN(ammut3.getSI(row, col)));
+                            assertTrue(Double.isNaN(ammut3.getSI(row, col)), "Value should be NaN");
 
                         }
                         else
                         {
-                            assertTrue("Value should be Infinite", Double.isInfinite(ammut3.getSI(row, col)));
+                            assertTrue(Double.isInfinite(ammut3.getSI(row, col)), "Value should be Infinite");
                         }
                     }
                 }
@@ -190,11 +190,11 @@ public class DoubleMatrixMethodTest
                         card += testData[row][col] == 0.0d ? 0 : 1;
                     }
                 }
-                assertEquals("zSum", sum, zSum.getInUnit(), 0.1);
-                assertEquals("cardinality", card, am.cardinality());
+                assertEquals(sum, zSum.getInUnit(), 0.1, "zSum");
+                assertEquals(card, am.cardinality(), "cardinality");
                 AreaMatrix ammutZero = ammut.multiplyBy(0.0);
-                assertEquals("cardinality should be 0", 0, ammutZero.cardinality());
-                assertEquals("zSum should be 0", 0.0, ammutZero.zSum().getSI(), 0);
+                assertEquals(0, ammutZero.cardinality(), "cardinality should be 0");
+                assertEquals(0.0, ammutZero.zSum().getSI(), 0, "zSum should be 0");
 
                 // INCREMENTBY(SCALAR) and DECREMENTBY(SCALAR)
                 AreaMatrix amold = am.clone();
@@ -202,17 +202,17 @@ public class DoubleMatrixMethodTest
                 AreaMatrix aminc = am.mutable().incrementBy(fa).immutable();
                 AreaMatrix amdec = am.mutable().decrementBy(fa).immutable();
                 AreaMatrix amid = aminc.mutable().decrementBy(fa);
-                assertEquals("immutable matrix should not change when converted to mutable", am, amold);
+                assertEquals(am, amold, "immutable matrix should not change when converted to mutable");
                 for (int row = 0; row < testData.length; row++)
                 {
                     for (int col = 0; col < testData[0].length; col++)
                     {
-                        assertEquals("increment and decrement with scalar should result in same matrix", am.getSI(row, col),
-                                amid.getSI(row, col), 0.1);
-                        assertEquals("m + s = (m+s)", au.getScale().toStandardUnit(testData[row][col]) + 10.0,
-                                aminc.getSI(row, col), 0.1);
-                        assertEquals("m - s = (m-s)", au.getScale().toStandardUnit(testData[row][col]) - 10.0,
-                                amdec.getSI(row, col), 0.1);
+                        assertEquals(am.getSI(row, col), amid.getSI(row, col), 0.1,
+                                "increment and decrement with scalar should result in same matrix");
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]) + 10.0, aminc.getSI(row, col), 0.1,
+                                "m + s = (m+s)");
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]) - 10.0, amdec.getSI(row, col), 0.1,
+                                "m - s = (m-s)");
                     }
                 }
 
@@ -228,41 +228,40 @@ public class DoubleMatrixMethodTest
                 {
                     for (int col = 0; col < testData[0].length; col++)
                     {
-                        assertEquals("times followed by divide with constant should result in same matrix", am.getSI(row, col),
-                                amtd.getSI(row, col), 0.1);
-                        assertEquals("m * 5.0 = (m*5.0)", au.getScale().toStandardUnit(testData[row][col]) * 5.0d,
-                                amt5.getSI(row, col), 0.1);
-                        assertEquals("m / 5.0 = (m/5.0)", au.getScale().toStandardUnit(testData[row][col]) / 5.0d,
-                                amd5.getSI(row, col), 0.1);
-                        assertEquals("amtimD", amt5.getSI(row, col), amtimD.getSI(row, col), 0.1d);
-                        assertEquals("amtimF", amt5.getSI(row, col), amtimF.getSI(row, col), 0.1d);
-                        assertEquals("amdivD", amd5.getSI(row, col), amdivD.getSI(row, col), 0.01d);
-                        assertEquals("amdivD", amd5.getSI(row, col), amdivF.getSI(row, col), 0.01d);
+                        assertEquals(am.getSI(row, col), amtd.getSI(row, col), 0.1,
+                                "times followed by divide with constant should result in same matrix");
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]) * 5.0d, amt5.getSI(row, col), 0.1,
+                                "m * 5.0 = (m*5.0)");
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]) / 5.0d, amd5.getSI(row, col), 0.1,
+                                "m / 5.0 = (m/5.0)");
+                        assertEquals(amt5.getSI(row, col), amtimD.getSI(row, col), 0.1d, "amtimD");
+                        assertEquals(amt5.getSI(row, col), amtimF.getSI(row, col), 0.1d, "amtimF");
+                        assertEquals(amd5.getSI(row, col), amdivD.getSI(row, col), 0.01d, "amdivD");
+                        assertEquals(amd5.getSI(row, col), amdivF.getSI(row, col), 0.01d, "amdivD");
                     }
                 }
 
                 // GET(), GETINUNIT()
-                assertEquals("get()", new Area(testData[2][2], au), am.get(2, 2));
-                assertEquals("getSI()", au.getScale().toStandardUnit(testData[2][2]), am.getSI(2, 2), 0.1);
-                assertEquals("getInUnit()", testData[2][2], am.getInUnit(2, 2), 0.1);
-                assertEquals("getInUnit(unit)",
-                        AreaUnit.SQUARE_YARD.getScale().fromStandardUnit(au.getScale().toStandardUnit(testData[2][2])),
-                        am.getInUnit(2, 2, AreaUnit.SQUARE_YARD), 0.1);
+                assertEquals(new Area(testData[2][2], au), am.get(2, 2), "get()");
+                assertEquals(au.getScale().toStandardUnit(testData[2][2]), am.getSI(2, 2), 0.1, "getSI()");
+                assertEquals(testData[2][2], am.getInUnit(2, 2), 0.1, "getInUnit()");
+                assertEquals(AreaUnit.SQUARE_YARD.getScale().fromStandardUnit(au.getScale().toStandardUnit(testData[2][2])),
+                        am.getInUnit(2, 2, AreaUnit.SQUARE_YARD), 0.1, "getInUnit(unit)");
 
                 // SET(), SETINUNIT()
                 Area fasqft = new Area(10.5d, AreaUnit.SQUARE_FOOT);
                 AreaMatrix famChange = am.clone().mutable();
                 famChange.set(2, 2, fasqft);
-                assertEquals("set()", fasqft.si, famChange.get(2, 2).si, 0.1d);
+                assertEquals(fasqft.si, famChange.get(2, 2).si, 0.1d, "set()");
                 famChange = am.clone().mutable();
                 famChange.setSI(2, 2, 123.4d);
-                assertEquals("setSI()", 123.4d, famChange.get(2, 2).si, 0.1d);
+                assertEquals(123.4d, famChange.get(2, 2).si, 0.1d, "setSI()");
                 famChange = am.clone().mutable();
                 famChange.setInUnit(2, 2, 1.2d);
-                assertEquals("setInUnit()", 1.2d, famChange.getInUnit(2, 2), 0.1d);
+                assertEquals(1.2d, famChange.getInUnit(2, 2), 0.1d, "setInUnit()");
                 famChange = am.clone().mutable();
                 famChange.setInUnit(2, 2, 1.5d, AreaUnit.HECTARE);
-                assertEquals("setInUnit(unit)", 15000.0d, famChange.get(2, 2).si, 1.0d);
+                assertEquals(15000.0d, famChange.get(2, 2).si, 1.0d, "setInUnit(unit)");
 
                 // GETROW(), GETCOLUMN(), GETDIAGONAL
                 double[][] squareData = storageType.equals(StorageType.DENSE) ? DOUBLEMATRIX.denseRectArrays(12, 12, false)
@@ -279,22 +278,22 @@ public class DoubleMatrixMethodTest
                 Area[] diagscalar = amSquare.getDiagonalScalars();
                 for (int col = 0; col < testData[0].length; col++)
                 {
-                    assertEquals("row2si", au.getScale().toStandardUnit(testData[2][col]), row2si[col], 0.1d);
-                    assertEquals("row2v", au.getScale().toStandardUnit(testData[2][col]), row2v.getSI(col), 0.1d);
-                    assertEquals("row2scalar", au.getScale().toStandardUnit(testData[2][col]), row2scalar[col].si, 0.1d);
+                    assertEquals(au.getScale().toStandardUnit(testData[2][col]), row2si[col], 0.1d, "row2si");
+                    assertEquals(au.getScale().toStandardUnit(testData[2][col]), row2v.getSI(col), 0.1d, "row2v");
+                    assertEquals(au.getScale().toStandardUnit(testData[2][col]), row2scalar[col].si, 0.1d, "row2scalar");
                 }
                 for (int row = 0; row < testData.length; row++)
                 {
-                    assertEquals("col2si", au.getScale().toStandardUnit(testData[row][2]), col2si[row], 0.1d);
-                    assertEquals("col2v", au.getScale().toStandardUnit(testData[row][2]), col2v.getSI(row), 0.1d);
-                    assertEquals("col2scalar", au.getScale().toStandardUnit(testData[row][2]), col2scalar[row].si, 0.1d);
+                    assertEquals(au.getScale().toStandardUnit(testData[row][2]), col2si[row], 0.1d, "col2si");
+                    assertEquals(au.getScale().toStandardUnit(testData[row][2]), col2v.getSI(row), 0.1d, "col2v");
+                    assertEquals(au.getScale().toStandardUnit(testData[row][2]), col2scalar[row].si, 0.1d, "col2scalar");
                 }
                 for (int diag = 0; diag < amSquare.rows(); diag++)
                 {
-                    assertEquals("diag2si", au.getScale().toStandardUnit(squareData[diag][diag]), diagsi[diag], 0.1d);
-                    assertEquals("diag2v", au.getScale().toStandardUnit(squareData[diag][diag]), diagv.getSI(diag), 0.1d);
-                    assertEquals("diag2scalar", au.getScale().toStandardUnit(squareData[diag][diag]), diagscalar[diag].si,
-                            0.1d);
+                    assertEquals(au.getScale().toStandardUnit(squareData[diag][diag]), diagsi[diag], 0.1d, "diag2si");
+                    assertEquals(au.getScale().toStandardUnit(squareData[diag][diag]), diagv.getSI(diag), 0.1d, "diag2v");
+                    assertEquals(au.getScale().toStandardUnit(squareData[diag][diag]), diagscalar[diag].si, 0.1d,
+                            "diag2scalar");
                 }
 
                 // GETVALUES(), GETSCALARS()
@@ -306,12 +305,14 @@ public class DoubleMatrixMethodTest
                 {
                     for (int col = 0; col < testData[0].length; col++)
                     {
-                        assertEquals("getValuesSI()", au.getScale().toStandardUnit(testData[row][col]), valsi[row][col], 0.1);
-                        assertEquals("getValuesInUnit()", testData[row][col], valunit[row][col], 0.1);
-                        assertEquals("getValuesInUnit(unit)", AreaUnit.SQUARE_YARD.getScale()
-                                .fromStandardUnit(au.getScale().toStandardUnit(testData[row][col])), valsqft[row][col], 0.1);
-                        assertEquals("getValuesInUnit(unit)", au.getScale().toStandardUnit(testData[row][col]),
-                                valscalars[row][col].si, 0.1);
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]), valsi[row][col], 0.1, "getValuesSI()");
+                        assertEquals(testData[row][col], valunit[row][col], 0.1, "getValuesInUnit()");
+                        assertEquals(
+                                AreaUnit.SQUARE_YARD.getScale()
+                                        .fromStandardUnit(au.getScale().toStandardUnit(testData[row][col])),
+                                valsqft[row][col], 0.1, "getValuesInUnit(unit)");
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]), valscalars[row][col].si, 0.1,
+                                "getValuesInUnit(unit)");
                     }
                 }
 
@@ -339,18 +340,18 @@ public class DoubleMatrixMethodTest
                     for (int col = 0; col < testData[0].length; col++)
                     {
                         // TODO: Should be rounded IN THE UNIT rather than BY SI VALUES
-                        assertEquals("div2", au.getScale().toStandardUnit(testData[row][col]) / 2.0d, amdiv2.getSI(row, col),
-                                0.1d);
-                        assertEquals("abs", Math.abs(au.getScale().toStandardUnit(testData[row][col]) / 2.0d),
-                                amAbs.getSI(row, col), 0.1d);
-                        assertEquals("ceil", Math.ceil(au.getScale().toStandardUnit(testData[row][col]) / 2.0d),
-                                amCeil.getSI(row, col), 0.1d);
-                        assertEquals("floor", Math.floor(au.getScale().toStandardUnit(testData[row][col]) / 2.0d),
-                                amFloor.getSI(row, col), 0.1d);
-                        assertEquals("neg", -au.getScale().toStandardUnit(testData[row][col]) / 2.0d, amNeg.getSI(row, col),
-                                0.1d);
-                        assertEquals("rint", Math.rint(au.getScale().toStandardUnit(testData[row][col]) / 2.0d),
-                                amRint.getSI(row, col), 0.1d);
+                        assertEquals(au.getScale().toStandardUnit(testData[row][col]) / 2.0d, amdiv2.getSI(row, col), 0.1d,
+                                "div2");
+                        assertEquals(Math.abs(au.getScale().toStandardUnit(testData[row][col]) / 2.0d), amAbs.getSI(row, col),
+                                0.1d, "abs");
+                        assertEquals(Math.ceil(au.getScale().toStandardUnit(testData[row][col]) / 2.0d), amCeil.getSI(row, col),
+                                0.1d, "ceil");
+                        assertEquals(Math.floor(au.getScale().toStandardUnit(testData[row][col]) / 2.0d),
+                                amFloor.getSI(row, col), 0.1d, "floor");
+                        assertEquals(-au.getScale().toStandardUnit(testData[row][col]) / 2.0d, amNeg.getSI(row, col), 0.1d,
+                                "neg");
+                        assertEquals(Math.rint(au.getScale().toStandardUnit(testData[row][col]) / 2.0d), amRint.getSI(row, col),
+                                0.1d, "rint");
                     }
                 }
 
@@ -359,8 +360,8 @@ public class DoubleMatrixMethodTest
                 double det = am4x4.determinantSI();
                 double detCalc = Determinant.det(am4x4.getValuesSI());
                 double err = Math.max(det, detCalc) / 10000.0;
-                assertEquals("Determinant of square matrix with unit " + au.getDefaultTextualAbbreviation() + ", storage = "
-                        + storageType + " = " + det + " but should have been " + detCalc, detCalc, det, err);
+                assertEquals(detCalc, det, err, "Determinant of square matrix with unit " + au.getDefaultTextualAbbreviation()
+                        + ", storage = " + storageType + " = " + det + " but should have been " + detCalc);
                 Try.testFail(() -> am.determinantSI(), "Determinant of non-square matrix should have thrown exception");
 
                 // TEST METHODS THAT INVOLVE TWO MATRIX INSTANCES
@@ -377,19 +378,19 @@ public class DoubleMatrixMethodTest
                         AreaMatrix amSum2 = am2.plus(am);
                         AreaMatrix amSum3 = am.mutable().incrementBy(am2).immutable();
                         AreaMatrix amSum4 = am2.mutable().incrementBy(am).immutable();
-                        assertEquals("a+b == b+a", amSum1, amSum2);
-                        assertEquals("a+b == b+a", amSum1, amSum3);
-                        assertEquals("a+b == b+a", amSum1, amSum4);
+                        assertEquals(amSum1, amSum2, "a+b == b+a");
+                        assertEquals(amSum1, amSum3, "a+b == b+a");
+                        assertEquals(amSum1, amSum4, "a+b == b+a");
                         for (int row = 0; row < testData.length; row++)
                         {
                             for (int col = 0; col < testData[0].length; col++)
                             {
                                 double tolerance = Double.isFinite(amSum1.getSI(row, col))
                                         ? Math.abs(amSum1.getSI(row, col) / 10000.0d) : 0.1d;
-                                assertEquals("value in matrix matches",
+                                assertEquals(
                                         au.getScale().toStandardUnit(testData[row][col])
                                                 + au2.getScale().toStandardUnit(testData2[row][col]),
-                                        amSum1.getSI(row, col), tolerance);
+                                        amSum1.getSI(row, col), tolerance, "value in matrix matches");
                             }
                         }
 
@@ -397,28 +398,28 @@ public class DoubleMatrixMethodTest
                         AreaMatrix amDiff1 = am.minus(am2);
                         AreaMatrix amDiff2 = am2.minus(am).mutable().neg();
                         AreaMatrix amDiff3 = am.mutable().decrementBy(am2).immutable();
-                        assertEquals("a-b == -(b-a)", amDiff1, amDiff2);
-                        assertEquals("a-b == -(b-a)", amDiff1, amDiff3);
+                        assertEquals(amDiff1, amDiff2, "a-b == -(b-a)");
+                        assertEquals(amDiff1, amDiff3, "a-b == -(b-a)");
                         for (int row = 0; row < testData.length; row++)
                         {
                             for (int col = 0; col < testData[0].length; col++)
                             {
                                 double tolerance = Double.isFinite(amDiff1.getSI(row, col))
                                         ? Math.abs(amDiff1.getSI(row, col) / 10000.0d) : 0.1d;
-                                assertEquals("value in matrix matches",
+                                assertEquals(
                                         au.getScale().toStandardUnit(testData[row][col])
                                                 - au2.getScale().toStandardUnit(testData2[row][col]),
-                                        amDiff1.getSI(row, col), tolerance);
+                                        amDiff1.getSI(row, col), tolerance, "value in matrix matches");
                             }
                         }
 
                         // TIMES(MATRIX) and DIVIDE(MATRIX)
                         SIMatrix amTim = am.times(am2);
                         SIMatrix amDiv = am.divide(am2);
-                        assertEquals("unit of m2 * m2 should be m4", "m4",
-                                amTim.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
-                        assertEquals("unit of m2 / m2 should be empty string", "",
-                                amDiv.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false));
+                        assertEquals("m4", amTim.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false),
+                                "unit of m2 * m2 should be m4");
+                        assertEquals("", amDiv.getDisplayUnit().getQuantity().getSiDimensions().toString(false, false, false),
+                                "unit of m2 / m2 should be empty string");
                         for (int row = 0; row < testData.length; row++)
                         {
                             for (int col = 0; col < testData[0].length; col++)
@@ -435,16 +436,16 @@ public class DoubleMatrixMethodTest
                                     // * au2.getScale().toStandardUnit(testData2[row][col]));
                                     am.times(am2);
                                 }
-                                assertEquals("value in m2 * m2 matches",
+                                assertEquals(
                                         au.getScale().toStandardUnit(testData[row][col])
                                                 * au2.getScale().toStandardUnit(testData2[row][col]),
-                                        amTim.getSI(row, col), tolerance);
-                                tolerance = Double.isFinite(amTim.getSI(row, col)) ? Math.abs(amDiv.getSI(row, col) / 10000.0d)
+                                        amTim.getSI(row, col), tolerance, "value in m2 * m2 matches");
+                                tolerance = Double.isFinite(amDiv.getSI(row, col)) ? Math.abs(amDiv.getSI(row, col) / 10000.0d)
                                         : 0.1d;
-                                assertEquals("value in m2 / m2 matches (could be NaN)",
+                                assertEquals(
                                         au.getScale().toStandardUnit(testData[row][col])
                                                 / au2.getScale().toStandardUnit(testData2[row][col]),
-                                        amDiv.getSI(row, col), tolerance);
+                                        amDiv.getSI(row, col), tolerance, "value in m2 / m2 matches (could be NaN)");
                             }
                         }
                     }
@@ -582,12 +583,12 @@ public class DoubleMatrixMethodTest
         {
             for (int col = 0; col < denseTestData[0].length; col++)
             {
-                assertEquals("absPlusRel", 61.0 * denseTestData[row][col], absPlusRel.getSI(row, col), 0.01);
-                assertEquals("absMinusRel", -59.0 * denseTestData[row][col], absMinusRel.getSI(row, col), 0.01);
-                assertEquals("absMinusAbs", denseTestData[row][col] / 2.0, absMinusAbs.getSI(row, col), 0.01);
-                assertEquals("absDecByRelS", denseTestData[row][col] - 60.0, absDecByRelS.getSI(row, col), 0.01);
-                assertEquals("absDecByRelM", -29.0 * denseTestData[row][col], absDecByRelM.getSI(row, col), 0.01);
-                assertEquals("relPlusAbs", 61.0 * denseTestData[row][col], relPlusAbs.getSI(row, col), 0.01);
+                assertEquals(61.0 * denseTestData[row][col], absPlusRel.getSI(row, col), 0.01, "absPlusRel");
+                assertEquals(-59.0 * denseTestData[row][col], absMinusRel.getSI(row, col), 0.01, "absMinusRel");
+                assertEquals(denseTestData[row][col] / 2.0, absMinusAbs.getSI(row, col), 0.01, "absMinusAbs");
+                assertEquals(denseTestData[row][col] - 60.0, absDecByRelS.getSI(row, col), 0.01, "absDecByRelS");
+                assertEquals(-29.0 * denseTestData[row][col], absDecByRelM.getSI(row, col), 0.01, "absDecByRelM");
+                assertEquals(61.0 * denseTestData[row][col], relPlusAbs.getSI(row, col), 0.01, "relPlusAbs");
             }
         }
         for (int dRows : new int[] {-1, 0, 1})
@@ -612,9 +613,8 @@ public class DoubleMatrixMethodTest
                 }
             }
         }
-        assertTrue("toString returns something informative",
-                DoubleMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE).toString()
-                        .startsWith("DoubleMatrixData"));
+        assertTrue(DoubleMatrixData.instantiate(denseTestData, TimeUnit.DEFAULT.getScale(), StorageType.DENSE).toString()
+                .startsWith("DoubleMatrixData"), "toString returns something informative");
     }
 
     /**
@@ -633,18 +633,18 @@ public class DoubleMatrixMethodTest
             // Let the row count fastest
             int row = compoundIndex % am.rows();
             int col = compoundIndex / am.rows();
-            assertEquals("initial value is 0", 0f, am.getSI(row, col), 0.0001);
+            assertEquals(0f, am.getSI(row, col), 0.0001, "initial value is 0");
             am.setSI(row, col, nonZeroValue);
-            assertEquals("current value is nonZero", nonZeroValue, am.getSI(row, col), 0.0001);
+            assertEquals(nonZeroValue, am.getSI(row, col), 0.0001, "current value is nonZero");
         }
         for (int compoundIndex = am.cols() * am.rows(); --compoundIndex >= 0;)
         {
             // Let the row count fastest
             int row = compoundIndex % am.rows();
             int col = compoundIndex / am.rows();
-            assertEquals("current value is nonZero", nonZeroValue, am.getSI(row, col), 0.0001);
+            assertEquals(nonZeroValue, am.getSI(row, col), 0.0001, "current value is nonZero");
             am.setSI(row, col, 0f);
-            assertEquals("final value is 0", 0f, am.getSI(row, col), 0.0001);
+            assertEquals(0f, am.getSI(row, col), 0.0001, "final value is 0");
         }
     }
 
@@ -668,12 +668,12 @@ public class DoubleMatrixMethodTest
         {
             for (int col = 0; col < denseTestData[0].length; col++)
             {
-                assertEquals("relPlusAbsTime", 61.0 * denseTestData[row][col], relPlusAbsTime.getSI(row, col), 0.01);
+                assertEquals(61.0 * denseTestData[row][col], relPlusAbsTime.getSI(row, col), 0.01, "relPlusAbsTime");
             }
         }
         Time time = durationMatrix.instantiateScalarAbsSI(123.456f, TimeUnit.EPOCH_DAY);
-        assertEquals("Unit of instantiateScalarAbsSI matches", TimeUnit.EPOCH_DAY, time.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, time.si, 0.1);
+        assertEquals(TimeUnit.EPOCH_DAY, time.getDisplayUnit(), "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, time.si, 0.1, "Value of instantiateScalarAbsSI matches");
 
         AngleMatrix angleMatrix = new AngleMatrix(denseTestData, AngleUnit.DEGREE, StorageType.DENSE);
         DirectionMatrix directionMatrix = new DirectionMatrix(denseTestData, DirectionUnit.EAST_DEGREE, StorageType.DENSE);
@@ -683,13 +683,13 @@ public class DoubleMatrixMethodTest
         {
             for (int col = 0; col < denseTestData[0].length; col++)
             {
-                assertEquals("relPlusAbsTime", 2.0 / 180 * Math.PI * denseTestData[row][col],
-                        relPlusAbsDirection.getSI(row, col), 0.01);
+                assertEquals(2.0 / 180 * Math.PI * denseTestData[row][col], relPlusAbsDirection.getSI(row, col), 0.01,
+                        "relPlusAbsTime");
             }
         }
         Direction direction = angleMatrix.instantiateScalarAbsSI(123.456f, DirectionUnit.NORTH_RADIAN);
-        assertEquals("Unit of instantiateScalarAbsSI matches", DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, direction.si, 0.1);
+        assertEquals(DirectionUnit.NORTH_RADIAN, direction.getDisplayUnit(), "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, direction.si, 0.1, "Value of instantiateScalarAbsSI matches");
 
         TemperatureMatrix temperatureMatrix =
                 new TemperatureMatrix(denseTestData, TemperatureUnit.DEGREE_FAHRENHEIT, StorageType.DENSE);
@@ -701,15 +701,15 @@ public class DoubleMatrixMethodTest
         {
             for (int col = 0; col < denseTestData[0].length; col++)
             {
-                assertEquals("relPlusAbsTime", (1.0 + 5.0 / 9.0) * denseTestData[row][col],
-                        relPlusAbsTemperature.getSI(row, col), 0.01);
+                assertEquals((1.0 + 5.0 / 9.0) * denseTestData[row][col], relPlusAbsTemperature.getSI(row, col), 0.01,
+                        "relPlusAbsTime");
             }
         }
         AbsoluteTemperature absoluteTemperature =
                 temperatureMatrix.instantiateScalarAbsSI(123.456f, AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT);
-        assertEquals("Unit of instantiateScalarAbsSI matches", AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT,
-                absoluteTemperature.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, absoluteTemperature.si, 0.1);
+        assertEquals(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT, absoluteTemperature.getDisplayUnit(),
+                "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, absoluteTemperature.si, 0.1, "Value of instantiateScalarAbsSI matches");
 
         LengthMatrix lengthMatrix = new LengthMatrix(denseTestData, LengthUnit.MILE, StorageType.DENSE);
         PositionMatrix positionMatrix = new PositionMatrix(denseTestData, PositionUnit.KILOMETER, StorageType.DENSE);
@@ -719,12 +719,12 @@ public class DoubleMatrixMethodTest
         {
             for (int col = 0; col < denseTestData[0].length; col++)
             {
-                assertEquals("relPlusAbsTime", 2609.344 * denseTestData[row][col], relPlusAbsPosition.getSI(row, col), 0.1);
+                assertEquals(2609.344 * denseTestData[row][col], relPlusAbsPosition.getSI(row, col), 0.1, "relPlusAbsTime");
             }
         }
         Position position = lengthMatrix.instantiateScalarAbsSI(123.456f, PositionUnit.ANGSTROM);
-        assertEquals("Unit of instantiateScalarAbsSI matches", PositionUnit.ANGSTROM, position.getDisplayUnit());
-        assertEquals("Value of instantiateScalarAbsSI matches", 123.456f, position.si, 0.01);
+        assertEquals(PositionUnit.ANGSTROM, position.getDisplayUnit(), "Unit of instantiateScalarAbsSI matches");
+        assertEquals(123.456f, position.si, 0.01, "Value of instantiateScalarAbsSI matches");
     }
 
     /**
@@ -739,31 +739,30 @@ public class DoubleMatrixMethodTest
         for (StorageType storageType : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
         {
             DoubleMatrixData dmd = DoubleMatrixData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType);
-            assertTrue("Double matrix is equal to itself", dmd.equals(dmd));
-            assertFalse("Double matrix is not equal to null", dmd.equals(null));
-            assertFalse("Double matrix data is not equal to some string", dmd.equals("some string"));
-            assertTrue("Double matrix is equal to sparse version of itself", dmd.equals(dmd.toSparse()));
-            assertTrue("Double matrix is equal to dense version of itself", dmd.equals(dmd.toDense()));
+            assertTrue(dmd.equals(dmd), "Double matrix is equal to itself");
+            assertFalse(dmd.equals(null), "Double matrix is not equal to null");
+            assertFalse(dmd.equals("some string"), "Double matrix data is not equal to some string");
+            assertTrue(dmd.equals(dmd.toSparse()), "Double matrix is equal to sparse version of itself");
+            assertTrue(dmd.equals(dmd.toDense()), "Double matrix is equal to dense version of itself");
             for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
             {
                 DoubleMatrixData dvd2 = DoubleMatrixData.instantiate(testData, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertEquals(
-                        "Double matrix data is equal to other double vector containing same values regardless of storage type",
-                        dmd, dvd2);
+                assertEquals(dmd, dvd2,
+                        "Double matrix data is equal to other double vector containing same values regardless of storage type");
                 double[][] testData2 = DOUBLEMATRIX.denseRectArrays(12, 33, false);
                 testData2[2][2] = 0;
                 dvd2 = DoubleMatrixData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Double matrix data is not equal to other double vector containing same values except last one",
-                        dmd.equals(dvd2));
+                assertFalse(dmd.equals(dvd2),
+                        "Double matrix data is not equal to other double vector containing same values except last one");
                 testData2 = DOUBLEMATRIX.denseRectArrays(13, 34, false);
                 testData2[2][2] = 0;
                 dvd2 = DoubleMatrixData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Double matrix data is not equal to other double vector containing same values except last one",
-                        dmd.equals(dvd2));
+                assertFalse(dmd.equals(dvd2),
+                        "Double matrix data is not equal to other double vector containing same values except last one");
                 testData2 = DOUBLEMATRIX.denseRectArrays(12, 34, false);
                 dvd2 = DoubleMatrixData.instantiate(testData2, TemperatureUnit.KELVIN.getScale(), storageType2);
-                assertFalse("Double matrix data is not equal to other double vector containing same values except for one zero",
-                        dmd.equals(dvd2));
+                assertFalse(dmd.equals(dvd2),
+                        "Double matrix data is not equal to other double vector containing same values except for one zero");
             }
         }
     }
@@ -797,13 +796,13 @@ public class DoubleMatrixMethodTest
 
         Length length = Length.valueOf("123 km");
         DoubleSparseValue dsv = new DoubleSparseValue(2, 3, length);
-        assertEquals("row matches", 2, dsv.getRow());
-        assertEquals("column matches", 3, dsv.getColumn());
-        assertEquals("value matches", 123000, dsv.getValueSI(), 0.1);
+        assertEquals(2, dsv.getRow(), "row matches");
+        assertEquals(3, dsv.getColumn(), "column matches");
+        assertEquals(123000, dsv.getValueSI(), 0.1, "value matches");
         dsv = new DoubleSparseValue(2, 3, 123.000, LengthUnit.KILOMETER);
-        assertEquals("row matches", 2, dsv.getRow());
-        assertEquals("column matches", 3, dsv.getColumn());
-        assertEquals("value matches", 123000, dsv.getValueSI(), 0.1);
+        assertEquals(2, dsv.getRow(), "row matches");
+        assertEquals(3, dsv.getColumn(), "column matches");
+        assertEquals(123000, dsv.getValueSI(), 0.1, "value matches");
     }
 
 }

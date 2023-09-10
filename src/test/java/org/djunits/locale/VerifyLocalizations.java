@@ -1,7 +1,7 @@
 package org.djunits.locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.djunits.unit.DurationUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Verify that all localizations contain all keys.
@@ -93,7 +93,7 @@ public class VerifyLocalizations
                 continue;
             }
             String[] parts = line.split("\\=");
-            assertTrue(referenceFileName + "(" + (lineNo + 1) + ") should contain a equals sign", parts.length > 1);
+            assertTrue(parts.length > 1, referenceFileName + "(" + (lineNo + 1) + ") should contain a equals sign");
             String key = parts[0].trim();
             keys.put(parts[0].trim(), (lineNo + 1));
             if (parts.length > 1)
@@ -102,7 +102,8 @@ public class VerifyLocalizations
             }
         }
         // system.out.println("Collected " + keys.size() + " keys from reference file " + referenceFileName);
-        // system.out.println("Verifying that the valueOf method of each unit correctly parses all writing styles into a Scalar");
+        // system.out.println("Verifying that the valueOf method of each unit correctly parses all writing styles into a
+        // Scalar");
         for (String key : new TreeSet<>(keys.keySet()))
         {
             int positionOfPoint = key.indexOf('.');
@@ -133,8 +134,7 @@ public class VerifyLocalizations
         for (Path path : paths)
         {
             // System.out.println(path);
-            if (path.getFileName().toString().startsWith("unit_")
-                    && path.getFileName().toString().endsWith(".properties"))
+            if (path.getFileName().toString().startsWith("unit_") && path.getFileName().toString().endsWith(".properties"))
             {
                 // system.out.println("Verifying locale file " + path.getFileName().toString());
                 Set<String> missingKeys = new TreeSet<>(keys.keySet());
@@ -175,12 +175,11 @@ public class VerifyLocalizations
                     System.err.println("file " + path.getFileName() + " misses key " + key);
                     errors++;
                 }
-                assertEquals("No errors in file " + path.getFileName(), 0, errors);
+                assertEquals(0, errors, "No errors in file " + path.getFileName());
             }
         }
     }
 
-    
     /**
      * Check that all UnitSystems have valid a nameKey and a valid abbreviationKey and test those keys in all available
      * localizations.

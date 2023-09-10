@@ -103,8 +103,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateCached(final double value,
-            final U unit)
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateCached(final double value, final U unit)
     {
         return instantiateAnonymousCached(value, unit);
     }
@@ -118,7 +117,7 @@ public final class BenchmarkAnonymousInstantiation
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
-    @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
+    @SuppressWarnings({"unchecked", "checkstyle:needbraces"})
     public static <S extends DoubleScalar<?, S>> S instantiateAnonymousCached(final double value, final Unit<?> unit)
     {
         try
@@ -162,8 +161,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateCascade(final double value,
-            final U unit)
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateCascade(final double value, final U unit)
     {
         return instantiateAnonymousCascade(value, unit);
     }
@@ -177,7 +175,7 @@ public final class BenchmarkAnonymousInstantiation
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
-    @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
+    @SuppressWarnings({"unchecked", "checkstyle:needbraces"})
     public static <S extends DoubleScalar<?, S>> S instantiateAnonymousCascade(final double value, final Unit<?> unit)
     {
         if (unit instanceof DimensionlessUnit)
@@ -250,8 +248,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateNonCached(final double value,
-            final U unit)
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateNonCached(final double value, final U unit)
     {
         return instantiateAnonymousNonCached(value, unit);
     }
@@ -265,7 +262,7 @@ public final class BenchmarkAnonymousInstantiation
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
-    @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
+    @SuppressWarnings({"unchecked", "checkstyle:needbraces"})
     public static <S extends DoubleScalar<?, S>> S instantiateAnonymousNonCached(final double value, final Unit<?> unit)
     {
         try
@@ -292,8 +289,7 @@ public final class BenchmarkAnonymousInstantiation
      * @param <U> the unit
      * @param <S> the return type
      */
-    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateMethodHandle(final double value,
-            final U unit)
+    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateMethodHandle(final double value, final U unit)
     {
         return instantiateAnonymousMethodHandle(value, unit);
     }
@@ -307,9 +303,8 @@ public final class BenchmarkAnonymousInstantiation
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
-    @SuppressWarnings({ "unchecked", "checkstyle:needbraces" })
-    public static <S extends DoubleScalar<?, S>> S instantiateAnonymousMethodHandle(final double value,
-            final Unit<?> unit)
+    @SuppressWarnings({"unchecked", "checkstyle:needbraces"})
+    public static <S extends DoubleScalar<?, S>> S instantiateAnonymousMethodHandle(final double value, final Unit<?> unit)
     {
         try
         {

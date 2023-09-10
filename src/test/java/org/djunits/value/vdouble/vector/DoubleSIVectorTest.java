@@ -1,8 +1,8 @@
 package org.djunits.value.vdouble.vector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +31,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vdouble.vector.base.DoubleVectorAbs;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRelWithAbs;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test.java.
@@ -88,7 +88,7 @@ public class DoubleSIVectorTest
                 DoubleVectorRel<RU, R, RV> sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals("Value at index matches", vector.getSI(index), sparseVector.getSI(index), 0.0);
+                    assertEquals(vector.getSI(index), sparseVector.getSI(index), 0.0, "Value at index matches");
                 }
 
                 SIVector mult = vector.times(dimlessVector);
@@ -97,8 +97,8 @@ public class DoubleSIVectorTest
                 assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), vector.getSI(index),
-                            asVector.getSI(index), vector.getSI(index) / 1000.0);
+                    assertEquals(vector.getSI(index), asVector.getSI(index), vector.getSI(index) / 1000.0,
+                            type + ", unit: " + unit.getDefaultTextualAbbreviation());
                 }
 
                 Method asMethodDisplayUnit = SIVector.class.getDeclaredMethod("as" + type, unit.getClass());
@@ -108,8 +108,8 @@ public class DoubleSIVectorTest
 
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), vector.getSI(index),
-                            asVectorDisplayUnit.getSI(index), vector.getSI(index) / 1000.0);
+                    assertEquals(vector.getSI(index), asVectorDisplayUnit.getSI(index), vector.getSI(index) / 1000.0,
+                            type + ", unit: " + unit.getDefaultTextualAbbreviation());
                 }
 
                 // test exception for wrong 'as'
@@ -148,22 +148,22 @@ public class DoubleSIVectorTest
                 AV sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals("Value at index matches", vector.getSI(index), sparseVector.getSI(index), 0.0);
+                    assertEquals(vector.getSI(index), sparseVector.getSI(index), 0.0, "Value at index matches");
                 }
                 Class<A> scalarClass = vector.getScalarClass();
-                assertTrue("Scalar class is correct kind of vdouble.scalar class",
-                        scalarClass.getName().equals("org.djunits.value.vdouble.scalar." + type));
+                assertTrue(scalarClass.getName().equals("org.djunits.value.vdouble.scalar." + type),
+                        "Scalar class is correct kind of vdouble.scalar class");
                 double testValue = 123.45;
                 A scalarAbs = vector.instantiateScalarSI(testValue, unit);
-                assertEquals("Scalar has correct value", testValue, scalarAbs.getSI(), 0.001);
-                assertEquals("Scalar ahs correct displayUnit", unit, scalarAbs.getDisplayUnit());
+                assertEquals(testValue, scalarAbs.getSI(), 0.001, "Scalar has correct value");
+                assertEquals(unit, scalarAbs.getDisplayUnit(), "Scalar ahs correct displayUnit");
                 Quantity<RU> relativeQuantity = (Quantity<RU>) Quantities.INSTANCE
                         .getQuantity(CLASSNAMES.REL_WITH_ABS_LIST.get(CLASSNAMES.ABS_LIST.indexOf(type)) + "Unit");
                 for (RU relativeUnit : relativeQuantity.getUnitsById().values())
                 {
                     R scalarRel = vector.instantiateScalarRelSI(testValue, relativeUnit);
-                    assertEquals("display unit of scalarRel matches", relativeUnit, scalarRel.getDisplayUnit());
-                    assertEquals("value of scalarRel matches", testValue, scalarRel.getSI(), 0.001);
+                    assertEquals(relativeUnit, scalarRel.getDisplayUnit(), "display unit of scalarRel matches");
+                    assertEquals(testValue, scalarRel.getSI(), 0.001, "value of scalarRel matches");
                 }
                 // Indirectly test the instantiateVectorRel method (we don't have direct access to a DoubleVectorData object)
                 // This was more difficult than it should be...
@@ -395,14 +395,14 @@ public class DoubleSIVectorTest
     public static void verifyDimensionLessVector(final double[] reference, final DoubleFunction operation,
             final DimensionlessVector got)
     {
-        assertEquals("item count matches", reference.length, got.size());
-        assertEquals("unit is DimensionLessUnit", DimensionlessUnit.BASE.getStandardUnit(),
-                got.getDisplayUnit().getStandardUnit());
+        assertEquals(reference.length, got.size(), "item count matches");
+        assertEquals(DimensionlessUnit.BASE.getStandardUnit(), got.getDisplayUnit().getStandardUnit(),
+                "unit is DimensionLessUnit");
         for (int index = 0; index < reference.length; index++)
         {
             double expect = operation.apply(reference[index]);
-            double tolerance = Math.abs(expect / 10000d);
-            assertEquals("value must match", expect, got.getSI(index), tolerance);
+            double tolerance = Double.isNaN(expect) ? 0.1 : Math.abs(expect / 10000d);
+            assertEquals(expect, got.getSI(index), tolerance, "value must match");
         }
     }
 
@@ -414,7 +414,7 @@ public class DoubleSIVectorTest
      */
     public void compareValuesWithScale(final Scale scale, final double[] reference, final double[] got)
     {
-        assertEquals("length of reference must equal length of result ", reference.length, got.length);
+        assertEquals(reference.length, got.length, "length of reference must equal length of result ");
         if (scale instanceof GradeScale)
         {
             return; // too difficult; for now
@@ -423,7 +423,7 @@ public class DoubleSIVectorTest
         double factor = scale.toStandardUnit(1) - offset;
         for (int i = 0; i < reference.length; i++)
         {
-            assertEquals("value at index " + i + " must match", reference[i] * factor + offset, got[i], 0.001);
+            assertEquals(reference[i] * factor + offset, got[i], 0.001, "value at index " + i + " must match");
         }
     }
 }

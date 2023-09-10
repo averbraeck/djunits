@@ -1,9 +1,9 @@
 package org.djunits.value.vfloat.matrix;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +23,7 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
 import org.djunits.value.vfloat.vector.FloatSIVector;
 import org.djutils.exceptions.Try;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * FloatMatrixInstantiateTest.java.
@@ -288,8 +288,8 @@ public class FloatMatrixInstantiateTest
         assertEquals(100, si10dd.cardinality());
         assertEquals(100 * 101 / 2, si10dd.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10dd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
-        assertEquals("getScalarClass returns FloatSIScalar", FloatSIScalar.class, si10dd.getScalarClass());
-        assertEquals("getVectorClass returns FloatSIVector", FloatSIVector.class, si10dd.getVectorClass());
+        assertEquals(FloatSIScalar.class, si10dd.getScalarClass(), "getScalarClass returns FloatSIScalar");
+        assertEquals(FloatSIVector.class, si10dd.getVectorClass(), "getVectorClass returns FloatSIVector");
 
         FloatSIMatrix si10ds =
                 new FloatSIMatrix(FLOATMATRIX.denseRectArrays(10, 10, false), SIUnit.of("m2/s3"), StorageType.SPARSE);
@@ -606,8 +606,8 @@ public class FloatMatrixInstantiateTest
         assertEquals(200, si10dd.cardinality());
         assertEquals(200 * 201 / 2, si10dd.zSum().getInUnit(), 0.001);
         assertEquals("m2/s3", si10dd.getDisplayUnit().getQuantity().getSiDimensions().toString(true, false, false));
-        assertEquals("getScalarClass returns FloatSIScalar", FloatSIScalar.class, si10dd.getScalarClass());
-        assertEquals("getVectorClass returns FloatSIVector", FloatSIVector.class, si10dd.getVectorClass());
+        assertEquals(FloatSIScalar.class, si10dd.getScalarClass(), "getScalarClass returns FloatSIScalar");
+        assertEquals(FloatSIVector.class, si10dd.getVectorClass(), "getVectorClass returns FloatSIVector");
 
         FloatSIMatrix si10ds =
                 new FloatSIMatrix(FLOATMATRIX.denseRectArrays(20, 10, false), SIUnit.of("m2/s3"), StorageType.SPARSE);
@@ -896,52 +896,52 @@ public class FloatMatrixInstantiateTest
         {
             int key = entry.getKey();
             FloatSpeedMatrix sv = entry.getValue();
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
-            assertEquals("key=" + key, 0, sv.cardinality());
-            assertEquals("key=" + key, 0, sv.getScalars().length);
-            assertEquals("key=" + key, SpeedUnit.KM_PER_HOUR, sv.getDisplayUnit());
-            assertEquals("DENSE/SPARSE: key = " + key, sv.getStorageType(),
-                    key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE);
-            assertFalse("key=" + key, sv.isMutable());
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
+            assertEquals(0, sv.cardinality(), "key=" + key);
+            assertEquals(0, sv.getScalars().length, "key=" + key);
+            assertEquals(SpeedUnit.KM_PER_HOUR, sv.getDisplayUnit(), "key=" + key);
+            assertEquals(sv.getStorageType(), key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE,
+                    "DENSE/SPARSE: key = " + key);
+            assertFalse(sv.isMutable(), "key=" + key);
             FloatSpeedMatrix svm = sv.mutable();
-            assertTrue("key=" + key, svm.isMutable());
+            assertTrue(svm.isMutable(), "key=" + key);
             assertEquals(SpeedUnit.KM_PER_HOUR, svm.getDisplayUnit());
-            assertEquals("DENSE/SPARSE: key = " + key, svm.getStorageType(),
-                    key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE);
+            assertEquals(svm.getStorageType(), key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE,
+                    "DENSE/SPARSE: key = " + key);
             FloatSpeedMatrix svr = svm.abs();
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
             assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
             svm = svm.ceil();
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
-            assertEquals("key=" + key, SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
+            assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit(), "key=" + key);
             svr = svm.decrementBy(FloatSpeed.ONE);
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
-            assertEquals("key=" + key, SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
+            assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit(), "key=" + key);
             svr = svm.incrementBy(FloatSpeed.ONE);
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
             assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
             svr = svm.plus(sv);
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
-            assertEquals("key=" + key, SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
-            assertEquals("DENSE/SPARSE: key = " + key, svr.getStorageType(),
-                    key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE);
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
+            assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit(), "key=" + key);
+            assertEquals(svr.getStorageType(), key % 2 == 0 ? StorageType.DENSE : StorageType.SPARSE,
+                    "DENSE/SPARSE: key = " + key);
             svr = sv.toDense();
-            assertEquals("key=" + key, StorageType.DENSE, svr.getStorageType());
+            assertEquals(StorageType.DENSE, svr.getStorageType(), "key=" + key);
             svr = sv.toSparse();
-            assertEquals("key=" + key, StorageType.SPARSE, svr.getStorageType());
-            assertEquals("key=" + key, 0, sv.getValuesSI().length);
-            assertEquals("key=" + key, 0, sv.getValuesInUnit().length);
-            assertEquals("key=" + key, 0, sv.getValuesInUnit(SpeedUnit.KNOT).length);
+            assertEquals(StorageType.SPARSE, svr.getStorageType(), "key=" + key);
+            assertEquals(0, sv.getValuesSI().length, "key=" + key);
+            assertEquals(0, sv.getValuesInUnit().length, "key=" + key);
+            assertEquals(0, sv.getValuesInUnit(SpeedUnit.KNOT).length, "key=" + key);
             svr = sv.times(2.0);
-            assertEquals("key=" + key, 0, sv.rows());
-            assertEquals("key=" + key, 0, sv.cols());
-            assertEquals("key=" + key, SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit());
+            assertEquals(0, sv.rows(), "key=" + key);
+            assertEquals(0, sv.cols(), "key=" + key);
+            assertEquals(SpeedUnit.KM_PER_HOUR, svr.getDisplayUnit(), "key=" + key);
         }
     }
 

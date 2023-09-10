@@ -1,8 +1,8 @@
 package org.djunits.value.vfloat.vector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +31,7 @@ import org.djunits.value.vfloat.scalar.base.FloatScalarRelWithAbs;
 import org.djunits.value.vfloat.vector.base.FloatVectorAbs;
 import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.base.FloatVectorRelWithAbs;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test.java.
@@ -88,7 +88,7 @@ public class FloatSIVectorTest
                 FloatVectorRel<RU, R, RV> sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals("Value at index matches", vector.getSI(index), sparseVector.getSI(index), 0.0);
+                    assertEquals(vector.getSI(index), sparseVector.getSI(index), 0.0, "Value at index matches");
                 }
 
                 FloatSIVector mult = vector.times(dimlessVector);
@@ -97,8 +97,8 @@ public class FloatSIVectorTest
                 assertEquals(vector.getDisplayUnit().getStandardUnit(), asVector.getDisplayUnit());
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), vector.getSI(index),
-                            asVector.getSI(index), vector.getSI(index) / 1000.0);
+                    assertEquals(vector.getSI(index), asVector.getSI(index), vector.getSI(index) / 1000.0,
+                            type + ", unit: " + unit.getDefaultTextualAbbreviation());
                 }
 
                 Method asMethodDisplayUnit = FloatSIVector.class.getDeclaredMethod("as" + type, unit.getClass());
@@ -108,8 +108,8 @@ public class FloatSIVectorTest
 
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals(type + ", unit: " + unit.getDefaultTextualAbbreviation(), vector.getSI(index),
-                            asVectorDisplayUnit.getSI(index), vector.getSI(index) / 1000.0);
+                    assertEquals(vector.getSI(index), asVectorDisplayUnit.getSI(index), vector.getSI(index) / 1000.0,
+                            type + ", unit: " + unit.getDefaultTextualAbbreviation());
                 }
 
                 // test exception for wrong 'as'
@@ -148,22 +148,22 @@ public class FloatSIVectorTest
                 AV sparseVector = vector.toSparse();
                 for (int index = 0; index < denseTestData.length; index++)
                 {
-                    assertEquals("Value at index matches", vector.getSI(index), sparseVector.getSI(index), 0.0);
+                    assertEquals(vector.getSI(index), sparseVector.getSI(index), 0.0, "Value at index matches");
                 }
                 Class<A> scalarClass = vector.getScalarClass();
-                assertTrue("Scalar class is correct kind of vfloat.scalar class",
-                        scalarClass.getName().equals("org.djunits.value.vfloat.scalar.Float" + type));
+                assertTrue(scalarClass.getName().equals("org.djunits.value.vfloat.scalar.Float" + type),
+                        "Scalar class is correct kind of vfloat.scalar class");
                 float testValue = 123.45f;
                 A scalarAbs = vector.instantiateScalarSI(testValue, unit);
-                assertEquals("Scalar has correct value", testValue, scalarAbs.getSI(), 0.001);
-                assertEquals("Scalar ahs correct displayUnit", unit, scalarAbs.getDisplayUnit());
+                assertEquals(testValue, scalarAbs.getSI(), 0.001, "Scalar has correct value");
+                assertEquals(unit, scalarAbs.getDisplayUnit(), "Scalar ahs correct displayUnit");
                 Quantity<RU> relativeQuantity = (Quantity<RU>) Quantities.INSTANCE
                         .getQuantity(CLASSNAMES.REL_WITH_ABS_LIST.get(CLASSNAMES.ABS_LIST.indexOf(type)) + "Unit");
                 for (RU relativeUnit : relativeQuantity.getUnitsById().values())
                 {
                     R scalarRel = vector.instantiateScalarRelSI(testValue, relativeUnit);
-                    assertEquals("display unit of scalarRel matches", relativeUnit, scalarRel.getDisplayUnit());
-                    assertEquals("value of scalarRel matches", testValue, scalarRel.getSI(), 0.001);
+                    assertEquals(relativeUnit, scalarRel.getDisplayUnit(), "display unit of scalarRel matches");
+                    assertEquals(testValue, scalarRel.getSI(), 0.001, "value of scalarRel matches");
                 }
                 // Indirectly test the instantiateVectorRel method (we don't have direct access to a FloatVectorData object)
                 // This was more difficult than it should be...
@@ -339,8 +339,8 @@ public class FloatSIVectorTest
                 {
                     for (StorageType storageType2 : new StorageType[] {StorageType.DENSE, StorageType.SPARSE})
                     {
-                        Constructor<?> constructor = CLASSNAMES
-                                .floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
+                        Constructor<?> constructor =
+                                CLASSNAMES.floatVectorClass(type).getConstructor(float[].class, unitClass, StorageType.class);
                         FloatVectorRel vector = (FloatVectorRel) constructor.newInstance(testValues, unit, storageType2);
                         FloatSIVector mult = vector.times(dimless);
                         Method asMethod = FloatSIVector.class.getDeclaredMethod("as" + type);
@@ -395,14 +395,14 @@ public class FloatSIVectorTest
     public static void verifyDimensionLessVector(final float[] reference, final FloatFunction operation,
             final FloatDimensionlessVector got)
     {
-        assertEquals("item count matches", reference.length, got.size());
-        assertEquals("unit is DimensionLessUnit", DimensionlessUnit.BASE.getStandardUnit(),
-                got.getDisplayUnit().getStandardUnit());
+        assertEquals(reference.length, got.size(), "item count matches");
+        assertEquals(DimensionlessUnit.BASE.getStandardUnit(), got.getDisplayUnit().getStandardUnit(),
+                "unit is DimensionLessUnit");
         for (int index = 0; index < reference.length; index++)
         {
             float expect = operation.apply(reference[index]);
-            float tolerance = Math.abs(expect / 10000f);
-            assertEquals("value must match", expect, got.getSI(index), tolerance);
+            double tolerance = Double.isNaN(expect) ? 0.1 : Math.abs(expect / 10000d);
+            assertEquals(expect, got.getSI(index), tolerance, "value must match");
         }
     }
 
@@ -414,7 +414,7 @@ public class FloatSIVectorTest
      */
     public void compareValuesWithScale(final Scale scale, final float[] reference, final float[] got)
     {
-        assertEquals("length of reference must equal length of result ", reference.length, got.length);
+        assertEquals(reference.length, got.length, "length of reference must equal length of result ");
         if (scale instanceof GradeScale)
         {
             return; // too difficult; for now
@@ -429,7 +429,7 @@ public class FloatSIVectorTest
                 continue;
             if (Math.abs(got[i]) > 1E30f && Math.abs(expected) > 1E30f)
                 continue;
-            assertEquals("value at index " + i + " must match", expected, got[i], tolerance);
+            assertEquals(expected, got[i], tolerance, "value at index " + i + " must match");
         }
     }
 }

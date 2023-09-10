@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class DurationUnitTest extends AbstractLinearUnitTest<DurationUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,9 +38,9 @@ public class DurationUnitTest extends AbstractLinearUnitTest<DurationUnit>
         checkUnitRatioNameAndAbbreviation(DurationUnit.HOUR, 3600, 0.0005, "hour", "h");
         checkUnitRatioNameAndAbbreviation(DurationUnit.DAY, 86400, 0.001, "day", "day");
         // Check two conversions between non-standard units
-        assertEquals("one DAY is 24 HOUR", 24, getMultiplicationFactorTo(DurationUnit.DAY, DurationUnit.HOUR), 0.0001);
-        assertEquals("one HOUR is about 0.0417 DAY", 0.0417, getMultiplicationFactorTo(DurationUnit.HOUR, DurationUnit.DAY),
-                0.0001);
+        assertEquals(24, getMultiplicationFactorTo(DurationUnit.DAY, DurationUnit.HOUR), 0.0001, "one DAY is 24 HOUR");
+        assertEquals(0.0417, getMultiplicationFactorTo(DurationUnit.HOUR, DurationUnit.DAY), 0.0001,
+                "one HOUR is about 0.0417 DAY");
         // Check conversion factor to standard unit for all remaining time units
         checkUnitRatioNameAndAbbreviation(DurationUnit.MILLISECOND, 0.001, 0.00000001, "millisecond", "ms");
         checkUnitRatioNameAndAbbreviation(DurationUnit.MINUTE, 60, 0.000001, "minute", "min");
@@ -54,7 +54,7 @@ public class DurationUnitTest extends AbstractLinearUnitTest<DurationUnit>
     public final void createDurationUnit()
     {
         DurationUnit myTU = DurationUnit.SECOND.deriveLinear(14.0 * 86400, "fnx", "Fortnight", UnitSystem.OTHER);
-        assertTrue("Can create a new DurationUnit", null != myTU);
+        assertTrue(null != myTU, "Can create a new DurationUnit");
         checkUnitRatioNameAndAbbreviation(myTU, 14 * 86400, 1, "Fortnight", "fnx");
         DurationUnit.BASE.unregister(myTU);
     }

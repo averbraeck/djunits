@@ -1,11 +1,11 @@
 package org.djunits.value.vfloat.scalar;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Locale;
 
 import org.djunits.unit.DirectionUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * FloatDirectionTest.java. <br>
@@ -24,9 +24,9 @@ public class FloatDirectionTest
     public final void testFloatDirectionDegToRad()
     {
         FloatDirection directionE10 = new FloatDirection(10.0f, DirectionUnit.EAST_DEGREE);
-        assertEquals("10 degrees East should be pi*10/180 radians", Math.PI * (10.0 / 180.0), directionE10.getSI(), 0.0001);
+        assertEquals(Math.PI * (10.0 / 180.0), directionE10.getSI(), 0.0001, "10 degrees East should be pi*10/180 radians");
         FloatDirection directionN10 = new FloatDirection(10.0f, DirectionUnit.NORTH_DEGREE);
-        assertEquals("10 degrees North should be pi*100/180 radians", Math.PI * (100.0 / 180.0), directionN10.getSI(), 0.0001);
+        assertEquals(Math.PI * (100.0 / 180.0), directionN10.getSI(), 0.0001, "10 degrees North should be pi*100/180 radians");
     }
 
     /**
@@ -36,7 +36,7 @@ public class FloatDirectionTest
     public final void testFloatDirectionStringConversions()
     {
         Locale.setDefault(Locale.US);
-        
+
         assertEquals(0.0, FloatDirection.valueOf("0.0 deg(E)").getSI(), 0.0001);
         assertEquals(Math.PI, FloatDirection.valueOf("180 deg(E)").getSI(), 0.0001);
         assertEquals(0.0, FloatDirection.valueOf("0.0deg(E)").getSI(), 0.0001);

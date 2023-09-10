@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class SpeedUnitTest extends AbstractLinearUnitTest<SpeedUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,10 +38,10 @@ public class SpeedUnitTest extends AbstractLinearUnitTest<SpeedUnit>
         checkUnitRatioNameAndAbbreviation(SpeedUnit.KM_PER_HOUR, 0.277778, 0.000001, "kilometer per hour", "km/h");
         checkUnitRatioNameAndAbbreviation(SpeedUnit.MILE_PER_HOUR, 0.44704, 0.00001, "mile per hour", "mi/h");
         // Check two conversions between non-standard units
-        assertEquals("one KM PER HOUR is about 0.621371 MILE PER HOUR", 0.621371,
-                getMultiplicationFactorTo(SpeedUnit.KM_PER_HOUR, SpeedUnit.MILE_PER_HOUR), 0.0001);
-        assertEquals("one MILE PER HOUR is about 1.60934 KM PER HOUR", 1.60934,
-                getMultiplicationFactorTo(SpeedUnit.MILE_PER_HOUR, SpeedUnit.KM_PER_HOUR), 0.0001);
+        assertEquals(0.621371, getMultiplicationFactorTo(SpeedUnit.KM_PER_HOUR, SpeedUnit.MILE_PER_HOUR), 0.0001,
+                "one KM PER HOUR is about 0.621371 MILE PER HOUR");
+        assertEquals(1.60934, getMultiplicationFactorTo(SpeedUnit.MILE_PER_HOUR, SpeedUnit.KM_PER_HOUR), 0.0001,
+                "one MILE PER HOUR is about 1.60934 KM PER HOUR");
         // Check conversion factor to standard unit for all remaining time units
         checkUnitRatioNameAndAbbreviation(SpeedUnit.FOOT_PER_SECOND, 0.3048, 0.0001, "foot per second", "ft/s");
         checkUnitRatioNameAndAbbreviation(SpeedUnit.KNOT, 0.514444, 0.000001, "knot", "kt");
@@ -54,7 +54,7 @@ public class SpeedUnitTest extends AbstractLinearUnitTest<SpeedUnit>
     public final void createSpeedUnit()
     {
         SpeedUnit mySU = SpeedUnit.KM_PER_HOUR.deriveLinear(48, "sprtr", "Sprinter", UnitSystem.SI_DERIVED);
-        assertTrue("Can create a new PowerUnit", null != mySU);
+        assertTrue(null != mySU, "Can create a new PowerUnit");
         checkUnitRatioNameAndAbbreviation(mySU, 13.3333, 0.0001, "Sprinter", "sprtr");
         SpeedUnit.BASE.unregister(mySU);
     }

@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +13,7 @@ import org.djunits.unit.Unit;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.base.Scalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the FloatScalar and FloatScalar classes for the valueOf and toString methods.
@@ -110,8 +110,8 @@ public class FloatValueOfStringOfTest
                         continue;
                     }
                     scalar = (FloatScalar<?, ?>) constructScalar.newInstance(Float.valueOf(1.0f), unit);
-                    assertEquals("Float construction with unit + get in unit failed for " + unit.toString(), 1.0,
-                            scalar.getInUnit(), 0.01);
+                    assertEquals(1.0, scalar.getInUnit(), 0.01,
+                            "Float construction with unit + get in unit failed for " + unit.toString());
                 }
                 catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
                         | InstantiationException exception)

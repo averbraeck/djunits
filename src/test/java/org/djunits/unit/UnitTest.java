@@ -1,7 +1,7 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * UnitTest.java.

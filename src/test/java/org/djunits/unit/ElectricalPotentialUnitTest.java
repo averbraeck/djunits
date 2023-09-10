@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class ElectricalPotentialUnitTest extends AbstractLinearUnitTest<Electric
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,8 +38,8 @@ public class ElectricalPotentialUnitTest extends AbstractLinearUnitTest<Electric
         checkUnitRatioNameAndAbbreviation(ElectricalPotentialUnit.MILLIVOLT, 0.001, 0.00000000001, "millivolt", "mV");
         checkUnitRatioNameAndAbbreviation(ElectricalPotentialUnit.KILOVOLT, 1000, 0.005, "kilovolt", "kV");
         // Check two conversions between non-standard units
-        assertEquals("one KILOVOLT is 1000000 MILLIVOLT", 1000000,
-                getMultiplicationFactorTo(ElectricalPotentialUnit.KILOVOLT, ElectricalPotentialUnit.MILLIVOLT), 0.0001);
+        assertEquals(1000000, getMultiplicationFactorTo(ElectricalPotentialUnit.KILOVOLT, ElectricalPotentialUnit.MILLIVOLT),
+                0.0001, "one KILOVOLT is 1000000 MILLIVOLT");
     }
 
     /**
@@ -49,7 +49,7 @@ public class ElectricalPotentialUnitTest extends AbstractLinearUnitTest<Electric
     public final void createElectricalPotentialUnit()
     {
         ElectricalPotentialUnit myEPU = ElectricalPotentialUnit.VOLT.deriveLinear(1e-9, "nanoV", "NanoVolt");
-        assertTrue("Can create a new ElectricalPotentialUnit", null != myEPU);
+        assertTrue(null != myEPU, "Can create a new ElectricalPotentialUnit");
         checkUnitRatioNameAndAbbreviation(myEPU, 1e-9, 0.1, "NanoVolt", "nanoV");
         ElectricalPotentialUnit.BASE.unregister(myEPU);
 
@@ -57,7 +57,7 @@ public class ElectricalPotentialUnitTest extends AbstractLinearUnitTest<Electric
                 PowerUnit.FOOT_POUND_FORCE_PER_HOUR.getScale().toStandardUnit(1.0)
                         / ElectricalCurrentUnit.MICROAMPERE.getScale().toStandardUnit(1.0),
                 "ft.lbfph/uA", "foot pound-force per hour per microA", UnitSystem.IMPERIAL);
-        assertTrue("Can create a new ElectricalPotentialUnit", null != myEPU);
+        assertTrue(null != myEPU, "Can create a new ElectricalPotentialUnit");
         checkUnitRatioNameAndAbbreviation(myEPU, 376.6, 0.1, "foot pound-force per hour per microA", "ft.lbfph/uA");
         ElectricalPotentialUnit.BASE.unregister(myEPU);
     }

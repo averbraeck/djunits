@@ -1,9 +1,9 @@
 package org.djunits.value.vfloat.vector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -38,7 +38,7 @@ import org.djunits.value.vfloat.vector.base.FloatVector;
 import org.djunits.value.vfloat.vector.base.FloatVectorRel;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
 import org.djutils.exceptions.Try;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test constructors of FloatVector.
@@ -99,22 +99,22 @@ public class FloatVectorConstructorsTest
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vDUS = constructorDUS.newInstance(testValues, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vDUS.getStorageType());
+                assertEquals(storageType, vDUS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vDU = constructorDU.newInstance(testValues, standardUnit);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vDU.getStorageType());
+                assertEquals(StorageType.DENSE, vDU.getStorageType(), "StorageType must be DENSE");
                 FloatVector<?, ?, ?> vDS = constructorDS.newInstance(testValues, storageType);
-                assertEquals("StorageType must match", storageType, vDS.getStorageType());
+                assertEquals(storageType, vDS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vD = constructorD.newInstance(testValues);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vD.getStorageType());
+                assertEquals(StorageType.DENSE, vD.getStorageType(), "StorageType must be DENSE");
 
                 for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vDUS, vDU, vDS, vD})
                 {
                     compareValuesWithScale(standardUnit.getScale(), testValues, floatVector.getValuesSI());
-                    assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
-                    assertEquals("Cardinality", cardinality, floatVector.cardinality());
+                    assertEquals(standardUnit, floatVector.getDisplayUnit(), "Unit must match");
+                    assertEquals(cardinality, floatVector.cardinality(), "Cardinality");
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals(zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001, "zSum");
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -123,7 +123,7 @@ public class FloatVectorConstructorsTest
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     FloatVector<?, ?, ?> mutable = floatVector.mutable();
-                    assertTrue("mutable float vector is mutable", mutable.isMutable());
+                    assertTrue(mutable.isMutable(), "mutable float vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> floatVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
@@ -134,7 +134,7 @@ public class FloatVectorConstructorsTest
                     mutable.ceil();
                     for (int index = 0; index < testValues.length; index++)
                     {
-                        assertEquals("ceil", Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -145,26 +145,26 @@ public class FloatVectorConstructorsTest
                     mutable.floor();
                     for (int index = 0; index < testValues.length; index++)
                     {
-                        assertEquals("floor", Math.floor(testValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.floor(testValues[index]), mutable.getInUnit(index), 0.001, "floor");
                     }
                     mutable = floatVector.mutable();
                     mutable.rint();
                     for (int index = 0; index < testValues.length; index++)
                     {
-                        assertEquals("rint", Math.rint(testValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.rint(testValues[index]), mutable.getInUnit(index), 0.001, "rint");
                     }
                     mutable = floatVector.mutable();
                     mutable.neg();
                     for (int index = 0; index < testValues.length; index++)
                     {
-                        assertEquals("neg", -testValues[index], mutable.getInUnit(index), 0.001);
+                        assertEquals(-testValues[index], mutable.getInUnit(index), 0.001, "neg");
                     }
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
                         FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                        assertEquals("value of scalar matches", s.getInUnit(), testValues[nextIndex], 0.001);
+                        assertEquals(s.getDisplayUnit(), standardUnit, "unit of scalar matches");
+                        assertEquals(s.getInUnit(), testValues[nextIndex], 0.001, "value of scalar matches");
                         nextIndex++;
                     }
                 }
@@ -232,24 +232,24 @@ public class FloatVectorConstructorsTest
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                assertEquals(storageType, vLUS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                assertEquals(StorageType.DENSE, vLU.getStorageType(), "StorageType must be DENSE");
                 FloatVector<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
-                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                assertEquals(storageType, vLS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vL = constructorL.newInstance(new Object[] {testValues});
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+                assertEquals(StorageType.DENSE, vL.getStorageType(), "StorageType must be DENSE");
 
                 for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vLUS, vLU, vLS, vL})
                 {
                     compareValuesWithScale(standardUnit.getScale(), floatValues, floatVector.getValuesSI());
-                    assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
-                    assertEquals("Cardinality", cardinality, floatVector.cardinality());
+                    assertEquals(standardUnit, floatVector.getDisplayUnit(), "Unit must match");
+                    assertEquals(cardinality, floatVector.cardinality(), "Cardinality");
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals(zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001, "zSum");
                     }
-                    assertEquals("scalarClass must match", scalarClass, floatVector.getScalarClass());
+                    assertEquals(scalarClass, floatVector.getScalarClass(), "scalarClass must match");
                     Method instantiateMethod =
                             floatVector.getClass().getDeclaredMethod("instantiateVector", FloatVectorData.class, unitClass);
                     FloatVector<?, ?, ?> vData = (FloatVector<?, ?, ?>) instantiateMethod.invoke(floatVector,
@@ -262,7 +262,7 @@ public class FloatVectorConstructorsTest
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     FloatVector<?, ?, ?> mutable = floatVector.mutable();
-                    assertTrue("mutable float vector is mutable", mutable.isMutable());
+                    assertTrue(mutable.isMutable(), "mutable float vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> floatVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
@@ -273,7 +273,7 @@ public class FloatVectorConstructorsTest
                     mutable.ceil();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("ceil", Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -284,26 +284,26 @@ public class FloatVectorConstructorsTest
                     mutable.floor();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("floor", Math.floor(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.floor(floatValues[index]), mutable.getInUnit(index), 0.001, "floor");
                     }
                     mutable = floatVector.mutable();
                     mutable.rint();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("rint", Math.rint(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.rint(floatValues[index]), mutable.getInUnit(index), 0.001, "rint");
                     }
                     mutable = floatVector.mutable();
                     mutable.neg();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("neg", -floatValues[index], mutable.getInUnit(index), 0.001);
+                        assertEquals(-floatValues[index], mutable.getInUnit(index), 0.001, "neg");
                     }
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
                         FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                        assertEquals("value of scalar matches", s.getInUnit(), floatValues[nextIndex], 0.001);
+                        assertEquals(s.getDisplayUnit(), standardUnit, "unit of scalar matches");
+                        assertEquals(s.getInUnit(), floatValues[nextIndex], 0.001, "value of scalar matches");
                         nextIndex++;
                     }
                 }
@@ -367,22 +367,22 @@ public class FloatVectorConstructorsTest
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                assertEquals(storageType, vLUS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                assertEquals(StorageType.DENSE, vLU.getStorageType(), "StorageType must be DENSE");
                 FloatVector<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
-                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                assertEquals(storageType, vLS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vL = constructorL.newInstance(testValues);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+                assertEquals(StorageType.DENSE, vL.getStorageType(), "StorageType must be DENSE");
 
                 for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vLUS, vLU, vLS, vL})
                 {
                     compareValuesWithScale(standardUnit.getScale(), floatValues, floatVector.getValuesSI());
-                    assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
-                    assertEquals("Cardinality", cardinality, floatVector.cardinality());
+                    assertEquals(standardUnit, floatVector.getDisplayUnit(), "Unit must match");
+                    assertEquals(cardinality, floatVector.cardinality(), "Cardinality");
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals(zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001, "zSum");
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -391,7 +391,7 @@ public class FloatVectorConstructorsTest
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     FloatVector<?, ?, ?> mutable = floatVector.mutable();
-                    assertTrue("mutable float vector is mutable", mutable.isMutable());
+                    assertTrue(mutable.isMutable(), "mutable float vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> floatVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
@@ -402,7 +402,7 @@ public class FloatVectorConstructorsTest
                     mutable.ceil();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("ceil", Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -413,65 +413,65 @@ public class FloatVectorConstructorsTest
                     mutable.floor();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("floor", Math.floor(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.floor(floatValues[index]), mutable.getInUnit(index), 0.001, "floor");
                     }
                     mutable = floatVector.mutable();
                     mutable.rint();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("rint", Math.rint(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.rint(floatValues[index]), mutable.getInUnit(index), 0.001, "rint");
                     }
                     mutable = floatVector.mutable();
                     mutable.neg();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("neg", -floatValues[index], mutable.getInUnit(index), 0.001);
+                        assertEquals(-floatValues[index], mutable.getInUnit(index), 0.001, "neg");
                     }
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
                         FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                        assertEquals("value of scalar matches", s.getInUnit(), floatValues[nextIndex], 0.001);
+                        assertEquals(s.getDisplayUnit(), standardUnit, "unit of scalar matches");
+                        assertEquals(s.getInUnit(), floatValues[nextIndex], 0.001, "value of scalar matches");
                         nextIndex++;
                     }
                 }
 
                 // test the empty list
                 vLUS = constructorLUS.newInstance(new ArrayList<Float>(), standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vLUS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vLUS.cardinality());
+                assertEquals(storageType, vLUS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vLUS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vLUS.cardinality(), "Cardinality");
                 if (vLUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vLU = constructorLU.newInstance(new ArrayList<Float>(), standardUnit);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                assertEquals("Unit must match", standardUnit, vLU.getDisplayUnit());
-                assertEquals("Cardinality", 0, vLU.cardinality());
+                assertEquals(StorageType.DENSE, vLU.getStorageType(), "StorageType must be DENSE");
+                assertEquals(standardUnit, vLU.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vLU.cardinality(), "Cardinality");
                 if (vLU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vLS = constructorLS.newInstance(new ArrayList<Float>(), storageType);
-                assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vLS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vLS.cardinality());
+                assertEquals(storageType, vLS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vLS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vLS.cardinality(), "Cardinality");
                 if (vLS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vL = constructorL.newInstance(new ArrayList<Float>());
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
-                assertEquals("Unit must match", standardUnit, vL.getDisplayUnit());
-                assertEquals("Cardinality", 0, vL.cardinality());
+                assertEquals(StorageType.DENSE, vL.getStorageType(), "StorageType must be DENSE");
+                assertEquals(standardUnit, vL.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vL.cardinality(), "Cardinality");
                 if (vL instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001, "zSum");
                 }
             }
         }
@@ -535,22 +535,22 @@ public class FloatVectorConstructorsTest
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vLUS = constructorLUS.newInstance(testValues, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
+                assertEquals(storageType, vLUS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vLU = constructorLU.newInstance(testValues, standardUnit);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
+                assertEquals(StorageType.DENSE, vLU.getStorageType(), "StorageType must be DENSE");
                 FloatVector<?, ?, ?> vLS = constructorLS.newInstance(testValues, storageType);
-                assertEquals("StorageType must match", storageType, vLS.getStorageType());
+                assertEquals(storageType, vLS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vL = constructorL.newInstance(testValues);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
+                assertEquals(StorageType.DENSE, vL.getStorageType(), "StorageType must be DENSE");
 
                 for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vLUS, vLU, vLS, vL})
                 {
                     compareValuesWithScale(standardUnit.getScale(), floatValues, floatVector.getValuesSI());
-                    assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
-                    assertEquals("Cardinality", cardinality, floatVector.cardinality());
+                    assertEquals(standardUnit, floatVector.getDisplayUnit(), "Unit must match");
+                    assertEquals(cardinality, floatVector.cardinality(), "Cardinality");
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals(zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001, "zSum");
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -559,7 +559,7 @@ public class FloatVectorConstructorsTest
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     FloatVector<?, ?, ?> mutable = floatVector.mutable();
-                    assertTrue("mutable float vector is mutable", mutable.isMutable());
+                    assertTrue(mutable.isMutable(), "mutable float vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> floatVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
@@ -570,7 +570,7 @@ public class FloatVectorConstructorsTest
                     mutable.ceil();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("ceil", Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.ceil(floatValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -581,65 +581,65 @@ public class FloatVectorConstructorsTest
                     mutable.floor();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("floor", Math.floor(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.floor(floatValues[index]), mutable.getInUnit(index), 0.001, "floor");
                     }
                     mutable = floatVector.mutable();
                     mutable.rint();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("rint", Math.rint(floatValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.rint(floatValues[index]), mutable.getInUnit(index), 0.001, "rint");
                     }
                     mutable = floatVector.mutable();
                     mutable.neg();
                     for (int index = 0; index < floatValues.length; index++)
                     {
-                        assertEquals("neg", -floatValues[index], mutable.getInUnit(index), 0.001);
+                        assertEquals(-floatValues[index], mutable.getInUnit(index), 0.001, "neg");
                     }
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
                         FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                        assertEquals("value of scalar matches", s.getInUnit(), floatValues[nextIndex], 0.001);
+                        assertEquals(s.getDisplayUnit(), standardUnit, "unit of scalar matches");
+                        assertEquals(s.getInUnit(), floatValues[nextIndex], 0.001, "value of scalar matches");
                         nextIndex++;
                     }
                 }
 
                 // test the empty list
                 vLUS = constructorLUS.newInstance(new ArrayList<FloatScalar<?, ?>>(), standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vLUS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vLUS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vLUS.cardinality());
+                assertEquals(storageType, vLUS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vLUS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vLUS.cardinality(), "Cardinality");
                 if (vLUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vLUS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vLU = constructorLU.newInstance(new ArrayList<FloatScalar<?, ?>>(), standardUnit);
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vLU.getStorageType());
-                assertEquals("Unit must match", standardUnit, vLU.getDisplayUnit());
-                assertEquals("Cardinality", 0, vLU.cardinality());
+                assertEquals(StorageType.DENSE, vLU.getStorageType(), "StorageType must be DENSE");
+                assertEquals(standardUnit, vLU.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vLU.cardinality(), "Cardinality");
                 if (vLU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vLU).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vLS = constructorLS.newInstance(new ArrayList<FloatScalar<?, ?>>(), storageType);
-                assertEquals("StorageType must match", storageType, vLS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vLS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vLS.cardinality());
+                assertEquals(storageType, vLS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vLS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vLS.cardinality(), "Cardinality");
                 if (vLS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vLS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vL = constructorL.newInstance(new ArrayList<FloatScalar<?, ?>>());
-                assertEquals("StorageType must be DENSE", StorageType.DENSE, vL.getStorageType());
-                assertEquals("Unit must match", standardUnit, vL.getDisplayUnit());
-                assertEquals("Cardinality", 0, vL.cardinality());
+                assertEquals(StorageType.DENSE, vL.getStorageType(), "StorageType must be DENSE");
+                assertEquals(standardUnit, vL.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vL.cardinality(), "Cardinality");
                 if (vL instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vL).zSum().getSI(), 0.001, "zSum");
                 }
             }
         }
@@ -703,23 +703,23 @@ public class FloatVectorConstructorsTest
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                assertEquals(storageType, vMUS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                assertEquals(StorageType.SPARSE, vMU.getStorageType(), "StorageType must be SPARSE");
                 FloatVector<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
-                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                assertEquals(storageType, vMS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vM = constructorM.newInstance(testValues, size);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+                assertEquals(StorageType.SPARSE, vM.getStorageType(), "StorageType must be SPARSE");
 
                 for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vMUS, vMU, vMS, vM})
                 {
                     compareValuesWithScale(standardUnit.getScale(), allValues, floatVector.getValuesSI());
-                    assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
-                    assertEquals("Cardinality", cardinality, floatVector.cardinality());
-                    assertEquals("Size", size, floatVector.size());
+                    assertEquals(standardUnit, floatVector.getDisplayUnit(), "Unit must match");
+                    assertEquals(cardinality, floatVector.cardinality(), "Cardinality");
+                    assertEquals(size, floatVector.size(), "Size");
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals(zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001, "zSum");
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -728,7 +728,7 @@ public class FloatVectorConstructorsTest
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     FloatVector<?, ?, ?> mutable = floatVector.mutable();
-                    assertTrue("mutable float vector is mutable", mutable.isMutable());
+                    assertTrue(mutable.isMutable(), "mutable float vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> floatVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
@@ -739,7 +739,7 @@ public class FloatVectorConstructorsTest
                     mutable.ceil();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("ceil", Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -750,106 +750,106 @@ public class FloatVectorConstructorsTest
                     mutable.floor();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("floor", Math.floor(allValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.floor(allValues[index]), mutable.getInUnit(index), 0.001, "floor");
                     }
                     mutable = floatVector.mutable();
                     mutable.rint();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("rint", Math.rint(allValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.rint(allValues[index]), mutable.getInUnit(index), 0.001, "rint");
                     }
                     mutable = floatVector.mutable();
                     mutable.neg();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("neg", -allValues[index], mutable.getInUnit(index), 0.001);
+                        assertEquals(-allValues[index], mutable.getInUnit(index), 0.001, "neg");
                     }
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
                         FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                        assertEquals("value of scalar matches", s.getInUnit(), allValues[nextIndex], 0.001);
+                        assertEquals(s.getDisplayUnit(), standardUnit, "unit of scalar matches");
+                        assertEquals(s.getInUnit(), allValues[nextIndex], 0.001, "value of scalar matches");
                         nextIndex++;
                     }
                 }
 
                 // test the empty map
                 vMUS = constructorMUS.newInstance(new TreeMap<Integer, Float>(), 0, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMUS.cardinality());
+                assertEquals(storageType, vMUS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMUS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMUS.cardinality(), "Cardinality");
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, Float>(), 0, standardUnit);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMU.cardinality());
+                assertEquals(StorageType.SPARSE, vMU.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vMU.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMU.cardinality(), "Cardinality");
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, Float>(), 0, storageType);
-                assertEquals("StorageType must match", storageType, vMS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMS.cardinality());
+                assertEquals(storageType, vMS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMS.cardinality(), "Cardinality");
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, Float>(), 0);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
-                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
-                assertEquals("Cardinality", 0, vM.cardinality());
+                assertEquals(StorageType.SPARSE, vM.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vM.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vM.cardinality(), "Cardinality");
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001, "zSum");
                 }
 
                 // test the empty map with a size
                 vMUS = constructorMUS.newInstance(new TreeMap<Integer, Float>(), 10, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMUS.cardinality());
-                assertEquals("Size", 10, vMUS.size());
+                assertEquals(storageType, vMUS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMUS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMUS.cardinality(), "Cardinality");
+                assertEquals(10, vMUS.size(), "Size");
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, Float>(), 10, standardUnit);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMU.cardinality());
-                assertEquals("Size", 10, vMU.size());
+                assertEquals(StorageType.SPARSE, vMU.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vMU.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMU.cardinality(), "Cardinality");
+                assertEquals(10, vMU.size(), "Size");
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, Float>(), 10, storageType);
-                assertEquals("StorageType must match", storageType, vMS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMS.cardinality());
-                assertEquals("Size", 10, vMS.size());
+                assertEquals(storageType, vMS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMS.cardinality(), "Cardinality");
+                assertEquals(10, vMS.size(), "Size");
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, Float>(), 10);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
-                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
-                assertEquals("Cardinality", 0, vM.cardinality());
-                assertEquals("Size", 10, vM.size());
+                assertEquals(StorageType.SPARSE, vM.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vM.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vM.cardinality(), "Cardinality");
+                assertEquals(10, vM.size(), "Size");
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001, "zSum");
                 }
             }
         }
@@ -915,23 +915,23 @@ public class FloatVectorConstructorsTest
 
                 // initialize vectors
                 FloatVector<?, ?, ?> vMUS = constructorMUS.newInstance(testValues, size, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
+                assertEquals(storageType, vMUS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vMU = constructorMU.newInstance(testValues, size, standardUnit);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
+                assertEquals(StorageType.SPARSE, vMU.getStorageType(), "StorageType must be SPARSE");
                 FloatVector<?, ?, ?> vMS = constructorMS.newInstance(testValues, size, storageType);
-                assertEquals("StorageType must match", storageType, vMS.getStorageType());
+                assertEquals(storageType, vMS.getStorageType(), "StorageType must match");
                 FloatVector<?, ?, ?> vM = constructorM.newInstance(testValues, size);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
+                assertEquals(StorageType.SPARSE, vM.getStorageType(), "StorageType must be SPARSE");
 
                 for (FloatVector<?, ?, ?> floatVector : new FloatVector[] {vMUS, vMU, vMS, vM})
                 {
                     compareValuesWithScale(standardUnit.getScale(), allValues, floatVector.getValuesSI());
-                    assertEquals("Unit must match", standardUnit, floatVector.getDisplayUnit());
-                    assertEquals("Cardinality", cardinality, floatVector.cardinality());
-                    assertEquals("Size", size, floatVector.size());
+                    assertEquals(standardUnit, floatVector.getDisplayUnit(), "Unit must match");
+                    assertEquals(cardinality, floatVector.cardinality(), "Cardinality");
+                    assertEquals(size, floatVector.size(), "Size");
                     if (floatVector instanceof Relative)
                     {
-                        assertEquals("zSum", zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001);
+                        assertEquals(zSum, ((FloatVectorRel<?, ?, ?>) floatVector).zSum().getSI(), 0.001, "zSum");
                     }
 
                     Try.testFail(() -> floatVector.setSI(0, 0), "float vector should be immutable",
@@ -940,7 +940,7 @@ public class FloatVectorConstructorsTest
                             ValueRuntimeException.class);
                     Try.testFail(() -> floatVector.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                     FloatVector<?, ?, ?> mutable = floatVector.mutable();
-                    assertTrue("mutable float vector is mutable", mutable.isMutable());
+                    assertTrue(mutable.isMutable(), "mutable float vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> floatVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
@@ -951,7 +951,7 @@ public class FloatVectorConstructorsTest
                     mutable.ceil();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("ceil", Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     FloatVector<?, ?, ?> immutable = mutable.immutable();
                     Try.testFail(() -> immutable.ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -962,106 +962,106 @@ public class FloatVectorConstructorsTest
                     mutable.floor();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("floor", Math.floor(allValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.floor(allValues[index]), mutable.getInUnit(index), 0.001, "floor");
                     }
                     mutable = floatVector.mutable();
                     mutable.rint();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("rint", Math.rint(allValues[index]), mutable.getInUnit(index), 0.001);
+                        assertEquals(Math.rint(allValues[index]), mutable.getInUnit(index), 0.001, "rint");
                     }
                     mutable = floatVector.mutable();
                     mutable.neg();
                     for (int index = 0; index < allValues.length; index++)
                     {
-                        assertEquals("neg", -allValues[index], mutable.getInUnit(index), 0.001);
+                        assertEquals(-allValues[index], mutable.getInUnit(index), 0.001, "neg");
                     }
                     int nextIndex = 0;
                     for (Iterator<?> iterator = floatVector.iterator(); iterator.hasNext();)
                     {
                         FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                        assertEquals("unit of scalar matches", s.getDisplayUnit(), standardUnit);
-                        assertEquals("value of scalar matches", s.getInUnit(), allValues[nextIndex], 0.001);
+                        assertEquals(s.getDisplayUnit(), standardUnit, "unit of scalar matches");
+                        assertEquals(s.getInUnit(), allValues[nextIndex], 0.001, "value of scalar matches");
                         nextIndex++;
                     }
                 }
 
                 // test the empty list
                 vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMUS.cardinality());
+                assertEquals(storageType, vMUS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMUS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMUS.cardinality(), "Cardinality");
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, standardUnit);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMU.cardinality());
+                assertEquals(StorageType.SPARSE, vMU.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vMU.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMU.cardinality(), "Cardinality");
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0, storageType);
-                assertEquals("StorageType must match", storageType, vMS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMS.cardinality());
+                assertEquals(storageType, vMS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMS.cardinality(), "Cardinality");
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 0);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
-                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
-                assertEquals("Cardinality", 0, vM.cardinality());
+                assertEquals(StorageType.SPARSE, vM.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vM.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vM.cardinality(), "Cardinality");
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001, "zSum");
                 }
 
                 // test the empty map with a size
                 vMUS = constructorMUS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit, storageType);
-                assertEquals("StorageType must match", storageType, vMUS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMUS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMUS.cardinality());
-                assertEquals("Size", 10, vMUS.size());
+                assertEquals(storageType, vMUS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMUS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMUS.cardinality(), "Cardinality");
+                assertEquals(10, vMUS.size(), "Size");
                 if (vMUS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMUS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMU = constructorMU.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, standardUnit);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vMU.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMU.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMU.cardinality());
-                assertEquals("Size", 10, vMU.size());
+                assertEquals(StorageType.SPARSE, vMU.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vMU.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMU.cardinality(), "Cardinality");
+                assertEquals(10, vMU.size(), "Size");
                 if (vMU instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMU).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vMS = constructorMS.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10, storageType);
-                assertEquals("StorageType must match", storageType, vMS.getStorageType());
-                assertEquals("Unit must match", standardUnit, vMS.getDisplayUnit());
-                assertEquals("Cardinality", 0, vMS.cardinality());
-                assertEquals("Size", 10, vMS.size());
+                assertEquals(storageType, vMS.getStorageType(), "StorageType must match");
+                assertEquals(standardUnit, vMS.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vMS.cardinality(), "Cardinality");
+                assertEquals(10, vMS.size(), "Size");
                 if (vMS instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vMS).zSum().getSI(), 0.001, "zSum");
                 }
 
                 vM = constructorM.newInstance(new TreeMap<Integer, FloatScalar<?, ?>>(), 10);
-                assertEquals("StorageType must be SPARSE", StorageType.SPARSE, vM.getStorageType());
-                assertEquals("Unit must match", standardUnit, vM.getDisplayUnit());
-                assertEquals("Cardinality", 0, vM.cardinality());
-                assertEquals("Size", 10, vM.size());
+                assertEquals(StorageType.SPARSE, vM.getStorageType(), "StorageType must be SPARSE");
+                assertEquals(standardUnit, vM.getDisplayUnit(), "Unit must match");
+                assertEquals(0, vM.cardinality(), "Cardinality");
+                assertEquals(10, vM.size(), "Size");
                 if (vM instanceof Relative)
                 {
-                    assertEquals("zSum", 0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001);
+                    assertEquals(0.0, ((FloatVectorRel<?, ?, ?>) vM).zSum().getSI(), 0.001, "zSum");
                 }
             }
         }
@@ -1112,22 +1112,22 @@ public class FloatVectorConstructorsTest
                 FloatSIVector siv = new FloatSIVector(testValues, SIUnit.of(quantity.getSiDimensions()), storageType);
                 final FloatSIVector sivf = siv;
                 compareValues(testValues, siv.getValuesSI());
-                assertEquals("StorageType must match", storageType, siv.getStorageType());
-                assertEquals("Cardinality", cardinality, siv.cardinality());
-                assertEquals("zSum", zSum, siv.zSum().getSI(), 0.001);
-                assertEquals("getScalarClass return FloatSIScalar", FloatSIScalar.class, siv.getScalarClass());
+                assertEquals(storageType, siv.getStorageType(), "StorageType must match");
+                assertEquals(cardinality, siv.cardinality(), "Cardinality");
+                assertEquals(zSum, siv.zSum().getSI(), 0.001, "zSum");
+                assertEquals(FloatSIScalar.class, siv.getScalarClass(), "getScalarClass return FloatSIScalar");
                 Try.testFail(() -> sivf.ceil(), "float vector should be immutable", ValueRuntimeException.class);
                 FloatSIVector mutable = siv.mutable();
-                assertTrue("vector is equal to itself", siv.equals(siv));
-                assertTrue("vector and mutable vector are considered equal", siv.equals(mutable));
-                assertTrue("vector and mutable vector are considered equal (symmetry)", mutable.equals(siv));
-                assertFalse("vector is not equal to null", siv.equals(null));
-                assertFalse("vector is not equal to some other object", siv.equals("hello world"));
+                assertTrue(siv.equals(siv), "vector is equal to itself");
+                assertTrue(siv.equals(mutable), "vector and mutable vector are considered equal");
+                assertTrue(mutable.equals(siv), "vector and mutable vector are considered equal (symmetry)");
+                assertFalse(siv.equals(null), "vector is not equal to null");
+                assertFalse(siv.equals("hello world"), "vector is not equal to some other object");
                 mutable.ceil();
-                assertFalse("vector is not equal to ceil of vector", siv.equals(mutable));
+                assertFalse(siv.equals(mutable), "vector is not equal to ceil of vector");
                 for (int index = 0; index < testValues.length; index++)
                 {
-                    assertEquals("ceil", Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001);
+                    assertEquals(Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                 }
                 Try.testFail(() -> sivf.immutable().abs(), "float vector should be immutable", ValueRuntimeException.class);
                 Try.testFail(() -> sivf.immutable().ceil(), "float vector should be immutable", ValueRuntimeException.class);
@@ -1139,34 +1139,34 @@ public class FloatVectorConstructorsTest
                 mutable.floor();
                 for (int index = 0; index < testValues.length; index++)
                 {
-                    assertEquals("floor", Math.floor(testValues[index]), mutable.getInUnit(index), 0.001);
+                    assertEquals(Math.floor(testValues[index]), mutable.getInUnit(index), 0.001, "floor");
                 }
                 mutable = siv.mutable();
                 mutable.abs();
                 for (int index = 0; index < testValues.length; index++)
                 {
-                    assertEquals("abs", Math.abs(testValues[index]), mutable.getInUnit(index), 0.001);
+                    assertEquals(Math.abs(testValues[index]), mutable.getInUnit(index), 0.001, "abs");
                 }
                 mutable = siv.mutable();
                 mutable.rint();
                 for (int index = 0; index < testValues.length; index++)
                 {
-                    assertEquals("rint", Math.rint(testValues[index]), mutable.getInUnit(index), 0.001);
+                    assertEquals(Math.rint(testValues[index]), mutable.getInUnit(index), 0.001, "rint");
                 }
                 mutable = siv.mutable();
                 mutable.neg();
                 for (int index = 0; index < testValues.length; index++)
                 {
-                    assertEquals("neg", -testValues[index], mutable.getInUnit(index), 0.001);
+                    assertEquals(-testValues[index], mutable.getInUnit(index), 0.001, "neg");
                 }
                 int nextIndex = 0;
                 Iterator<?> iterator;
                 for (iterator = siv.iterator(); iterator.hasNext();)
                 {
                     FloatScalar<?, ?> s = (FloatScalar<?, ?>) iterator.next();
-                    assertEquals("SIDimensions match", s.getDisplayUnit().getQuantity().getSiDimensions(),
-                            quantity.getSiDimensions());
-                    assertEquals("value of scalar matches", s.getInUnit(), testValues[nextIndex], 0.001);
+                    assertEquals(s.getDisplayUnit().getQuantity().getSiDimensions(), quantity.getSiDimensions(),
+                            "SIDimensions match");
+                    assertEquals(s.getInUnit(), testValues[nextIndex], 0.001, "value of scalar matches");
                     nextIndex++;
                     try
                     {
@@ -1257,9 +1257,8 @@ public class FloatVectorConstructorsTest
                 () -> new FloatAbsoluteTemperatureVector((Map<Integer, FloatAbsoluteTemperature>) null, 10,
                         AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureVector((Map<Integer, Float>) null, 10,
-                AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE), "null pointer should have thrown an exception",
-                NullPointerException.class);
+        Try.testFail(() -> new FloatAbsoluteTemperatureVector((Map<Integer, Float>) null, 10, AbsoluteTemperatureUnit.KELVIN,
+                StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
         Try.testFail(() -> new FloatAbsoluteTemperatureVector(map, 10, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
         Try.testFail(() -> new FloatAbsoluteTemperatureVector(map, 10, AbsoluteTemperatureUnit.KELVIN, null),
@@ -1338,10 +1337,10 @@ public class FloatVectorConstructorsTest
      */
     public void compareValues(final float[] reference, final float[] got)
     {
-        assertEquals("length of reference must equal length of result ", reference.length, got.length);
+        assertEquals(reference.length, got.length, "length of reference must equal length of result ");
         for (int i = 0; i < reference.length; i++)
         {
-            assertEquals("value at index " + i + " must match", reference[i], got[i], 0.001);
+            assertEquals(reference[i], got[i], 0.001, "value at index " + i + " must match");
         }
     }
 
@@ -1353,7 +1352,7 @@ public class FloatVectorConstructorsTest
      */
     public void compareValuesWithScale(final Scale scale, final float[] reference, final float[] got)
     {
-        assertEquals("length of reference must equal length of result ", reference.length, got.length);
+        assertEquals(reference.length, got.length, "length of reference must equal length of result ");
         if (scale instanceof GradeScale)
         {
             return; // too difficult; for now
@@ -1362,7 +1361,7 @@ public class FloatVectorConstructorsTest
         double factor = scale.toStandardUnit(1) - offset;
         for (int i = 0; i < reference.length; i++)
         {
-            assertEquals("value at index " + i + " must match", reference[i] * factor + offset, got[i], 0.001);
+            assertEquals(reference[i] * factor + offset, got[i], 0.001, "value at index " + i + " must match");
         }
     }
 

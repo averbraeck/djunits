@@ -1,8 +1,8 @@
 package org.djunits.value.vdouble.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -25,7 +25,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the DoubleScalar class.
@@ -48,14 +48,14 @@ public class DoubleScalarTest
      * @param u Unit&lt;?&gt;; the expected type
      * @param expectAbsolute boolean; if true; ds should be Absolute; if false; ds should be Relative
      */
-    private static void checkContentsAndType(final DoubleScalar<?, ?> ds, final double reference,
-            final double precision, final Unit<?> u, final boolean expectAbsolute)
+    private static void checkContentsAndType(final DoubleScalar<?, ?> ds, final double reference, final double precision,
+            final Unit<?> u, final boolean expectAbsolute)
     {
-        assertTrue("DoubleScalar should not be null", null != ds);
-        assertEquals("Value should match", reference, ds.getInUnit(), precision);
-        assertEquals("Unit should be " + u.toString(), u, ds.getDisplayUnit());
-        assertTrue("Should be " + (expectAbsolute ? "Absolute" : "Relative"),
-                expectAbsolute ? ds.isAbsolute() : ds.isRelative());
+        assertTrue(null != ds, "DoubleScalar should not be null");
+        assertEquals(reference, ds.getInUnit(), precision, "Value should match");
+        assertEquals(u, ds.getDisplayUnit(), "Unit should be " + u.toString());
+        assertTrue(expectAbsolute ? ds.isAbsolute() : ds.isRelative(),
+                "Should be " + (expectAbsolute ? "Absolute" : "Relative"));
     }
 
     /**
@@ -68,8 +68,8 @@ public class DoubleScalarTest
         double value = 38.0;
         AbsoluteTemperature ds = new AbsoluteTemperature(value, tempUnit);
         String result = ds.toString(true, true);
-        assertTrue("toString result contains \"Abs \"", result.contains("Abs "));
-        assertTrue("toString result contains \"K\"", result.contains("K"));
+        assertTrue(result.contains("Abs "), "toString result contains \"Abs \"");
+        assertTrue(result.contains("K"), "toString result contains \"K\"");
     }
 
     /**
@@ -82,24 +82,24 @@ public class DoubleScalarTest
         double value = 38.0;
         AbsoluteTemperature temperatureDS = new AbsoluteTemperature(value, tempUnit);
         checkContentsAndType(temperatureDS, value, 0.001, tempUnit, true);
-        assertEquals("Value in SI is equivalent in Kelvin", 311.15, temperatureDS.getSI(), 0.05);
-        assertEquals("Value in Fahrenheit", 100.4, temperatureDS.getInUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT), 0.1);
+        assertEquals(311.15, temperatureDS.getSI(), 0.05, "Value in SI is equivalent in Kelvin");
+        assertEquals(100.4, temperatureDS.getInUnit(AbsoluteTemperatureUnit.DEGREE_FAHRENHEIT), 0.1, "Value in Fahrenheit");
         double out = temperatureDS.getInUnit();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
         AbsoluteTemperature mds = new AbsoluteTemperature(value, tempUnit);
         checkContentsAndType(mds, value, 0.001, tempUnit, true);
         mds = new AbsoluteTemperature(-200, tempUnit);
-        assertEquals("-200 Celsius roughly equivalent to 73 Kelvin", 73.0d, mds.getSI(), 1.0d);
+        assertEquals(73.0d, mds.getSI(), 1.0d, "-200 Celsius roughly equivalent to 73 Kelvin");
         mds = new AbsoluteTemperature(temperatureDS);
         checkContentsAndType(mds, value, 0.001, tempUnit, true);
         AbsoluteTemperature temperature2DS = new AbsoluteTemperature(temperatureDS);
-        assertTrue("temperature2DS should be equal to temperatureDS", temperature2DS.equals(temperatureDS));
-        assertTrue("Value is Absolute", temperatureDS.isAbsolute());
-        assertFalse("Value is not Relative", temperatureDS.isRelative());
+        assertTrue(temperature2DS.equals(temperatureDS), "temperature2DS should be equal to temperatureDS");
+        assertTrue(temperatureDS.isAbsolute(), "Value is Absolute");
+        assertFalse(temperatureDS.isRelative(), "Value is not Relative");
         temperatureDS = new AbsoluteTemperature(value, AbsoluteTemperatureUnit.KELVIN);
         checkContentsAndType(temperatureDS, value, 0.001, AbsoluteTemperatureUnit.KELVIN, true);
         out = temperatureDS.getSI();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
     }
 
     /**
@@ -130,10 +130,9 @@ public class DoubleScalarTest
                 Method ofMethod = scalarClass.getDeclaredMethod("of", double.class, String.class);
                 for (String unitAbbreviation : unit.getDefaultAbbreviations())
                 {
-                    DoubleScalar<?, ?> scalar =
-                            (DoubleScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
-                    assertEquals("unit was parsed correctly", scalar.getDisplayUnit().getId(), unit.getId());
-                    assertEquals("value was parsed correctly", scalar.getInUnit(), testValue, 0.0001);
+                    DoubleScalar<?, ?> scalar = (DoubleScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
+                    assertEquals(scalar.getDisplayUnit().getId(), unit.getId(), "unit was parsed correctly");
+                    assertEquals(scalar.getInUnit(), testValue, 0.0001, "value was parsed correctly");
                 }
                 try
                 {
@@ -141,18 +140,18 @@ public class DoubleScalarTest
                 }
                 catch (InvocationTargetException ite)
                 {
-                    assertTrue("Exception is an IllegalArgumentException",
-                            ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"));
+                    assertTrue(ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"),
+                            "Exception is an IllegalArgumentException");
                 }
-                
+
                 try
                 {
                     ofMethod.invoke(null, testValue, "");
                 }
                 catch (InvocationTargetException ite)
                 {
-                    assertTrue("Exception is an IllegalArgumentException",
-                            ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"));
+                    assertTrue(ite.getCause().toString().startsWith("java.lang.IllegalArgumentException"),
+                            "Exception is an IllegalArgumentException");
                 }
             }
         }
@@ -174,7 +173,7 @@ public class DoubleScalarTest
     {
         // load all classes
         assertEquals("m", UNITS.METER.getId());
-        assertEquals("type lists have same size", CLASSNAMES.REL_WITH_ABS_LIST.size(), CLASSNAMES.ABS_LIST.size());
+        assertEquals(CLASSNAMES.REL_WITH_ABS_LIST.size(), CLASSNAMES.ABS_LIST.size(), "type lists have same size");
 
         for (int typeIndex = 0; typeIndex < CLASSNAMES.REL_WITH_ABS_LIST.size(); typeIndex++)
         {
@@ -189,8 +188,7 @@ public class DoubleScalarTest
             for (Unit<?> relativeUnit : Quantities.INSTANCE.getQuantity(relativeType + "Unit").getUnitsById().values())
             {
                 Constructor<?> relConstructor = scalarClass.getConstructor(double.class, relativeUnit.getClass());
-                DoubleScalarRel<?, ?> relScalar =
-                        (DoubleScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
+                DoubleScalarRel<?, ?> relScalar = (DoubleScalarRel<?, ?>) relConstructor.newInstance(relValue, relativeUnit);
                 double absValue = 234.567;
                 Quantity<?> quantity = Quantities.INSTANCE.getQuantity(absoluteType + "Unit");
                 for (Unit<?> absoluteUnit : quantity.getUnitsById().values())
@@ -198,15 +196,14 @@ public class DoubleScalarTest
                     // Create an abs
                     Method instantiateAbsMethod =
                             scalarClass.getDeclaredMethod("instantiateAbs", double.class, absoluteUnit.getClass());
-                    DoubleScalarAbs<?, ?, ?, ?> absScalar = (DoubleScalarAbs<?, ?, ?, ?>) instantiateAbsMethod
-                            .invoke(relScalar, absValue, absoluteUnit);
+                    DoubleScalarAbs<?, ?, ?, ?> absScalar =
+                            (DoubleScalarAbs<?, ?, ?, ?>) instantiateAbsMethod.invoke(relScalar, absValue, absoluteUnit);
                     // method "plus" cannot be found with getMethod() for absScalar.getClass().
                     Method plusMethod = scalarClass.getMethod("plus", absScalar.getClass().getSuperclass());
-                    DoubleScalarAbs<?, ?, ?, ?> sum =
-                            (DoubleScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
+                    DoubleScalarAbs<?, ?, ?, ?> sum = (DoubleScalarAbs<?, ?, ?, ?>) plusMethod.invoke(relScalar, absScalar);
                     // system.out.println("rel=" + relScalar + ", abs=" + absScalar + ", sum=" + sum);
-                    assertEquals("sum in SI equals sum of SI values", absScalar.getSI() + relScalar.getSI(), sum.getSI(),
-                            sum.getSI() / 1e7);
+                    assertEquals(absScalar.getSI() + relScalar.getSI(), sum.getSI(), Math.abs(sum.getSI() / 1e7),
+                            "sum in SI equals sum of SI values");
                 }
             }
         }
@@ -222,19 +219,19 @@ public class DoubleScalarTest
         PositionUnit positionUnit = PositionUnit.DEFAULT;
         double value = 38.0;
         Position ds = new Position(value, positionUnit);
-        assertTrue("Equal to itself", ds.equals(ds));
-        assertFalse("Not equal to null", ds.equals(null));
-        assertFalse("Not equal to some other kind of object; e.g. a String", ds.equals(new String("abc")));
+        assertTrue(ds.equals(ds), "Equal to itself");
+        assertFalse(ds.equals(null), "Not equal to null");
+        assertFalse(ds.equals(new String("abc")), "Not equal to some other kind of object; e.g. a String");
         Length dsCounterPart = new Length(value, lengthUnit);
-        assertFalse("Not equal if one Absolute and other Relative", ds.equals(dsCounterPart));
+        assertFalse(ds.equals(dsCounterPart), "Not equal if one Absolute and other Relative");
         AbsoluteTemperature dsWrongBaseUnit = new AbsoluteTemperature(value, AbsoluteTemperatureUnit.KELVIN);
-        assertEquals("The underlying SI values are the same", ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001);
-        assertFalse("Not equals because the standard SI unit differs", ds.equals(dsWrongBaseUnit));
+        assertEquals(ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001, "The underlying SI values are the same");
+        assertFalse(ds.equals(dsWrongBaseUnit), "Not equals because the standard SI unit differs");
         Position dsCompatibleUnit = new Position(38000.0, PositionUnit.MILLIMETER);
-        assertFalse("Units are different", ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()));
-        assertTrue("equals returns true", ds.equals(dsCompatibleUnit));
+        assertFalse(ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()), "Units are different");
+        assertTrue(ds.equals(dsCompatibleUnit), "equals returns true");
         Position dsDifferentValue = new Position(123.456, PositionUnit.MILLIMETER);
-        assertFalse("Different value makes equals return false", ds.equals(dsDifferentValue));
+        assertFalse(ds.equals(dsDifferentValue), "Different value makes equals return false");
     }
 
     /**
@@ -247,24 +244,24 @@ public class DoubleScalarTest
         Position same = new Position(123000, PositionUnit.METER);
         Position smaller = new Position(122999, PositionUnit.METER);
         Position larger = new Position(123001, PositionUnit.METER);
-        assertFalse("123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertTrue("123km == 123000m", base.eq(same));
-        assertFalse("NOT 123km != 123000m", base.ne(same));
-        assertTrue("123km < 123001m", base.lt(larger));
-        assertTrue("123km > 122999m", base.gt(smaller));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertFalse("NOT 123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km != 123001m", base.ne(larger));
-        assertFalse("NOT 123km == 123001m", base.eq(larger));
-        assertTrue("123km != 122999m", base.ne(smaller));
-        assertFalse("NOT 123km == 122999m", base.eq(smaller));
-        assertFalse("NOT 123km >= 123001m", base.ge(larger));
-        assertFalse("NOT 123km <= 122999m", base.le(smaller));
+        assertFalse(base.lt(same), "123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertTrue(base.eq(same), "123km == 123000m");
+        assertFalse(base.ne(same), "NOT 123km != 123000m");
+        assertTrue(base.lt(larger), "123km < 123001m");
+        assertTrue(base.gt(smaller), "123km > 122999m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertFalse(base.lt(same), "NOT 123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ne(larger), "123km != 123001m");
+        assertFalse(base.eq(larger), "NOT 123km == 123001m");
+        assertTrue(base.ne(smaller), "123km != 122999m");
+        assertFalse(base.eq(smaller), "NOT 123km == 122999m");
+        assertFalse(base.ge(larger), "NOT 123km >= 123001m");
+        assertFalse(base.le(smaller), "NOT 123km <= 122999m");
     }
 
     /**
@@ -273,7 +270,7 @@ public class DoubleScalarTest
     @Test
     public final void mathFunctionsTestAbsTest()
     {
-        double[] seedValues = { -10, -2, -1, -0.5, -0.1, 0, 0.1, 0.5, 1, 2, 10 };
+        double[] seedValues = {-10, -2, -1, -0.5, -0.1, 0, 0.1, 0.5, 1, 2, 10};
         for (double seedValue : seedValues)
         {
             double input = seedValue;
@@ -319,12 +316,12 @@ public class DoubleScalarTest
         Position left = new Position(leftValue, PositionUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
         Position result = DoubleScalar.plus(left, right);
-        assertEquals("value of element should be SI plus of contributing elements", left.getSI() + right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI plus of contributing elements");
         // Reverse parameters
         result = DoubleScalar.plus(right, left);
-        assertEquals("value of element should be SI plus of contributing elements", left.getSI() + right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI plus of contributing elements");
     }
 
     /**
@@ -338,8 +335,8 @@ public class DoubleScalarTest
         Position left = new Position(leftValue, PositionUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
         Position result = DoubleScalar.minus(left, right);
-        assertEquals("value of element should be SI minus of contributing elements", left.getSI() - right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI minus of contributing elements");
     }
 
     /**
@@ -353,8 +350,8 @@ public class DoubleScalarTest
         Position left = new Position(leftValue, PositionUnit.MILE);
         Position right = new Position(rightValue, PositionUnit.MILE);
         Length result = DoubleScalar.minus(left, right);
-        assertEquals("value of element should be SI minus of contributing elements", left.getSI() - right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI minus of contributing elements");
     }
 
     /**
@@ -363,7 +360,7 @@ public class DoubleScalarTest
     @Test
     public final void interpolateTest()
     {
-        double[] ratios = new double[] { 0.0, 1.0, 0.5, 0.1, -7.2, 8.04 };
+        double[] ratios = new double[] {0.0, 1.0, 0.5, 0.1, -7.2, 8.04};
         double zeroValue = 123.4;
         double oneValue = 234.5;
         Position zeroPosition = new Position(zeroValue, PositionUnit.MILE);
@@ -391,13 +388,13 @@ public class DoubleScalarTest
                 expected = zeroValue + (oneValue - zeroValue) * ratio;
             }
             Position interpolated = DoubleScalar.interpolate(zeroPosition, onePosition, ratio);
-            assertEquals("interpoated value matches ratio", expected, interpolated.getInUnit(), 0.001);
+            assertEquals(expected, interpolated.getInUnit(), 0.001, "interpoated value matches ratio");
             FloatPosition floatInterpolated = FloatScalar.interpolate(floatZeroPosition, floatOnePosition, (float) ratio);
-            assertEquals("interpoated value matches ratio", (float) expected, floatInterpolated.getInUnit(), 0.01f);
+            assertEquals((float) expected, floatInterpolated.getInUnit(), 0.01f, "interpoated value matches ratio");
             Length interpolatedLength = DoubleScalar.interpolate(zeroLength, oneLength, ratio);
-            assertEquals("interpoated value matches ratio", expected, interpolatedLength.getInUnit(), 0.001);
+            assertEquals(expected, interpolatedLength.getInUnit(), 0.001, "interpoated value matches ratio");
             FloatLength floatInterpolatedLength = FloatScalar.interpolate(floatZeroLength, floatOneLength, (float) ratio);
-            assertEquals("interpoated value matches ratio", (float) expected, floatInterpolatedLength.getInUnit(), 0.01f);
+            assertEquals((float) expected, floatInterpolatedLength.getInUnit(), 0.01f, "interpoated value matches ratio");
         }
     }
 
@@ -416,36 +413,36 @@ public class DoubleScalarTest
         Position highestPosition = new Position(highest, PositionUnit.FOOT);
 
         Position max = DoubleScalar.max(lowestPosition, highestPosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         // Reverse arguments
         max = DoubleScalar.max(highestPosition, lowestPosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         // Three arguments
         max = DoubleScalar.max(lowestPosition, middlePosition, highestPosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         max = DoubleScalar.max(highestPosition, lowestPosition, middlePosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         max = DoubleScalar.max(lowestPosition, highestPosition, middlePosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
         // Lots of arguments
         max = DoubleScalar.max(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
-        assertEquals("max returns highest", highestPosition, max);
+        assertEquals(highestPosition, max, "max returns highest");
 
         Position min = DoubleScalar.min(lowestPosition, highestPosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         // Reverse arguments
         min = DoubleScalar.min(highestPosition, lowestPosition);
-        assertEquals("min returns highest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns highest");
         // Three arguments
         min = DoubleScalar.min(lowestPosition, middlePosition, highestPosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         min = DoubleScalar.min(highestPosition, lowestPosition, middlePosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         min = DoubleScalar.min(highestPosition, middlePosition, lowestPosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
         // Lots of arguments
         min = DoubleScalar.min(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
-        assertEquals("min returns lowest", lowestPosition, min);
+        assertEquals(lowestPosition, min, "min returns lowest");
     }
 
     /**
@@ -458,8 +455,8 @@ public class DoubleScalarTest
         double value = 38.0;
         Temperature ds = new Temperature(value, tempUnit);
         String result = ds.toString(true, true);
-        assertTrue("toString result contains \"Rel \"", result.contains("Rel "));
-        assertTrue("toString result contains \"K\"", result.contains("K"));
+        assertTrue(result.contains("Rel "), "toString result contains \"Rel \"");
+        assertTrue(result.contains("K"), "toString result contains \"K\"");
     }
 
     /**
@@ -472,20 +469,20 @@ public class DoubleScalarTest
         double value = 38.0;
         Temperature temperatureDS = new Temperature(value, tempUnit);
         checkContentsAndType(temperatureDS, value, 0.001, tempUnit, false);
-        assertEquals("Value in SI is equivalent in Kelvin", 38.0, temperatureDS.getSI(), 0.05);
-        assertEquals("Value in Fahrenheit", 38.0 * 9.0 / 5.0, temperatureDS.getInUnit(TemperatureUnit.DEGREE_FAHRENHEIT), 0.1);
+        assertEquals(38.0, temperatureDS.getSI(), 0.05, "Value in SI is equivalent in Kelvin");
+        assertEquals(38.0 * 9.0 / 5.0, temperatureDS.getInUnit(TemperatureUnit.DEGREE_FAHRENHEIT), 0.1, "Value in Fahrenheit");
         double out = temperatureDS.getInUnit();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
         Temperature mds = new Temperature(value, tempUnit);
         checkContentsAndType(mds, value, 0.001, tempUnit, false);
         Temperature temperature2DS = new Temperature(temperatureDS);
-        assertTrue("temperature2DS should be equal to temperatureDS", temperature2DS.equals(temperatureDS));
-        assertTrue("Value is Relative", temperatureDS.isRelative());
-        assertFalse("Value is not Absolute", temperatureDS.isAbsolute());
+        assertTrue(temperature2DS.equals(temperatureDS), "temperature2DS should be equal to temperatureDS");
+        assertTrue(temperatureDS.isRelative(), "Value is Relative");
+        assertFalse(temperatureDS.isAbsolute(), "Value is not Absolute");
         temperatureDS = new Temperature(value, TemperatureUnit.KELVIN);
         checkContentsAndType(temperatureDS, value, 0.001, TemperatureUnit.KELVIN, false);
         out = temperatureDS.getSI();
-        assertEquals("Value should match", value, out, 0.001);
+        assertEquals(value, out, 0.001, "Value should match");
     }
 
     /**
@@ -498,19 +495,19 @@ public class DoubleScalarTest
         PositionUnit positionUnit = PositionUnit.DEFAULT;
         double value = 38.0;
         Length ds = new Length(value, lengthUnit);
-        assertTrue("Equal to itself", ds.equals(ds));
-        assertFalse("Not equal to null", ds.equals(null));
-        assertFalse("Not equal to some other kind of object; e.g. a String", ds.equals(new String("abc")));
+        assertTrue(ds.equals(ds), "Equal to itself");
+        assertFalse(ds.equals(null), "Not equal to null");
+        assertFalse(ds.equals(new String("abc")), "Not equal to some other kind of object; e.g. a String");
         Position dsCounterPart = new Position(value, positionUnit);
-        assertFalse("Not equal if one Absolute and other Relative", ds.equals(dsCounterPart));
+        assertFalse(ds.equals(dsCounterPart), "Not equal if one Absolute and other Relative");
         Temperature dsWrongBaseUnit = new Temperature(value, TemperatureUnit.KELVIN);
-        assertEquals("The underlying SI values are the same", ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001);
-        assertFalse("Not equals because the standard SI unit differs", ds.equals(dsWrongBaseUnit));
+        assertEquals(ds.getSI(), dsWrongBaseUnit.getSI(), 0.0001, "The underlying SI values are the same");
+        assertFalse(ds.equals(dsWrongBaseUnit), "Not equals because the standard SI unit differs");
         Length dsCompatibleUnit = new Length(38000.0, LengthUnit.MILLIMETER);
-        assertFalse("Units are different", ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()));
-        assertTrue("equals returns true", ds.equals(dsCompatibleUnit));
+        assertFalse(ds.getDisplayUnit().equals(dsCompatibleUnit.getDisplayUnit()), "Units are different");
+        assertTrue(ds.equals(dsCompatibleUnit), "equals returns true");
         Length dsDifferentValue = new Length(123.456, LengthUnit.MILLIMETER);
-        assertFalse("Different value makes equals return false", ds.equals(dsDifferentValue));
+        assertFalse(ds.equals(dsDifferentValue), "Different value makes equals return false");
     }
 
     /**
@@ -523,24 +520,24 @@ public class DoubleScalarTest
         Length same = new Length(123000, LengthUnit.METER);
         Length smaller = new Length(122999, LengthUnit.METER);
         Length larger = new Length(123001, LengthUnit.METER);
-        assertFalse("123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertTrue("123km == 123000m", base.eq(same));
-        assertFalse("NOT 123km != 123000m", base.ne(same));
-        assertTrue("123km < 123001m", base.lt(larger));
-        assertTrue("123km > 122999m", base.gt(smaller));
-        assertTrue("123km >= 123000m", base.ge(same));
-        assertFalse("NOT 123km > 123000m", base.gt(same));
-        assertFalse("NOT 123km < 123000m", base.lt(same));
-        assertTrue("123km <= 123000m", base.le(same));
-        assertTrue("123km != 123001m", base.ne(larger));
-        assertFalse("NOT 123km == 123001m", base.eq(larger));
-        assertTrue("123km != 122999m", base.ne(smaller));
-        assertFalse("NOT 123km == 122999m", base.eq(smaller));
-        assertFalse("NOT 123km >= 123001m", base.ge(larger));
-        assertFalse("NOT 123km <= 122999m", base.le(smaller));
+        assertFalse(base.lt(same), "123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertTrue(base.eq(same), "123km == 123000m");
+        assertFalse(base.ne(same), "NOT 123km != 123000m");
+        assertTrue(base.lt(larger), "123km < 123001m");
+        assertTrue(base.gt(smaller), "123km > 122999m");
+        assertTrue(base.ge(same), "123km >= 123000m");
+        assertFalse(base.gt(same), "NOT 123km > 123000m");
+        assertFalse(base.lt(same), "NOT 123km < 123000m");
+        assertTrue(base.le(same), "123km <= 123000m");
+        assertTrue(base.ne(larger), "123km != 123001m");
+        assertFalse(base.eq(larger), "NOT 123km == 123001m");
+        assertTrue(base.ne(smaller), "123km != 122999m");
+        assertFalse(base.eq(smaller), "NOT 123km == 122999m");
+        assertFalse(base.ge(larger), "NOT 123km >= 123001m");
+        assertFalse(base.le(smaller), "NOT 123km <= 122999m");
     }
 
     /**
@@ -549,7 +546,7 @@ public class DoubleScalarTest
     @Test
     public final void mathFunctionsTestRelTest()
     {
-        double[] seedValues = { -10, -2, -1, -0.5, -0.1, 0, 0.1, 0.5, 1, 2, 10 };
+        double[] seedValues = {-10, -2, -1, -0.5, -0.1, 0, 0.1, 0.5, 1, 2, 10};
         for (double seedValue : seedValues)
         {
             double input = seedValue;
@@ -631,8 +628,8 @@ public class DoubleScalarTest
         Length left = new Length(leftValue, LengthUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
         Length result = DoubleScalar.plus(left, right);
-        assertEquals("value of element should be SI plus of contributing elements", left.getSI() + right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI plus of contributing elements");
     }
 
     /**
@@ -646,8 +643,8 @@ public class DoubleScalarTest
         Length left = new Length(leftValue, LengthUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
         Length result = DoubleScalar.minus(left, right);
-        assertEquals("value of element should be SI minus of contributing elements", left.getSI() - right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI minus of contributing elements");
     }
 
     /**
@@ -661,8 +658,8 @@ public class DoubleScalarTest
         Length left = new Length(leftValue, LengthUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
         SIScalar result = DoubleScalar.multiply(left, right);
-        assertEquals("value of element should be SI multiply of contributing elements", left.getSI() * right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() * right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI multiply of contributing elements");
     }
 
     /**
@@ -676,8 +673,8 @@ public class DoubleScalarTest
         Length left = new Length(leftValue, LengthUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
         SIScalar result = DoubleScalar.divide(left, right);
-        assertEquals("value of element should be SI divide of contributing elements", left.getSI() / right.getSI(),
-                result.getSI(), 0.001);
+        assertEquals(left.getSI() / right.getSI(), result.getSI(), 0.001,
+                "value of element should be SI divide of contributing elements");
     }
 
     /** */
@@ -701,15 +698,15 @@ public class DoubleScalarTest
          * @param precision double; expected accuracy
          * @param function DoubleToDouble; encapsulated function that converts one inputValue to an outputValue
          */
-        public static void tester(final double inputValue, final String operation,
-                final DoubleScalar<?, ?> actualResult, final double precision, final DoubleToDouble function)
+        public static void tester(final double inputValue, final String operation, final DoubleScalar<?, ?> actualResult,
+                final double precision, final DoubleToDouble function)
         {
             double expectedResult = function.function(inputValue);
             double got = actualResult.getSI();
             String description = String.format("%s(%f->%f should be equal to %f with precision %f", operation, inputValue,
                     expectedResult, got, precision);
             // System.out.println(description);
-            assertEquals(description, expectedResult, got, precision);
+            assertEquals(expectedResult, got, precision, description);
         }
 
     }

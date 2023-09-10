@@ -1,12 +1,12 @@
 package org.djunits.value;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.djunits.unit.AngleUnit;
 import org.djunits.value.util.AngleUtil;
 import org.djunits.value.vdouble.scalar.Angle;
 import org.djunits.value.vfloat.scalar.FloatAngle;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the AngleUtil class.
@@ -24,8 +24,8 @@ public class AngleUtilTest
     @Test
     public void angleUtilTest()
     {
-        double[] testValues = { 0, 1, -1, -Math.ulp(0), 0 + Math.ulp(0), Math.PI, 2 * Math.PI + 0.0001, 2 * Math.PI - 0.0001,
-                10 * Math.PI + 0.0001, -Math.PI, -2 * Math.PI + 0.0001, -2 * Math.PI - 0.0001 };
+        double[] testValues = {0, 1, -1, -Math.ulp(0), 0 + Math.ulp(0), Math.PI, 2 * Math.PI + 0.0001, 2 * Math.PI - 0.0001,
+                10 * Math.PI + 0.0001, -Math.PI, -2 * Math.PI + 0.0001, -2 * Math.PI - 0.0001};
         for (double testValue : testValues)
         {
             double expected = testValue;
@@ -37,11 +37,11 @@ public class AngleUtilTest
             {
                 expected += 2 * Math.PI;
             }
-            assertEquals("normalized angle", expected, AngleUtil.normalize(testValue), 0.001);
-            assertEquals("float normalized angle", (float) expected, AngleUtil.normalize((float) testValue), 0.001f);
-            assertEquals("normalized Angle", expected, AngleUtil.normalize(new Angle(testValue, AngleUnit.SI)).si, 0.001);
-            assertEquals("normalized FloatAngle", expected, AngleUtil.normalize(new FloatAngle(testValue, AngleUnit.SI)).si,
-                    0.001);
+            assertEquals(expected, AngleUtil.normalize(testValue), 0.001, "normalized angle");
+            assertEquals((float) expected, AngleUtil.normalize((float) testValue), 0.001f, "float normalized angle");
+            assertEquals(expected, AngleUtil.normalize(new Angle(testValue, AngleUnit.SI)).si, 0.001, "normalized Angle");
+            assertEquals(expected, AngleUtil.normalize(new FloatAngle(testValue, AngleUnit.SI)).si, 0.001,
+                    "normalized FloatAngle");
         }
     }
 }

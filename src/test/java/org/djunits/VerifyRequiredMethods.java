@@ -1,14 +1,14 @@
 package org.djunits;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Verify that all classes have a toString method (unless the class in non-instantiable, or an enum, or abstract. <br>
@@ -89,28 +89,28 @@ public class VerifyRequiredMethods
                 if (isFinal)
                 {
                     // system.out.println("Class " + c.getName() + " can not override the toString method because a super "
-                    //        + "class implements a final toString method");
+                    // + "class implements a final toString method");
                 }
                 else if (!ClassList.hasNonStaticFields(c))
                 {
                     // system.out.println("Class " + c.getName()
-                    //        + " does not have to override the toString method because it does not have non-static fields");
+                    // + " does not have to override the toString method because it does not have non-static fields");
                 }
                 else if (isAbstract)
                 {
                     // system.out.println("Class " + c.getName() + " does not have to override the toString method because "
-                    //        + "it is an abstract class");
+                    // + "it is an abstract class");
                 }
                 else if (c.isEnum())
                 {
                     // system.out.println(
-                    //        "Class " + c.getName() + " does not have to override toString because this class " + "is an enum");
+                    // "Class " + c.getName() + " does not have to override toString because this class " + "is an enum");
                 }
                 else if (toStringMethod.getDeclaringClass().getPackage().getName().startsWith(packageName))
                 {
                     // system.out.println("Class " + c.getName()
-                    //        + " does not have to override the toString method because a super class with the package "
-                    //        + toStringMethod.getName() + " overrides toString (though not in a final way)");
+                    // + " does not have to override the toString method because a super class with the package "
+                    // + toStringMethod.getName() + " overrides toString (though not in a final way)");
                 }
                 else
                 {
@@ -119,14 +119,14 @@ public class VerifyRequiredMethods
                 }
             }
         }
-        assertEquals("Failures to implement toString", 0, failures);
+        assertEquals(0, failures, "Failures to implement toString");
     }
 
     /**
      * Check that all classes implement the Serializable interface.
      */
     // FIXME: @Test
-    @SuppressWarnings({ "checkstyle:methodlength", "checkstyle:emptyblock" })
+    @SuppressWarnings({"checkstyle:methodlength", "checkstyle:emptyblock"})
     public final void serializableTest()
     {
         int failures = 0;
@@ -201,7 +201,7 @@ public class VerifyRequiredMethods
                 }
             }
         }
-        assertEquals("Failures to implement serializable", 0, failures);
+        assertEquals(0, failures, "Failures to implement serializable");
     }
 
     /**
@@ -254,7 +254,7 @@ public class VerifyRequiredMethods
                 // System.out.println("Class " + c.getName() + " implements equals and hashCode (good)");
             }
         }
-        assertEquals("Failures to implement both hashCode and equals", 0, failures);
+        assertEquals(0, failures, "Failures to implement both hashCode and equals");
     }
 
 }

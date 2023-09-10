@@ -1,7 +1,7 @@
 package org.djunits.value.vdouble.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +18,7 @@ import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the scalar constructors.
@@ -55,16 +55,16 @@ public class DoubleScalarConstructorsTest implements UNITS
             Unit<?> standardUnit = quantity.getStandardUnit();
             Constructor<?> constructor = scalarClass.getConstructor(double.class, standardUnit.getClass());
             double testValue = 123.456d;
-            Object[] args = new Object[] { testValue, standardUnit };
+            Object[] args = new Object[] {testValue, standardUnit};
             DoubleScalar<?, ?> doubleScalar = (DoubleScalar<?, ?>) constructor.newInstance(args);
             // system.out.println(doubleScalar);
-            assertEquals("Value must match", testValue, doubleScalar.getSI(), 0.1);
-            assertEquals("Unit must match", standardUnit, doubleScalar.getDisplayUnit());
+            assertEquals(testValue, doubleScalar.getSI(), 0.1, "Value must match");
+            assertEquals(standardUnit, doubleScalar.getDisplayUnit(), "Unit must match");
             constructor = scalarClass.getConstructor(doubleScalar.getClass());
-            args = new Object[] { doubleScalar };
+            args = new Object[] {doubleScalar};
             DoubleScalar<?, ?> secondaryDoubleScalar = (DoubleScalar<?, ?>) constructor.newInstance(args);
-            assertEquals("Value must match", testValue, secondaryDoubleScalar.getSI(), 0.1);
-            assertEquals("Unit must match", standardUnit, secondaryDoubleScalar.getDisplayUnit());
+            assertEquals(testValue, secondaryDoubleScalar.getSI(), 0.1, "Value must match");
+            assertEquals(standardUnit, secondaryDoubleScalar.getDisplayUnit(), "Unit must match");
         }
     }
 

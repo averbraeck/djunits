@@ -1,9 +1,9 @@
 package org.djunits.value;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the constructors for ValueException.
@@ -26,32 +26,32 @@ public class ValueExceptionTest
     {
         String message = "MessageString";
         Exception e = new ValueRuntimeException(message);
-        assertTrue("Exception should not be null", null != e);
-        assertEquals("message should be our message", message, e.getMessage());
-        assertEquals("cause should be null", null, e.getCause());
+        assertTrue(null != e, "Exception should not be null");
+        assertEquals(message, e.getMessage(), "message should be our message");
+        assertEquals(null, e.getCause(), "cause should be null");
         e = new ValueRuntimeException();
-        assertTrue("Exception should not be null", null != e);
-        assertEquals("cause should be null", null, e.getCause());
+        assertTrue(null != e, "Exception should not be null");
+        assertEquals(null, e.getCause(), "cause should be null");
         String causeString = "CauseString";
         Throwable cause = new Throwable(causeString);
         e = new ValueRuntimeException(cause);
-        assertTrue("Exception should not be null", null != e);
-        assertEquals("cause should not be our cause", cause, e.getCause());
-        assertEquals("cause description should be our cause string", causeString, e.getCause().getMessage());
+        assertTrue(null != e, "Exception should not be null");
+        assertEquals(cause, e.getCause(), "cause should not be our cause");
+        assertEquals(causeString, e.getCause().getMessage(), "cause description should be our cause string");
         e = new ValueRuntimeException(message, cause);
-        assertTrue("Exception should not be null", null != e);
-        assertEquals("message should be our message", message, e.getMessage());
-        assertEquals("cause should not be our cause", cause, e.getCause());
-        assertEquals("cause description should be our cause string", causeString, e.getCause().getMessage());
-        for (boolean enableSuppression : new boolean[] { true, false })
+        assertTrue(null != e, "Exception should not be null");
+        assertEquals(message, e.getMessage(), "message should be our message");
+        assertEquals(cause, e.getCause(), "cause should not be our cause");
+        assertEquals(causeString, e.getCause().getMessage(), "cause description should be our cause string");
+        for (boolean enableSuppression : new boolean[] {true, false})
         {
-            for (boolean writableStackTrace : new boolean[] { true, false })
+            for (boolean writableStackTrace : new boolean[] {true, false})
             {
                 e = new ValueRuntimeException(message, cause, enableSuppression, writableStackTrace);
-                assertTrue("Exception should not be null", null != e);
-                assertEquals("message should be our message", message, e.getMessage());
-                assertEquals("cause should not be our cause", cause, e.getCause());
-                assertEquals("cause description should be our cause string", causeString, e.getCause().getMessage());
+                assertTrue(null != e, "Exception should not be null");
+                assertEquals(message, e.getMessage(), "message should be our message");
+                assertEquals(cause, e.getCause(), "cause should not be our cause");
+                assertEquals(causeString, e.getCause().getMessage(), "cause description should be our cause string");
                 // Don't know how to check if suppression is enabled/disabled
                 StackTraceElement[] stackTrace = new StackTraceElement[1];
                 stackTrace[0] = new StackTraceElement("a", "b", "c", 1234);
@@ -61,14 +61,14 @@ public class ValueExceptionTest
                 }
                 catch (Exception e1)
                 {
-                    assertTrue("Stack trace should be writable", writableStackTrace);
+                    assertTrue(writableStackTrace, "Stack trace should be writable");
                     continue;
                 }
                 // You wouldn't believe it, but a call to setStackTrace if non-writable is silently ignored
                 StackTraceElement[] retrievedStackTrace = e.getStackTrace();
                 if (retrievedStackTrace.length > 0)
                 {
-                    assertTrue("stack trace should be writable", writableStackTrace);
+                    assertTrue(writableStackTrace, "stack trace should be writable");
                 }
             }
         }

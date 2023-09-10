@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class VolumeUnitTest extends AbstractLinearUnitTest<VolumeUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,10 +38,10 @@ public class VolumeUnitTest extends AbstractLinearUnitTest<VolumeUnit>
         checkUnitRatioNameAndAbbreviation(VolumeUnit.CUBIC_DECIMETER, 0.001, 0.0000000001, "cubic decimeter", "dm^3");
         checkUnitRatioNameAndAbbreviation(VolumeUnit.LITER, 0.001, 0.0000000001, "liter", "L");
         // Check two conversions between non-standard units
-        assertEquals("one CUBIC MILE is about 5451776000 CUBIC YARD", 5451776000.,
-                getMultiplicationFactorTo(VolumeUnit.CUBIC_MILE, VolumeUnit.CUBIC_YARD), 0.5);
-        assertEquals("one CUBIC YARD is 1.83426465e-10 CUBIC MILE", 1.83426465e-10,
-                getMultiplicationFactorTo(VolumeUnit.CUBIC_YARD, VolumeUnit.CUBIC_MILE), 0.0000000001);
+        assertEquals(5451776000., getMultiplicationFactorTo(VolumeUnit.CUBIC_MILE, VolumeUnit.CUBIC_YARD), 0.5,
+                "one CUBIC MILE is about 5451776000 CUBIC YARD");
+        assertEquals(1.83426465e-10, getMultiplicationFactorTo(VolumeUnit.CUBIC_YARD, VolumeUnit.CUBIC_MILE), 0.0000000001,
+                "one CUBIC YARD is 1.83426465e-10 CUBIC MILE");
         // Check conversion factor to standard unit for all remaining time units
         checkUnitRatioNameAndAbbreviation(VolumeUnit.CUBIC_CENTIMETER, 0.000001, 0.000000000001, "cubic centimeter", "cm^3");
         checkUnitRatioNameAndAbbreviation(VolumeUnit.CUBIC_KILOMETER, 1e9, 1, "cubic kilometer", "km^3");
@@ -66,7 +66,7 @@ public class VolumeUnitTest extends AbstractLinearUnitTest<VolumeUnit>
     public final void createVolumeUnit()
     {
         VolumeUnit myVU = VolumeUnit.LITER.deriveLinear(119.240471, "brl", "Barrel", UnitSystem.OTHER);
-        assertTrue("Can create a new VolumeUnit", null != myVU);
+        assertTrue(null != myVU, "Can create a new VolumeUnit");
         checkUnitRatioNameAndAbbreviation(myVU, 0.119240471, 0.000001, "Barrel", "brl");
         VolumeUnit.BASE.unregister(myVU);
     }

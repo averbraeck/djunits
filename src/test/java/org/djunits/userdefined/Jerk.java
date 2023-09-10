@@ -51,12 +51,12 @@ public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
     {
         return new Jerk(valueSI, JerkUnit.SI);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {
         return DoubleScalar.divide(Dimensionless.ONE, this);
     }
- 
+
 }

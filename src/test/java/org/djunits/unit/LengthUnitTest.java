@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class LengthUnitTest extends AbstractLinearUnitTest<LengthUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,10 +38,10 @@ public class LengthUnitTest extends AbstractLinearUnitTest<LengthUnit>
         checkUnitRatioNameAndAbbreviation(LengthUnit.MILE, 1609, 0.5, "mile", "mi");
         checkUnitRatioNameAndAbbreviation(LengthUnit.CENTIMETER, 0.01, 0.000000001, "centimeter", "cm");
         // Check two conversions between non-standard units
-        assertEquals("one MILE is about 160900 CENTIMETER", 160900,
-                getMultiplicationFactorTo(LengthUnit.MILE, LengthUnit.CENTIMETER), 50);
-        assertEquals("one CENTIMETER is about 0.000006215 MILE", 0.000006215,
-                getMultiplicationFactorTo(LengthUnit.CENTIMETER, LengthUnit.MILE), 0.000000002);
+        assertEquals(160900, getMultiplicationFactorTo(LengthUnit.MILE, LengthUnit.CENTIMETER), 50,
+                "one MILE is about 160900 CENTIMETER");
+        assertEquals(0.000006215, getMultiplicationFactorTo(LengthUnit.CENTIMETER, LengthUnit.MILE), 0.000000002,
+                "one CENTIMETER is about 0.000006215 MILE");
         // Check conversion factor to standard unit for all remaining distance units
         checkUnitRatioNameAndAbbreviation(LengthUnit.MILLIMETER, 0.001, 0.000000001, "millimeter", "mm");
         checkUnitRatioNameAndAbbreviation(LengthUnit.DECIMETER, 0.1, 0.000000001, "decimeter", "dm");
@@ -61,7 +61,7 @@ public class LengthUnitTest extends AbstractLinearUnitTest<LengthUnit>
     public final void createLengthUnit()
     {
         LengthUnit myLU = LengthUnit.METER.deriveLinear(201.16800, "fl", "Furlong", UnitSystem.OTHER);
-        assertTrue("Can create a new LengthUnit", null != myLU);
+        assertTrue(null != myLU, "Can create a new LengthUnit");
         checkUnitRatioNameAndAbbreviation(myLU, 200, 2, "Furlong", "fl");
         LengthUnit.BASE.unregister(myLU);
     }

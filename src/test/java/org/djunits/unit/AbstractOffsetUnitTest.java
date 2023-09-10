@@ -1,6 +1,6 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.djunits.unit.scale.OffsetLinearScale;
 
@@ -27,13 +27,13 @@ public class AbstractOffsetUnitTest<OU extends Unit<OU>> extends AbstractUnitTes
             final double expectedOffset, final double precision, final String expectedName, final String expectedAbbreviation)
     {
         OffsetLinearScale scale = (OffsetLinearScale) ou.getScale();
-        assertEquals(String.format("zero %s is about %f reference unit", ou.getId(), expectedOffset), expectedOffset,
-                scale.getOffsetToStandardUnit(), precision);
-        assertEquals(String.format("one %s is about %f reference unit", ou.getId(), expectedRatio), expectedRatio,
-                scale.getConversionFactorToStandardUnit(), precision);
-        assertEquals(String.format("Name of %s is %s", ou.getId(), expectedName), expectedName, ou.getName());
-        assertEquals(String.format("Abbreviation of %s is %s", ou.getId(), expectedAbbreviation), expectedAbbreviation,
-                ou.getDefaultDisplayAbbreviation());
+        assertEquals(expectedOffset, scale.getOffsetToStandardUnit(), precision,
+                String.format("zero %s is about %f reference unit", ou.getId(), expectedOffset));
+        assertEquals(expectedRatio, scale.getConversionFactorToStandardUnit(), precision,
+                String.format("one %s is about %f reference unit", ou.getId(), expectedRatio));
+        assertEquals(expectedName, ou.getName(), String.format("Name of %s is %s", ou.getId(), expectedName));
+        assertEquals(expectedAbbreviation, ou.getDefaultDisplayAbbreviation(),
+                String.format("Abbreviation of %s is %s", ou.getId(), expectedAbbreviation));
     }
 
     /**

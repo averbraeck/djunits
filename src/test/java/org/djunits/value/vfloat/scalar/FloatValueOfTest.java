@@ -1,7 +1,7 @@
 package org.djunits.value.vfloat.scalar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,7 +12,7 @@ import org.djunits.unit.SIUnit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * ValueOfTest.java.

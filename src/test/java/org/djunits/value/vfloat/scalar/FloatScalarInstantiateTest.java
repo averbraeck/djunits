@@ -1,6 +1,6 @@
 package org.djunits.value.vfloat.scalar;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.djunits.unit.AccelerationUnit;
 import org.djunits.unit.AngleUnit;
@@ -11,7 +11,7 @@ import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SolidAngleUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the instantiation utility functions.
@@ -31,32 +31,32 @@ public class FloatScalarInstantiateTest
     public final void instantiateTest()
     {
         FloatDimensionless dimensionless = FloatScalar.instantiate(10.0f, DimensionlessUnit.SI);
-        assertEquals("FloatDimensionless", 10.0f, dimensionless.getSI(), 0.0001d);
+        assertEquals(10.0f, dimensionless.getSI(), 0.0001d, "FloatDimensionless");
 
         FloatAcceleration acceleration = FloatScalar.instantiate(10.0f, AccelerationUnit.SI);
-        assertEquals("FloatAcceleration", 10.0f, acceleration.getSI(), 0.0001d);
+        assertEquals(10.0f, acceleration.getSI(), 0.0001d, "FloatAcceleration");
         acceleration = FloatScalar.instantiate(12960.0f, AccelerationUnit.KM_PER_HOUR_2);
-        assertEquals("FloatAcceleration", 1.0, acceleration.getSI(), 0.001d);
+        assertEquals(1.0, acceleration.getSI(), 0.001d, "FloatAcceleration");
 
         FloatSolidAngle angleSolid = FloatScalar.instantiate(10.0f, SolidAngleUnit.SI);
-        assertEquals("FloatSolidAngle", 10.0f, angleSolid.getSI(), 0.0001d);
+        assertEquals(10.0f, angleSolid.getSI(), 0.0001d, "FloatSolidAngle");
         angleSolid = FloatScalar.instantiate(1.0f, SolidAngleUnit.SQUARE_DEGREE);
-        assertEquals("FloatSolidAngle", (Math.PI / 180.0) * (Math.PI / 180.0), angleSolid.getSI(), 0.001d);
+        assertEquals((Math.PI / 180.0) * (Math.PI / 180.0), angleSolid.getSI(), 0.001d, "FloatSolidAngle");
 
         FloatAngle angle = FloatScalar.instantiate(10.0f, AngleUnit.SI);
-        assertEquals("FloatAngle", 10.0f, angle.getSI(), 0.0001d);
+        assertEquals(10.0f, angle.getSI(), 0.0001d, "FloatAngle");
         angle = FloatScalar.instantiate(1.0f, AngleUnit.DEGREE);
-        assertEquals("FloatAngle", Math.PI / 180.0, angle.getSI(), 0.001d);
+        assertEquals(Math.PI / 180.0, angle.getSI(), 0.001d, "FloatAngle");
 
         FloatDirection direction = FloatScalar.instantiate(10.0f, DirectionUnit.DEFAULT);
-        assertEquals("FloatDirection", 10.0f, direction.getSI(), 0.0001d);
+        assertEquals(10.0f, direction.getSI(), 0.0001d, "FloatDirection");
         direction = FloatScalar.instantiate(1.0f, DirectionUnit.EAST_DEGREE);
-        assertEquals("FloatDirection", Math.PI / 180.0, direction.getSI(), 0.001d);
+        assertEquals(Math.PI / 180.0, direction.getSI(), 0.001d, "FloatDirection");
 
         FloatArea area = FloatScalar.instantiate(10.0f, AreaUnit.SI);
-        assertEquals("FloatArea", 10.0f, area.getSI(), 0.0001d);
+        assertEquals(10.0f, area.getSI(), 0.0001d, "FloatArea");
         area = FloatScalar.instantiate(1.0f, AreaUnit.HECTARE);
-        assertEquals("FloatArea", 10000.0, area.getSI(), 0.001d);
+        assertEquals(10000.0, area.getSI(), 0.001d, "FloatArea");
 
         // TODO: other base units
 
@@ -71,9 +71,9 @@ public class FloatScalarInstantiateTest
         Unit<?> unitSI = LengthUnit.SI;
         Unit<?> unitKM = LengthUnit.KILOMETER;
         FloatLength length = FloatScalar.instantiateAnonymous(10.0f, unitSI);
-        assertEquals("FloatLength", 10.0f, length.getSI(), 0.0001d);
+        assertEquals(10.0f, length.getSI(), 0.0001d, "FloatLength");
         length = FloatScalar.instantiateAnonymous(1.0f, unitKM);
-        assertEquals("FloatLength", 1000.0, length.getSI(), 0.001d);
+        assertEquals(1000.0, length.getSI(), 0.001d, "FloatLength");
 
         // TODO: other base units
 

@@ -1,13 +1,13 @@
 package org.djunits.unit.si;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.Unit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * SIRuntimeExceptionTest.java.
@@ -96,7 +96,7 @@ public class SIRuntimeExceptionTest
         }
         catch (NullPointerException npe)
         {
-            assertTrue("Exception describes the parameter that has the problem", npe.getMessage().contains("unitString"));
+            assertTrue(npe.getMessage().contains("unitString"), "Exception describes the parameter that has the problem");
         }
 
         try
@@ -110,7 +110,7 @@ public class SIRuntimeExceptionTest
         }
 
         Unit<?> u = Unit.getUnit("m/s");
-        assertTrue("u uses a base si scale", u.getScale().isBaseSIScale());
+        assertTrue(u.getScale().isBaseSIScale(), "u uses a base si scale");
     }
 
 }

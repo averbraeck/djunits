@@ -1,10 +1,10 @@
 package org.djunits.unit.quantity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.djunits.quantity.Quantities;
 import org.djunits.quantity.Quantity;
@@ -16,7 +16,7 @@ import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.unit.util.UnitException;
 import org.djunits.unit.util.UnitRuntimeException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * QuantityTest.java.
@@ -43,7 +43,7 @@ public class QuantityTest
         assertNotEquals(QUnit.BASE, new Object());
         Quantity<QUnit> quantity1 = new Quantity<>("kgm4/s5A3", SIDimensions.of("kgm4/s5A3"));
         Quantity<QUnit> quantity2 = new Quantity<>("Test2", new SIDimensions(0, 0, 1, 4, -5, -3, 0, 0, 0));
-        Quantity<QUnit> quantity3 = new Quantity<>("Test3", new byte[] { 0, 0, 1, 4, -5, -3, 0, 0, 0 });
+        Quantity<QUnit> quantity3 = new Quantity<>("Test3", new byte[] {0, 0, 1, 4, -5, -3, 0, 0, 0});
         assertEquals(quantity1, quantity2);
         assertEquals(quantity1, quantity3);
         assertNotEquals(quantity1, QUnit.BASE); // QUnit has a standard base; quantity1 not (yet)

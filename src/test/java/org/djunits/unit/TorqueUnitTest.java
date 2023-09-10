@@ -1,13 +1,13 @@
 package org.djunits.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.unit.unitsystem.UnitSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public class TorqueUnitTest extends AbstractLinearUnitTest<TorqueUnit>
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
      */
-    @Before
+    @BeforeEach
     public final void setup()
     {
         Locale.setDefault(new Locale("en"));
@@ -38,8 +38,8 @@ public class TorqueUnitTest extends AbstractLinearUnitTest<TorqueUnit>
         checkUnitRatioNameAndAbbreviation(TorqueUnit.METER_KILOGRAM_FORCE, 9.80665, 0.000005, "meter kilogram-force", "m.kgf");
         checkUnitRatioNameAndAbbreviation(TorqueUnit.POUND_FOOT, 1.35581794833, 0.0000001, "pound-foot", "lbf.ft");
         // Check two conversions between non-standard units
-        assertEquals("one FOOT POUND FORCE is 12 INCH_POUND_FORCE", 12,
-                getMultiplicationFactorTo(TorqueUnit.POUND_FOOT, TorqueUnit.POUND_INCH), 0.0001);
+        assertEquals(12, getMultiplicationFactorTo(TorqueUnit.POUND_FOOT, TorqueUnit.POUND_INCH), 0.0001,
+                "one FOOT POUND FORCE is 12 INCH_POUND_FORCE");
         // Check conversion factor to standard unit for all remaining acceleration units
         checkUnitRatioNameAndAbbreviation(TorqueUnit.POUND_INCH, 0.112984829, 0.000000001, "pound-inch", "lbf.in");
     }
@@ -51,7 +51,7 @@ public class TorqueUnitTest extends AbstractLinearUnitTest<TorqueUnit>
     public final void createTorqueUnit()
     {
         TorqueUnit myUnit = TorqueUnit.SI.deriveLinear(1.23, "my", "myTorque", UnitSystem.OTHER);
-        assertTrue("Can create a new TorqueUnit", null != myUnit);
+        assertTrue(null != myUnit, "Can create a new TorqueUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myTorque", "my");
         TorqueUnit.BASE.unregister(myUnit);
     }
