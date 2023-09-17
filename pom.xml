@@ -26,7 +26,7 @@
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
 
     <djunits.version>${project.version}</djunits.version>
-    <djutils.version>2.1.9</djutils.version>
+    <djutils.version>2.2.0</djutils.version>
     <junit.version>5.10.0</junit.version>
     <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
 
@@ -69,7 +69,7 @@
 
     <dependency>
       <groupId>org.djutils</groupId>
-      <artifactId>djutils</artifactId>
+      <artifactId>djutils-base</artifactId>
       <version>${djutils.version}</version>
     </dependency>
 
