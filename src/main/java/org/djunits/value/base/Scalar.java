@@ -52,42 +52,42 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     /**
      * Test if this DoubleScalar is less than another DoubleScalar.
      * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is less than other; false if this is not less than other
+     * @return boolean; true if this is less than o; false otherwise
      */
     public abstract boolean lt(S o);
 
     /**
      * Test if this DoubleScalar is less than or equal to another DoubleScalar.
      * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean
+     * @return boolean; true if this is less than or equal to o; false otherwise
      */
     public abstract boolean le(S o);
 
     /**
-     * Test if this DoubleScalar is greater than or equal to a DoubleScalar.
+     * Test if this DoubleScalar is greater than another DoubleScalar.
      * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is greater than or equal to other; false if this is not greater than or equal to other
+     * @return boolean; true if this is greater than o; false otherwise
      */
     public abstract boolean gt(S o);
 
     /**
-     * Test if this DoubleScalar is greater than a DoubleScalar.
+     * Test if this DoubleScalar is greater than or equal to another DoubleScalar.
      * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is greater than other; false if this is not greater than other
+     * @return boolean; true if this is greater than or equal to o; false otherwise
      */
     public abstract boolean ge(S o);
 
     /**
-     * Test if this DoubleScalar is equal to a DoubleScalar.
+     * Test if this DoubleScalar is equal to another DoubleScalar.
      * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is equal to other; false if this is not equal to other
+     * @return boolean; true if this is equal to o; false otherwise
      */
     public abstract boolean eq(S o);
 
     /**
-     * Test if this DoubleScalar is not equal to a DoubleScalar.
+     * Test if this DoubleScalar is not equal to another DoubleScalar.
      * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is not equal to other; false if this is equal to other
+     * @return boolean; true if this is not equal to o; false otherwise
      */
     public abstract boolean ne(S o);
 
@@ -104,14 +104,14 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     public abstract boolean le0();
 
     /**
-     * Test if this DoubleScalar is greater than or equal to 0.0.
-     * @return boolean; true if this is greater than or equal to 0.0; false if this is not greater than or equal to 0.0
+     * Test if this DoubleScalar is greater than 0.0.
+     * @return boolean; true if this is greater than 0.0; false if this is not greater than 0.0
      */
     public abstract boolean gt0();
 
     /**
-     * Test if this DoubleScalar is greater than 0.0.
-     * @return boolean; true if this is greater than 0.0; false if this is not greater than 0.0
+     * Test if this DoubleScalar is greater than or equal to 0.0.
+     * @return boolean; true if this is greater than or equal to 0.0; false if this is not greater than or equal to 0.0
      */
     public abstract boolean ge0();
 
