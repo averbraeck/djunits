@@ -12,7 +12,7 @@ import org.djunits.unit.si.SIDimensions;
  * UnitTypes is a singleton where the BaseUnit SIDimensions 'fingerprints' are stored and mapped to the BaseUnits. It is
  * possible that more baseUnits have the same fingerprint. E.g., Energy and Torque.
  * <p>
- * Copyright (c) 2019-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2019-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>

@@ -5,7 +5,7 @@ package org.djunits.unit.scale;
  * angle = atan(grade). The factor that is given, is the factor by which the value is multiplied to get a grade. When a scale is
  * constructed for e.g. ratio as a percentage (100% instead of 1), the conversionFactor to apply is 0.01.
  * <p>
- * Copyright (c) 2013-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2013-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>

@@ -9,7 +9,7 @@ import org.djunits.unit.unitsystem.UnitSystem;
  * According to <a href="https://en.wikipedia.org/wiki/Momentum">Wikipedia</a>: Momentum or linear momentum, or translational
  * momentum is the product of the mass and velocity of an object.
  * <p>
- * Copyright (c) 2015-2023 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2015-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
