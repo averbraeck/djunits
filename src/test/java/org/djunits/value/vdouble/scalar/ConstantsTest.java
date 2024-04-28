@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Constants class.
- * <p>
+ * <br>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers">Peter Knoppers</a>
  */
 public class ConstantsTest

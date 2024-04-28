@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Verify that all localizations contain all keys.
- * <p>
+ * <br>
  * @author <a href="https://www.tudelft.nl/p.knoppers">Peter Knoppers</a>
  */
 public class VerifyLocalizations
