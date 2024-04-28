@@ -8,7 +8,7 @@ import org.djunits.unit.scale.OffsetLinearScale;
  * <p>
  * Copyright (c) 2013-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
- * <p>
+ * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  * @param <OU> Make the test specific for this sub class of OffsetUnit
  */

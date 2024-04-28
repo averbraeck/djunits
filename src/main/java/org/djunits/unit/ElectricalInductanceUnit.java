@@ -10,7 +10,7 @@ import org.djunits.unit.unitsystem.UnitSystem;
  * <p>
  * Copyright (c) 2015-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
- * <p>
+ * </p>
  * version May 15, 2014 <br>
  * @author <a href="https://www.tudelft.nl/p.knoppers">Peter Knoppers</a>
  */
