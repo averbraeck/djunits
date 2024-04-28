@@ -363,8 +363,8 @@ public class SIDimensions implements Serializable
      * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIDimensions.
      * @param divided boolean; if true, return m/s2 for acceleration; if false return ms-2
      * @param separator String; add this string between successive units, e.g. kg.m.s-2 instead of kgms-2
-     * @param powerPrefix String; the prefix for the power, e.g., "^" or "<sup>"
-     * @param powerPostfix String; the postfix for the power, e.g., "</sup>"
+     * @param powerPrefix String; the prefix for the power, e.g., "^" or "&lt;sup&gt;"
+     * @param powerPostfix String; the postfix for the power, e.g., "&lt;/sup&gt;"
      * @return String; a formatted string for this SIDimensions
      */
     public String toString(final boolean divided, final String separator, final String powerPrefix, final String powerPostfix)
