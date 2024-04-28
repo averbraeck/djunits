@@ -362,7 +362,7 @@ public class DoubleMatrixConstructorsTest
     }
 
     /**
-     * test Map<Integer, Double> constructors
+     * test Map&lt;Integer, Double&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

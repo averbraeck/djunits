@@ -361,7 +361,7 @@ public class FloatMatrixConstructorsTest
     }
 
     /**
-     * test Map<Integer, Float> constructors
+     * test Map&lt;Integer, Float&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

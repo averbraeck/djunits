@@ -312,7 +312,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test List<Double> constructors
+     * test List&lt;Double&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -478,7 +478,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test List<Scalar> constructors
+     * test List&lt;Scalar&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -646,7 +646,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test Map<Integer, Double> constructors
+     * test Map&lt;Integer, Double&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -856,7 +856,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test Map<Integer, Scalar> constructors
+     * test Map&lt;Integer, Scalar&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

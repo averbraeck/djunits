@@ -312,7 +312,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test List<Float> constructors
+     * test List&lt;Float&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -478,7 +478,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test List<Scalar> constructors
+     * test List&lt;Scalar&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -646,7 +646,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test Map<Integer, Float> constructors
+     * test Map&lt;Integer, Float&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -856,7 +856,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test Map<Integer, Scalar> constructors
+     * test Map&lt;Integer, Scalar&gt; constructors
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
