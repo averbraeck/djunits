@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="${artifactId} ${version}" xmlns="http://maven.apache.org/DECORATION/1.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project name="${project.artifactId} ${version}" xmlns="http://maven.apache.org/DECORATION/1.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.6.0 http://maven.apache.org/xsd/decoration-1.6.0.xsd">
 
   <publishDate position="left" format="dd-MM-yyyy hh:mm" />
 
-  <bannerRight>
-    <name>${artifactId} ${version}</name>
-  </bannerRight>
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>2.0.0-M8</version>
+  </skin>
+  
+  <bannerLeft>
+    <name>${project.name}</name>
+  </bannerLeft>
 
+  <bannerRight>
+    <name>${project.artifactId} ${project.version}</name>
+  </bannerRight>
+  
+  
   <body>
 
     <menu name="API">
