@@ -1,7 +1,7 @@
                    --------------------------------
                    DJUNITS - Delft Java UNIT System
                    --------------------------------
-                   Version 5, August, 2022
+                   Version 5.1, May, 2024
                    --------------------------------
                    
 DJUNITS - Delft Java UNIT System
@@ -9,7 +9,7 @@ DJUNITS - Delft Java UNIT System
 	DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors at compile time.
 
     * DJUNITS performs automatic conversions between most commonly used units of the same type. 
-      E.g. conversion of distances from Miles to kilometers.
+      E.g. conversion of distances from miles to kilometers.
 
     * DJUNITS stores all values internally in the basic SI unit for that value. 
       The value can be converted to any (user-selectable) suitable unit for display.
