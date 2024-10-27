@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 public class FloatVectorConstructorsTest
 {
     /**
-     * test float[] constructors
+     * test float[] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -173,7 +173,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test Scalar[] constructors
+     * test Scalar[] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -312,7 +312,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test List&lt;Float&gt; constructors
+     * test List&lt;Float&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -478,7 +478,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test List&lt;Scalar&gt; constructors
+     * test List&lt;Scalar&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -646,7 +646,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test Map&lt;Integer, Float&gt; constructors
+     * test Map&lt;Integer, Float&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -856,7 +856,7 @@ public class FloatVectorConstructorsTest
     }
 
     /**
-     * test Map&lt;Integer, Scalar&gt; constructors
+     * test Map&lt;Integer, Scalar&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

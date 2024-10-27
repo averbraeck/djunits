@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 public class DoubleVectorConstructorsTest
 {
     /**
-     * test double[] constructors
+     * test double[] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -173,7 +173,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test Scalar[] constructors
+     * test Scalar[] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -312,7 +312,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test List&lt;Double&gt; constructors
+     * test List&lt;Double&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -478,7 +478,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test List&lt;Scalar&gt; constructors
+     * test List&lt;Scalar&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -646,7 +646,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test Map&lt;Integer, Double&gt; constructors
+     * test Map&lt;Integer, Double&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -856,7 +856,7 @@ public class DoubleVectorConstructorsTest
     }
 
     /**
-     * test Map&lt;Integer, Scalar&gt; constructors
+     * test Map&lt;Integer, Scalar&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

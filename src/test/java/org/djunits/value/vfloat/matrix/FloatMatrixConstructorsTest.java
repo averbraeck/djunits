@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 public class FloatMatrixConstructorsTest
 {
     /**
-     * test float[][] constructors
+     * test float[][] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -211,7 +211,7 @@ public class FloatMatrixConstructorsTest
     }
 
     /**
-     * test Scalar[][] constructors
+     * test Scalar[][] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -361,7 +361,7 @@ public class FloatMatrixConstructorsTest
     }
 
     /**
-     * test Map&lt;Integer, Float&gt; constructors
+     * test Map&lt;Integer, Float&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

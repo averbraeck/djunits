@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 public class DoubleMatrixConstructorsTest
 {
     /**
-     * test double[][] constructors
+     * test double[][] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -211,7 +211,7 @@ public class DoubleMatrixConstructorsTest
     }
 
     /**
-     * test Scalar[][] constructors
+     * test Scalar[][] constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error
@@ -362,7 +362,7 @@ public class DoubleMatrixConstructorsTest
     }
 
     /**
-     * test Map&lt;Integer, Double&gt; constructors
+     * test Map&lt;Integer, Double&gt; constructors.
      * @throws SecurityException on error
      * @throws NoSuchMethodException on error
      * @throws InvocationTargetException on error

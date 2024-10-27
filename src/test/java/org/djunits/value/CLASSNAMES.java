@@ -76,7 +76,7 @@ public final class CLASSNAMES
     }
 
     /**
-     * Return the double scalar classes for the quantity name
+     * Return the double scalar classes for the quantity name.
      * @param qName quantity name
      * @return double scalar class for the quantity name
      */
@@ -95,7 +95,7 @@ public final class CLASSNAMES
     }
 
     /**
-     * Return the float scalar classes for the quantity name
+     * Return the float scalar classes for the quantity name.
      * @param qName quantity name
      * @return list of float scalar classes for the quantity name
      */
@@ -114,7 +114,7 @@ public final class CLASSNAMES
     }
 
     /**
-     * Return the double vector classes for the quantity name
+     * Return the double vector classes for the quantity name.
      * @param qName quantity name
      * @return list of double vector classes for the quantity name
      */
@@ -134,7 +134,7 @@ public final class CLASSNAMES
     }
 
     /**
-     * Return the float vector classes for the quantity name
+     * Return the float vector classes for the quantity name.
      * @param qName quantity name
      * @return list of float vector classes for the quantity name
      */
@@ -154,7 +154,7 @@ public final class CLASSNAMES
     }
 
     /**
-     * Return the double matrix classes for the quantity name
+     * Return the double matrix classes for the quantity name.
      * @param qName quantity name
      * @return list of double matrix classes for the quantity name
      */
@@ -174,7 +174,7 @@ public final class CLASSNAMES
     }
 
     /**
-     * Return the float matrix classes for the quantity name
+     * Return the float matrix classes for the quantity name.
      * @param qName quantity name
      * @return list of float matrix classes for the quantity name
      */
