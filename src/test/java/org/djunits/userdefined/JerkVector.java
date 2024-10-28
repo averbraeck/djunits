@@ -28,21 +28,18 @@ public class JerkVector extends DoubleVectorRel<JerkUnit, Jerk, JerkVector>
         super(data, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Jerk> getScalarClass()
     {
         return Jerk.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public JerkVector instantiateVector(final DoubleVectorData dvd, final JerkUnit displayUnit)
     {
         return new JerkVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Jerk instantiateScalarSI(final double valueSI, final JerkUnit displayUnit)
     {

@@ -80,7 +80,6 @@ public class FloatTemperature
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatTemperature instantiateRel(final float value, final TemperatureUnit unit)
     {
@@ -97,7 +96,6 @@ public class FloatTemperature
         return new FloatTemperature(value, TemperatureUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAbsoluteTemperature instantiateAbs(final float value, final AbsoluteTemperatureUnit unit)
     {
@@ -240,7 +238,6 @@ public class FloatTemperature
         return new FloatDimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

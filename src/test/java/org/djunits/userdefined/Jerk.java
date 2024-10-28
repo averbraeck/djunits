@@ -35,7 +35,6 @@ public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Jerk instantiateRel(final double value, final JerkUnit unit)
     {
@@ -52,7 +51,6 @@ public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
         return new Jerk(valueSI, JerkUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

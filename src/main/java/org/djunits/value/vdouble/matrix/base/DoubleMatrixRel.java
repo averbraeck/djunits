@@ -51,14 +51,12 @@ public abstract class DoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarR
         return instantiateScalarSI(this.data.zSum(), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RM plus(final RM rel) throws ValueRuntimeException
     {
         return instantiateMatrix(this.getData().plus(rel.getData()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RM minus(final RM rel) throws ValueRuntimeException
     {
@@ -168,7 +166,6 @@ public abstract class DoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarR
                 getDisplayUnit().getQuantity().getSiDimensions().plus(rel.getDisplayUnit().getQuantity().getSiDimensions())));
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RM times(final double multiplier)
     {
@@ -177,7 +174,6 @@ public abstract class DoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarR
         return result.immutable();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RM times(final float multiplier)
     {
@@ -205,14 +201,12 @@ public abstract class DoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarR
                 getDisplayUnit().getQuantity().getSiDimensions().minus(rel.getDisplayUnit().getQuantity().getSiDimensions())));
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RM divide(final float divisor)
     {
         return divide((double) divisor);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RM divide(final double divisor)
     {

@@ -85,7 +85,6 @@ public class FloatElectricalCharge extends FloatScalarRel<ElectricalChargeUnit, 
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatElectricalCharge instantiateRel(final float value, final ElectricalChargeUnit unit)
     {
@@ -284,7 +283,6 @@ public class FloatElectricalCharge extends FloatScalarRel<ElectricalChargeUnit, 
         return new FloatElectricalPotential(this.si / v.si, ElectricalPotentialUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

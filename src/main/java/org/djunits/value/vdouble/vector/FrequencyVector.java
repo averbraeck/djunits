@@ -278,21 +278,18 @@ public class FrequencyVector extends DoubleVectorRel<FrequencyUnit, Frequency, F
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Frequency> getScalarClass()
     {
         return Frequency.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FrequencyVector instantiateVector(final DoubleVectorData dvd, final FrequencyUnit displayUnit)
     {
         return new FrequencyVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Frequency instantiateScalarSI(final double valueSI, final FrequencyUnit displayUnit)
     {

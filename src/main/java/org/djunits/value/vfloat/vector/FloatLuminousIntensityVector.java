@@ -290,21 +290,18 @@ public class FloatLuminousIntensityVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLuminousIntensity> getScalarClass()
     {
         return FloatLuminousIntensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousIntensityVector instantiateVector(final FloatVectorData fvd, final LuminousIntensityUnit displayUnit)
     {
         return new FloatLuminousIntensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousIntensity instantiateScalarSI(final float valueSI, final LuminousIntensityUnit displayUnit)
     {

@@ -202,35 +202,30 @@ public class FloatCatalyticActivityMatrix extends FloatMatrixRel<CatalyticActivi
         this(data, CatalyticActivityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatCatalyticActivity> getScalarClass()
     {
         return FloatCatalyticActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatCatalyticActivityVector> getVectorClass()
     {
         return FloatCatalyticActivityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatCatalyticActivityMatrix instantiateMatrix(final FloatMatrixData fmd, final CatalyticActivityUnit displayUnit)
     {
         return new FloatCatalyticActivityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatCatalyticActivityVector instantiateVector(final FloatVectorData fvd, final CatalyticActivityUnit displayUnit)
     {
         return new FloatCatalyticActivityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatCatalyticActivity instantiateScalarSI(final float valueSI, final CatalyticActivityUnit displayUnit)
     {

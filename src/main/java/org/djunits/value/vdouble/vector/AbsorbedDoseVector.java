@@ -279,21 +279,18 @@ public class AbsorbedDoseVector extends DoubleVectorRel<AbsorbedDoseUnit, Absorb
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<AbsorbedDose> getScalarClass()
     {
         return AbsorbedDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsorbedDoseVector instantiateVector(final DoubleVectorData dvd, final AbsorbedDoseUnit displayUnit)
     {
         return new AbsorbedDoseVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsorbedDose instantiateScalarSI(final double valueSI, final AbsorbedDoseUnit displayUnit)
     {

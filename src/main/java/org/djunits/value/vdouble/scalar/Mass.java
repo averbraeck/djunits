@@ -74,7 +74,6 @@ public class Mass extends DoubleScalarRel<MassUnit, Mass>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Mass instantiateRel(final double value, final MassUnit unit)
     {
@@ -216,7 +215,6 @@ public class Mass extends DoubleScalarRel<MassUnit, Mass>
         throw new IllegalArgumentException("Error parsing Mass with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
     {
@@ -321,7 +319,6 @@ public class Mass extends DoubleScalarRel<MassUnit, Mass>
         return new Momentum(this.si * v.si, MomentumUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

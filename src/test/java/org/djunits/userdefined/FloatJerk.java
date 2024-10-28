@@ -35,7 +35,6 @@ public class FloatJerk extends FloatScalarRel<JerkUnit, FloatJerk>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatJerk instantiateRel(final float value, final JerkUnit unit)
     {
@@ -52,7 +51,6 @@ public class FloatJerk extends FloatScalarRel<JerkUnit, FloatJerk>
         return new FloatJerk(valueSI, JerkUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

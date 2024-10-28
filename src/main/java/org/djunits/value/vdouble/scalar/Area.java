@@ -73,7 +73,6 @@ public class Area extends DoubleScalarRel<AreaUnit, Area>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Area instantiateRel(final double value, final AreaUnit unit)
     {
@@ -305,7 +304,6 @@ public class Area extends DoubleScalarRel<AreaUnit, Area>
         return new LuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

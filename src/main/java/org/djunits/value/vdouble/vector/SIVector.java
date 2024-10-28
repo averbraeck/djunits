@@ -222,7 +222,6 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<SIScalar> getScalarClass()
     {
@@ -318,21 +317,18 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
         throw new IllegalArgumentException("Error parsing SIVector with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIVector instantiateVector(final DoubleVectorData dvd, final SIUnit unit)
     {
         return new SIVector(dvd, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar instantiateScalarSI(final double valueSI, final SIUnit unit)
     {
         return new SIScalar(valueSI, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
     {

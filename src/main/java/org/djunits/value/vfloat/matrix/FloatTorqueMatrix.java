@@ -193,35 +193,30 @@ public class FloatTorqueMatrix extends FloatMatrixRel<TorqueUnit, FloatTorque, F
         this(data, TorqueUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTorque> getScalarClass()
     {
         return FloatTorque.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTorqueVector> getVectorClass()
     {
         return FloatTorqueVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTorqueMatrix instantiateMatrix(final FloatMatrixData fmd, final TorqueUnit displayUnit)
     {
         return new FloatTorqueMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTorqueVector instantiateVector(final FloatVectorData fvd, final TorqueUnit displayUnit)
     {
         return new FloatTorqueVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTorque instantiateScalarSI(final float valueSI, final TorqueUnit displayUnit)
     {

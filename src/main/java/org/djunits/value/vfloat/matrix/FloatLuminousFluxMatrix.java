@@ -197,35 +197,30 @@ public class FloatLuminousFluxMatrix
         this(data, LuminousFluxUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLuminousFlux> getScalarClass()
     {
         return FloatLuminousFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLuminousFluxVector> getVectorClass()
     {
         return FloatLuminousFluxVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousFluxMatrix instantiateMatrix(final FloatMatrixData fmd, final LuminousFluxUnit displayUnit)
     {
         return new FloatLuminousFluxMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousFluxVector instantiateVector(final FloatVectorData fvd, final LuminousFluxUnit displayUnit)
     {
         return new FloatLuminousFluxVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousFlux instantiateScalarSI(final float valueSI, final LuminousFluxUnit displayUnit)
     {

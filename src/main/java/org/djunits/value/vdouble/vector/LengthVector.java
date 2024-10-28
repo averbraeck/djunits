@@ -279,21 +279,18 @@ public class LengthVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Length> getScalarClass()
     {
         return Length.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LengthVector instantiateVector(final DoubleVectorData dvd, final LengthUnit displayUnit)
     {
         return new LengthVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Length instantiateScalarSI(final double valueSI, final LengthUnit displayUnit)
     {
@@ -302,14 +299,12 @@ public class LengthVector
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PositionVector instantiateVectorAbs(final DoubleVectorData dvd, final PositionUnit displayUnit)
     {
         return new PositionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Position instantiateScalarAbsSI(final double valueSI, final PositionUnit displayUnit)
     {

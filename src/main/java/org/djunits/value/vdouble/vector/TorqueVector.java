@@ -277,21 +277,18 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Torque> getScalarClass()
     {
         return Torque.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TorqueVector instantiateVector(final DoubleVectorData dvd, final TorqueUnit displayUnit)
     {
         return new TorqueVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Torque instantiateScalarSI(final double valueSI, final TorqueUnit displayUnit)
     {

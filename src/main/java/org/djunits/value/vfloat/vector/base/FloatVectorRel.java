@@ -46,14 +46,12 @@ public abstract class FloatVectorRel<U extends Unit<U>, S extends FloatScalarRel
         return instantiateScalarSI(getData().zSum(), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RV plus(final RV rel) throws ValueRuntimeException
     {
         return instantiateVector(this.getData().plus(rel.getData()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RV minus(final RV rel) throws ValueRuntimeException
     {
@@ -202,28 +200,24 @@ public abstract class FloatVectorRel<U extends Unit<U>, S extends FloatScalarRel
                 getDisplayUnit().getQuantity().getSiDimensions().minus(rel.getDisplayUnit().getQuantity().getSiDimensions())));
     }
 
-    /** {@inheritDoc} */
     @Override
     public RV times(final double multiplier)
     {
         return clone().mutable().assign(FloatMathFunctions.MULT((float) multiplier)).immutable();
     }
 
-    /** {@inheritDoc} */
     @Override
     public RV divide(final double divisor)
     {
         return clone().mutable().assign(FloatMathFunctions.DIV((float) divisor)).immutable();
     }
 
-    /** {@inheritDoc} */
     @Override
     public RV times(final float multiplier)
     {
         return times((double) multiplier);
     }
 
-    /** {@inheritDoc} */
     @Override
     public RV divide(final float divisor)
     {

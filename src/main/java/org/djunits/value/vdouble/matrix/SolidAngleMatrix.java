@@ -194,35 +194,30 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
         this(data, SolidAngleUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<SolidAngle> getScalarClass()
     {
         return SolidAngle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<SolidAngleVector> getVectorClass()
     {
         return SolidAngleVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public SolidAngleMatrix instantiateMatrix(final DoubleMatrixData dmd, final SolidAngleUnit displayUnit)
     {
         return new SolidAngleMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SolidAngleVector instantiateVector(final DoubleVectorData dvd, final SolidAngleUnit displayUnit)
     {
         return new SolidAngleVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SolidAngle instantiateScalarSI(final double valueSI, final SolidAngleUnit displayUnit)
     {

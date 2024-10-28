@@ -197,35 +197,30 @@ public class FloatEquivalentDoseMatrix
         this(data, EquivalentDoseUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatEquivalentDose> getScalarClass()
     {
         return FloatEquivalentDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatEquivalentDoseVector> getVectorClass()
     {
         return FloatEquivalentDoseVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEquivalentDoseMatrix instantiateMatrix(final FloatMatrixData fmd, final EquivalentDoseUnit displayUnit)
     {
         return new FloatEquivalentDoseMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEquivalentDoseVector instantiateVector(final FloatVectorData fvd, final EquivalentDoseUnit displayUnit)
     {
         return new FloatEquivalentDoseVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEquivalentDose instantiateScalarSI(final float valueSI, final EquivalentDoseUnit displayUnit)
     {

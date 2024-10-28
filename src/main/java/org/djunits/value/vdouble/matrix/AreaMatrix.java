@@ -193,35 +193,30 @@ public class AreaMatrix extends DoubleMatrixRel<AreaUnit, Area, AreaVector, Area
         this(data, AreaUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Area> getScalarClass()
     {
         return Area.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AreaVector> getVectorClass()
     {
         return AreaVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AreaMatrix instantiateMatrix(final DoubleMatrixData dmd, final AreaUnit displayUnit)
     {
         return new AreaMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AreaVector instantiateVector(final DoubleVectorData dvd, final AreaUnit displayUnit)
     {
         return new AreaVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Area instantiateScalarSI(final double valueSI, final AreaUnit displayUnit)
     {

@@ -276,21 +276,18 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Area> getScalarClass()
     {
         return Area.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AreaVector instantiateVector(final DoubleVectorData dvd, final AreaUnit displayUnit)
     {
         return new AreaVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Area instantiateScalarSI(final double valueSI, final AreaUnit displayUnit)
     {

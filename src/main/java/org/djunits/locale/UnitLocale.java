@@ -109,7 +109,6 @@ public class UnitLocale implements Serializable
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

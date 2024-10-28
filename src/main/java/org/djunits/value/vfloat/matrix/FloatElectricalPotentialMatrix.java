@@ -206,21 +206,18 @@ public class FloatElectricalPotentialMatrix extends FloatMatrixRel<ElectricalPot
         this(data, ElectricalPotentialUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalPotential> getScalarClass()
     {
         return FloatElectricalPotential.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalPotentialVector> getVectorClass()
     {
         return FloatElectricalPotentialVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalPotentialMatrix instantiateMatrix(final FloatMatrixData fmd,
             final ElectricalPotentialUnit displayUnit)
@@ -228,7 +225,6 @@ public class FloatElectricalPotentialMatrix extends FloatMatrixRel<ElectricalPot
         return new FloatElectricalPotentialMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalPotentialVector instantiateVector(final FloatVectorData fvd,
             final ElectricalPotentialUnit displayUnit)
@@ -236,7 +232,6 @@ public class FloatElectricalPotentialMatrix extends FloatMatrixRel<ElectricalPot
         return new FloatElectricalPotentialVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalPotential instantiateScalarSI(final float valueSI, final ElectricalPotentialUnit displayUnit)
     {

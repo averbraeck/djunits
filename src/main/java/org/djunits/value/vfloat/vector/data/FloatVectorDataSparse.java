@@ -42,14 +42,12 @@ public class FloatVectorDataSparse extends FloatVectorData
         this.size = size;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
         return this.indices.length;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatVectorData assign(final FloatFunction floatFunction)
     {
@@ -113,7 +111,6 @@ public class FloatVectorDataSparse extends FloatVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataSparse assign(final FloatFunction2 floatFunction, final FloatVectorData right)
     {
@@ -267,7 +264,6 @@ public class FloatVectorDataSparse extends FloatVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense toDense()
     {
@@ -279,21 +275,18 @@ public class FloatVectorDataSparse extends FloatVectorData
         return new FloatVectorDataDense(denseSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataSparse toSparse()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int size()
     {
         return this.size;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final float getSI(final int index)
     {
@@ -301,7 +294,6 @@ public class FloatVectorDataSparse extends FloatVectorData
         return internalIndex < 0 ? 0.0f : this.vectorSI[internalIndex];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int index, final float valueSI)
     {
@@ -346,14 +338,12 @@ public class FloatVectorDataSparse extends FloatVectorData
         this.vectorSI = vectorSINew;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final float[] getDenseVectorSI()
     {
         return toDense().vectorSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataSparse copy()
     {
@@ -391,7 +381,6 @@ public class FloatVectorDataSparse extends FloatVectorData
         return new FloatVectorDataSparse(sparseSI, indices, valuesSI.length);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorData plus(final FloatVectorData right)
     {
@@ -402,7 +391,6 @@ public class FloatVectorDataSparse extends FloatVectorData
         return this.copy().incrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorData minus(final FloatVectorData right)
     {
@@ -413,14 +401,12 @@ public class FloatVectorDataSparse extends FloatVectorData
         return this.copy().decrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorData times(final FloatVectorData right)
     {
         return this.copy().multiplyBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorData divide(final FloatVectorData right) throws ValueRuntimeException
     {
@@ -433,14 +419,12 @@ public class FloatVectorDataSparse extends FloatVectorData
         return this.copy().divideBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
         return super.hashCode();
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:needbraces", "checkstyle:designforextension"})
     public boolean equals(final Object obj)

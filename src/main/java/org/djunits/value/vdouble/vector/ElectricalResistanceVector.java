@@ -289,21 +289,18 @@ public class ElectricalResistanceVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalResistance> getScalarClass()
     {
         return ElectricalResistance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalResistanceVector instantiateVector(final DoubleVectorData dvd, final ElectricalResistanceUnit displayUnit)
     {
         return new ElectricalResistanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalResistance instantiateScalarSI(final double valueSI, final ElectricalResistanceUnit displayUnit)
     {

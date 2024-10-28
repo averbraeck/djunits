@@ -278,21 +278,18 @@ public class FloatPressureVector extends FloatVectorRel<PressureUnit, FloatPress
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPressure> getScalarClass()
     {
         return FloatPressure.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPressureVector instantiateVector(final FloatVectorData fvd, final PressureUnit displayUnit)
     {
         return new FloatPressureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPressure instantiateScalarSI(final float valueSI, final PressureUnit displayUnit)
     {

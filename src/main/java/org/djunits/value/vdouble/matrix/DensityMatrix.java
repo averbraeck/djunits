@@ -193,35 +193,30 @@ public class DensityMatrix extends DoubleMatrixRel<DensityUnit, Density, Density
         this(data, DensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Density> getScalarClass()
     {
         return Density.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<DensityVector> getVectorClass()
     {
         return DensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DensityMatrix instantiateMatrix(final DoubleMatrixData dmd, final DensityUnit displayUnit)
     {
         return new DensityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DensityVector instantiateVector(final DoubleVectorData dvd, final DensityUnit displayUnit)
     {
         return new DensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Density instantiateScalarSI(final double valueSI, final DensityUnit displayUnit)
     {

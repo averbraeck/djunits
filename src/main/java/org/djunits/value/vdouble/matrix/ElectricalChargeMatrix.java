@@ -197,35 +197,30 @@ public class ElectricalChargeMatrix
         this(data, ElectricalChargeUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCharge> getScalarClass()
     {
         return ElectricalCharge.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalChargeVector> getVectorClass()
     {
         return ElectricalChargeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalChargeMatrix instantiateMatrix(final DoubleMatrixData dmd, final ElectricalChargeUnit displayUnit)
     {
         return new ElectricalChargeMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalChargeVector instantiateVector(final DoubleVectorData dvd, final ElectricalChargeUnit displayUnit)
     {
         return new ElectricalChargeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCharge instantiateScalarSI(final double valueSI, final ElectricalChargeUnit displayUnit)
     {

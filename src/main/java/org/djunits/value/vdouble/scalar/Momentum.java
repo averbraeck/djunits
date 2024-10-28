@@ -73,7 +73,6 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Momentum instantiateRel(final double value, final MomentumUnit unit)
     {
@@ -286,7 +285,6 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
         return new Power(this.si * v.si, PowerUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

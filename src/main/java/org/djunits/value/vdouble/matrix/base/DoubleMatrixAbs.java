@@ -55,21 +55,18 @@ public abstract class DoubleMatrixAbs<
         super(data.copy(), unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AM plus(final RM increment) throws ValueRuntimeException
     {
         return instantiateMatrix(this.getData().plus(increment.getData()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public AM minus(final RM decrement) throws ValueRuntimeException
     {
         return instantiateMatrix(this.getData().minus(decrement.getData()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public RM minus(final AM decrement) throws ValueRuntimeException
     {

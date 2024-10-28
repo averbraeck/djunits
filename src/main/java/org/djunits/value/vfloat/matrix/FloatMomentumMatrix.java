@@ -194,35 +194,30 @@ public class FloatMomentumMatrix extends FloatMatrixRel<MomentumUnit, FloatMomen
         this(data, MomentumUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMomentum> getScalarClass()
     {
         return FloatMomentum.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMomentumVector> getVectorClass()
     {
         return FloatMomentumVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMomentumMatrix instantiateMatrix(final FloatMatrixData fmd, final MomentumUnit displayUnit)
     {
         return new FloatMomentumMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMomentumVector instantiateVector(final FloatVectorData fvd, final MomentumUnit displayUnit)
     {
         return new FloatMomentumVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMomentum instantiateScalarSI(final float valueSI, final MomentumUnit displayUnit)
     {

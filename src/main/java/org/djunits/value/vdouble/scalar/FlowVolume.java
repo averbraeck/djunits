@@ -72,7 +72,6 @@ public class FlowVolume extends DoubleScalarRel<FlowVolumeUnit, FlowVolume>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FlowVolume instantiateRel(final double value, final FlowVolumeUnit unit)
     {
@@ -285,7 +284,6 @@ public class FlowVolume extends DoubleScalarRel<FlowVolumeUnit, FlowVolume>
         return new FlowMass(this.si * v.si, FlowMassUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

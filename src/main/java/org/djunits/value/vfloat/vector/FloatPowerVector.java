@@ -278,21 +278,18 @@ public class FloatPowerVector extends FloatVectorRel<PowerUnit, FloatPower, Floa
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPower> getScalarClass()
     {
         return FloatPower.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPowerVector instantiateVector(final FloatVectorData fvd, final PowerUnit displayUnit)
     {
         return new FloatPowerVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPower instantiateScalarSI(final float valueSI, final PowerUnit displayUnit)
     {

@@ -290,14 +290,12 @@ public class FloatAngularAccelerationVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngularAcceleration> getScalarClass()
     {
         return FloatAngularAcceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularAccelerationVector instantiateVector(final FloatVectorData fvd,
             final AngularAccelerationUnit displayUnit)
@@ -305,7 +303,6 @@ public class FloatAngularAccelerationVector
         return new FloatAngularAccelerationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularAcceleration instantiateScalarSI(final float valueSI, final AngularAccelerationUnit displayUnit)
     {

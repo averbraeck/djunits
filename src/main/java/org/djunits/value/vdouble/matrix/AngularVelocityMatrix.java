@@ -197,35 +197,30 @@ public class AngularVelocityMatrix
         this(data, AngularVelocityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngularVelocity> getScalarClass()
     {
         return AngularVelocity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngularVelocityVector> getVectorClass()
     {
         return AngularVelocityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularVelocityMatrix instantiateMatrix(final DoubleMatrixData dmd, final AngularVelocityUnit displayUnit)
     {
         return new AngularVelocityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularVelocityVector instantiateVector(final DoubleVectorData dvd, final AngularVelocityUnit displayUnit)
     {
         return new AngularVelocityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularVelocity instantiateScalarSI(final double valueSI, final AngularVelocityUnit displayUnit)
     {

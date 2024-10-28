@@ -198,35 +198,30 @@ public class MagneticFluxDensityMatrix extends
         this(data, MagneticFluxDensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<MagneticFluxDensity> getScalarClass()
     {
         return MagneticFluxDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<MagneticFluxDensityVector> getVectorClass()
     {
         return MagneticFluxDensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxDensityMatrix instantiateMatrix(final DoubleMatrixData dmd, final MagneticFluxDensityUnit displayUnit)
     {
         return new MagneticFluxDensityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxDensityVector instantiateVector(final DoubleVectorData dvd, final MagneticFluxDensityUnit displayUnit)
     {
         return new MagneticFluxDensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxDensity instantiateScalarSI(final double valueSI, final MagneticFluxDensityUnit displayUnit)
     {

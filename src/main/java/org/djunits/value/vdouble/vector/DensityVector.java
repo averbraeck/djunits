@@ -277,21 +277,18 @@ public class DensityVector extends DoubleVectorRel<DensityUnit, Density, Density
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Density> getScalarClass()
     {
         return Density.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DensityVector instantiateVector(final DoubleVectorData dvd, final DensityUnit displayUnit)
     {
         return new DensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Density instantiateScalarSI(final double valueSI, final DensityUnit displayUnit)
     {

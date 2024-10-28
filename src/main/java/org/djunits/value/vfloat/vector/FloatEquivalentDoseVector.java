@@ -288,21 +288,18 @@ public class FloatEquivalentDoseVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatEquivalentDose> getScalarClass()
     {
         return FloatEquivalentDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEquivalentDoseVector instantiateVector(final FloatVectorData fvd, final EquivalentDoseUnit displayUnit)
     {
         return new FloatEquivalentDoseVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEquivalentDose instantiateScalarSI(final float valueSI, final EquivalentDoseUnit displayUnit)
     {

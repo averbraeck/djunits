@@ -53,14 +53,12 @@ public class SIUnit extends Unit<SIUnit>
         return Unit.lookupOrCreateUnitWithSIDimensions(siDimensions);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {
         return getQuantity().getSiDimensions().toString(true, false);
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public int hashCode()
@@ -68,7 +66,6 @@ public class SIUnit extends Unit<SIUnit>
         return getQuantity().getSiDimensions().hashCode();
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:designforextension", "checkstyle:needbraces"})
     public boolean equals(final Object obj)

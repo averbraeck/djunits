@@ -277,21 +277,18 @@ public class EnergyVector extends DoubleVectorRel<EnergyUnit, Energy, EnergyVect
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Energy> getScalarClass()
     {
         return Energy.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public EnergyVector instantiateVector(final DoubleVectorData dvd, final EnergyUnit displayUnit)
     {
         return new EnergyVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Energy instantiateScalarSI(final double valueSI, final EnergyUnit displayUnit)
     {

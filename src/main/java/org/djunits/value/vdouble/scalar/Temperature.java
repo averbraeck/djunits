@@ -70,14 +70,12 @@ public class Temperature
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Temperature instantiateRel(final double value, final TemperatureUnit unit)
     {
         return new Temperature(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final AbsoluteTemperature instantiateAbs(final double value, final AbsoluteTemperatureUnit unit)
     {
@@ -230,7 +228,6 @@ public class Temperature
         return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

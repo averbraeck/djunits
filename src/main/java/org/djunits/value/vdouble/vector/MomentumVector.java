@@ -278,21 +278,18 @@ public class MomentumVector extends DoubleVectorRel<MomentumUnit, Momentum, Mome
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Momentum> getScalarClass()
     {
         return Momentum.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MomentumVector instantiateVector(final DoubleVectorData dvd, final MomentumUnit displayUnit)
     {
         return new MomentumVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Momentum instantiateScalarSI(final double valueSI, final MomentumUnit displayUnit)
     {

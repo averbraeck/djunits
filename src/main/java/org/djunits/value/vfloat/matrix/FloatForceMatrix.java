@@ -193,35 +193,30 @@ public class FloatForceMatrix extends FloatMatrixRel<ForceUnit, FloatForce, Floa
         this(data, ForceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatForce> getScalarClass()
     {
         return FloatForce.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatForceVector> getVectorClass()
     {
         return FloatForceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatForceMatrix instantiateMatrix(final FloatMatrixData fmd, final ForceUnit displayUnit)
     {
         return new FloatForceMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatForceVector instantiateVector(final FloatVectorData fvd, final ForceUnit displayUnit)
     {
         return new FloatForceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatForce instantiateScalarSI(final float valueSI, final ForceUnit displayUnit)
     {

@@ -197,35 +197,30 @@ public class FloatPositionMatrix extends FloatMatrixAbs<PositionUnit, FloatPosit
         this(data, PositionUnit.BASE.getStandardUnit(), rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPosition> getScalarClass()
     {
         return FloatPosition.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPositionVector> getVectorClass()
     {
         return FloatPositionVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPositionMatrix instantiateMatrix(final FloatMatrixData fmd, final PositionUnit displayUnit)
     {
         return new FloatPositionMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPositionVector instantiateVector(final FloatVectorData fvd, final PositionUnit displayUnit)
     {
         return new FloatPositionVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPosition instantiateScalarSI(final float valueSI, final PositionUnit displayUnit)
     {
@@ -234,21 +229,18 @@ public class FloatPositionMatrix extends FloatMatrixAbs<PositionUnit, FloatPosit
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLengthMatrix instantiateMatrixRel(final FloatMatrixData fmd, final LengthUnit displayUnit)
     {
         return new FloatLengthMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLengthVector instantiateVectorRel(final FloatVectorData fvd, final LengthUnit displayUnit)
     {
         return new FloatLengthVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLength instantiateScalarRelSI(final float valueSI, final LengthUnit displayUnit)
     {

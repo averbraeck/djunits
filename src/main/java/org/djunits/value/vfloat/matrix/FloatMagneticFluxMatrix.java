@@ -197,35 +197,30 @@ public class FloatMagneticFluxMatrix
         this(data, MagneticFluxUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMagneticFlux> getScalarClass()
     {
         return FloatMagneticFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMagneticFluxVector> getVectorClass()
     {
         return FloatMagneticFluxVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxMatrix instantiateMatrix(final FloatMatrixData fmd, final MagneticFluxUnit displayUnit)
     {
         return new FloatMagneticFluxMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxVector instantiateVector(final FloatVectorData fvd, final MagneticFluxUnit displayUnit)
     {
         return new FloatMagneticFluxVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFlux instantiateScalarSI(final float valueSI, final MagneticFluxUnit displayUnit)
     {

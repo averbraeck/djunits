@@ -290,21 +290,18 @@ public class FloatAmountOfSubstanceVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAmountOfSubstance> getScalarClass()
     {
         return FloatAmountOfSubstance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAmountOfSubstanceVector instantiateVector(final FloatVectorData fvd, final AmountOfSubstanceUnit displayUnit)
     {
         return new FloatAmountOfSubstanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAmountOfSubstance instantiateScalarSI(final float valueSI, final AmountOfSubstanceUnit displayUnit)
     {

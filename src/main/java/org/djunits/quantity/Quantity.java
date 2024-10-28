@@ -417,7 +417,6 @@ public class Quantity<U extends Unit<U>> implements Serializable
         return this.standardUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -433,7 +432,6 @@ public class Quantity<U extends Unit<U>> implements Serializable
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)
@@ -479,7 +477,6 @@ public class Quantity<U extends Unit<U>> implements Serializable
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

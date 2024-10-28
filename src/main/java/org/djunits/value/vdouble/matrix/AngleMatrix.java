@@ -196,35 +196,30 @@ public class AngleMatrix extends DoubleMatrixRelWithAbs<DirectionUnit, Direction
         this(data, AngleUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Angle> getScalarClass()
     {
         return Angle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngleVector> getVectorClass()
     {
         return AngleVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngleMatrix instantiateMatrix(final DoubleMatrixData dmd, final AngleUnit displayUnit)
     {
         return new AngleMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngleVector instantiateVector(final DoubleVectorData dvd, final AngleUnit displayUnit)
     {
         return new AngleVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Angle instantiateScalarSI(final double valueSI, final AngleUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class AngleMatrix extends DoubleMatrixRelWithAbs<DirectionUnit, Direction
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DirectionMatrix instantiateMatrixAbs(final DoubleMatrixData dmd, final DirectionUnit displayUnit)
     {
         return new DirectionMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DirectionVector instantiateVectorAbs(final DoubleVectorData dvd, final DirectionUnit displayUnit)
     {
         return new DirectionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Direction instantiateScalarAbsSI(final double valueSI, final DirectionUnit displayUnit)
     {

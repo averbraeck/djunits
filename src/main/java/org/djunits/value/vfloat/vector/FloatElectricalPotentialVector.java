@@ -290,14 +290,12 @@ public class FloatElectricalPotentialVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalPotential> getScalarClass()
     {
         return FloatElectricalPotential.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalPotentialVector instantiateVector(final FloatVectorData fvd,
             final ElectricalPotentialUnit displayUnit)
@@ -305,7 +303,6 @@ public class FloatElectricalPotentialVector
         return new FloatElectricalPotentialVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalPotential instantiateScalarSI(final float valueSI, final ElectricalPotentialUnit displayUnit)
     {

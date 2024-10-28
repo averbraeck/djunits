@@ -71,7 +71,6 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final CatalyticActivity instantiateRel(final double value, final CatalyticActivityUnit unit)
     {
@@ -254,7 +253,6 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
         return new AmountOfSubstance(this.si / v.si, AmountOfSubstanceUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

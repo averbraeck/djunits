@@ -69,7 +69,6 @@ public class LinearDensity extends DoubleScalarRel<LinearDensityUnit, LinearDens
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final LinearDensity instantiateRel(final double value, final LinearDensityUnit unit)
     {
@@ -262,7 +261,6 @@ public class LinearDensity extends DoubleScalarRel<LinearDensityUnit, LinearDens
         return new Frequency(this.si * v.si, FrequencyUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Length reciprocal()
     {

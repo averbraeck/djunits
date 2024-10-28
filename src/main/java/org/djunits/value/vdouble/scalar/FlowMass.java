@@ -73,7 +73,6 @@ public class FlowMass extends DoubleScalarRel<FlowMassUnit, FlowMass>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FlowMass instantiateRel(final double value, final FlowMassUnit unit)
     {
@@ -296,7 +295,6 @@ public class FlowMass extends DoubleScalarRel<FlowMassUnit, FlowMass>
         return new Momentum(this.si * v.si, MomentumUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

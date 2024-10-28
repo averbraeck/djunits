@@ -59,14 +59,12 @@ public class FloatAbsoluteTemperature
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAbsoluteTemperature instantiateAbs(final float value, final AbsoluteTemperatureUnit unit)
     {
         return new FloatAbsoluteTemperature(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatTemperature instantiateRel(final float value, final TemperatureUnit unit)
     {

@@ -193,35 +193,30 @@ public class ForceMatrix extends DoubleMatrixRel<ForceUnit, Force, ForceVector, 
         this(data, ForceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Force> getScalarClass()
     {
         return Force.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ForceVector> getVectorClass()
     {
         return ForceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ForceMatrix instantiateMatrix(final DoubleMatrixData dmd, final ForceUnit displayUnit)
     {
         return new ForceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ForceVector instantiateVector(final DoubleVectorData dvd, final ForceUnit displayUnit)
     {
         return new ForceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Force instantiateScalarSI(final double valueSI, final ForceUnit displayUnit)
     {

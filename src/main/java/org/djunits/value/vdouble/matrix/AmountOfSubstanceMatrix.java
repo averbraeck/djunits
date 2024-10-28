@@ -198,35 +198,30 @@ public class AmountOfSubstanceMatrix
         this(data, AmountOfSubstanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AmountOfSubstance> getScalarClass()
     {
         return AmountOfSubstance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AmountOfSubstanceVector> getVectorClass()
     {
         return AmountOfSubstanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AmountOfSubstanceMatrix instantiateMatrix(final DoubleMatrixData dmd, final AmountOfSubstanceUnit displayUnit)
     {
         return new AmountOfSubstanceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AmountOfSubstanceVector instantiateVector(final DoubleVectorData dvd, final AmountOfSubstanceUnit displayUnit)
     {
         return new AmountOfSubstanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AmountOfSubstance instantiateScalarSI(final double valueSI, final AmountOfSubstanceUnit displayUnit)
     {

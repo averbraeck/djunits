@@ -75,7 +75,6 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final ElectricalPotential instantiateRel(final double value, final ElectricalPotentialUnit unit)
     {
@@ -272,7 +271,6 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
         return new MagneticFlux(this.si * v.si, MagneticFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

@@ -278,21 +278,18 @@ public class FloatForceVector extends FloatVectorRel<ForceUnit, FloatForce, Floa
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatForce> getScalarClass()
     {
         return FloatForce.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatForceVector instantiateVector(final FloatVectorData fvd, final ForceUnit displayUnit)
     {
         return new FloatForceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatForce instantiateScalarSI(final float valueSI, final ForceUnit displayUnit)
     {

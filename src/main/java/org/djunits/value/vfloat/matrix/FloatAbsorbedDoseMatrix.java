@@ -197,35 +197,30 @@ public class FloatAbsorbedDoseMatrix
         this(data, AbsorbedDoseUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAbsorbedDose> getScalarClass()
     {
         return FloatAbsorbedDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAbsorbedDoseVector> getVectorClass()
     {
         return FloatAbsorbedDoseVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsorbedDoseMatrix instantiateMatrix(final FloatMatrixData fmd, final AbsorbedDoseUnit displayUnit)
     {
         return new FloatAbsorbedDoseMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsorbedDoseVector instantiateVector(final FloatVectorData fvd, final AbsorbedDoseUnit displayUnit)
     {
         return new FloatAbsorbedDoseVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsorbedDose instantiateScalarSI(final float valueSI, final AbsorbedDoseUnit displayUnit)
     {

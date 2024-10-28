@@ -207,21 +207,18 @@ public class FloatElectricalConductanceMatrix extends FloatMatrixRel<ElectricalC
         this(data, ElectricalConductanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalConductance> getScalarClass()
     {
         return FloatElectricalConductance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalConductanceVector> getVectorClass()
     {
         return FloatElectricalConductanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalConductanceMatrix instantiateMatrix(final FloatMatrixData fmd,
             final ElectricalConductanceUnit displayUnit)
@@ -229,7 +226,6 @@ public class FloatElectricalConductanceMatrix extends FloatMatrixRel<ElectricalC
         return new FloatElectricalConductanceMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalConductanceVector instantiateVector(final FloatVectorData fvd,
             final ElectricalConductanceUnit displayUnit)
@@ -237,7 +233,6 @@ public class FloatElectricalConductanceMatrix extends FloatMatrixRel<ElectricalC
         return new FloatElectricalConductanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalConductance instantiateScalarSI(final float valueSI, final ElectricalConductanceUnit displayUnit)
     {

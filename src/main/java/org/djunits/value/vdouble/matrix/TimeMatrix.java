@@ -196,35 +196,30 @@ public class TimeMatrix
         this(data, TimeUnit.BASE.getStandardUnit(), rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Time> getScalarClass()
     {
         return Time.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<TimeVector> getVectorClass()
     {
         return TimeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TimeMatrix instantiateMatrix(final DoubleMatrixData dmd, final TimeUnit displayUnit)
     {
         return new TimeMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public TimeVector instantiateVector(final DoubleVectorData dvd, final TimeUnit displayUnit)
     {
         return new TimeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Time instantiateScalarSI(final double valueSI, final TimeUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class TimeMatrix
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DurationMatrix instantiateMatrixRel(final DoubleMatrixData dmd, final DurationUnit displayUnit)
     {
         return new DurationMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DurationVector instantiateVectorRel(final DoubleVectorData dvd, final DurationUnit displayUnit)
     {
         return new DurationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Duration instantiateScalarRelSI(final double valueSI, final DurationUnit displayUnit)
     {

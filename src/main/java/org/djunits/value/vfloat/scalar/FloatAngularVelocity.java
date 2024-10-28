@@ -83,7 +83,6 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAngularVelocity instantiateRel(final float value, final AngularVelocityUnit unit)
     {
@@ -301,7 +300,6 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
         return new FloatAngularAcceleration(this.si * v.si, AngularAccelerationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

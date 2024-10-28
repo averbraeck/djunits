@@ -36,7 +36,6 @@ public class LinearScale implements Scale
         this.conversionFactorToStandardUnit = conversionFactorToStandardUnit;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("checkstyle:designforextension")
     @Override
     public double toStandardUnit(final double value)
@@ -44,7 +43,6 @@ public class LinearScale implements Scale
         return value * this.conversionFactorToStandardUnit;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("checkstyle:designforextension")
     @Override
     public double fromStandardUnit(final double value)
@@ -61,14 +59,12 @@ public class LinearScale implements Scale
         return this.conversionFactorToStandardUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public boolean isBaseSIScale()
     {
         return this.conversionFactorToStandardUnit == 1.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -80,7 +76,6 @@ public class LinearScale implements Scale
         return result;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("checkstyle:needbraces")
     @Override
     public boolean equals(final Object obj)
@@ -98,7 +93,6 @@ public class LinearScale implements Scale
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

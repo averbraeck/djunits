@@ -201,35 +201,30 @@ public class FloatTemperatureMatrix extends
         this(data, TemperatureUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTemperature> getScalarClass()
     {
         return FloatTemperature.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTemperatureVector> getVectorClass()
     {
         return FloatTemperatureVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperatureMatrix instantiateMatrix(final FloatMatrixData fmd, final TemperatureUnit displayUnit)
     {
         return new FloatTemperatureMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperatureVector instantiateVector(final FloatVectorData fvd, final TemperatureUnit displayUnit)
     {
         return new FloatTemperatureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperature instantiateScalarSI(final float valueSI, final TemperatureUnit displayUnit)
     {
@@ -238,7 +233,6 @@ public class FloatTemperatureMatrix extends
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperatureMatrix instantiateMatrixAbs(final FloatMatrixData fmd,
             final AbsoluteTemperatureUnit displayUnit)
@@ -246,7 +240,6 @@ public class FloatTemperatureMatrix extends
         return new FloatAbsoluteTemperatureMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperatureVector instantiateVectorAbs(final FloatVectorData fvd,
             final AbsoluteTemperatureUnit displayUnit)
@@ -254,7 +247,6 @@ public class FloatTemperatureMatrix extends
         return new FloatAbsoluteTemperatureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperature instantiateScalarAbsSI(final float valueSI, final AbsoluteTemperatureUnit displayUnit)
     {

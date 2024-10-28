@@ -71,14 +71,12 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Angle instantiateRel(final double value, final AngleUnit unit)
     {
         return new Angle(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Direction instantiateAbs(final double value, final DirectionUnit unit)
     {
@@ -260,7 +258,6 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
         return new Duration(this.si / v.si, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

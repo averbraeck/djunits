@@ -47,7 +47,6 @@ public abstract class DoubleVectorRelWithAbs<
         super(data, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AV plus(final AV increment)
     {

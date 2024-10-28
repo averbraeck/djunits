@@ -279,21 +279,18 @@ public class RadioActivityVector extends DoubleVectorRel<RadioActivityUnit, Radi
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<RadioActivity> getScalarClass()
     {
         return RadioActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public RadioActivityVector instantiateVector(final DoubleVectorData dvd, final RadioActivityUnit displayUnit)
     {
         return new RadioActivityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public RadioActivity instantiateScalarSI(final double valueSI, final RadioActivityUnit displayUnit)
     {

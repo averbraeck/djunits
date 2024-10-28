@@ -28,21 +28,18 @@ public class FloatJerkVector extends FloatVectorRel<JerkUnit, FloatJerk, FloatJe
         super(data, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatJerk> getScalarClass()
     {
         return FloatJerk.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatJerkVector instantiateVector(final FloatVectorData fvd, final JerkUnit displayUnit)
     {
         return new FloatJerkVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatJerk instantiateScalarSI(final float valueSI, final JerkUnit displayUnit)
     {

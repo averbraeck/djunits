@@ -48,14 +48,12 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Direction instantiateAbs(final double value, final DirectionUnit unit)
     {
         return new Direction(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Angle instantiateRel(final double value, final AngleUnit unit)
     {

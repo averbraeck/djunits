@@ -81,7 +81,6 @@ public class FloatLinearDensity extends FloatScalarRel<LinearDensityUnit, FloatL
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatLinearDensity instantiateRel(final float value, final LinearDensityUnit unit)
     {
@@ -276,7 +275,6 @@ public class FloatLinearDensity extends FloatScalarRel<LinearDensityUnit, FloatL
         return new FloatFrequency(this.si * v.si, FrequencyUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLength reciprocal()
     {

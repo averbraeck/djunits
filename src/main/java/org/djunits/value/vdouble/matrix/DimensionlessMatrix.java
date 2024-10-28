@@ -197,35 +197,30 @@ public class DimensionlessMatrix
         this(data, DimensionlessUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Dimensionless> getScalarClass()
     {
         return Dimensionless.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<DimensionlessVector> getVectorClass()
     {
         return DimensionlessVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DimensionlessMatrix instantiateMatrix(final DoubleMatrixData dmd, final DimensionlessUnit displayUnit)
     {
         return new DimensionlessMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DimensionlessVector instantiateVector(final DoubleVectorData dvd, final DimensionlessUnit displayUnit)
     {
         return new DimensionlessVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Dimensionless instantiateScalarSI(final double valueSI, final DimensionlessUnit displayUnit)
     {
@@ -234,7 +229,6 @@ public class DimensionlessMatrix
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix acos()
     {
@@ -242,7 +236,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix asin()
     {
@@ -250,7 +243,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix atan()
     {
@@ -258,7 +250,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix cbrt()
     {
@@ -266,7 +257,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix cos()
     {
@@ -274,7 +264,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix cosh()
     {
@@ -282,7 +271,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix exp()
     {
@@ -290,7 +278,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix expm1()
     {
@@ -298,7 +285,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix log()
     {
@@ -306,7 +292,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix log10()
     {
@@ -314,7 +299,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix log1p()
     {
@@ -322,7 +306,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix pow(final double x)
     {
@@ -330,7 +313,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix signum()
     {
@@ -338,7 +320,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix sin()
     {
@@ -346,7 +327,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix sinh()
     {
@@ -354,7 +334,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix sqrt()
     {
@@ -362,7 +341,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix tan()
     {
@@ -370,7 +348,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix tanh()
     {
@@ -378,7 +355,6 @@ public class DimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessMatrix inv()
     {

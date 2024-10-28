@@ -75,119 +75,102 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         return ValueUtil.expressAsUnit(getSI(), targetUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean lt(final S o)
     {
         return this.getSI() < o.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean le(final S o)
     {
         return this.getSI() <= o.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean gt(final S o)
     {
         return this.getSI() > o.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean ge(final S o)
     {
         return this.getSI() >= o.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean eq(final S o)
     {
         return this.getSI() == o.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean ne(final S o)
     {
         return this.getSI() != o.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean lt0()
     {
         return this.getSI() < 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean le0()
     {
         return this.getSI() <= 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean gt0()
     {
         return this.getSI() > 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean ge0()
     {
         return this.getSI() >= 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean eq0()
     {
         return this.getSI() == 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final boolean ne0()
     {
         return this.getSI() != 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int compareTo(final S o)
     {
         return Double.compare(this.getSI(), o.getSI());
     }
 
-    /** {@inheritDoc} */
     @Override
     public int intValue()
     {
         return (int) this.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public long longValue()
     {
         return (long) this.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public float floatValue()
     {
         return (float) this.getSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public double doubleValue()
     {
@@ -198,28 +181,24 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     /********************************* GENERIC METHODS ********************************/
     /**********************************************************************************/
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {
         return toString(getDisplayUnit(), false, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final U displayUnit)
     {
         return toString(displayUnit, false, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final boolean verbose, final boolean withUnit)
     {
         return toString(getDisplayUnit(), verbose, withUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
     {
@@ -280,14 +259,12 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         return toString(displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toTextualString()
     {
         return toTextualString(getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toTextualString(final U displayUnit)
     {
@@ -295,14 +272,12 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         return format(d) + " " + displayUnit.getLocalizedTextualAbbreviation();
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toDisplayString()
     {
         return toDisplayString(getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toDisplayString(final U displayUnit)
     {
@@ -310,7 +285,6 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         return format(d) + " " + displayUnit.getLocalizedDisplayAbbreviation();
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public int hashCode()
@@ -323,7 +297,6 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:designforextension", "checkstyle:needbraces", "unchecked"})
     public boolean equals(final Object obj)

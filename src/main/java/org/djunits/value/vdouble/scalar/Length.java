@@ -75,14 +75,12 @@ public class Length extends DoubleScalarRelWithAbs<PositionUnit, Position, Lengt
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Length instantiateRel(final double value, final LengthUnit unit)
     {
         return new Length(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Position instantiateAbs(final double value, final PositionUnit unit)
     {
@@ -334,7 +332,6 @@ public class Length extends DoubleScalarRelWithAbs<PositionUnit, Position, Lengt
         return new Momentum(this.si * v.si, MomentumUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LinearDensity reciprocal()
     {

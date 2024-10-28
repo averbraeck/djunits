@@ -279,21 +279,18 @@ public class FloatSolidAngleVector extends FloatVectorRel<SolidAngleUnit, FloatS
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSolidAngle> getScalarClass()
     {
         return FloatSolidAngle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSolidAngleVector instantiateVector(final FloatVectorData fvd, final SolidAngleUnit displayUnit)
     {
         return new FloatSolidAngleVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSolidAngle instantiateScalarSI(final float valueSI, final SolidAngleUnit displayUnit)
     {

@@ -196,35 +196,30 @@ public class FloatTimeMatrix extends FloatMatrixAbs<TimeUnit, FloatTime, FloatTi
         this(data, TimeUnit.BASE.getStandardUnit(), rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTime> getScalarClass()
     {
         return FloatTime.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTimeVector> getVectorClass()
     {
         return FloatTimeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTimeMatrix instantiateMatrix(final FloatMatrixData fmd, final TimeUnit displayUnit)
     {
         return new FloatTimeMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTimeVector instantiateVector(final FloatVectorData fvd, final TimeUnit displayUnit)
     {
         return new FloatTimeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTime instantiateScalarSI(final float valueSI, final TimeUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class FloatTimeMatrix extends FloatMatrixAbs<TimeUnit, FloatTime, FloatTi
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDurationMatrix instantiateMatrixRel(final FloatMatrixData fmd, final DurationUnit displayUnit)
     {
         return new FloatDurationMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDurationVector instantiateVectorRel(final FloatVectorData fvd, final DurationUnit displayUnit)
     {
         return new FloatDurationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDuration instantiateScalarRelSI(final float valueSI, final DurationUnit displayUnit)
     {

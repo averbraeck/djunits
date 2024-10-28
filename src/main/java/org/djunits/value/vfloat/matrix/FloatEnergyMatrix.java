@@ -193,35 +193,30 @@ public class FloatEnergyMatrix extends FloatMatrixRel<EnergyUnit, FloatEnergy, F
         this(data, EnergyUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatEnergy> getScalarClass()
     {
         return FloatEnergy.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatEnergyVector> getVectorClass()
     {
         return FloatEnergyVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEnergyMatrix instantiateMatrix(final FloatMatrixData fmd, final EnergyUnit displayUnit)
     {
         return new FloatEnergyMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEnergyVector instantiateVector(final FloatVectorData fvd, final EnergyUnit displayUnit)
     {
         return new FloatEnergyVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEnergy instantiateScalarSI(final float valueSI, final EnergyUnit displayUnit)
     {

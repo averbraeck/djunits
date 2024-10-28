@@ -281,7 +281,6 @@ public class FloatDirectionVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDirection>
 
@@ -290,14 +289,12 @@ public class FloatDirectionVector
         return FloatDirection.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDirectionVector instantiateVector(final FloatVectorData fvd, final DirectionUnit displayUnit)
     {
         return new FloatDirectionVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDirection instantiateScalarSI(final float valueSI, final DirectionUnit displayUnit)
     {
@@ -306,14 +303,12 @@ public class FloatDirectionVector
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngleVector instantiateVectorRel(final FloatVectorData fvd, final AngleUnit displayUnit)
     {
         return new FloatAngleVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngle instantiateScalarRelSI(final float valueSI, final AngleUnit displayUnit)
     {

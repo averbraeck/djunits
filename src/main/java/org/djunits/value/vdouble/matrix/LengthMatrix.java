@@ -196,35 +196,30 @@ public class LengthMatrix extends DoubleMatrixRelWithAbs<PositionUnit, Position,
         this(data, LengthUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Length> getScalarClass()
     {
         return Length.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LengthVector> getVectorClass()
     {
         return LengthVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LengthMatrix instantiateMatrix(final DoubleMatrixData dmd, final LengthUnit displayUnit)
     {
         return new LengthMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LengthVector instantiateVector(final DoubleVectorData dvd, final LengthUnit displayUnit)
     {
         return new LengthVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Length instantiateScalarSI(final double valueSI, final LengthUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class LengthMatrix extends DoubleMatrixRelWithAbs<PositionUnit, Position,
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PositionMatrix instantiateMatrixAbs(final DoubleMatrixData dmd, final PositionUnit displayUnit)
     {
         return new PositionMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public PositionVector instantiateVectorAbs(final DoubleVectorData dvd, final PositionUnit displayUnit)
     {
         return new PositionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Position instantiateScalarAbsSI(final double valueSI, final PositionUnit displayUnit)
     {

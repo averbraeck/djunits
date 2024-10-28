@@ -73,7 +73,6 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final AngularAcceleration instantiateRel(final double value, final AngularAccelerationUnit unit)
     {
@@ -260,7 +259,6 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
         return new Frequency(this.si / v.si, FrequencyUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

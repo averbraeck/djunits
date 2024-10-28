@@ -199,35 +199,30 @@ public class FloatDimensionlessMatrix
         this(data, DimensionlessUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDimensionless> getScalarClass()
     {
         return FloatDimensionless.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDimensionlessVector> getVectorClass()
     {
         return FloatDimensionlessVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDimensionlessMatrix instantiateMatrix(final FloatMatrixData fmd, final DimensionlessUnit displayUnit)
     {
         return new FloatDimensionlessMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDimensionlessVector instantiateVector(final FloatVectorData fvd, final DimensionlessUnit displayUnit)
     {
         return new FloatDimensionlessVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDimensionless instantiateScalarSI(final float valueSI, final DimensionlessUnit displayUnit)
     {
@@ -236,7 +231,6 @@ public class FloatDimensionlessMatrix
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix acos()
     {
@@ -244,7 +238,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix asin()
     {
@@ -252,7 +245,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix atan()
     {
@@ -260,7 +252,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix cbrt()
     {
@@ -268,7 +259,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix cos()
     {
@@ -276,7 +266,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix cosh()
     {
@@ -284,7 +273,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix exp()
     {
@@ -292,7 +280,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix expm1()
     {
@@ -300,7 +287,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix log()
     {
@@ -308,7 +294,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix log10()
     {
@@ -316,7 +301,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix log1p()
     {
@@ -324,7 +308,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix pow(final double x)
     {
@@ -332,7 +315,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix signum()
     {
@@ -340,7 +322,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix sin()
     {
@@ -348,7 +329,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix sinh()
     {
@@ -356,7 +336,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix sqrt()
     {
@@ -364,7 +343,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix tan()
     {
@@ -372,7 +350,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix tanh()
     {
@@ -380,7 +357,6 @@ public class FloatDimensionlessMatrix
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDimensionlessMatrix inv()
     {

@@ -290,21 +290,18 @@ public class FloatCatalyticActivityVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatCatalyticActivity> getScalarClass()
     {
         return FloatCatalyticActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatCatalyticActivityVector instantiateVector(final FloatVectorData fvd, final CatalyticActivityUnit displayUnit)
     {
         return new FloatCatalyticActivityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatCatalyticActivity instantiateScalarSI(final float valueSI, final CatalyticActivityUnit displayUnit)
     {

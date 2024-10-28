@@ -196,35 +196,30 @@ public class DurationMatrix extends
         this(data, DurationUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Duration> getScalarClass()
     {
         return Duration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<DurationVector> getVectorClass()
     {
         return DurationVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DurationMatrix instantiateMatrix(final DoubleMatrixData dmd, final DurationUnit displayUnit)
     {
         return new DurationMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DurationVector instantiateVector(final DoubleVectorData dvd, final DurationUnit displayUnit)
     {
         return new DurationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Duration instantiateScalarSI(final double valueSI, final DurationUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class DurationMatrix extends
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TimeMatrix instantiateMatrixAbs(final DoubleMatrixData dmd, final TimeUnit displayUnit)
     {
         return new TimeMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public TimeVector instantiateVectorAbs(final DoubleVectorData dvd, final TimeUnit displayUnit)
     {
         return new TimeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Time instantiateScalarAbsSI(final double valueSI, final TimeUnit displayUnit)
     {

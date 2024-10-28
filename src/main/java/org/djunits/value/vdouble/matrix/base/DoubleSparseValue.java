@@ -107,7 +107,6 @@ public class DoubleSparseValue<U extends Unit<U>, S extends DoubleScalar<U, S>> 
         return this.valueSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

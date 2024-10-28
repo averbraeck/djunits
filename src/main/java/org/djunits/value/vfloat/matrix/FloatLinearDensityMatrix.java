@@ -197,35 +197,30 @@ public class FloatLinearDensityMatrix
         this(data, LinearDensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLinearDensity> getScalarClass()
     {
         return FloatLinearDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLinearDensityVector> getVectorClass()
     {
         return FloatLinearDensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLinearDensityMatrix instantiateMatrix(final FloatMatrixData fmd, final LinearDensityUnit displayUnit)
     {
         return new FloatLinearDensityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLinearDensityVector instantiateVector(final FloatVectorData fvd, final LinearDensityUnit displayUnit)
     {
         return new FloatLinearDensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLinearDensity instantiateScalarSI(final float valueSI, final LinearDensityUnit displayUnit)
     {

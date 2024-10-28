@@ -197,35 +197,30 @@ public class FloatSolidAngleMatrix
         this(data, SolidAngleUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSolidAngle> getScalarClass()
     {
         return FloatSolidAngle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSolidAngleVector> getVectorClass()
     {
         return FloatSolidAngleVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSolidAngleMatrix instantiateMatrix(final FloatMatrixData fmd, final SolidAngleUnit displayUnit)
     {
         return new FloatSolidAngleMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSolidAngleVector instantiateVector(final FloatVectorData fvd, final SolidAngleUnit displayUnit)
     {
         return new FloatSolidAngleVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSolidAngle instantiateScalarSI(final float valueSI, final SolidAngleUnit displayUnit)
     {

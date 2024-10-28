@@ -206,21 +206,18 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
         this(data, ElectricalResistanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalResistance> getScalarClass()
     {
         return FloatElectricalResistance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalResistanceVector> getVectorClass()
     {
         return FloatElectricalResistanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalResistanceMatrix instantiateMatrix(final FloatMatrixData fmd,
             final ElectricalResistanceUnit displayUnit)
@@ -228,7 +225,6 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
         return new FloatElectricalResistanceMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalResistanceVector instantiateVector(final FloatVectorData fvd,
             final ElectricalResistanceUnit displayUnit)
@@ -236,7 +232,6 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
         return new FloatElectricalResistanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalResistance instantiateScalarSI(final float valueSI, final ElectricalResistanceUnit displayUnit)
     {

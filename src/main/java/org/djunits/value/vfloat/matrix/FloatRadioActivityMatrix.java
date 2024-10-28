@@ -197,35 +197,30 @@ public class FloatRadioActivityMatrix
         this(data, RadioActivityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatRadioActivity> getScalarClass()
     {
         return FloatRadioActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatRadioActivityVector> getVectorClass()
     {
         return FloatRadioActivityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatRadioActivityMatrix instantiateMatrix(final FloatMatrixData fmd, final RadioActivityUnit displayUnit)
     {
         return new FloatRadioActivityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatRadioActivityVector instantiateVector(final FloatVectorData fvd, final RadioActivityUnit displayUnit)
     {
         return new FloatRadioActivityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatRadioActivity instantiateScalarSI(final float valueSI, final RadioActivityUnit displayUnit)
     {

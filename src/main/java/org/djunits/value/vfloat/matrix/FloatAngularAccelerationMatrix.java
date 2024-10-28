@@ -206,21 +206,18 @@ public class FloatAngularAccelerationMatrix extends FloatMatrixRel<AngularAccele
         this(data, AngularAccelerationUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngularAcceleration> getScalarClass()
     {
         return FloatAngularAcceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngularAccelerationVector> getVectorClass()
     {
         return FloatAngularAccelerationVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularAccelerationMatrix instantiateMatrix(final FloatMatrixData fmd,
             final AngularAccelerationUnit displayUnit)
@@ -228,7 +225,6 @@ public class FloatAngularAccelerationMatrix extends FloatMatrixRel<AngularAccele
         return new FloatAngularAccelerationMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularAccelerationVector instantiateVector(final FloatVectorData fvd,
             final AngularAccelerationUnit displayUnit)
@@ -236,7 +232,6 @@ public class FloatAngularAccelerationMatrix extends FloatMatrixRel<AngularAccele
         return new FloatAngularAccelerationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularAcceleration instantiateScalarSI(final float valueSI, final AngularAccelerationUnit displayUnit)
     {

@@ -48,14 +48,12 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Position instantiateAbs(final double value, final PositionUnit unit)
     {
         return new Position(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Length instantiateRel(final double value, final LengthUnit unit)
     {

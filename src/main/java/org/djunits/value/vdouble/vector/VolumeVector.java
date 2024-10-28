@@ -277,21 +277,18 @@ public class VolumeVector extends DoubleVectorRel<VolumeUnit, Volume, VolumeVect
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Volume> getScalarClass()
     {
         return Volume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public VolumeVector instantiateVector(final DoubleVectorData dvd, final VolumeUnit displayUnit)
     {
         return new VolumeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Volume instantiateScalarSI(final double valueSI, final VolumeUnit displayUnit)
     {

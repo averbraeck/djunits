@@ -106,14 +106,12 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
         this(values, unit, StorageType.DENSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSIScalar> getScalarClass()
     {
         return FloatSIScalar.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSIVector> getVectorClass()
     {
@@ -149,28 +147,24 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
         throw new IllegalArgumentException("Error parsing FloatSIMatrix with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIMatrix instantiateMatrix(final FloatMatrixData fmd, final SIUnit unit)
     {
         return new FloatSIMatrix(fmd, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIVector instantiateVector(final FloatVectorData fvd, final SIUnit unit)
     {
         return new FloatSIVector(fvd, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar instantiateScalarSI(final float valueSI, final SIUnit unit)
     {
         return new FloatSIScalar(valueSI, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
     {

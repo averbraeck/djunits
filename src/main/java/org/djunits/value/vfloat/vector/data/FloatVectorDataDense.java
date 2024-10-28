@@ -31,7 +31,6 @@ public class FloatVectorDataDense extends FloatVectorData
         System.arraycopy(vectorSI, 0, this.vectorSI, 0, vectorSI.length);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
@@ -40,7 +39,6 @@ public class FloatVectorDataDense extends FloatVectorData
                 .filter(d -> d != 0.0).count();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense assign(final FloatFunction floatFunction)
     {
@@ -48,7 +46,6 @@ public class FloatVectorDataDense extends FloatVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense assign(final FloatFunction2 floatFunction2, final FloatVectorData right)
     {
@@ -65,49 +62,42 @@ public class FloatVectorDataDense extends FloatVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense toDense()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataSparse toSparse()
     {
         return FloatVectorDataSparse.instantiate(this.vectorSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int size()
     {
         return this.vectorSI.length;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final float getSI(final int index)
     {
         return this.vectorSI[index];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int index, final float valueSI)
     {
         this.vectorSI[index] = valueSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final float[] getDenseVectorSI()
     {
         return this.vectorSI.clone();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense copy()
     {
@@ -116,7 +106,6 @@ public class FloatVectorDataDense extends FloatVectorData
         return new FloatVectorDataDense(vCopy);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense plus(final FloatVectorData right)
     {
@@ -126,7 +115,6 @@ public class FloatVectorDataDense extends FloatVectorData
         return new FloatVectorDataDense(out);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorDataDense minus(final FloatVectorData right)
     {
@@ -136,7 +124,6 @@ public class FloatVectorDataDense extends FloatVectorData
         return new FloatVectorDataDense(out);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorData times(final FloatVectorData right)
     {
@@ -150,7 +137,6 @@ public class FloatVectorDataDense extends FloatVectorData
         return this.copy().multiplyBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVectorData divide(final FloatVectorData right)
     {

@@ -82,7 +82,6 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatFlowVolume instantiateRel(final float value, final FlowVolumeUnit unit)
     {
@@ -295,7 +294,6 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
         return new FloatFlowMass(this.si * v.si, FlowMassUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

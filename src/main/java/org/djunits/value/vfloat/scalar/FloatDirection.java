@@ -58,14 +58,12 @@ public class FloatDirection extends FloatScalarAbs<DirectionUnit, FloatDirection
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDirection instantiateAbs(final float value, final DirectionUnit unit)
     {
         return new FloatDirection(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAngle instantiateRel(final float value, final AngleUnit unit)
     {

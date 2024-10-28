@@ -83,7 +83,6 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMomentum instantiateRel(final float value, final MomentumUnit unit)
     {
@@ -296,7 +295,6 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
         return new FloatPower(this.si * v.si, PowerUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

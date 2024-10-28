@@ -263,7 +263,6 @@ public final class DOUBLEMATRIX
         /** */
         private static final long serialVersionUID = 1L;
 
-        /** {@inheritDoc} */
         @Override
         public double nextDouble()
         {

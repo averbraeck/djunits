@@ -193,35 +193,30 @@ public class EnergyMatrix extends DoubleMatrixRel<EnergyUnit, Energy, EnergyVect
         this(data, EnergyUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Energy> getScalarClass()
     {
         return Energy.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<EnergyVector> getVectorClass()
     {
         return EnergyVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public EnergyMatrix instantiateMatrix(final DoubleMatrixData dmd, final EnergyUnit displayUnit)
     {
         return new EnergyMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public EnergyVector instantiateVector(final DoubleVectorData dvd, final EnergyUnit displayUnit)
     {
         return new EnergyVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Energy instantiateScalarSI(final double valueSI, final EnergyUnit displayUnit)
     {

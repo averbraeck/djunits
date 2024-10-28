@@ -202,35 +202,30 @@ public class FloatAmountOfSubstanceMatrix extends FloatMatrixRel<AmountOfSubstan
         this(data, AmountOfSubstanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAmountOfSubstance> getScalarClass()
     {
         return FloatAmountOfSubstance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAmountOfSubstanceVector> getVectorClass()
     {
         return FloatAmountOfSubstanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAmountOfSubstanceMatrix instantiateMatrix(final FloatMatrixData fmd, final AmountOfSubstanceUnit displayUnit)
     {
         return new FloatAmountOfSubstanceMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAmountOfSubstanceVector instantiateVector(final FloatVectorData fvd, final AmountOfSubstanceUnit displayUnit)
     {
         return new FloatAmountOfSubstanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAmountOfSubstance instantiateScalarSI(final float valueSI, final AmountOfSubstanceUnit displayUnit)
     {

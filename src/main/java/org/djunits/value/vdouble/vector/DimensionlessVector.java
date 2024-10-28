@@ -281,21 +281,18 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Dimensionless> getScalarClass()
     {
         return Dimensionless.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DimensionlessVector instantiateVector(final DoubleVectorData dvd, final DimensionlessUnit displayUnit)
     {
         return new DimensionlessVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Dimensionless instantiateScalarSI(final double valueSI, final DimensionlessUnit displayUnit)
     {
@@ -304,7 +301,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector acos()
     {
@@ -312,7 +308,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector asin()
     {
@@ -320,7 +315,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector atan()
     {
@@ -328,7 +322,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector cbrt()
     {
@@ -336,7 +329,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector cos()
     {
@@ -344,7 +336,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector cosh()
     {
@@ -352,7 +343,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector exp()
     {
@@ -360,7 +350,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector expm1()
     {
@@ -368,7 +357,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector log()
     {
@@ -376,7 +364,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector log10()
     {
@@ -384,7 +371,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector log1p()
     {
@@ -392,7 +378,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector pow(final double x)
     {
@@ -400,7 +385,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector signum()
     {
@@ -408,7 +392,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector sin()
     {
@@ -416,7 +399,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector sinh()
     {
@@ -424,7 +406,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector sqrt()
     {
@@ -432,7 +413,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector tan()
     {
@@ -440,7 +420,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector tanh()
     {
@@ -448,7 +427,6 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DimensionlessVector inv()
     {

@@ -83,7 +83,6 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAcceleration instantiateRel(final float value, final AccelerationUnit unit)
     {
@@ -286,7 +285,6 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
         return new FloatPower(this.si * v.si, PowerUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

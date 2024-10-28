@@ -437,7 +437,6 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /* =============================== EQUALS, HASHCODE, TOSTRING ================================= */
     /* ============================================================================================ */
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -469,7 +468,6 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)
@@ -495,7 +493,6 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
         return Arrays.equals(this.vectorSI, other.vectorSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

@@ -83,7 +83,6 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatArea instantiateRel(final float value, final AreaUnit unit)
     {
@@ -316,7 +315,6 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
         return new FloatLuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

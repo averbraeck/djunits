@@ -279,21 +279,18 @@ public class AccelerationVector extends DoubleVectorRel<AccelerationUnit, Accele
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Acceleration> getScalarClass()
     {
         return Acceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AccelerationVector instantiateVector(final DoubleVectorData dvd, final AccelerationUnit displayUnit)
     {
         return new AccelerationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Acceleration instantiateScalarSI(final double valueSI, final AccelerationUnit displayUnit)
     {

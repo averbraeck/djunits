@@ -67,7 +67,6 @@ public class EquivalentDose extends DoubleScalarRel<EquivalentDoseUnit, Equivale
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final EquivalentDose instantiateRel(final double value, final EquivalentDoseUnit unit)
     {
@@ -220,7 +219,6 @@ public class EquivalentDose extends DoubleScalarRel<EquivalentDoseUnit, Equivale
         return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

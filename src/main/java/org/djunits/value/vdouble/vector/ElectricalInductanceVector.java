@@ -289,21 +289,18 @@ public class ElectricalInductanceVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalInductance> getScalarClass()
     {
         return ElectricalInductance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalInductanceVector instantiateVector(final DoubleVectorData dvd, final ElectricalInductanceUnit displayUnit)
     {
         return new ElectricalInductanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalInductance instantiateScalarSI(final double valueSI, final ElectricalInductanceUnit displayUnit)
     {

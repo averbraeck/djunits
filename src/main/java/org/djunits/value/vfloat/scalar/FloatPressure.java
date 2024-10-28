@@ -79,7 +79,6 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatPressure instantiateRel(final float value, final PressureUnit unit)
     {
@@ -252,7 +251,6 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
         return new FloatEnergy(this.si * v.si, EnergyUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

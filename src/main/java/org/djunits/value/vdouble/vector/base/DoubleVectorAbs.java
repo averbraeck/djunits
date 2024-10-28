@@ -48,21 +48,18 @@ public abstract class DoubleVectorAbs<
         super(data.copy(), unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AV plus(final RV increment) throws ValueRuntimeException
     {
         return instantiateVector(this.getData().plus(increment.getData()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public AV minus(final RV decrement) throws ValueRuntimeException
     {
         return instantiateVector(this.getData().minus(decrement.getData()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public RV minus(final AV decrement) throws ValueRuntimeException
     {

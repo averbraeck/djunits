@@ -198,35 +198,30 @@ public class LuminousIntensityMatrix
         this(data, LuminousIntensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LuminousIntensity> getScalarClass()
     {
         return LuminousIntensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LuminousIntensityVector> getVectorClass()
     {
         return LuminousIntensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousIntensityMatrix instantiateMatrix(final DoubleMatrixData dmd, final LuminousIntensityUnit displayUnit)
     {
         return new LuminousIntensityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousIntensityVector instantiateVector(final DoubleVectorData dvd, final LuminousIntensityUnit displayUnit)
     {
         return new LuminousIntensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousIntensity instantiateScalarSI(final double valueSI, final LuminousIntensityUnit displayUnit)
     {

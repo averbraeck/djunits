@@ -193,35 +193,30 @@ public class FloatVolumeMatrix extends FloatMatrixRel<VolumeUnit, FloatVolume, F
         this(data, VolumeUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatVolume> getScalarClass()
     {
         return FloatVolume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatVolumeVector> getVectorClass()
     {
         return FloatVolumeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatVolumeMatrix instantiateMatrix(final FloatMatrixData fmd, final VolumeUnit displayUnit)
     {
         return new FloatVolumeMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatVolumeVector instantiateVector(final FloatVectorData fvd, final VolumeUnit displayUnit)
     {
         return new FloatVolumeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatVolume instantiateScalarSI(final float valueSI, final VolumeUnit displayUnit)
     {

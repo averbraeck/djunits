@@ -198,35 +198,30 @@ public class AngularAccelerationMatrix extends
         this(data, AngularAccelerationUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngularAcceleration> getScalarClass()
     {
         return AngularAcceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngularAccelerationVector> getVectorClass()
     {
         return AngularAccelerationVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularAccelerationMatrix instantiateMatrix(final DoubleMatrixData dmd, final AngularAccelerationUnit displayUnit)
     {
         return new AngularAccelerationMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularAccelerationVector instantiateVector(final DoubleVectorData dvd, final AngularAccelerationUnit displayUnit)
     {
         return new AngularAccelerationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularAcceleration instantiateScalarSI(final double valueSI, final AngularAccelerationUnit displayUnit)
     {

@@ -658,7 +658,6 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         return getQuantity().getStandardUnit();
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public U clone() throws CloneNotSupportedException
@@ -666,7 +665,6 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         return (U) super.clone();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -684,7 +682,6 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)
@@ -757,7 +754,6 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {
@@ -1038,7 +1034,6 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public String toString()
         {

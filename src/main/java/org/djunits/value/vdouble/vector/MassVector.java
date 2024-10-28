@@ -276,21 +276,18 @@ public class MassVector extends DoubleVectorRel<MassUnit, Mass, MassVector>
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Mass> getScalarClass()
     {
         return Mass.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MassVector instantiateVector(final DoubleVectorData dvd, final MassUnit displayUnit)
     {
         return new MassVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Mass instantiateScalarSI(final double valueSI, final MassUnit displayUnit)
     {

@@ -61,7 +61,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      */
     public abstract A instantiateAbs(float value, AU unit);
 
-    /** {@inheritDoc} */
     @Override
     public final A plus(final R increment)
     {
@@ -69,7 +68,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs(getInUnit() + increment.getInUnit(targetUnit.getRelativeUnit()), targetUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final A minus(final R decrement)
     {
@@ -77,7 +75,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs(getInUnit() - decrement.getInUnit(targetUnit.getRelativeUnit()), targetUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final R minus(final A decrement)
     {
@@ -89,7 +86,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
     /********************************** MATH METHODS **********************************/
     /**********************************************************************************/
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public A abs()
@@ -97,7 +93,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs(Math.abs(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public A ceil()
@@ -105,7 +100,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs((float) Math.ceil(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public A floor()
@@ -113,7 +107,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs((float) Math.floor(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public A neg()
@@ -121,7 +114,6 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs(-getInUnit(), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public A rint()

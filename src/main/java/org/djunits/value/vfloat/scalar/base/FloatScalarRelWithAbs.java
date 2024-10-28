@@ -53,7 +53,6 @@ public abstract class FloatScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public A plus(final A increment)
     {

@@ -278,21 +278,18 @@ public class FloatEnergyVector extends FloatVectorRel<EnergyUnit, FloatEnergy, F
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatEnergy> getScalarClass()
     {
         return FloatEnergy.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEnergyVector instantiateVector(final FloatVectorData fvd, final EnergyUnit displayUnit)
     {
         return new FloatEnergyVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatEnergy instantiateScalarSI(final float valueSI, final EnergyUnit displayUnit)
     {

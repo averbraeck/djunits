@@ -289,21 +289,18 @@ public class ElectricalPotentialVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalPotential> getScalarClass()
     {
         return ElectricalPotential.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalPotentialVector instantiateVector(final DoubleVectorData dvd, final ElectricalPotentialUnit displayUnit)
     {
         return new ElectricalPotentialVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalPotential instantiateScalarSI(final double valueSI, final ElectricalPotentialUnit displayUnit)
     {

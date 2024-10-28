@@ -194,35 +194,30 @@ public class FloatPressureMatrix extends FloatMatrixRel<PressureUnit, FloatPress
         this(data, PressureUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPressure> getScalarClass()
     {
         return FloatPressure.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPressureVector> getVectorClass()
     {
         return FloatPressureVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPressureMatrix instantiateMatrix(final FloatMatrixData fmd, final PressureUnit displayUnit)
     {
         return new FloatPressureMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPressureVector instantiateVector(final FloatVectorData fvd, final PressureUnit displayUnit)
     {
         return new FloatPressureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPressure instantiateScalarSI(final float valueSI, final PressureUnit displayUnit)
     {

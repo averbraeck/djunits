@@ -75,7 +75,6 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Power instantiateRel(final double value, final PowerUnit unit)
     {
@@ -317,7 +316,6 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
         return new Acceleration(this.si / v.si, AccelerationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

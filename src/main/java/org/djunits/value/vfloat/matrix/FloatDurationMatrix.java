@@ -197,35 +197,30 @@ public class FloatDurationMatrix extends FloatMatrixRelWithAbs<TimeUnit, FloatTi
         this(data, DurationUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDuration> getScalarClass()
     {
         return FloatDuration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDurationVector> getVectorClass()
     {
         return FloatDurationVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDurationMatrix instantiateMatrix(final FloatMatrixData fmd, final DurationUnit displayUnit)
     {
         return new FloatDurationMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDurationVector instantiateVector(final FloatVectorData fvd, final DurationUnit displayUnit)
     {
         return new FloatDurationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDuration instantiateScalarSI(final float valueSI, final DurationUnit displayUnit)
     {
@@ -234,21 +229,18 @@ public class FloatDurationMatrix extends FloatMatrixRelWithAbs<TimeUnit, FloatTi
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTimeMatrix instantiateMatrixAbs(final FloatMatrixData fmd, final TimeUnit displayUnit)
     {
         return new FloatTimeMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTimeVector instantiateVectorAbs(final FloatVectorData fvd, final TimeUnit displayUnit)
     {
         return new FloatTimeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTime instantiateScalarAbsSI(final float valueSI, final TimeUnit displayUnit)
     {

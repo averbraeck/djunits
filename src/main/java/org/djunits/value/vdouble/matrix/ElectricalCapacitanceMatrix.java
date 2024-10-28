@@ -206,21 +206,18 @@ public class ElectricalCapacitanceMatrix extends DoubleMatrixRel<ElectricalCapac
         this(data, ElectricalCapacitanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCapacitance> getScalarClass()
     {
         return ElectricalCapacitance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCapacitanceVector> getVectorClass()
     {
         return ElectricalCapacitanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCapacitanceMatrix instantiateMatrix(final DoubleMatrixData dmd,
             final ElectricalCapacitanceUnit displayUnit)
@@ -228,7 +225,6 @@ public class ElectricalCapacitanceMatrix extends DoubleMatrixRel<ElectricalCapac
         return new ElectricalCapacitanceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCapacitanceVector instantiateVector(final DoubleVectorData dvd,
             final ElectricalCapacitanceUnit displayUnit)
@@ -236,7 +232,6 @@ public class ElectricalCapacitanceMatrix extends DoubleMatrixRel<ElectricalCapac
         return new ElectricalCapacitanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCapacitance instantiateScalarSI(final double valueSI, final ElectricalCapacitanceUnit displayUnit)
     {

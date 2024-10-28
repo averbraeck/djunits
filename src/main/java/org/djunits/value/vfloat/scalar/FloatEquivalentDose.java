@@ -79,7 +79,6 @@ public class FloatEquivalentDose extends FloatScalarRel<EquivalentDoseUnit, Floa
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatEquivalentDose instantiateRel(final float value, final EquivalentDoseUnit unit)
     {
@@ -236,7 +235,6 @@ public class FloatEquivalentDose extends FloatScalarRel<EquivalentDoseUnit, Floa
         return new FloatDimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

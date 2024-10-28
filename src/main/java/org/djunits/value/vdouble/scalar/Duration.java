@@ -79,14 +79,12 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Duration instantiateRel(final double value, final DurationUnit unit)
     {
         return new Duration(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Time instantiateAbs(final double value, final TimeUnit unit)
     {
@@ -359,7 +357,6 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
         return new AngularVelocity(this.si * v.si, AngularVelocityUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Frequency reciprocal()
     {

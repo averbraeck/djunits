@@ -200,35 +200,30 @@ public class FloatAngularVelocityMatrix extends
         this(data, AngularVelocityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngularVelocity> getScalarClass()
     {
         return FloatAngularVelocity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngularVelocityVector> getVectorClass()
     {
         return FloatAngularVelocityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularVelocityMatrix instantiateMatrix(final FloatMatrixData fmd, final AngularVelocityUnit displayUnit)
     {
         return new FloatAngularVelocityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularVelocityVector instantiateVector(final FloatVectorData fvd, final AngularVelocityUnit displayUnit)
     {
         return new FloatAngularVelocityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngularVelocity instantiateScalarSI(final float valueSI, final AngularVelocityUnit displayUnit)
     {

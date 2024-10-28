@@ -193,35 +193,30 @@ public class PowerMatrix extends DoubleMatrixRel<PowerUnit, Power, PowerVector, 
         this(data, PowerUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Power> getScalarClass()
     {
         return Power.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<PowerVector> getVectorClass()
     {
         return PowerVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PowerMatrix instantiateMatrix(final DoubleMatrixData dmd, final PowerUnit displayUnit)
     {
         return new PowerMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public PowerVector instantiateVector(final DoubleVectorData dvd, final PowerUnit displayUnit)
     {
         return new PowerVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Power instantiateScalarSI(final double valueSI, final PowerUnit displayUnit)
     {

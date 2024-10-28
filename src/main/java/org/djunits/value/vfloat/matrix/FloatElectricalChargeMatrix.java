@@ -200,35 +200,30 @@ public class FloatElectricalChargeMatrix extends
         this(data, ElectricalChargeUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalCharge> getScalarClass()
     {
         return FloatElectricalCharge.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalChargeVector> getVectorClass()
     {
         return FloatElectricalChargeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalChargeMatrix instantiateMatrix(final FloatMatrixData fmd, final ElectricalChargeUnit displayUnit)
     {
         return new FloatElectricalChargeMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalChargeVector instantiateVector(final FloatVectorData fvd, final ElectricalChargeUnit displayUnit)
     {
         return new FloatElectricalChargeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCharge instantiateScalarSI(final float valueSI, final ElectricalChargeUnit displayUnit)
     {

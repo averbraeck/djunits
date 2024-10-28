@@ -82,14 +82,12 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      */
     public abstract S instantiateScalarSI(float valueSI, U displayUnit);
 
-    /** {@inheritDoc} */
     @Override
     protected final FloatMatrixData getData()
     {
         return this.data;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected void setData(final FloatMatrixData data)
     {
@@ -277,21 +275,18 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return values;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int rows()
     {
         return this.data.rows();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int cols()
     {
         return this.data.cols();
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public S[][] getScalars()
@@ -309,7 +304,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return array;
     }
 
-    /** {@inheritDoc} */
     @Override
     public S get(final int row, final int column) throws ValueRuntimeException
     {
@@ -317,7 +311,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return FloatScalar.instantiateSI(getSI(row, column), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public V getRow(final int row) throws ValueRuntimeException
     {
@@ -327,7 +320,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return instantiateVector(dvd, getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public V getColumn(final int column) throws ValueRuntimeException
     {
@@ -337,7 +329,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return instantiateVector(dvd, getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public V getDiagonal() throws ValueRuntimeException
     {
@@ -348,7 +339,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public S[] getRowScalars(final int row) throws ValueRuntimeException
@@ -362,7 +352,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return array;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public S[] getColumnScalars(final int col) throws ValueRuntimeException
@@ -376,7 +365,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return array;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public S[] getDiagonalScalars() throws ValueRuntimeException
@@ -390,7 +378,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return array;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public M toSparse()
@@ -409,7 +396,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return result;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public M toDense()
@@ -440,63 +426,54 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return (M) this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final M abs()
     {
         return assign(FloatMathFunctions.ABS);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final M ceil()
     {
         return assign(FloatMathFunctions.CEIL);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final M floor()
     {
         return assign(FloatMathFunctions.FLOOR);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final M neg()
     {
         return assign(FloatMathFunctions.NEG);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final M rint()
     {
         return assign(FloatMathFunctions.RINT);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {
         return toString(getDisplayUnit(), false, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final U displayUnit)
     {
         return toString(displayUnit, false, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final boolean verbose, final boolean withUnit)
     {
         return toString(getDisplayUnit(), verbose, withUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
     {
@@ -638,7 +615,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return det;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public int hashCode()
@@ -649,7 +625,6 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:designforextension", "checkstyle:needbraces"})
     public boolean equals(final Object obj)

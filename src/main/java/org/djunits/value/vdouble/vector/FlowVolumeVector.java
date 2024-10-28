@@ -278,21 +278,18 @@ public class FlowVolumeVector extends DoubleVectorRel<FlowVolumeUnit, FlowVolume
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FlowVolume> getScalarClass()
     {
         return FlowVolume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowVolumeVector instantiateVector(final DoubleVectorData dvd, final FlowVolumeUnit displayUnit)
     {
         return new FlowVolumeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowVolume instantiateScalarSI(final double valueSI, final FlowVolumeUnit displayUnit)
     {

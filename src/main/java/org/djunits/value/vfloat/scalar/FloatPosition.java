@@ -58,14 +58,12 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatPosition instantiateAbs(final float value, final PositionUnit unit)
     {
         return new FloatPosition(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatLength instantiateRel(final float value, final LengthUnit unit)
     {

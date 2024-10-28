@@ -75,7 +75,6 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Energy instantiateRel(final double value, final EnergyUnit unit)
     {
@@ -327,7 +326,6 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
         return new Speed(this.si / v.si, SpeedUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

@@ -69,7 +69,6 @@ public class Density extends DoubleScalarRel<DensityUnit, Density>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Density instantiateRel(final double value, final DensityUnit unit)
     {
@@ -242,7 +241,6 @@ public class Density extends DoubleScalarRel<DensityUnit, Density>
         return new FlowMass(this.si * v.si, FlowMassUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

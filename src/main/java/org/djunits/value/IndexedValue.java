@@ -43,14 +43,12 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
         this.displayUnit = displayUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final U getDisplayUnit()
     {
         return this.displayUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void setDisplayUnit(final U newUnit)
     {
@@ -208,7 +206,6 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
      */
     public abstract Class<S> getScalarClass();
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public T clone()

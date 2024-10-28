@@ -278,21 +278,18 @@ public class AngleVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Angle> getScalarClass()
     {
         return Angle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngleVector instantiateVector(final DoubleVectorData dvd, final AngleUnit displayUnit)
     {
         return new AngleVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Angle instantiateScalarSI(final double valueSI, final AngleUnit displayUnit)
     {
@@ -301,14 +298,12 @@ public class AngleVector
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DirectionVector instantiateVectorAbs(final DoubleVectorData dvd, final DirectionUnit displayUnit)
     {
         return new DirectionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Direction instantiateScalarAbsSI(final double valueSI, final DirectionUnit displayUnit)
     {

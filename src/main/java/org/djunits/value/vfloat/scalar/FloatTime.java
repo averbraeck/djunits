@@ -66,14 +66,12 @@ public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit,
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatTime instantiateAbs(final float value, final TimeUnit unit)
     {
         return new FloatTime(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDuration instantiateRel(final float value, final DurationUnit unit)
     {

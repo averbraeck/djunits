@@ -278,21 +278,18 @@ public class FloatFlowMassVector extends FloatVectorRel<FlowMassUnit, FloatFlowM
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFlowMass> getScalarClass()
     {
         return FloatFlowMass.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowMassVector instantiateVector(final FloatVectorData fvd, final FlowMassUnit displayUnit)
     {
         return new FloatFlowMassVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowMass instantiateScalarSI(final float valueSI, final FlowMassUnit displayUnit)
     {

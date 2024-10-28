@@ -279,21 +279,18 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Illuminance> getScalarClass()
     {
         return Illuminance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public IlluminanceVector instantiateVector(final DoubleVectorData dvd, final IlluminanceUnit displayUnit)
     {
         return new IlluminanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Illuminance instantiateScalarSI(final double valueSI, final IlluminanceUnit displayUnit)
     {

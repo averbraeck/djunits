@@ -198,35 +198,30 @@ public class ElectricalPotentialMatrix extends
         this(data, ElectricalPotentialUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalPotential> getScalarClass()
     {
         return ElectricalPotential.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalPotentialVector> getVectorClass()
     {
         return ElectricalPotentialVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalPotentialMatrix instantiateMatrix(final DoubleMatrixData dmd, final ElectricalPotentialUnit displayUnit)
     {
         return new ElectricalPotentialMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalPotentialVector instantiateVector(final DoubleVectorData dvd, final ElectricalPotentialUnit displayUnit)
     {
         return new ElectricalPotentialVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalPotential instantiateScalarSI(final double valueSI, final ElectricalPotentialUnit displayUnit)
     {

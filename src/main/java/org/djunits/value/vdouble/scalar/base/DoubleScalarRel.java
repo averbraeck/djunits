@@ -50,7 +50,6 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
      */
     public abstract R instantiateRel(double value, U unit);
 
-    /** {@inheritDoc} */
     @Override
     public final R plus(final R increment)
     {
@@ -63,7 +62,6 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
                 : instantiateRel(this.getSI() + increment.getSI(), getDisplayUnit().getStandardUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final R minus(final R decrement)
     {
@@ -106,63 +104,54 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
     /********************************** MATH METHODS **********************************/
     /**********************************************************************************/
 
-    /** {@inheritDoc} */
     @Override
     public R abs()
     {
         return instantiateRel(Math.abs(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R ceil()
     {
         return instantiateRel(Math.ceil(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R floor()
     {
         return instantiateRel(Math.floor(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R rint()
     {
         return instantiateRel(Math.rint(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R neg()
     {
         return instantiateRel(-getInUnit(), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R times(final double constant)
     {
         return instantiateRel(getInUnit() * constant, getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R divide(final double constant)
     {
         return instantiateRel(getInUnit() / constant, getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R times(final float constant)
     {
         return instantiateRel(getInUnit() * constant, getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public R divide(final float constant)
     {

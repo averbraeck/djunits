@@ -538,7 +538,6 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /* =============================== EQUALS, HASHCODE, TOSTRING ================================= */
     /* ============================================================================================ */
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -571,7 +570,6 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)
@@ -597,7 +595,6 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
         return Arrays.equals(this.vectorSI, other.vectorSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

@@ -280,21 +280,18 @@ public class EquivalentDoseVector extends DoubleVectorRel<EquivalentDoseUnit, Eq
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<EquivalentDose> getScalarClass()
     {
         return EquivalentDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public EquivalentDoseVector instantiateVector(final DoubleVectorData dvd, final EquivalentDoseUnit displayUnit)
     {
         return new EquivalentDoseVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public EquivalentDose instantiateScalarSI(final double valueSI, final EquivalentDoseUnit displayUnit)
     {

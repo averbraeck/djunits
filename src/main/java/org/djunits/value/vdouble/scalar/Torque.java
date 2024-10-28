@@ -73,7 +73,6 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Torque instantiateRel(final double value, final TorqueUnit unit)
     {
@@ -305,7 +304,6 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
         return new Volume(this.si / v.si, VolumeUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

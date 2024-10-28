@@ -448,7 +448,6 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /* =============================== EQUALS, HASHCODE, TOSTRING ================================= */
     /* ============================================================================================ */
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -487,7 +486,6 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)
@@ -515,7 +513,6 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
         return Arrays.equals(this.matrixSI, other.matrixSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

@@ -53,7 +53,6 @@ public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, R
      */
     public abstract A instantiateAbs(double value, AU unit);
 
-    /** {@inheritDoc} */
     @Override
     public A plus(final A increment)
     {

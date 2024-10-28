@@ -194,35 +194,30 @@ public class LuminousFluxMatrix extends DoubleMatrixRel<LuminousFluxUnit, Lumino
         this(data, LuminousFluxUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LuminousFlux> getScalarClass()
     {
         return LuminousFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LuminousFluxVector> getVectorClass()
     {
         return LuminousFluxVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousFluxMatrix instantiateMatrix(final DoubleMatrixData dmd, final LuminousFluxUnit displayUnit)
     {
         return new LuminousFluxMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousFluxVector instantiateVector(final DoubleVectorData dvd, final LuminousFluxUnit displayUnit)
     {
         return new LuminousFluxVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousFlux instantiateScalarSI(final double valueSI, final LuminousFluxUnit displayUnit)
     {

@@ -68,7 +68,6 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final SolidAngle instantiateRel(final double value, final SolidAngleUnit unit)
     {
@@ -231,7 +230,6 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
         return new LuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

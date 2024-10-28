@@ -195,35 +195,30 @@ public class LinearDensityMatrix
         this(data, LinearDensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LinearDensity> getScalarClass()
     {
         return LinearDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<LinearDensityVector> getVectorClass()
     {
         return LinearDensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LinearDensityMatrix instantiateMatrix(final DoubleMatrixData dmd, final LinearDensityUnit displayUnit)
     {
         return new LinearDensityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LinearDensityVector instantiateVector(final DoubleVectorData dvd, final LinearDensityUnit displayUnit)
     {
         return new LinearDensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LinearDensity instantiateScalarSI(final double valueSI, final LinearDensityUnit displayUnit)
     {

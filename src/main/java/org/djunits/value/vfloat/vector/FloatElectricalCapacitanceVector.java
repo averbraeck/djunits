@@ -291,14 +291,12 @@ public class FloatElectricalCapacitanceVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalCapacitance> getScalarClass()
     {
         return FloatElectricalCapacitance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCapacitanceVector instantiateVector(final FloatVectorData fvd,
             final ElectricalCapacitanceUnit displayUnit)
@@ -306,7 +304,6 @@ public class FloatElectricalCapacitanceVector
         return new FloatElectricalCapacitanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCapacitance instantiateScalarSI(final float valueSI, final ElectricalCapacitanceUnit displayUnit)
     {

@@ -89,7 +89,6 @@ public class FloatDuration extends FloatScalarRelWithAbs<TimeUnit, FloatTime, Du
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDuration instantiateRel(final float value, final DurationUnit unit)
     {
@@ -106,7 +105,6 @@ public class FloatDuration extends FloatScalarRelWithAbs<TimeUnit, FloatTime, Du
         return new FloatDuration(value, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatTime instantiateAbs(final float value, final TimeUnit unit)
     {
@@ -373,7 +371,6 @@ public class FloatDuration extends FloatScalarRelWithAbs<TimeUnit, FloatTime, Du
         return new FloatAngularVelocity(this.si * v.si, AngularVelocityUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFrequency reciprocal()
     {

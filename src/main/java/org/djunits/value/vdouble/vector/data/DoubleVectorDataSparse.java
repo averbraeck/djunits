@@ -41,14 +41,12 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         this.size = size;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
         return this.indices.length;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleVectorData assign(final DoubleFunction doubleFunction)
     {
@@ -112,7 +110,6 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataSparse assign(final DoubleFunction2 doubleFunction, final DoubleVectorData right)
     {
@@ -266,7 +263,6 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense toDense()
     {
@@ -278,21 +274,18 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return new DoubleVectorDataDense(denseSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataSparse toSparse()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int size()
     {
         return this.size;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double getSI(final int index)
     {
@@ -300,7 +293,6 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return internalIndex < 0 ? 0.0 : this.vectorSI[internalIndex];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int index, final double valueSI)
     {
@@ -347,14 +339,12 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         this.vectorSI = vectorSINew;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double[] getDenseVectorSI()
     {
         return toDense().vectorSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataSparse copy()
     {
@@ -391,7 +381,6 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return new DoubleVectorDataSparse(sparseSI, indices, valuesSI.length);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorData plus(final DoubleVectorData right)
     {
@@ -404,21 +393,18 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return this.copy().incrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorData minus(final DoubleVectorData right)
     {
         return this.copy().decrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorData times(final DoubleVectorData right)
     {
         return this.copy().multiplyBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorData divide(final DoubleVectorData right) throws ValueRuntimeException
     {
@@ -431,14 +417,12 @@ public class DoubleVectorDataSparse extends DoubleVectorData
         return this.copy().divideBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
         return super.hashCode();
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:needbraces", "checkstyle:designforextension"})
     public boolean equals(final Object obj)

@@ -206,21 +206,18 @@ public class FloatMagneticFluxDensityMatrix extends FloatMatrixRel<MagneticFluxD
         this(data, MagneticFluxDensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMagneticFluxDensity> getScalarClass()
     {
         return FloatMagneticFluxDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMagneticFluxDensityVector> getVectorClass()
     {
         return FloatMagneticFluxDensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxDensityMatrix instantiateMatrix(final FloatMatrixData fmd,
             final MagneticFluxDensityUnit displayUnit)
@@ -228,7 +225,6 @@ public class FloatMagneticFluxDensityMatrix extends FloatMatrixRel<MagneticFluxD
         return new FloatMagneticFluxDensityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxDensityVector instantiateVector(final FloatVectorData fvd,
             final MagneticFluxDensityUnit displayUnit)
@@ -236,7 +232,6 @@ public class FloatMagneticFluxDensityMatrix extends FloatMatrixRel<MagneticFluxD
         return new FloatMagneticFluxDensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxDensity instantiateScalarSI(final float valueSI, final MagneticFluxDensityUnit displayUnit)
     {

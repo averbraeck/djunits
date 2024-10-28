@@ -278,21 +278,18 @@ public class FloatSpeedVector extends FloatVectorRel<SpeedUnit, FloatSpeed, Floa
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSpeed> getScalarClass()
     {
         return FloatSpeed.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSpeedVector instantiateVector(final FloatVectorData fvd, final SpeedUnit displayUnit)
     {
         return new FloatSpeedVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSpeed instantiateScalarSI(final float valueSI, final SpeedUnit displayUnit)
     {

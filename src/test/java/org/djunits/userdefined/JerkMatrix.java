@@ -28,35 +28,30 @@ public class JerkMatrix extends DoubleMatrixRel<JerkUnit, Jerk, JerkVector, Jerk
         super(data, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Jerk> getScalarClass()
     {
         return Jerk.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<JerkVector> getVectorClass()
     {
         return JerkVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public JerkMatrix instantiateMatrix(final DoubleMatrixData dmd, final JerkUnit displayUnit)
     {
         return new JerkMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public JerkVector instantiateVector(final DoubleVectorData dvd, final JerkUnit displayUnit)
     {
         return new JerkVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Jerk instantiateScalarSI(final double valueSI, final JerkUnit displayUnit)
     {

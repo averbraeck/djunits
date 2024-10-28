@@ -202,35 +202,30 @@ public class FloatElectricalCurrentMatrix extends FloatMatrixRel<ElectricalCurre
         this(data, ElectricalCurrentUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalCurrent> getScalarClass()
     {
         return FloatElectricalCurrent.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalCurrentVector> getVectorClass()
     {
         return FloatElectricalCurrentVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCurrentMatrix instantiateMatrix(final FloatMatrixData fmd, final ElectricalCurrentUnit displayUnit)
     {
         return new FloatElectricalCurrentMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCurrentVector instantiateVector(final FloatVectorData fvd, final ElectricalCurrentUnit displayUnit)
     {
         return new FloatElectricalCurrentVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCurrent instantiateScalarSI(final float valueSI, final ElectricalCurrentUnit displayUnit)
     {

@@ -193,35 +193,30 @@ public class FloatAreaMatrix extends FloatMatrixRel<AreaUnit, FloatArea, FloatAr
         this(data, AreaUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatArea> getScalarClass()
     {
         return FloatArea.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAreaVector> getVectorClass()
     {
         return FloatAreaVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAreaMatrix instantiateMatrix(final FloatMatrixData fmd, final AreaUnit displayUnit)
     {
         return new FloatAreaMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAreaVector instantiateVector(final FloatVectorData fvd, final AreaUnit displayUnit)
     {
         return new FloatAreaVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatArea instantiateScalarSI(final float valueSI, final AreaUnit displayUnit)
     {

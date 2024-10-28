@@ -89,7 +89,6 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatSIScalar instantiateRel(final float value, final SIUnit unit)
     {
@@ -182,7 +181,6 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
         return minr;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {
@@ -246,7 +244,6 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
         throw new IllegalArgumentException("Error parsing FloatSIScalar with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
     {

@@ -278,21 +278,18 @@ public class FlowMassVector extends DoubleVectorRel<FlowMassUnit, FlowMass, Flow
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FlowMass> getScalarClass()
     {
         return FlowMass.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowMassVector instantiateVector(final DoubleVectorData dvd, final FlowMassUnit displayUnit)
     {
         return new FlowMassVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowMass instantiateScalarSI(final double valueSI, final FlowMassUnit displayUnit)
     {

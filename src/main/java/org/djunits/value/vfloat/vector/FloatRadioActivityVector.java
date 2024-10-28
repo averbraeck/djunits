@@ -284,21 +284,18 @@ public class FloatRadioActivityVector extends FloatVectorRel<RadioActivityUnit, 
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatRadioActivity> getScalarClass()
     {
         return FloatRadioActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatRadioActivityVector instantiateVector(final FloatVectorData fvd, final RadioActivityUnit displayUnit)
     {
         return new FloatRadioActivityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatRadioActivity instantiateScalarSI(final float valueSI, final RadioActivityUnit displayUnit)
     {

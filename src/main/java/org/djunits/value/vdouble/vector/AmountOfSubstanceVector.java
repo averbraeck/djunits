@@ -284,21 +284,18 @@ public class AmountOfSubstanceVector extends DoubleVectorRel<AmountOfSubstanceUn
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<AmountOfSubstance> getScalarClass()
     {
         return AmountOfSubstance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AmountOfSubstanceVector instantiateVector(final DoubleVectorData dvd, final AmountOfSubstanceUnit displayUnit)
     {
         return new AmountOfSubstanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AmountOfSubstance instantiateScalarSI(final double valueSI, final AmountOfSubstanceUnit displayUnit)
     {

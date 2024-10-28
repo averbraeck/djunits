@@ -196,35 +196,30 @@ public class PositionMatrix extends
         this(data, PositionUnit.BASE.getStandardUnit(), rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Position> getScalarClass()
     {
         return Position.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<PositionVector> getVectorClass()
     {
         return PositionVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PositionMatrix instantiateMatrix(final DoubleMatrixData dmd, final PositionUnit displayUnit)
     {
         return new PositionMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public PositionVector instantiateVector(final DoubleVectorData dvd, final PositionUnit displayUnit)
     {
         return new PositionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Position instantiateScalarSI(final double valueSI, final PositionUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class PositionMatrix extends
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LengthMatrix instantiateMatrixRel(final DoubleMatrixData dmd, final LengthUnit displayUnit)
     {
         return new LengthMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LengthVector instantiateVectorRel(final DoubleVectorData dvd, final LengthUnit displayUnit)
     {
         return new LengthVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Length instantiateScalarRelSI(final double valueSI, final LengthUnit displayUnit)
     {

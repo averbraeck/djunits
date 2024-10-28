@@ -197,35 +197,30 @@ public class FloatIlluminanceMatrix
         this(data, IlluminanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatIlluminance> getScalarClass()
     {
         return FloatIlluminance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatIlluminanceVector> getVectorClass()
     {
         return FloatIlluminanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatIlluminanceMatrix instantiateMatrix(final FloatMatrixData fmd, final IlluminanceUnit displayUnit)
     {
         return new FloatIlluminanceMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatIlluminanceVector instantiateVector(final FloatVectorData fvd, final IlluminanceUnit displayUnit)
     {
         return new FloatIlluminanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatIlluminance instantiateScalarSI(final float valueSI, final IlluminanceUnit displayUnit)
     {

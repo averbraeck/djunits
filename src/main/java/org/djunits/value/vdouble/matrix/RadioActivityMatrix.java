@@ -195,35 +195,30 @@ public class RadioActivityMatrix
         this(data, RadioActivityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<RadioActivity> getScalarClass()
     {
         return RadioActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<RadioActivityVector> getVectorClass()
     {
         return RadioActivityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public RadioActivityMatrix instantiateMatrix(final DoubleMatrixData dmd, final RadioActivityUnit displayUnit)
     {
         return new RadioActivityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public RadioActivityVector instantiateVector(final DoubleVectorData dvd, final RadioActivityUnit displayUnit)
     {
         return new RadioActivityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public RadioActivity instantiateScalarSI(final double valueSI, final RadioActivityUnit displayUnit)
     {

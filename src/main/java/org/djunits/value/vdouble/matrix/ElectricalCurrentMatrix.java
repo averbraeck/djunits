@@ -198,35 +198,30 @@ public class ElectricalCurrentMatrix
         this(data, ElectricalCurrentUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCurrent> getScalarClass()
     {
         return ElectricalCurrent.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCurrentVector> getVectorClass()
     {
         return ElectricalCurrentVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCurrentMatrix instantiateMatrix(final DoubleMatrixData dmd, final ElectricalCurrentUnit displayUnit)
     {
         return new ElectricalCurrentMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCurrentVector instantiateVector(final DoubleVectorData dvd, final ElectricalCurrentUnit displayUnit)
     {
         return new ElectricalCurrentVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCurrent instantiateScalarSI(final double valueSI, final ElectricalCurrentUnit displayUnit)
     {

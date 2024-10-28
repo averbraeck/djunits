@@ -84,7 +84,6 @@ public class FloatForce extends FloatScalarRel<ForceUnit, FloatForce>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatForce instantiateRel(final float value, final ForceUnit unit)
     {
@@ -317,7 +316,6 @@ public class FloatForce extends FloatScalarRel<ForceUnit, FloatForce>
         return new FloatArea(this.si / v.si, AreaUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

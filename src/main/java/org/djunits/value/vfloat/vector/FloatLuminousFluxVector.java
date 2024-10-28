@@ -283,21 +283,18 @@ public class FloatLuminousFluxVector extends FloatVectorRel<LuminousFluxUnit, Fl
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLuminousFlux> getScalarClass()
     {
         return FloatLuminousFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousFluxVector instantiateVector(final FloatVectorData fvd, final LuminousFluxUnit displayUnit)
     {
         return new FloatLuminousFluxVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousFlux instantiateScalarSI(final float valueSI, final LuminousFluxUnit displayUnit)
     {

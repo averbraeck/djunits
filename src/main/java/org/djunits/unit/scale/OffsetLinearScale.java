@@ -60,14 +60,12 @@ public class OffsetLinearScale extends LinearScale
         this.offsetToStandardUnit = offsetToStandardUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double toStandardUnit(final double value)
     {
         return (value + this.offsetToStandardUnit) * getConversionFactorToStandardUnit();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double fromStandardUnit(final double value)
     {
@@ -83,14 +81,12 @@ public class OffsetLinearScale extends LinearScale
         return this.offsetToStandardUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public boolean isBaseSIScale()
     {
         return super.isBaseSIScale() && this.offsetToStandardUnit == 0.0;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -102,7 +98,6 @@ public class OffsetLinearScale extends LinearScale
         return result;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("checkstyle:needbraces")
     @Override
     public boolean equals(final Object obj)
@@ -119,7 +114,6 @@ public class OffsetLinearScale extends LinearScale
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

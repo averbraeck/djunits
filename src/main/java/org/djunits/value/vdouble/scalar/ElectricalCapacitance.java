@@ -74,7 +74,6 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final ElectricalCapacitance instantiateRel(final double value, final ElectricalCapacitanceUnit unit)
     {
@@ -262,7 +261,6 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
         return new Duration(this.si / v.si, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

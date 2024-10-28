@@ -67,7 +67,6 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final RadioActivity instantiateRel(final double value, final RadioActivityUnit unit)
     {
@@ -220,7 +219,6 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
         return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

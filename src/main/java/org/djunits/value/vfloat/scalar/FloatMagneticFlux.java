@@ -85,7 +85,6 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMagneticFlux instantiateRel(final float value, final MagneticFluxUnit unit)
     {
@@ -300,7 +299,6 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
         return new FloatElectricalCurrent(this.si / v.si, ElectricalCurrentUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

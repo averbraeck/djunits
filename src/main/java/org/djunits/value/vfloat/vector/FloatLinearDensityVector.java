@@ -284,21 +284,18 @@ public class FloatLinearDensityVector extends FloatVectorRel<LinearDensityUnit, 
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLinearDensity> getScalarClass()
     {
         return FloatLinearDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLinearDensityVector instantiateVector(final FloatVectorData fvd, final LinearDensityUnit displayUnit)
     {
         return new FloatLinearDensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLinearDensity instantiateScalarSI(final float valueSI, final LinearDensityUnit displayUnit)
     {

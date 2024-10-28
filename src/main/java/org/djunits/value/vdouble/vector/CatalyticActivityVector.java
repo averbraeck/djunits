@@ -284,21 +284,18 @@ public class CatalyticActivityVector extends DoubleVectorRel<CatalyticActivityUn
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<CatalyticActivity> getScalarClass()
     {
         return CatalyticActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public CatalyticActivityVector instantiateVector(final DoubleVectorData dvd, final CatalyticActivityUnit displayUnit)
     {
         return new CatalyticActivityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public CatalyticActivity instantiateScalarSI(final double valueSI, final CatalyticActivityUnit displayUnit)
     {

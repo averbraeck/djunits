@@ -261,7 +261,6 @@ public final class FLOATMATRIX
         /** */
         private static final long serialVersionUID = 1L;
 
-        /** {@inheritDoc} */
         @Override
         public float nextFloat()
         {

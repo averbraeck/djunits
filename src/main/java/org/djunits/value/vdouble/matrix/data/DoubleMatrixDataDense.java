@@ -68,14 +68,12 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
         return (int) Arrays.stream(this.matrixSI).parallel().filter(d -> d != 0.0).count();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataDense assign(final DoubleFunction doubleFunction)
     {
@@ -84,7 +82,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataDense assign(final DoubleFunction2 doubleFunction, final DoubleMatrixData right)
     {
@@ -102,14 +99,12 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataDense toDense()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataSparse toSparse()
     {
@@ -133,21 +128,18 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return new DoubleMatrixDataSparse(sparseSI, indices, this.rows, this.cols);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double getSI(final int row, final int col)
     {
         return this.matrixSI[row * this.cols + col];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int row, final int col, final double valueSI)
     {
         this.matrixSI[row * this.cols + col] = valueSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double[][] getDenseMatrixSI()
     {
@@ -161,7 +153,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return matrix;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataDense copy()
     {
@@ -175,7 +166,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixData plus(final DoubleMatrixData right) throws ValueRuntimeException
     {
@@ -194,7 +184,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return new DoubleMatrixDataDense(dm, this.rows, this.cols);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataDense minus(final DoubleMatrixData right)
     {
@@ -213,7 +202,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return new DoubleMatrixDataDense(dm, this.rows, this.cols);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixData times(final DoubleMatrixData right) throws ValueRuntimeException
     {
@@ -227,7 +215,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return this.copy().multiplyBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixData divide(final DoubleMatrixData right) throws ValueRuntimeException
     {
@@ -245,7 +232,6 @@ public class DoubleMatrixDataDense extends DoubleMatrixData
         return new DoubleMatrixDataDense(dm, this.rows, this.cols);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

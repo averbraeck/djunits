@@ -85,7 +85,6 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatElectricalCapacitance instantiateRel(final float value, final ElectricalCapacitanceUnit unit)
     {
@@ -276,7 +275,6 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
         return new FloatDuration(this.si / v.si, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

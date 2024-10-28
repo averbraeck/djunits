@@ -206,21 +206,18 @@ public class ElectricalConductanceMatrix extends DoubleMatrixRel<ElectricalCondu
         this(data, ElectricalConductanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalConductance> getScalarClass()
     {
         return ElectricalConductance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalConductanceVector> getVectorClass()
     {
         return ElectricalConductanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalConductanceMatrix instantiateMatrix(final DoubleMatrixData dmd,
             final ElectricalConductanceUnit displayUnit)
@@ -228,7 +225,6 @@ public class ElectricalConductanceMatrix extends DoubleMatrixRel<ElectricalCondu
         return new ElectricalConductanceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalConductanceVector instantiateVector(final DoubleVectorData dvd,
             final ElectricalConductanceUnit displayUnit)
@@ -236,7 +232,6 @@ public class ElectricalConductanceMatrix extends DoubleMatrixRel<ElectricalCondu
         return new ElectricalConductanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalConductance instantiateScalarSI(final double valueSI, final ElectricalConductanceUnit displayUnit)
     {

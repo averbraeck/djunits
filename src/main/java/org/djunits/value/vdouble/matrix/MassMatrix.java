@@ -193,35 +193,30 @@ public class MassMatrix extends DoubleMatrixRel<MassUnit, Mass, MassVector, Mass
         this(data, MassUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Mass> getScalarClass()
     {
         return Mass.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<MassVector> getVectorClass()
     {
         return MassVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MassMatrix instantiateMatrix(final DoubleMatrixData dmd, final MassUnit displayUnit)
     {
         return new MassMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MassVector instantiateVector(final DoubleVectorData dvd, final MassUnit displayUnit)
     {
         return new MassVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Mass instantiateScalarSI(final double valueSI, final MassUnit displayUnit)
     {

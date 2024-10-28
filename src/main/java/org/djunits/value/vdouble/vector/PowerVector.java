@@ -276,21 +276,18 @@ public class PowerVector extends DoubleVectorRel<PowerUnit, Power, PowerVector>
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Power> getScalarClass()
     {
         return Power.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PowerVector instantiateVector(final DoubleVectorData dvd, final PowerUnit displayUnit)
     {
         return new PowerVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Power instantiateScalarSI(final double valueSI, final PowerUnit displayUnit)
     {

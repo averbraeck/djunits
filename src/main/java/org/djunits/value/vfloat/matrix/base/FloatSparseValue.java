@@ -107,7 +107,6 @@ public class FloatSparseValue<U extends Unit<U>, S extends FloatScalar<U, S>> im
         return this.valueSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

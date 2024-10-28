@@ -25,21 +25,18 @@ public final class IdentityScale extends LinearScale
         super(1.0);
     }
 
-    /** {@inheritDoc} */
     @Override
     public double toStandardUnit(final double value)
     {
         return value;
     }
 
-    /** {@inheritDoc} */
     @Override
     public double fromStandardUnit(final double value)
     {
         return value;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

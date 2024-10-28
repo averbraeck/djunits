@@ -196,35 +196,30 @@ public class FloatAngleMatrix extends FloatMatrixRelWithAbs<DirectionUnit, Float
         this(data, AngleUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngle> getScalarClass()
     {
         return FloatAngle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAngleVector> getVectorClass()
     {
         return FloatAngleVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngleMatrix instantiateMatrix(final FloatMatrixData fmd, final AngleUnit displayUnit)
     {
         return new FloatAngleMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngleVector instantiateVector(final FloatVectorData fvd, final AngleUnit displayUnit)
     {
         return new FloatAngleVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAngle instantiateScalarSI(final float valueSI, final AngleUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class FloatAngleMatrix extends FloatMatrixRelWithAbs<DirectionUnit, Float
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDirectionMatrix instantiateMatrixAbs(final FloatMatrixData fmd, final DirectionUnit displayUnit)
     {
         return new FloatDirectionMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDirectionVector instantiateVectorAbs(final FloatVectorData fvd, final DirectionUnit displayUnit)
     {
         return new FloatDirectionVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDirection instantiateScalarAbsSI(final float valueSI, final DirectionUnit displayUnit)
     {

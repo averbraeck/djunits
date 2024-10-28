@@ -280,7 +280,6 @@ public class FloatTimeVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTime>
 
@@ -289,14 +288,12 @@ public class FloatTimeVector
         return FloatTime.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTimeVector instantiateVector(final FloatVectorData fvd, final TimeUnit displayUnit)
     {
         return new FloatTimeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTime instantiateScalarSI(final float valueSI, final TimeUnit displayUnit)
     {
@@ -305,14 +302,12 @@ public class FloatTimeVector
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDurationVector instantiateVectorRel(final FloatVectorData fvd, final DurationUnit displayUnit)
     {
         return new FloatDurationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDuration instantiateScalarRelSI(final float valueSI, final DurationUnit displayUnit)
     {

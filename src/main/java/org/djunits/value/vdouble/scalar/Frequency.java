@@ -71,7 +71,6 @@ public class Frequency extends DoubleScalarRel<FrequencyUnit, Frequency>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Frequency instantiateRel(final double value, final FrequencyUnit unit)
     {
@@ -284,7 +283,6 @@ public class Frequency extends DoubleScalarRel<FrequencyUnit, Frequency>
         return new AngularAcceleration(this.si * v.si, AngularAccelerationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Duration reciprocal()
     {

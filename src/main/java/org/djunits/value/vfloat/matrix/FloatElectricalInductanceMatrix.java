@@ -206,21 +206,18 @@ public class FloatElectricalInductanceMatrix extends FloatMatrixRel<ElectricalIn
         this(data, ElectricalInductanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalInductance> getScalarClass()
     {
         return FloatElectricalInductance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalInductanceVector> getVectorClass()
     {
         return FloatElectricalInductanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalInductanceMatrix instantiateMatrix(final FloatMatrixData fmd,
             final ElectricalInductanceUnit displayUnit)
@@ -228,7 +225,6 @@ public class FloatElectricalInductanceMatrix extends FloatMatrixRel<ElectricalIn
         return new FloatElectricalInductanceMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalInductanceVector instantiateVector(final FloatVectorData fvd,
             final ElectricalInductanceUnit displayUnit)
@@ -236,7 +232,6 @@ public class FloatElectricalInductanceMatrix extends FloatMatrixRel<ElectricalIn
         return new FloatElectricalInductanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalInductance instantiateScalarSI(final float valueSI, final ElectricalInductanceUnit displayUnit)
     {

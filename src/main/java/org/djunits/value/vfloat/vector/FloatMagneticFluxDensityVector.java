@@ -290,14 +290,12 @@ public class FloatMagneticFluxDensityVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMagneticFluxDensity> getScalarClass()
     {
         return FloatMagneticFluxDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxDensityVector instantiateVector(final FloatVectorData fvd,
             final MagneticFluxDensityUnit displayUnit)
@@ -305,7 +303,6 @@ public class FloatMagneticFluxDensityVector
         return new FloatMagneticFluxDensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMagneticFluxDensity instantiateScalarSI(final float valueSI, final MagneticFluxDensityUnit displayUnit)
     {

@@ -194,35 +194,30 @@ public class FlowVolumeMatrix extends DoubleMatrixRel<FlowVolumeUnit, FlowVolume
         this(data, FlowVolumeUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FlowVolume> getScalarClass()
     {
         return FlowVolume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FlowVolumeVector> getVectorClass()
     {
         return FlowVolumeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowVolumeMatrix instantiateMatrix(final DoubleMatrixData dmd, final FlowVolumeUnit displayUnit)
     {
         return new FlowVolumeMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowVolumeVector instantiateVector(final DoubleVectorData dvd, final FlowVolumeUnit displayUnit)
     {
         return new FlowVolumeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowVolume instantiateScalarSI(final double valueSI, final FlowVolumeUnit displayUnit)
     {

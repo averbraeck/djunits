@@ -291,7 +291,6 @@ public class FloatAbsoluteTemperatureVector extends FloatVectorAbs<AbsoluteTempe
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAbsoluteTemperature>
 
@@ -300,7 +299,6 @@ public class FloatAbsoluteTemperatureVector extends FloatVectorAbs<AbsoluteTempe
         return FloatAbsoluteTemperature.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperatureVector instantiateVector(final FloatVectorData fvd,
             final AbsoluteTemperatureUnit displayUnit)
@@ -308,7 +306,6 @@ public class FloatAbsoluteTemperatureVector extends FloatVectorAbs<AbsoluteTempe
         return new FloatAbsoluteTemperatureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperature instantiateScalarSI(final float valueSI, final AbsoluteTemperatureUnit displayUnit)
     {
@@ -317,14 +314,12 @@ public class FloatAbsoluteTemperatureVector extends FloatVectorAbs<AbsoluteTempe
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperatureVector instantiateVectorRel(final FloatVectorData fvd, final TemperatureUnit displayUnit)
     {
         return new FloatTemperatureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperature instantiateScalarRelSI(final float valueSI, final TemperatureUnit displayUnit)
     {

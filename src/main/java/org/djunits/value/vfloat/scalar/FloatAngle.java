@@ -81,7 +81,6 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAngle instantiateRel(final float value, final AngleUnit unit)
     {
@@ -98,7 +97,6 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
         return new FloatAngle(value, AngleUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDirection instantiateAbs(final float value, final DirectionUnit unit)
     {
@@ -271,7 +269,6 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
         return new FloatDuration(this.si / v.si, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

@@ -283,21 +283,18 @@ public class ElectricalChargeVector extends DoubleVectorRel<ElectricalChargeUnit
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCharge> getScalarClass()
     {
         return ElectricalCharge.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalChargeVector instantiateVector(final DoubleVectorData dvd, final ElectricalChargeUnit displayUnit)
     {
         return new ElectricalChargeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCharge instantiateScalarSI(final double valueSI, final ElectricalChargeUnit displayUnit)
     {

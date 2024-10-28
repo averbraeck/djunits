@@ -284,21 +284,18 @@ public class LuminousIntensityVector extends DoubleVectorRel<LuminousIntensityUn
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<LuminousIntensity> getScalarClass()
     {
         return LuminousIntensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousIntensityVector instantiateVector(final DoubleVectorData dvd, final LuminousIntensityUnit displayUnit)
     {
         return new LuminousIntensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousIntensity instantiateScalarSI(final double valueSI, final LuminousIntensityUnit displayUnit)
     {

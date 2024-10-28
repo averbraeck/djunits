@@ -74,7 +74,6 @@ public class Force extends DoubleScalarRel<ForceUnit, Force>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Force instantiateRel(final double value, final ForceUnit unit)
     {
@@ -306,7 +305,6 @@ public class Force extends DoubleScalarRel<ForceUnit, Force>
         return new Area(this.si / v.si, AreaUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

@@ -29,14 +29,12 @@ public class GradeScale implements Scale
         this.conversionFactorToGrade = conversionFactorToGrade;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double toStandardUnit(final double value)
     {
         return Math.atan(value * this.conversionFactorToGrade);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double fromStandardUnit(final double value)
     {
@@ -51,14 +49,12 @@ public class GradeScale implements Scale
         return this.conversionFactorToGrade;
     }
 
-    /** {@inheritDoc} */
     @Override
     public boolean isBaseSIScale()
     {
         return false;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -70,7 +66,6 @@ public class GradeScale implements Scale
         return result;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("checkstyle:needbraces")
     @Override
     public boolean equals(final Object obj)
@@ -87,7 +82,6 @@ public class GradeScale implements Scale
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

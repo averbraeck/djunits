@@ -72,7 +72,6 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final ElectricalConductance instantiateRel(final double value, final ElectricalConductanceUnit unit)
     {
@@ -260,7 +259,6 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
         return new ElectricalCapacitance(this.si * v.si, ElectricalCapacitanceUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalResistance reciprocal()
     {

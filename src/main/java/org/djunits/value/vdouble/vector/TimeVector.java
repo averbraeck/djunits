@@ -277,21 +277,18 @@ public class TimeVector extends DoubleVectorAbs<TimeUnit, Time, TimeVector, Dura
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Time> getScalarClass()
     {
         return Time.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TimeVector instantiateVector(final DoubleVectorData dvd, final TimeUnit displayUnit)
     {
         return new TimeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Time instantiateScalarSI(final double valueSI, final TimeUnit displayUnit)
     {
@@ -300,14 +297,12 @@ public class TimeVector extends DoubleVectorAbs<TimeUnit, Time, TimeVector, Dura
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DurationVector instantiateVectorRel(final DoubleVectorData dvd, final DurationUnit displayUnit)
     {
         return new DurationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Duration instantiateScalarRelSI(final double valueSI, final DurationUnit displayUnit)
     {

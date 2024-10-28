@@ -197,35 +197,30 @@ public class FloatFlowVolumeMatrix
         this(data, FlowVolumeUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFlowVolume> getScalarClass()
     {
         return FloatFlowVolume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFlowVolumeVector> getVectorClass()
     {
         return FloatFlowVolumeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowVolumeMatrix instantiateMatrix(final FloatMatrixData fmd, final FlowVolumeUnit displayUnit)
     {
         return new FloatFlowVolumeMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowVolumeVector instantiateVector(final FloatVectorData fvd, final FlowVolumeUnit displayUnit)
     {
         return new FloatFlowVolumeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowVolume instantiateScalarSI(final float valueSI, final FlowVolumeUnit displayUnit)
     {

@@ -289,21 +289,18 @@ public class FloatElectricalChargeVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalCharge> getScalarClass()
     {
         return FloatElectricalCharge.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalChargeVector instantiateVector(final FloatVectorData fvd, final ElectricalChargeUnit displayUnit)
     {
         return new FloatElectricalChargeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCharge instantiateScalarSI(final float valueSI, final ElectricalChargeUnit displayUnit)
     {

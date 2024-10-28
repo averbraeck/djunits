@@ -72,14 +72,12 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      */
     public abstract S instantiateScalarSI(float valueSI, U displayUnit);
     
-    /** {@inheritDoc} */
     @Override
     protected final FloatVectorData getData()
     {
         return this.data;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected void setData(final FloatVectorData data)
     {
@@ -119,7 +117,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         return values;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int size()
     {
@@ -151,7 +148,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         return getData().getSI(index);
     }
 
-    /** {@inheritDoc} */
     @Override
     public S get(final int index) throws ValueRuntimeException
     {
@@ -228,7 +224,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         setSI(index, value.si);
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public S[] getScalars()
@@ -241,7 +236,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         return array;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public V toSparse()
@@ -260,7 +254,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         return result;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public V toDense()
@@ -291,63 +284,54 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         return (V) this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final V abs()
     {
         return assign(FloatMathFunctions.ABS);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final V ceil()
     {
         return assign(FloatMathFunctions.CEIL);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final V floor()
     {
         return assign(FloatMathFunctions.FLOOR);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final V neg()
     {
         return assign(FloatMathFunctions.NEG);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final V rint()
     {
         return assign(FloatMathFunctions.RINT);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {
         return toString(getDisplayUnit(), false, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final U displayUnit)
     {
         return toString(displayUnit, false, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final boolean verbose, final boolean withUnit)
     {
         return toString(getDisplayUnit(), verbose, withUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
     {
@@ -399,7 +383,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
                 other.size());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public int hashCode()
@@ -410,7 +393,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:designforextension", "checkstyle:needbraces"})
     public boolean equals(final Object obj)
@@ -438,7 +420,6 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
     /* =============================== ITERATOR METHODS AND CLASS ================================= */
     /* ============================================================================================ */
 
-    /** {@inheritDoc} */
     @Override
     public Iterator<S> iterator()
     {
@@ -458,14 +439,12 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
         /** index of next element to return. */
         private int cursor = 0;
 
-        /** {@inheritDoc} */
         @Override
         public boolean hasNext()
         {
             return this.cursor != size();
         }
 
-        /** {@inheritDoc} */
         @Override
         public S next()
         {
@@ -486,14 +465,12 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
             }
         }
 
-        /** {@inheritDoc} */
         @Override
         public void remove()
         {
             throw new RuntimeException("Remove function cannot be applied on fixed-size DJUNITS Vector");
         }
 
-        /** {@inheritDoc} */
         @Override
         public String toString()
         {

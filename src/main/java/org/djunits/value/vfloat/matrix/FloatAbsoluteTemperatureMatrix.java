@@ -210,21 +210,18 @@ public class FloatAbsoluteTemperatureMatrix extends
         this(data, AbsoluteTemperatureUnit.BASE.getStandardUnit(), rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAbsoluteTemperature> getScalarClass()
     {
         return FloatAbsoluteTemperature.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAbsoluteTemperatureVector> getVectorClass()
     {
         return FloatAbsoluteTemperatureVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperatureMatrix instantiateMatrix(final FloatMatrixData fmd,
             final AbsoluteTemperatureUnit displayUnit)
@@ -232,7 +229,6 @@ public class FloatAbsoluteTemperatureMatrix extends
         return new FloatAbsoluteTemperatureMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperatureVector instantiateVector(final FloatVectorData fvd,
             final AbsoluteTemperatureUnit displayUnit)
@@ -240,7 +236,6 @@ public class FloatAbsoluteTemperatureMatrix extends
         return new FloatAbsoluteTemperatureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsoluteTemperature instantiateScalarSI(final float valueSI, final AbsoluteTemperatureUnit displayUnit)
     {
@@ -249,21 +244,18 @@ public class FloatAbsoluteTemperatureMatrix extends
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperatureMatrix instantiateMatrixRel(final FloatMatrixData fmd, final TemperatureUnit displayUnit)
     {
         return new FloatTemperatureMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperatureVector instantiateVectorRel(final FloatVectorData fvd, final TemperatureUnit displayUnit)
     {
         return new FloatTemperatureVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTemperature instantiateScalarRelSI(final float valueSI, final TemperatureUnit displayUnit)
     {

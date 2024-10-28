@@ -72,7 +72,6 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final MagneticFluxDensity instantiateRel(final double value, final MagneticFluxDensityUnit unit)
     {
@@ -239,7 +238,6 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
         return new MagneticFlux(this.si * v.si, MagneticFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

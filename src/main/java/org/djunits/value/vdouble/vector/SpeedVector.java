@@ -276,21 +276,18 @@ public class SpeedVector extends DoubleVectorRel<SpeedUnit, Speed, SpeedVector>
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Speed> getScalarClass()
     {
         return Speed.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public SpeedVector instantiateVector(final DoubleVectorData dvd, final SpeedUnit displayUnit)
     {
         return new SpeedVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Speed instantiateScalarSI(final double valueSI, final SpeedUnit displayUnit)
     {

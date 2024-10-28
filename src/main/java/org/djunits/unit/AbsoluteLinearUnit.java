@@ -51,7 +51,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
         return this.relativeUnit;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Override
     public AU build(final Unit.Builder<AU> builder) throws UnitRuntimeException
@@ -175,7 +174,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
         return deriveLinearOffset(scaleFactor, offset, derivedRelativeUnit, derivedId, derivedName, getUnitSystem());
     }
 
-    /** {@inheritDoc} */
     @Override
     public Builder<AU, RU> makeBuilder()
     {
@@ -184,7 +182,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
         return builder;
     }
 
-    /** {@inheritDoc} */
     @Override
     public OffsetLinearScale getScale()
     {
@@ -211,14 +208,12 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
         /** The relative unit belonging to this unit. */
         private RU relativeUnit;
 
-        /** {@inheritDoc} */
         @Override
         public OffsetLinearScale getScale()
         {
             return (OffsetLinearScale) super.getScale();
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setScale(final Scale scale)
         {
@@ -251,7 +246,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
 
         // Other setters will have to be overridden to make them return this builder rather than the Unit.Builder.
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setSiPrefixes(final SIPrefixes siPrefixes, final double power)
         {
@@ -259,7 +253,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setId(final String id)
         {
@@ -267,7 +260,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setAdditionalAbbreviations(final String... abbreviations)
         {
@@ -275,7 +267,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setDefaultDisplayAbbreviation(final String defaultDisplayAbbreviation)
         {
@@ -283,7 +274,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setDefaultTextualAbbreviation(final String defaultTextualAbbreviation)
         {
@@ -291,7 +281,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setName(final String name)
         {
@@ -299,7 +288,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setUnitSystem(final UnitSystem unitSystem)
         {
@@ -307,7 +295,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setGenerated(final boolean generated)
         {
@@ -315,7 +302,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public Builder<AU, RU> setQuantity(final Quantity<AU> baseUnit)
         {
@@ -323,7 +309,6 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
             return this;
         }
 
-        /** {@inheritDoc} */
         @Override
         public String toString()
         {

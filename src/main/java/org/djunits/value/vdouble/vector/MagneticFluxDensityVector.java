@@ -289,21 +289,18 @@ public class MagneticFluxDensityVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<MagneticFluxDensity> getScalarClass()
     {
         return MagneticFluxDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxDensityVector instantiateVector(final DoubleVectorData dvd, final MagneticFluxDensityUnit displayUnit)
     {
         return new MagneticFluxDensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxDensity instantiateScalarSI(final double valueSI, final MagneticFluxDensityUnit displayUnit)
     {

@@ -84,7 +84,6 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMass instantiateRel(final float value, final MassUnit unit)
     {
@@ -227,7 +226,6 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
         throw new IllegalArgumentException("Error parsing FloatMass with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
     {
@@ -332,7 +330,6 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
         return new FloatMomentum(this.si * v.si, MomentumUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

@@ -193,35 +193,30 @@ public class SpeedMatrix extends DoubleMatrixRel<SpeedUnit, Speed, SpeedVector, 
         this(data, SpeedUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Speed> getScalarClass()
     {
         return Speed.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<SpeedVector> getVectorClass()
     {
         return SpeedVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public SpeedMatrix instantiateMatrix(final DoubleMatrixData dmd, final SpeedUnit displayUnit)
     {
         return new SpeedMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SpeedVector instantiateVector(final DoubleVectorData dvd, final SpeedUnit displayUnit)
     {
         return new SpeedVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Speed instantiateScalarSI(final double valueSI, final SpeedUnit displayUnit)
     {

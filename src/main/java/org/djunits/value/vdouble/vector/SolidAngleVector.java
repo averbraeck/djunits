@@ -278,21 +278,18 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<SolidAngle> getScalarClass()
     {
         return SolidAngle.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public SolidAngleVector instantiateVector(final DoubleVectorData dvd, final SolidAngleUnit displayUnit)
     {
         return new SolidAngleVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SolidAngle instantiateScalarSI(final double valueSI, final SolidAngleUnit displayUnit)
     {

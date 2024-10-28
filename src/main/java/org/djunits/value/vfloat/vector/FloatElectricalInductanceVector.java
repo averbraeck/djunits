@@ -290,14 +290,12 @@ public class FloatElectricalInductanceVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalInductance> getScalarClass()
     {
         return FloatElectricalInductance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalInductanceVector instantiateVector(final FloatVectorData fvd,
             final ElectricalInductanceUnit displayUnit)
@@ -305,7 +303,6 @@ public class FloatElectricalInductanceVector
         return new FloatElectricalInductanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalInductance instantiateScalarSI(final float valueSI, final ElectricalInductanceUnit displayUnit)
     {

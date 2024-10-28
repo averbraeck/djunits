@@ -290,21 +290,18 @@ public class FloatElectricalCurrentVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatElectricalCurrent> getScalarClass()
     {
         return FloatElectricalCurrent.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCurrentVector instantiateVector(final FloatVectorData fvd, final ElectricalCurrentUnit displayUnit)
     {
         return new FloatElectricalCurrentVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalCurrent instantiateScalarSI(final float valueSI, final ElectricalCurrentUnit displayUnit)
     {

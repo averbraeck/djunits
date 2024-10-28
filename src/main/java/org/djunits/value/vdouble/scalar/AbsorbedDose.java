@@ -67,7 +67,6 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final AbsorbedDose instantiateRel(final double value, final AbsorbedDoseUnit unit)
     {
@@ -220,7 +219,6 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
         return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

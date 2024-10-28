@@ -106,14 +106,12 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
         this(values, unit, StorageType.DENSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<SIScalar> getScalarClass()
     {
         return SIScalar.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<SIVector> getVectorClass()
     {
@@ -149,28 +147,24 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
         throw new IllegalArgumentException("Error parsing SIMatrix with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIMatrix instantiateMatrix(final DoubleMatrixData dmd, final SIUnit unit)
     {
         return new SIMatrix(dmd, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIVector instantiateVector(final DoubleVectorData dvd, final SIUnit unit)
     {
         return new SIVector(dvd, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar instantiateScalarSI(final double valueSI, final SIUnit unit)
     {
         return new SIScalar(valueSI, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
     {

@@ -281,21 +281,18 @@ public class TemperatureVector extends DoubleVectorRelWithAbs<AbsoluteTemperatur
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Temperature> getScalarClass()
     {
         return Temperature.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TemperatureVector instantiateVector(final DoubleVectorData dvd, final TemperatureUnit displayUnit)
     {
         return new TemperatureVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Temperature instantiateScalarSI(final double valueSI, final TemperatureUnit displayUnit)
     {
@@ -304,14 +301,12 @@ public class TemperatureVector extends DoubleVectorRelWithAbs<AbsoluteTemperatur
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsoluteTemperatureVector instantiateVectorAbs(final DoubleVectorData dvd, final AbsoluteTemperatureUnit displayUnit)
     {
         return new AbsoluteTemperatureVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsoluteTemperature instantiateScalarAbsSI(final double valueSI, final AbsoluteTemperatureUnit displayUnit)
     {

@@ -79,7 +79,6 @@ public class FloatAbsorbedDose extends FloatScalarRel<AbsorbedDoseUnit, FloatAbs
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatAbsorbedDose instantiateRel(final float value, final AbsorbedDoseUnit unit)
     {
@@ -232,7 +231,6 @@ public class FloatAbsorbedDose extends FloatScalarRel<AbsorbedDoseUnit, FloatAbs
         return new FloatDimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

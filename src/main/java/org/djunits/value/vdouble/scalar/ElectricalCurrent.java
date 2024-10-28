@@ -73,7 +73,6 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final ElectricalCurrent instantiateRel(final double value, final ElectricalCurrentUnit unit)
     {
@@ -277,7 +276,6 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
         return new ElectricalPotential(this.si / v.si, ElectricalPotentialUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

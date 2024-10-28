@@ -196,35 +196,30 @@ public class DirectionMatrix extends
         this(data, DirectionUnit.BASE.getStandardUnit(), rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Direction> getScalarClass()
     {
         return Direction.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<DirectionVector> getVectorClass()
     {
         return DirectionVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DirectionMatrix instantiateMatrix(final DoubleMatrixData dmd, final DirectionUnit displayUnit)
     {
         return new DirectionMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DirectionVector instantiateVector(final DoubleVectorData dvd, final DirectionUnit displayUnit)
     {
         return new DirectionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Direction instantiateScalarSI(final double valueSI, final DirectionUnit displayUnit)
     {
@@ -233,21 +228,18 @@ public class DirectionMatrix extends
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngleMatrix instantiateMatrixRel(final DoubleMatrixData dmd, final AngleUnit displayUnit)
     {
         return new AngleMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngleVector instantiateVectorRel(final DoubleVectorData dvd, final AngleUnit displayUnit)
     {
         return new AngleVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Angle instantiateScalarRelSI(final double valueSI, final AngleUnit displayUnit)
     {

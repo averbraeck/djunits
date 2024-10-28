@@ -279,21 +279,18 @@ public class FloatFrequencyVector extends FloatVectorRel<FrequencyUnit, FloatFre
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFrequency> getScalarClass()
     {
         return FloatFrequency.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFrequencyVector instantiateVector(final FloatVectorData fvd, final FrequencyUnit displayUnit)
     {
         return new FloatFrequencyVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFrequency instantiateScalarSI(final float valueSI, final FrequencyUnit displayUnit)
     {

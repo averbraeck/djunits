@@ -279,21 +279,18 @@ public class PositionVector extends DoubleVectorAbs<PositionUnit, Position, Posi
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Position> getScalarClass()
     {
         return Position.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PositionVector instantiateVector(final DoubleVectorData dvd, final PositionUnit displayUnit)
     {
         return new PositionVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Position instantiateScalarSI(final double valueSI, final PositionUnit displayUnit)
     {
@@ -302,14 +299,12 @@ public class PositionVector extends DoubleVectorAbs<PositionUnit, Position, Posi
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LengthVector instantiateVectorRel(final DoubleVectorData dvd, final LengthUnit displayUnit)
     {
         return new LengthVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Length instantiateScalarRelSI(final double valueSI, final LengthUnit displayUnit)
     {

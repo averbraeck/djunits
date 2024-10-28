@@ -198,35 +198,30 @@ public class TemperatureMatrix
         this(data, TemperatureUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Temperature> getScalarClass()
     {
         return Temperature.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<TemperatureVector> getVectorClass()
     {
         return TemperatureVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TemperatureMatrix instantiateMatrix(final DoubleMatrixData dmd, final TemperatureUnit displayUnit)
     {
         return new TemperatureMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public TemperatureVector instantiateVector(final DoubleVectorData dvd, final TemperatureUnit displayUnit)
     {
         return new TemperatureVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Temperature instantiateScalarSI(final double valueSI, final TemperatureUnit displayUnit)
     {
@@ -235,21 +230,18 @@ public class TemperatureMatrix
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsoluteTemperatureMatrix instantiateMatrixAbs(final DoubleMatrixData dmd, final AbsoluteTemperatureUnit displayUnit)
     {
         return new AbsoluteTemperatureMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsoluteTemperatureVector instantiateVectorAbs(final DoubleVectorData dvd, final AbsoluteTemperatureUnit displayUnit)
     {
         return new AbsoluteTemperatureVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsoluteTemperature instantiateScalarAbsSI(final double valueSI, final AbsoluteTemperatureUnit displayUnit)
     {

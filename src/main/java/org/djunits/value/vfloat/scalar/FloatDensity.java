@@ -79,7 +79,6 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatDensity instantiateRel(final float value, final DensityUnit unit)
     {
@@ -252,7 +251,6 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
         return new FloatFlowMass(this.si * v.si, FlowMassUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

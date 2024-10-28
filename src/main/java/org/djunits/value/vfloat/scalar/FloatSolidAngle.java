@@ -78,7 +78,6 @@ public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAn
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatSolidAngle instantiateRel(final float value, final SolidAngleUnit unit)
     {
@@ -241,7 +240,6 @@ public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAn
         return new FloatLuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

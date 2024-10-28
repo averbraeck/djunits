@@ -62,7 +62,6 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      */
     public abstract A instantiateAbs(double value, AU unit);
     
-    /** {@inheritDoc} */
     @Override
     public final A plus(final R increment)
     {
@@ -70,7 +69,6 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs(getInUnit() + increment.getInUnit(targetUnit.getRelativeUnit()), targetUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final A minus(final R decrement)
     {
@@ -78,7 +76,6 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
         return instantiateAbs(getInUnit() - decrement.getInUnit(targetUnit.getRelativeUnit()), targetUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final R minus(final A decrement)
     {
@@ -90,35 +87,30 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
     /********************************** MATH METHODS **********************************/
     /**********************************************************************************/
 
-    /** {@inheritDoc} */
     @Override
     public A abs()
     {
         return instantiateAbs(Math.abs(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public A ceil()
     {
         return instantiateAbs(Math.ceil(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public A floor()
     {
         return instantiateAbs(Math.floor(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public A neg()
     {
         return instantiateAbs(-getInUnit(), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public A rint()
     {

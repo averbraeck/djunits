@@ -278,21 +278,18 @@ public class PressureVector extends DoubleVectorRel<PressureUnit, Pressure, Pres
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Pressure> getScalarClass()
     {
         return Pressure.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PressureVector instantiateVector(final DoubleVectorData dvd, final PressureUnit displayUnit)
     {
         return new PressureVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Pressure instantiateScalarSI(final double valueSI, final PressureUnit displayUnit)
     {

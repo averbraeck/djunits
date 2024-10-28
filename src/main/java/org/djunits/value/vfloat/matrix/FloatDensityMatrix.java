@@ -194,35 +194,30 @@ public class FloatDensityMatrix extends FloatMatrixRel<DensityUnit, FloatDensity
         this(data, DensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDensity> getScalarClass()
     {
         return FloatDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatDensityVector> getVectorClass()
     {
         return FloatDensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDensityMatrix instantiateMatrix(final FloatMatrixData fmd, final DensityUnit displayUnit)
     {
         return new FloatDensityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDensityVector instantiateVector(final FloatVectorData fvd, final DensityUnit displayUnit)
     {
         return new FloatDensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDensity instantiateScalarSI(final float valueSI, final DensityUnit displayUnit)
     {

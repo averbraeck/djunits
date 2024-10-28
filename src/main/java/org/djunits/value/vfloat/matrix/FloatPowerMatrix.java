@@ -193,35 +193,30 @@ public class FloatPowerMatrix extends FloatMatrixRel<PowerUnit, FloatPower, Floa
         this(data, PowerUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPower> getScalarClass()
     {
         return FloatPower.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPowerVector> getVectorClass()
     {
         return FloatPowerVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPowerMatrix instantiateMatrix(final FloatMatrixData fmd, final PowerUnit displayUnit)
     {
         return new FloatPowerMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPowerVector instantiateVector(final FloatVectorData fvd, final PowerUnit displayUnit)
     {
         return new FloatPowerVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPower instantiateScalarSI(final float valueSI, final PowerUnit displayUnit)
     {

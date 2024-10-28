@@ -193,35 +193,30 @@ public class TorqueMatrix extends DoubleMatrixRel<TorqueUnit, Torque, TorqueVect
         this(data, TorqueUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Torque> getScalarClass()
     {
         return Torque.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<TorqueVector> getVectorClass()
     {
         return TorqueVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public TorqueMatrix instantiateMatrix(final DoubleMatrixData dmd, final TorqueUnit displayUnit)
     {
         return new TorqueMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public TorqueVector instantiateVector(final DoubleVectorData dvd, final TorqueUnit displayUnit)
     {
         return new TorqueVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Torque instantiateScalarSI(final double valueSI, final TorqueUnit displayUnit)
     {

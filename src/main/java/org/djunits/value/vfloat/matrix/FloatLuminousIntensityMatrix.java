@@ -202,35 +202,30 @@ public class FloatLuminousIntensityMatrix extends FloatMatrixRel<LuminousIntensi
         this(data, LuminousIntensityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLuminousIntensity> getScalarClass()
     {
         return FloatLuminousIntensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatLuminousIntensityVector> getVectorClass()
     {
         return FloatLuminousIntensityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousIntensityMatrix instantiateMatrix(final FloatMatrixData fmd, final LuminousIntensityUnit displayUnit)
     {
         return new FloatLuminousIntensityMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousIntensityVector instantiateVector(final FloatVectorData fvd, final LuminousIntensityUnit displayUnit)
     {
         return new FloatLuminousIntensityVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLuminousIntensity instantiateScalarSI(final float valueSI, final LuminousIntensityUnit displayUnit)
     {

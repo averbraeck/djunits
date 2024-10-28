@@ -278,21 +278,18 @@ public class FloatMomentumVector extends FloatVectorRel<MomentumUnit, FloatMomen
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMomentum> getScalarClass()
     {
         return FloatMomentum.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMomentumVector instantiateVector(final FloatVectorData fvd, final MomentumUnit displayUnit)
     {
         return new FloatMomentumVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMomentum instantiateScalarSI(final float valueSI, final MomentumUnit displayUnit)
     {

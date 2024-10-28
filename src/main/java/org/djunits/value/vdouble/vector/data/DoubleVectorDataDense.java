@@ -32,14 +32,12 @@ public class DoubleVectorDataDense extends DoubleVectorData
         System.arraycopy(vectorSI, 0, this.vectorSI, 0, vectorSI.length);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
         return (int) Arrays.stream(this.vectorSI).parallel().filter(d -> d != 0.0).count();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense assign(final DoubleFunction doubleFunction)
     {
@@ -47,7 +45,6 @@ public class DoubleVectorDataDense extends DoubleVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense assign(final DoubleFunction2 doubleFunction2, final DoubleVectorData right)
     {
@@ -64,49 +61,42 @@ public class DoubleVectorDataDense extends DoubleVectorData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense toDense()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataSparse toSparse()
     {
         return DoubleVectorDataSparse.instantiate(this.vectorSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int size()
     {
         return this.vectorSI.length;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double getSI(final int index)
     {
         return this.vectorSI[index];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int index, final double valueSI)
     {
         this.vectorSI[index] = valueSI;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double[] getDenseVectorSI()
     {
         return this.vectorSI.clone();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense copy()
     {
@@ -115,7 +105,6 @@ public class DoubleVectorDataDense extends DoubleVectorData
         return new DoubleVectorDataDense(vCopy);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense plus(final DoubleVectorData right)
     {
@@ -124,7 +113,6 @@ public class DoubleVectorDataDense extends DoubleVectorData
                 IntStream.range(0, size()).parallel().mapToDouble(i -> getSI(i) + right.getSI(i)).toArray());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorDataDense minus(final DoubleVectorData right)
     {
@@ -133,7 +121,6 @@ public class DoubleVectorDataDense extends DoubleVectorData
                 IntStream.range(0, size()).parallel().mapToDouble(i -> getSI(i) - right.getSI(i)).toArray());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorData times(final DoubleVectorData right)
     {
@@ -147,7 +134,6 @@ public class DoubleVectorDataDense extends DoubleVectorData
         return this.copy().multiplyBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleVectorData divide(final DoubleVectorData right)
     {

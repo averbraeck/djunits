@@ -281,21 +281,18 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatIlluminance> getScalarClass()
     {
         return FloatIlluminance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatIlluminanceVector instantiateVector(final FloatVectorData fvd, final IlluminanceUnit displayUnit)
     {
         return new FloatIlluminanceVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatIlluminance instantiateScalarSI(final float valueSI, final IlluminanceUnit displayUnit)
     {

@@ -82,7 +82,6 @@ public class FloatElectricalInductance extends FloatScalarRel<ElectricalInductan
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatElectricalInductance instantiateRel(final float value, final ElectricalInductanceUnit unit)
     {
@@ -251,7 +250,6 @@ public class FloatElectricalInductance extends FloatScalarRel<ElectricalInductan
         return new FloatMagneticFlux(this.si * v.si, MagneticFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

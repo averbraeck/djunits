@@ -281,21 +281,18 @@ public class AngularVelocityVector extends DoubleVectorRel<AngularVelocityUnit, 
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngularVelocity> getScalarClass()
     {
         return AngularVelocity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularVelocityVector instantiateVector(final DoubleVectorData dvd, final AngularVelocityUnit displayUnit)
     {
         return new AngularVelocityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularVelocity instantiateScalarSI(final double valueSI, final AngularVelocityUnit displayUnit)
     {

@@ -83,7 +83,6 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatTorque instantiateRel(final float value, final TorqueUnit unit)
     {
@@ -316,7 +315,6 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
         return new FloatVolume(this.si / v.si, VolumeUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

@@ -50,7 +50,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
      */
     public abstract R instantiateRel(float value, U unit);
 
-    /** {@inheritDoc} */
     @Override
     public final R plus(final R increment)
     {
@@ -63,7 +62,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
                 : instantiateRel(this.getSI() + increment.getSI(), getDisplayUnit().getStandardUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     public final R minus(final R decrement)
     {
@@ -106,7 +104,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
     /********************************** MATH METHODS **********************************/
     /**********************************************************************************/
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R abs()
@@ -114,7 +111,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel(Math.abs(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R ceil()
@@ -122,7 +118,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel((float) Math.ceil(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R floor()
@@ -130,7 +125,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel((float) Math.floor(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R rint()
@@ -138,7 +132,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel((float) Math.rint(getInUnit()), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R neg()
@@ -146,7 +139,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel(-getInUnit(), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R times(final double constant)
@@ -154,7 +146,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel((float) (getInUnit() * constant), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R divide(final double constant)
@@ -162,7 +153,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel((float) (getInUnit() / constant), getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R times(final float constant)
@@ -170,7 +160,6 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
         return instantiateRel(getInUnit() * constant, getDisplayUnit());
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:designforextension")
     public R divide(final float constant)

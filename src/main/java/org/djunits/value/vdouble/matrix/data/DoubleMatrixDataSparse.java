@@ -81,7 +81,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
@@ -161,7 +160,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixData assign(final DoubleFunction doubleFunction)
     {
@@ -225,7 +223,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataSparse assign(final DoubleFunction2 doubleFunction, final DoubleMatrixData right)
     {
@@ -379,7 +376,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataDense toDense()
     {
@@ -398,14 +394,12 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataSparse toSparse()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double getSI(final int row, final int col)
     {
@@ -414,7 +408,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return internalIndex < 0 ? 0.0 : this.matrixSI[internalIndex];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int row, final int col, final double valueSI)
     {
@@ -440,14 +433,12 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         this.matrixSI = matrixSINew;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double[][] getDenseMatrixSI()
     {
         return toDense().getDenseMatrixSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixDataSparse copy()
     {
@@ -523,7 +514,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return atomicLength.get();
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixData plus(final DoubleMatrixData right) throws ValueRuntimeException
     {
@@ -534,7 +524,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return this.copy().incrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final DoubleMatrixData minus(final DoubleMatrixData right)
     {
@@ -545,7 +534,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return this.copy().decrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixDataSparse times(final DoubleMatrixData right) throws ValueRuntimeException
     {
@@ -555,7 +543,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public DoubleMatrixData divide(final DoubleMatrixData right) throws ValueRuntimeException
     {
@@ -569,14 +556,12 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return this.copy().divideBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
         return super.hashCode();
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:needbraces", "checkstyle:designforextension"})
     public boolean equals(final Object obj)
@@ -602,7 +587,6 @@ public class DoubleMatrixDataSparse extends DoubleMatrixData
         return Arrays.equals(this.matrixSI, ((DoubleMatrixDataSparse) other).matrixSI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

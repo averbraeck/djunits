@@ -193,35 +193,30 @@ public class MomentumMatrix extends DoubleMatrixRel<MomentumUnit, Momentum, Mome
         this(data, MomentumUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Momentum> getScalarClass()
     {
         return Momentum.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<MomentumVector> getVectorClass()
     {
         return MomentumVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MomentumMatrix instantiateMatrix(final DoubleMatrixData dmd, final MomentumUnit displayUnit)
     {
         return new MomentumMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MomentumVector instantiateVector(final DoubleVectorData dvd, final MomentumUnit displayUnit)
     {
         return new MomentumVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Momentum instantiateScalarSI(final double valueSI, final MomentumUnit displayUnit)
     {

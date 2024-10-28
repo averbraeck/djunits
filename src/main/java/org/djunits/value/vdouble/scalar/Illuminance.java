@@ -68,7 +68,6 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Illuminance instantiateRel(final double value, final IlluminanceUnit unit)
     {
@@ -231,7 +230,6 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
         return new LuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

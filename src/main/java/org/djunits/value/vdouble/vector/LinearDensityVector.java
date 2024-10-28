@@ -279,21 +279,18 @@ public class LinearDensityVector extends DoubleVectorRel<LinearDensityUnit, Line
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<LinearDensity> getScalarClass()
     {
         return LinearDensity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LinearDensityVector instantiateVector(final DoubleVectorData dvd, final LinearDensityUnit displayUnit)
     {
         return new LinearDensityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LinearDensity instantiateScalarSI(final double valueSI, final LinearDensityUnit displayUnit)
     {

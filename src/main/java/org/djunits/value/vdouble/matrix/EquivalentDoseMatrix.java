@@ -196,35 +196,30 @@ public class EquivalentDoseMatrix
         this(data, EquivalentDoseUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<EquivalentDose> getScalarClass()
     {
         return EquivalentDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<EquivalentDoseVector> getVectorClass()
     {
         return EquivalentDoseVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public EquivalentDoseMatrix instantiateMatrix(final DoubleMatrixData dmd, final EquivalentDoseUnit displayUnit)
     {
         return new EquivalentDoseMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public EquivalentDoseVector instantiateVector(final DoubleVectorData dvd, final EquivalentDoseUnit displayUnit)
     {
         return new EquivalentDoseVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public EquivalentDose instantiateScalarSI(final double valueSI, final EquivalentDoseUnit displayUnit)
     {

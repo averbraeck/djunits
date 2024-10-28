@@ -81,7 +81,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public final int cardinality()
     {
@@ -161,7 +160,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMatrixData assign(final FloatFunction floatFunction)
     {
@@ -225,7 +223,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMatrixDataSparse assign(final FloatFunction2 floatFunction, final FloatMatrixData right)
     {
@@ -370,7 +367,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMatrixDataDense toDense()
     {
@@ -389,14 +385,12 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMatrixDataSparse toSparse()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final float getSI(final int row, final int col)
     {
@@ -405,7 +399,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return internalIndex < 0 ? 0.0f : this.matrixSI[internalIndex];
     }
 
-    /** {@inheritDoc} */
     @Override
     public final void setSI(final int row, final int col, final float valueSI)
     {
@@ -431,21 +424,18 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         this.matrixSI = matrixSINew;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final float[][] getDenseMatrixSI()
     {
         return toDense().getDenseMatrixSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final double[][] getDoubleDenseMatrixSI()
     {
         return toDense().getDoubleDenseMatrixSI();
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMatrixDataSparse copy()
     {
@@ -521,7 +511,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return atomicLength.get();
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMatrixData plus(final FloatMatrixData right) throws ValueRuntimeException
     {
@@ -532,7 +521,6 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return this.copy().incrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatMatrixData minus(final FloatMatrixData right)
     {
@@ -543,14 +531,12 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return this.copy().decrementBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMatrixData times(final FloatMatrixData right) throws ValueRuntimeException
     {
         return this.copy().multiplyBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMatrixData divide(final FloatMatrixData right) throws ValueRuntimeException
     {
@@ -563,14 +549,12 @@ public class FloatMatrixDataSparse extends FloatMatrixData
         return this.copy().divideBy(right);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
         return super.hashCode();
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings({"checkstyle:needbraces", "checkstyle:designforextension"})
     public boolean equals(final Object obj)

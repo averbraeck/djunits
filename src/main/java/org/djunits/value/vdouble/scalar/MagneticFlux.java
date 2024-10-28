@@ -73,7 +73,6 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final MagneticFlux instantiateRel(final double value, final MagneticFluxUnit unit)
     {
@@ -286,7 +285,6 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
         return new ElectricalCurrent(this.si / v.si, ElectricalCurrentUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

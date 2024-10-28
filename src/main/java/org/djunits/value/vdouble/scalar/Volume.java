@@ -73,7 +73,6 @@ public class Volume extends DoubleScalarRel<VolumeUnit, Volume>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Volume instantiateRel(final double value, final VolumeUnit unit)
     {
@@ -295,7 +294,6 @@ public class Volume extends DoubleScalarRel<VolumeUnit, Volume>
         return new Duration(this.si / v.si, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

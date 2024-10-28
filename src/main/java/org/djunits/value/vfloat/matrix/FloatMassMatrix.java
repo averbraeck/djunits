@@ -193,35 +193,30 @@ public class FloatMassMatrix extends FloatMatrixRel<MassUnit, FloatMass, FloatMa
         this(data, MassUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMass> getScalarClass()
     {
         return FloatMass.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatMassVector> getVectorClass()
     {
         return FloatMassVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMassMatrix instantiateMatrix(final FloatMatrixData fmd, final MassUnit displayUnit)
     {
         return new FloatMassMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMassVector instantiateVector(final FloatVectorData fvd, final MassUnit displayUnit)
     {
         return new FloatMassVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatMass instantiateScalarSI(final float valueSI, final MassUnit displayUnit)
     {

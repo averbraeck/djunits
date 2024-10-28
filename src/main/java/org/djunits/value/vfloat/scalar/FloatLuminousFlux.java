@@ -83,7 +83,6 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatLuminousFlux instantiateRel(final float value, final LuminousFluxUnit unit)
     {
@@ -276,7 +275,6 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
         return new FloatLuminousIntensity(this.si / v.si, LuminousIntensityUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

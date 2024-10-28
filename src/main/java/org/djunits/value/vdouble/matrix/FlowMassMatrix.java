@@ -193,35 +193,30 @@ public class FlowMassMatrix extends DoubleMatrixRel<FlowMassUnit, FlowMass, Flow
         this(data, FlowMassUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FlowMass> getScalarClass()
     {
         return FlowMass.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FlowMassVector> getVectorClass()
     {
         return FlowMassVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowMassMatrix instantiateMatrix(final DoubleMatrixData dmd, final FlowMassUnit displayUnit)
     {
         return new FlowMassMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowMassVector instantiateVector(final DoubleVectorData dvd, final FlowMassUnit displayUnit)
     {
         return new FlowMassVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FlowMass instantiateScalarSI(final double valueSI, final FlowMassUnit displayUnit)
     {

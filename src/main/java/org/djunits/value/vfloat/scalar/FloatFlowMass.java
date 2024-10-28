@@ -83,7 +83,6 @@ public class FloatFlowMass extends FloatScalarRel<FlowMassUnit, FloatFlowMass>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatFlowMass instantiateRel(final float value, final FlowMassUnit unit)
     {
@@ -306,7 +305,6 @@ public class FloatFlowMass extends FloatScalarRel<FlowMassUnit, FloatFlowMass>
         return new FloatMomentum(this.si * v.si, MomentumUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

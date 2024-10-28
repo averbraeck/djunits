@@ -85,7 +85,6 @@ public class FloatLength extends FloatScalarRelWithAbs<PositionUnit, FloatPositi
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatLength instantiateRel(final float value, final LengthUnit unit)
     {
@@ -102,7 +101,6 @@ public class FloatLength extends FloatScalarRelWithAbs<PositionUnit, FloatPositi
         return new FloatLength(value, LengthUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatPosition instantiateAbs(final float value, final PositionUnit unit)
     {
@@ -345,7 +343,6 @@ public class FloatLength extends FloatScalarRelWithAbs<PositionUnit, FloatPositi
         return new FloatMomentum(this.si * v.si, MomentumUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLinearDensity reciprocal()
     {

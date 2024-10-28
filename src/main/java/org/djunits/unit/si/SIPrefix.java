@@ -96,7 +96,6 @@ public class SIPrefix implements Serializable
         return this.defaultDisplayPrefix;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

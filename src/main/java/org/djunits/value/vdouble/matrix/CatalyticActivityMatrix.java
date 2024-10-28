@@ -198,35 +198,30 @@ public class CatalyticActivityMatrix
         this(data, CatalyticActivityUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<CatalyticActivity> getScalarClass()
     {
         return CatalyticActivity.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<CatalyticActivityVector> getVectorClass()
     {
         return CatalyticActivityVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public CatalyticActivityMatrix instantiateMatrix(final DoubleMatrixData dmd, final CatalyticActivityUnit displayUnit)
     {
         return new CatalyticActivityMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public CatalyticActivityVector instantiateVector(final DoubleVectorData dvd, final CatalyticActivityUnit displayUnit)
     {
         return new CatalyticActivityVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public CatalyticActivity instantiateScalarSI(final double valueSI, final CatalyticActivityUnit displayUnit)
     {

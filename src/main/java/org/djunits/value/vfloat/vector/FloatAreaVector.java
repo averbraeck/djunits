@@ -278,21 +278,18 @@ public class FloatAreaVector extends FloatVectorRel<AreaUnit, FloatArea, FloatAr
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatArea> getScalarClass()
     {
         return FloatArea.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAreaVector instantiateVector(final FloatVectorData fvd, final AreaUnit displayUnit)
     {
         return new FloatAreaVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatArea instantiateScalarSI(final float valueSI, final AreaUnit displayUnit)
     {

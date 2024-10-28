@@ -193,35 +193,30 @@ public class FloatSpeedMatrix extends FloatMatrixRel<SpeedUnit, FloatSpeed, Floa
         this(data, SpeedUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSpeed> getScalarClass()
     {
         return FloatSpeed.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSpeedVector> getVectorClass()
     {
         return FloatSpeedVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSpeedMatrix instantiateMatrix(final FloatMatrixData fmd, final SpeedUnit displayUnit)
     {
         return new FloatSpeedMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSpeedVector instantiateVector(final FloatVectorData fvd, final SpeedUnit displayUnit)
     {
         return new FloatSpeedVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSpeed instantiateScalarSI(final float valueSI, final SpeedUnit displayUnit)
     {

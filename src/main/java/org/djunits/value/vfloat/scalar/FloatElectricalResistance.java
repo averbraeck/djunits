@@ -82,7 +82,6 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatElectricalResistance instantiateRel(final float value, final ElectricalResistanceUnit unit)
     {
@@ -273,7 +272,6 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
         return new FloatElectricalInductance(this.si * v.si, ElectricalInductanceUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatElectricalConductance reciprocal()
     {

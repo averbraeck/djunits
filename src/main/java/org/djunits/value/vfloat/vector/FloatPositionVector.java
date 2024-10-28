@@ -280,7 +280,6 @@ public class FloatPositionVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatPosition>
 
@@ -289,14 +288,12 @@ public class FloatPositionVector
         return FloatPosition.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPositionVector instantiateVector(final FloatVectorData fvd, final PositionUnit displayUnit)
     {
         return new FloatPositionVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatPosition instantiateScalarSI(final float valueSI, final PositionUnit displayUnit)
     {
@@ -305,14 +302,12 @@ public class FloatPositionVector
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLengthVector instantiateVectorRel(final FloatVectorData fvd, final LengthUnit displayUnit)
     {
         return new FloatLengthVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatLength instantiateScalarRelSI(final float valueSI, final LengthUnit displayUnit)
     {

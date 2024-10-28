@@ -194,35 +194,30 @@ public class IlluminanceMatrix extends DoubleMatrixRel<IlluminanceUnit, Illumina
         this(data, IlluminanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Illuminance> getScalarClass()
     {
         return Illuminance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<IlluminanceVector> getVectorClass()
     {
         return IlluminanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public IlluminanceMatrix instantiateMatrix(final DoubleMatrixData dmd, final IlluminanceUnit displayUnit)
     {
         return new IlluminanceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public IlluminanceVector instantiateVector(final DoubleVectorData dvd, final IlluminanceUnit displayUnit)
     {
         return new IlluminanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Illuminance instantiateScalarSI(final double valueSI, final IlluminanceUnit displayUnit)
     {

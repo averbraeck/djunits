@@ -222,7 +222,6 @@ public class FloatSIVector extends FloatVectorRel<SIUnit, FloatSIScalar, FloatSI
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatSIScalar> getScalarClass()
     {
@@ -318,21 +317,18 @@ public class FloatSIVector extends FloatVectorRel<SIUnit, FloatSIScalar, FloatSI
         throw new IllegalArgumentException("Error parsing FloatSIVector with unit " + unitString);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIVector instantiateVector(final FloatVectorData fvd, final SIUnit unit)
     {
         return new FloatSIVector(fvd, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar instantiateScalarSI(final float valueSI, final SIUnit unit)
     {
         return new FloatSIScalar(valueSI, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString(final SIUnit displayUnit, final boolean verbose, final boolean withUnit)
     {

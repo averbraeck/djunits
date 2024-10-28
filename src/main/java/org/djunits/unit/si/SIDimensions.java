@@ -329,7 +329,6 @@ public class SIDimensions implements Serializable
         return this.fractional;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -340,7 +339,6 @@ public class SIDimensions implements Serializable
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)
@@ -471,7 +469,6 @@ public class SIDimensions implements Serializable
         return toString(divided, separator ? "." : "", "<sup>", "</sup>");
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString()
     {

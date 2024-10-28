@@ -83,7 +83,6 @@ public class FloatCatalyticActivity extends FloatScalarRel<CatalyticActivityUnit
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatCatalyticActivity instantiateRel(final float value, final CatalyticActivityUnit unit)
     {
@@ -272,7 +271,6 @@ public class FloatCatalyticActivity extends FloatScalarRel<CatalyticActivityUnit
         return new FloatAmountOfSubstance(this.si / v.si, AmountOfSubstanceUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

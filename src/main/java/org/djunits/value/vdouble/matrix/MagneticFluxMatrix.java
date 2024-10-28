@@ -194,35 +194,30 @@ public class MagneticFluxMatrix extends DoubleMatrixRel<MagneticFluxUnit, Magnet
         this(data, MagneticFluxUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<MagneticFlux> getScalarClass()
     {
         return MagneticFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<MagneticFluxVector> getVectorClass()
     {
         return MagneticFluxVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxMatrix instantiateMatrix(final DoubleMatrixData dmd, final MagneticFluxUnit displayUnit)
     {
         return new MagneticFluxMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxVector instantiateVector(final DoubleVectorData dvd, final MagneticFluxUnit displayUnit)
     {
         return new MagneticFluxVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFlux instantiateScalarSI(final double valueSI, final MagneticFluxUnit displayUnit)
     {

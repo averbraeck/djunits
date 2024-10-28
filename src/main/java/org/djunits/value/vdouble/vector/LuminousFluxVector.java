@@ -279,21 +279,18 @@ public class LuminousFluxVector extends DoubleVectorRel<LuminousFluxUnit, Lumino
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<LuminousFlux> getScalarClass()
     {
         return LuminousFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousFluxVector instantiateVector(final DoubleVectorData dvd, final LuminousFluxUnit displayUnit)
     {
         return new LuminousFluxVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public LuminousFlux instantiateScalarSI(final double valueSI, final LuminousFluxUnit displayUnit)
     {

@@ -73,7 +73,6 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final ElectricalCharge instantiateRel(final double value, final ElectricalChargeUnit unit)
     {
@@ -266,7 +265,6 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
         return new ElectricalPotential(this.si / v.si, ElectricalPotentialUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

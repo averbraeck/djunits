@@ -276,21 +276,18 @@ public class ForceVector extends DoubleVectorRel<ForceUnit, Force, ForceVector>
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<Force> getScalarClass()
     {
         return Force.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ForceVector instantiateVector(final DoubleVectorData dvd, final ForceUnit displayUnit)
     {
         return new ForceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Force instantiateScalarSI(final double valueSI, final ForceUnit displayUnit)
     {

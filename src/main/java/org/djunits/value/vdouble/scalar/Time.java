@@ -55,14 +55,12 @@ public class Time extends DoubleScalarAbs<TimeUnit, Time, DurationUnit, Duration
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Time instantiateAbs(final double value, final TimeUnit unit)
     {
         return new Time(value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Duration instantiateRel(final double value, final DurationUnit unit)
     {

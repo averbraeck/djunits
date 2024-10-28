@@ -278,21 +278,18 @@ public class FloatTorqueVector extends FloatVectorRel<TorqueUnit, FloatTorque, F
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatTorque> getScalarClass()
     {
         return FloatTorque.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTorqueVector instantiateVector(final FloatVectorData fvd, final TorqueUnit displayUnit)
     {
         return new FloatTorqueVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatTorque instantiateScalarSI(final float valueSI, final TorqueUnit displayUnit)
     {

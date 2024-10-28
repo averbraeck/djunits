@@ -283,21 +283,18 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAbsorbedDose> getScalarClass()
     {
         return FloatAbsorbedDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsorbedDoseVector instantiateVector(final FloatVectorData fvd, final AbsorbedDoseUnit displayUnit)
     {
         return new FloatAbsorbedDoseVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAbsorbedDose instantiateScalarSI(final float valueSI, final AbsorbedDoseUnit displayUnit)
     {

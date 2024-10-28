@@ -194,35 +194,30 @@ public class AccelerationMatrix extends DoubleMatrixRel<AccelerationUnit, Accele
         this(data, AccelerationUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Acceleration> getScalarClass()
     {
         return Acceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AccelerationVector> getVectorClass()
     {
         return AccelerationVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AccelerationMatrix instantiateMatrix(final DoubleMatrixData dmd, final AccelerationUnit displayUnit)
     {
         return new AccelerationMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AccelerationVector instantiateVector(final DoubleVectorData dvd, final AccelerationUnit displayUnit)
     {
         return new AccelerationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Acceleration instantiateScalarSI(final double valueSI, final AccelerationUnit displayUnit)
     {

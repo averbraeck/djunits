@@ -195,35 +195,30 @@ public class FloatFrequencyMatrix
         this(data, FrequencyUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFrequency> getScalarClass()
     {
         return FloatFrequency.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFrequencyVector> getVectorClass()
     {
         return FloatFrequencyVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFrequencyMatrix instantiateMatrix(final FloatMatrixData fmd, final FrequencyUnit displayUnit)
     {
         return new FloatFrequencyMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFrequencyVector instantiateVector(final FloatVectorData fvd, final FrequencyUnit displayUnit)
     {
         return new FloatFrequencyVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFrequency instantiateScalarSI(final float valueSI, final FrequencyUnit displayUnit)
     {

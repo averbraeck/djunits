@@ -279,21 +279,18 @@ public class FloatFlowVolumeVector extends FloatVectorRel<FlowVolumeUnit, FloatF
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatFlowVolume> getScalarClass()
     {
         return FloatFlowVolume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowVolumeVector instantiateVector(final FloatVectorData fvd, final FlowVolumeUnit displayUnit)
     {
         return new FloatFlowVolumeVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatFlowVolume instantiateScalarSI(final float valueSI, final FlowVolumeUnit displayUnit)
     {

@@ -279,21 +279,18 @@ public class MagneticFluxVector extends DoubleVectorRel<MagneticFluxUnit, Magnet
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<MagneticFlux> getScalarClass()
     {
         return MagneticFlux.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFluxVector instantiateVector(final DoubleVectorData dvd, final MagneticFluxUnit displayUnit)
     {
         return new MagneticFluxVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public MagneticFlux instantiateScalarSI(final double valueSI, final MagneticFluxUnit displayUnit)
     {

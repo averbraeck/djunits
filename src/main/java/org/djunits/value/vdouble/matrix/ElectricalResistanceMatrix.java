@@ -200,35 +200,30 @@ public class ElectricalResistanceMatrix extends
         this(data, ElectricalResistanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalResistance> getScalarClass()
     {
         return ElectricalResistance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalResistanceVector> getVectorClass()
     {
         return ElectricalResistanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalResistanceMatrix instantiateMatrix(final DoubleMatrixData dmd, final ElectricalResistanceUnit displayUnit)
     {
         return new ElectricalResistanceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalResistanceVector instantiateVector(final DoubleVectorData dvd, final ElectricalResistanceUnit displayUnit)
     {
         return new ElectricalResistanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalResistance instantiateScalarSI(final double valueSI, final ElectricalResistanceUnit displayUnit)
     {

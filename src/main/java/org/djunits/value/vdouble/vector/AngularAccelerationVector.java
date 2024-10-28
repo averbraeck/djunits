@@ -289,21 +289,18 @@ public class AngularAccelerationVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<AngularAcceleration> getScalarClass()
     {
         return AngularAcceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularAccelerationVector instantiateVector(final DoubleVectorData dvd, final AngularAccelerationUnit displayUnit)
     {
         return new AngularAccelerationVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AngularAcceleration instantiateScalarSI(final double valueSI, final AngularAccelerationUnit displayUnit)
     {

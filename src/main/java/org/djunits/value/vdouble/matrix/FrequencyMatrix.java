@@ -193,35 +193,30 @@ public class FrequencyMatrix extends DoubleMatrixRel<FrequencyUnit, Frequency, F
         this(data, FrequencyUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Frequency> getScalarClass()
     {
         return Frequency.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FrequencyVector> getVectorClass()
     {
         return FrequencyVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FrequencyMatrix instantiateMatrix(final DoubleMatrixData dmd, final FrequencyUnit displayUnit)
     {
         return new FrequencyMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FrequencyVector instantiateVector(final DoubleVectorData dvd, final FrequencyUnit displayUnit)
     {
         return new FrequencyVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Frequency instantiateScalarSI(final double valueSI, final FrequencyUnit displayUnit)
     {

@@ -32,14 +32,12 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
         this.displayUnit = displayUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public final U getDisplayUnit()
     {
         return this.displayUnit;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void setDisplayUnit(final U newUnit)
     {

@@ -81,7 +81,6 @@ public class FloatFrequency extends FloatScalarRel<FrequencyUnit, FloatFrequency
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatFrequency instantiateRel(final float value, final FrequencyUnit unit)
     {
@@ -295,7 +294,6 @@ public class FloatFrequency extends FloatScalarRel<FrequencyUnit, FloatFrequency
         return new FloatAngularAcceleration(this.si * v.si, AngularAccelerationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatDuration reciprocal()
     {

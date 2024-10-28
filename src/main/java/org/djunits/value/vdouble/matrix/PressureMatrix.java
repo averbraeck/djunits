@@ -193,35 +193,30 @@ public class PressureMatrix extends DoubleMatrixRel<PressureUnit, Pressure, Pres
         this(data, PressureUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Pressure> getScalarClass()
     {
         return Pressure.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<PressureVector> getVectorClass()
     {
         return PressureVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PressureMatrix instantiateMatrix(final DoubleMatrixData dmd, final PressureUnit displayUnit)
     {
         return new PressureMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public PressureVector instantiateVector(final DoubleVectorData dvd, final PressureUnit displayUnit)
     {
         return new PressureVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Pressure instantiateScalarSI(final double valueSI, final PressureUnit displayUnit)
     {

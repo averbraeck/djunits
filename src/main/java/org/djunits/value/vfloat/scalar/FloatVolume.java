@@ -83,7 +83,6 @@ public class FloatVolume extends FloatScalarRel<VolumeUnit, FloatVolume>
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatVolume instantiateRel(final float value, final VolumeUnit unit)
     {
@@ -306,7 +305,6 @@ public class FloatVolume extends FloatScalarRel<VolumeUnit, FloatVolume>
         return new FloatDuration(this.si / v.si, DurationUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

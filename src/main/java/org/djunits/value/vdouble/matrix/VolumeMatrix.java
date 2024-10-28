@@ -193,35 +193,30 @@ public class VolumeMatrix extends DoubleMatrixRel<VolumeUnit, Volume, VolumeVect
         this(data, VolumeUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<Volume> getScalarClass()
     {
         return Volume.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<VolumeVector> getVectorClass()
     {
         return VolumeVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public VolumeMatrix instantiateMatrix(final DoubleMatrixData dmd, final VolumeUnit displayUnit)
     {
         return new VolumeMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public VolumeVector instantiateVector(final DoubleVectorData dvd, final VolumeUnit displayUnit)
     {
         return new VolumeVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Volume instantiateScalarSI(final double valueSI, final VolumeUnit displayUnit)
     {

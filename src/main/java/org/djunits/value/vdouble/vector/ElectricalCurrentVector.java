@@ -284,21 +284,18 @@ public class ElectricalCurrentVector extends DoubleVectorRel<ElectricalCurrentUn
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCurrent> getScalarClass()
     {
         return ElectricalCurrent.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCurrentVector instantiateVector(final DoubleVectorData dvd, final ElectricalCurrentUnit displayUnit)
     {
         return new ElectricalCurrentVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCurrent instantiateScalarSI(final double valueSI, final ElectricalCurrentUnit displayUnit)
     {

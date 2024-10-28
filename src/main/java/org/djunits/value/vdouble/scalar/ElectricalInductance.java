@@ -72,7 +72,6 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final ElectricalInductance instantiateRel(final double value, final ElectricalInductanceUnit unit)
     {
@@ -239,7 +238,6 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
         return new MagneticFlux(this.si * v.si, MagneticFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

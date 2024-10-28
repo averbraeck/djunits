@@ -194,35 +194,30 @@ public class AbsorbedDoseMatrix extends DoubleMatrixRel<AbsorbedDoseUnit, Absorb
         this(data, AbsorbedDoseUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AbsorbedDose> getScalarClass()
     {
         return AbsorbedDose.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<AbsorbedDoseVector> getVectorClass()
     {
         return AbsorbedDoseVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsorbedDoseMatrix instantiateMatrix(final DoubleMatrixData dmd, final AbsorbedDoseUnit displayUnit)
     {
         return new AbsorbedDoseMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsorbedDoseVector instantiateVector(final DoubleVectorData dvd, final AbsorbedDoseUnit displayUnit)
     {
         return new AbsorbedDoseVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AbsorbedDose instantiateScalarSI(final double valueSI, final AbsorbedDoseUnit displayUnit)
     {

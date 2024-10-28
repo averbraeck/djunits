@@ -79,7 +79,6 @@ public class FloatRadioActivity extends FloatScalarRel<RadioActivityUnit, FloatR
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatRadioActivity instantiateRel(final float value, final RadioActivityUnit unit)
     {
@@ -234,7 +233,6 @@ public class FloatRadioActivity extends FloatScalarRel<RadioActivityUnit, FloatR
         return new FloatDimensionless(this.si / v.si, DimensionlessUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

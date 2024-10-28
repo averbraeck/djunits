@@ -85,7 +85,6 @@ public class FloatElectricalCurrent extends FloatScalarRel<ElectricalCurrentUnit
         super((float) value, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final FloatElectricalCurrent instantiateRel(final float value, final ElectricalCurrentUnit unit)
     {
@@ -298,7 +297,6 @@ public class FloatElectricalCurrent extends FloatScalarRel<ElectricalCurrentUnit
         return new FloatElectricalPotential(this.si / v.si, ElectricalPotentialUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatSIScalar reciprocal()
     {

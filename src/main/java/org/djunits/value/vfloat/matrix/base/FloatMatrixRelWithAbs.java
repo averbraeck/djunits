@@ -54,7 +54,6 @@ public abstract class FloatMatrixRelWithAbs<
         super(data, unit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public AM plus(final AM increment)
     {

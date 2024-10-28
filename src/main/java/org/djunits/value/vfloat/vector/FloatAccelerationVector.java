@@ -283,21 +283,18 @@ public class FloatAccelerationVector extends FloatVectorRel<AccelerationUnit, Fl
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAcceleration> getScalarClass()
     {
         return FloatAcceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAccelerationVector instantiateVector(final FloatVectorData fvd, final AccelerationUnit displayUnit)
     {
         return new FloatAccelerationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAcceleration instantiateScalarSI(final float valueSI, final AccelerationUnit displayUnit)
     {

@@ -70,7 +70,6 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final LuminousIntensity instantiateRel(final double value, final LuminousIntensityUnit unit)
     {
@@ -233,7 +232,6 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
         return new LuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {

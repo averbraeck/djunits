@@ -440,7 +440,6 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /* =============================== EQUALS, HASHCODE, TOSTRING ================================= */
     /* ============================================================================================ */
 
-    /** {@inheritDoc} */
     @Override
     public int hashCode()
     {
@@ -480,7 +479,6 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
         return true;
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public boolean equals(final Object obj)

@@ -289,14 +289,12 @@ public class ElectricalCapacitanceVector
 
     /* ****************************** Other methods ****************************** */
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalCapacitance> getScalarClass()
     {
         return ElectricalCapacitance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCapacitanceVector instantiateVector(final DoubleVectorData dvd,
             final ElectricalCapacitanceUnit displayUnit)
@@ -304,7 +302,6 @@ public class ElectricalCapacitanceVector
         return new ElectricalCapacitanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalCapacitance instantiateScalarSI(final double valueSI, final ElectricalCapacitanceUnit displayUnit)
     {

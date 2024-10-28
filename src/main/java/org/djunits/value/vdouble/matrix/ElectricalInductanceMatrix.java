@@ -200,35 +200,30 @@ public class ElectricalInductanceMatrix extends
         this(data, ElectricalInductanceUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalInductance> getScalarClass()
     {
         return ElectricalInductance.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<ElectricalInductanceVector> getVectorClass()
     {
         return ElectricalInductanceVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalInductanceMatrix instantiateMatrix(final DoubleMatrixData dmd, final ElectricalInductanceUnit displayUnit)
     {
         return new ElectricalInductanceMatrix(dmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalInductanceVector instantiateVector(final DoubleVectorData dvd, final ElectricalInductanceUnit displayUnit)
     {
         return new ElectricalInductanceVector(dvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ElectricalInductance instantiateScalarSI(final double valueSI, final ElectricalInductanceUnit displayUnit)
     {

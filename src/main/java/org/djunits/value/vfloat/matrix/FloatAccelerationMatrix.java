@@ -197,35 +197,30 @@ public class FloatAccelerationMatrix
         this(data, AccelerationUnit.SI, rows, cols, StorageType.SPARSE);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAcceleration> getScalarClass()
     {
         return FloatAcceleration.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Class<FloatAccelerationVector> getVectorClass()
     {
         return FloatAccelerationVector.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAccelerationMatrix instantiateMatrix(final FloatMatrixData fmd, final AccelerationUnit displayUnit)
     {
         return new FloatAccelerationMatrix(fmd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAccelerationVector instantiateVector(final FloatVectorData fvd, final AccelerationUnit displayUnit)
     {
         return new FloatAccelerationVector(fvd, displayUnit);
     }
 
-    /** {@inheritDoc} */
     @Override
     public FloatAcceleration instantiateScalarSI(final float valueSI, final AccelerationUnit displayUnit)
     {

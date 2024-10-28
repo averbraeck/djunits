@@ -69,7 +69,6 @@ public class Pressure extends DoubleScalarRel<PressureUnit, Pressure>
         super(value);
     }
 
-    /** {@inheritDoc} */
     @Override
     public final Pressure instantiateRel(final double value, final PressureUnit unit)
     {
@@ -242,7 +241,6 @@ public class Pressure extends DoubleScalarRel<PressureUnit, Pressure>
         return new Energy(this.si * v.si, EnergyUnit.SI);
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIScalar reciprocal()
     {
