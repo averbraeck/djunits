@@ -146,19 +146,20 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
      * @return FloatVectorData; the FloatVectorData with the right data type
-     * @throws ValueRuntimeException when length &lt; 0
+     * @throws IllegalArgumentException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
+     * @throws IndexOutOfBoundsException when one of the keys is out of range with the given size
      */
-    public static FloatVectorData instantiate(final Map<Integer, ? extends Number> valueMap, final int size,
-            final Scale scale, final StorageType storageType) throws ValueRuntimeException
+    public static FloatVectorData instantiate(final Map<Integer, ? extends Number> valueMap, final int size, final Scale scale,
+            final StorageType storageType) throws IllegalArgumentException, IndexOutOfBoundsException
     {
         Throw.whenNull(valueMap, "FloatVectorData.instantiate: values is null");
-        Throw.when(size < 0, ValueRuntimeException.class, "size must be >= 0");
+        Throw.when(size < 0, IllegalArgumentException.class, "size must be >= 0");
         Throw.whenNull(scale, "FloatVectorData.instantiate: scale is null");
         Throw.whenNull(storageType, "FloatVectorData.instantiate: storageType is null");
         for (Integer key : valueMap.keySet())
         {
-            Throw.when(key < 0 || key >= size, ValueRuntimeException.class, "Key in values out of range");
+            Throw.when(key < 0 || key >= size, IndexOutOfBoundsException.class, "Key in values out of range");
         }
 
         if (storageType.equals(StorageType.DENSE))

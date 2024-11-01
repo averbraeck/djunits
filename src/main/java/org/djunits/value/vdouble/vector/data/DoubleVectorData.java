@@ -248,19 +248,20 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
      * @param scale Scale; the scale of the unit to use for conversion to SI
      * @param storageType StorageType; the data type to use
      * @return DoubleVectorData; the DoubleVectorData with the right data type
-     * @throws ValueRuntimeException when length &lt; 0
+     * @throws IllegalArgumentException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
+     * @throws IndexOutOfBoundsException when one of the keys is out of range with the given size
      */
-    public static DoubleVectorData instantiate(final Map<Integer, ? extends Number> valueMap, final int size,
-            final Scale scale, final StorageType storageType) throws ValueRuntimeException
+    public static DoubleVectorData instantiate(final Map<Integer, ? extends Number> valueMap, final int size, final Scale scale,
+            final StorageType storageType) throws IllegalArgumentException, IndexOutOfBoundsException
     {
         Throw.whenNull(valueMap, "DoubleVectorData.instantiate: values is null");
-        Throw.when(size < 0, ValueRuntimeException.class, "size must be >= 0");
+        Throw.when(size < 0, IllegalArgumentException.class, "size must be >= 0");
         Throw.whenNull(scale, "DoubleVectorData.instantiate: scale is null");
         Throw.whenNull(storageType, "DoubleVectorData.instantiate: storageType is null");
         for (Integer key : valueMap.keySet())
         {
-            Throw.when(key < 0 || key >= size, ValueRuntimeException.class, "Key in values out of range");
+            Throw.when(key < 0 || key >= size, IndexOutOfBoundsException.class, "Key in values out of range");
         }
 
         if (storageType.equals(StorageType.DENSE))

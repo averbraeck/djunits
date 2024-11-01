@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.IndexedValue;
-import org.djunits.value.ValueRuntimeException;
 import org.djunits.value.storage.Storage;
 
 /**
@@ -47,9 +46,9 @@ public abstract class Vector<U extends Unit<U>, S extends Scalar<U, S>, V extend
      * Retrieve a value from the vector.
      * @param index int; the index to retrieve the value at
      * @return S; the value as a Scalar
-     * @throws ValueRuntimeException in case index is out of bounds
+     * @throws IndexOutOfBoundsException in case index is out of bounds
      */
-    public abstract S get(int index) throws ValueRuntimeException;
+    public abstract S get(int index) throws IndexOutOfBoundsException;
 
     /**
      * Return the vector as an array of scalars.

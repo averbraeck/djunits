@@ -25,17 +25,17 @@ import org.djutils.exceptions.Throw;
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
-  * @param <U> the unit
+ * @param <U> the unit
  * @param <S> the scalar with unit U
  * @param <V> the vector type belonging to the matrix type
  * @param <M> the generic matrix type
-*/
+ */
 public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, S>, V extends DoubleVector<U, S, V>,
         M extends DoubleMatrix<U, S, V, M>> extends Matrix<U, S, V, DoubleVectorData, M, DoubleMatrixData>
 {
     /** */
     private static final long serialVersionUID = 20161015L;
-    
+
     /** The stored data as an object, can be sparse or dense. */
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected DoubleMatrixData data;
@@ -81,7 +81,7 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @return S; a scalar of the correct type, belonging to the matrix type
      */
     public abstract S instantiateScalarSI(double valueSI, U displayUnit);
-    
+
     @Override
     protected final DoubleMatrixData getData()
     {
@@ -99,10 +99,10 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param row int; row of the value to retrieve
      * @param column int; column of the value to retrieve
      * @return double; value at position row, column in the standard SI unit
-     * @throws ValueRuntimeException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or column
-     *             &gt;= columns())
+     * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
+     *             column &gt;= columns())
      */
-    public double getSI(final int row, final int column) throws ValueRuntimeException
+    public double getSI(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return this.data.getSI(row, column);
@@ -113,10 +113,10 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param row int; row of the value to retrieve
      * @param column int; column of the value to retrieve
      * @return double; value at position row, column in the original unit
-     * @throws ValueRuntimeException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or column
-     *             &gt;= columns())
+     * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
+     *             column &gt;= columns())
      */
-    public double getInUnit(final int row, final int column) throws ValueRuntimeException
+    public double getInUnit(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return ValueUtil.expressAsUnit(this.data.getSI(row, column), getDisplayUnit());
@@ -128,10 +128,10 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param column int; column of the value to retrieve
      * @param targetUnit U; the unit for the result
      * @return double; value at position row, column converted into the specified unit
-     * @throws ValueRuntimeException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or column
-     *             &gt;= columns())
+     * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
+     *             column &gt;= columns())
      */
-    public double getInUnit(final int row, final int column, final U targetUnit) throws ValueRuntimeException
+    public double getInUnit(final int row, final int column, final U targetUnit) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return ValueUtil.expressAsUnit(this.data.getSI(row, column), targetUnit);
@@ -142,9 +142,9 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param row int; row of the value to set
      * @param column int; column of the value to set
      * @param valueSI double; the value, specified in the standard SI unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setSI(final int row, final int column, final double valueSI) throws ValueRuntimeException
+    public void setSI(final int row, final int column, final double valueSI) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         checkCopyOnWrite();
@@ -156,9 +156,9 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param row int; row of the value to set
      * @param column int; column of the value to set
      * @param valueInUnit double; the value, specified in the (current) display unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setInUnit(final int row, final int column, final double valueInUnit) throws ValueRuntimeException
+    public void setInUnit(final int row, final int column, final double valueInUnit) throws IndexOutOfBoundsException
     {
         setSI(row, column, ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
     }
@@ -169,10 +169,10 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param column int; column of the value to set
      * @param valueInUnit double; the value, specified in the (current) display unit
      * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int row, final int column, final double valueInUnit, final U valueUnit)
-            throws ValueRuntimeException
+            throws IndexOutOfBoundsException
     {
         setSI(row, column, ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
     }
@@ -182,9 +182,9 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param row int; row of the value to set
      * @param column int; column of the value to set
      * @param value S; the value to set
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void set(final int row, final int column, final S value) throws ValueRuntimeException
+    public void set(final int row, final int column, final S value) throws IndexOutOfBoundsException
     {
         setSI(row, column, value.si);
     }
@@ -193,9 +193,9 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * Retrieve a row from the matrix as an array of double.
      * @param row int; row of the values to retrieve
      * @return S[]; the row as a double array
-     * @throws ValueRuntimeException in case row is out of bounds
+     * @throws IndexOutOfBoundsException in case row is out of bounds
      */
-    public double[] getRowSI(final int row) throws ValueRuntimeException
+    public double[] getRowSI(final int row) throws IndexOutOfBoundsException
     {
         checkRowIndex(row);
         double[] result = new double[this.data.cols()];
@@ -210,9 +210,9 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * Retrieve a column from the matrix as an array of double.
      * @param column int; column of the values to retrieve
      * @return S[]; the column as a double array
-     * @throws ValueRuntimeException in case column is out of bounds
+     * @throws IndexOutOfBoundsException in case column is out of bounds
      */
-    public double[] getColumnSI(final int column) throws ValueRuntimeException
+    public double[] getColumnSI(final int column) throws IndexOutOfBoundsException
     {
         checkColumnIndex(column);
         double[] result = new double[this.data.rows()];
@@ -305,14 +305,14 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     @Override
-    public S get(final int row, final int column) throws ValueRuntimeException
+    public S get(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return DoubleScalar.instantiateSI(getSI(row, column), getDisplayUnit());
     }
 
     @Override
-    public V getRow(final int row) throws ValueRuntimeException
+    public V getRow(final int row) throws IndexOutOfBoundsException
     {
         checkRowIndex(row);
         DoubleVectorData dvd =
@@ -321,7 +321,7 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     @Override
-    public V getColumn(final int column) throws ValueRuntimeException
+    public V getColumn(final int column) throws IndexOutOfBoundsException
     {
         checkColumnIndex(column);
         DoubleVectorData dvd = DoubleVectorData.instantiate(getColumnSI(column), getDisplayUnit().getStandardUnit().getScale(),
@@ -340,7 +340,7 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
 
     @SuppressWarnings("unchecked")
     @Override
-    public S[] getRowScalars(final int row) throws ValueRuntimeException
+    public S[] getRowScalars(final int row) throws IndexOutOfBoundsException
     {
         checkRowIndex(row);
         S[] array = (S[]) Array.newInstance(getScalarClass(), cols());
@@ -353,7 +353,7 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
 
     @SuppressWarnings("unchecked")
     @Override
-    public S[] getColumnScalars(final int col) throws ValueRuntimeException
+    public S[] getColumnScalars(final int col) throws IndexOutOfBoundsException
     {
         checkColumnIndex(col);
         S[] array = (S[]) Array.newInstance(getScalarClass(), rows());
@@ -500,7 +500,7 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
                     double d = ValueUtil.expressAsUnit(getSI(row, col), displayUnit);
                     buf.append(" " + Format.format(d));
                 }
-                catch (ValueRuntimeException ve)
+                catch (IndexOutOfBoundsException ve)
                 {
                     buf.append(" " + "********************".substring(0, Format.DEFAULTSIZE));
                 }
@@ -518,13 +518,13 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
      * Check that provided row and column indices are valid.
      * @param row int; the row value to check
      * @param col int; the column value to check
-     * @throws ValueRuntimeException when row or column is invalid
+     * @throws IndexOutOfBoundsException when row or column is invalid
      */
-    protected final void checkIndex(final int row, final int col) throws ValueRuntimeException
+    protected final void checkIndex(final int row, final int col) throws IndexOutOfBoundsException
     {
         if (row < 0 || row >= rows() || col < 0 || col >= cols())
         {
-            throw new ValueRuntimeException("index out of range (valid range is 0.." + (rows() - 1) + ", 0.." + (cols() - 1)
+            throw new IndexOutOfBoundsException("index out of range (valid range is 0.." + (rows() - 1) + ", 0.." + (cols() - 1)
                     + ", got " + row + ", " + col + ")");
         }
     }
@@ -532,26 +532,27 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
     /**
      * Check that provided row index is valid.
      * @param row int; the row value to check
-     * @throws ValueRuntimeException when row is invalid
+     * @throws IndexOutOfBoundsException when row is invalid
      */
-    protected final void checkRowIndex(final int row) throws ValueRuntimeException
+    protected final void checkRowIndex(final int row) throws IndexOutOfBoundsException
     {
         if (row < 0 || row >= rows())
         {
-            throw new ValueRuntimeException("row index out of range (valid range is 0.." + (rows() - 1) + ", got " + row + ")");
+            throw new IndexOutOfBoundsException(
+                    "row index out of range (valid range is 0.." + (rows() - 1) + ", got " + row + ")");
         }
     }
 
     /**
      * Check that provided column index is valid.
      * @param col int; the column value to check
-     * @throws ValueRuntimeException when row is invalid
+     * @throws IndexOutOfBoundsException when row is invalid
      */
-    protected final void checkColumnIndex(final int col) throws ValueRuntimeException
+    protected final void checkColumnIndex(final int col) throws IndexOutOfBoundsException
     {
         if (col < 0 || col >= cols())
         {
-            throw new ValueRuntimeException(
+            throw new IndexOutOfBoundsException(
                     "column index out of range (valid range is 0.." + (cols() - 1) + ", got " + col + ")");
         }
     }
@@ -646,5 +647,5 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
             return false;
         return true;
     }
-    
+
 }

@@ -99,10 +99,10 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param row int; row of the value to retrieve
      * @param column int; column of the value to retrieve
      * @return float; value at position row, column in the standard SI unit
-     * @throws ValueRuntimeException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or column
-     *             &gt;= columns())
+     * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
+     *             column &gt;= columns())
      */
-    public float getSI(final int row, final int column) throws ValueRuntimeException
+    public float getSI(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return this.data.getSI(row, column);
@@ -113,10 +113,10 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param row int; row of the value to retrieve
      * @param column int; column of the value to retrieve
      * @return float; value at position row, column in the original unit
-     * @throws ValueRuntimeException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or column
-     *             &gt;= columns())
+     * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
+     *             column &gt;= columns())
      */
-    public float getInUnit(final int row, final int column) throws ValueRuntimeException
+    public float getInUnit(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return (float) ValueUtil.expressAsUnit(this.data.getSI(row, column), getDisplayUnit());
@@ -128,10 +128,10 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param column int; column of the value to retrieve
      * @param targetUnit U; the unit for the result
      * @return float; value at position row, column converted into the specified unit
-     * @throws ValueRuntimeException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or column
-     *             &gt;= columns())
+     * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
+     *             column &gt;= columns())
      */
-    public float getInUnit(final int row, final int column, final U targetUnit) throws ValueRuntimeException
+    public float getInUnit(final int row, final int column, final U targetUnit) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return (float) ValueUtil.expressAsUnit(this.data.getSI(row, column), targetUnit);
@@ -142,9 +142,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param row int; row of the value to set
      * @param column int; column of the value to set
      * @param valueSI float; the value, specified in the standard SI unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setSI(final int row, final int column, final float valueSI) throws ValueRuntimeException
+    public void setSI(final int row, final int column, final float valueSI) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         checkCopyOnWrite();
@@ -156,9 +156,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param row int; row of the value to set
      * @param column int; column of the value to set
      * @param valueInUnit float; the value, specified in the (current) display unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setInUnit(final int row, final int column, final float valueInUnit) throws ValueRuntimeException
+    public void setInUnit(final int row, final int column, final float valueInUnit) throws IndexOutOfBoundsException
     {
         setSI(row, column, (float) ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
     }
@@ -169,10 +169,10 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param column int; column of the value to set
      * @param valueInUnit float; the value, specified in the (current) display unit
      * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int row, final int column, final float valueInUnit, final U valueUnit)
-            throws ValueRuntimeException
+            throws IndexOutOfBoundsException
     {
         setSI(row, column, (float) ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
     }
@@ -182,9 +182,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param row int; row of the value to set
      * @param column int; column of the value to set
      * @param value S; the value to set
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void set(final int row, final int column, final S value) throws ValueRuntimeException
+    public void set(final int row, final int column, final S value) throws IndexOutOfBoundsException
     {
         setSI(row, column, value.si);
     }
@@ -193,9 +193,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * Retrieve a row from the matrix as an array of float.
      * @param row int; row of the values to retrieve
      * @return S[]; the row as a float array
-     * @throws ValueRuntimeException in case row is out of bounds
+     * @throws IndexOutOfBoundsException in case row is out of bounds
      */
-    public float[] getRowSI(final int row) throws ValueRuntimeException
+    public float[] getRowSI(final int row) throws IndexOutOfBoundsException
     {
         checkRowIndex(row);
         float[] result = new float[this.data.cols()];
@@ -210,9 +210,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * Retrieve a column from the matrix as an array of float.
      * @param column int; column of the values to retrieve
      * @return S[]; the column as a float array
-     * @throws ValueRuntimeException in case column is out of bounds
+     * @throws IndexOutOfBoundsException in case column is out of bounds
      */
-    public float[] getColumnSI(final int column) throws ValueRuntimeException
+    public float[] getColumnSI(final int column) throws IndexOutOfBoundsException
     {
         checkColumnIndex(column);
         float[] result = new float[this.data.rows()];
@@ -305,14 +305,14 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     @Override
-    public S get(final int row, final int column) throws ValueRuntimeException
+    public S get(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
         return FloatScalar.instantiateSI(getSI(row, column), getDisplayUnit());
     }
 
     @Override
-    public V getRow(final int row) throws ValueRuntimeException
+    public V getRow(final int row) throws IndexOutOfBoundsException
     {
         checkRowIndex(row);
         FloatVectorData dvd =
@@ -321,7 +321,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     @Override
-    public V getColumn(final int column) throws ValueRuntimeException
+    public V getColumn(final int column) throws IndexOutOfBoundsException
     {
         checkColumnIndex(column);
         FloatVectorData dvd = FloatVectorData.instantiate(getColumnSI(column), getDisplayUnit().getStandardUnit().getScale(),
@@ -341,7 +341,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     @SuppressWarnings("unchecked")
     @Override
-    public S[] getRowScalars(final int row) throws ValueRuntimeException
+    public S[] getRowScalars(final int row) throws IndexOutOfBoundsException
     {
         checkRowIndex(row);
         S[] array = (S[]) Array.newInstance(getScalarClass(), cols());
@@ -354,7 +354,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     @SuppressWarnings("unchecked")
     @Override
-    public S[] getColumnScalars(final int col) throws ValueRuntimeException
+    public S[] getColumnScalars(final int col) throws IndexOutOfBoundsException
     {
         checkColumnIndex(col);
         S[] array = (S[]) Array.newInstance(getScalarClass(), rows());
@@ -501,7 +501,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
                     float d = (float) ValueUtil.expressAsUnit(getSI(row, col), displayUnit);
                     buf.append(" " + Format.format(d));
                 }
-                catch (ValueRuntimeException ve)
+                catch (IndexOutOfBoundsException ve)
                 {
                     buf.append(" " + "********************".substring(0, Format.DEFAULTSIZE));
                 }
@@ -519,13 +519,13 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * Check that provided row and column indices are valid.
      * @param row int; the row value to check
      * @param col int; the column value to check
-     * @throws ValueRuntimeException when row or column is invalid
+     * @throws IndexOutOfBoundsException when row or column is invalid
      */
-    protected final void checkIndex(final int row, final int col) throws ValueRuntimeException
+    protected final void checkIndex(final int row, final int col) throws IndexOutOfBoundsException
     {
         if (row < 0 || row >= rows() || col < 0 || col >= cols())
         {
-            throw new ValueRuntimeException("index out of range (valid range is 0.." + (rows() - 1) + ", 0.." + (cols() - 1)
+            throw new IndexOutOfBoundsException("index out of range (valid range is 0.." + (rows() - 1) + ", 0.." + (cols() - 1)
                     + ", got " + row + ", " + col + ")");
         }
     }
@@ -533,26 +533,27 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
     /**
      * Check that provided row index is valid.
      * @param row int; the row value to check
-     * @throws ValueRuntimeException when row is invalid
+     * @throws IndexOutOfBoundsException when row is invalid
      */
-    protected final void checkRowIndex(final int row) throws ValueRuntimeException
+    protected final void checkRowIndex(final int row) throws IndexOutOfBoundsException
     {
         if (row < 0 || row >= rows())
         {
-            throw new ValueRuntimeException("row index out of range (valid range is 0.." + (rows() - 1) + ", got " + row + ")");
+            throw new IndexOutOfBoundsException(
+                    "row index out of range (valid range is 0.." + (rows() - 1) + ", got " + row + ")");
         }
     }
 
     /**
      * Check that provided column index is valid.
      * @param col int; the column value to check
-     * @throws ValueRuntimeException when row is invalid
+     * @throws IndexOutOfBoundsException when row is invalid
      */
-    protected final void checkColumnIndex(final int col) throws ValueRuntimeException
+    protected final void checkColumnIndex(final int col) throws IndexOutOfBoundsException
     {
         if (col < 0 || col >= cols())
         {
-            throw new ValueRuntimeException(
+            throw new IndexOutOfBoundsException(
                     "column index out of range (valid range is 0.." + (cols() - 1) + ", got " + col + ")");
         }
     }

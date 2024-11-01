@@ -60,9 +60,9 @@ public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extend
      * @param row int; row of the value to retrieve
      * @param column int; column of the value to retrieve
      * @return S; the value as a Scalar
-     * @throws ValueRuntimeException in case row or column is out of bounds
+     * @throws IndexOutOfBoundsException in case row or column is out of bounds
      */
-    public abstract S get(int row, int column) throws ValueRuntimeException;
+    public abstract S get(int row, int column) throws IndexOutOfBoundsException;
 
     /**
      * Return the vector as a 2D-array of scalars.
@@ -74,17 +74,17 @@ public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extend
      * Retrieve a row from the matrix as a vector.
      * @param row int; row of the values to retrieve
      * @return V; the row as a Vector
-     * @throws ValueRuntimeException in case row is out of bounds
+     * @throws IndexOutOfBoundsException in case row is out of bounds
      */
-    public abstract V getRow(int row) throws ValueRuntimeException;
+    public abstract V getRow(int row) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve a column from the matrix as a vector.
      * @param column int; column of the values to retrieve
      * @return V; the column as a Vector
-     * @throws ValueRuntimeException in case column is out of bounds
+     * @throws IndexOutOfBoundsException in case column is out of bounds
      */
-    public abstract V getColumn(int column) throws ValueRuntimeException;
+    public abstract V getColumn(int column) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve the main diagonal of the matrix as a vector.
@@ -97,17 +97,17 @@ public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extend
      * Retrieve a row from the matrix as an array of scalars.
      * @param row int; row of the values to retrieve
      * @return S[]; the row as a Scalar array
-     * @throws ValueRuntimeException in case row is out of bounds
+     * @throws IndexOutOfBoundsException in case row is out of bounds
      */
-    public abstract S[] getRowScalars(int row) throws ValueRuntimeException;
+    public abstract S[] getRowScalars(int row) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve a column from the matrix as an array of scalars.
      * @param column int; column of the values to retrieve
      * @return S[]; the column as a Scalar array
-     * @throws ValueRuntimeException in case column is out of bounds
+     * @throws IndexOutOfBoundsException in case column is out of bounds
      */
-    public abstract S[] getColumnScalars(int column) throws ValueRuntimeException;
+    public abstract S[] getColumnScalars(int column) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve the main diagonal of the matrix as an array of scalars.

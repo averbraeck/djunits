@@ -128,13 +128,14 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
     /**
      * Check that a provided index is valid.
      * @param index int; the value to check
-     * @throws ValueRuntimeException when index is invalid
+     * @throws IndexOutOfBoundsException when index is invalid
      */
-    protected final void checkIndex(final int index) throws ValueRuntimeException
+    protected final void checkIndex(final int index) throws IndexOutOfBoundsException
     {
         if (index < 0 || index >= size())
         {
-            throw new ValueRuntimeException("index out of range (valid range is 0.." + (size() - 1) + ", got " + index + ")");
+            throw new IndexOutOfBoundsException(
+                    "index out of range (valid range is 0.." + (size() - 1) + ", got " + index + ")");
         }
     }
 
@@ -142,16 +143,16 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Retrieve the value stored at a specified position in the standard SI unit.
      * @param index int; index of the value to retrieve
      * @return double; value at position index in the standard SI unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final double getSI(final int index) throws ValueRuntimeException
+    public final double getSI(final int index) throws IndexOutOfBoundsException
     {
         checkIndex(index);
         return getData().getSI(index);
     }
 
     @Override
-    public S get(final int index) throws ValueRuntimeException
+    public S get(final int index) throws IndexOutOfBoundsException
     {
         return DoubleScalar.instantiateSI(getSI(index), getDisplayUnit());
     }
@@ -160,9 +161,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Retrieve the value stored at a specified position in the original unit.
      * @param index int; index of the value to retrieve
      * @return double; value at position index in the original unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final double getInUnit(final int index) throws ValueRuntimeException
+    public final double getInUnit(final int index) throws IndexOutOfBoundsException
     {
         return ValueUtil.expressAsUnit(getSI(index), getDisplayUnit());
     }
@@ -172,9 +173,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param index int; index of the value to retrieve
      * @param targetUnit U; the unit for the result
      * @return double; value at position index converted into the specified unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final double getInUnit(final int index, final U targetUnit) throws ValueRuntimeException
+    public final double getInUnit(final int index, final U targetUnit) throws IndexOutOfBoundsException
     {
         return ValueUtil.expressAsUnit(getSI(index), targetUnit);
     }
@@ -183,9 +184,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Set the value, specified in the standard SI unit, at the specified position.
      * @param index int; the index of the value to set
      * @param valueSI double; the value, specified in the standard SI unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final void setSI(final int index, final double valueSI) throws ValueRuntimeException
+    public final void setSI(final int index, final double valueSI) throws IndexOutOfBoundsException
     {
         checkIndex(index);
         checkCopyOnWrite();
@@ -196,9 +197,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Set the value, specified in the (current) display unit, at the specified position.
      * @param index int; the index of the value to set
      * @param valueInUnit double; the value, specified in the (current) display unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setInUnit(final int index, final double valueInUnit) throws ValueRuntimeException
+    public void setInUnit(final int index, final double valueInUnit) throws IndexOutOfBoundsException
     {
         setSI(index, ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
     }
@@ -208,9 +209,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * @param index int; the index of the value to set
      * @param valueInUnit double; the value, specified in the (current) display unit
      * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setInUnit(final int index, final double valueInUnit, final U valueUnit) throws ValueRuntimeException
+    public void setInUnit(final int index, final double valueInUnit, final U valueUnit) throws IndexOutOfBoundsException
     {
         setSI(index, ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
     }
@@ -219,9 +220,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Set the scalar value at the specified position.
      * @param index int; the index of the value to set
      * @param value S; the value to set
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void set(final int index, final S value) throws ValueRuntimeException
+    public void set(final int index, final S value) throws IndexOutOfBoundsException
     {
         setSI(index, value.si);
     }
@@ -366,7 +367,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
                 double d = ValueUtil.expressAsUnit(getSI(i), displayUnit);
                 buf.append(" " + Format.format(d));
             }
-            catch (ValueRuntimeException ve)
+            catch (IndexOutOfBoundsException ve)
             {
                 buf.append(" " + "********************".substring(0, Format.DEFAULTSIZE));
             }
@@ -468,7 +469,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
                 this.cursor = i + 1;
                 return next;
             }
-            catch (ValueRuntimeException exception)
+            catch (IndexOutOfBoundsException exception)
             {
                 throw new RuntimeException(exception);
             }

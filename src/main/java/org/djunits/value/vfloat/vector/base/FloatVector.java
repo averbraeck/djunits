@@ -30,8 +30,8 @@ import org.djutils.exceptions.Throw;
  * @param <S> the scalar with unit U
  * @param <V> the generic vector type
  */
-public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>,
-        V extends FloatVector<U, S, V>> extends Vector<U, S, V, FloatVectorData>
+public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>, V extends FloatVector<U, S, V>>
+        extends Vector<U, S, V, FloatVectorData>
 {
     /** */
     private static final long serialVersionUID = 20161015L;
@@ -71,7 +71,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * @return S; a scalar of the correct type, belonging to the vector type
      */
     public abstract S instantiateScalarSI(float valueSI, U displayUnit);
-    
+
     @Override
     protected final FloatVectorData getData()
     {
@@ -126,13 +126,14 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
     /**
      * Check that a provided index is valid.
      * @param index int; the value to check
-     * @throws ValueRuntimeException when index is invalid
+     * @throws IndexOutOfBoundsException when index is invalid
      */
-    protected final void checkIndex(final int index) throws ValueRuntimeException
+    protected final void checkIndex(final int index) throws IndexOutOfBoundsException
     {
         if (index < 0 || index >= size())
         {
-            throw new ValueRuntimeException("index out of range (valid range is 0.." + (size() - 1) + ", got " + index + ")");
+            throw new IndexOutOfBoundsException(
+                    "index out of range (valid range is 0.." + (size() - 1) + ", got " + index + ")");
         }
     }
 
@@ -140,16 +141,16 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Retrieve the value stored at a specified position in the standard SI unit.
      * @param index int; index of the value to retrieve
      * @return float; value at position index in the standard SI unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final float getSI(final int index) throws ValueRuntimeException
+    public final float getSI(final int index) throws IndexOutOfBoundsException
     {
         checkIndex(index);
         return getData().getSI(index);
     }
 
     @Override
-    public S get(final int index) throws ValueRuntimeException
+    public S get(final int index) throws IndexOutOfBoundsException
     {
         return FloatScalar.instantiateSI(getSI(index), getDisplayUnit());
     }
@@ -158,9 +159,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Retrieve the value stored at a specified position in the original unit.
      * @param index int; index of the value to retrieve
      * @return float; value at position index in the original unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final float getInUnit(final int index) throws ValueRuntimeException
+    public final float getInUnit(final int index) throws IndexOutOfBoundsException
     {
         return (float) ValueUtil.expressAsUnit(getSI(index), getDisplayUnit());
     }
@@ -170,9 +171,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param index int; index of the value to retrieve
      * @param targetUnit U; the unit for the result
      * @return float; value at position index converted into the specified unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final float getInUnit(final int index, final U targetUnit) throws ValueRuntimeException
+    public final float getInUnit(final int index, final U targetUnit) throws IndexOutOfBoundsException
     {
         return (float) ValueUtil.expressAsUnit(getSI(index), targetUnit);
     }
@@ -181,9 +182,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Set the value, specified in the standard SI unit, at the specified position.
      * @param index int; the index of the value to set
      * @param valueSI float; the value, specified in the standard SI unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public final void setSI(final int index, final float valueSI) throws ValueRuntimeException
+    public final void setSI(final int index, final float valueSI) throws IndexOutOfBoundsException
     {
         checkIndex(index);
         checkCopyOnWrite();
@@ -194,9 +195,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Set the value, specified in the (current) display unit, at the specified position.
      * @param index int; the index of the value to set
      * @param valueInUnit float; the value, specified in the (current) display unit
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setInUnit(final int index, final float valueInUnit) throws ValueRuntimeException
+    public void setInUnit(final int index, final float valueInUnit) throws IndexOutOfBoundsException
     {
         setSI(index, (float) ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
     }
@@ -206,9 +207,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * @param index int; the index of the value to set
      * @param valueInUnit float; the value, specified in the (current) display unit
      * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void setInUnit(final int index, final float valueInUnit, final U valueUnit) throws ValueRuntimeException
+    public void setInUnit(final int index, final float valueInUnit, final U valueUnit) throws IndexOutOfBoundsException
     {
         setSI(index, (float) ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
     }
@@ -217,9 +218,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Set the scalar value at the specified position.
      * @param index int; the index of the value to set
      * @param value S; the value to set
-     * @throws ValueRuntimeException when index out of range (index &lt; 0 or index &gt;= size())
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
-    public void set(final int index, final S value) throws ValueRuntimeException
+    public void set(final int index, final S value) throws IndexOutOfBoundsException
     {
         setSI(index, value.si);
     }
@@ -357,7 +358,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
                 float f = (float) ValueUtil.expressAsUnit(getSI(i), displayUnit);
                 buf.append(" " + Format.format(f));
             }
-            catch (ValueRuntimeException ve)
+            catch (IndexOutOfBoundsException ve)
             {
                 buf.append(" " + "********************".substring(0, Format.DEFAULTSIZE));
             }
@@ -459,7 +460,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
                 this.cursor = i + 1;
                 return next;
             }
-            catch (ValueRuntimeException exception)
+            catch (IndexOutOfBoundsException exception)
             {
                 throw new RuntimeException(exception);
             }
