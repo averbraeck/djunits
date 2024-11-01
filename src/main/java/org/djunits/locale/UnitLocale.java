@@ -31,7 +31,7 @@ public class UnitLocale implements Serializable
     private Locale currentLocale = null;
 
     /** the fallback resource bundle. */
-    private transient final ResourceBundle fallbackResourceBundle;
+    private final transient ResourceBundle fallbackResourceBundle;
 
     /** fallback locale. */
     private final Locale fallbackLocale;
