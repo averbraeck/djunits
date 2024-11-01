@@ -33,7 +33,7 @@ public class SIDimensions implements Serializable
     private static final int[] PARSE_ORDER = new int[] {0, 1, 2, 7, 3, 4, 5, 6, 8};
     
     /** the dimensionless SIDimensions. */
-    public static SIDimensions DIMLESS = new SIDimensions(0, 0, 0, 0, 0, 0, 0, 0, 0); 
+    public static final SIDimensions DIMLESS = new SIDimensions(0, 0, 0, 0, 0, 0, 0, 0, 0); 
 
     /**
      * The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2: mass (kg), 3: length
