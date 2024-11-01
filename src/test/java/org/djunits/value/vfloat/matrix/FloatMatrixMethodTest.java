@@ -84,9 +84,9 @@ public class FloatMatrixMethodTest
                             try
                             {
                                 am.get(row, col);
-                                fail("bad row or bad column value should have thrown a ValueRuntimeException");
+                                fail("bad row or bad column value should have thrown an IndexOutOfBoundsException");
                             }
-                            catch (ValueRuntimeException vre)
+                            catch (IndexOutOfBoundsException vre)
                             {
                                 // Ignore expected exception
                             }
@@ -101,9 +101,9 @@ public class FloatMatrixMethodTest
                         try
                         {
                             am.getRow(row);
-                            fail("getRow with bad row value should have thrown a ValueRuntimeException");
+                            fail("getRow with bad row value should have thrown an IndexOutOfBoundsException");
                         }
-                        catch (ValueRuntimeException vre)
+                        catch (IndexOutOfBoundsException vre)
                         {
                             // Ignore expected exception
                         }
@@ -116,9 +116,9 @@ public class FloatMatrixMethodTest
                         try
                         {
                             am.getColumn(col);
-                            fail("getColumn with bad column value should have thrown a ValueRuntimeException");
+                            fail("getColumn with bad column value should have thrown an IndexOutOfBoundsException");
                         }
-                        catch (ValueRuntimeException vre)
+                        catch (IndexOutOfBoundsException vre)
                         {
                             // Ignore expected exception
                         }

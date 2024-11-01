@@ -154,13 +154,13 @@ public class FloatMatrixConstructorsTest
                         mutable.setSI(0, 0, 0);
                         mutable.setInUnit(0, 0, 0);
                         Try.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
-                                "negative index should have thrown an exception", ValueRuntimeException.class);
+                                "negative index should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
-                                "negative index should have thrown an exception", ValueRuntimeException.class);
+                                "negative index should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(testValues.length, 0, 0),
-                                "index just above range should have thrown an exception", ValueRuntimeException.class);
+                                "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(0, testValues.length, 0),
-                                "index just above range should have thrown an exception", ValueRuntimeException.class);
+                                "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         mutable.setSI(testValues.length - 1, 0, 0);
                         mutable.setSI(0, testValues.length - 1, 0);
                         mutable = floatMatrix.mutable();
@@ -304,13 +304,13 @@ public class FloatMatrixConstructorsTest
                         mutable.setSI(0, 0, 0);
                         mutable.setInUnit(0, 0, 0);
                         Try.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
-                                "negative index should have thrown an exception", ValueRuntimeException.class);
+                                "negative index should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
-                                "negative index should have thrown an exception", ValueRuntimeException.class);
+                                "negative index should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(testValues.length, 0, 0),
-                                "index just above range should have thrown an exception", ValueRuntimeException.class);
+                                "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(0, testValues.length, 0),
-                                "index just above range should have thrown an exception", ValueRuntimeException.class);
+                                "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         mutable.setSI(testValues.length - 1, 0, 0);
                         mutable.setSI(0, testValues.length - 1, 0);
                         mutable = floatMatrix.mutable();
@@ -456,13 +456,13 @@ public class FloatMatrixConstructorsTest
                         mutable.setSI(0, 0, 0);
                         mutable.setInUnit(0, 0, 0);
                         Try.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
-                                "negative index should have thrown an exception", ValueRuntimeException.class);
+                                "negative index should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
-                                "negative index should have thrown an exception", ValueRuntimeException.class);
+                                "negative index should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(rows, 0, 0),
-                                "index just above range should have thrown an exception", ValueRuntimeException.class);
+                                "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         Try.testFail(() -> floatMatrix.mutable().setSI(0, cols, 0),
-                                "index just above range should have thrown an exception", ValueRuntimeException.class);
+                                "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         mutable.setSI(cols - 1, 0, 0);
                         mutable.setSI(0, rows - 1, 0);
                         mutable = original.mutable();
@@ -659,13 +659,13 @@ public class FloatMatrixConstructorsTest
                     mutable.setSI(0, 0, 0);
                     mutable.setInUnit(0, 0, 0);
                     Try.testFail(() -> siv.mutable().setSI(-1, 0, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> siv.mutable().setSI(0, -1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> siv.mutable().setSI(rows, 0, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     Try.testFail(() -> siv.mutable().setSI(0, cols, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(rows - 1, 0, 0);
                     mutable.setSI(0, cols - 1, 0);
                     mutable = sivf.mutable();

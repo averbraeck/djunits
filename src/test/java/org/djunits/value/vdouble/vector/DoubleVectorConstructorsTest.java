@@ -127,9 +127,9 @@ public class DoubleVectorConstructorsTest
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> doubleVector.mutable().setSI(testValues.length, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(testValues.length - 1, 0);
                     mutable.ceil();
                     for (int index = 0; index < testValues.length; index++)
@@ -266,9 +266,9 @@ public class DoubleVectorConstructorsTest
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(doubleValues.length - 1, 0);
                     mutable.ceil();
                     for (int index = 0; index < doubleValues.length; index++)
@@ -395,9 +395,9 @@ public class DoubleVectorConstructorsTest
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(doubleValues.length - 1, 0);
                     mutable.ceil();
                     for (int index = 0; index < doubleValues.length; index++)
@@ -563,9 +563,9 @@ public class DoubleVectorConstructorsTest
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(doubleValues.length - 1, 0);
                     mutable.ceil();
                     for (int index = 0; index < doubleValues.length; index++)
@@ -732,9 +732,9 @@ public class DoubleVectorConstructorsTest
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(allValues.length - 1, 0);
                     mutable.ceil();
                     for (int index = 0; index < allValues.length; index++)
@@ -944,9 +944,9 @@ public class DoubleVectorConstructorsTest
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
                     Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            ValueRuntimeException.class);
+                            IndexOutOfBoundsException.class);
                     Try.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
-                            "index just above range should have thrown an exception", ValueRuntimeException.class);
+                            "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(allValues.length - 1, 0);
                     mutable.ceil();
                     for (int index = 0; index < allValues.length; index++)
@@ -1261,14 +1261,14 @@ public class DoubleVectorConstructorsTest
         Try.testFail(() -> new AbsoluteTemperatureVector(map, 10, AbsoluteTemperatureUnit.KELVIN, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
         Try.testFail(() -> new AbsoluteTemperatureVector(map, -1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
-                "negative length should have thrown an exception", ValueRuntimeException.class);
+                "negative length should have thrown an exception", IllegalArgumentException.class);
         Try.testFail(() -> new AbsoluteTemperatureVector(map, 1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
-                "too small length should have thrown an exception", ValueRuntimeException.class);
+                "too small length should have thrown an exception", IndexOutOfBoundsException.class);
 
         map.put(-1, at[0]);
         Try.testFail(
                 () -> new AbsoluteTemperatureVector(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
-                "too small length should have thrown an exception", ValueRuntimeException.class);
+                "too small length should have thrown an exception", IndexOutOfBoundsException.class);
 
         map.remove(-1); // Remove the offending entry
         Quantity<?> quantity = Quantities.INSTANCE.getQuantity("AbsoluteTemperature" + "Unit");
