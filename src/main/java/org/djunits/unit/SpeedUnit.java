@@ -84,9 +84,9 @@ public class SpeedUnit extends Unit<SpeedUnit>
 
     /**
      * Determine the conversion factor to the base speed unit, given a length unit and a duration unit.
-     * @param length LengthUnit; the used length unit, e.g. km
-     * @param duration DurationUnit; the used duration unit, e.g. h
-     * @return double; the conversion factor from the provided units (e.g. km/h) to the standard unit (e.g., m/s)
+     * @param length the used length unit, e.g. km
+     * @param duration the used duration unit, e.g. h
+     * @return the conversion factor from the provided units (e.g. km/h) to the standard unit (e.g., m/s)
      */
     private static double factorLD(final LengthUnit length, final DurationUnit duration)
     {

@@ -93,9 +93,9 @@ public class PressureUnit extends Unit<PressureUnit>
 
     /**
      * Determine the conversion factor to the base pressure unit, given a force unit and an area unit.
-     * @param force ForceUnit; the used force unit, e.g. kgf
-     * @param area AreaUnit; the used area unit, e.g. mm2
-     * @return double; the conversion factor from the provided units (e.g. kgf/mm2) to the standard unit (Pa)
+     * @param force the used force unit, e.g. kgf
+     * @param area the used area unit, e.g. mm2
+     * @return the conversion factor from the provided units (e.g. kgf/mm2) to the standard unit (Pa)
      */
     private static double factorFA(final ForceUnit force, final AreaUnit area)
     {

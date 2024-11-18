@@ -26,10 +26,10 @@ public final class Formatter
 
     /**
      * Build a format string.
-     * @param width int; the number of characters in the result
-     * @param precision int; the number of fractional digits in the result
-     * @param converter String; the format conversion specifier
-     * @return String; suitable for formatting a float or double
+     * @param width the number of characters in the result
+     * @param precision the number of fractional digits in the result
+     * @param converter the format conversion specifier
+     * @return suitable for formatting a float or double
      */
     static String formatString(final int width, final int precision, final String converter)
     {
@@ -38,10 +38,10 @@ public final class Formatter
 
     /**
      * Format a floating point value.
-     * @param value float; the value to format
-     * @param width int; the number of characters in the result
-     * @param precision int; the number of fractional digits in the result
-     * @return String; the formatted floating point value
+     * @param value the value to format
+     * @param width the number of characters in the result
+     * @param precision the number of fractional digits in the result
+     * @return the formatted floating point value
      */
     public static String format(final float value, final int width, final int precision)
     {
@@ -54,9 +54,9 @@ public final class Formatter
 
     /**
      * Format a floating point value.
-     * @param value float; the value to format
-     * @param size int; the number of characters in the result
-     * @return String; the formatted floating point value
+     * @param value the value to format
+     * @param size the number of characters in the result
+     * @return the formatted floating point value
      */
     public static String format(final float value, final int size)
     {
@@ -65,8 +65,8 @@ public final class Formatter
 
     /**
      * Format a floating point value.
-     * @param value float; the value to format
-     * @return String; the formatted floating point value
+     * @param value the value to format
+     * @return the formatted floating point value
      */
     public static String format(final float value)
     {
@@ -75,10 +75,10 @@ public final class Formatter
 
     /**
      * Format a floating point value.
-     * @param value double; the value to format
-     * @param width int; the number of characters in the result
-     * @param precision int; the number of fractional digits in the result
-     * @return String; the formatted floating point value
+     * @param value the value to format
+     * @param width the number of characters in the result
+     * @param precision the number of fractional digits in the result
+     * @return the formatted floating point value
      */
     public static String format(final double value, final int width, final int precision)
     {
@@ -91,9 +91,9 @@ public final class Formatter
 
     /**
      * Format a floating point value.
-     * @param value double; the value to format
-     * @param size int; the number of characters in the result
-     * @return String; the formatted floating point value
+     * @param value the value to format
+     * @param size the number of characters in the result
+     * @return the formatted floating point value
      */
     public static String format(final double value, final int size)
     {

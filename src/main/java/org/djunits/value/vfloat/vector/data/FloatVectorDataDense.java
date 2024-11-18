@@ -22,7 +22,7 @@ public class FloatVectorDataDense extends FloatVectorData
 
     /**
      * Create a vector with dense data.
-     * @param vectorSI float[]; the data to store
+     * @param vectorSI the data to store
      */
     public FloatVectorDataDense(final float[] vectorSI)
     {

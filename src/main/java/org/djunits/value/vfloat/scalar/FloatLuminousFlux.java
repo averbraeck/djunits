@@ -56,7 +56,7 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Construct FloatLuminousFlux scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatLuminousFlux(final float value, final LuminousFluxUnit unit)
@@ -75,7 +75,7 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Construct FloatLuminousFlux scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatLuminousFlux(final double value, final LuminousFluxUnit unit)
@@ -91,7 +91,7 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Construct FloatLuminousFlux scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatLuminousFlux instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatLuminousFlux interpolate(final FloatLuminousFlux zero, final FloatLuminousFlux one, final float ratio)
@@ -178,8 +178,8 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
      * Returns a FloatLuminousFlux representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatLuminousFlux
-     * @return FloatLuminousFlux; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatLuminousFlux
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -206,9 +206,9 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Returns a FloatLuminousFlux based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatLuminousFlux; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -227,8 +227,8 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Calculate the division of FloatLuminousFlux and FloatLuminousFlux, which results in a FloatDimensionless scalar.
-     * @param v FloatLuminousFlux; scalar
-     * @return FloatDimensionless; scalar as a division of FloatLuminousFlux and FloatLuminousFlux
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatLuminousFlux
      */
     public final FloatDimensionless divide(final FloatLuminousFlux v)
     {
@@ -237,8 +237,8 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Calculate the division of FloatLuminousFlux and FloatArea, which results in a FloatIlluminance scalar.
-     * @param v FloatLuminousFlux; scalar
-     * @return FloatIlluminance; scalar as a division of FloatLuminousFlux and FloatArea
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatArea
      */
     public final FloatIlluminance divide(final FloatArea v)
     {
@@ -247,8 +247,8 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Calculate the division of FloatLuminousFlux and FloatIlluminance, which results in a FloatArea scalar.
-     * @param v FloatLuminousFlux; scalar
-     * @return FloatArea; scalar as a division of FloatLuminousFlux and FloatIlluminance
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatIlluminance
      */
     public final FloatArea divide(final FloatIlluminance v)
     {
@@ -257,8 +257,8 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Calculate the division of FloatLuminousFlux and FloatLuminousIntensity, which results in a FloatSolidAngle scalar.
-     * @param v FloatLuminousFlux; scalar
-     * @return FloatSolidAngle; scalar as a division of FloatLuminousFlux and FloatLuminousIntensity
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatLuminousIntensity
      */
     public final FloatSolidAngle divide(final FloatLuminousIntensity v)
     {
@@ -267,8 +267,8 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
 
     /**
      * Calculate the division of FloatLuminousFlux and FloatSolidAngle, which results in a FloatLuminousIntensity scalar.
-     * @param v FloatLuminousFlux; scalar
-     * @return FloatLuminousIntensity; scalar as a division of FloatLuminousFlux and FloatSolidAngle
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatSolidAngle
      */
     public final FloatLuminousIntensity divide(final FloatSolidAngle v)
     {

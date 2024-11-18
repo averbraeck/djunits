@@ -28,8 +28,8 @@ public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, R
 
     /**
      * Construct a new Relative Immutable DoubleScalar.
-     * @param value double; the value of the new Relative Immutable DoubleScalar
-     * @param unit RU; the unit of the new Relative Immutable DoubleScalar
+     * @param value the value of the new Relative Immutable DoubleScalar
+     * @param unit the unit of the new Relative Immutable DoubleScalar
      */
     public DoubleScalarRelWithAbs(final double value, final RU unit)
     {
@@ -38,7 +38,7 @@ public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, R
 
     /**
      * Construct a new Relative Immutable DoubleScalar from an existing Relative Immutable DoubleScalar.
-     * @param value R, a relative typed DoubleScalar; the reference
+     * @param value the reference
      */
     public DoubleScalarRelWithAbs(final R value)
     {
@@ -47,8 +47,8 @@ public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, R
 
     /**
      * Construct a new Absolute Immutable DoubleScalar of the right type. Each extending class must implement this method.
-     * @param value double; the double value
-     * @param unit AU; the absolute unit
+     * @param value the double value
+     * @param unit the absolute unit
      * @return A a new absolute instance of the DoubleScalar of the right type
      */
     public abstract A instantiateAbs(double value, AU unit);

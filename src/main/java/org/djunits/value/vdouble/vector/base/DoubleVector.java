@@ -44,8 +44,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Construct a new DoubleVector.
-     * @param data DoubleVectorData; an internal data object
-     * @param unit U; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     DoubleVector(final DoubleVectorData data, final U unit)
     {
@@ -58,9 +58,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Instantiate a new vector of the class of this vector. This can be used instead of the DoubleVector.instiantiate() methods
      * in case another vector of this class is known. The method is faster than DoubleVector.instantiate, and it will also work
      * if the vector is user-defined.
-     * @param dvd DoubleVectorData; the data used to instantiate the vector
-     * @param displayUnit U; the display unit of the vector
-     * @return V; a vector of the correct type
+     * @param dvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the vector
+     * @return a vector of the correct type
      */
     public abstract V instantiateVector(DoubleVectorData dvd, U displayUnit);
 
@@ -68,9 +68,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
      * Instantiate a new scalar for the class of this vector. This can be used instead of the DoubleScalar.instiantiate()
      * methods in case a vector of this class is known. The method is faster than DoubleScalar.instantiate, and it will also
      * work if the vector and/or scalar are user-defined.
-     * @param valueSI double; the SI value of the scalar
-     * @param displayUnit U; the unit in which the value will be displayed
-     * @return S; a scalar of the correct type, belonging to the vector type
+     * @param valueSI the SI value of the scalar
+     * @param displayUnit the unit in which the value will be displayed
+     * @return a scalar of the correct type, belonging to the vector type
      */
     public abstract S instantiateScalarSI(double valueSI, U displayUnit);
 
@@ -88,7 +88,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Create a double[] array filled with the values in the standard SI unit.
-     * @return double[]; array of values in the standard SI unit
+     * @return array of values in the standard SI unit
      */
     public final double[] getValuesSI()
     {
@@ -97,7 +97,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Create a double[] array filled with the values in the original unit.
-     * @return double[]; the values in the original unit
+     * @return the values in the original unit
      */
     public final double[] getValuesInUnit()
     {
@@ -106,8 +106,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Create a double[] array filled with the values converted into a specified unit.
-     * @param targetUnit U; the unit into which the values are converted for use
-     * @return double[]; the values converted into the specified unit
+     * @param targetUnit the unit into which the values are converted for use
+     * @return the values converted into the specified unit
      */
     public final double[] getValuesInUnit(final U targetUnit)
     {
@@ -127,7 +127,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Check that a provided index is valid.
-     * @param index int; the value to check
+     * @param index the value to check
      * @throws IndexOutOfBoundsException when index is invalid
      */
     protected final void checkIndex(final int index) throws IndexOutOfBoundsException
@@ -141,8 +141,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Retrieve the value stored at a specified position in the standard SI unit.
-     * @param index int; index of the value to retrieve
-     * @return double; value at position index in the standard SI unit
+     * @param index index of the value to retrieve
+     * @return value at position index in the standard SI unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final double getSI(final int index) throws IndexOutOfBoundsException
@@ -159,8 +159,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Retrieve the value stored at a specified position in the original unit.
-     * @param index int; index of the value to retrieve
-     * @return double; value at position index in the original unit
+     * @param index index of the value to retrieve
+     * @return value at position index in the original unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final double getInUnit(final int index) throws IndexOutOfBoundsException
@@ -170,9 +170,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Retrieve the value stored at a specified position converted into a specified unit.
-     * @param index int; index of the value to retrieve
-     * @param targetUnit U; the unit for the result
-     * @return double; value at position index converted into the specified unit
+     * @param index index of the value to retrieve
+     * @param targetUnit the unit for the result
+     * @return value at position index converted into the specified unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final double getInUnit(final int index, final U targetUnit) throws IndexOutOfBoundsException
@@ -182,8 +182,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Set the value, specified in the standard SI unit, at the specified position.
-     * @param index int; the index of the value to set
-     * @param valueSI double; the value, specified in the standard SI unit
+     * @param index the index of the value to set
+     * @param valueSI the value, specified in the standard SI unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final void setSI(final int index, final double valueSI) throws IndexOutOfBoundsException
@@ -195,8 +195,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Set the value, specified in the (current) display unit, at the specified position.
-     * @param index int; the index of the value to set
-     * @param valueInUnit double; the value, specified in the (current) display unit
+     * @param index the index of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int index, final double valueInUnit) throws IndexOutOfBoundsException
@@ -206,9 +206,9 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Set the value, specified in the <code>valueUnit</code>, at the specified position.
-     * @param index int; the index of the value to set
-     * @param valueInUnit double; the value, specified in the (current) display unit
-     * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
+     * @param index the index of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
+     * @param valueUnit the unit in which the <code>valueInUnit</code> is expressed
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int index, final double valueInUnit, final U valueUnit) throws IndexOutOfBoundsException
@@ -218,8 +218,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Set the scalar value at the specified position.
-     * @param index int; the index of the value to set
-     * @param value S; the value to set
+     * @param index the index of the value to set
+     * @param value the value to set
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void set(final int index, final S value) throws IndexOutOfBoundsException
@@ -276,8 +276,8 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Execute a function on a cell by cell basis. Note: May be expensive when used on sparse data.
-     * @param doubleFunction DoubleFunction; the function to apply
-     * @return V; this updated vector
+     * @param doubleFunction the function to apply
+     * @return this updated vector
      */
     @SuppressWarnings("unchecked")
     public final V assign(final DoubleFunction doubleFunction)
@@ -382,7 +382,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Centralized size equality check.
-     * @param other DoubleVector&lt;?, ?, ?&gt;; other DoubleVector
+     * @param other other DoubleVector
      * @throws NullPointerException when other vector is null
      * @throws ValueRuntimeException when vectors have unequal size
      */

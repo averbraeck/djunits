@@ -56,7 +56,7 @@ public class ScalarOperationsTest
 
     /**
      * Perform many tests on scalar types.
-     * @param doubleType boolean; if true; perform tests on DoubleScalar types; if false; perform tests on FloatScalar types
+     * @param doubleType if true; perform tests on DoubleScalar types; if false; perform tests on FloatScalar types
      * @throws NoSuchFieldException on class or method resolving error
      * @throws InvocationTargetException on class or method resolving error
      * @throws IllegalAccessException on class or method resolving error
@@ -126,8 +126,8 @@ public class ScalarOperationsTest
      * Find the methods defined in the class itself (not in a superclass) called times or divide and test the method. Also test
      * the Unary methods of the class.
      * @param scalarClassAbsRel class to test
-     * @param isAbs boolean; if true; the scalarClassAbsRel must be aAsolute; if false; the scalarClassAbsRel must be Relative
-     * @param doubleType boolean; if true; perform tests on DoubleScalar; if false perform tests on FloatScalar
+     * @param isAbs if true; the scalarClassAbsRel must be aAsolute; if false; the scalarClassAbsRel must be Relative
+     * @param doubleType if true; perform tests on DoubleScalar; if false perform tests on FloatScalar
      * @throws InvocationTargetException on class or method resolving error
      * @throws IllegalAccessException on class or method resolving error
      * @throws InstantiationException on class or method resolving error
@@ -159,10 +159,10 @@ public class ScalarOperationsTest
     /**
      * Test a multiplication method for an Abs or Rel scalar. Note: filter out the method that multiplies by a constant...
      * @param scalarClass the Abs or Rel class for the multiplication, e.g. Length
-     * @param abs boolean; true to test the Abs sub-class; false to test the Rel sub-class
+     * @param abs true to test the Abs sub-class; false to test the Rel sub-class
      * @param method the method 'times' for that class
-     * @param multiply boolean; if true; test a times method; if false; test a divide method
-     * @param doubleType boolean; if true; perform tests on DoubleScalar; if false; perform tests on FloatScalar
+     * @param multiply if true; test a times method; if false; test a divide method
+     * @param doubleType if true; perform tests on DoubleScalar; if false; perform tests on FloatScalar
      * @throws NoSuchMethodException on class or method resolving error
      * @throws InvocationTargetException on class or method resolving error
      * @throws IllegalAccessException on class or method resolving error
@@ -331,7 +331,7 @@ public class ScalarOperationsTest
 
     /**
      * Obtain the SI coefficient string of a DJUNITS class.
-     * @param clas Class&lt;?&gt;; the DJUNITS class
+     * @param clas the DJUNITS class
      * @return String
      * @throws IllegalAccessException on class or method resolving error
      * @throws NoSuchFieldException on class or method resolving error
@@ -346,7 +346,7 @@ public class ScalarOperationsTest
 
     /**
      * Obtain the SI coefficient string of a DJUNITS class.
-     * @param clas Class&lt;?&gt;; the DJUNITS class
+     * @param clas the DJUNITS class
      * @param isAbs true when abs
      * @return String
      * @throws NoSuchFieldException on class or method resolving error
@@ -381,10 +381,10 @@ public class ScalarOperationsTest
 
     /**
      * Verify the Absolute-ness or Relative-ness of a DoubleScalar and return the SI value.
-     * @param abs boolean; expected Absolute- or Relative-ness
-     * @param doubleType boolean; if true; double is expected; if false; float is expected
+     * @param abs expected Absolute- or Relative-ness
+     * @param doubleType if true; double is expected; if false; float is expected
      * @param o the (DoubleScalar?) object
-     * @return double; the SI value
+     * @return the SI value
      */
     private double verifyAbsRelPrecisionAndExtractSI(final boolean abs, final boolean doubleType, final Object o)
     {
@@ -428,8 +428,8 @@ public class ScalarOperationsTest
 
     /**
      * @param scalarClass the class to test
-     * @param abs boolean; if true; test Absolute class; if false; test the Relative class
-     * @param doubleType boolean; if true; perform tests on DoubleScalar; if false; perform tests on FloatScalar
+     * @param abs if true; test Absolute class; if false; test the Relative class
+     * @param doubleType if true; perform tests on DoubleScalar; if false; perform tests on FloatScalar
      * @throws NoSuchMethodException on class or method resolving error
      * @throws InstantiationException on class or method resolving error
      * @throws IllegalAccessException on class or method resolving error
@@ -773,9 +773,9 @@ public class ScalarOperationsTest
 
     /**
      * Test the various static methods.
-     * @param scalarClass Class&lt;?&gt;; the class to test
-     * @param abs boolean; if true; scalarClass is Absolute; if false; scalarClass is Relative
-     * @param doubleType boolean; if true; perform tests on DoubleScalar; if false; perform tests on FloatScalar
+     * @param scalarClass the class to test
+     * @param abs if true; scalarClass is Absolute; if false; scalarClass is Relative
+     * @param doubleType if true; perform tests on DoubleScalar; if false; perform tests on FloatScalar
      * @throws NoSuchMethodException on class or method resolving error
      * @throws NoSuchFieldException on class or method resolving error
      * @throws InvocationTargetException on class or method resolving error

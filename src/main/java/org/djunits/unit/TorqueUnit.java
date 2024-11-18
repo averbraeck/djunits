@@ -43,9 +43,9 @@ public class TorqueUnit extends Unit<TorqueUnit>
 
     /**
      * Determine the conversion factor to the base torque unit, given a length unit and a force unit.
-     * @param length LengthUnit; the used length unit, e.g. m
-     * @param force ForceUnit; the used force unit, e.g. kgf
-     * @return double; the conversion factor from the provided units (e.g. m.kgf) to the standard unit (e.g., Nm or kg.m2/s2)
+     * @param length the used length unit, e.g. m
+     * @param force the used force unit, e.g. kgf
+     * @return the conversion factor from the provided units (e.g. m.kgf) to the standard unit (e.g., Nm or kg.m2/s2)
      */
     private static double factorLF(final LengthUnit length, final ForceUnit force)
     {

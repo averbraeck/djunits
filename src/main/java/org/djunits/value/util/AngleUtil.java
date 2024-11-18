@@ -17,7 +17,7 @@ public interface AngleUtil
 {
     /**
      * Normalize an angle between 0 and 2 * PI.
-     * @param angle double; original angle.
+     * @param angle original angle.
      * @return angle between 0 and 2 * PI.
      */
     static double normalize(final double angle)
@@ -32,7 +32,7 @@ public interface AngleUtil
 
     /**
      * Normalize an angle between 0 and 2 * PI.
-     * @param angle float; original angle.
+     * @param angle original angle.
      * @return angle between 0 and 2 * PI.
      */
     static float normalize(final float angle)
@@ -42,8 +42,8 @@ public interface AngleUtil
 
     /**
      * Normalize an angle between 0 and 2 * PI.
-     * @param angle Angle; original angle.
-     * @return Angle; a new Angle object with angle between 0 and 2 * PI.
+     * @param angle original angle.
+     * @return a new Angle object with angle between 0 and 2 * PI.
      */
     static Angle normalize(final Angle angle)
     {
@@ -52,7 +52,7 @@ public interface AngleUtil
 
     /**
      * Normalize an angle between 0 and 2 * PI.
-     * @param angle FloatAngle; original angle.
+     * @param angle original angle.
      * @return angle between 0 and 2 * PI.
      */
     static FloatAngle normalize(final FloatAngle angle)

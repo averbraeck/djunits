@@ -27,8 +27,8 @@ public final class Format
 
     /**
      * Format a floating point value.
-     * @param value double; the value to format
-     * @return String; the formatted floating point value
+     * @param value the value to format
+     * @return the formatted floating point value
      */
     public static String format(final double value)
     {

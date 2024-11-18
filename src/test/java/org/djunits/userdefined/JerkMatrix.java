@@ -20,8 +20,8 @@ public class JerkMatrix extends DoubleMatrixRel<JerkUnit, Jerk, JerkVector, Jerk
     private static final long serialVersionUID = 20151109L;
 
     /**
-     * @param data DoubleMatrixData; an internal data object
-     * @param displayUnit JerkUnit; the unit in which the data will be displayed
+     * @param data an internal data object
+     * @param displayUnit the unit in which the data will be displayed
      */
     public JerkMatrix(final DoubleMatrixData data, final JerkUnit displayUnit)
     {

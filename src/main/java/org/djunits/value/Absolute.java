@@ -23,23 +23,23 @@ public interface Absolute<AU extends AbsoluteLinearUnit<AU, RU>, A extends Absol
 {
     /**
      * Add a Relative value to this Absolute value. A new value is returned due to immutability.
-     * @param rel R; R the right operand
-     * @return A; the sum of this value and the operand
+     * @param rel R the right operand
+     * @return the sum of this value and the operand
      */
     A plus(R rel);
 
     /**
      * Subtract a Relative value from this Absolute value. A new value is returned due to immutability.
-     * @param rel R; R the right operand
-     * @return A; the subtraction of this value and the operand
+     * @param rel R the right operand
+     * @return the subtraction of this value and the operand
      */
     A minus(R rel);
 
     /**
      * Subtract an Absolute value from this Absolute value, resulting in a Relative value. A new value is returned due to
      * immutability.
-     * @param abs A; A the right operand
-     * @return R; the subtraction of this value and the operand
+     * @param abs A the right operand
+     * @return the subtraction of this value and the operand
      */
     R minus(A abs);
 }

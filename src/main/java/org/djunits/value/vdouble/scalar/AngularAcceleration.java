@@ -56,8 +56,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Construct AngularAcceleration scalar.
-     * @param value double; the double value
-     * @param unit AngularAccelerationUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public AngularAcceleration(final double value, final AngularAccelerationUnit unit)
     {
@@ -66,7 +66,7 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Construct AngularAcceleration scalar.
-     * @param value AngularAcceleration; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public AngularAcceleration(final AngularAcceleration value)
     {
@@ -81,8 +81,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Construct AngularAcceleration scalar.
-     * @param value double; the double value in SI units
-     * @return AngularAcceleration; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final AngularAcceleration instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Interpolate between two values.
-     * @param zero AngularAcceleration; the low value
-     * @param one AngularAcceleration; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return AngularAcceleration; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static AngularAcceleration interpolate(final AngularAcceleration zero, final AngularAcceleration one,
             final double ratio)
@@ -105,9 +105,9 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 AngularAcceleration; the first scalar
-     * @param r2 AngularAcceleration; the second scalar
-     * @return AngularAcceleration; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static AngularAcceleration max(final AngularAcceleration r1, final AngularAcceleration r2)
     {
@@ -116,10 +116,10 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 AngularAcceleration; the first scalar
-     * @param r2 AngularAcceleration; the second scalar
-     * @param rn AngularAcceleration...; the other scalars
-     * @return AngularAcceleration; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static AngularAcceleration max(final AngularAcceleration r1, final AngularAcceleration r2,
             final AngularAcceleration... rn)
@@ -137,9 +137,9 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 AngularAcceleration; the first scalar
-     * @param r2 AngularAcceleration; the second scalar
-     * @return AngularAcceleration; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static AngularAcceleration min(final AngularAcceleration r1, final AngularAcceleration r2)
     {
@@ -148,10 +148,10 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 AngularAcceleration; the first scalar
-     * @param r2 AngularAcceleration; the second scalar
-     * @param rn AngularAcceleration...; the other scalars
-     * @return AngularAcceleration; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static AngularAcceleration min(final AngularAcceleration r1, final AngularAcceleration r2,
             final AngularAcceleration... rn)
@@ -171,8 +171,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
      * Returns a AngularAcceleration representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a AngularAcceleration
-     * @return AngularAcceleration; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a AngularAcceleration
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -200,9 +200,9 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Returns a AngularAcceleration based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return AngularAcceleration; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -221,8 +221,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Calculate the division of AngularAcceleration and AngularAcceleration, which results in a Dimensionless scalar.
-     * @param v AngularAcceleration; scalar
-     * @return Dimensionless; scalar as a division of AngularAcceleration and AngularAcceleration
+     * @param v scalar
+     * @return scalar as a division of AngularAcceleration and AngularAcceleration
      */
     public final Dimensionless divide(final AngularAcceleration v)
     {
@@ -231,8 +231,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Calculate the multiplication of AngularAcceleration and Duration, which results in a AngularVelocity scalar.
-     * @param v AngularAcceleration; scalar
-     * @return AngularVelocity; scalar as a multiplication of AngularAcceleration and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of AngularAcceleration and Duration
      */
     public final AngularVelocity times(final Duration v)
     {
@@ -241,8 +241,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Calculate the division of AngularAcceleration and Frequency, which results in a AngularVelocity scalar.
-     * @param v AngularAcceleration; scalar
-     * @return AngularVelocity; scalar as a division of AngularAcceleration and Frequency
+     * @param v scalar
+     * @return scalar as a division of AngularAcceleration and Frequency
      */
     public final AngularVelocity divide(final Frequency v)
     {
@@ -251,8 +251,8 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
 
     /**
      * Calculate the division of AngularAcceleration and AngularVelocity, which results in a Frequency scalar.
-     * @param v AngularAcceleration; scalar
-     * @return Frequency; scalar as a division of AngularAcceleration and AngularVelocity
+     * @param v scalar
+     * @return scalar as a division of AngularAcceleration and AngularVelocity
      */
     public final Frequency divide(final AngularVelocity v)
     {

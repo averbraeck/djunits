@@ -34,7 +34,7 @@ public class SIUnit extends Unit<SIUnit>
 
     /**
      * Instantiate an SI unit 'of' a String.
-     * @param siString String; the SI string, e.g., "kgm/s2"
+     * @param siString the SI string, e.g., "kgm/s2"
      * @return the SIUnit based on the SI dimensionality
      * @throws UnitException when the SI string is not according to the rules
      */
@@ -45,7 +45,7 @@ public class SIUnit extends Unit<SIUnit>
 
     /**
      * Instantiate an SI unit 'of' a SIDimensions.
-     * @param siDimensions SIDimensions; the SI dimensions
+     * @param siDimensions the SI dimensions
      * @return the SIUnit based on the SI dimensionality
      */
     public static SIUnit of(final SIDimensions siDimensions)

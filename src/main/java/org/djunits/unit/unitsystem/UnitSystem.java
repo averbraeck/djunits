@@ -76,8 +76,8 @@ public abstract class UnitSystem implements Serializable
 
     /**
      * Construct a new UnitSystem.
-     * @param abbreviationKey String; the abbreviation of the unit system, such as cgs
-     * @param nameKey String; the name of the unit system, such as centimeter-gram-second
+     * @param abbreviationKey the abbreviation of the unit system, such as cgs
+     * @param nameKey the name of the unit system, such as centimeter-gram-second
      */
     protected UnitSystem(final String abbreviationKey, final String nameKey)
     {
@@ -87,7 +87,7 @@ public abstract class UnitSystem implements Serializable
 
     /**
      * Retrieve the name of this UnitSystem.
-     * @return String; the name of this UnitSystem, e.g. centimeter-gram-second
+     * @return the name of this UnitSystem, e.g. centimeter-gram-second
      */
     public final String getName()
     {
@@ -96,7 +96,7 @@ public abstract class UnitSystem implements Serializable
 
     /**
      * Retrieve the name key of this UnitSystem.
-     * @return String; the name key of this UnitSystem, e.g. CGS.centimeter-gram-second
+     * @return the name key of this UnitSystem, e.g. CGS.centimeter-gram-second
      */
     public final String getNameKey()
     {
@@ -105,7 +105,7 @@ public abstract class UnitSystem implements Serializable
 
     /**
      * Retrieve the abbreviation of this UnitSystem.
-     * @return String; the abbreviation of this UnitSystem, e.g., CGS.cgs
+     * @return the abbreviation of this UnitSystem, e.g., CGS.cgs
      */
     public final String getAbbreviation()
     {
@@ -114,7 +114,7 @@ public abstract class UnitSystem implements Serializable
 
     /**
      * Retrieve the abbreviation key of this UnitSystem.
-     * @return String; the abbreviation key of this UnitSystem, e.g. cgs
+     * @return the abbreviation key of this UnitSystem, e.g. cgs
      */
     public final String getAbbreviationKey()
     {

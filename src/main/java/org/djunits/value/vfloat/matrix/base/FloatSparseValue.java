@@ -34,9 +34,9 @@ public class FloatSparseValue<U extends Unit<U>, S extends FloatScalar<U, S>> im
 
     /**
      * Create a data point for a sparse matrix.
-     * @param row int; the row of the sparse data point in the matrix
-     * @param column int; the column of the sparse data point in the matrix
-     * @param value S; the value in the given unit of the data point in the matrix
+     * @param row the row of the sparse data point in the matrix
+     * @param column the column of the sparse data point in the matrix
+     * @param value the value in the given unit of the data point in the matrix
      */
     public FloatSparseValue(final int row, final int column, final S value)
     {
@@ -45,8 +45,8 @@ public class FloatSparseValue<U extends Unit<U>, S extends FloatScalar<U, S>> im
 
     /**
      * Check for null pointer in constructor.
-     * @param value S; the scalar to check
-     * @return S; the untouched scalar value
+     * @param value the scalar to check
+     * @return the untouched scalar value
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
@@ -58,10 +58,10 @@ public class FloatSparseValue<U extends Unit<U>, S extends FloatScalar<U, S>> im
 
     /**
      * Create a data point for a sparse matrix.
-     * @param row int; the row of the sparse data point in the matrix
-     * @param column int; the column of the sparse data point in the matrix
-     * @param valueInUnit float; the value in the given unit of the data point in the matrix
-     * @param unit U; the unit of the value
+     * @param row the row of the sparse data point in the matrix
+     * @param column the column of the sparse data point in the matrix
+     * @param valueInUnit the value in the given unit of the data point in the matrix
+     * @param unit the unit of the value
      */
     public FloatSparseValue(final int row, final int column, final float valueInUnit, final U unit)
     {
@@ -70,9 +70,9 @@ public class FloatSparseValue<U extends Unit<U>, S extends FloatScalar<U, S>> im
 
     /**
      * Create a data point for a sparse matrix.
-     * @param row int; the row of the sparse data point in the matrix
-     * @param column int; the column of the sparse data point in the matrix
-     * @param valueSI float; the SI value of the data point in the matrix
+     * @param row the row of the sparse data point in the matrix
+     * @param column the column of the sparse data point in the matrix
+     * @param valueSI the SI value of the data point in the matrix
      */
     public FloatSparseValue(final int row, final int column, final float valueSI)
     {

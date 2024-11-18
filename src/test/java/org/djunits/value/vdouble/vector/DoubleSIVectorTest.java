@@ -386,11 +386,11 @@ public class DoubleSIVectorTest
 
     /**
      * Verify the contents of a FloatDimensionlessVector.
-     * @param reference double[]; the values on which the <code>operation</code> needs to be applied to get the values that must
+     * @param reference the values on which the <code>operation</code> needs to be applied to get the values that must
      *            be verified
-     * @param operation FloatFunction; the operation that converts the <code>reference</code> values to the values that must be
+     * @param operation the operation that converts the <code>reference</code> values to the values that must be
      *            verified
-     * @param got FloatDimensionlessVector; the values that must be verified
+     * @param got the values that must be verified
      */
     public static void verifyDimensionLessVector(final double[] reference, final DoubleFunction operation,
             final DimensionlessVector got)
@@ -408,8 +408,8 @@ public class DoubleSIVectorTest
 
     /**
      * Compare two double arrays with factor and offset (derived from a scale).
-     * @param scale Scale; the scale
-     * @param reference double[]; the reference values
+     * @param scale the scale
+     * @param reference the reference values
      * @param got double[] the values that should match the reference values
      */
     public void compareValuesWithScale(final Scale scale, final double[] reference, final double[] got)

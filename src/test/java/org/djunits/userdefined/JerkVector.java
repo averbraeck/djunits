@@ -20,8 +20,8 @@ public class JerkVector extends DoubleVectorRel<JerkUnit, Jerk, JerkVector>
 
     /**
      * Construct an JerkVector from an internal data object.
-     * @param data DoubleVectorData; an internal data object
-     * @param displayUnit JerkUnit; the unit in which the data will be displayed
+     * @param data an internal data object
+     * @param displayUnit the unit in which the data will be displayed
      */
     public JerkVector(final DoubleVectorData data, final JerkUnit displayUnit)
     {

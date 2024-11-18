@@ -81,8 +81,8 @@ public class AreaUnit extends Unit<AreaUnit>
 
     /**
      * Calculate the conversion factor for a "squared" length.
-     * @param lu LengthUnit; the LengthUnit to use as the base
-     * @return double; the conversion factor
+     * @param lu the LengthUnit to use as the base
+     * @return the conversion factor
      */
     private static double sqLength(final LengthUnit lu)
     {

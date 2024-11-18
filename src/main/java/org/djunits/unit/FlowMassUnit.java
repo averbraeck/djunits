@@ -36,9 +36,9 @@ public class FlowMassUnit extends Unit<FlowMassUnit>
 
     /**
      * Determine the conversion factor to the base flow mass unit, given a mass unit and a duration unit.
-     * @param mass MassUnit; the used mass unit, e.g. lb
-     * @param duration DurationUnit; the used duration unit, e.g. h
-     * @return double; the conversion factor from the provided units (e.g. lb/h) to the standard unit (e.g., kg/s)
+     * @param mass the used mass unit, e.g. lb
+     * @param duration the used duration unit, e.g. h
+     * @return the conversion factor from the provided units (e.g. lb/h) to the standard unit (e.g., kg/s)
      */
     private static double factorMD(final MassUnit mass, final DurationUnit duration)
     {

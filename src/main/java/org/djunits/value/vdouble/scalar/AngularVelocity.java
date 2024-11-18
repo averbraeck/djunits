@@ -56,8 +56,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Construct AngularVelocity scalar.
-     * @param value double; the double value
-     * @param unit AngularVelocityUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public AngularVelocity(final double value, final AngularVelocityUnit unit)
     {
@@ -66,7 +66,7 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Construct AngularVelocity scalar.
-     * @param value AngularVelocity; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public AngularVelocity(final AngularVelocity value)
     {
@@ -81,8 +81,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Construct AngularVelocity scalar.
-     * @param value double; the double value in SI units
-     * @return AngularVelocity; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final AngularVelocity instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Interpolate between two values.
-     * @param zero AngularVelocity; the low value
-     * @param one AngularVelocity; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return AngularVelocity; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static AngularVelocity interpolate(final AngularVelocity zero, final AngularVelocity one, final double ratio)
     {
@@ -104,9 +104,9 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 AngularVelocity; the first scalar
-     * @param r2 AngularVelocity; the second scalar
-     * @return AngularVelocity; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static AngularVelocity max(final AngularVelocity r1, final AngularVelocity r2)
     {
@@ -115,10 +115,10 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 AngularVelocity; the first scalar
-     * @param r2 AngularVelocity; the second scalar
-     * @param rn AngularVelocity...; the other scalars
-     * @return AngularVelocity; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static AngularVelocity max(final AngularVelocity r1, final AngularVelocity r2, final AngularVelocity... rn)
     {
@@ -135,9 +135,9 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 AngularVelocity; the first scalar
-     * @param r2 AngularVelocity; the second scalar
-     * @return AngularVelocity; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static AngularVelocity min(final AngularVelocity r1, final AngularVelocity r2)
     {
@@ -146,10 +146,10 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 AngularVelocity; the first scalar
-     * @param r2 AngularVelocity; the second scalar
-     * @param rn AngularVelocity...; the other scalars
-     * @return AngularVelocity; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static AngularVelocity min(final AngularVelocity r1, final AngularVelocity r2, final AngularVelocity... rn)
     {
@@ -168,8 +168,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
      * Returns a AngularVelocity representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a AngularVelocity
-     * @return AngularVelocity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a AngularVelocity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -197,9 +197,9 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Returns a AngularVelocity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return AngularVelocity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -217,8 +217,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the division of AngularVelocity and AngularVelocity, which results in a Dimensionless scalar.
-     * @param v AngularVelocity; scalar
-     * @return Dimensionless; scalar as a division of AngularVelocity and AngularVelocity
+     * @param v scalar
+     * @return scalar as a division of AngularVelocity and AngularVelocity
      */
     public final Dimensionless divide(final AngularVelocity v)
     {
@@ -227,8 +227,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the division of AngularVelocity and Angle, which results in a Frequency scalar.
-     * @param v AngularVelocity; scalar
-     * @return Frequency; scalar as a division of AngularVelocity and Angle
+     * @param v scalar
+     * @return scalar as a division of AngularVelocity and Angle
      */
     public final Frequency divide(final Angle v)
     {
@@ -237,8 +237,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the division of AngularVelocity and Frequency, which results in a Angle scalar.
-     * @param v AngularVelocity; scalar
-     * @return Angle; scalar as a division of AngularVelocity and Frequency
+     * @param v scalar
+     * @return scalar as a division of AngularVelocity and Frequency
      */
     public final Angle divide(final Frequency v)
     {
@@ -247,8 +247,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the multiplication of AngularVelocity and Duration, which results in a Angle scalar.
-     * @param v AngularVelocity; scalar
-     * @return Angle; scalar as a multiplication of AngularVelocity and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of AngularVelocity and Duration
      */
     public final Angle times(final Duration v)
     {
@@ -257,8 +257,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the division of AngularVelocity and Duration, which results in a AngularAcceleration scalar.
-     * @param v AngularVelocity; scalar
-     * @return AngularAcceleration; scalar as a division of AngularVelocity and Duration
+     * @param v scalar
+     * @return scalar as a division of AngularVelocity and Duration
      */
     public final AngularAcceleration divide(final Duration v)
     {
@@ -267,8 +267,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the division of AngularVelocity and AngularAcceleration, which results in a Duration scalar.
-     * @param v AngularVelocity; scalar
-     * @return Duration; scalar as a division of AngularVelocity and AngularAcceleration
+     * @param v scalar
+     * @return scalar as a division of AngularVelocity and AngularAcceleration
      */
     public final Duration divide(final AngularAcceleration v)
     {
@@ -277,8 +277,8 @@ public class AngularVelocity extends DoubleScalarRel<AngularVelocityUnit, Angula
 
     /**
      * Calculate the multiplication of AngularVelocity and Frequency, which results in a AngularAcceleration scalar.
-     * @param v AngularVelocity; scalar
-     * @return AngularAcceleration; scalar as a multiplication of AngularVelocity and Frequency
+     * @param v scalar
+     * @return scalar as a multiplication of AngularVelocity and Frequency
      */
     public final AngularAcceleration times(final Frequency v)
     {

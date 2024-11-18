@@ -211,7 +211,7 @@ public class SIDimensionsTest
     }
 
     /**
-     * @param si String; the (wrong) SI unit to parse
+     * @param si the (wrong) SI unit to parse
      */
     private void illegal(final String si)
     {

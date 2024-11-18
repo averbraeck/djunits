@@ -53,8 +53,8 @@ public class FloatTemperature
 
     /**
      * Construct FloatTemperature scalar.
-     * @param value float; the float value
-     * @param unit TemperatureUnit; unit for the float value
+     * @param value the float value
+     * @param unit unit for the float value
      */
     public FloatTemperature(final float value, final TemperatureUnit unit)
     {
@@ -63,7 +63,7 @@ public class FloatTemperature
 
     /**
      * Construct FloatTemperature scalar.
-     * @param value FloatTemperature; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public FloatTemperature(final FloatTemperature value)
     {
@@ -72,8 +72,8 @@ public class FloatTemperature
 
     /**
      * Construct FloatTemperature scalar using a double value.
-     * @param value double; the double value
-     * @param unit TemperatureUnit; unit for the resulting float value
+     * @param value the double value
+     * @param unit unit for the resulting float value
      */
     public FloatTemperature(final double value, final TemperatureUnit unit)
     {
@@ -88,8 +88,8 @@ public class FloatTemperature
 
     /**
      * Construct FloatTemperature scalar.
-     * @param value float; the float value in SI units
-     * @return FloatTemperature; the new scalar with the SI value
+     * @param value the float value in SI units
+     * @return the new scalar with the SI value
      */
     public static final FloatTemperature instantiateSI(final float value)
     {
@@ -104,10 +104,10 @@ public class FloatTemperature
 
     /**
      * Interpolate between two values.
-     * @param zero FloatTemperature; the low value
-     * @param one FloatTemperature; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return FloatTemperature; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static FloatTemperature interpolate(final FloatTemperature zero, final FloatTemperature one, final float ratio)
     {
@@ -117,9 +117,9 @@ public class FloatTemperature
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 FloatTemperature; the first scalar
-     * @param r2 FloatTemperature; the second scalar
-     * @return FloatTemperature; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static FloatTemperature max(final FloatTemperature r1, final FloatTemperature r2)
     {
@@ -128,10 +128,10 @@ public class FloatTemperature
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 FloatTemperature; the first scalar
-     * @param r2 FloatTemperature; the second scalar
-     * @param rn FloatTemperature...; the other scalars
-     * @return FloatTemperature; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static FloatTemperature max(final FloatTemperature r1, final FloatTemperature r2, final FloatTemperature... rn)
     {
@@ -148,9 +148,9 @@ public class FloatTemperature
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 FloatTemperature; the first scalar
-     * @param r2 FloatTemperature; the second scalar
-     * @return FloatTemperature; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static FloatTemperature min(final FloatTemperature r1, final FloatTemperature r2)
     {
@@ -159,10 +159,10 @@ public class FloatTemperature
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 FloatTemperature; the first scalar
-     * @param r2 FloatTemperature; the second scalar
-     * @param rn FloatTemperature...; the other scalars
-     * @return FloatTemperature; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static FloatTemperature min(final FloatTemperature r1, final FloatTemperature r2, final FloatTemperature... rn)
     {
@@ -181,8 +181,8 @@ public class FloatTemperature
      * Returns a FloatTemperature representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatTemperature
-     * @return FloatTemperature; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatTemperature
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -209,9 +209,9 @@ public class FloatTemperature
 
     /**
      * Returns a FloatTemperature based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatTemperature; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -230,8 +230,8 @@ public class FloatTemperature
 
     /**
      * Calculate the division of FloatTemperature and FloatTemperature, which results in a FloatDimensionless scalar.
-     * @param v FloatTemperature; scalar
-     * @return FloatDimensionless; scalar as a division of FloatTemperature and FloatTemperature
+     * @param v scalar
+     * @return scalar as a division of FloatTemperature and FloatTemperature
      */
     public final FloatDimensionless divide(final FloatTemperature v)
     {

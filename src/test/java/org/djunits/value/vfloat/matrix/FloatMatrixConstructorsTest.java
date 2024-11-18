@@ -803,7 +803,7 @@ public class FloatMatrixConstructorsTest
 
     /**
      * Compare two float arrays.
-     * @param reference float[][]; the reference values
+     * @param reference the reference values
      * @param got float[][] the values that should match the reference values
      */
     public void compareValues(final float[][] reference, final float[][] got)
@@ -821,8 +821,8 @@ public class FloatMatrixConstructorsTest
 
     /**
      * Compare two float arrays with factor and offset (derived from a scale).
-     * @param scale Scale; the scale
-     * @param reference float[][]; the reference values
+     * @param scale the scale
+     * @param reference the reference values
      * @param got float[][] the values that should match the reference values
      */
     public void compareValuesWithScale(final Scale scale, final float[][] reference, final float[][] got)
@@ -847,8 +847,8 @@ public class FloatMatrixConstructorsTest
 
     /**
      * Compare two float arrays with factor and offset (derived from a scale).
-     * @param scale Scale; the scale
-     * @param reference Collection&lt;FloatSparseValue&gt;; the reference values
+     * @param scale the scale
+     * @param reference the reference values
      * @param got float[][] the values that should match the reference values
      */
     public void compareValuesWithScale(final Scale scale, final Collection<FloatSparseValue<?, ?>> reference,

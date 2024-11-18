@@ -56,7 +56,7 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Construct FloatTorque scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatTorque(final float value, final TorqueUnit unit)
@@ -75,7 +75,7 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Construct FloatTorque scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatTorque(final double value, final TorqueUnit unit)
@@ -91,7 +91,7 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Construct FloatTorque scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatTorque instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatTorque interpolate(final FloatTorque zero, final FloatTorque one, final float ratio)
@@ -178,8 +178,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
      * Returns a FloatTorque representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatTorque
-     * @return FloatTorque; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatTorque
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -207,9 +207,9 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Returns a FloatTorque based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatTorque; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -227,8 +227,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatTorque, which results in a FloatDimensionless scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatDimensionless; scalar as a division of FloatTorque and FloatTorque
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatTorque
      */
     public final FloatDimensionless divide(final FloatTorque v)
     {
@@ -237,8 +237,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatForce, which results in a FloatLength scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatLength; scalar as a division of FloatTorque and FloatForce
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatForce
      */
     public final FloatLength divide(final FloatForce v)
     {
@@ -247,8 +247,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatLength, which results in a FloatForce scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatForce; scalar as a division of FloatTorque and FloatLength
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatLength
      */
     public final FloatForce divide(final FloatLength v)
     {
@@ -257,8 +257,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the multiplication of FloatTorque and FloatLinearDensity, which results in a FloatForce scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatForce; scalar as a multiplication of FloatTorque and FloatLinearDensity
+     * @param v scalar
+     * @return scalar as a multiplication of FloatTorque and FloatLinearDensity
      */
     public final FloatForce times(final FloatLinearDensity v)
     {
@@ -267,8 +267,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatDuration, which results in a FloatPower scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatPower; scalar as a division of FloatTorque and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatDuration
      */
     public final FloatPower divide(final FloatDuration v)
     {
@@ -277,8 +277,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatPower, which results in a FloatDuration scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatDuration; scalar as a division of FloatTorque and FloatPower
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatPower
      */
     public final FloatDuration divide(final FloatPower v)
     {
@@ -287,8 +287,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the multiplication of FloatTorque and FloatFrequency, which results in a FloatPower scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatPower; scalar as a multiplication of FloatTorque and FloatFrequency
+     * @param v scalar
+     * @return scalar as a multiplication of FloatTorque and FloatFrequency
      */
     public final FloatPower times(final FloatFrequency v)
     {
@@ -297,8 +297,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatVolume, which results in a FloatPressure scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatPressure; scalar as a division of FloatTorque and FloatVolume
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatVolume
      */
     public final FloatPressure divide(final FloatVolume v)
     {
@@ -307,8 +307,8 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
 
     /**
      * Calculate the division of FloatTorque and FloatPressure, which results in a FloatVolume scalar.
-     * @param v FloatTorque; scalar
-     * @return FloatVolume; scalar as a division of FloatTorque and FloatPressure
+     * @param v scalar
+     * @return scalar as a division of FloatTorque and FloatPressure
      */
     public final FloatVolume divide(final FloatPressure v)
     {

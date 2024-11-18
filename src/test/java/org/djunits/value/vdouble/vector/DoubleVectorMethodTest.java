@@ -648,9 +648,9 @@ public class DoubleVectorMethodTest
 
     /**
      * Check that two arrays and a sum array match.
-     * @param left double[]; the left array
-     * @param right double[]; the right array
-     * @param sum double[]; the sum array
+     * @param left the left array
+     * @param right the right array
+     * @param sum the sum array
      */
     public void compareSum(final double[] left, final double[] right, final double[] sum)
     {

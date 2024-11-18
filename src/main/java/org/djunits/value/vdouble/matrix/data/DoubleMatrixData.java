@@ -44,7 +44,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Construct a new DoubleMatrixData store.
-     * @param storageType StorageType; the data type
+     * @param storageType the data type
      */
     DoubleMatrixData(final StorageType storageType)
     {
@@ -58,9 +58,9 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Instantiate a DoubleMatrixData with the right data type. The double array is of the form d[rows][columns] so each value
      * can be found with d[row][column].
-     * @param values double[][]; the (SI) values to store
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
+     * @param values the (SI) values to store
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
      * @return the DoubleMatrixData with the right data type
      * @throws NullPointerException when values are null, or storageType is null
      * @throws ValueRuntimeException when values is ragged
@@ -97,10 +97,10 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Instantiate a DoubleMatrixData with the right data type.
-     * @param values Collection&lt;DoubleSparseValue&lt;U, S&gt;&gt;; the (sparse [X, Y, SI]) values to store
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the data type to use
+     * @param values the (sparse [X, Y, SI]) values to store
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the data type to use
      * @return the DoubleMatrixData with the right data type
      * @throws NullPointerException when values are null, or storageType is null
      * @throws ValueRuntimeException when rows &lt; 0 or cols &lt; 0
@@ -140,8 +140,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Instantiate a DoubleMatrixData with the right data type. The double array is of the form d[rows][columns] so each value
      * can be found with d[row][column].
-     * @param values S[][]; the values to store
-     * @param storageType StorageType; the data type to use
+     * @param values the values to store
+     * @param storageType the data type to use
      * @return the DoubleMatrixData with the right data type
      * @throws NullPointerException when values is null, or storageType is null
      * @throws ValueRuntimeException when values is ragged
@@ -186,7 +186,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Retrieve the row count.
-     * @return int; the number of rows of the matrix
+     * @return the number of rows of the matrix
      */
     public int rows()
     {
@@ -195,7 +195,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Retrieve the column count.
-     * @return int; the number of columns of the matrix
+     * @return the number of columns of the matrix
      */
     public int cols()
     {
@@ -204,35 +204,35 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Return the data of this matrix in dense storage format.
-     * @return DoubleMatrixDataDense; the dense transformation of this data
+     * @return the dense transformation of this data
      */
     public abstract DoubleMatrixDataDense toDense();
 
     /**
      * Return the data of this matrix in sparse storage format.
-     * @return DoubleMatrixDataSparse; the sparse transformation of this data
+     * @return the sparse transformation of this data
      */
     public abstract DoubleMatrixDataSparse toSparse();
 
     /**
      * Retrieve one value from this data.
-     * @param row int; the row number to get the value for
-     * @param col int; the column number to get the value for
+     * @param row the row number to get the value for
+     * @param col the column number to get the value for
      * @return the value at the [row, col] point
      */
     public abstract double getSI(int row, int col);
 
     /**
      * Sets a value at the [row, col] point in the matrix.
-     * @param row int; the row number to set the value for
-     * @param col int; the column number to set the value for
-     * @param valueSI double; the value at the index
+     * @param row the row number to set the value for
+     * @param col the column number to set the value for
+     * @param valueSI the value at the index
      */
     public abstract void setSI(int row, int col, double valueSI);
 
     /**
      * Compute and return the sum of the values of all cells of this matrix.
-     * @return double; the sum of the values of all cells
+     * @return the sum of the values of all cells
      */
     public final double zSum()
     {
@@ -242,13 +242,13 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Create and return a deep copy of the data in dense format. The double array is of the form d[rows][columns] so each value
      * can be found with d[row][column].
-     * @return double[][]; a safe, dense copy of matrixSI as a matrix
+     * @return a safe, dense copy of matrixSI as a matrix
      */
     public abstract double[][] getDenseMatrixSI();
 
     /**
      * Check that a 2D array of float is not null, not empty and not jagged; i.e. all rows have the same length.
-     * @param values double[][]; the 2D array to check
+     * @param values the 2D array to check
      * @return the values in case the method is used in a constructor
      * @throws NullPointerException when <code>values</code> is null
      * @throws ValueRuntimeException when <code>values</code> is jagged
@@ -268,7 +268,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Check that a 2D array of float is not null, not empty and not jagged; i.e. all rows have the same length.
-     * @param values S[][]; the 2D array to check
+     * @param values the 2D array to check
      * @return the values in case the method is used in a constructor
      * @throws NullPointerException when <code>values</code> is null
      * @throws ValueRuntimeException when <code>values</code> is jagged
@@ -295,7 +295,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Check the sizes of this data object and the other data object.
-     * @param other DoubleMatrixData; the other data object
+     * @param other the other data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
     protected void checkSizes(final DoubleMatrixData other) throws ValueRuntimeException
@@ -312,16 +312,16 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Apply an operation to each cell.
-     * @param doubleFunction DoubleFunction; the operation to apply
-     * @return DoubleMatrixData; this (modified) double matrix data object
+     * @param doubleFunction the operation to apply
+     * @return this (modified) double matrix data object
      */
     public abstract DoubleMatrixData assign(DoubleFunction doubleFunction);
 
     /**
      * Apply a binary operation on a cell by cell basis.
-     * @param doubleFunction2 DoubleFunction2; the binary operation to apply
-     * @param right DoubleMatrixData; the right operand for the binary operation
-     * @return DoubleMatrixData; this (modified) double matrix data object
+     * @param doubleFunction2 the binary operation to apply
+     * @param right the right operand for the binary operation
+     * @return this (modified) double matrix data object
      * @throws ValueRuntimeException when the sizes of the matrices do not match
      */
     abstract DoubleMatrixData assign(DoubleFunction2 doubleFunction2, DoubleMatrixData right) throws ValueRuntimeException;
@@ -329,7 +329,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Add two matrices on a cell-by-cell basis. If both matrices are sparse, a sparse matrix is returned, otherwise a dense
      * matrix is returned.
-     * @param right DoubleMatrixData; the other data object to add
+     * @param right the other data object to add
      * @return the sum of this data object and the other data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
@@ -337,8 +337,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Add a matrix to this matrix on a cell-by-cell basis. The type of matrix (sparse, dense) stays the same.
-     * @param right DoubleMatrixData; the other data object to add
-     * @return DoubleMatrixData; this modified double matrix data object
+     * @param right the other data object to add
+     * @return this modified double matrix data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
     public final DoubleMatrixData incrementBy(final DoubleMatrixData right) throws ValueRuntimeException
@@ -356,7 +356,7 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Subtract two matrices on a cell-by-cell basis. If both matrices are sparse, a sparse matrix is returned, otherwise a
      * dense matrix is returned.
-     * @param right DoubleMatrixData; the other data object to subtract
+     * @param right the other data object to subtract
      * @return the sum of this data object and the other data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
@@ -364,8 +364,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Subtract a matrix from this matrix on a cell-by-cell basis. The type of matrix (sparse, dense) stays the same.
-     * @param decrement DoubleMatrixData; the amount to subtract
-     * @return DoubleMatrixData; this modified double matrix data object
+     * @param decrement the amount to subtract
+     * @return this modified double matrix data object
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public final DoubleMatrixData decrementBy(final DoubleMatrixData decrement) throws ValueRuntimeException
@@ -383,8 +383,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Multiply two matrices on a cell-by-cell basis. If both matrices are dense, a dense matrix is returned, otherwise a sparse
      * matrix is returned.
-     * @param right DoubleMatrixData; the other data object to multiply with
-     * @return DoubleVectorData; a new double matrix data store holding the result of the multiplications
+     * @param right the other data object to multiply with
+     * @return a new double matrix data store holding the result of the multiplications
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public abstract DoubleMatrixData times(DoubleMatrixData right) throws ValueRuntimeException;
@@ -392,8 +392,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Multiply a matrix with the values of another matrix on a cell-by-cell basis. The type of matrix (sparse, dense) stays the
      * same.
-     * @param right DoubleMatrixData; the other data object to multiply with
-     * @return DoubleMatrixData; this modified data store
+     * @param right the other data object to multiply with
+     * @return this modified data store
      * @throws ValueRuntimeException if matrices have different lengths
      */
     public final DoubleMatrixData multiplyBy(final DoubleMatrixData right) throws ValueRuntimeException
@@ -411,8 +411,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Divide two matrices on a cell-by-cell basis. If this matrix is sparse and <code>right</code> is dense, a sparse matrix is
      * returned, otherwise a dense matrix is returned.
-     * @param right DoubleMatrixData; the other data object to divide by
-     * @return DoubleMatrixData; the ratios of the values of this data object and the other data object
+     * @param right the other data object to divide by
+     * @return the ratios of the values of this data object and the other data object
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public abstract DoubleMatrixData divide(DoubleMatrixData right) throws ValueRuntimeException;
@@ -420,8 +420,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
     /**
      * Divide the values of a matrix by the values of another matrix on a cell-by-cell basis. The type of matrix (sparse, dense)
      * stays the same.
-     * @param right DoubleMatrixData; the other data object to divide by
-     * @return DoubleMatrixData; this modified data store
+     * @param right the other data object to divide by
+     * @return this modified data store
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public final DoubleMatrixData divideBy(final DoubleMatrixData right) throws ValueRuntimeException
@@ -460,9 +460,9 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
 
     /**
      * Compare contents of a dense and a sparse matrix.
-     * @param dm DoubleMatrixDataDense; the dense matrix
-     * @param sm DoubleMatrixDataSparse; the sparse matrix
-     * @return boolean; true if the contents are equal
+     * @param dm the dense matrix
+     * @param sm the sparse matrix
+     * @return true if the contents are equal
      */
     protected boolean compareDenseMatrixWithSparseMatrix(final DoubleMatrixDataDense dm, final DoubleMatrixDataSparse sm)
     {

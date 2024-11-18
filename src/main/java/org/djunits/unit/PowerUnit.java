@@ -79,9 +79,9 @@ public class PowerUnit extends Unit<PowerUnit>
 
     /**
      * Determine the conversion factor to the base power unit, given an energy unit and a duration unit.
-     * @param energy EnergyUnit; the used energy unit, e.g. erg
-     * @param duration DurationUnit; the used duration unit, e.g. s
-     * @return double; the conversion factor from the provided units (e.g. erg/s) to the standard unit (e.g., W)
+     * @param energy the used energy unit, e.g. erg
+     * @param duration the used duration unit, e.g. s
+     * @return the conversion factor from the provided units (e.g. erg/s) to the standard unit (e.g., W)
      */
     private static double factorED(final EnergyUnit energy, final DurationUnit duration)
     {

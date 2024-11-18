@@ -52,7 +52,7 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Construct FloatDensity scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatDensity(final float value, final DensityUnit unit)
@@ -71,7 +71,7 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Construct FloatDensity scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatDensity(final double value, final DensityUnit unit)
@@ -87,7 +87,7 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Construct FloatDensity scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatDensity instantiateSI(final float value)
@@ -99,7 +99,7 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatDensity interpolate(final FloatDensity zero, final FloatDensity one, final float ratio)
@@ -174,8 +174,8 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
      * Returns a FloatDensity representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatDensity
-     * @return FloatDensity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatDensity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -203,9 +203,9 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Returns a FloatDensity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatDensity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -223,8 +223,8 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Calculate the division of FloatDensity and FloatDensity, which results in a FloatDimensionless scalar.
-     * @param v FloatDensity; scalar
-     * @return FloatDimensionless; scalar as a division of FloatDensity and FloatDensity
+     * @param v scalar
+     * @return scalar as a division of FloatDensity and FloatDensity
      */
     public final FloatDimensionless divide(final FloatDensity v)
     {
@@ -233,8 +233,8 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Calculate the multiplication of FloatDensity and FloatVolume, which results in a FloatMass scalar.
-     * @param v FloatDensity; scalar
-     * @return FloatMass; scalar as a multiplication of FloatDensity and FloatVolume
+     * @param v scalar
+     * @return scalar as a multiplication of FloatDensity and FloatVolume
      */
     public final FloatMass times(final FloatVolume v)
     {
@@ -243,8 +243,8 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 
     /**
      * Calculate the multiplication of FloatDensity and FloatFlowVolume, which results in a FloatFlowMass scalar.
-     * @param v FloatDensity; scalar
-     * @return FloatFlowMass; scalar as a multiplication of FloatDensity and FloatFlowVolume
+     * @param v scalar
+     * @return scalar as a multiplication of FloatDensity and FloatFlowVolume
      */
     public final FloatFlowMass times(final FloatFlowVolume v)
     {

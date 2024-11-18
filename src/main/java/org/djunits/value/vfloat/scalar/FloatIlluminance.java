@@ -51,7 +51,7 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
 
     /**
      * Construct FloatIlluminance scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatIlluminance(final float value, final IlluminanceUnit unit)
@@ -70,7 +70,7 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
 
     /**
      * Construct FloatIlluminance scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatIlluminance(final double value, final IlluminanceUnit unit)
@@ -86,7 +86,7 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
 
     /**
      * Construct FloatIlluminance scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatIlluminance instantiateSI(final float value)
@@ -98,7 +98,7 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatIlluminance interpolate(final FloatIlluminance zero, final FloatIlluminance one, final float ratio)
@@ -173,8 +173,8 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
      * Returns a FloatIlluminance representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatIlluminance
-     * @return FloatIlluminance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatIlluminance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -201,9 +201,9 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
 
     /**
      * Returns a FloatIlluminance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatIlluminance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -222,8 +222,8 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
 
     /**
      * Calculate the division of FloatIlluminance and FloatIlluminance, which results in a FloatDimensionless scalar.
-     * @param v FloatIlluminance; scalar
-     * @return FloatDimensionless; scalar as a division of FloatIlluminance and FloatIlluminance
+     * @param v scalar
+     * @return scalar as a division of FloatIlluminance and FloatIlluminance
      */
     public final FloatDimensionless divide(final FloatIlluminance v)
     {
@@ -232,8 +232,8 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
 
     /**
      * Calculate the multiplication of FloatIlluminance and FloatArea, which results in a FloatLuminousFlux scalar.
-     * @param v FloatIlluminance; scalar
-     * @return FloatLuminousFlux; scalar as a multiplication of FloatIlluminance and FloatArea
+     * @param v scalar
+     * @return scalar as a multiplication of FloatIlluminance and FloatArea
      */
     public final FloatLuminousFlux times(final FloatArea v)
     {

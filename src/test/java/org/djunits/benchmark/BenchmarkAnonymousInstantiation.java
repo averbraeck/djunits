@@ -97,8 +97,8 @@ public final class BenchmarkAnonymousInstantiation
 
     /**
      * Instantiate the DoubleScalar based on its unit. Rigid check on types for the compiler.
-     * @param value double; the value
-     * @param unit U; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <U> the unit
      * @param <S> the return type
@@ -112,8 +112,8 @@ public final class BenchmarkAnonymousInstantiation
      * Instantiate the DoubleScalar based on its unit. Loose check for types on the compiler. This allows the unit to be
      * specified as a Unit&lt;?&gt; type.<br>
      * <b>Note</b> that it is possible to make mistakes with anonymous units.
-     * @param value double; the value
-     * @param unit Unit&lt;?&gt;; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
@@ -155,8 +155,8 @@ public final class BenchmarkAnonymousInstantiation
 
     /**
      * Instantiate the DoubleScalar based on its unit. Rigid check on types for the compiler.
-     * @param value double; the value
-     * @param unit U; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <U> the unit
      * @param <S> the return type
@@ -170,8 +170,8 @@ public final class BenchmarkAnonymousInstantiation
      * Instantiate the DoubleScalar based on its unit. Loose check for types on the compiler. This allows the unit to be
      * specified as a Unit&lt;?&gt; type.<br>
      * <b>Note</b> that it is possible to make mistakes with anonymous units.
-     * @param value double; the value
-     * @param unit Unit&lt;?&gt;; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
@@ -242,8 +242,8 @@ public final class BenchmarkAnonymousInstantiation
 
     /**
      * Instantiate the DoubleScalar based on its unit. Rigid check on types for the compiler.
-     * @param value double; the value
-     * @param unit U; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <U> the unit
      * @param <S> the return type
@@ -257,8 +257,8 @@ public final class BenchmarkAnonymousInstantiation
      * Instantiate the DoubleScalar based on its unit. Loose check for types on the compiler. This allows the unit to be
      * specified as a Unit&lt;?&gt; type.<br>
      * <b>Note</b> that it is possible to make mistakes with anonymous units.
-     * @param value double; the value
-     * @param unit Unit&lt;?&gt;; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */
@@ -283,8 +283,8 @@ public final class BenchmarkAnonymousInstantiation
 
     /**
      * Instantiate the DoubleScalar based on its unit. Rigid check on types for the compiler.
-     * @param value double; the value
-     * @param unit U; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <U> the unit
      * @param <S> the return type
@@ -298,8 +298,8 @@ public final class BenchmarkAnonymousInstantiation
      * Instantiate the DoubleScalar based on its unit. Loose check for types on the compiler. This allows the unit to be
      * specified as a Unit&lt;?&gt; type.<br>
      * <b>Note</b> that it is possible to make mistakes with anonymous units.
-     * @param value double; the value
-     * @param unit Unit&lt;?&gt;; the unit in which the value is expressed
+     * @param value the value
+     * @param unit the unit in which the value is expressed
      * @return an instantiated DoubleScalar with the value expressed in the unit
      * @param <S> the return type
      */

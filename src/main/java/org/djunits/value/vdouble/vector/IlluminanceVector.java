@@ -30,8 +30,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
 
     /**
      * Construct an IlluminanceVector from an internal data object.
-     * @param data DoubleVectorData; the internal data object for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data
+     * @param data the internal data object for the vector
+     * @param displayUnit the display unit of the vector data
      */
     public IlluminanceVector(final DoubleVectorData data, final IlluminanceUnit displayUnit)
     {
@@ -43,9 +43,9 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
     /**
      * Construct an IlluminanceVector from a double[] object. The double values are expressed in the displayUnit, and will be
      * printed using the displayUnit.
-     * @param data double[]; the data for the vector, expressed in the displayUnit
-     * @param displayUnit IlluminanceUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final double[] data, final IlluminanceUnit displayUnit, final StorageType storageType)
     {
@@ -55,8 +55,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
     /**
      * Construct an IlluminanceVector from a double[] object. The double values are expressed in the displayUnit. Assume that
      * the StorageType is DENSE since we offer the data as an array.
-     * @param data double[]; the data for the vector
-     * @param displayUnit IlluminanceUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the vector
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public IlluminanceVector(final double[] data, final IlluminanceUnit displayUnit)
     {
@@ -65,8 +65,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
 
     /**
      * Construct an IlluminanceVector from a double[] object with SI-unit values.
-     * @param data double[]; the data for the vector, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final double[] data, final StorageType storageType)
     {
@@ -76,7 +76,7 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
     /**
      * Construct an IlluminanceVector from a double[] object with SI-unit values. Assume that the StorageType is DENSE since we
      * offer the data as an array.
-     * @param data double[]; the data for the vector, in SI units
+     * @param data the data for the vector, in SI units
      */
     public IlluminanceVector(final double[] data)
     {
@@ -88,9 +88,9 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
     /**
      * Construct an IlluminanceVector from an array of Illuminance objects. The Illuminance values are each expressed in their
      * own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data Illuminance[]; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final Illuminance[] data, final IlluminanceUnit displayUnit, final StorageType storageType)
     {
@@ -101,8 +101,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * Construct an IlluminanceVector from an array of Illuminance objects. The Illuminance values are each expressed in their
      * own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array.
-     * @param data Illuminance[]; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the values when printing
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
      */
     public IlluminanceVector(final Illuminance[] data, final IlluminanceUnit displayUnit)
     {
@@ -113,8 +113,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * Construct an IlluminanceVector from an array of Illuminance objects. The Illuminance values are each expressed in their
      * own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data
      * as an array.
-     * @param data Illuminance[]; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final Illuminance[] data, final StorageType storageType)
     {
@@ -125,7 +125,7 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * Construct an IlluminanceVector from an array of Illuminance objects. The Illuminance values are each expressed in their
      * own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array.
-     * @param data Illuminance[]; the data for the vector
+     * @param data the data for the vector
      */
     public IlluminanceVector(final Illuminance[] data)
     {
@@ -141,10 +141,10 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * expressed, as well as the unit in which they will be printed. In case the list contains Illuminance objects, each
      * Illuminance has its own unit, and the displayUnit is just used for printing. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;Illuminance&gt;; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final List<? extends Number> data, final IlluminanceUnit displayUnit,
             final StorageType storageType)
@@ -163,8 +163,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * Illuminance has its own unit, and the displayUnit is just used for printing. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is DENSE since we offer the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;Illuminance&gt;; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public IlluminanceVector(final List<? extends Number> data, final IlluminanceUnit displayUnit)
@@ -177,8 +177,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * such as Double, assume that they are expressed using SI units. When the data consists of Illuminance objects, they each
      * have their own unit, but will be printed using SI units or base units. The values but will always be internally stored as
      * SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;Illuminance&gt;; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final List<? extends Number> data, final StorageType storageType)
     {
@@ -191,7 +191,7 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * have their own unit, but will be printed using SI units or base units. The values but will always be internally stored as
      * SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is
      * DENSE since we offer the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;Illuminance&gt;; the data for the vector
+     * @param data the data for the vector
      */
     public IlluminanceVector(final List<? extends Number> data)
     {
@@ -209,11 +209,11 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * well as the unit in which they will be printed. In case the map contains Illuminance objects, each Illuminance has its
      * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
      * base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Illuminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final Map<Integer, ? extends Number> data, final int size, final IlluminanceUnit displayUnit,
             final StorageType storageType)
@@ -235,9 +235,9 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or
      * base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we
      * offer the data as a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Illuminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public IlluminanceVector(final Map<Integer, ? extends Number> data, final int size, final IlluminanceUnit displayUnit)
@@ -252,9 +252,9 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * Double, assume that they are expressed using SI units. When the data consists of Illuminance objects, they each have
      * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
      * values or base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Illuminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public IlluminanceVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
@@ -269,8 +269,8 @@ public class IlluminanceVector extends DoubleVectorRel<IlluminanceUnit, Illumina
      * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
      * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
      * since we offer the data as a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Illuminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
      */
     public IlluminanceVector(final Map<Integer, ? extends Number> data, final int size)
     {

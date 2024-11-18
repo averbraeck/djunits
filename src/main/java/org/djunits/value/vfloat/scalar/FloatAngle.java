@@ -54,8 +54,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Construct FloatAngle scalar.
-     * @param value float; the float value
-     * @param unit AngleUnit; unit for the float value
+     * @param value the float value
+     * @param unit unit for the float value
      */
     public FloatAngle(final float value, final AngleUnit unit)
     {
@@ -64,7 +64,7 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Construct FloatAngle scalar.
-     * @param value FloatAngle; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public FloatAngle(final FloatAngle value)
     {
@@ -73,8 +73,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Construct FloatAngle scalar using a double value.
-     * @param value double; the double value
-     * @param unit AngleUnit; unit for the resulting float value
+     * @param value the double value
+     * @param unit unit for the resulting float value
      */
     public FloatAngle(final double value, final AngleUnit unit)
     {
@@ -89,8 +89,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Construct FloatAngle scalar.
-     * @param value float; the float value in SI units
-     * @return FloatAngle; the new scalar with the SI value
+     * @param value the float value in SI units
+     * @return the new scalar with the SI value
      */
     public static final FloatAngle instantiateSI(final float value)
     {
@@ -105,10 +105,10 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Interpolate between two values.
-     * @param zero FloatAngle; the low value
-     * @param one FloatAngle; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return FloatAngle; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static FloatAngle interpolate(final FloatAngle zero, final FloatAngle one, final float ratio)
     {
@@ -118,9 +118,9 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 FloatAngle; the first scalar
-     * @param r2 FloatAngle; the second scalar
-     * @return FloatAngle; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static FloatAngle max(final FloatAngle r1, final FloatAngle r2)
     {
@@ -129,10 +129,10 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 FloatAngle; the first scalar
-     * @param r2 FloatAngle; the second scalar
-     * @param rn FloatAngle...; the other scalars
-     * @return FloatAngle; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static FloatAngle max(final FloatAngle r1, final FloatAngle r2, final FloatAngle... rn)
     {
@@ -149,9 +149,9 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 FloatAngle; the first scalar
-     * @param r2 FloatAngle; the second scalar
-     * @return FloatAngle; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static FloatAngle min(final FloatAngle r1, final FloatAngle r2)
     {
@@ -160,10 +160,10 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 FloatAngle; the first scalar
-     * @param r2 FloatAngle; the second scalar
-     * @param rn FloatAngle...; the other scalars
-     * @return FloatAngle; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static FloatAngle min(final FloatAngle r1, final FloatAngle r2, final FloatAngle... rn)
     {
@@ -182,8 +182,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
      * Returns a FloatAngle representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatAngle
-     * @return FloatAngle; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatAngle
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -211,9 +211,9 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Returns a FloatAngle based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatAngle; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -231,8 +231,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Calculate the division of FloatAngle and FloatAngle, which results in a FloatDimensionless scalar.
-     * @param v FloatAngle; scalar
-     * @return FloatDimensionless; scalar as a division of FloatAngle and FloatAngle
+     * @param v scalar
+     * @return scalar as a division of FloatAngle and FloatAngle
      */
     public final FloatDimensionless divide(final FloatAngle v)
     {
@@ -241,8 +241,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Calculate the multiplication of FloatAngle and FloatFrequency, which results in a FloatAngularVelocity scalar.
-     * @param v FloatAngle; scalar
-     * @return FloatAngularVelocity; scalar as a multiplication of FloatAngle and FloatFrequency
+     * @param v scalar
+     * @return scalar as a multiplication of FloatAngle and FloatFrequency
      */
     public final FloatAngularVelocity times(final FloatFrequency v)
     {
@@ -251,8 +251,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Calculate the division of FloatAngle and FloatDuration, which results in a FloatAngularVelocity scalar.
-     * @param v FloatAngle; scalar
-     * @return FloatAngularVelocity; scalar as a division of FloatAngle and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatAngle and FloatDuration
      */
     public final FloatAngularVelocity divide(final FloatDuration v)
     {
@@ -261,8 +261,8 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /**
      * Calculate the division of FloatAngle and FloatAngularVelocity, which results in a FloatDuration scalar.
-     * @param v FloatAngle; scalar
-     * @return FloatDuration; scalar as a division of FloatAngle and FloatAngularVelocity
+     * @param v scalar
+     * @return scalar as a division of FloatAngle and FloatAngularVelocity
      */
     public final FloatDuration divide(final FloatAngularVelocity v)
     {

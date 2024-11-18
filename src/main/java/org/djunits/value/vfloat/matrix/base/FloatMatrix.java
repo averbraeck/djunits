@@ -42,8 +42,8 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Construct a new FloatMatrix.
-     * @param data FloatMatrixData; an internal data object
-     * @param unit U; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     public FloatMatrix(final FloatMatrixData data, final U unit)
     {
@@ -56,9 +56,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * Instantiate a new matrix of the class of this matrix. This can be used instead of the FloatMatrix.instiantiate() methods
      * in case another matrix of this class is known. The method is faster than FloatMatrix.instantiate, and it will also work
      * if the matrix is user-defined.
-     * @param fmd FloatMatrixData; the data used to instantiate the matrix
-     * @param displayUnit U; the display unit of the matrix
-     * @return V; a matrix of the correct type
+     * @param fmd the data used to instantiate the matrix
+     * @param displayUnit the display unit of the matrix
+     * @return a matrix of the correct type
      */
     public abstract M instantiateMatrix(FloatMatrixData fmd, U displayUnit);
 
@@ -66,9 +66,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * Instantiate a new vector of the class of this matrix. This can be used instead of the FloatVector.instiantiate() methods
      * in case another matrix of this class is known. The method is faster than FloatVector.instantiate, and it will also work
      * if the matrix and/or vector are user-defined.
-     * @param fvd FloatVectorData; the data used to instantiate the vector
-     * @param displayUnit U; the display unit of the vector
-     * @return V; a vector of the correct type
+     * @param fvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the vector
+     * @return a vector of the correct type
      */
     public abstract V instantiateVector(FloatVectorData fvd, U displayUnit);
 
@@ -76,9 +76,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
      * Instantiate a new scalar for the class of this matrix. This can be used instead of the FloatScalar.instiantiate() methods
      * in case a matrix of this class is known. The method is faster than FloatScalar.instantiate, and it will also work if the
      * matrix and/or scalar are user-defined.
-     * @param valueSI float; the SI value of the scalar
-     * @param displayUnit U; the unit in which the value will be displayed
-     * @return S; a scalar of the correct type, belonging to the matrix type
+     * @param valueSI the SI value of the scalar
+     * @param displayUnit the unit in which the value will be displayed
+     * @return a scalar of the correct type, belonging to the matrix type
      */
     public abstract S instantiateScalarSI(float valueSI, U displayUnit);
 
@@ -96,9 +96,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the value stored at a specified row and column in the standard SI unit.
-     * @param row int; row of the value to retrieve
-     * @param column int; column of the value to retrieve
-     * @return float; value at position row, column in the standard SI unit
+     * @param row row of the value to retrieve
+     * @param column column of the value to retrieve
+     * @return value at position row, column in the standard SI unit
      * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
      *             column &gt;= columns())
      */
@@ -110,9 +110,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the value stored at a specified row and column in the original unit.
-     * @param row int; row of the value to retrieve
-     * @param column int; column of the value to retrieve
-     * @return float; value at position row, column in the original unit
+     * @param row row of the value to retrieve
+     * @param column column of the value to retrieve
+     * @return value at position row, column in the original unit
      * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
      *             column &gt;= columns())
      */
@@ -124,10 +124,10 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the value stored at a specified row and column converted into a specified unit.
-     * @param row int; row of the value to retrieve
-     * @param column int; column of the value to retrieve
-     * @param targetUnit U; the unit for the result
-     * @return float; value at position row, column converted into the specified unit
+     * @param row row of the value to retrieve
+     * @param column column of the value to retrieve
+     * @param targetUnit the unit for the result
+     * @return value at position row, column converted into the specified unit
      * @throws IndexOutOfBoundsException when row or column out of range (row &lt; 0 or row &gt;= rows() or column &lt; 0 or
      *             column &gt;= columns())
      */
@@ -139,9 +139,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the value, specified in the standard SI unit, at the specified position.
-     * @param row int; row of the value to set
-     * @param column int; column of the value to set
-     * @param valueSI float; the value, specified in the standard SI unit
+     * @param row row of the value to set
+     * @param column column of the value to set
+     * @param valueSI the value, specified in the standard SI unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setSI(final int row, final int column, final float valueSI) throws IndexOutOfBoundsException
@@ -153,9 +153,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the value, specified in the (current) display unit, at the specified position.
-     * @param row int; row of the value to set
-     * @param column int; column of the value to set
-     * @param valueInUnit float; the value, specified in the (current) display unit
+     * @param row row of the value to set
+     * @param column column of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int row, final int column, final float valueInUnit) throws IndexOutOfBoundsException
@@ -165,10 +165,10 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the value, specified in the <code>valueUnit</code>, at the specified position.
-     * @param row int; row of the value to set
-     * @param column int; column of the value to set
-     * @param valueInUnit float; the value, specified in the (current) display unit
-     * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
+     * @param row row of the value to set
+     * @param column column of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
+     * @param valueUnit the unit in which the <code>valueInUnit</code> is expressed
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int row, final int column, final float valueInUnit, final U valueUnit)
@@ -179,9 +179,9 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the scalar value at the specified position.
-     * @param row int; row of the value to set
-     * @param column int; column of the value to set
-     * @param value S; the value to set
+     * @param row row of the value to set
+     * @param column column of the value to set
+     * @param value the value to set
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void set(final int row, final int column, final S value) throws IndexOutOfBoundsException
@@ -191,8 +191,8 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve a row from the matrix as an array of float.
-     * @param row int; row of the values to retrieve
-     * @return S[]; the row as a float array
+     * @param row row of the values to retrieve
+     * @return the row as a float array
      * @throws IndexOutOfBoundsException in case row is out of bounds
      */
     public float[] getRowSI(final int row) throws IndexOutOfBoundsException
@@ -208,8 +208,8 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve a column from the matrix as an array of float.
-     * @param column int; column of the values to retrieve
-     * @return S[]; the column as a float array
+     * @param column column of the values to retrieve
+     * @return the column as a float array
      * @throws IndexOutOfBoundsException in case column is out of bounds
      */
     public float[] getColumnSI(final int column) throws IndexOutOfBoundsException
@@ -225,7 +225,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the main diagonal of the matrix as an array of float.
-     * @return V; the main diagonal as a float array
+     * @return the main diagonal as a float array
      * @throws ValueRuntimeException in case the matrix is not square
      */
     public float[] getDiagonalSI() throws ValueRuntimeException
@@ -241,7 +241,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Create a dense float[][] array filled with the values in the standard SI unit.
-     * @return float[][]; array of values in the standard SI unit
+     * @return array of values in the standard SI unit
      */
     public final float[][] getValuesSI()
     {
@@ -250,7 +250,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Create a dense float[][] array filled with the values in the original unit.
-     * @return float[][]; the values in the original unit
+     * @return the values in the original unit
      */
     public final float[][] getValuesInUnit()
     {
@@ -259,8 +259,8 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Create a dense float[][] array filled with the values converted into a specified unit.
-     * @param targetUnit U; the unit into which the values are converted for use
-     * @return float[][]; the values converted into the specified unit
+     * @param targetUnit the unit into which the values are converted for use
+     * @return the values converted into the specified unit
      */
     public final float[][] getValuesInUnit(final U targetUnit)
     {
@@ -415,8 +415,8 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Execute a function on a cell by cell basis. Note: May be expensive when used on sparse data.
-     * @param floatFunction FloatFunction; the function to apply
-     * @return M; this updated matrix
+     * @param floatFunction the function to apply
+     * @return this updated matrix
      */
     @SuppressWarnings("unchecked")
     public final M assign(final FloatFunction floatFunction)
@@ -517,8 +517,8 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Check that provided row and column indices are valid.
-     * @param row int; the row value to check
-     * @param col int; the column value to check
+     * @param row the row value to check
+     * @param col the column value to check
      * @throws IndexOutOfBoundsException when row or column is invalid
      */
     protected final void checkIndex(final int row, final int col) throws IndexOutOfBoundsException
@@ -532,7 +532,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Check that provided row index is valid.
-     * @param row int; the row value to check
+     * @param row the row value to check
      * @throws IndexOutOfBoundsException when row is invalid
      */
     protected final void checkRowIndex(final int row) throws IndexOutOfBoundsException
@@ -546,7 +546,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Check that provided column index is valid.
-     * @param col int; the column value to check
+     * @param col the column value to check
      * @throws IndexOutOfBoundsException when row is invalid
      */
     protected final void checkColumnIndex(final int col) throws IndexOutOfBoundsException
@@ -569,7 +569,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Compute the determinant of the matrix, based on the SI values.
-     * @return float; the determinant of the matrix
+     * @return the determinant of the matrix
      * @throws ValueRuntimeException when matrix is neither sparse, nor dense, or not square
      */
     public final float determinantSI() throws ValueRuntimeException

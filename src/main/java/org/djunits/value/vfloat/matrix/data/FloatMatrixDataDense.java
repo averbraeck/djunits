@@ -24,9 +24,9 @@ public class FloatMatrixDataDense extends FloatMatrixData
 
     /**
      * Create a matrix with dense data.
-     * @param matrixSI float[]; the data to store
-     * @param rows int; the number of rows
-     * @param cols int; the number of columns
+     * @param matrixSI the data to store
+     * @param rows the number of rows
+     * @param cols the number of columns
      * @throws ValueRuntimeException in case <code>rows * cols != matrixSI.length</code>
      */
     public FloatMatrixDataDense(final float[] matrixSI, final int rows, final int cols) throws ValueRuntimeException
@@ -45,7 +45,7 @@ public class FloatMatrixDataDense extends FloatMatrixData
     /**
      * Create a matrix with dense data. The float array is of the form d[rows][columns] so each value can be found with
      * f[row][column].
-     * @param matrixSI float[][]; the data to store
+     * @param matrixSI the data to store
      * @throws NullPointerException when matrixSI is null
      * @throws ValueRuntimeException in case matrix is ragged
      */

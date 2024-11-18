@@ -56,8 +56,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Construct ElectricalCharge scalar.
-     * @param value double; the double value
-     * @param unit ElectricalChargeUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalCharge(final double value, final ElectricalChargeUnit unit)
     {
@@ -66,7 +66,7 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Construct ElectricalCharge scalar.
-     * @param value ElectricalCharge; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalCharge(final ElectricalCharge value)
     {
@@ -81,8 +81,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Construct ElectricalCharge scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalCharge; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalCharge instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalCharge; the low value
-     * @param one ElectricalCharge; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalCharge; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalCharge interpolate(final ElectricalCharge zero, final ElectricalCharge one, final double ratio)
     {
@@ -104,9 +104,9 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalCharge; the first scalar
-     * @param r2 ElectricalCharge; the second scalar
-     * @return ElectricalCharge; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalCharge max(final ElectricalCharge r1, final ElectricalCharge r2)
     {
@@ -115,10 +115,10 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalCharge; the first scalar
-     * @param r2 ElectricalCharge; the second scalar
-     * @param rn ElectricalCharge...; the other scalars
-     * @return ElectricalCharge; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalCharge max(final ElectricalCharge r1, final ElectricalCharge r2, final ElectricalCharge... rn)
     {
@@ -135,9 +135,9 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalCharge; the first scalar
-     * @param r2 ElectricalCharge; the second scalar
-     * @return ElectricalCharge; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalCharge min(final ElectricalCharge r1, final ElectricalCharge r2)
     {
@@ -146,10 +146,10 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalCharge; the first scalar
-     * @param r2 ElectricalCharge; the second scalar
-     * @param rn ElectricalCharge...; the other scalars
-     * @return ElectricalCharge; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalCharge min(final ElectricalCharge r1, final ElectricalCharge r2, final ElectricalCharge... rn)
     {
@@ -168,8 +168,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
      * Returns a ElectricalCharge representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalCharge
-     * @return ElectricalCharge; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalCharge
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -196,9 +196,9 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Returns a ElectricalCharge based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalCharge; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -217,8 +217,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Calculate the division of ElectricalCharge and ElectricalCharge, which results in a Dimensionless scalar.
-     * @param v ElectricalCharge; scalar
-     * @return Dimensionless; scalar as a division of ElectricalCharge and ElectricalCharge
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalCharge
      */
     public final Dimensionless divide(final ElectricalCharge v)
     {
@@ -227,8 +227,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Calculate the division of ElectricalCharge and Duration, which results in a ElectricalCurrent scalar.
-     * @param v ElectricalCharge; scalar
-     * @return ElectricalCurrent; scalar as a division of ElectricalCharge and Duration
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and Duration
      */
     public final ElectricalCurrent divide(final Duration v)
     {
@@ -237,8 +237,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Calculate the division of ElectricalCharge and ElectricalCurrent, which results in a Duration scalar.
-     * @param v ElectricalCharge; scalar
-     * @return Duration; scalar as a division of ElectricalCharge and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalCurrent
      */
     public final Duration divide(final ElectricalCurrent v)
     {
@@ -247,8 +247,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Calculate the division of ElectricalCharge and ElectricalPotential, which results in a ElectricalCapacitance scalar.
-     * @param v ElectricalCharge; scalar
-     * @return ElectricalCapacitance; scalar as a division of ElectricalCharge and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalPotential
      */
     public final ElectricalCapacitance divide(final ElectricalPotential v)
     {
@@ -257,8 +257,8 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
 
     /**
      * Calculate the division of ElectricalCharge and ElectricalCapacitance, which results in a ElectricalPotential scalar.
-     * @param v ElectricalCharge; scalar
-     * @return ElectricalPotential; scalar as a division of ElectricalCharge and ElectricalCapacitance
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalCapacitance
      */
     public final ElectricalPotential divide(final ElectricalCapacitance v)
     {

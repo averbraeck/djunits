@@ -60,8 +60,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Create a unit base with the SI dimensions.
-     * @param name String; the quantity name (CamelCase)
-     * @param siDimensions SIDimensions; the 9 dimensions of the unit, wrapped in an SIDimensions object
+     * @param name the quantity name (CamelCase)
+     * @param siDimensions the 9 dimensions of the unit, wrapped in an SIDimensions object
      * @throws NullPointerException when one of the arguments is null
      */
     public Quantity(final String name, final SIDimensions siDimensions)
@@ -75,8 +75,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Create a unit base with the SI dimensions as a String.
-     * @param name String; the quantity name (CamelCase)
-     * @param siString String; the 9 dimensions of the unit, represented as an SI string
+     * @param name the quantity name (CamelCase)
+     * @param siString the 9 dimensions of the unit, represented as an SI string
      * @throws UnitRuntimeException when the String cannot be translated into an SIDimensions object
      * @throws NullPointerException when one of the arguments is null
      */
@@ -98,8 +98,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Create a unit base with the SI dimensions, provided as a byte array.
-     * @param name String; the quantity name (CamelCase)
-     * @param siSignature byte[]; the 9 dimensions of the unit
+     * @param name the quantity name (CamelCase)
+     * @param siSignature the 9 dimensions of the unit
      * @throws NullPointerException when one of the arguments is null
      */
     public Quantity(final String name, final byte[] siSignature)
@@ -114,9 +114,9 @@ public class Quantity<U extends Unit<U>> implements Serializable
      * as the millimeter and the kilometer are registered as well. When earlier or later the "KILOMETER" is created as a
      * separate unit, the "km" lookup will result in the "KILOMETER" registration rather than in the "METER" registration with a
      * factor of 1000.
-     * @param unit U; the unit to register in the map.
-     * @param siPrefixes SIPrefixes; indicates whether and which SI prefixes should be generated.
-     * @param siPrefixPower double; the power factor of the SI prefixes, e.g. 2.0 for square meters and 3.0 for cubic meters.
+     * @param unit the unit to register in the map.
+     * @param siPrefixes indicates whether and which SI prefixes should be generated.
+     * @param siPrefixPower the power factor of the SI prefixes, e.g. 2.0 for square meters and 3.0 for cubic meters.
      */
     public void registerUnit(final U unit, final SIPrefixes siPrefixes, final double siPrefixPower)
     {
@@ -212,7 +212,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Unregister a unit from the registry, e.g. after a Unit test, or to insert a replacement for an already existing unit.
-     * @param unit U; the unit to unregister.
+     * @param unit the unit to unregister.
      */
     public void unregister(final U unit)
     {
@@ -235,7 +235,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve the name of the quantity.
-     * @return String; the name of the quantity
+     * @return the name of the quantity
      */
     public final String getName()
     {
@@ -252,7 +252,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve a unit by Id.
-     * @param id String; the id to look up
+     * @param id the id to look up
      * @return the corresponding unit or null when it was not found
      */
     public U getUnitById(final String id)
@@ -285,7 +285,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
      * Retrieve a unit by one of its abbreviations. First try whether the abbreviation itself is available. If not, look up the
      * unit without spaces, "." and "^" to map e.g., "kg.m/s^2" to "kgm/s2". If that fails, see if the unit is an SIDimensions
      * string. If not, return null.
-     * @param abbreviation String; the abbreviation to look up
+     * @param abbreviation the abbreviation to look up
      * @return the corresponding unit or null when it was not found
      */
     public U getUnitByAbbreviation(final String abbreviation)
@@ -326,7 +326,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
      * Retrieve a unit by one of its abbreviations. First try whether the abbreviation itself is available. If not, try without
      * "." that might separate the units (e.g., "N.m"). If that fails, look up the unit without "." and "^" to map e.g.,
      * "kg.m/s^2" to "kgm/s2". If that fails, see if the unit is an SIDimensions string. If not, return null.
-     * @param abbreviation String; the abbreviation to look up
+     * @param abbreviation the abbreviation to look up
      * @return the corresponding unit or null when it was not found
      */
     public U of(final String abbreviation)
@@ -336,7 +336,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve a safe copy of the unitsById.
-     * @return Map&lt;String, U&gt;; a safe copy of the unitsById
+     * @return a safe copy of the unitsById
      */
     public Map<String, U> getUnitsById()
     {
@@ -345,7 +345,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Return a safe copy of the unitsByAbbreviation.
-     * @return Map&lt;String, U&gt;; a safe copy of the unitsByAbbreviation
+     * @return a safe copy of the unitsByAbbreviation
      */
     public Map<String, U> getUnitsByAbbreviation()
     {
@@ -354,7 +354,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Return a safe copy of the unitsByLocalizedAbbreviation.
-     * @return Map&lt;String, U&gt;; a safe copy of the unitsByLocalizedAbbreviation
+     * @return a safe copy of the unitsByLocalizedAbbreviation
      */
     public Map<String, U> getUnitsByLocalizedAbbreviation()
     {
@@ -363,8 +363,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve a safe copy of the localized unit abbreviations.
-     * @param unit U; the unit for which to retrieve the abbreviations
-     * @return Set&lt;String&gt;; the localized unit abbreviations
+     * @param unit the unit for which to retrieve the abbreviations
+     * @return the localized unit abbreviations
      */
     public Set<String> getLocalizedAbbreviations(final U unit)
     {
@@ -379,8 +379,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve the localized display abbreviation.
-     * @param unit U; the unit for which to retrieve the display abbreviation
-     * @return String; the localized display abbreviation
+     * @param unit the unit for which to retrieve the display abbreviation
+     * @return the localized display abbreviation
      */
     public String getLocalizedDisplayAbbreviation(final U unit)
     {
@@ -390,8 +390,8 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve the localized textual abbreviation.
-     * @param unit U; the unit for which to retrieve the textual abbreviation
-     * @return String; the localized textual abbreviation
+     * @param unit the unit for which to retrieve the textual abbreviation
+     * @return the localized textual abbreviation
      */
     public String getLocalizedTextualAbbreviation(final U unit)
     {
@@ -401,7 +401,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve the localized name of this unit.
-     * @return String; the localized name of this unit
+     * @return the localized name of this unit
      */
     public String getLocalizedName()
     {
@@ -410,7 +410,7 @@ public class Quantity<U extends Unit<U>> implements Serializable
 
     /**
      * Retrieve the standard unit for this unit base (usually the first registered unit).
-     * @return U; the standardUnit for this unit base (usually the first registered unit)
+     * @return the standardUnit for this unit base (usually the first registered unit)
      */
     public U getStandardUnit()
     {

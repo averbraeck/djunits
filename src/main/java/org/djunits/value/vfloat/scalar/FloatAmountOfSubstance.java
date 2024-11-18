@@ -56,7 +56,7 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
 
     /**
      * Construct FloatAmountOfSubstance scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatAmountOfSubstance(final float value, final AmountOfSubstanceUnit unit)
@@ -75,7 +75,7 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
 
     /**
      * Construct FloatAmountOfSubstance scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatAmountOfSubstance(final double value, final AmountOfSubstanceUnit unit)
@@ -91,7 +91,7 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
 
     /**
      * Construct FloatAmountOfSubstance scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatAmountOfSubstance instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatAmountOfSubstance interpolate(final FloatAmountOfSubstance zero, final FloatAmountOfSubstance one,
@@ -181,8 +181,8 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
      * Returns a FloatAmountOfSubstance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatAmountOfSubstance
-     * @return FloatAmountOfSubstance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatAmountOfSubstance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -210,9 +210,9 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
 
     /**
      * Returns a FloatAmountOfSubstance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatAmountOfSubstance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -232,8 +232,8 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
     /**
      * Calculate the division of FloatAmountOfSubstance and FloatAmountOfSubstance, which results in a FloatDimensionless
      * scalar.
-     * @param v FloatAmountOfSubstance; scalar
-     * @return FloatDimensionless; scalar as a division of FloatAmountOfSubstance and FloatAmountOfSubstance
+     * @param v scalar
+     * @return scalar as a division of FloatAmountOfSubstance and FloatAmountOfSubstance
      */
     public final FloatDimensionless divide(final FloatAmountOfSubstance v)
     {
@@ -242,8 +242,8 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
 
     /**
      * Calculate the division of FloatAmountOfSubstance and FloatCatalyticActivity, which results in a FloatDuration scalar.
-     * @param v FloatAmountOfSubstance; scalar
-     * @return FloatDuration; scalar as a division of FloatAmountOfSubstance and FloatCatalyticActivity
+     * @param v scalar
+     * @return scalar as a division of FloatAmountOfSubstance and FloatCatalyticActivity
      */
     public final FloatDuration divide(final FloatCatalyticActivity v)
     {
@@ -252,8 +252,8 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
 
     /**
      * Calculate the division of FloatAmountOfSubstance and FloatDuration, which results in a FloatCatalyticActivity scalar.
-     * @param v FloatAmountOfSubstance; scalar
-     * @return FloatCatalyticActivity; scalar as a division of FloatAmountOfSubstance and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatAmountOfSubstance and FloatDuration
      */
     public final FloatCatalyticActivity divide(final FloatDuration v)
     {

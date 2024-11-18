@@ -12,9 +12,9 @@ public interface FloatFunction2
 {
     /**
      * Apply function on two float values.
-     * @param leftValue float; the value of the left operand
-     * @param rightValue float; the value of the right operand
-     * @return float; the result of the operation
+     * @param leftValue the value of the left operand
+     * @param rightValue the value of the right operand
+     * @return the result of the operation
      */
     float apply(float leftValue, float rightValue);
 

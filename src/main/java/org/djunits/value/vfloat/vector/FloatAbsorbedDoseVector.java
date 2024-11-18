@@ -30,8 +30,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
 
     /**
      * Construct a FloatAbsorbedDoseVector from an internal data object.
-     * @param data FloatVectorData; the internal data object for the vector
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the vector data
+     * @param data the internal data object for the vector
+     * @param displayUnit the display unit of the vector data
      */
     public FloatAbsorbedDoseVector(final FloatVectorData data, final AbsorbedDoseUnit displayUnit)
     {
@@ -43,9 +43,9 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
     /**
      * Construct a FloatAbsorbedDoseVector from a float[] object. The Float values are expressed in the displayUnit, and will be
      * printed using the displayUnit.
-     * @param data float[]; the data for the vector, expressed in the displayUnit
-     * @param displayUnit AbsorbedDoseUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final float[] data, final AbsorbedDoseUnit displayUnit, final StorageType storageType)
     {
@@ -55,8 +55,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
     /**
      * Construct a FloatAbsorbedDoseVector from a float[] object. The Float values are expressed in the displayUnit. Assume that
      * the StorageType is DENSE since we offer the data as an array.
-     * @param data float[]; the data for the vector
-     * @param displayUnit AbsorbedDoseUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the vector
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public FloatAbsorbedDoseVector(final float[] data, final AbsorbedDoseUnit displayUnit)
     {
@@ -65,8 +65,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
 
     /**
      * Construct a FloatAbsorbedDoseVector from a float[] object with SI-unit values.
-     * @param data float[]; the data for the vector, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final float[] data, final StorageType storageType)
     {
@@ -76,7 +76,7 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
     /**
      * Construct a FloatAbsorbedDoseVector from a float[] object with SI-unit values. Assume that the StorageType is DENSE since
      * we offer the data as an array.
-     * @param data float[]; the data for the vector, in SI units
+     * @param data the data for the vector, in SI units
      */
     public FloatAbsorbedDoseVector(final float[] data)
     {
@@ -88,9 +88,9 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
     /**
      * Construct a FloatAbsorbedDoseVector from an array of FloatAbsorbedDose objects. The FloatAbsorbedDose values are each
      * expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data FloatAbsorbedDose[]; the data for the vector
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final FloatAbsorbedDose[] data, final AbsorbedDoseUnit displayUnit,
             final StorageType storageType)
@@ -102,8 +102,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * Construct a FloatAbsorbedDoseVector from an array of FloatAbsorbedDose objects. The FloatAbsorbedDose values are each
      * expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
      * Assume that the StorageType is DENSE since we offer the data as an array.
-     * @param data FloatAbsorbedDose[]; the data for the vector
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the values when printing
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
      */
     public FloatAbsorbedDoseVector(final FloatAbsorbedDose[] data, final AbsorbedDoseUnit displayUnit)
     {
@@ -114,8 +114,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * Construct a FloatAbsorbedDoseVector from an array of FloatAbsorbedDose objects. The FloatAbsorbedDose values are each
      * expressed in their own unit, but will be internally stored as SI values, and expressed using SI units when printing.
      * since we offer the data as an array.
-     * @param data FloatAbsorbedDose[]; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final FloatAbsorbedDose[] data, final StorageType storageType)
     {
@@ -126,7 +126,7 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * Construct a FloatAbsorbedDoseVector from an array of FloatAbsorbedDose objects. The FloatAbsorbedDose values are each
      * expressed in their own unit, but will be internally stored as SI values, and expressed using SI units when printing.
      * Assume that the StorageType is DENSE since we offer the data as an array.
-     * @param data FloatAbsorbedDose[]; the data for the vector
+     * @param data the data for the vector
      */
     public FloatAbsorbedDoseVector(final FloatAbsorbedDose[] data)
     {
@@ -143,10 +143,10 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * FloatAbsorbedDose objects, each FloatAbsorbedDose has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing.
-     * @param data List&lt;Float&gt; or List&lt;AbsorbedDose&gt;; the data for the vector
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the vector data, and the unit of the data points when the data
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
      *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final List<? extends Number> data, final AbsorbedDoseUnit displayUnit,
             final StorageType storageType)
@@ -165,8 +165,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * FloatAbsorbedDose objects, each FloatAbsorbedDose has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data List&lt;Float&gt; or List&lt;AbsorbedDose&gt;; the data for the vector
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the vector data, and the unit of the data points when the data
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
      *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatAbsorbedDoseVector(final List<? extends Number> data, final AbsorbedDoseUnit displayUnit)
@@ -180,8 +180,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * FloatAbsorbedDose objects, they each have their own unit, but will be printed using SI units or base units. The values
      * but will always be internally stored as SI values or base values, and expressed using the display unit or base unit when
      * printing.
-     * @param data List&lt;Float&gt; or List&lt;AbsorbedDose&gt;; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final List<? extends Number> data, final StorageType storageType)
     {
@@ -194,7 +194,7 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * FloatAbsorbedDose objects, they each have their own unit, but will be printed using SI units or base units. The values
      * but will always be internally stored as SI values or base values, and expressed using the display unit or base unit when
      * printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data List&lt;Float&gt; or List&lt;AbsorbedDose&gt;; the data for the vector
+     * @param data the data for the vector
      */
     public FloatAbsorbedDoseVector(final List<? extends Number> data)
     {
@@ -212,11 +212,11 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * expressed, as well as the unit in which they will be printed. In case the map contains FloatAbsorbedDose objects, each
      * FloatAbsorbedDose has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatAbsorbedDose&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the vector data, and the unit of the data points when the data
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
      *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final Map<Integer, ? extends Number> data, final int size,
             final AbsorbedDoseUnit displayUnit, final StorageType storageType)
@@ -238,9 +238,9 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * FloatAbsorbedDose has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is SPARSE since we offer the data as a Map.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatAbsorbedDose&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit AbsorbedDoseUnit; the display unit of the vector data, and the unit of the data points when the data
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
      *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatAbsorbedDoseVector(final Map<Integer, ? extends Number> data, final int size,
@@ -256,9 +256,9 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * such as Float, assume that they are expressed using SI units. When the data consists of FloatAbsorbedDose objects, they
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatAbsorbedDose&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatAbsorbedDoseVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
@@ -273,8 +273,8 @@ public class FloatAbsorbedDoseVector extends FloatVectorRel<AbsorbedDoseUnit, Fl
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is SPARSE since we offer the data as a Map.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatAbsorbedDose&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
      */
     public FloatAbsorbedDoseVector(final Map<Integer, ? extends Number> data, final int size)
     {

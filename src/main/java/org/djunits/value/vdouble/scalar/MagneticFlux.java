@@ -56,8 +56,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Construct MagneticFlux scalar.
-     * @param value double; the double value
-     * @param unit MagneticFluxUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public MagneticFlux(final double value, final MagneticFluxUnit unit)
     {
@@ -66,7 +66,7 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Construct MagneticFlux scalar.
-     * @param value MagneticFlux; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public MagneticFlux(final MagneticFlux value)
     {
@@ -81,8 +81,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Construct MagneticFlux scalar.
-     * @param value double; the double value in SI units
-     * @return MagneticFlux; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final MagneticFlux instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Interpolate between two values.
-     * @param zero MagneticFlux; the low value
-     * @param one MagneticFlux; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return MagneticFlux; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static MagneticFlux interpolate(final MagneticFlux zero, final MagneticFlux one, final double ratio)
     {
@@ -104,9 +104,9 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 MagneticFlux; the first scalar
-     * @param r2 MagneticFlux; the second scalar
-     * @return MagneticFlux; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static MagneticFlux max(final MagneticFlux r1, final MagneticFlux r2)
     {
@@ -115,10 +115,10 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 MagneticFlux; the first scalar
-     * @param r2 MagneticFlux; the second scalar
-     * @param rn MagneticFlux...; the other scalars
-     * @return MagneticFlux; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static MagneticFlux max(final MagneticFlux r1, final MagneticFlux r2, final MagneticFlux... rn)
     {
@@ -135,9 +135,9 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 MagneticFlux; the first scalar
-     * @param r2 MagneticFlux; the second scalar
-     * @return MagneticFlux; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static MagneticFlux min(final MagneticFlux r1, final MagneticFlux r2)
     {
@@ -146,10 +146,10 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 MagneticFlux; the first scalar
-     * @param r2 MagneticFlux; the second scalar
-     * @param rn MagneticFlux...; the other scalars
-     * @return MagneticFlux; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static MagneticFlux min(final MagneticFlux r1, final MagneticFlux r2, final MagneticFlux... rn)
     {
@@ -168,8 +168,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
      * Returns a MagneticFlux representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a MagneticFlux
-     * @return MagneticFlux; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a MagneticFlux
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -197,9 +197,9 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Returns a MagneticFlux based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return MagneticFlux; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -217,8 +217,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and MagneticFlux, which results in a Dimensionless scalar.
-     * @param v MagneticFlux; scalar
-     * @return Dimensionless; scalar as a division of MagneticFlux and MagneticFlux
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and MagneticFlux
      */
     public final Dimensionless divide(final MagneticFlux v)
     {
@@ -227,8 +227,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and ElectricalPotential, which results in a Duration scalar.
-     * @param v MagneticFlux; scalar
-     * @return Duration; scalar as a division of MagneticFlux and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and ElectricalPotential
      */
     public final Duration divide(final ElectricalPotential v)
     {
@@ -237,8 +237,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and Duration, which results in a ElectricalPotential scalar.
-     * @param v MagneticFlux; scalar
-     * @return ElectricalPotential; scalar as a division of MagneticFlux and Duration
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and Duration
      */
     public final ElectricalPotential divide(final Duration v)
     {
@@ -247,8 +247,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and Area, which results in a MagneticFluxDensity scalar.
-     * @param v MagneticFlux; scalar
-     * @return MagneticFluxDensity; scalar as a division of MagneticFlux and Area
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and Area
      */
     public final MagneticFluxDensity divide(final Area v)
     {
@@ -257,8 +257,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and MagneticFluxDensity, which results in a Area scalar.
-     * @param v MagneticFlux; scalar
-     * @return Area; scalar as a division of MagneticFlux and MagneticFluxDensity
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and MagneticFluxDensity
      */
     public final Area divide(final MagneticFluxDensity v)
     {
@@ -267,8 +267,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and ElectricalCurrent, which results in a ElectricalInductance scalar.
-     * @param v MagneticFlux; scalar
-     * @return ElectricalInductance; scalar as a division of MagneticFlux and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and ElectricalCurrent
      */
     public final ElectricalInductance divide(final ElectricalCurrent v)
     {
@@ -277,8 +277,8 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
 
     /**
      * Calculate the division of MagneticFlux and ElectricalInductance, which results in a ElectricalCurrent scalar.
-     * @param v MagneticFlux; scalar
-     * @return ElectricalCurrent; scalar as a division of MagneticFlux and ElectricalInductance
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and ElectricalInductance
      */
     public final ElectricalCurrent divide(final ElectricalInductance v)
     {

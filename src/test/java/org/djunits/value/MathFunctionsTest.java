@@ -57,11 +57,11 @@ public class MathFunctionsTest
 
     /**
      * Check the result of a double precision Math function.
-     * @param functionName String; name of the function
-     * @param df DoubleFunction; the double function to apply
-     * @param ff FloatFunction; the float functio to apply
-     * @param testValue double; the value to apply
-     * @param expectedResult double; the expected result value
+     * @param functionName name of the function
+     * @param df the double function to apply
+     * @param ff the float functio to apply
+     * @param testValue the value to apply
+     * @param expectedResult the expected result value
      */
     public static void check(final String functionName, final DoubleFunction df, final FloatFunction ff, final double testValue,
             final double expectedResult)

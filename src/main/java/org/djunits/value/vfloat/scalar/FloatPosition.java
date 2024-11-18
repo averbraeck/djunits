@@ -31,8 +31,8 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Construct FloatPosition scalar.
-     * @param value float; the float value
-     * @param unit PositionUnit; unit for the float value
+     * @param value the float value
+     * @param unit unit for the float value
      */
     public FloatPosition(final float value, final PositionUnit unit)
     {
@@ -41,8 +41,8 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Construct FloatPosition scalar using a double value.
-     * @param value double; the double value
-     * @param unit PositionUnit; unit for the resulting float value
+     * @param value the double value
+     * @param unit unit for the resulting float value
      */
     public FloatPosition(final double value, final PositionUnit unit)
     {
@@ -51,7 +51,7 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Construct FloatPosition scalar.
-     * @param value FloatPosition; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public FloatPosition(final FloatPosition value)
     {
@@ -72,8 +72,8 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Construct FloatPosition scalar.
-     * @param value float; the float value in BASE units
-     * @return FloatPosition; the new scalar with the BASE value
+     * @param value the float value in BASE units
+     * @return the new scalar with the BASE value
      */
     public static final FloatPosition instantiateSI(final float value)
     {
@@ -82,10 +82,10 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Interpolate between two values.
-     * @param zero FloatPosition; the low value
-     * @param one FloatPosition; the high value
-     * @param ratio float; the ratio between 0 and 1, inclusive
-     * @return FloatPosition; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static FloatPosition interpolate(final FloatPosition zero, final FloatPosition one, final float ratio)
     {
@@ -95,9 +95,9 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Return the maximum value of two absolute scalars.
-     * @param a1 FloatPosition; the first scalar
-     * @param a2 FloatPosition; the second scalar
-     * @return FloatPosition; the maximum value of two absolute scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @return the maximum value of two absolute scalars
      */
     public static FloatPosition max(final FloatPosition a1, final FloatPosition a2)
     {
@@ -106,10 +106,10 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Return the maximum value of more than two absolute scalars.
-     * @param a1 FloatPosition; the first scalar
-     * @param a2 FloatPosition; the second scalar
-     * @param an FloatPosition...; the other scalars
-     * @return FloatPosition; the maximum value of more than two absolute scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @param an the other scalars
+     * @return the maximum value of more than two absolute scalars
      */
     public static FloatPosition max(final FloatPosition a1, final FloatPosition a2, final FloatPosition... an)
     {
@@ -126,9 +126,9 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Return the minimum value of two absolute scalars.
-     * @param a1 FloatPosition; the first scalar
-     * @param a2 FloatPosition; the second scalar
-     * @return FloatPosition; the minimum value of two absolute scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @return the minimum value of two absolute scalars
      */
     public static FloatPosition min(final FloatPosition a1, final FloatPosition a2)
     {
@@ -137,10 +137,10 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Return the minimum value of more than two absolute scalars.
-     * @param a1 FloatPosition; the first scalar
-     * @param a2 FloatPosition; the second scalar
-     * @param an FloatPosition...; the other scalars
-     * @return FloatPosition; the minimum value of more than two absolute scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @param an the other scalars
+     * @return the minimum value of more than two absolute scalars
      */
     public static FloatPosition min(final FloatPosition a1, final FloatPosition a2, final FloatPosition... an)
     {
@@ -159,8 +159,8 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
      * Returns a FloatPosition representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatPosition
-     * @return FloatPosition; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatPosition
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -188,9 +188,9 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
 
     /**
      * Returns a FloatPosition based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatPosition; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */

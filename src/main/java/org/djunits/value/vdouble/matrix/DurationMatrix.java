@@ -34,8 +34,8 @@ public class DurationMatrix extends
 
     /**
      * Construct a DurationMatrix from an internal data object.
-     * @param data DoubleMatrixData; the internal data object for the matrix
-     * @param displayUnit DurationUnit; the display unit of the matrix data
+     * @param data the internal data object for the matrix
+     * @param displayUnit the display unit of the matrix data
      */
     public DurationMatrix(final DoubleMatrixData data, final DurationUnit displayUnit)
     {
@@ -47,9 +47,9 @@ public class DurationMatrix extends
     /**
      * Construct a DurationMatrix from a double[][] object. The double values are expressed in the displayUnit, and will be
      * printed using the displayUnit.
-     * @param data double[][]; the data for the matrix, expressed in the displayUnit
-     * @param displayUnit DurationUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public DurationMatrix(final double[][] data, final DurationUnit displayUnit, final StorageType storageType)
     {
@@ -59,8 +59,8 @@ public class DurationMatrix extends
     /**
      * Construct a DurationMatrix from a double[][] object. The double values are expressed in the displayUnit. Assume that the
      * StorageType is DENSE since we offer the data as an array of an array.
-     * @param data double[][]; the data for the matrix
-     * @param displayUnit DurationUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the matrix
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public DurationMatrix(final double[][] data, final DurationUnit displayUnit)
     {
@@ -69,8 +69,8 @@ public class DurationMatrix extends
 
     /**
      * Construct a DurationMatrix from a double[][] object with SI-unit values.
-     * @param data double[][]; the data for the matrix, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public DurationMatrix(final double[][] data, final StorageType storageType)
     {
@@ -80,7 +80,7 @@ public class DurationMatrix extends
     /**
      * Construct a DurationMatrix from a double[][] object with SI-unit values. Assume that the StorageType is DENSE since we
      * offer the data as an array of an array.
-     * @param data double[][]; the data for the matrix, in SI units
+     * @param data the data for the matrix, in SI units
      */
     public DurationMatrix(final double[][] data)
     {
@@ -92,9 +92,9 @@ public class DurationMatrix extends
     /**
      * Construct a DurationMatrix from an array of an array of Duration objects. The Duration values are each expressed in their
      * own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data Duration[][]; the data for the matrix
-     * @param displayUnit DurationUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public DurationMatrix(final Duration[][] data, final DurationUnit displayUnit, final StorageType storageType)
     {
@@ -105,8 +105,8 @@ public class DurationMatrix extends
      * Construct a DurationMatrix from an array of an array of Duration objects. The Duration values are each expressed in their
      * own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array of an array.
-     * @param data Duration[][]; the data for the matrix
-     * @param displayUnit DurationUnit; the display unit of the values when printing
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
      */
     public DurationMatrix(final Duration[][] data, final DurationUnit displayUnit)
     {
@@ -117,8 +117,8 @@ public class DurationMatrix extends
      * Construct a DurationMatrix from an array of an array of Duration objects. The Duration values are each expressed in their
      * own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data
      * as an array of an array.
-     * @param data Duration[][]; the data for the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public DurationMatrix(final Duration[][] data, final StorageType storageType)
     {
@@ -129,7 +129,7 @@ public class DurationMatrix extends
      * Construct a DurationMatrix from an array of an array of Duration objects. The Duration values are each expressed in their
      * own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array of an array.
-     * @param data Duration[][]; the data for the matrix
+     * @param data the data for the matrix
      */
     public DurationMatrix(final Duration[][] data)
     {
@@ -141,11 +141,11 @@ public class DurationMatrix extends
     /**
      * Construct a DurationMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit in
      * which the values in the collection are expressed, as well as the unit in which they will be printed.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param displayUnit DurationUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public DurationMatrix(final Collection<DoubleSparseValue<DurationUnit, Duration>> data, final DurationUnit displayUnit,
             final int rows, final int cols, final StorageType storageType)
@@ -157,10 +157,10 @@ public class DurationMatrix extends
      * Construct a DurationMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit in
      * which the values in the collection are expressed, as well as the unit in which they will be printed. Assume the storage
      * type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param displayUnit DurationUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public DurationMatrix(final Collection<DoubleSparseValue<DurationUnit, Duration>> data, final DurationUnit displayUnit,
             final int rows, final int cols)
@@ -172,10 +172,10 @@ public class DurationMatrix extends
      * Construct a DurationMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit in
      * which the values in the collection are expressed, as well as the unit in which they will be printed. Use the SI unit or
      * base unit as the displayUnit.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public DurationMatrix(final Collection<DoubleSparseValue<DurationUnit, Duration>> data, final int rows, final int cols,
             final StorageType storageType)
@@ -187,9 +187,9 @@ public class DurationMatrix extends
      * Construct a DurationMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit in
      * which the values in the collection are expressed, as well as the unit in which they will be printed. Use the SI unit or
      * base unit as the displayUnit. Assume the storage type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public DurationMatrix(final Collection<DoubleSparseValue<DurationUnit, Duration>> data, final int rows, final int cols)
     {

@@ -30,8 +30,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
 
     /**
      * Construct a FloatIlluminanceVector from an internal data object.
-     * @param data FloatVectorData; the internal data object for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data
+     * @param data the internal data object for the vector
+     * @param displayUnit the display unit of the vector data
      */
     public FloatIlluminanceVector(final FloatVectorData data, final IlluminanceUnit displayUnit)
     {
@@ -43,9 +43,9 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
     /**
      * Construct a FloatIlluminanceVector from a float[] object. The Float values are expressed in the displayUnit, and will be
      * printed using the displayUnit.
-     * @param data float[]; the data for the vector, expressed in the displayUnit
-     * @param displayUnit IlluminanceUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final float[] data, final IlluminanceUnit displayUnit, final StorageType storageType)
     {
@@ -55,8 +55,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
     /**
      * Construct a FloatIlluminanceVector from a float[] object. The Float values are expressed in the displayUnit. Assume that
      * the StorageType is DENSE since we offer the data as an array.
-     * @param data float[]; the data for the vector
-     * @param displayUnit IlluminanceUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the vector
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public FloatIlluminanceVector(final float[] data, final IlluminanceUnit displayUnit)
     {
@@ -65,8 +65,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
 
     /**
      * Construct a FloatIlluminanceVector from a float[] object with SI-unit values.
-     * @param data float[]; the data for the vector, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final float[] data, final StorageType storageType)
     {
@@ -76,7 +76,7 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
     /**
      * Construct a FloatIlluminanceVector from a float[] object with SI-unit values. Assume that the StorageType is DENSE since
      * we offer the data as an array.
-     * @param data float[]; the data for the vector, in SI units
+     * @param data the data for the vector, in SI units
      */
     public FloatIlluminanceVector(final float[] data)
     {
@@ -88,9 +88,9 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
     /**
      * Construct a FloatIlluminanceVector from an array of FloatIlluminance objects. The FloatIlluminance values are each
      * expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data FloatIlluminance[]; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final FloatIlluminance[] data, final IlluminanceUnit displayUnit,
             final StorageType storageType)
@@ -102,8 +102,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * Construct a FloatIlluminanceVector from an array of FloatIlluminance objects. The FloatIlluminance values are each
      * expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
      * Assume that the StorageType is DENSE since we offer the data as an array.
-     * @param data FloatIlluminance[]; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the values when printing
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
      */
     public FloatIlluminanceVector(final FloatIlluminance[] data, final IlluminanceUnit displayUnit)
     {
@@ -114,8 +114,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * Construct a FloatIlluminanceVector from an array of FloatIlluminance objects. The FloatIlluminance values are each
      * expressed in their own unit, but will be internally stored as SI values, and expressed using SI units when printing.
      * since we offer the data as an array.
-     * @param data FloatIlluminance[]; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final FloatIlluminance[] data, final StorageType storageType)
     {
@@ -126,7 +126,7 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * Construct a FloatIlluminanceVector from an array of FloatIlluminance objects. The FloatIlluminance values are each
      * expressed in their own unit, but will be internally stored as SI values, and expressed using SI units when printing.
      * Assume that the StorageType is DENSE since we offer the data as an array.
-     * @param data FloatIlluminance[]; the data for the vector
+     * @param data the data for the vector
      */
     public FloatIlluminanceVector(final FloatIlluminance[] data)
     {
@@ -143,10 +143,10 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * FloatIlluminance objects, each FloatIlluminance has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing.
-     * @param data List&lt;Float&gt; or List&lt;Illuminance&gt;; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final List<? extends Number> data, final IlluminanceUnit displayUnit,
             final StorageType storageType)
@@ -165,8 +165,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * FloatIlluminance objects, each FloatIlluminance has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data List&lt;Float&gt; or List&lt;Illuminance&gt;; the data for the vector
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatIlluminanceVector(final List<? extends Number> data, final IlluminanceUnit displayUnit)
@@ -179,8 +179,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * contains numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatIlluminance
      * objects, they each have their own unit, but will be printed using SI units or base units. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Float&gt; or List&lt;Illuminance&gt;; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final List<? extends Number> data, final StorageType storageType)
     {
@@ -193,7 +193,7 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * objects, they each have their own unit, but will be printed using SI units or base units. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is DENSE since we offer the data as a List.
-     * @param data List&lt;Float&gt; or List&lt;Illuminance&gt;; the data for the vector
+     * @param data the data for the vector
      */
     public FloatIlluminanceVector(final List<? extends Number> data)
     {
@@ -211,11 +211,11 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * expressed, as well as the unit in which they will be printed. In case the map contains FloatIlluminance objects, each
      * FloatIlluminance has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatIlluminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final Map<Integer, ? extends Number> data, final int size, final IlluminanceUnit displayUnit,
             final StorageType storageType)
@@ -237,9 +237,9 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * FloatIlluminance has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is SPARSE since we offer the data as a Map.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatIlluminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit IlluminanceUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatIlluminanceVector(final Map<Integer, ? extends Number> data, final int size, final IlluminanceUnit displayUnit)
@@ -254,9 +254,9 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * such as Float, assume that they are expressed using SI units. When the data consists of FloatIlluminance objects, they
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatIlluminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatIlluminanceVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
@@ -271,8 +271,8 @@ public class FloatIlluminanceVector extends FloatVectorRel<IlluminanceUnit, Floa
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is SPARSE since we offer the data as a Map.
-     * @param data Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatIlluminance&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
      */
     public FloatIlluminanceVector(final Map<Integer, ? extends Number> data, final int size)
     {

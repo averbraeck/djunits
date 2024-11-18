@@ -30,8 +30,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
 
     /**
      * Construct an SolidAngleVector from an internal data object.
-     * @param data DoubleVectorData; the internal data object for the vector
-     * @param displayUnit SolidAngleUnit; the display unit of the vector data
+     * @param data the internal data object for the vector
+     * @param displayUnit the display unit of the vector data
      */
     public SolidAngleVector(final DoubleVectorData data, final SolidAngleUnit displayUnit)
     {
@@ -43,9 +43,9 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
     /**
      * Construct an SolidAngleVector from a double[] object. The double values are expressed in the displayUnit, and will be
      * printed using the displayUnit.
-     * @param data double[]; the data for the vector, expressed in the displayUnit
-     * @param displayUnit SolidAngleUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final double[] data, final SolidAngleUnit displayUnit, final StorageType storageType)
     {
@@ -55,8 +55,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
     /**
      * Construct an SolidAngleVector from a double[] object. The double values are expressed in the displayUnit. Assume that the
      * StorageType is DENSE since we offer the data as an array.
-     * @param data double[]; the data for the vector
-     * @param displayUnit SolidAngleUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the vector
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public SolidAngleVector(final double[] data, final SolidAngleUnit displayUnit)
     {
@@ -65,8 +65,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
 
     /**
      * Construct an SolidAngleVector from a double[] object with SI-unit values.
-     * @param data double[]; the data for the vector, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final double[] data, final StorageType storageType)
     {
@@ -76,7 +76,7 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
     /**
      * Construct an SolidAngleVector from a double[] object with SI-unit values. Assume that the StorageType is DENSE since we
      * offer the data as an array.
-     * @param data double[]; the data for the vector, in SI units
+     * @param data the data for the vector, in SI units
      */
     public SolidAngleVector(final double[] data)
     {
@@ -88,9 +88,9 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
     /**
      * Construct an SolidAngleVector from an array of SolidAngle objects. The SolidAngle values are each expressed in their own
      * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data SolidAngle[]; the data for the vector
-     * @param displayUnit SolidAngleUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final SolidAngle[] data, final SolidAngleUnit displayUnit, final StorageType storageType)
     {
@@ -101,8 +101,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * Construct an SolidAngleVector from an array of SolidAngle objects. The SolidAngle values are each expressed in their own
      * unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array.
-     * @param data SolidAngle[]; the data for the vector
-     * @param displayUnit SolidAngleUnit; the display unit of the values when printing
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
      */
     public SolidAngleVector(final SolidAngle[] data, final SolidAngleUnit displayUnit)
     {
@@ -113,8 +113,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * Construct an SolidAngleVector from an array of SolidAngle objects. The SolidAngle values are each expressed in their own
      * unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer the data as
      * an array.
-     * @param data SolidAngle[]; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final SolidAngle[] data, final StorageType storageType)
     {
@@ -125,7 +125,7 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * Construct an SolidAngleVector from an array of SolidAngle objects. The SolidAngle values are each expressed in their own
      * unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the StorageType
      * is DENSE since we offer the data as an array.
-     * @param data SolidAngle[]; the data for the vector
+     * @param data the data for the vector
      */
     public SolidAngleVector(final SolidAngle[] data)
     {
@@ -141,10 +141,10 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * expressed, as well as the unit in which they will be printed. In case the list contains SolidAngle objects, each
      * SolidAngle has its own unit, and the displayUnit is just used for printing. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;SolidAngle&gt;; the data for the vector
-     * @param displayUnit SolidAngleUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final List<? extends Number> data, final SolidAngleUnit displayUnit, final StorageType storageType)
     {
@@ -162,8 +162,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * SolidAngle has its own unit, and the displayUnit is just used for printing. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is DENSE since we offer the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;SolidAngle&gt;; the data for the vector
-     * @param displayUnit SolidAngleUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public SolidAngleVector(final List<? extends Number> data, final SolidAngleUnit displayUnit)
@@ -176,8 +176,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * such as Double, assume that they are expressed using SI units. When the data consists of SolidAngle objects, they each
      * have their own unit, but will be printed using SI units or base units. The values but will always be internally stored as
      * SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;SolidAngle&gt;; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final List<? extends Number> data, final StorageType storageType)
     {
@@ -190,7 +190,7 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * have their own unit, but will be printed using SI units or base units. The values but will always be internally stored as
      * SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is
      * DENSE since we offer the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;SolidAngle&gt;; the data for the vector
+     * @param data the data for the vector
      */
     public SolidAngleVector(final List<? extends Number> data)
     {
@@ -208,11 +208,11 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * well as the unit in which they will be printed. In case the map contains SolidAngle objects, each SolidAngle has its own
      * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SolidAngle&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit SolidAngleUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final Map<Integer, ? extends Number> data, final int size, final SolidAngleUnit displayUnit,
             final StorageType storageType)
@@ -234,9 +234,9 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer
      * the data as a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SolidAngle&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit SolidAngleUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public SolidAngleVector(final Map<Integer, ? extends Number> data, final int size, final SolidAngleUnit displayUnit)
@@ -251,9 +251,9 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * Double, assume that they are expressed using SI units. When the data consists of SolidAngle objects, they each have their
      * own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values
      * or base values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SolidAngle&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SolidAngleVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
@@ -268,8 +268,8 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
      * own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values
      * or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since
      * we offer the data as a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SolidAngle&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
      */
     public SolidAngleVector(final Map<Integer, ? extends Number> data, final int size)
     {

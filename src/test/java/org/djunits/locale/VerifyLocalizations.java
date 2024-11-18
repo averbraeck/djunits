@@ -35,7 +35,7 @@ public class VerifyLocalizations
     /**
      * Replace unicode escapes by the corresponding character. Based on
      * https://stackoverflow.com/questions/37502058/replace-unicode-escapes-with-the-corresponding-character
-     * @param in String; the input string to process
+     * @param in the input string to process
      * @return String the processed input string
      */
     static String fixUnicodeEscapes(final String in)

@@ -66,9 +66,9 @@ public class AccelerationUnit extends Unit<AccelerationUnit>
 
     /**
      * Determine the conversion factor to the base acceleration unit, given a length unit and a duration unit.
-     * @param length String; a length unit, e.g. km
-     * @param duration String; a duration unit, e.g. h
-     * @return double; the conversion factor from the provided units (e.g. km/h2) to the standard unit (m/s2)
+     * @param length a length unit, e.g. km
+     * @param duration a duration unit, e.g. h
+     * @return the conversion factor from the provided units (e.g. km/h2) to the standard unit (m/s2)
      */
     private static double factorLD(final String length, final String duration)
     {
@@ -79,8 +79,8 @@ public class AccelerationUnit extends Unit<AccelerationUnit>
 
     /**
      * Determine the conversion factor to the base acceleration unit, given a speed unit and a duration unit.
-     * @param speed String; a speed unit, e.g. km/h
-     * @param duration String; a duration unit, e.g. s
+     * @param speed a speed unit, e.g. km/h
+     * @param duration a duration unit, e.g. s
      * @return the conversion factor from the provided units (e.g. km/h/s) to the standard unit (m/s2)
      */
     private static double factorSD(final String speed, final String duration)

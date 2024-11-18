@@ -51,7 +51,7 @@ public class SIDimensions implements Serializable
     /**
      * Create an immutable SIDimensions instance based on a safe copy of a given dimensions specification. As an example, speed
      * is indicated as length = 1; time = -1 with the other dimensions equal to zero.
-     * @param dimensions byte[]; The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle
+     * @param dimensions The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle
      *            (sr), 2: mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance
      *            (mol), 8: luminous intensity (cd).
      */
@@ -67,10 +67,10 @@ public class SIDimensions implements Serializable
     /**
      * Create an immutable fractional SIDimensions instance based on a safe copy of a given specification, separated in a
      * numerator and a denominator.
-     * @param numerator byte[]; The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr),
+     * @param numerator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr),
      *            2: mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
-     * @param denominator byte[]; The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle
+     * @param denominator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle
      *            (sr), 2: mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance
      *            (mol), 8: luminous intensity (cd).
      */
@@ -88,15 +88,15 @@ public class SIDimensions implements Serializable
 
     /**
      * Create an immutable SIDimensions instance based on a safe copy of a given dimensions specification.
-     * @param angle int; dimension of the angle (rad)
-     * @param solidAngle int; dimension of the solidAngle (sr)
-     * @param mass int; dimension of the mass (kg)
-     * @param length int; dimension of the length (m)
-     * @param time int; dimension of the time (s)
-     * @param current int; dimension of the current (A)
-     * @param temperature int; dimension of the temperature (K)
-     * @param amountOfSubstance int; dimension of the amount of substance (mol)
-     * @param luminousIntensity int; dimension of the luminous intensity (cd)
+     * @param angle dimension of the angle (rad)
+     * @param solidAngle dimension of the solidAngle (sr)
+     * @param mass dimension of the mass (kg)
+     * @param length dimension of the length (m)
+     * @param time dimension of the time (s)
+     * @param current dimension of the current (A)
+     * @param temperature dimension of the temperature (K)
+     * @param amountOfSubstance dimension of the amount of substance (mol)
+     * @param luminousIntensity dimension of the luminous intensity (cd)
      */
     @SuppressWarnings("checkstyle:parameternumber")
     public SIDimensions(final int angle, final int solidAngle, final int mass, final int length, final int time,
@@ -123,8 +123,8 @@ public class SIDimensions implements Serializable
      * values are subtracted from each other, so m/m will have a length dimensionality of 0. Dimensions between -9 and 9 are
      * allowed. Spaces, periods and ^ are taken out, but other characters are not allowed and will lead to a UnitException. The
      * order of allowed units is arbitrary, so "kg/ms2" is accepted as well as "kg/s^2.m".
-     * @param siString String; the string to parse
-     * @return SIDimension; the corresponding SI dimensions
+     * @param siString the string to parse
+     * @return the corresponding SI dimensions
      * @throws UnitException when the string could not be parsed into dimensions
      */
     public static SIDimensions of(final String siString) throws UnitException
@@ -155,8 +155,8 @@ public class SIDimensions implements Serializable
      * to a vector {0,0,1,2,0,0,0,0,0}. It is allowed to use 0 or 1 for the dimensions. Dimensions between -9 and 9 are allowed.
      * The parsing is quite lenient: periods and carets (^) are taken out, and the order can be arbitrary, so "kgms-2" is
      * accepted as well as "m.s^-2.kg". Note that the empty string parses to the dimensionless unit.
-     * @param siString String; concatenation of SI units with positive or negative dimensions. No divisions sign is allowed.
-     * @return byte[]; a vector of length <code>NUMBER_DIMENSIONS</code> with the dimensions for the SI units
+     * @param siString concatenation of SI units with positive or negative dimensions. No divisions sign is allowed.
+     * @return a vector of length <code>NUMBER_DIMENSIONS</code> with the dimensions for the SI units
      * @throws UnitException when the String cannot be parsed, e.g. due to units not being recognized
      */
     private static byte[] parse(final String siString) throws UnitException
@@ -232,7 +232,7 @@ public class SIDimensions implements Serializable
 
     /**
      * Returns a safe copy of the SI abbreviations (a public static final String[] is mutable).
-     * @return String[]; a safe copy of the SI abbreviations
+     * @return a safe copy of the SI abbreviations
      */
     public String[] siAbbreviations()
     {
@@ -242,8 +242,8 @@ public class SIDimensions implements Serializable
     /**
      * Add a set of SI dimensions to this SIDimensions. Note: as dimensions are considered to be immutable, a new dimension is
      * returned. The original dimension (<code>this</code>) remains unaltered.
-     * @param other SIDimensions; the dimensions to add (usually as a result of multiplication of scalars)
-     * @return SIDimensions; the new dimensions with the dimensions of this object plus the dimensions in the parameter
+     * @param other the dimensions to add (usually as a result of multiplication of scalars)
+     * @return the new dimensions with the dimensions of this object plus the dimensions in the parameter
      */
     public SIDimensions plus(final SIDimensions other)
     {
@@ -258,8 +258,8 @@ public class SIDimensions implements Serializable
     /**
      * Subtract a set of SI dimensions from this SIDimensions. Note: as dimensions are considered to be immutable, a new
      * dimension is returned. The original dimension (<code>this</code>) remains unaltered.
-     * @param other SIDimensions; the dimensions to subtract (usually as a result of division of scalars)
-     * @return SIDimensions; the new dimensions with the dimensions of this object minus the dimensions in the parameter
+     * @param other the dimensions to subtract (usually as a result of division of scalars)
+     * @return the new dimensions with the dimensions of this object minus the dimensions in the parameter
      */
     public SIDimensions minus(final SIDimensions other)
     {
@@ -274,7 +274,7 @@ public class SIDimensions implements Serializable
     /**
      * Invert a set of SI dimensions; instead of m/s we get s/m. Note: as dimensions are considered to be immutable, a new
      * dimension is returned. The original dimension (<code>this</code>) remains unaltered.
-     * @return SIDimensions; the new dimensions that are the inverse of the dimensions in this object
+     * @return the new dimensions that are the inverse of the dimensions in this object
      */
     public SIDimensions invert()
     {
@@ -289,8 +289,8 @@ public class SIDimensions implements Serializable
     /**
      * Add two SIDimensions and return the new SIDimensions. Usually, dimensions are added as a result of multiplication of
      * scalars.
-     * @param dim1 SIDimensions; the first set of dimensions
-     * @param dim2 SIDimensions; the second set of dimensions
+     * @param dim1 the first set of dimensions
+     * @param dim2 the second set of dimensions
      * @return the new dimensions with the sum of the dimensions in the parameters
      */
     public static SIDimensions add(final SIDimensions dim1, final SIDimensions dim2)
@@ -306,8 +306,8 @@ public class SIDimensions implements Serializable
     /**
      * Subtract an SIDimensions (dim2) from another SIDimensions (dim1) and return the new SIDimensions. Usually, dimensions are
      * added as a result of division of scalars.
-     * @param dim1 SIDimensions; the first set of dimensions
-     * @param dim2 SIDimensions; the second set of dimensions that will be subtracted from dim1
+     * @param dim1 the first set of dimensions
+     * @param dim2 the second set of dimensions that will be subtracted from dim1
      * @return the new dimensions with the difference of the dimensions in the parameters
      */
     public static SIDimensions subtract(final SIDimensions dim1, final SIDimensions dim2)
@@ -322,7 +322,7 @@ public class SIDimensions implements Serializable
 
     /**
      * Indicate whether this SIDImensions contains one or more fractional dimensions.
-     * @return boolean; whether this SIDImensions contains one or more fractional dimensions
+     * @return whether this SIDImensions contains one or more fractional dimensions
      */
     public boolean isFractional()
     {
@@ -359,11 +359,11 @@ public class SIDimensions implements Serializable
 
     /**
      * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIDimensions.
-     * @param divided boolean; if true, return m/s2 for acceleration; if false return ms-2
-     * @param separator String; add this string between successive units, e.g. kg.m.s-2 instead of kgms-2
-     * @param powerPrefix String; the prefix for the power, e.g., "^" or "&lt;sup&gt;"
-     * @param powerPostfix String; the postfix for the power, e.g., "&lt;/sup&gt;"
-     * @return String; a formatted string for this SIDimensions
+     * @param divided if true, return m/s2 for acceleration; if false return ms-2
+     * @param separator add this string between successive units, e.g. kg.m.s-2 instead of kgms-2
+     * @param powerPrefix the prefix for the power, e.g., "^" or "&lt;sup&gt;"
+     * @param powerPostfix the postfix for the power, e.g., "&lt;/sup&gt;"
+     * @return a formatted string for this SIDimensions
      */
     public String toString(final boolean divided, final String separator, final String powerPrefix, final String powerPostfix)
     {
@@ -437,9 +437,9 @@ public class SIDimensions implements Serializable
 
     /**
      * Return a string such as "kgm/s2" or "kg.m/s2" or "kg.m.s-2" from this SIDimensions.
-     * @param divided boolean; if true, return m/s2 for acceleration; if false return ms-2
-     * @param separator boolean; if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
-     * @return String; a formatted string describing this SIDimensions
+     * @param divided if true, return m/s2 for acceleration; if false return ms-2
+     * @param separator if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
+     * @return a formatted string describing this SIDimensions
      */
     public String toString(final boolean divided, final boolean separator)
     {
@@ -448,10 +448,10 @@ public class SIDimensions implements Serializable
 
     /**
      * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIDimensions.
-     * @param divided boolean; if true, return m/s2 for acceleration; if false return ms-2
-     * @param separator boolean; if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
-     * @param power boolean; if true, add a ^ sign before the power, e.g., "kg.m^2/s^3" instead of "kg.m2/s3"
-     * @return String; a formatted string describing this SIDimensions
+     * @param divided if true, return m/s2 for acceleration; if false return ms-2
+     * @param separator if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
+     * @param power if true, add a ^ sign before the power, e.g., "kg.m^2/s^3" instead of "kg.m2/s3"
+     * @return a formatted string describing this SIDimensions
      */
     public String toString(final boolean divided, final boolean separator, final boolean power)
     {
@@ -460,9 +460,9 @@ public class SIDimensions implements Serializable
 
     /**
      * Return a string such as "kgm/s<sup>2</sup>" or or "kg.m.s<sup>-2</sup>" from this SIDimensions.
-     * @param divided boolean; if true, return "m/s<sup>2</sup>" for acceleration; if false return "ms<sup>-2</sup>"
-     * @param separator boolean; if true, add a period between successive units, e.g. kg.m.s<sup>-2</sup>
-     * @return String; a formatted string describing this SIDimensions
+     * @param divided if true, return "m/s<sup>2</sup>" for acceleration; if false return "ms<sup>-2</sup>"
+     * @param separator if true, add a period between successive units, e.g. kg.m.s<sup>-2</sup>
+     * @return a formatted string describing this SIDimensions
      */
     public String toHTMLString(final boolean divided, final boolean separator)
     {

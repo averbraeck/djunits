@@ -52,7 +52,7 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Construct FloatPressure scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatPressure(final float value, final PressureUnit unit)
@@ -71,7 +71,7 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Construct FloatPressure scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatPressure(final double value, final PressureUnit unit)
@@ -87,7 +87,7 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Construct FloatPressure scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatPressure instantiateSI(final float value)
@@ -99,7 +99,7 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatPressure interpolate(final FloatPressure zero, final FloatPressure one, final float ratio)
@@ -174,8 +174,8 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
      * Returns a FloatPressure representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatPressure
-     * @return FloatPressure; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatPressure
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -203,9 +203,9 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Returns a FloatPressure based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatPressure; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -223,8 +223,8 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Calculate the division of FloatPressure and FloatPressure, which results in a FloatDimensionless scalar.
-     * @param v FloatPressure; scalar
-     * @return FloatDimensionless; scalar as a division of FloatPressure and FloatPressure
+     * @param v scalar
+     * @return scalar as a division of FloatPressure and FloatPressure
      */
     public final FloatDimensionless divide(final FloatPressure v)
     {
@@ -233,8 +233,8 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Calculate the multiplication of FloatPressure and FloatArea, which results in a FloatForce scalar.
-     * @param v FloatPressure; scalar
-     * @return FloatForce; scalar as a multiplication of FloatPressure and FloatArea
+     * @param v scalar
+     * @return scalar as a multiplication of FloatPressure and FloatArea
      */
     public final FloatForce times(final FloatArea v)
     {
@@ -243,8 +243,8 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
 
     /**
      * Calculate the multiplication of FloatPressure and FloatVolume, which results in a FloatEnergy scalar.
-     * @param v FloatPressure; scalar
-     * @return FloatEnergy; scalar as a multiplication of FloatPressure and FloatVolume
+     * @param v scalar
+     * @return scalar as a multiplication of FloatPressure and FloatVolume
      */
     public final FloatEnergy times(final FloatVolume v)
     {

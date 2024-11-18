@@ -22,7 +22,7 @@ public final class EngineeringFormatter
 
     /**
      * Switch to/from upper case E for exponent indicator. The default is to use upper case.
-     * @param upper boolean; if true; an upper case E will be used; if false; a lower case e will be used
+     * @param upper if true; an upper case E will be used; if false; a lower case e will be used
      */
     public static void setUpperCaseFormat(final boolean upper)
     {
@@ -44,8 +44,8 @@ public final class EngineeringFormatter
 
     /**
      * Format a double in Engineering format using <code>DEFAULTSIZE</code> room.
-     * @param val double; the value to format
-     * @return String; the formatted value
+     * @param val the value to format
+     * @return the formatted value
      */
     public static String format(final double val)
     {
@@ -54,10 +54,10 @@ public final class EngineeringFormatter
 
     /**
      * Format a double in Engineering format.
-     * @param val double; the value to format
-     * @param room int; the width in characters of the result (minimum value is 10; values below this limit will be treated as
+     * @param val the value to format
+     * @param room the width in characters of the result (minimum value is 10; values below this limit will be treated as
      *            10)
-     * @return String; the formatted value
+     * @return the formatted value
      */
     public static String format(final double val, final int room)
     {
@@ -110,8 +110,8 @@ public final class EngineeringFormatter
     /**
      * Make the exponent of a floating point value a multiple of 3. Assumes that the first dot or comma is the radix symbol and
      * 'e' or 'E' is used at the exponent symbol.
-     * @param in String; String representation of a floating point value
-     * @return String; The engineering formatted value
+     * @param in String representation of a floating point value
+     * @return The engineering formatted value
      */
     public static String convertToEngineering(final String in)
     {
@@ -173,9 +173,9 @@ public final class EngineeringFormatter
 
     /**
      * Extend a String with spaces, or trim it to reach a specified length.
-     * @param in String; input string
-     * @param width int; length of the result
-     * @return String; the extended or trimmed input string
+     * @param in input string
+     * @param width length of the result
+     * @return the extended or trimmed input string
      */
     public static String padd(final String in, final int width)
     {

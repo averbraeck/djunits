@@ -15,8 +15,8 @@ public class USCustomary extends Imperial
 
     /**
      * Protected constructor to avoid creating other (false) unit systems.
-     * @param abbreviationKey String; the abbreviation of the unit system, such as SI
-     * @param nameKey String; the name of the unit system, such as SI Base
+     * @param abbreviationKey the abbreviation of the unit system, such as SI
+     * @param nameKey the name of the unit system, such as SI Base
      */
     protected USCustomary(final String abbreviationKey, final String nameKey)
     {

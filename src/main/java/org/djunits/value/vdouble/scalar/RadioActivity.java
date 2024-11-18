@@ -50,8 +50,8 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Construct RadioActivity scalar.
-     * @param value double; the double value
-     * @param unit RadioActivityUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public RadioActivity(final double value, final RadioActivityUnit unit)
     {
@@ -60,7 +60,7 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Construct RadioActivity scalar.
-     * @param value RadioActivity; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public RadioActivity(final RadioActivity value)
     {
@@ -75,8 +75,8 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Construct RadioActivity scalar.
-     * @param value double; the double value in SI units
-     * @return RadioActivity; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final RadioActivity instantiateSI(final double value)
     {
@@ -85,10 +85,10 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Interpolate between two values.
-     * @param zero RadioActivity; the low value
-     * @param one RadioActivity; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return RadioActivity; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static RadioActivity interpolate(final RadioActivity zero, final RadioActivity one, final double ratio)
     {
@@ -98,9 +98,9 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 RadioActivity; the first scalar
-     * @param r2 RadioActivity; the second scalar
-     * @return RadioActivity; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static RadioActivity max(final RadioActivity r1, final RadioActivity r2)
     {
@@ -109,10 +109,10 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 RadioActivity; the first scalar
-     * @param r2 RadioActivity; the second scalar
-     * @param rn RadioActivity...; the other scalars
-     * @return RadioActivity; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static RadioActivity max(final RadioActivity r1, final RadioActivity r2, final RadioActivity... rn)
     {
@@ -129,9 +129,9 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 RadioActivity; the first scalar
-     * @param r2 RadioActivity; the second scalar
-     * @return RadioActivity; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static RadioActivity min(final RadioActivity r1, final RadioActivity r2)
     {
@@ -140,10 +140,10 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 RadioActivity; the first scalar
-     * @param r2 RadioActivity; the second scalar
-     * @param rn RadioActivity...; the other scalars
-     * @return RadioActivity; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static RadioActivity min(final RadioActivity r1, final RadioActivity r2, final RadioActivity... rn)
     {
@@ -162,8 +162,8 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
      * Returns a RadioActivity representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a RadioActivity
-     * @return RadioActivity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a RadioActivity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -191,9 +191,9 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Returns a RadioActivity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return RadioActivity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -211,8 +211,8 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
 
     /**
      * Calculate the division of RadioActivity and RadioActivity, which results in a Dimensionless scalar.
-     * @param v RadioActivity; scalar
-     * @return Dimensionless; scalar as a division of RadioActivity and RadioActivity
+     * @param v scalar
+     * @return scalar as a division of RadioActivity and RadioActivity
      */
     public final Dimensionless divide(final RadioActivity v)
     {

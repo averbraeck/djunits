@@ -20,8 +20,8 @@ public class FloatJerkMatrix extends FloatMatrixRel<JerkUnit, FloatJerk, FloatJe
     private static final long serialVersionUID = 20151109L;
 
     /**
-     * @param data FloatMatrixData; an internal data object
-     * @param displayUnit JerkUnit; the unit in which the data will be displayed
+     * @param data an internal data object
+     * @param displayUnit the unit in which the data will be displayed
      */
     public FloatJerkMatrix(final FloatMatrixData data, final JerkUnit displayUnit)
     {

@@ -29,8 +29,8 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
 
     /**
      * Construct a new Absolute Immutable DoubleScalar.
-     * @param value double; the value of the new Absolute Immutable DoubleScalar
-     * @param unit AU; the unit of the new Absolute Immutable DoubleScalar
+     * @param value the value of the new Absolute Immutable DoubleScalar
+     * @param unit the unit of the new Absolute Immutable DoubleScalar
      */
     public DoubleScalarAbs(final double value, final AU unit)
     {
@@ -39,7 +39,7 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
 
     /**
      * Construct a new Absolute Immutable DoubleScalar from an existing Absolute Immutable DoubleScalar.
-     * @param value A, an absolute typed DoubleScalar; the reference
+     * @param value the reference
      */
     public DoubleScalarAbs(final A value)
     {
@@ -48,16 +48,16 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
 
     /**
      * Construct a new Relative Immutable DoubleScalar of the right type. Each extending class must implement this method.
-     * @param value double; the double value
-     * @param unit RU; the unit
+     * @param value the double value
+     * @param unit the unit
      * @return R a new relative instance of the DoubleScalar of the right type
      */
     public abstract R instantiateRel(double value, RU unit);
 
     /**
      * Construct a new Absolute Immutable DoubleScalar of the right type. Each extending class must implement this method.
-     * @param value double; the double value
-     * @param unit AU; the absolute unit
+     * @param value the double value
+     * @param unit the absolute unit
      * @return A a new absolute instance of the DoubleScalar of the right type
      */
     public abstract A instantiateAbs(double value, AU unit);

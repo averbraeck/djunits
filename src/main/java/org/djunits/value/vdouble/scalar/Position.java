@@ -31,8 +31,8 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Construct Position scalar.
-     * @param value double; value
-     * @param unit PositionUnit; unit for the double value
+     * @param value value
+     * @param unit unit for the double value
      */
     public Position(final double value, final PositionUnit unit)
     {
@@ -41,7 +41,7 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Construct Position scalar.
-     * @param value Position; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Position(final Position value)
     {
@@ -62,8 +62,8 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Construct Position scalar.
-     * @param value double; value in SI units
-     * @return Position; the new scalar with the SI value
+     * @param value value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Position instantiateSI(final double value)
     {
@@ -72,10 +72,10 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Interpolate between two values.
-     * @param zero Position; the low value
-     * @param one Position; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Position; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Position interpolate(final Position zero, final Position one, final double ratio)
     {
@@ -85,9 +85,9 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Return the maximum value of two absolute scalars.
-     * @param a1 Position; the first scalar
-     * @param a2 Position; the second scalar
-     * @return Position; the maximum value of two absolute scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @return the maximum value of two absolute scalars
      */
     public static Position max(final Position a1, final Position a2)
     {
@@ -96,9 +96,9 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Return the maximum value of more than two absolute scalars.
-     * @param a1 Position; the first scalar
-     * @param a2 Position; the second scalar
-     * @param an Position...; the other scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @param an the other scalars
      * @return the maximum value of more than two absolute scalars
      */
     public static Position max(final Position a1, final Position a2, final Position... an)
@@ -116,8 +116,8 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Return the minimum value of two absolute scalars.
-     * @param a1 Position; the first scalar
-     * @param a2 Position; the second scalar
+     * @param a1 the first scalar
+     * @param a2 the second scalar
      * @return the minimum value of two absolute scalars
      */
     public static Position min(final Position a1, final Position a2)
@@ -127,9 +127,9 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Return the minimum value of more than two absolute scalars.
-     * @param a1 Position; the first scalar
-     * @param a2 Position; the second scalar
-     * @param an Position...; the other scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @param an the other scalars
      * @return the minimum value of more than two absolute scalars
      */
     public static Position min(final Position a1, final Position a2, final Position... an)
@@ -149,8 +149,8 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
      * Returns a Position representation of a textual representation of a value with a unit. The String representation that can
      * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Position
-     * @return Position; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Position
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -178,9 +178,9 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
 
     /**
      * Returns a Position based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Position; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */

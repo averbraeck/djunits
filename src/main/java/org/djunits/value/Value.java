@@ -25,13 +25,13 @@ public interface Value<U extends Unit<U>, T extends Value<U, T>> extends Seriali
 {
     /**
      * Retrieve the unit of this Value.
-     * @return U; the unit of this Value
+     * @return the unit of this Value
      */
     U getDisplayUnit();
 
     /**
      * Set a new display unit for the value. Internally, the value will stay stored in the default or SI unit.
-     * @param newUnit U; the new display unit of this Value
+     * @param newUnit the new display unit of this Value
      */
     void setDisplayUnit(U newUnit);
 
@@ -62,56 +62,56 @@ public interface Value<U extends Unit<U>, T extends Value<U, T>> extends Seriali
 
     /**
      * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit U; the unit into which the values are converted for display
-     * @return String; printable string with the value contents expressed in the specified unit
+     * @param displayUnit the unit into which the values are converted for display
+     * @return printable string with the value contents expressed in the specified unit
      */
     String toString(U displayUnit);
 
     /**
      * Somewhat verbose description of this value with optional type and unit information.
-     * @param verbose boolean; if true; include type info; if false; exclude type info
-     * @param withUnit boolean; if true; include the unit; of false; exclude the unit
-     * @return String; printable string with the value contents
+     * @param verbose if true; include type info; if false; exclude type info
+     * @param withUnit if true; include the unit; of false; exclude the unit
+     * @return printable string with the value contents
      */
     String toString(boolean verbose, boolean withUnit);
 
     /**
      * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit U; the unit into which the values are converted for display
-     * @param verbose boolean; if true; include type info; if false; exclude type info
-     * @param withUnit boolean; if true; include the unit; of false; exclude the unit
-     * @return String; printable string with the value contents
+     * @param displayUnit the unit into which the values are converted for display
+     * @param verbose if true; include type info; if false; exclude type info
+     * @param withUnit if true; include the unit; of false; exclude the unit
+     * @return printable string with the value contents
      */
     String toString(U displayUnit, boolean verbose, boolean withUnit);
 
     /**
      * Return a new Scalar/Vector/Matrix with absolute value(s).
-     * @return R; a new R with absolute value(s)
+     * @return a new R with absolute value(s)
      */
     T abs();
 
     /**
      * Return a new Scalar/Vector/Matrix with the nearest integer value(s) above the current value(s).
-     * @return R; a new R with absolute value(s)
+     * @return a new R with absolute value(s)
      */
     T ceil();
 
     /**
      * Return a new Scalar/Vector/Matrix with the nearest integer value(s) below the current value(s).
-     * @return R; a new R with absolute value(s)
+     * @return a new R with absolute value(s)
      */
     T floor();
 
     /**
      * Return a new Scalar/Vector/Matrix with negated value(s).
-     * @return R; a new R with negated value(s)
+     * @return a new R with negated value(s)
      */
     T neg();
 
     /**
      * Return a new Scalar/Vector/Matrix with the nearest integer value(s). When the value is exactly in the middle between two
      * integer values, the even one is returned.
-     * @return R; a new R with absolute value(s)
+     * @return a new R with absolute value(s)
      */
     T rint();
 }

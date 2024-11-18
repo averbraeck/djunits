@@ -53,8 +53,8 @@ public class Temperature
 
     /**
      * Construct Temperature scalar.
-     * @param value double; double value
-     * @param unit TemperatureUnit; unit for the double value
+     * @param value double value
+     * @param unit unit for the double value
      */
     public Temperature(final double value, final TemperatureUnit unit)
     {
@@ -63,7 +63,7 @@ public class Temperature
 
     /**
      * Construct Temperature scalar.
-     * @param value Temperature; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Temperature(final Temperature value)
     {
@@ -84,8 +84,8 @@ public class Temperature
 
     /**
      * Construct Temperature scalar.
-     * @param value double; the double value in SI units
-     * @return Temperature; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Temperature instantiateSI(final double value)
     {
@@ -94,10 +94,10 @@ public class Temperature
 
     /**
      * Interpolate between two values.
-     * @param zero Temperature; the low value
-     * @param one Temperature; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Temperature; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Temperature interpolate(final Temperature zero, final Temperature one, final double ratio)
     {
@@ -107,9 +107,9 @@ public class Temperature
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Temperature; the first scalar
-     * @param r2 Temperature; the second scalar
-     * @return Temperature; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Temperature max(final Temperature r1, final Temperature r2)
     {
@@ -118,10 +118,10 @@ public class Temperature
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Temperature; the first scalar
-     * @param r2 Temperature; the second scalar
-     * @param rn Temperature...; the other scalars
-     * @return Temperature; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Temperature max(final Temperature r1, final Temperature r2, final Temperature... rn)
     {
@@ -138,9 +138,9 @@ public class Temperature
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Temperature; the first scalar
-     * @param r2 Temperature; the second scalar
-     * @return Temperature; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Temperature min(final Temperature r1, final Temperature r2)
     {
@@ -149,10 +149,10 @@ public class Temperature
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Temperature; the first scalar
-     * @param r2 Temperature; the second scalar
-     * @param rn Temperature...; the other scalars
-     * @return Temperature; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Temperature min(final Temperature r1, final Temperature r2, final Temperature... rn)
     {
@@ -171,8 +171,8 @@ public class Temperature
      * Returns a Temperature representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Temperature
-     * @return Temperature; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Temperature
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -200,9 +200,9 @@ public class Temperature
 
     /**
      * Returns a Temperature based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Temperature; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -220,8 +220,8 @@ public class Temperature
 
     /**
      * Calculate the division of Temperature and Temperature, which results in a Dimensionless scalar.
-     * @param v Temperature; scalar
-     * @return Dimensionless; scalar as a division of Temperature and Temperature
+     * @param v scalar
+     * @return scalar as a division of Temperature and Temperature
      */
     public final Dimensionless divide(final Temperature v)
     {

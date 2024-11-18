@@ -56,8 +56,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Construct Momentum scalar.
-     * @param value double; the double value
-     * @param unit MomentumUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public Momentum(final double value, final MomentumUnit unit)
     {
@@ -66,7 +66,7 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Construct Momentum scalar.
-     * @param value Momentum; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Momentum(final Momentum value)
     {
@@ -81,8 +81,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Construct Momentum scalar.
-     * @param value double; the double value in SI units
-     * @return Momentum; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Momentum instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Interpolate between two values.
-     * @param zero Momentum; the low value
-     * @param one Momentum; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Momentum; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Momentum interpolate(final Momentum zero, final Momentum one, final double ratio)
     {
@@ -104,9 +104,9 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Momentum; the first scalar
-     * @param r2 Momentum; the second scalar
-     * @return Momentum; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Momentum max(final Momentum r1, final Momentum r2)
     {
@@ -115,10 +115,10 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Momentum; the first scalar
-     * @param r2 Momentum; the second scalar
-     * @param rn Momentum...; the other scalars
-     * @return Momentum; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Momentum max(final Momentum r1, final Momentum r2, final Momentum... rn)
     {
@@ -135,9 +135,9 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Momentum; the first scalar
-     * @param r2 Momentum; the second scalar
-     * @return Momentum; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Momentum min(final Momentum r1, final Momentum r2)
     {
@@ -146,10 +146,10 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Momentum; the first scalar
-     * @param r2 Momentum; the second scalar
-     * @param rn Momentum...; the other scalars
-     * @return Momentum; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Momentum min(final Momentum r1, final Momentum r2, final Momentum... rn)
     {
@@ -168,8 +168,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
      * Returns a Momentum representation of a textual representation of a value with a unit. The String representation that can
      * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Momentum
-     * @return Momentum; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Momentum
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -197,9 +197,9 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Returns a Momentum based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Momentum; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -217,8 +217,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the division of Momentum and Momentum, which results in a Dimensionless scalar.
-     * @param v Momentum; scalar
-     * @return Dimensionless; scalar as a division of Momentum and Momentum
+     * @param v scalar
+     * @return scalar as a division of Momentum and Momentum
      */
     public final Dimensionless divide(final Momentum v)
     {
@@ -227,8 +227,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the division of Momentum and Speed, which results in a Mass scalar.
-     * @param v Momentum; scalar
-     * @return Mass; scalar as a division of Momentum and Speed
+     * @param v scalar
+     * @return scalar as a division of Momentum and Speed
      */
     public final Mass divide(final Speed v)
     {
@@ -237,8 +237,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the division of Momentum and Mass, which results in a Speed scalar.
-     * @param v Momentum; scalar
-     * @return Speed; scalar as a division of Momentum and Mass
+     * @param v scalar
+     * @return scalar as a division of Momentum and Mass
      */
     public final Speed divide(final Mass v)
     {
@@ -247,8 +247,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the division of Momentum and Length, which results in a FlowMass scalar.
-     * @param v Momentum; scalar
-     * @return FlowMass; scalar as a division of Momentum and Length
+     * @param v scalar
+     * @return scalar as a division of Momentum and Length
      */
     public final FlowMass divide(final Length v)
     {
@@ -257,8 +257,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the division of Momentum and FlowMass, which results in a Length scalar.
-     * @param v Momentum; scalar
-     * @return Length; scalar as a division of Momentum and FlowMass
+     * @param v scalar
+     * @return scalar as a division of Momentum and FlowMass
      */
     public final Length divide(final FlowMass v)
     {
@@ -267,8 +267,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the multiplication of Momentum and Speed, which results in a Energy scalar.
-     * @param v Momentum; scalar
-     * @return Energy; scalar as a multiplication of Momentum and Speed
+     * @param v scalar
+     * @return scalar as a multiplication of Momentum and Speed
      */
     public final Energy times(final Speed v)
     {
@@ -277,8 +277,8 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
 
     /**
      * Calculate the multiplication of Momentum and Acceleration, which results in a Power scalar.
-     * @param v Momentum; scalar
-     * @return Power; scalar as a multiplication of Momentum and Acceleration
+     * @param v scalar
+     * @return scalar as a multiplication of Momentum and Acceleration
      */
     public final Power times(final Acceleration v)
     {

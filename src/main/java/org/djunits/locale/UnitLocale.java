@@ -38,7 +38,7 @@ public class UnitLocale implements Serializable
 
     /**
      * Create a localization object for units and unit systems. The prefix is right now either "unit" or "unitsystem".
-     * @param prefix String; the prefix of the properties files to use.
+     * @param prefix the prefix of the properties files to use.
      */
     public UnitLocale(final String prefix)
     {
@@ -70,8 +70,8 @@ public class UnitLocale implements Serializable
     /**
      * Retrieve a string from a resource bundle. If retrieval fails, try the fallbackLocale. If that fails as well, return the
      * value of key string, surrounded by exclamation marks. When the DefaultLocale has changed, load a new ResourceBundle.
-     * @param key String; the key for the locale in the currently valid resource bundle
-     * @return String; localized string, or, if the key could not be found, the key surrounded by exclamation marks
+     * @param key the key for the locale in the currently valid resource bundle
+     * @return localized string, or, if the key could not be found, the key surrounded by exclamation marks
      */
     public final String getString(final String key)
     {
@@ -94,8 +94,8 @@ public class UnitLocale implements Serializable
     /**
      * Retrieve a string from the falback bundle. If retrieval fails, return the value of key string, surrounded by exclamation
      * marks.
-     * @param key String; the key for the fallback locale to look up in the resource bundle
-     * @return String; localized string, or, if the key could not be found, the key surrounded by exclamation marks
+     * @param key the key for the fallback locale to look up in the resource bundle
+     * @return localized string, or, if the key could not be found, the key surrounded by exclamation marks
      */
     public final String getFallbackString(final String key)
     {

@@ -31,8 +31,8 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
 
     /**
      * Construct a SolidAngleMatrix from an internal data object.
-     * @param data DoubleMatrixData; the internal data object for the matrix
-     * @param displayUnit SolidAngleUnit; the display unit of the matrix data
+     * @param data the internal data object for the matrix
+     * @param displayUnit the display unit of the matrix data
      */
     public SolidAngleMatrix(final DoubleMatrixData data, final SolidAngleUnit displayUnit)
     {
@@ -44,9 +44,9 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
     /**
      * Construct a SolidAngleMatrix from a double[][] object. The double values are expressed in the displayUnit, and will be
      * printed using the displayUnit.
-     * @param data double[][]; the data for the matrix, expressed in the displayUnit
-     * @param displayUnit SolidAngleUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public SolidAngleMatrix(final double[][] data, final SolidAngleUnit displayUnit, final StorageType storageType)
     {
@@ -56,8 +56,8 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
     /**
      * Construct a SolidAngleMatrix from a double[][] object. The double values are expressed in the displayUnit. Assume that
      * the StorageType is DENSE since we offer the data as an array of an array.
-     * @param data double[][]; the data for the matrix
-     * @param displayUnit SolidAngleUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the matrix
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public SolidAngleMatrix(final double[][] data, final SolidAngleUnit displayUnit)
     {
@@ -66,8 +66,8 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
 
     /**
      * Construct a SolidAngleMatrix from a double[][] object with SI-unit values.
-     * @param data double[][]; the data for the matrix, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public SolidAngleMatrix(final double[][] data, final StorageType storageType)
     {
@@ -77,7 +77,7 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
     /**
      * Construct a SolidAngleMatrix from a double[][] object with SI-unit values. Assume that the StorageType is DENSE since we
      * offer the data as an array of an array.
-     * @param data double[][]; the data for the matrix, in SI units
+     * @param data the data for the matrix, in SI units
      */
     public SolidAngleMatrix(final double[][] data)
     {
@@ -89,9 +89,9 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
     /**
      * Construct a SolidAngleMatrix from an array of an array of SolidAngle objects. The SolidAngle values are each expressed in
      * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data SolidAngle[][]; the data for the matrix
-     * @param displayUnit SolidAngleUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public SolidAngleMatrix(final SolidAngle[][] data, final SolidAngleUnit displayUnit, final StorageType storageType)
     {
@@ -102,8 +102,8 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
      * Construct a SolidAngleMatrix from an array of an array of SolidAngle objects. The SolidAngle values are each expressed in
      * their own unit, but will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that
      * the StorageType is DENSE since we offer the data as an array of an array.
-     * @param data SolidAngle[][]; the data for the matrix
-     * @param displayUnit SolidAngleUnit; the display unit of the values when printing
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
      */
     public SolidAngleMatrix(final SolidAngle[][] data, final SolidAngleUnit displayUnit)
     {
@@ -114,8 +114,8 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
      * Construct a SolidAngleMatrix from an array of an array of SolidAngle objects. The SolidAngle values are each expressed in
      * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. since we offer
      * the data as an array of an array.
-     * @param data SolidAngle[][]; the data for the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public SolidAngleMatrix(final SolidAngle[][] data, final StorageType storageType)
     {
@@ -126,7 +126,7 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
      * Construct a SolidAngleMatrix from an array of an array of SolidAngle objects. The SolidAngle values are each expressed in
      * their own unit, but will be internally stored as SI values, and expressed using SI units when printing. Assume that the
      * StorageType is DENSE since we offer the data as an array of an array.
-     * @param data SolidAngle[][]; the data for the matrix
+     * @param data the data for the matrix
      */
     public SolidAngleMatrix(final SolidAngle[][] data)
     {
@@ -138,11 +138,11 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
     /**
      * Construct a SolidAngleMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit
      * in which the values in the collection are expressed, as well as the unit in which they will be printed.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param displayUnit SolidAngleUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public SolidAngleMatrix(final Collection<DoubleSparseValue<SolidAngleUnit, SolidAngle>> data,
             final SolidAngleUnit displayUnit, final int rows, final int cols, final StorageType storageType)
@@ -154,10 +154,10 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
      * Construct a SolidAngleMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit
      * in which the values in the collection are expressed, as well as the unit in which they will be printed. Assume the
      * storage type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param displayUnit SolidAngleUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public SolidAngleMatrix(final Collection<DoubleSparseValue<SolidAngleUnit, SolidAngle>> data,
             final SolidAngleUnit displayUnit, final int rows, final int cols)
@@ -169,10 +169,10 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
      * Construct a SolidAngleMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit
      * in which the values in the collection are expressed, as well as the unit in which they will be printed. Use the SI unit
      * or base unit as the displayUnit.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public SolidAngleMatrix(final Collection<DoubleSparseValue<SolidAngleUnit, SolidAngle>> data, final int rows,
             final int cols, final StorageType storageType)
@@ -184,9 +184,9 @@ public class SolidAngleMatrix extends DoubleMatrixRel<SolidAngleUnit, SolidAngle
      * Construct a SolidAngleMatrix from a (sparse) collection of DoubleSparseValue objects. The displayUnit indicates the unit
      * in which the values in the collection are expressed, as well as the unit in which they will be printed. Use the SI unit
      * or base unit as the displayUnit. Assume the storage type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;DoubleSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public SolidAngleMatrix(final Collection<DoubleSparseValue<SolidAngleUnit, SolidAngle>> data, final int rows,
             final int cols)

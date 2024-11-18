@@ -12,8 +12,8 @@ public interface DoubleFunction
 {
     /**
      * Carry out a specific transformation function on a double value.
-     * @param value double; the value to transform
-     * @return double; the transformed value
+     * @param value the value to transform
+     * @return the transformed value
      */
     double apply(double value);
 }

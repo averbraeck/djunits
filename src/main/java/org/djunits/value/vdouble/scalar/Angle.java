@@ -54,8 +54,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Construct Angle scalar.
-     * @param value double; double value
-     * @param unit AngleUnit; unit for the double value
+     * @param value double value
+     * @param unit unit for the double value
      */
     public Angle(final double value, final AngleUnit unit)
     {
@@ -64,7 +64,7 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Construct Angle scalar.
-     * @param value Angle; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Angle(final Angle value)
     {
@@ -85,8 +85,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Construct Angle scalar.
-     * @param value double; the double value in SI units
-     * @return Angle; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Angle instantiateSI(final double value)
     {
@@ -95,10 +95,10 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Interpolate between two values.
-     * @param zero Angle; the low value
-     * @param one Angle; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Angle; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Angle interpolate(final Angle zero, final Angle one, final double ratio)
     {
@@ -107,9 +107,9 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Angle; the first scalar
-     * @param r2 Angle; the second scalar
-     * @return Angle; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Angle max(final Angle r1, final Angle r2)
     {
@@ -118,10 +118,10 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Angle; the first scalar
-     * @param r2 Angle; the second scalar
-     * @param rn Angle...; the other scalars
-     * @return Angle; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Angle max(final Angle r1, final Angle r2, final Angle... rn)
     {
@@ -138,9 +138,9 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Angle; the first scalar
-     * @param r2 Angle; the second scalar
-     * @return Angle; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Angle min(final Angle r1, final Angle r2)
     {
@@ -149,10 +149,10 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Angle; the first scalar
-     * @param r2 Angle; the second scalar
-     * @param rn Angle...; the other scalars
-     * @return Angle; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Angle min(final Angle r1, final Angle r2, final Angle... rn)
     {
@@ -171,8 +171,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
      * Returns a Angle representation of a textual representation of a value with a unit. The String representation that can be
      * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
      * but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Angle
-     * @return Angle; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Angle
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -200,9 +200,9 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Returns a Angle based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Angle; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -220,8 +220,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Calculate the division of Angle and Angle, which results in a Dimensionless scalar.
-     * @param v Angle; scalar
-     * @return Dimensionless; scalar as a division of Angle and Angle
+     * @param v scalar
+     * @return scalar as a division of Angle and Angle
      */
     public final Dimensionless divide(final Angle v)
     {
@@ -230,8 +230,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Calculate the multiplication of Angle and Frequency, which results in a AngularVelocity scalar.
-     * @param v Angle; scalar
-     * @return AngularVelocity; scalar as a multiplication of Angle and Frequency
+     * @param v scalar
+     * @return scalar as a multiplication of Angle and Frequency
      */
     public final AngularVelocity times(final Frequency v)
     {
@@ -240,8 +240,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Calculate the division of Angle and Duration, which results in a AngularVelocity scalar.
-     * @param v Angle; scalar
-     * @return AngularVelocity; scalar as a division of Angle and Duration
+     * @param v scalar
+     * @return scalar as a division of Angle and Duration
      */
     public final AngularVelocity divide(final Duration v)
     {
@@ -250,8 +250,8 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /**
      * Calculate the division of Angle and AngularVelocity, which results in a Duration scalar.
-     * @param v Angle; scalar
-     * @return Duration; scalar as a division of Angle and AngularVelocity
+     * @param v scalar
+     * @return scalar as a division of Angle and AngularVelocity
      */
     public final Duration divide(final AngularVelocity v)
     {

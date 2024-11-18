@@ -54,8 +54,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Construct AmountOfSubstance scalar.
-     * @param value double; the double value
-     * @param unit AmountOfSubstanceUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public AmountOfSubstance(final double value, final AmountOfSubstanceUnit unit)
     {
@@ -64,7 +64,7 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Construct AmountOfSubstance scalar.
-     * @param value AmountOfSubstance; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public AmountOfSubstance(final AmountOfSubstance value)
     {
@@ -79,8 +79,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Construct AmountOfSubstance scalar.
-     * @param value double; the double value in SI units
-     * @return AmountOfSubstance; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final AmountOfSubstance instantiateSI(final double value)
     {
@@ -89,10 +89,10 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Interpolate between two values.
-     * @param zero AmountOfSubstance; the low value
-     * @param one AmountOfSubstance; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return AmountOfSubstance; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static AmountOfSubstance interpolate(final AmountOfSubstance zero, final AmountOfSubstance one, final double ratio)
     {
@@ -102,9 +102,9 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 AmountOfSubstance; the first scalar
-     * @param r2 AmountOfSubstance; the second scalar
-     * @return AmountOfSubstance; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static AmountOfSubstance max(final AmountOfSubstance r1, final AmountOfSubstance r2)
     {
@@ -113,10 +113,10 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 AmountOfSubstance; the first scalar
-     * @param r2 AmountOfSubstance; the second scalar
-     * @param rn AmountOfSubstance...; the other scalars
-     * @return AmountOfSubstance; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static AmountOfSubstance max(final AmountOfSubstance r1, final AmountOfSubstance r2, final AmountOfSubstance... rn)
     {
@@ -133,9 +133,9 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 AmountOfSubstance; the first scalar
-     * @param r2 AmountOfSubstance; the second scalar
-     * @return AmountOfSubstance; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static AmountOfSubstance min(final AmountOfSubstance r1, final AmountOfSubstance r2)
     {
@@ -144,10 +144,10 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 AmountOfSubstance; the first scalar
-     * @param r2 AmountOfSubstance; the second scalar
-     * @param rn AmountOfSubstance...; the other scalars
-     * @return AmountOfSubstance; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static AmountOfSubstance min(final AmountOfSubstance r1, final AmountOfSubstance r2, final AmountOfSubstance... rn)
     {
@@ -166,8 +166,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
      * Returns a AmountOfSubstance representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a AmountOfSubstance
-     * @return AmountOfSubstance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a AmountOfSubstance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -194,9 +194,9 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Returns a AmountOfSubstance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return AmountOfSubstance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -215,8 +215,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Calculate the division of AmountOfSubstance and AmountOfSubstance, which results in a Dimensionless scalar.
-     * @param v AmountOfSubstance; scalar
-     * @return Dimensionless; scalar as a division of AmountOfSubstance and AmountOfSubstance
+     * @param v scalar
+     * @return scalar as a division of AmountOfSubstance and AmountOfSubstance
      */
     public final Dimensionless divide(final AmountOfSubstance v)
     {
@@ -225,8 +225,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Calculate the division of AmountOfSubstance and CatalyticActivity, which results in a Duration scalar.
-     * @param v AmountOfSubstance; scalar
-     * @return Duration; scalar as a division of AmountOfSubstance and CatalyticActivity
+     * @param v scalar
+     * @return scalar as a division of AmountOfSubstance and CatalyticActivity
      */
     public final Duration divide(final CatalyticActivity v)
     {
@@ -235,8 +235,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
 
     /**
      * Calculate the division of AmountOfSubstance and Duration, which results in a CatalyticActivity scalar.
-     * @param v AmountOfSubstance; scalar
-     * @return CatalyticActivity; scalar as a division of AmountOfSubstance and Duration
+     * @param v scalar
+     * @return scalar as a division of AmountOfSubstance and Duration
      */
     public final CatalyticActivity divide(final Duration v)
     {

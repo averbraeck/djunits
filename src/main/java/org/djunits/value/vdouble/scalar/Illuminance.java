@@ -51,8 +51,8 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Construct Illuminance scalar.
-     * @param value double; the double value
-     * @param unit IlluminanceUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public Illuminance(final double value, final IlluminanceUnit unit)
     {
@@ -61,7 +61,7 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Construct Illuminance scalar.
-     * @param value Illuminance; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Illuminance(final Illuminance value)
     {
@@ -76,8 +76,8 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Construct Illuminance scalar.
-     * @param value double; the double value in SI units
-     * @return Illuminance; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Illuminance instantiateSI(final double value)
     {
@@ -86,10 +86,10 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Interpolate between two values.
-     * @param zero Illuminance; the low value
-     * @param one Illuminance; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Illuminance; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Illuminance interpolate(final Illuminance zero, final Illuminance one, final double ratio)
     {
@@ -99,9 +99,9 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Illuminance; the first scalar
-     * @param r2 Illuminance; the second scalar
-     * @return Illuminance; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Illuminance max(final Illuminance r1, final Illuminance r2)
     {
@@ -110,10 +110,10 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Illuminance; the first scalar
-     * @param r2 Illuminance; the second scalar
-     * @param rn Illuminance...; the other scalars
-     * @return Illuminance; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Illuminance max(final Illuminance r1, final Illuminance r2, final Illuminance... rn)
     {
@@ -130,9 +130,9 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Illuminance; the first scalar
-     * @param r2 Illuminance; the second scalar
-     * @return Illuminance; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Illuminance min(final Illuminance r1, final Illuminance r2)
     {
@@ -141,10 +141,10 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Illuminance; the first scalar
-     * @param r2 Illuminance; the second scalar
-     * @param rn Illuminance...; the other scalars
-     * @return Illuminance; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Illuminance min(final Illuminance r1, final Illuminance r2, final Illuminance... rn)
     {
@@ -163,8 +163,8 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
      * Returns a Illuminance representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Illuminance
-     * @return Illuminance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Illuminance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -192,9 +192,9 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Returns a Illuminance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Illuminance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -212,8 +212,8 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Calculate the division of Illuminance and Illuminance, which results in a Dimensionless scalar.
-     * @param v Illuminance; scalar
-     * @return Dimensionless; scalar as a division of Illuminance and Illuminance
+     * @param v scalar
+     * @return scalar as a division of Illuminance and Illuminance
      */
     public final Dimensionless divide(final Illuminance v)
     {
@@ -222,8 +222,8 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 
     /**
      * Calculate the multiplication of Illuminance and Area, which results in a LuminousFlux scalar.
-     * @param v Illuminance; scalar
-     * @return LuminousFlux; scalar as a multiplication of Illuminance and Area
+     * @param v scalar
+     * @return scalar as a multiplication of Illuminance and Area
      */
     public final LuminousFlux times(final Area v)
     {

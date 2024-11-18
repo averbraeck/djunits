@@ -57,7 +57,7 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Construct FloatMass scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatMass(final float value, final MassUnit unit)
@@ -76,7 +76,7 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Construct FloatMass scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatMass(final double value, final MassUnit unit)
@@ -92,7 +92,7 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Construct FloatMass scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatMass instantiateSI(final float value)
@@ -104,7 +104,7 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatMass interpolate(final FloatMass zero, final FloatMass one, final float ratio)
@@ -179,8 +179,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
      * Returns a FloatMass representation of a textual representation of a value with a unit. The String representation that can
      * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatMass
-     * @return FloatMass; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatMass
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -208,9 +208,9 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Returns a FloatMass based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatMass; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -252,8 +252,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the division of FloatMass and FloatMass, which results in a FloatDimensionless scalar.
-     * @param v FloatMass; scalar
-     * @return FloatDimensionless; scalar as a division of FloatMass and FloatMass
+     * @param v scalar
+     * @return scalar as a division of FloatMass and FloatMass
      */
     public final FloatDimensionless divide(final FloatMass v)
     {
@@ -262,8 +262,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the division of FloatMass and FloatFlowMass, which results in a FloatDuration scalar.
-     * @param v FloatMass; scalar
-     * @return FloatDuration; scalar as a division of FloatMass and FloatFlowMass
+     * @param v scalar
+     * @return scalar as a division of FloatMass and FloatFlowMass
      */
     public final FloatDuration divide(final FloatFlowMass v)
     {
@@ -272,8 +272,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the division of FloatMass and FloatDuration, which results in a FloatFlowMass scalar.
-     * @param v FloatMass; scalar
-     * @return FloatFlowMass; scalar as a division of FloatMass and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatMass and FloatDuration
      */
     public final FloatFlowMass divide(final FloatDuration v)
     {
@@ -282,8 +282,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the multiplication of FloatMass and FloatAcceleration, which results in a FloatForce scalar.
-     * @param v FloatMass; scalar
-     * @return FloatForce; scalar as a multiplication of FloatMass and FloatAcceleration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatMass and FloatAcceleration
      */
     public final FloatForce times(final FloatAcceleration v)
     {
@@ -292,8 +292,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the multiplication of FloatMass and FloatFrequency, which results in a FloatFlowMass scalar.
-     * @param v FloatMass; scalar
-     * @return FloatFlowMass; scalar as a multiplication of FloatMass and FloatFrequency
+     * @param v scalar
+     * @return scalar as a multiplication of FloatMass and FloatFrequency
      */
     public final FloatFlowMass times(final FloatFrequency v)
     {
@@ -302,8 +302,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the division of FloatMass and FloatDensity, which results in a FloatVolume scalar.
-     * @param v FloatMass; scalar
-     * @return FloatVolume; scalar as a division of FloatMass and FloatDensity
+     * @param v scalar
+     * @return scalar as a division of FloatMass and FloatDensity
      */
     public final FloatVolume divide(final FloatDensity v)
     {
@@ -312,8 +312,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the division of FloatMass and FloatVolume, which results in a FloatDensity scalar.
-     * @param v FloatMass; scalar
-     * @return FloatDensity; scalar as a division of FloatMass and FloatVolume
+     * @param v scalar
+     * @return scalar as a division of FloatMass and FloatVolume
      */
     public final FloatDensity divide(final FloatVolume v)
     {
@@ -322,8 +322,8 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
 
     /**
      * Calculate the multiplication of FloatMass and FloatSpeed, which results in a FloatMomentum scalar.
-     * @param v FloatMass; scalar
-     * @return FloatMomentum; scalar as a multiplication of FloatMass and FloatSpeed
+     * @param v scalar
+     * @return scalar as a multiplication of FloatMass and FloatSpeed
      */
     public final FloatMomentum times(final FloatSpeed v)
     {

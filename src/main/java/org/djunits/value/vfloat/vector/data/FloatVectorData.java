@@ -36,7 +36,7 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Construct a new FloatVectorData object.
-     * @param storageType StorageType; the data type.
+     * @param storageType the data type.
      */
     FloatVectorData(final StorageType storageType)
     {
@@ -49,10 +49,10 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param values float[]; the (SI) values to store
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
-     * @return FloatVectorData; the FloatVectorData with the right data type
+     * @param values the (SI) values to store
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
+     * @return the FloatVectorData with the right data type
      * @throws NullPointerException when values are null, or storageType is null
      */
     public static FloatVectorData instantiate(final float[] values, final Scale scale, final StorageType storageType)
@@ -76,11 +76,11 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param values List&lt;? extends Number&gt;; the values to store, can either be a list of numbers, or a list of
+     * @param values the values to store, can either be a list of numbers, or a list of
      *            FloatScalars
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
-     * @return FloatVectorData; the FloatVectorData with the right data type
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
+     * @return the FloatVectorData with the right data type
      * @throws NullPointerException when list is null, or storageType is null
      */
     public static FloatVectorData instantiate(final List<? extends Number> values, final Scale scale,
@@ -108,9 +108,9 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param values S[]; the values to store
-     * @param storageType StorageType; the data type to use
-     * @return FloatVectorData; the FloatVectorData with the right data type
+     * @param values the values to store
+     * @param storageType the data type to use
+     * @return the FloatVectorData with the right data type
      * @throws NullPointerException when values is null, or storageType is null
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
@@ -141,11 +141,11 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param valueMap Map&lt;Integer,? extends Number&gt;; the values to store; either Numbers or FloatScalars
-     * @param size int; the size of the vector to pad with 0 after last entry in map
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
-     * @return FloatVectorData; the FloatVectorData with the right data type
+     * @param valueMap the values to store; either Numbers or FloatScalars
+     * @param size the size of the vector to pad with 0 after last entry in map
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
+     * @return the FloatVectorData with the right data type
      * @throws IllegalArgumentException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
      * @throws IndexOutOfBoundsException when one of the keys is out of range with the given size
@@ -244,39 +244,39 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Retrieve the size of the vector.
-     * @return int; the size of the vector
+     * @return the size of the vector
      */
     public abstract int size();
 
     /**
      * Return the densely stored equivalent of this data.
-     * @return FloatVectorDataDense; the dense transformation of this data
+     * @return the dense transformation of this data
      */
     public abstract FloatVectorDataDense toDense();
 
     /**
      * Return the sparsely stored equivalent of this data.
-     * @return FloatVectorDataSparse; the sparse transformation of this data
+     * @return the sparse transformation of this data
      */
     public abstract FloatVectorDataSparse toSparse();
 
     /**
      * Retrieve the SI value of one element of this data.
-     * @param index int; the index to get the value for
+     * @param index the index to get the value for
      * @return the value at the index
      */
     public abstract float getSI(int index);
 
     /**
      * Sets a value at the index in the vector.
-     * @param index int; the index to set the value for
-     * @param valueSI float; the value at the index
+     * @param index the index to set the value for
+     * @param valueSI the value at the index
      */
     public abstract void setSI(int index, float valueSI);
 
     /**
      * Compute and return the sum of all values.
-     * @return double; the sum of the values of all cells
+     * @return the sum of the values of all cells
      */
     public final float zSum()
     {
@@ -286,13 +286,13 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Create and return a dense copy of the data.
-     * @return float[]; a safe copy of VectorSI
+     * @return a safe copy of VectorSI
      */
     public abstract float[] getDenseVectorSI();
 
     /**
      * Check the sizes of this data object and the other data object.
-     * @param other FloatVectorData; the other data object
+     * @param other the other data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     protected void checkSizes(final FloatVectorData other) throws ValueRuntimeException
@@ -309,16 +309,16 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Apply an operation to each cell.
-     * @param floatFunction FloatFunction; the operation to apply
-     * @return FloatVectorData; this (modified) float vector data object
+     * @param floatFunction the operation to apply
+     * @return this (modified) float vector data object
      */
     public abstract FloatVectorData assign(FloatFunction floatFunction);
 
     /**
      * Apply a binary operation on a cell by cell basis.
-     * @param floatFunction2 FloatFunction2; the binary operation to apply
-     * @param right FloatVectorData; the right operand for the binary operation
-     * @return DoubleMatrixData; this (modified) float vector data object
+     * @param floatFunction2 the binary operation to apply
+     * @param right the right operand for the binary operation
+     * @return this (modified) float vector data object
      * @throws ValueRuntimeException when the sizes of the vectors do not match
      */
     abstract FloatVectorData assign(FloatFunction2 floatFunction2, FloatVectorData right) throws ValueRuntimeException;
@@ -326,16 +326,16 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /**
      * Add two vectors on a cell-by-cell basis. If both vectors are sparse, a sparse vector is returned, otherwise a dense
      * vector is returned.
-     * @param right FloatVectorData; the other data object to add
-     * @return FloatVectorData; the sum of this data object and the other data object
+     * @param right the other data object to add
+     * @return the sum of this data object and the other data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract FloatVectorData plus(FloatVectorData right) throws ValueRuntimeException;
 
     /**
      * Add a vector to this vector on a cell-by-cell basis. The type of vector (sparse, dense) stays the same.
-     * @param right FloatVectorData; the other data object to add
-     * @return FloatVectorData; this modified float vector data object
+     * @param right the other data object to add
+     * @return this modified float vector data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final FloatVectorData incrementBy(final FloatVectorData right) throws ValueRuntimeException
@@ -353,16 +353,16 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /**
      * Subtract two vectors on a cell-by-cell basis. If both vectors are sparse, a sparse vector is returned, otherwise a dense
      * vector is returned.
-     * @param right FloatVectorData; the other data object to subtract
-     * @return FloatVectorData; the difference of this data object and the other data object
+     * @param right the other data object to subtract
+     * @return the difference of this data object and the other data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract FloatVectorData minus(FloatVectorData right) throws ValueRuntimeException;
 
     /**
      * Subtract a vector from this vector on a cell-by-cell basis. The type of vector (sparse, dense) stays the same.
-     * @param right FloatVectorData; the other data object to subtract
-     * @return FloatVectorData; this modified float vector data object
+     * @param right the other data object to subtract
+     * @return this modified float vector data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final FloatVectorData decrementBy(final FloatVectorData right) throws ValueRuntimeException
@@ -380,8 +380,8 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /**
      * Multiply two vector on a cell-by-cell basis. If both vectors are dense, a dense vector is returned, otherwise a sparse
      * vector is returned.
-     * @param right FloatVectorData; the other data object to multiply with
-     * @return FloatVectorData; a new double vector data store holding the result of the multiplications
+     * @param right the other data object to multiply with
+     * @return a new double vector data store holding the result of the multiplications
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract FloatVectorData times(FloatVectorData right) throws ValueRuntimeException;
@@ -389,8 +389,8 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /**
      * Multiply a vector with the values of another vector on a cell-by-cell basis. The type of vector (sparse, dense) stays the
      * same.
-     * @param right FloatVectorData; the other data object to multiply with
-     * @return FloatVectorData; this modified float vector data store
+     * @param right the other data object to multiply with
+     * @return this modified float vector data store
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final FloatVectorData multiplyBy(final FloatVectorData right) throws ValueRuntimeException
@@ -409,8 +409,8 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /**
      * Divide two vectors on a cell-by-cell basis. If this vector is sparse and <code>right</code> is dense, a sparse vector is
      * returned, otherwise a dense vector is returned.
-     * @param right FloatVectorData; the other data object to divide by
-     * @return FloatVectorData; the ratios of the values of this data object and the other data object
+     * @param right the other data object to divide by
+     * @return the ratios of the values of this data object and the other data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract FloatVectorData divide(FloatVectorData right) throws ValueRuntimeException;
@@ -418,8 +418,8 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
     /**
      * Divide the values of a vector by the values of another vector on a cell-by-cell basis. The type of vector (sparse, dense)
      * stays the same.
-     * @param right FloatVectorData; the other data object to divide by
-     * @return FloatVectorData; this modified float vector data store
+     * @param right the other data object to divide by
+     * @return this modified float vector data store
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final FloatVectorData divideBy(final FloatVectorData right) throws ValueRuntimeException
@@ -453,9 +453,9 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Compare contents of a dense and a sparse vector.
-     * @param dm FloatVectorDataDense; the dense vector
-     * @param sm FloatVectorDataSparse; the sparse vector
-     * @return boolean; true if the contents are equal
+     * @param dm the dense vector
+     * @param sm the sparse vector
+     * @return true if the contents are equal
      */
     protected boolean compareDenseVectorWithSparseVector(final FloatVectorDataDense dm, final FloatVectorDataSparse sm)
     {

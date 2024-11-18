@@ -58,7 +58,7 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
 
     /**
      * Construct FloatElectricalPotential scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatElectricalPotential(final float value, final ElectricalPotentialUnit unit)
@@ -77,7 +77,7 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
 
     /**
      * Construct FloatElectricalPotential scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatElectricalPotential(final double value, final ElectricalPotentialUnit unit)
@@ -93,7 +93,7 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
 
     /**
      * Construct FloatElectricalPotential scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatElectricalPotential instantiateSI(final float value)
@@ -105,7 +105,7 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatElectricalPotential interpolate(final FloatElectricalPotential zero, final FloatElectricalPotential one,
@@ -183,8 +183,8 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
      * Returns a FloatElectricalPotential representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatElectricalPotential
-     * @return FloatElectricalPotential; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatElectricalPotential
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -212,9 +212,9 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
 
     /**
      * Returns a FloatElectricalPotential based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatElectricalPotential; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -234,8 +234,8 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
     /**
      * Calculate the division of FloatElectricalPotential and FloatElectricalPotential, which results in a FloatDimensionless
      * scalar.
-     * @param v FloatElectricalPotential; scalar
-     * @return FloatDimensionless; scalar as a division of FloatElectricalPotential and FloatElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalPotential and FloatElectricalPotential
      */
     public final FloatDimensionless divide(final FloatElectricalPotential v)
     {
@@ -245,8 +245,8 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
     /**
      * Calculate the multiplication of FloatElectricalPotential and FloatElectricalCurrent, which results in a FloatPower
      * scalar.
-     * @param v FloatElectricalPotential; scalar
-     * @return FloatPower; scalar as a multiplication of FloatElectricalPotential and FloatElectricalCurrent
+     * @param v scalar
+     * @return scalar as a multiplication of FloatElectricalPotential and FloatElectricalCurrent
      */
     public final FloatPower times(final FloatElectricalCurrent v)
     {
@@ -256,8 +256,8 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
     /**
      * Calculate the division of FloatElectricalPotential and FloatElectricalCurrent, which results in a
      * FloatElectricalResistance scalar.
-     * @param v FloatElectricalPotential; scalar
-     * @return FloatElectricalResistance; scalar as a division of FloatElectricalPotential and FloatElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalPotential and FloatElectricalCurrent
      */
     public final FloatElectricalResistance divide(final FloatElectricalCurrent v)
     {
@@ -267,8 +267,8 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
     /**
      * Calculate the division of FloatElectricalPotential and FloatElectricalResistance, which results in a
      * FloatElectricalCurrent scalar.
-     * @param v FloatElectricalPotential; scalar
-     * @return FloatElectricalCurrent; scalar as a division of FloatElectricalPotential and FloatElectricalResistance
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalPotential and FloatElectricalResistance
      */
     public final FloatElectricalCurrent divide(final FloatElectricalResistance v)
     {
@@ -277,8 +277,8 @@ public class FloatElectricalPotential extends FloatScalarRel<ElectricalPotential
 
     /**
      * Calculate the multiplication of FloatElectricalPotential and FloatDuration, which results in a FloatMagneticFlux scalar.
-     * @param v FloatElectricalPotential; scalar
-     * @return FloatMagneticFlux; scalar as a multiplication of FloatElectricalPotential and FloatDuration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatElectricalPotential and FloatDuration
      */
     public final FloatMagneticFlux times(final FloatDuration v)
     {

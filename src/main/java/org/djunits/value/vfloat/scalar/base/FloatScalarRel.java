@@ -25,8 +25,8 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Construct a new Relative Immutable FloatScalar.
-     * @param value float; the value of the new Relative Immutable FloatScalar
-     * @param unit U; the unit of the new Relative Immutable FloatScalar
+     * @param value the value of the new Relative Immutable FloatScalar
+     * @param unit the unit of the new Relative Immutable FloatScalar
      */
     public FloatScalarRel(final float value, final U unit)
     {
@@ -35,7 +35,7 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Construct a new Relative Immutable FloatScalar from an existing Relative Immutable FloatScalar.
-     * @param value R, a relative typed FloatScalar; the reference
+     * @param value the reference
      */
     public FloatScalarRel(final R value)
     {
@@ -44,8 +44,8 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Construct a new Relative Immutable FloatScalar of the right type. Each extending class must implement this method.
-     * @param value float; the float value
-     * @param unit U; the unit
+     * @param value the float value
+     * @param unit the unit
      * @return R a new relative instance of the FloatScalar of the right type
      */
     public abstract R instantiateRel(float value, U unit);
@@ -76,8 +76,8 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Multiply this scalar by another scalar and create a new scalar.
-     * @param otherScalar FloatScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
-     * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
+     * @param otherScalar the value by which this scalar is multiplied
+     * @return a new scalar instance with correct SI dimensions
      */
     public FloatSIScalar times(final FloatScalarRel<?, ?> otherScalar)
     {
@@ -86,14 +86,14 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
 
     /**
      * Create the reciprocal of this scalar with the correct dimensions.
-     * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
+     * @return a new scalar instance with correct SI dimensions
      */
     public abstract FloatScalarRel<?, ?> reciprocal();
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
-     * @param otherScalar FloatScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
-     * @return FloatScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
+     * @param otherScalar the value by which this scalar is divided
+     * @return a new scalar instance with correct SI dimensions
      */
     public FloatSIScalar divide(final FloatScalarRel<?, ?> otherScalar)
     {

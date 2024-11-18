@@ -54,8 +54,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Construct LuminousFlux scalar.
-     * @param value double; the double value
-     * @param unit LuminousFluxUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public LuminousFlux(final double value, final LuminousFluxUnit unit)
     {
@@ -64,7 +64,7 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Construct LuminousFlux scalar.
-     * @param value LuminousFlux; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public LuminousFlux(final LuminousFlux value)
     {
@@ -79,8 +79,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Construct LuminousFlux scalar.
-     * @param value double; the double value in SI units
-     * @return LuminousFlux; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final LuminousFlux instantiateSI(final double value)
     {
@@ -89,10 +89,10 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Interpolate between two values.
-     * @param zero LuminousFlux; the low value
-     * @param one LuminousFlux; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return LuminousFlux; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static LuminousFlux interpolate(final LuminousFlux zero, final LuminousFlux one, final double ratio)
     {
@@ -102,9 +102,9 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 LuminousFlux; the first scalar
-     * @param r2 LuminousFlux; the second scalar
-     * @return LuminousFlux; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static LuminousFlux max(final LuminousFlux r1, final LuminousFlux r2)
     {
@@ -113,10 +113,10 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 LuminousFlux; the first scalar
-     * @param r2 LuminousFlux; the second scalar
-     * @param rn LuminousFlux...; the other scalars
-     * @return LuminousFlux; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static LuminousFlux max(final LuminousFlux r1, final LuminousFlux r2, final LuminousFlux... rn)
     {
@@ -133,9 +133,9 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 LuminousFlux; the first scalar
-     * @param r2 LuminousFlux; the second scalar
-     * @return LuminousFlux; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static LuminousFlux min(final LuminousFlux r1, final LuminousFlux r2)
     {
@@ -144,10 +144,10 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 LuminousFlux; the first scalar
-     * @param r2 LuminousFlux; the second scalar
-     * @param rn LuminousFlux...; the other scalars
-     * @return LuminousFlux; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static LuminousFlux min(final LuminousFlux r1, final LuminousFlux r2, final LuminousFlux... rn)
     {
@@ -166,8 +166,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
      * Returns a LuminousFlux representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a LuminousFlux
-     * @return LuminousFlux; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a LuminousFlux
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -195,9 +195,9 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Returns a LuminousFlux based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return LuminousFlux; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -215,8 +215,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Calculate the division of LuminousFlux and LuminousFlux, which results in a Dimensionless scalar.
-     * @param v LuminousFlux; scalar
-     * @return Dimensionless; scalar as a division of LuminousFlux and LuminousFlux
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and LuminousFlux
      */
     public final Dimensionless divide(final LuminousFlux v)
     {
@@ -225,8 +225,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Calculate the division of LuminousFlux and Area, which results in a Illuminance scalar.
-     * @param v LuminousFlux; scalar
-     * @return Illuminance; scalar as a division of LuminousFlux and Area
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and Area
      */
     public final Illuminance divide(final Area v)
     {
@@ -235,8 +235,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Calculate the division of LuminousFlux and Illuminance, which results in a Area scalar.
-     * @param v LuminousFlux; scalar
-     * @return Area; scalar as a division of LuminousFlux and Illuminance
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and Illuminance
      */
     public final Area divide(final Illuminance v)
     {
@@ -245,8 +245,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Calculate the division of LuminousFlux and LuminousIntensity, which results in a SolidAngle scalar.
-     * @param v LuminousFlux; scalar
-     * @return SolidAngle; scalar as a division of LuminousFlux and LuminousIntensity
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and LuminousIntensity
      */
     public final SolidAngle divide(final LuminousIntensity v)
     {
@@ -255,8 +255,8 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
 
     /**
      * Calculate the division of LuminousFlux and SolidAngle, which results in a LuminousIntensity scalar.
-     * @param v LuminousFlux; scalar
-     * @return LuminousIntensity; scalar as a division of LuminousFlux and SolidAngle
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and SolidAngle
      */
     public final LuminousIntensity divide(final SolidAngle v)
     {

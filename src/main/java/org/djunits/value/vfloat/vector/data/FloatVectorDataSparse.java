@@ -30,9 +30,9 @@ public class FloatVectorDataSparse extends FloatVectorData
 
     /**
      * Create a vector with sparse data.
-     * @param vectorSI float[]; the data to store
-     * @param indices int[]; the index values of the Vector
-     * @param size int; the length of the vector (padded with 0 after highest index in indices)
+     * @param vectorSI the data to store
+     * @param indices the index values of the Vector
+     * @param size the length of the vector (padded with 0 after highest index in indices)
      */
     public FloatVectorDataSparse(final float[] vectorSI, final int[] indices, final int size)
     {
@@ -356,7 +356,7 @@ public class FloatVectorDataSparse extends FloatVectorData
 
     /**
      * Instantiate a FloatVectorDataSparse from an array.
-     * @param valuesSI float[]; the (SI) values to store
+     * @param valuesSI the (SI) values to store
      * @return the FloatVectorDataSparse
      */
     public static FloatVectorDataSparse instantiate(final float[] valuesSI)

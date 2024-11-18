@@ -23,7 +23,7 @@ public abstract class Storage<T extends Storage<T>> implements Cloneable, Serial
 
     /**
      * Construct a new Data store.
-     * @param storageType StorageType; the data type
+     * @param storageType the data type
      */
     public Storage(final StorageType storageType)
     {
@@ -42,7 +42,7 @@ public abstract class Storage<T extends Storage<T>> implements Cloneable, Serial
 
     /**
      * Is this indexed value dense?
-     * @return boolean; true if the data storage type is dense; false if the data storage type is not dense
+     * @return true if the data storage type is dense; false if the data storage type is not dense
      */
     public final boolean isDense()
     {
@@ -51,7 +51,7 @@ public abstract class Storage<T extends Storage<T>> implements Cloneable, Serial
 
     /**
      * Is this indexed value sparse?
-     * @return boolean; true if the data storage type is sparse; false if the data storage type is not sparse
+     * @return true if the data storage type is sparse; false if the data storage type is not sparse
      */
     public final boolean isSparse()
     {
@@ -60,13 +60,13 @@ public abstract class Storage<T extends Storage<T>> implements Cloneable, Serial
 
     /**
      * Compute and return the number of non-zero cells in this indexed value.
-     * @return int; the number of non-zero cells
+     * @return the number of non-zero cells
      */
     public abstract int cardinality();
 
     /**
      * Create and return a deep copy of the data.
-     * @return T; a deep copy of the data
+     * @return a deep copy of the data
      */
     public abstract T copy();
 

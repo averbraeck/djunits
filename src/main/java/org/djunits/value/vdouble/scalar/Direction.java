@@ -31,8 +31,8 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Construct Direction scalar.
-     * @param value double; value
-     * @param unit DirectionUnit; unit for the double value
+     * @param value value
+     * @param unit unit for the double value
      */
     public Direction(final double value, final DirectionUnit unit)
     {
@@ -41,7 +41,7 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Construct Direction scalar.
-     * @param value Direction; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Direction(final Direction value)
     {
@@ -62,8 +62,8 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Construct Direction scalar.
-     * @param value double; value in SI units
-     * @return Direction; the new scalar with the SI value
+     * @param value value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Direction instantiateSI(final double value)
     {
@@ -72,10 +72,10 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Interpolate between two values.
-     * @param zero Direction; the low value
-     * @param one Direction; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Direction; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Direction interpolate(final Direction zero, final Direction one, final double ratio)
     {
@@ -85,9 +85,9 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Return the maximum value of two absolute scalars.
-     * @param a1 Direction; the first scalar
-     * @param a2 Direction; the second scalar
-     * @return Direction; the maximum value of two absolute scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @return the maximum value of two absolute scalars
      */
     public static Direction max(final Direction a1, final Direction a2)
     {
@@ -96,9 +96,9 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Return the maximum value of more than two absolute scalars.
-     * @param a1 Direction; the first scalar
-     * @param a2 Direction; the second scalar
-     * @param an Direction...; the other scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @param an the other scalars
      * @return the maximum value of more than two absolute scalars
      */
     public static Direction max(final Direction a1, final Direction a2, final Direction... an)
@@ -116,8 +116,8 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Return the minimum value of two absolute scalars.
-     * @param a1 Direction; the first scalar
-     * @param a2 Direction; the second scalar
+     * @param a1 the first scalar
+     * @param a2 the second scalar
      * @return the minimum value of two absolute scalars
      */
     public static Direction min(final Direction a1, final Direction a2)
@@ -127,9 +127,9 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Return the minimum value of more than two absolute scalars.
-     * @param a1 Direction; the first scalar
-     * @param a2 Direction; the second scalar
-     * @param an Direction...; the other scalars
+     * @param a1 the first scalar
+     * @param a2 the second scalar
+     * @param an the other scalars
      * @return the minimum value of more than two absolute scalars
      */
     public static Direction min(final Direction a1, final Direction a2, final Direction... an)
@@ -149,8 +149,8 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
      * Returns a Direction representation of a textual representation of a value with a unit. The String representation that can
      * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Direction
-     * @return Direction; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Direction
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -178,9 +178,9 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
 
     /**
      * Returns a Direction based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Direction; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */

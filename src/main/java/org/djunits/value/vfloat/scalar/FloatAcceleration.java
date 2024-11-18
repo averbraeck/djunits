@@ -56,7 +56,7 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Construct FloatAcceleration scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatAcceleration(final float value, final AccelerationUnit unit)
@@ -75,7 +75,7 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Construct FloatAcceleration scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatAcceleration(final double value, final AccelerationUnit unit)
@@ -91,7 +91,7 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Construct FloatAcceleration scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatAcceleration instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatAcceleration interpolate(final FloatAcceleration zero, final FloatAcceleration one, final float ratio)
@@ -178,8 +178,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
      * Returns a FloatAcceleration representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatAcceleration
-     * @return FloatAcceleration; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatAcceleration
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -206,9 +206,9 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Returns a FloatAcceleration based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatAcceleration; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -227,8 +227,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Calculate the division of FloatAcceleration and FloatAcceleration, which results in a FloatDimensionless scalar.
-     * @param v FloatAcceleration; scalar
-     * @return FloatDimensionless; scalar as a division of FloatAcceleration and FloatAcceleration
+     * @param v scalar
+     * @return scalar as a division of FloatAcceleration and FloatAcceleration
      */
     public final FloatDimensionless divide(final FloatAcceleration v)
     {
@@ -237,8 +237,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Calculate the multiplication of FloatAcceleration and FloatMass, which results in a FloatForce scalar.
-     * @param v FloatAcceleration; scalar
-     * @return FloatForce; scalar as a multiplication of FloatAcceleration and FloatMass
+     * @param v scalar
+     * @return scalar as a multiplication of FloatAcceleration and FloatMass
      */
     public final FloatForce times(final FloatMass v)
     {
@@ -247,8 +247,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Calculate the multiplication of FloatAcceleration and FloatDuration, which results in a FloatSpeed scalar.
-     * @param v FloatAcceleration; scalar
-     * @return FloatSpeed; scalar as a multiplication of FloatAcceleration and FloatDuration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatAcceleration and FloatDuration
      */
     public final FloatSpeed times(final FloatDuration v)
     {
@@ -257,8 +257,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Calculate the division of FloatAcceleration and FloatFrequency, which results in a FloatSpeed scalar.
-     * @param v FloatAcceleration; scalar
-     * @return FloatSpeed; scalar as a division of FloatAcceleration and FloatFrequency
+     * @param v scalar
+     * @return scalar as a division of FloatAcceleration and FloatFrequency
      */
     public final FloatSpeed divide(final FloatFrequency v)
     {
@@ -267,8 +267,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Calculate the division of FloatAcceleration and FloatSpeed, which results in a FloatFrequency scalar.
-     * @param v FloatAcceleration; scalar
-     * @return FloatFrequency; scalar as a division of FloatAcceleration and FloatSpeed
+     * @param v scalar
+     * @return scalar as a division of FloatAcceleration and FloatSpeed
      */
     public final FloatFrequency divide(final FloatSpeed v)
     {
@@ -277,8 +277,8 @@ public class FloatAcceleration extends FloatScalarRel<AccelerationUnit, FloatAcc
 
     /**
      * Calculate the multiplication of FloatAcceleration and FloatMomentum, which results in a FloatPower scalar.
-     * @param v FloatAcceleration; scalar
-     * @return FloatPower; scalar as a multiplication of FloatAcceleration and FloatMomentum
+     * @param v scalar
+     * @return scalar as a multiplication of FloatAcceleration and FloatMomentum
      */
     public final FloatPower times(final FloatMomentum v)
     {

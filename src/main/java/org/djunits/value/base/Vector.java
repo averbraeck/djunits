@@ -29,7 +29,7 @@ public abstract class Vector<U extends Unit<U>, S extends Scalar<U, S>, V extend
 
     /**
      * Construct a new Vector.
-     * @param displayUnit U; the unit of the new AbstractValue
+     * @param displayUnit the unit of the new AbstractValue
      */
     public Vector(final U displayUnit)
     {
@@ -38,27 +38,27 @@ public abstract class Vector<U extends Unit<U>, S extends Scalar<U, S>, V extend
 
     /**
      * Retrieve the size of the vector.
-     * @return int; the size of the vector
+     * @return the size of the vector
      */
     public abstract int size();
 
     /**
      * Retrieve a value from the vector.
-     * @param index int; the index to retrieve the value at
-     * @return S; the value as a Scalar
+     * @param index the index to retrieve the value at
+     * @return the value as a Scalar
      * @throws IndexOutOfBoundsException in case index is out of bounds
      */
     public abstract S get(int index) throws IndexOutOfBoundsException;
 
     /**
      * Return the vector as an array of scalars.
-     * @return S[]; the vector as an array of scalars
+     * @return the vector as an array of scalars
      */
     public abstract S[] getScalars();
 
     /**
      * Create and return an iterator over the scalars in this vector in proper sequence.
-     * @return Iterator&lt;S&gt;; an iterator over the scalars in this vector in proper sequence
+     * @return an iterator over the scalars in this vector in proper sequence
      */
     @Override
     public abstract Iterator<S> iterator();

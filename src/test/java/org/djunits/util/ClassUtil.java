@@ -636,7 +636,7 @@ public final class ClassUtil
     /**
      * converts an array of objects to their corresponding classes.
      * @param array the array to invoke
-     * @return Class&lt;?&gt;[] the result;
+     * @return the classes as an array
      */
     public static Class<?>[] getClass(final Object[] array)
     {

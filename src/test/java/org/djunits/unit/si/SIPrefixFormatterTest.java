@@ -41,7 +41,7 @@ public class SIPrefixFormatterTest
 
     /**
      * Perform all checks using the specified exponent value.
-     * @param value double; the value
+     * @param value the value
      */
     public static void checks(final double value)
     {
@@ -56,8 +56,8 @@ public class SIPrefixFormatterTest
 
     /**
      * Check the formatting for Mass.
-     * @param value double; the value
-     * @param sign boolean; if true; invert the value
+     * @param value the value
+     * @param sign if true; invert the value
      */
     public static void checkMass(final double value, final boolean sign)
     {
@@ -79,8 +79,8 @@ public class SIPrefixFormatterTest
 
     /**
      * Check the formatting for Energy.
-     * @param value double; the value
-     * @param sign boolean; if true; invert the value
+     * @param value the value
+     * @param sign if true; invert the value
      */
     public static void checkEnergy(final double value, final boolean sign)
     {
@@ -102,8 +102,8 @@ public class SIPrefixFormatterTest
 
     /**
      * Check the formatting for Temperature.
-     * @param value double; the value
-     * @param sign boolean; if true; invert the value
+     * @param value the value
+     * @param sign if true; invert the value
      */
     public static void checkTemperature(final double value, final boolean sign)
     {
@@ -126,8 +126,8 @@ public class SIPrefixFormatterTest
 
     /**
      * Check the formatting for DimensionLess.
-     * @param value double; the value
-     * @param sign boolean; if true; invert the value
+     * @param value the value
+     * @param sign if true; invert the value
      */
     public static void checkDimensionless(final double value, final boolean sign)
     {

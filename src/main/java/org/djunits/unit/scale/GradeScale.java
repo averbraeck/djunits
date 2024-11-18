@@ -21,7 +21,7 @@ public class GradeScale implements Scale
 
     /**
      * Construct a Scale for transforming a slope as a grade, where 45 degrees is 1, and 90 degrees is infinite, to radians.
-     * @param conversionFactorToGrade double; the conversion factor by which this number has to be multiplied to convert it to
+     * @param conversionFactorToGrade the conversion factor by which this number has to be multiplied to convert it to
      *            the standard (e.g., SI) unit.
      */
     public GradeScale(final double conversionFactorToGrade)

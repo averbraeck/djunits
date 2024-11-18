@@ -55,7 +55,7 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
 
     /**
      * Construct FloatLuminousIntensity scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatLuminousIntensity(final float value, final LuminousIntensityUnit unit)
@@ -74,7 +74,7 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
 
     /**
      * Construct FloatLuminousIntensity scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatLuminousIntensity(final double value, final LuminousIntensityUnit unit)
@@ -90,7 +90,7 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
 
     /**
      * Construct FloatLuminousIntensity scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatLuminousIntensity instantiateSI(final float value)
@@ -102,7 +102,7 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatLuminousIntensity interpolate(final FloatLuminousIntensity zero, final FloatLuminousIntensity one,
@@ -180,8 +180,8 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
      * Returns a FloatLuminousIntensity representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatLuminousIntensity
-     * @return FloatLuminousIntensity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatLuminousIntensity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -209,9 +209,9 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
 
     /**
      * Returns a FloatLuminousIntensity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatLuminousIntensity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -231,8 +231,8 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
     /**
      * Calculate the division of FloatLuminousIntensity and FloatLuminousIntensity, which results in a FloatDimensionless
      * scalar.
-     * @param v FloatLuminousIntensity; scalar
-     * @return FloatDimensionless; scalar as a division of FloatLuminousIntensity and FloatLuminousIntensity
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousIntensity and FloatLuminousIntensity
      */
     public final FloatDimensionless divide(final FloatLuminousIntensity v)
     {
@@ -241,8 +241,8 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
 
     /**
      * Calculate the multiplication of FloatLuminousIntensity and FloatSolidAngle, which results in a FloatLuminousFlux scalar.
-     * @param v FloatLuminousIntensity; scalar
-     * @return FloatLuminousFlux; scalar as a multiplication of FloatLuminousIntensity and FloatSolidAngle
+     * @param v scalar
+     * @return scalar as a multiplication of FloatLuminousIntensity and FloatSolidAngle
      */
     public final FloatLuminousFlux times(final FloatSolidAngle v)
     {

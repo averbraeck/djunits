@@ -54,8 +54,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Construct CatalyticActivity scalar.
-     * @param value double; the double value
-     * @param unit CatalyticActivityUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public CatalyticActivity(final double value, final CatalyticActivityUnit unit)
     {
@@ -64,7 +64,7 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Construct CatalyticActivity scalar.
-     * @param value CatalyticActivity; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public CatalyticActivity(final CatalyticActivity value)
     {
@@ -79,8 +79,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Construct CatalyticActivity scalar.
-     * @param value double; the double value in SI units
-     * @return CatalyticActivity; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final CatalyticActivity instantiateSI(final double value)
     {
@@ -89,10 +89,10 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Interpolate between two values.
-     * @param zero CatalyticActivity; the low value
-     * @param one CatalyticActivity; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return CatalyticActivity; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static CatalyticActivity interpolate(final CatalyticActivity zero, final CatalyticActivity one, final double ratio)
     {
@@ -102,9 +102,9 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 CatalyticActivity; the first scalar
-     * @param r2 CatalyticActivity; the second scalar
-     * @return CatalyticActivity; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static CatalyticActivity max(final CatalyticActivity r1, final CatalyticActivity r2)
     {
@@ -113,10 +113,10 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 CatalyticActivity; the first scalar
-     * @param r2 CatalyticActivity; the second scalar
-     * @param rn CatalyticActivity...; the other scalars
-     * @return CatalyticActivity; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static CatalyticActivity max(final CatalyticActivity r1, final CatalyticActivity r2, final CatalyticActivity... rn)
     {
@@ -133,9 +133,9 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 CatalyticActivity; the first scalar
-     * @param r2 CatalyticActivity; the second scalar
-     * @return CatalyticActivity; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static CatalyticActivity min(final CatalyticActivity r1, final CatalyticActivity r2)
     {
@@ -144,10 +144,10 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 CatalyticActivity; the first scalar
-     * @param r2 CatalyticActivity; the second scalar
-     * @param rn CatalyticActivity...; the other scalars
-     * @return CatalyticActivity; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static CatalyticActivity min(final CatalyticActivity r1, final CatalyticActivity r2, final CatalyticActivity... rn)
     {
@@ -166,8 +166,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
      * Returns a CatalyticActivity representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a CatalyticActivity
-     * @return CatalyticActivity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a CatalyticActivity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -194,9 +194,9 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Returns a CatalyticActivity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return CatalyticActivity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -215,8 +215,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Calculate the division of CatalyticActivity and CatalyticActivity, which results in a Dimensionless scalar.
-     * @param v CatalyticActivity; scalar
-     * @return Dimensionless; scalar as a division of CatalyticActivity and CatalyticActivity
+     * @param v scalar
+     * @return scalar as a division of CatalyticActivity and CatalyticActivity
      */
     public final Dimensionless divide(final CatalyticActivity v)
     {
@@ -225,8 +225,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Calculate the multiplication of CatalyticActivity and Duration, which results in a AmountOfSubstance scalar.
-     * @param v CatalyticActivity; scalar
-     * @return AmountOfSubstance; scalar as a multiplication of CatalyticActivity and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of CatalyticActivity and Duration
      */
     public final AmountOfSubstance times(final Duration v)
     {
@@ -235,8 +235,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Calculate the division of CatalyticActivity and AmountOfSubstance, which results in a Frequency scalar.
-     * @param v CatalyticActivity; scalar
-     * @return Frequency; scalar as a division of CatalyticActivity and AmountOfSubstance
+     * @param v scalar
+     * @return scalar as a division of CatalyticActivity and AmountOfSubstance
      */
     public final Frequency divide(final AmountOfSubstance v)
     {
@@ -245,8 +245,8 @@ public class CatalyticActivity extends DoubleScalarRel<CatalyticActivityUnit, Ca
 
     /**
      * Calculate the division of CatalyticActivity and Frequency, which results in a AmountOfSubstance scalar.
-     * @param v CatalyticActivity; scalar
-     * @return AmountOfSubstance; scalar as a division of CatalyticActivity and Frequency
+     * @param v scalar
+     * @return scalar as a division of CatalyticActivity and Frequency
      */
     public final AmountOfSubstance divide(final Frequency v)
     {

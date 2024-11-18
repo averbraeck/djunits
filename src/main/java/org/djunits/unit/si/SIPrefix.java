@@ -31,10 +31,10 @@ public class SIPrefix implements Serializable
 
     /**
      * Construct an SI prefix.
-     * @param defaultTextualPrefix String; the prefix abbreviation, duch as "M" for mega and "da" for deca
-     * @param prefixName String; the prefix name such as "mega" or "deca"
-     * @param factor double; the factor that the SI prefix represents, such as 1.0E6 for mega
-     * @param defaultDisplayPrefix the display prefix; "\u03BC" for micro
+     * @param defaultTextualPrefix the prefix abbreviation, duch as "M" for mega and "da" for deca
+     * @param prefixName the prefix name such as "mega" or "deca"
+     * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
+     * @param defaultDisplayPrefix "\u03BC" for micro
      */
     public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor,
             final String defaultDisplayPrefix)
@@ -51,9 +51,9 @@ public class SIPrefix implements Serializable
 
     /**
      * Construct an SI prefix with the defaultDisplayPrefix equal to the defaultTextualPrefix.
-     * @param defaultTextualPrefix String; the prefix abbreviation, duch as "M" for mega and "da" for deca
-     * @param prefixName String; the prefix name such as "mega" or "deca"
-     * @param factor double; the factor that the SI prefix represents, such as 1.0E6 for mega
+     * @param defaultTextualPrefix the prefix abbreviation, duch as "M" for mega and "da" for deca
+     * @param prefixName the prefix name such as "mega" or "deca"
+     * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
      */
     public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor)
     {
@@ -62,7 +62,7 @@ public class SIPrefix implements Serializable
 
     /**
      * Retrieve the default textual prefix.
-     * @return String; the default textual prefix
+     * @return the default textual prefix
      */
     public String getDefaultTextualPrefix()
     {
@@ -71,7 +71,7 @@ public class SIPrefix implements Serializable
 
     /**
      * Retrieve the prefix name.
-     * @return String; the prefix name
+     * @return the prefix name
      */
     public String getPrefixName()
     {
@@ -80,7 +80,7 @@ public class SIPrefix implements Serializable
 
     /**
      * Retrieve the factor.
-     * @return double; the factor
+     * @return the factor
      */
     public double getFactor()
     {
@@ -89,7 +89,7 @@ public class SIPrefix implements Serializable
 
     /**
      * Retrieve the default display prefix.
-     * @return String; the default display prefix
+     * @return the default display prefix
      */
     public String getDefaultDisplayPrefix()
     {

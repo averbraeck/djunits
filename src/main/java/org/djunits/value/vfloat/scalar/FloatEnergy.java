@@ -58,7 +58,7 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Construct FloatEnergy scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatEnergy(final float value, final EnergyUnit unit)
@@ -77,7 +77,7 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Construct FloatEnergy scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatEnergy(final double value, final EnergyUnit unit)
@@ -93,7 +93,7 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Construct FloatEnergy scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatEnergy instantiateSI(final float value)
@@ -105,7 +105,7 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatEnergy interpolate(final FloatEnergy zero, final FloatEnergy one, final float ratio)
@@ -180,8 +180,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
      * Returns a FloatEnergy representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatEnergy
-     * @return FloatEnergy; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatEnergy
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -209,9 +209,9 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Returns a FloatEnergy based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatEnergy; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -229,8 +229,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatEnergy, which results in a FloatDimensionless scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatDimensionless; scalar as a division of FloatEnergy and FloatEnergy
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatEnergy
      */
     public final FloatDimensionless divide(final FloatEnergy v)
     {
@@ -239,8 +239,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatForce, which results in a FloatLength scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatLength; scalar as a division of FloatEnergy and FloatForce
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatForce
      */
     public final FloatLength divide(final FloatForce v)
     {
@@ -249,8 +249,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatLength, which results in a FloatForce scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatForce; scalar as a division of FloatEnergy and FloatLength
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatLength
      */
     public final FloatForce divide(final FloatLength v)
     {
@@ -259,8 +259,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the multiplication of FloatEnergy and FloatLinearDensity, which results in a FloatForce scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatForce; scalar as a multiplication of FloatEnergy and FloatLinearDensity
+     * @param v scalar
+     * @return scalar as a multiplication of FloatEnergy and FloatLinearDensity
      */
     public final FloatForce times(final FloatLinearDensity v)
     {
@@ -269,8 +269,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatDuration, which results in a FloatPower scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatPower; scalar as a division of FloatEnergy and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatDuration
      */
     public final FloatPower divide(final FloatDuration v)
     {
@@ -279,8 +279,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatPower, which results in a FloatDuration scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatDuration; scalar as a division of FloatEnergy and FloatPower
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatPower
      */
     public final FloatDuration divide(final FloatPower v)
     {
@@ -289,8 +289,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatVolume, which results in a FloatPressure scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatPressure; scalar as a division of FloatEnergy and FloatVolume
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatVolume
      */
     public final FloatPressure divide(final FloatVolume v)
     {
@@ -299,8 +299,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatPressure, which results in a FloatVolume scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatVolume; scalar as a division of FloatEnergy and FloatPressure
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatPressure
      */
     public final FloatVolume divide(final FloatPressure v)
     {
@@ -309,8 +309,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the multiplication of FloatEnergy and FloatFrequency, which results in a FloatPower scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatPower; scalar as a multiplication of FloatEnergy and FloatFrequency
+     * @param v scalar
+     * @return scalar as a multiplication of FloatEnergy and FloatFrequency
      */
     public final FloatPower times(final FloatFrequency v)
     {
@@ -319,8 +319,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatSpeed, which results in a FloatMomentum scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatMomentum; scalar as a division of FloatEnergy and FloatSpeed
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatSpeed
      */
     public final FloatMomentum divide(final FloatSpeed v)
     {
@@ -329,8 +329,8 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
 
     /**
      * Calculate the division of FloatEnergy and FloatMomentum, which results in a FloatSpeed scalar.
-     * @param v FloatEnergy; scalar
-     * @return FloatSpeed; scalar as a division of FloatEnergy and FloatMomentum
+     * @param v scalar
+     * @return scalar as a division of FloatEnergy and FloatMomentum
      */
     public final FloatSpeed divide(final FloatMomentum v)
     {

@@ -31,7 +31,7 @@ public final class DOUBLEMATRIX
      * Return a rectangular array with all values != 0.
      * @param rows the number of rows
      * @param cols the number of columns
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param random whether values will contain a random element or are fully predictable
      * @return an array with all nonzero values
      */
     public static double[][] denseRectArrays(final int rows, final int cols, final boolean random)
@@ -54,7 +54,7 @@ public final class DOUBLEMATRIX
      * Return a rectangular array with only nonzero values on the diagonal.
      * @param rows the number of rows
      * @param cols the number of columns
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param random whether values will contain a random element or are fully predictable
      * @return an array with only nonzero values on the diagonal
      */
     public static double[][] sparseRectArrays(final int rows, final int cols, final boolean random)
@@ -78,8 +78,8 @@ public final class DOUBLEMATRIX
      * @param rows the number of rows
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
-     * @param unit U; the unit to use for construction
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param unit the unit to use for construction
+     * @param random whether values will contain a random element or are fully predictable
      * @return an array with all nonzero values
      * @param <U> the unit type
      * @param <S> the scalar type
@@ -113,8 +113,8 @@ public final class DOUBLEMATRIX
      * @param rows the number of rows
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
-     * @param unit U; the unit to use for construction
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param unit the unit to use for construction
+     * @param random whether values will contain a random element or are fully predictable
      * @return an array with only nonzero values on the diagonal
      * @param <U> the unit type
      * @param <S> the scalar type
@@ -150,7 +150,7 @@ public final class DOUBLEMATRIX
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
      * @param unit U the unit
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param random whether values will contain a random element or are fully predictable
      * @return a collection with all nonzero values
      * @param <U> the unit type
      * @param <S> the scalar type
@@ -186,7 +186,7 @@ public final class DOUBLEMATRIX
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
      * @param unit U the unit
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param random whether values will contain a random element or are fully predictable
      * @return a collection with only nonzero values on the diagonal
      * @param <U> the unit type
      * @param <S> the scalar type
@@ -205,7 +205,7 @@ public final class DOUBLEMATRIX
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
      * @param unit U the unit
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param random whether values will contain a random element or are fully predictable
      * @return a collection with only nonzero values on the diagonal
      * @param <U> the unit type
      * @param <S> the scalar type
@@ -244,7 +244,7 @@ public final class DOUBLEMATRIX
      * @param cols the number of columns
      * @param scalarClass the class of scalars to use
      * @param unit U the unit
-     * @param random boolean; whether values will contain a random element or are fully predictable
+     * @param random whether values will contain a random element or are fully predictable
      * @return a collection with only nonzero values on the diagonal
      * @param <U> the unit type
      * @param <S> the scalar type

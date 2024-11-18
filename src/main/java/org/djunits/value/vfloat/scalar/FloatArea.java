@@ -56,7 +56,7 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Construct FloatArea scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatArea(final float value, final AreaUnit unit)
@@ -75,7 +75,7 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Construct FloatArea scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatArea(final double value, final AreaUnit unit)
@@ -91,7 +91,7 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Construct FloatArea scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatArea instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatArea interpolate(final FloatArea zero, final FloatArea one, final float ratio)
@@ -178,8 +178,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
      * Returns a FloatArea representation of a textual representation of a value with a unit. The String representation that can
      * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatArea
-     * @return FloatArea; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatArea
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -207,9 +207,9 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Returns a FloatArea based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatArea; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -227,8 +227,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the division of FloatArea and FloatArea, which results in a FloatDimensionless scalar.
-     * @param v FloatArea; scalar
-     * @return FloatDimensionless; scalar as a division of FloatArea and FloatArea
+     * @param v scalar
+     * @return scalar as a division of FloatArea and FloatArea
      */
     public final FloatDimensionless divide(final FloatArea v)
     {
@@ -237,8 +237,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the multiplication of FloatArea and FloatLength, which results in a FloatVolume scalar.
-     * @param v FloatArea; scalar
-     * @return FloatVolume; scalar as a multiplication of FloatArea and FloatLength
+     * @param v scalar
+     * @return scalar as a multiplication of FloatArea and FloatLength
      */
     public final FloatVolume times(final FloatLength v)
     {
@@ -247,8 +247,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the division of FloatArea and FloatLinearDensity, which results in a FloatVolume scalar.
-     * @param v FloatArea; scalar
-     * @return FloatVolume; scalar as a division of FloatArea and FloatLinearDensity
+     * @param v scalar
+     * @return scalar as a division of FloatArea and FloatLinearDensity
      */
     public final FloatVolume divide(final FloatLinearDensity v)
     {
@@ -257,8 +257,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the division of FloatArea and FloatVolume, which results in a FloatLinearDensity scalar.
-     * @param v FloatArea; scalar
-     * @return FloatLinearDensity; scalar as a division of FloatArea and FloatVolume
+     * @param v scalar
+     * @return scalar as a division of FloatArea and FloatVolume
      */
     public final FloatLinearDensity divide(final FloatVolume v)
     {
@@ -267,8 +267,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the division of FloatArea and FloatLength, which results in a FloatLength scalar.
-     * @param v FloatArea; scalar
-     * @return FloatLength; scalar as a division of FloatArea and FloatLength
+     * @param v scalar
+     * @return scalar as a division of FloatArea and FloatLength
      */
     public final FloatLength divide(final FloatLength v)
     {
@@ -277,8 +277,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the multiplication of FloatArea and FloatLinearDensity, which results in a FloatLength scalar.
-     * @param v FloatArea; scalar
-     * @return FloatLength; scalar as a multiplication of FloatArea and FloatLinearDensity
+     * @param v scalar
+     * @return scalar as a multiplication of FloatArea and FloatLinearDensity
      */
     public final FloatLength times(final FloatLinearDensity v)
     {
@@ -287,8 +287,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the multiplication of FloatArea and FloatSpeed, which results in a FloatFlowVolume scalar.
-     * @param v FloatArea; scalar
-     * @return FloatFlowVolume; scalar as a multiplication of FloatArea and FloatSpeed
+     * @param v scalar
+     * @return scalar as a multiplication of FloatArea and FloatSpeed
      */
     public final FloatFlowVolume times(final FloatSpeed v)
     {
@@ -297,8 +297,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the multiplication of FloatArea and FloatPressure, which results in a FloatForce scalar.
-     * @param v FloatArea; scalar
-     * @return FloatForce; scalar as a multiplication of FloatArea and FloatPressure
+     * @param v scalar
+     * @return scalar as a multiplication of FloatArea and FloatPressure
      */
     public final FloatForce times(final FloatPressure v)
     {
@@ -307,8 +307,8 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
 
     /**
      * Calculate the multiplication of FloatArea and FloatIlluminance, which results in a FloatLuminousFlux scalar.
-     * @param v FloatArea; scalar
-     * @return FloatLuminousFlux; scalar as a multiplication of FloatArea and FloatIlluminance
+     * @param v scalar
+     * @return scalar as a multiplication of FloatArea and FloatIlluminance
      */
     public final FloatLuminousFlux times(final FloatIlluminance v)
     {

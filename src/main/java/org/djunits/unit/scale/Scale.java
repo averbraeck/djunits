@@ -16,14 +16,14 @@ public interface Scale extends Serializable
 {
     /**
      * Convert a value to an SI value using this scale.
-     * @param value double; the value to convert
+     * @param value the value to convert
      * @return the corresponding SI value
      */
     double toStandardUnit(double value);
 
     /**
      * Convert a value from an SI value to a value in the unit that uses this scale.
-     * @param value double; the value to convert
+     * @param value the value to convert
      * @return the corresponding value in the given unit
      */
     double fromStandardUnit(double value);
@@ -32,7 +32,7 @@ public interface Scale extends Serializable
      * Return whether a scale is a 'standard' scale that would belong to an SI unit. For a linear scale, any scale with
      * conversion factor 1 would be considered standard. For an offset scale, it would be considered standard if the offset is 0
      * and the conversion factor is 1.
-     * @return boolean; whether the scale is a 'standard' scale that would belong to an SI unit.
+     * @return whether the scale is a 'standard' scale that would belong to an SI unit.
      */
     boolean isBaseSIScale();
 

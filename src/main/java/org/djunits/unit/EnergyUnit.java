@@ -131,9 +131,9 @@ public class EnergyUnit extends Unit<EnergyUnit>
 
     /**
      * Determine the conversion factor to the base energy unit, given a force unit and a length unit.
-     * @param force ForceUnit; the used force unit, e.g. lbf
-     * @param distance LengthUnit; the used length unit, e.g. ft
-     * @return double; the conversion factor from the provided units (e.g. ft.lbf) to the standard unit (e.g., J)
+     * @param force the used force unit, e.g. lbf
+     * @param distance the used length unit, e.g. ft
+     * @return the conversion factor from the provided units (e.g. ft.lbf) to the standard unit (e.g., J)
      */
     private static double factorFL(final ForceUnit force, final LengthUnit distance)
     {

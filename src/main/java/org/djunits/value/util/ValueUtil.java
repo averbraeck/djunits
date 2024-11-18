@@ -24,9 +24,9 @@ public final class ValueUtil
 
     /**
      * Convert a value in a given unit into the equivalent in the standard SI unit.
-     * @param value double; the value to convert into the standard SI unit
-     * @param unit Unit&lt;?&gt;; the unit of the given value
-     * @return double; the value in the standard SI unit
+     * @param value the value to convert into the standard SI unit
+     * @param unit the unit of the given value
+     * @return the value in the standard SI unit
      */
     public static double expressAsSIUnit(final double value, final Unit<?> unit)
     {
@@ -36,9 +36,9 @@ public final class ValueUtil
 
     /**
      * Convert a value from the standard SI unit into a compatible unit.
-     * @param siValue double; the given value in the standard SI unit
-     * @param targetUnit Unit&lt;?&gt;; the unit to convert the value into
-     * @return double; the value in the targetUnit
+     * @param siValue the given value in the standard SI unit
+     * @param targetUnit the unit to convert the value into
+     * @return the value in the targetUnit
      */
     public static double expressAsUnit(final double siValue, final Unit<?> targetUnit)
     {

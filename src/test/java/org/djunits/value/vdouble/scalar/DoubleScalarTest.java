@@ -42,11 +42,11 @@ public class DoubleScalarTest
 {
     /**
      * Check that the value in a DoubleScalarmatches the expected value.
-     * @param ds DoubleScalar&lt;?&gt;; the DoubleScalar to match
-     * @param reference double; the reference value
-     * @param precision double; the maximum allowed error
-     * @param u Unit&lt;?&gt;; the expected type
-     * @param expectAbsolute boolean; if true; ds should be Absolute; if false; ds should be Relative
+     * @param ds the DoubleScalar to match
+     * @param reference the reference value
+     * @param precision the maximum allowed error
+     * @param u the expected type
+     * @param expectAbsolute if true; ds should be Absolute; if false; ds should be Relative
      */
     private static void checkContentsAndType(final DoubleScalar<?, ?> ds, final double reference, final double precision,
             final Unit<?> u, final boolean expectAbsolute)
@@ -681,7 +681,7 @@ public class DoubleScalarTest
     interface DoubleToDouble
     {
         /**
-         * @param d double; value
+         * @param d value
          * @return double value
          */
         double function(double d);
@@ -692,11 +692,11 @@ public class DoubleScalarTest
     {
         /**
          * Test a math function.
-         * @param inputValue double; unprocessed value
-         * @param operation String; description of method that is being tested
-         * @param actualResult DoubleScalar&lt;?&gt;; the actual result of the operation
-         * @param precision double; expected accuracy
-         * @param function DoubleToDouble; encapsulated function that converts one inputValue to an outputValue
+         * @param inputValue unprocessed value
+         * @param operation description of method that is being tested
+         * @param actualResult the actual result of the operation
+         * @param precision expected accuracy
+         * @param function encapsulated function that converts one inputValue to an outputValue
          */
         public static void tester(final double inputValue, final String operation, final DoubleScalar<?, ?> actualResult,
                 final double precision, final DoubleToDouble function)

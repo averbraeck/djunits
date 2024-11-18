@@ -56,8 +56,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Construct Torque scalar.
-     * @param value double; the double value
-     * @param unit TorqueUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public Torque(final double value, final TorqueUnit unit)
     {
@@ -66,7 +66,7 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Construct Torque scalar.
-     * @param value Torque; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Torque(final Torque value)
     {
@@ -81,8 +81,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Construct Torque scalar.
-     * @param value double; the double value in SI units
-     * @return Torque; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Torque instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Interpolate between two values.
-     * @param zero Torque; the low value
-     * @param one Torque; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Torque; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Torque interpolate(final Torque zero, final Torque one, final double ratio)
     {
@@ -103,9 +103,9 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Torque; the first scalar
-     * @param r2 Torque; the second scalar
-     * @return Torque; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Torque max(final Torque r1, final Torque r2)
     {
@@ -114,10 +114,10 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Torque; the first scalar
-     * @param r2 Torque; the second scalar
-     * @param rn Torque...; the other scalars
-     * @return Torque; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Torque max(final Torque r1, final Torque r2, final Torque... rn)
     {
@@ -134,9 +134,9 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Torque; the first scalar
-     * @param r2 Torque; the second scalar
-     * @return Torque; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Torque min(final Torque r1, final Torque r2)
     {
@@ -145,10 +145,10 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Torque; the first scalar
-     * @param r2 Torque; the second scalar
-     * @param rn Torque...; the other scalars
-     * @return Torque; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Torque min(final Torque r1, final Torque r2, final Torque... rn)
     {
@@ -167,8 +167,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
      * Returns a Torque representation of a textual representation of a value with a unit. The String representation that can be
      * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
      * but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Torque
-     * @return Torque; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Torque
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -196,9 +196,9 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Returns a Torque based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Torque; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -216,8 +216,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Torque, which results in a Dimensionless scalar.
-     * @param v Torque; scalar
-     * @return Dimensionless; scalar as a division of Torque and Torque
+     * @param v scalar
+     * @return scalar as a division of Torque and Torque
      */
     public final Dimensionless divide(final Torque v)
     {
@@ -226,8 +226,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Force, which results in a Length scalar.
-     * @param v Torque; scalar
-     * @return Length; scalar as a division of Torque and Force
+     * @param v scalar
+     * @return scalar as a division of Torque and Force
      */
     public final Length divide(final Force v)
     {
@@ -236,8 +236,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Length, which results in a Force scalar.
-     * @param v Torque; scalar
-     * @return Force; scalar as a division of Torque and Length
+     * @param v scalar
+     * @return scalar as a division of Torque and Length
      */
     public final Force divide(final Length v)
     {
@@ -246,8 +246,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the multiplication of Torque and LinearDensity, which results in a Force scalar.
-     * @param v Torque; scalar
-     * @return Force; scalar as a multiplication of Torque and LinearDensity
+     * @param v scalar
+     * @return scalar as a multiplication of Torque and LinearDensity
      */
     public final Force times(final LinearDensity v)
     {
@@ -256,8 +256,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Duration, which results in a Power scalar.
-     * @param v Torque; scalar
-     * @return Power; scalar as a division of Torque and Duration
+     * @param v scalar
+     * @return scalar as a division of Torque and Duration
      */
     public final Power divide(final Duration v)
     {
@@ -266,8 +266,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Power, which results in a Duration scalar.
-     * @param v Torque; scalar
-     * @return Duration; scalar as a division of Torque and Power
+     * @param v scalar
+     * @return scalar as a division of Torque and Power
      */
     public final Duration divide(final Power v)
     {
@@ -276,8 +276,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the multiplication of Torque and Frequency, which results in a Power scalar.
-     * @param v Torque; scalar
-     * @return Power; scalar as a multiplication of Torque and Frequency
+     * @param v scalar
+     * @return scalar as a multiplication of Torque and Frequency
      */
     public final Power times(final Frequency v)
     {
@@ -286,8 +286,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Volume, which results in a Pressure scalar.
-     * @param v Torque; scalar
-     * @return Pressure; scalar as a division of Torque and Volume
+     * @param v scalar
+     * @return scalar as a division of Torque and Volume
      */
     public final Pressure divide(final Volume v)
     {
@@ -296,8 +296,8 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
 
     /**
      * Calculate the division of Torque and Pressure, which results in a Volume scalar.
-     * @param v Torque; scalar
-     * @return Volume; scalar as a division of Torque and Pressure
+     * @param v scalar
+     * @return scalar as a division of Torque and Pressure
      */
     public final Volume divide(final Pressure v)
     {

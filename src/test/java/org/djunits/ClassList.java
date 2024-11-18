@@ -56,9 +56,9 @@ public final class ClassList
 
     /**
      * Recursively load names from a resource tree.
-     * @param element String; root of the tree to load
-     * @param pattern Pattern; only return names matching this pattern
-     * @return Collection&lt;String&gt;; a list of names
+     * @param element root of the tree to load
+     * @param pattern only return names matching this pattern
+     * @return a list of names
      */
     private static Collection<String> getResources(final String element, final Pattern pattern)
     {
@@ -77,9 +77,9 @@ public final class ClassList
 
     /**
      * Recursively load names from a jar file.
-     * @param file File; root of the tree to load
-     * @param pattern Pattern; only return names matching this pattern
-     * @return Collection&lt;String&gt;; a list of names
+     * @param file root of the tree to load
+     * @param pattern only return names matching this pattern
+     * @return a list of names
      */
     private static Collection<String> getResourcesFromJarFile(final File file, final Pattern pattern)
     {
@@ -121,9 +121,9 @@ public final class ClassList
 
     /**
      * Recursively load names from a directory.
-     * @param directory File; root of the tree to load
-     * @param pattern Pattern; only return names matching this pattern
-     * @return Collection&lt;String&gt;; a list of names
+     * @param directory root of the tree to load
+     * @param pattern only return names matching this pattern
+     * @return a list of names
      */
     private static Collection<String> getResourcesFromDirectory(final File directory, final Pattern pattern)
     {
@@ -162,8 +162,8 @@ public final class ClassList
     /**
      * Return a List of all the classes under a package. Test-classes are excluded from the result.
      * @param packageRoot String package name
-     * @param excludeInterfaces boolean; if true; interfaces are excluded from the result
-     * @return Collection&lt;Class&lt;?&gt;&gt;; the classes under the package
+     * @param excludeInterfaces if true; interfaces are excluded from the result
+     * @return the classes under the package
      */
     public static Collection<Class<?>> classList(final String packageRoot, final boolean excludeInterfaces)
     {
@@ -219,8 +219,8 @@ public final class ClassList
 
     /**
      * Determine if a class is an anonymous inner class.
-     * @param c Class; the class to check
-     * @return boolean; true if <cite>c</cite> is an anonymous inner class; false otherwise
+     * @param c the class to check
+     * @return true if <cite>c</cite> is an anonymous inner class; false otherwise
      */
     public static boolean isAnonymousInnerClass(final Class<?> c)
     {
@@ -245,8 +245,8 @@ public final class ClassList
 
     /**
      * Report if a class has non-static fields.
-     * @param c Class&lt;?&gt;; the class
-     * @return boolean; true if the class has non-static fields
+     * @param c the class
+     * @return true if the class has non-static fields
      */
     public static boolean hasNonStaticFields(final Class<?> c)
     {

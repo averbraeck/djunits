@@ -56,7 +56,7 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Construct FloatAngularVelocity scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatAngularVelocity(final float value, final AngularVelocityUnit unit)
@@ -75,7 +75,7 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Construct FloatAngularVelocity scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatAngularVelocity(final double value, final AngularVelocityUnit unit)
@@ -91,7 +91,7 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Construct FloatAngularVelocity scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatAngularVelocity instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatAngularVelocity interpolate(final FloatAngularVelocity zero, final FloatAngularVelocity one,
@@ -181,8 +181,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
      * Returns a FloatAngularVelocity representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatAngularVelocity
-     * @return FloatAngularVelocity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatAngularVelocity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -210,9 +210,9 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Returns a FloatAngularVelocity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatAngularVelocity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -231,8 +231,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Calculate the division of FloatAngularVelocity and FloatAngularVelocity, which results in a FloatDimensionless scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatDimensionless; scalar as a division of FloatAngularVelocity and FloatAngularVelocity
+     * @param v scalar
+     * @return scalar as a division of FloatAngularVelocity and FloatAngularVelocity
      */
     public final FloatDimensionless divide(final FloatAngularVelocity v)
     {
@@ -241,8 +241,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Calculate the division of FloatAngularVelocity and FloatAngle, which results in a FloatFrequency scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatFrequency; scalar as a division of FloatAngularVelocity and FloatAngle
+     * @param v scalar
+     * @return scalar as a division of FloatAngularVelocity and FloatAngle
      */
     public final FloatFrequency divide(final FloatAngle v)
     {
@@ -251,8 +251,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Calculate the division of FloatAngularVelocity and FloatFrequency, which results in a FloatAngle scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatAngle; scalar as a division of FloatAngularVelocity and FloatFrequency
+     * @param v scalar
+     * @return scalar as a division of FloatAngularVelocity and FloatFrequency
      */
     public final FloatAngle divide(final FloatFrequency v)
     {
@@ -261,8 +261,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Calculate the multiplication of FloatAngularVelocity and FloatDuration, which results in a FloatAngle scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatAngle; scalar as a multiplication of FloatAngularVelocity and FloatDuration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatAngularVelocity and FloatDuration
      */
     public final FloatAngle times(final FloatDuration v)
     {
@@ -271,8 +271,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Calculate the division of FloatAngularVelocity and FloatDuration, which results in a FloatAngularAcceleration scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatAngularAcceleration; scalar as a division of FloatAngularVelocity and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatAngularVelocity and FloatDuration
      */
     public final FloatAngularAcceleration divide(final FloatDuration v)
     {
@@ -281,8 +281,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
 
     /**
      * Calculate the division of FloatAngularVelocity and FloatAngularAcceleration, which results in a FloatDuration scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatDuration; scalar as a division of FloatAngularVelocity and FloatAngularAcceleration
+     * @param v scalar
+     * @return scalar as a division of FloatAngularVelocity and FloatAngularAcceleration
      */
     public final FloatDuration divide(final FloatAngularAcceleration v)
     {
@@ -292,8 +292,8 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
     /**
      * Calculate the multiplication of FloatAngularVelocity and FloatFrequency, which results in a FloatAngularAcceleration
      * scalar.
-     * @param v FloatAngularVelocity; scalar
-     * @return FloatAngularAcceleration; scalar as a multiplication of FloatAngularVelocity and FloatFrequency
+     * @param v scalar
+     * @return scalar as a multiplication of FloatAngularVelocity and FloatFrequency
      */
     public final FloatAngularAcceleration times(final FloatFrequency v)
     {

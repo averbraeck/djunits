@@ -23,7 +23,7 @@ public class DoubleVectorDataDense extends DoubleVectorData
 
     /**
      * Create a vector with dense data.
-     * @param vectorSI double[]; the data to store
+     * @param vectorSI the data to store
      */
     public DoubleVectorDataDense(final double[] vectorSI)
     {

@@ -26,7 +26,7 @@ public class LinearScale implements Scale
 
     /**
      * Construct a Scale for linear transformations.
-     * @param conversionFactorToStandardUnit double; the conversion factor by which this number has to be multiplied to convert
+     * @param conversionFactorToStandardUnit the conversion factor by which this number has to be multiplied to convert
      *            it to the standard (e.g., SI) unit.
      */
     public LinearScale(final double conversionFactorToStandardUnit)
@@ -52,7 +52,7 @@ public class LinearScale implements Scale
 
     /**
      * Retrieve the factor for conversion to the standard unit.
-     * @return double; the factor for conversion to the standard unit
+     * @return the factor for conversion to the standard unit
      */
     public final double getConversionFactorToStandardUnit()
     {

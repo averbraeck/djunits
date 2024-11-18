@@ -30,10 +30,10 @@ public class AngleUnitTest extends AbstractLinearUnitTest<AngleUnit>
     /**
      * Verify one length conversion factor to standard unit and the localization of the name and abbreviation.
      * @param au Unit to check
-     * @param expectedValue Double; expected value of one 'unit to check' in SI units
-     * @param precision Double; precision of verification
-     * @param expectedName String; expected name in the resources
-     * @param expectedAbbreviation String; expected abbreviation in the resources
+     * @param expectedValue expected value of one 'unit to check' in SI units
+     * @param precision precision of verification
+     * @param expectedName expected name in the resources
+     * @param expectedAbbreviation expected abbreviation in the resources
      */
     protected final void checkUnitValueNameAndAbbreviation(final AngleUnit au, final double expectedValue,
             final double precision, final String expectedName, final String expectedAbbreviation)

@@ -96,9 +96,9 @@ public class FlowVolumeUnit extends Unit<FlowVolumeUnit>
 
     /**
      * Determine the conversion factor to the base flow volume unit, given a volume unit and a duration unit.
-     * @param volume VolumeUnit; the used volume unit, e.g. m3
-     * @param duration DurationUnit; the used duration unit, e.g. h
-     * @return double; the conversion factor from the provided units (e.g. m3/h) to the standard unit (e.g., m3/s)
+     * @param volume the used volume unit, e.g. m3
+     * @param duration the used duration unit, e.g. h
+     * @return the conversion factor from the provided units (e.g. m3/h) to the standard unit (e.g., m3/s)
      */
     private static double factorVD(final VolumeUnit volume, final DurationUnit duration)
     {

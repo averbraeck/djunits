@@ -55,8 +55,8 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Construct ElectricalInductance scalar.
-     * @param value double; the double value
-     * @param unit ElectricalInductanceUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalInductance(final double value, final ElectricalInductanceUnit unit)
     {
@@ -65,7 +65,7 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Construct ElectricalInductance scalar.
-     * @param value ElectricalInductance; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalInductance(final ElectricalInductance value)
     {
@@ -80,8 +80,8 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Construct ElectricalInductance scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalInductance; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalInductance instantiateSI(final double value)
     {
@@ -90,10 +90,10 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalInductance; the low value
-     * @param one ElectricalInductance; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalInductance; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalInductance interpolate(final ElectricalInductance zero, final ElectricalInductance one,
             final double ratio)
@@ -104,9 +104,9 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalInductance; the first scalar
-     * @param r2 ElectricalInductance; the second scalar
-     * @return ElectricalInductance; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalInductance max(final ElectricalInductance r1, final ElectricalInductance r2)
     {
@@ -115,10 +115,10 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalInductance; the first scalar
-     * @param r2 ElectricalInductance; the second scalar
-     * @param rn ElectricalInductance...; the other scalars
-     * @return ElectricalInductance; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalInductance max(final ElectricalInductance r1, final ElectricalInductance r2,
             final ElectricalInductance... rn)
@@ -136,9 +136,9 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalInductance; the first scalar
-     * @param r2 ElectricalInductance; the second scalar
-     * @return ElectricalInductance; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalInductance min(final ElectricalInductance r1, final ElectricalInductance r2)
     {
@@ -147,10 +147,10 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalInductance; the first scalar
-     * @param r2 ElectricalInductance; the second scalar
-     * @param rn ElectricalInductance...; the other scalars
-     * @return ElectricalInductance; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalInductance min(final ElectricalInductance r1, final ElectricalInductance r2,
             final ElectricalInductance... rn)
@@ -170,8 +170,8 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
      * Returns a ElectricalInductance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalInductance
-     * @return ElectricalInductance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalInductance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -199,9 +199,9 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Returns a ElectricalInductance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalInductance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -220,8 +220,8 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Calculate the division of ElectricalInductance and ElectricalInductance, which results in a Dimensionless scalar.
-     * @param v ElectricalInductance; scalar
-     * @return Dimensionless; scalar as a division of ElectricalInductance and ElectricalInductance
+     * @param v scalar
+     * @return scalar as a division of ElectricalInductance and ElectricalInductance
      */
     public final Dimensionless divide(final ElectricalInductance v)
     {
@@ -230,8 +230,8 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
 
     /**
      * Calculate the multiplication of ElectricalInductance and ElectricalCurrent, which results in a MagneticFlux scalar.
-     * @param v ElectricalInductance; scalar
-     * @return MagneticFlux; scalar as a multiplication of ElectricalInductance and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalInductance and ElectricalCurrent
      */
     public final MagneticFlux times(final ElectricalCurrent v)
     {

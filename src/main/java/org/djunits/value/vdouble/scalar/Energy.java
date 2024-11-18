@@ -58,8 +58,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Construct Energy scalar.
-     * @param value double; the double value
-     * @param unit EnergyUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public Energy(final double value, final EnergyUnit unit)
     {
@@ -68,7 +68,7 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Construct Energy scalar.
-     * @param value Energy; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Energy(final Energy value)
     {
@@ -83,8 +83,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Construct Energy scalar.
-     * @param value double; the double value in SI units
-     * @return Energy; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Energy instantiateSI(final double value)
     {
@@ -93,10 +93,10 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Interpolate between two values.
-     * @param zero Energy; the low value
-     * @param one Energy; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Energy; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Energy interpolate(final Energy zero, final Energy one, final double ratio)
     {
@@ -105,9 +105,9 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Energy; the first scalar
-     * @param r2 Energy; the second scalar
-     * @return Energy; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Energy max(final Energy r1, final Energy r2)
     {
@@ -116,10 +116,10 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Energy; the first scalar
-     * @param r2 Energy; the second scalar
-     * @param rn Energy...; the other scalars
-     * @return Energy; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Energy max(final Energy r1, final Energy r2, final Energy... rn)
     {
@@ -136,9 +136,9 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Energy; the first scalar
-     * @param r2 Energy; the second scalar
-     * @return Energy; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Energy min(final Energy r1, final Energy r2)
     {
@@ -147,10 +147,10 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Energy; the first scalar
-     * @param r2 Energy; the second scalar
-     * @param rn Energy...; the other scalars
-     * @return Energy; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Energy min(final Energy r1, final Energy r2, final Energy... rn)
     {
@@ -169,8 +169,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
      * Returns a Energy representation of a textual representation of a value with a unit. The String representation that can be
      * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
      * but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Energy
-     * @return Energy; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Energy
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -198,9 +198,9 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Returns a Energy based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Energy; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -218,8 +218,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Energy, which results in a Dimensionless scalar.
-     * @param v Energy; scalar
-     * @return Dimensionless; scalar as a division of Energy and Energy
+     * @param v scalar
+     * @return scalar as a division of Energy and Energy
      */
     public final Dimensionless divide(final Energy v)
     {
@@ -228,8 +228,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Force, which results in a Length scalar.
-     * @param v Energy; scalar
-     * @return Length; scalar as a division of Energy and Force
+     * @param v scalar
+     * @return scalar as a division of Energy and Force
      */
     public final Length divide(final Force v)
     {
@@ -238,8 +238,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Length, which results in a Force scalar.
-     * @param v Energy; scalar
-     * @return Force; scalar as a division of Energy and Length
+     * @param v scalar
+     * @return scalar as a division of Energy and Length
      */
     public final Force divide(final Length v)
     {
@@ -248,8 +248,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the multiplication of Energy and LinearDensity, which results in a Force scalar.
-     * @param v Energy; scalar
-     * @return Force; scalar as a multiplication of Energy and LinearDensity
+     * @param v scalar
+     * @return scalar as a multiplication of Energy and LinearDensity
      */
     public final Force times(final LinearDensity v)
     {
@@ -258,8 +258,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Duration, which results in a Power scalar.
-     * @param v Energy; scalar
-     * @return Power; scalar as a division of Energy and Duration
+     * @param v scalar
+     * @return scalar as a division of Energy and Duration
      */
     public final Power divide(final Duration v)
     {
@@ -268,8 +268,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Power, which results in a Duration scalar.
-     * @param v Energy; scalar
-     * @return Duration; scalar as a division of Energy and Power
+     * @param v scalar
+     * @return scalar as a division of Energy and Power
      */
     public final Duration divide(final Power v)
     {
@@ -278,8 +278,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Volume, which results in a Pressure scalar.
-     * @param v Energy; scalar
-     * @return Pressure; scalar as a division of Energy and Volume
+     * @param v scalar
+     * @return scalar as a division of Energy and Volume
      */
     public final Pressure divide(final Volume v)
     {
@@ -288,8 +288,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Pressure, which results in a Volume scalar.
-     * @param v Energy; scalar
-     * @return Volume; scalar as a division of Energy and Pressure
+     * @param v scalar
+     * @return scalar as a division of Energy and Pressure
      */
     public final Volume divide(final Pressure v)
     {
@@ -298,8 +298,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the multiplication of Energy and Frequency, which results in a Power scalar.
-     * @param v Energy; scalar
-     * @return Power; scalar as a multiplication of Energy and Frequency
+     * @param v scalar
+     * @return scalar as a multiplication of Energy and Frequency
      */
     public final Power times(final Frequency v)
     {
@@ -308,8 +308,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Speed, which results in a Momentum scalar.
-     * @param v Energy; scalar
-     * @return Momentum; scalar as a division of Energy and Speed
+     * @param v scalar
+     * @return scalar as a division of Energy and Speed
      */
     public final Momentum divide(final Speed v)
     {
@@ -318,8 +318,8 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
 
     /**
      * Calculate the division of Energy and Momentum, which results in a Speed scalar.
-     * @param v Energy; scalar
-     * @return Speed; scalar as a division of Energy and Momentum
+     * @param v scalar
+     * @return scalar as a division of Energy and Momentum
      */
     public final Speed divide(final Momentum v)
     {

@@ -136,8 +136,8 @@ public class EngineeringFormatterTest
 
     /**
      * Print result of main value and value plus or minus one ULP.
-     * @param d double; the value
-     * @param width int; width parameter of the converter
+     * @param d the value
+     * @param width width parameter of the converter
      */
     public static void testD(final double d, final int width)
     {
@@ -150,9 +150,9 @@ public class EngineeringFormatterTest
 
     /**
      * Call convert and then verify that the result is an accurate representation of the value.
-     * @param val double; value to convert
-     * @param room int; width of the output of convert
-     * @return String; the converted value
+     * @param val value to convert
+     * @param room width of the output of convert
+     * @return the converted value
      */
     public static String convertAndVerify(final double val, final int room)
     {
@@ -164,9 +164,9 @@ public class EngineeringFormatterTest
     /**
      * Check that a double value is represented by a string as accurately as possible; i.e. the last digit in the mantissa is
      * rounded correctly.
-     * @param value double; the value
-     * @param text String; the textual representation of value
-     * @param room int; the expected length of the text
+     * @param value the value
+     * @param text the textual representation of value
+     * @param room the expected length of the text
      */
     public static void verifyResult(final double value, final String text, final int room)
     {

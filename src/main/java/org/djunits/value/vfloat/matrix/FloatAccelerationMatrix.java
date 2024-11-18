@@ -32,8 +32,8 @@ public class FloatAccelerationMatrix
 
     /**
      * Construct a FloatAccelerationMatrix from an internal data object.
-     * @param data FloatMatrixData; the internal data object for the matrix
-     * @param displayUnit AccelerationUnit; the display unit of the matrix data
+     * @param data the internal data object for the matrix
+     * @param displayUnit the display unit of the matrix data
      */
     public FloatAccelerationMatrix(final FloatMatrixData data, final AccelerationUnit displayUnit)
     {
@@ -45,9 +45,9 @@ public class FloatAccelerationMatrix
     /**
      * Construct a FloatAccelerationMatrix from a float[][] object. The float values are expressed in the displayUnit, and will
      * be printed using the displayUnit.
-     * @param data float[][]; the data for the matrix, expressed in the displayUnit
-     * @param displayUnit AccelerationUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatAccelerationMatrix(final float[][] data, final AccelerationUnit displayUnit, final StorageType storageType)
     {
@@ -57,8 +57,8 @@ public class FloatAccelerationMatrix
     /**
      * Construct a FloatAccelerationMatrix from a float[][] object. The float values are expressed in the displayUnit. Assume
      * that the StorageType is DENSE since we offer the data as an array of an array.
-     * @param data float[][]; the data for the matrix
-     * @param displayUnit AccelerationUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the matrix
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public FloatAccelerationMatrix(final float[][] data, final AccelerationUnit displayUnit)
     {
@@ -67,8 +67,8 @@ public class FloatAccelerationMatrix
 
     /**
      * Construct a FloatAccelerationMatrix from a float[][] object with SI-unit values.
-     * @param data float[][]; the data for the matrix, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatAccelerationMatrix(final float[][] data, final StorageType storageType)
     {
@@ -78,7 +78,7 @@ public class FloatAccelerationMatrix
     /**
      * Construct a FloatAccelerationMatrix from a float[][] object with SI-unit values. Assume that the StorageType is DENSE
      * since we offer the data as an array of an array.
-     * @param data float[][]; the data for the matrix, in SI units
+     * @param data the data for the matrix, in SI units
      */
     public FloatAccelerationMatrix(final float[][] data)
     {
@@ -91,9 +91,9 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from an array of an array of FloatAcceleration objects. The FloatAcceleration values
      * are each expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit when
      * printing.
-     * @param data FloatAcceleration[][]; the data for the matrix
-     * @param displayUnit AccelerationUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatAccelerationMatrix(final FloatAcceleration[][] data, final AccelerationUnit displayUnit,
             final StorageType storageType)
@@ -105,8 +105,8 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from an array of an array of FloatAcceleration objects. The FloatAcceleration values
      * are each expressed in their own unit, but will be internally stored as SI values, all expressed in the displayUnit when
      * printing. Assume that the StorageType is DENSE since we offer the data as an array of an array.
-     * @param data FloatAcceleration[][]; the data for the matrix
-     * @param displayUnit AccelerationUnit; the display unit of the values when printing
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
      */
     public FloatAccelerationMatrix(final FloatAcceleration[][] data, final AccelerationUnit displayUnit)
     {
@@ -117,8 +117,8 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from an array of an array of FloatAcceleration objects. The FloatAcceleration values
      * are each expressed in their own unit, but will be internally stored as SI values, and expressed using SI units when
      * printing. since we offer the data as an array of an array.
-     * @param data FloatAcceleration[][]; the data for the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatAccelerationMatrix(final FloatAcceleration[][] data, final StorageType storageType)
     {
@@ -129,7 +129,7 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from an array of an array of FloatAcceleration objects. The FloatAcceleration values
      * are each expressed in their own unit, but will be internally stored as SI values, and expressed using SI units when
      * printing. Assume that the StorageType is DENSE since we offer the data as an array of an array.
-     * @param data FloatAcceleration[][]; the data for the matrix
+     * @param data the data for the matrix
      */
     public FloatAccelerationMatrix(final FloatAcceleration[][] data)
     {
@@ -141,11 +141,11 @@ public class FloatAccelerationMatrix
     /**
      * Construct a FloatAccelerationMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates the
      * unit in which the values in the collection are expressed, as well as the unit in which they will be printed.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param displayUnit AccelerationUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatAccelerationMatrix(final Collection<FloatSparseValue<AccelerationUnit, FloatAcceleration>> data,
             final AccelerationUnit displayUnit, final int rows, final int cols, final StorageType storageType)
@@ -157,10 +157,10 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates the
      * unit in which the values in the collection are expressed, as well as the unit in which they will be printed. Assume the
      * storage type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param displayUnit AccelerationUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public FloatAccelerationMatrix(final Collection<FloatSparseValue<AccelerationUnit, FloatAcceleration>> data,
             final AccelerationUnit displayUnit, final int rows, final int cols)
@@ -172,10 +172,10 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates the
      * unit in which the values in the collection are expressed, as well as the unit in which they will be printed. Use the SI
      * unit or base unit as the displayUnit.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatAccelerationMatrix(final Collection<FloatSparseValue<AccelerationUnit, FloatAcceleration>> data, final int rows,
             final int cols, final StorageType storageType)
@@ -187,9 +187,9 @@ public class FloatAccelerationMatrix
      * Construct a FloatAccelerationMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit indicates the
      * unit in which the values in the collection are expressed, as well as the unit in which they will be printed. Use the SI
      * unit or base unit as the displayUnit. Assume the storage type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public FloatAccelerationMatrix(final Collection<FloatSparseValue<AccelerationUnit, FloatAcceleration>> data, final int rows,
             final int cols)

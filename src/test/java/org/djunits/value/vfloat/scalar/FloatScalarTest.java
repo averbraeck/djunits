@@ -38,11 +38,11 @@ public class FloatScalarTest
 {
     /**
      * Check that the value in a FloatScalar matches the expected value.
-     * @param ds FloatScalar&lt;?&gt;; the FloatScalar to match
-     * @param reference float; the reference value
-     * @param precision float; the maximum allowed error
-     * @param u Unit&lt;?&gt;; the expected type
-     * @param expectAbsolute boolean; if true; ds should be Absolute; if false; ds should be Relative
+     * @param ds the FloatScalar to match
+     * @param reference the reference value
+     * @param precision the maximum allowed error
+     * @param u the expected type
+     * @param expectAbsolute if true; ds should be Absolute; if false; ds should be Relative
      */
     private static void checkContentsAndType(final FloatScalar<?, ?> ds, final float reference, final float precision,
             final Unit<?> u, final boolean expectAbsolute)
@@ -634,7 +634,7 @@ public class FloatScalarTest
     interface FloatToFloat
     {
         /**
-         * @param d float; value
+         * @param d value
          * @return float value
          */
         float function(float d);
@@ -645,11 +645,11 @@ public class FloatScalarTest
     {
         /**
          * Test a math function.
-         * @param inputValue float; unprocessed value
-         * @param operation String; description of method that is being tested
-         * @param actualResult FloatScalar&lt;?&gt;; the actual result of the operation
-         * @param precision float; expected accuracy
-         * @param function FloatToFloat; encapsulated function that converts one inputValue to an outputValue
+         * @param inputValue unprocessed value
+         * @param operation description of method that is being tested
+         * @param actualResult the actual result of the operation
+         * @param precision expected accuracy
+         * @param function encapsulated function that converts one inputValue to an outputValue
          */
         public static void tester(final float inputValue, final String operation, final FloatScalar<?, ?> actualResult,
                 final float precision, final FloatToFloat function)

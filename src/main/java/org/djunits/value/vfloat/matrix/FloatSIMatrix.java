@@ -74,8 +74,8 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Construct a new Relative FloatSIMatrix on the basis of a data object.
-     * @param data FloatMatrixData; an internal data object
-     * @param displayUnit SIUnit; the display unit
+     * @param data an internal data object
+     * @param displayUnit the display unit
      */
     public FloatSIMatrix(final FloatMatrixData data, final SIUnit displayUnit)
     {
@@ -84,9 +84,9 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Construct a new Relative FloatSIMatrix with a unit for the float values that will also be used for the displayUnit.
-     * @param values float[][]; the values of the entries in the new Relative FloatSIMatrix
-     * @param unit SIUnit; the unit of the new Relative FloatSIMatrix
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
+     * @param values the values of the entries in the new Relative FloatSIMatrix
+     * @param unit the unit of the new Relative FloatSIMatrix
+     * @param storageType the data type to use (e.g., DENSE or SPARSE)
      * @throws ValueRuntimeException when values is null
      */
     public FloatSIMatrix(final float[][] values, final SIUnit unit, final StorageType storageType) throws ValueRuntimeException
@@ -97,8 +97,8 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Construct a new Relative FloatSIMatrix with a unit for the float values that will also be used for the displayUnit.
      * Assume the StorageType is DENSE since we offer the content as an array.
-     * @param values float[][]; the values of the entries in the new Relative FloatSIMatrix
-     * @param unit SIUnit; the unit of the new Relative FloatSIMatrix
+     * @param values the values of the entries in the new Relative FloatSIMatrix
+     * @param unit the unit of the new Relative FloatSIMatrix
      * @throws ValueRuntimeException when values is null
      */
     public FloatSIMatrix(final float[][] values, final SIUnit unit) throws ValueRuntimeException
@@ -120,10 +120,10 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Returns an FloatSIMatrix based on an array of values and the textual representation of the unit.
-     * @param values float[][]; the values to use
-     * @param unitString String; the textual representation of the unit
-     * @param storageType StorageType; the storage type to use
-     * @return FloatSIMatrix; the matrix representation of the values in their unit
+     * @param values the values to use
+     * @param unitString the textual representation of the unit
+     * @param storageType the storage type to use
+     * @return the matrix representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -177,7 +177,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a absorbeddose matrix.
-     * @return FloatAbsorbedDoseMatrix; the current matrix as a absorbeddose matrix
+     * @return the current matrix as a absorbeddose matrix
      */
     public final FloatAbsorbedDoseMatrix asAbsorbedDose()
     {
@@ -189,7 +189,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a absorbeddose matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAbsorbedDoseMatrix; the current matrix as a absorbeddose matrix
+     * @return the current matrix as a absorbeddose matrix
      */
     public final FloatAbsorbedDoseMatrix asAbsorbedDose(final AbsorbedDoseUnit displayUnit)
     {
@@ -202,7 +202,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a acceleration matrix.
-     * @return FloatAccelerationMatrix; the current matrix as a acceleration matrix
+     * @return the current matrix as a acceleration matrix
      */
     public final FloatAccelerationMatrix asAcceleration()
     {
@@ -214,7 +214,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a acceleration matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAccelerationMatrix; the current matrix as a acceleration matrix
+     * @return the current matrix as a acceleration matrix
      */
     public final FloatAccelerationMatrix asAcceleration(final AccelerationUnit displayUnit)
     {
@@ -227,7 +227,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a amountofsubstance matrix.
-     * @return FloatAmountOfSubstanceMatrix; the current matrix as a amountofsubstance matrix
+     * @return the current matrix as a amountofsubstance matrix
      */
     public final FloatAmountOfSubstanceMatrix asAmountOfSubstance()
     {
@@ -239,7 +239,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a amountofsubstance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAmountOfSubstanceMatrix; the current matrix as a amountofsubstance matrix
+     * @return the current matrix as a amountofsubstance matrix
      */
     public final FloatAmountOfSubstanceMatrix asAmountOfSubstance(final AmountOfSubstanceUnit displayUnit)
     {
@@ -252,7 +252,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a angularacceleration matrix.
-     * @return FloatAngularAccelerationMatrix; the current matrix as a angularacceleration matrix
+     * @return the current matrix as a angularacceleration matrix
      */
     public final FloatAngularAccelerationMatrix asAngularAcceleration()
     {
@@ -264,7 +264,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a angularacceleration matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAngularAccelerationMatrix; the current matrix as a angularacceleration matrix
+     * @return the current matrix as a angularacceleration matrix
      */
     public final FloatAngularAccelerationMatrix asAngularAcceleration(final AngularAccelerationUnit displayUnit)
     {
@@ -277,7 +277,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a angularvelocity matrix.
-     * @return FloatAngularVelocityMatrix; the current matrix as a angularvelocity matrix
+     * @return the current matrix as a angularvelocity matrix
      */
     public final FloatAngularVelocityMatrix asAngularVelocity()
     {
@@ -289,7 +289,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a angularvelocity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAngularVelocityMatrix; the current matrix as a angularvelocity matrix
+     * @return the current matrix as a angularvelocity matrix
      */
     public final FloatAngularVelocityMatrix asAngularVelocity(final AngularVelocityUnit displayUnit)
     {
@@ -302,7 +302,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a area matrix.
-     * @return FloatAreaMatrix; the current matrix as a area matrix
+     * @return the current matrix as a area matrix
      */
     public final FloatAreaMatrix asArea()
     {
@@ -314,7 +314,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a area matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAreaMatrix; the current matrix as a area matrix
+     * @return the current matrix as a area matrix
      */
     public final FloatAreaMatrix asArea(final AreaUnit displayUnit)
     {
@@ -327,7 +327,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a catalyticactivity matrix.
-     * @return FloatCatalyticActivityMatrix; the current matrix as a catalyticactivity matrix
+     * @return the current matrix as a catalyticactivity matrix
      */
     public final FloatCatalyticActivityMatrix asCatalyticActivity()
     {
@@ -339,7 +339,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a catalyticactivity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatCatalyticActivityMatrix; the current matrix as a catalyticactivity matrix
+     * @return the current matrix as a catalyticactivity matrix
      */
     public final FloatCatalyticActivityMatrix asCatalyticActivity(final CatalyticActivityUnit displayUnit)
     {
@@ -352,7 +352,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a density matrix.
-     * @return FloatDensityMatrix; the current matrix as a density matrix
+     * @return the current matrix as a density matrix
      */
     public final FloatDensityMatrix asDensity()
     {
@@ -364,7 +364,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a density matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatDensityMatrix; the current matrix as a density matrix
+     * @return the current matrix as a density matrix
      */
     public final FloatDensityMatrix asDensity(final DensityUnit displayUnit)
     {
@@ -377,7 +377,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a dimensionless matrix.
-     * @return FloatDimensionlessMatrix; the current matrix as a dimensionless matrix
+     * @return the current matrix as a dimensionless matrix
      */
     public final FloatDimensionlessMatrix asDimensionless()
     {
@@ -389,7 +389,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a dimensionless matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatDimensionlessMatrix; the current matrix as a dimensionless matrix
+     * @return the current matrix as a dimensionless matrix
      */
     public final FloatDimensionlessMatrix asDimensionless(final DimensionlessUnit displayUnit)
     {
@@ -402,7 +402,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalcapacitance matrix.
-     * @return FloatElectricalCapacitanceMatrix; the current matrix as a electricalcapacitance matrix
+     * @return the current matrix as a electricalcapacitance matrix
      */
     public final FloatElectricalCapacitanceMatrix asElectricalCapacitance()
     {
@@ -414,7 +414,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalcapacitance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalCapacitanceMatrix; the current matrix as a electricalcapacitance matrix
+     * @return the current matrix as a electricalcapacitance matrix
      */
     public final FloatElectricalCapacitanceMatrix asElectricalCapacitance(final ElectricalCapacitanceUnit displayUnit)
     {
@@ -428,7 +428,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalcharge matrix.
-     * @return FloatElectricalChargeMatrix; the current matrix as a electricalcharge matrix
+     * @return the current matrix as a electricalcharge matrix
      */
     public final FloatElectricalChargeMatrix asElectricalCharge()
     {
@@ -440,7 +440,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalcharge matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalChargeMatrix; the current matrix as a electricalcharge matrix
+     * @return the current matrix as a electricalcharge matrix
      */
     public final FloatElectricalChargeMatrix asElectricalCharge(final ElectricalChargeUnit displayUnit)
     {
@@ -453,7 +453,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalconductance matrix.
-     * @return FloatElectricalConductanceMatrix; the current matrix as a electricalconductance matrix
+     * @return the current matrix as a electricalconductance matrix
      */
     public final FloatElectricalConductanceMatrix asElectricalConductance()
     {
@@ -465,7 +465,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalconductance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalConductanceMatrix; the current matrix as a electricalconductance matrix
+     * @return the current matrix as a electricalconductance matrix
      */
     public final FloatElectricalConductanceMatrix asElectricalConductance(final ElectricalConductanceUnit displayUnit)
     {
@@ -479,7 +479,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalcurrent matrix.
-     * @return FloatElectricalCurrentMatrix; the current matrix as a electricalcurrent matrix
+     * @return the current matrix as a electricalcurrent matrix
      */
     public final FloatElectricalCurrentMatrix asElectricalCurrent()
     {
@@ -491,7 +491,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalcurrent matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalCurrentMatrix; the current matrix as a electricalcurrent matrix
+     * @return the current matrix as a electricalcurrent matrix
      */
     public final FloatElectricalCurrentMatrix asElectricalCurrent(final ElectricalCurrentUnit displayUnit)
     {
@@ -504,7 +504,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalinductance matrix.
-     * @return FloatElectricalInductanceMatrix; the current matrix as a electricalinductance matrix
+     * @return the current matrix as a electricalinductance matrix
      */
     public final FloatElectricalInductanceMatrix asElectricalInductance()
     {
@@ -516,7 +516,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalinductance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalInductanceMatrix; the current matrix as a electricalinductance matrix
+     * @return the current matrix as a electricalinductance matrix
      */
     public final FloatElectricalInductanceMatrix asElectricalInductance(final ElectricalInductanceUnit displayUnit)
     {
@@ -529,7 +529,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalpotential matrix.
-     * @return FloatElectricalPotentialMatrix; the current matrix as a electricalpotential matrix
+     * @return the current matrix as a electricalpotential matrix
      */
     public final FloatElectricalPotentialMatrix asElectricalPotential()
     {
@@ -541,7 +541,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalpotential matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalPotentialMatrix; the current matrix as a electricalpotential matrix
+     * @return the current matrix as a electricalpotential matrix
      */
     public final FloatElectricalPotentialMatrix asElectricalPotential(final ElectricalPotentialUnit displayUnit)
     {
@@ -554,7 +554,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a electricalresistance matrix.
-     * @return FloatElectricalResistanceMatrix; the current matrix as a electricalresistance matrix
+     * @return the current matrix as a electricalresistance matrix
      */
     public final FloatElectricalResistanceMatrix asElectricalResistance()
     {
@@ -566,7 +566,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a electricalresistance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalResistanceMatrix; the current matrix as a electricalresistance matrix
+     * @return the current matrix as a electricalresistance matrix
      */
     public final FloatElectricalResistanceMatrix asElectricalResistance(final ElectricalResistanceUnit displayUnit)
     {
@@ -579,7 +579,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a energy matrix.
-     * @return FloatEnergyMatrix; the current matrix as a energy matrix
+     * @return the current matrix as a energy matrix
      */
     public final FloatEnergyMatrix asEnergy()
     {
@@ -591,7 +591,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a energy matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatEnergyMatrix; the current matrix as a energy matrix
+     * @return the current matrix as a energy matrix
      */
     public final FloatEnergyMatrix asEnergy(final EnergyUnit displayUnit)
     {
@@ -604,7 +604,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a equivalentdose matrix.
-     * @return FloatEquivalentDoseMatrix; the current matrix as a equivalentdose matrix
+     * @return the current matrix as a equivalentdose matrix
      */
     public final FloatEquivalentDoseMatrix asEquivalentDose()
     {
@@ -616,7 +616,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a equivalentdose matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatEquivalentDoseMatrix; the current matrix as a equivalentdose matrix
+     * @return the current matrix as a equivalentdose matrix
      */
     public final FloatEquivalentDoseMatrix asEquivalentDose(final EquivalentDoseUnit displayUnit)
     {
@@ -629,7 +629,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a flowmass matrix.
-     * @return FloatFlowMassMatrix; the current matrix as a flowmass matrix
+     * @return the current matrix as a flowmass matrix
      */
     public final FloatFlowMassMatrix asFlowMass()
     {
@@ -641,7 +641,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a flowmass matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatFlowMassMatrix; the current matrix as a flowmass matrix
+     * @return the current matrix as a flowmass matrix
      */
     public final FloatFlowMassMatrix asFlowMass(final FlowMassUnit displayUnit)
     {
@@ -654,7 +654,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a flowvolume matrix.
-     * @return FloatFlowVolumeMatrix; the current matrix as a flowvolume matrix
+     * @return the current matrix as a flowvolume matrix
      */
     public final FloatFlowVolumeMatrix asFlowVolume()
     {
@@ -666,7 +666,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a flowvolume matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatFlowVolumeMatrix; the current matrix as a flowvolume matrix
+     * @return the current matrix as a flowvolume matrix
      */
     public final FloatFlowVolumeMatrix asFlowVolume(final FlowVolumeUnit displayUnit)
     {
@@ -679,7 +679,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a force matrix.
-     * @return FloatForceMatrix; the current matrix as a force matrix
+     * @return the current matrix as a force matrix
      */
     public final FloatForceMatrix asForce()
     {
@@ -691,7 +691,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a force matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatForceMatrix; the current matrix as a force matrix
+     * @return the current matrix as a force matrix
      */
     public final FloatForceMatrix asForce(final ForceUnit displayUnit)
     {
@@ -704,7 +704,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a frequency matrix.
-     * @return FloatFrequencyMatrix; the current matrix as a frequency matrix
+     * @return the current matrix as a frequency matrix
      */
     public final FloatFrequencyMatrix asFrequency()
     {
@@ -716,7 +716,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a frequency matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatFrequencyMatrix; the current matrix as a frequency matrix
+     * @return the current matrix as a frequency matrix
      */
     public final FloatFrequencyMatrix asFrequency(final FrequencyUnit displayUnit)
     {
@@ -729,7 +729,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a illuminance matrix.
-     * @return FloatIlluminanceMatrix; the current matrix as a illuminance matrix
+     * @return the current matrix as a illuminance matrix
      */
     public final FloatIlluminanceMatrix asIlluminance()
     {
@@ -741,7 +741,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a illuminance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatIlluminanceMatrix; the current matrix as a illuminance matrix
+     * @return the current matrix as a illuminance matrix
      */
     public final FloatIlluminanceMatrix asIlluminance(final IlluminanceUnit displayUnit)
     {
@@ -754,7 +754,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a lineardensity matrix.
-     * @return FloatLinearDensityMatrix; the current matrix as a lineardensity matrix
+     * @return the current matrix as a lineardensity matrix
      */
     public final FloatLinearDensityMatrix asLinearDensity()
     {
@@ -766,7 +766,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a lineardensity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLinearDensityMatrix; the current matrix as a lineardensity matrix
+     * @return the current matrix as a lineardensity matrix
      */
     public final FloatLinearDensityMatrix asLinearDensity(final LinearDensityUnit displayUnit)
     {
@@ -779,7 +779,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a luminousflux matrix.
-     * @return FloatLuminousFluxMatrix; the current matrix as a luminousflux matrix
+     * @return the current matrix as a luminousflux matrix
      */
     public final FloatLuminousFluxMatrix asLuminousFlux()
     {
@@ -791,7 +791,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a luminousflux matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLuminousFluxMatrix; the current matrix as a luminousflux matrix
+     * @return the current matrix as a luminousflux matrix
      */
     public final FloatLuminousFluxMatrix asLuminousFlux(final LuminousFluxUnit displayUnit)
     {
@@ -804,7 +804,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a luminousintensity matrix.
-     * @return FloatLuminousIntensityMatrix; the current matrix as a luminousintensity matrix
+     * @return the current matrix as a luminousintensity matrix
      */
     public final FloatLuminousIntensityMatrix asLuminousIntensity()
     {
@@ -816,7 +816,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a luminousintensity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLuminousIntensityMatrix; the current matrix as a luminousintensity matrix
+     * @return the current matrix as a luminousintensity matrix
      */
     public final FloatLuminousIntensityMatrix asLuminousIntensity(final LuminousIntensityUnit displayUnit)
     {
@@ -829,7 +829,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a magneticfluxdensity matrix.
-     * @return FloatMagneticFluxDensityMatrix; the current matrix as a magneticfluxdensity matrix
+     * @return the current matrix as a magneticfluxdensity matrix
      */
     public final FloatMagneticFluxDensityMatrix asMagneticFluxDensity()
     {
@@ -841,7 +841,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a magneticfluxdensity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMagneticFluxDensityMatrix; the current matrix as a magneticfluxdensity matrix
+     * @return the current matrix as a magneticfluxdensity matrix
      */
     public final FloatMagneticFluxDensityMatrix asMagneticFluxDensity(final MagneticFluxDensityUnit displayUnit)
     {
@@ -854,7 +854,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a magneticflux matrix.
-     * @return FloatMagneticFluxMatrix; the current matrix as a magneticflux matrix
+     * @return the current matrix as a magneticflux matrix
      */
     public final FloatMagneticFluxMatrix asMagneticFlux()
     {
@@ -866,7 +866,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a magneticflux matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMagneticFluxMatrix; the current matrix as a magneticflux matrix
+     * @return the current matrix as a magneticflux matrix
      */
     public final FloatMagneticFluxMatrix asMagneticFlux(final MagneticFluxUnit displayUnit)
     {
@@ -879,7 +879,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a mass matrix.
-     * @return FloatMassMatrix; the current matrix as a mass matrix
+     * @return the current matrix as a mass matrix
      */
     public final FloatMassMatrix asMass()
     {
@@ -891,7 +891,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a mass matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMassMatrix; the current matrix as a mass matrix
+     * @return the current matrix as a mass matrix
      */
     public final FloatMassMatrix asMass(final MassUnit displayUnit)
     {
@@ -904,7 +904,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a momentum matrix.
-     * @return FloatMomentumMatrix; the current matrix as a momentum matrix
+     * @return the current matrix as a momentum matrix
      */
     public final FloatMomentumMatrix asMomentum()
     {
@@ -916,7 +916,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a momentum matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMomentumMatrix; the current matrix as a momentum matrix
+     * @return the current matrix as a momentum matrix
      */
     public final FloatMomentumMatrix asMomentum(final MomentumUnit displayUnit)
     {
@@ -929,7 +929,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a power matrix.
-     * @return FloatPowerMatrix; the current matrix as a power matrix
+     * @return the current matrix as a power matrix
      */
     public final FloatPowerMatrix asPower()
     {
@@ -941,7 +941,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a power matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatPowerMatrix; the current matrix as a power matrix
+     * @return the current matrix as a power matrix
      */
     public final FloatPowerMatrix asPower(final PowerUnit displayUnit)
     {
@@ -954,7 +954,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a pressure matrix.
-     * @return FloatPressureMatrix; the current matrix as a pressure matrix
+     * @return the current matrix as a pressure matrix
      */
     public final FloatPressureMatrix asPressure()
     {
@@ -966,7 +966,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a pressure matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatPressureMatrix; the current matrix as a pressure matrix
+     * @return the current matrix as a pressure matrix
      */
     public final FloatPressureMatrix asPressure(final PressureUnit displayUnit)
     {
@@ -979,7 +979,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a radioactivity matrix.
-     * @return FloatRadioActivityMatrix; the current matrix as a radioactivity matrix
+     * @return the current matrix as a radioactivity matrix
      */
     public final FloatRadioActivityMatrix asRadioActivity()
     {
@@ -991,7 +991,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a radioactivity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatRadioActivityMatrix; the current matrix as a radioactivity matrix
+     * @return the current matrix as a radioactivity matrix
      */
     public final FloatRadioActivityMatrix asRadioActivity(final RadioActivityUnit displayUnit)
     {
@@ -1004,7 +1004,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a solidangle matrix.
-     * @return FloatSolidAngleMatrix; the current matrix as a solidangle matrix
+     * @return the current matrix as a solidangle matrix
      */
     public final FloatSolidAngleMatrix asSolidAngle()
     {
@@ -1016,7 +1016,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a solidangle matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatSolidAngleMatrix; the current matrix as a solidangle matrix
+     * @return the current matrix as a solidangle matrix
      */
     public final FloatSolidAngleMatrix asSolidAngle(final SolidAngleUnit displayUnit)
     {
@@ -1029,7 +1029,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a speed matrix.
-     * @return FloatSpeedMatrix; the current matrix as a speed matrix
+     * @return the current matrix as a speed matrix
      */
     public final FloatSpeedMatrix asSpeed()
     {
@@ -1041,7 +1041,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a speed matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatSpeedMatrix; the current matrix as a speed matrix
+     * @return the current matrix as a speed matrix
      */
     public final FloatSpeedMatrix asSpeed(final SpeedUnit displayUnit)
     {
@@ -1054,7 +1054,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a torque matrix.
-     * @return FloatTorqueMatrix; the current matrix as a torque matrix
+     * @return the current matrix as a torque matrix
      */
     public final FloatTorqueMatrix asTorque()
     {
@@ -1066,7 +1066,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a torque matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatTorqueMatrix; the current matrix as a torque matrix
+     * @return the current matrix as a torque matrix
      */
     public final FloatTorqueMatrix asTorque(final TorqueUnit displayUnit)
     {
@@ -1079,7 +1079,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a volume matrix.
-     * @return FloatVolumeMatrix; the current matrix as a volume matrix
+     * @return the current matrix as a volume matrix
      */
     public final FloatVolumeMatrix asVolume()
     {
@@ -1091,7 +1091,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a volume matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatVolumeMatrix; the current matrix as a volume matrix
+     * @return the current matrix as a volume matrix
      */
     public final FloatVolumeMatrix asVolume(final VolumeUnit displayUnit)
     {
@@ -1104,7 +1104,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a angle matrix.
-     * @return FloatAngleMatrix; the current matrix as a angle matrix
+     * @return the current matrix as a angle matrix
      */
     public final FloatAngleMatrix asAngle()
     {
@@ -1116,7 +1116,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a angle matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAngleMatrix; the current matrix as a angle matrix
+     * @return the current matrix as a angle matrix
      */
     public final FloatAngleMatrix asAngle(final AngleUnit displayUnit)
     {
@@ -1129,7 +1129,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a length matrix.
-     * @return FloatLengthMatrix; the current matrix as a length matrix
+     * @return the current matrix as a length matrix
      */
     public final FloatLengthMatrix asLength()
     {
@@ -1141,7 +1141,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a length matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLengthMatrix; the current matrix as a length matrix
+     * @return the current matrix as a length matrix
      */
     public final FloatLengthMatrix asLength(final LengthUnit displayUnit)
     {
@@ -1154,7 +1154,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a temperature matrix.
-     * @return FloatTemperatureMatrix; the current matrix as a temperature matrix
+     * @return the current matrix as a temperature matrix
      */
     public final FloatTemperatureMatrix asTemperature()
     {
@@ -1166,7 +1166,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a temperature matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatTemperatureMatrix; the current matrix as a temperature matrix
+     * @return the current matrix as a temperature matrix
      */
     public final FloatTemperatureMatrix asTemperature(final TemperatureUnit displayUnit)
     {
@@ -1179,7 +1179,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
 
     /**
      * Return the current matrix as a duration matrix.
-     * @return FloatDurationMatrix; the current matrix as a duration matrix
+     * @return the current matrix as a duration matrix
      */
     public final FloatDurationMatrix asDuration()
     {
@@ -1191,7 +1191,7 @@ public class FloatSIMatrix extends FloatMatrixRel<SIUnit, FloatSIScalar, FloatSI
     /**
      * Return the current matrix as a duration matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatDurationMatrix; the current matrix as a duration matrix
+     * @return the current matrix as a duration matrix
      */
     public final FloatDurationMatrix asDuration(final DurationUnit displayUnit)
     {

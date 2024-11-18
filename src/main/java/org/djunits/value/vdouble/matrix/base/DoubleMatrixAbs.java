@@ -47,8 +47,8 @@ public abstract class DoubleMatrixAbs<
 
     /**
      * Construct a new Relative Mutable DoubleMatrix.
-     * @param data DoubleMatrixData; an internal data object
-     * @param unit AU; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     protected DoubleMatrixAbs(final DoubleMatrixData data, final AU unit)
     {
@@ -75,8 +75,8 @@ public abstract class DoubleMatrixAbs<
 
     /**
      * Decrement all values of this matrix by the decrement. This only works if this matrix is mutable.
-     * @param decrement R; the scalar by which to decrement all values
-     * @return AM; this modified vector
+     * @param decrement the scalar by which to decrement all values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable
      */
     public AM decrementBy(final R decrement)
@@ -88,8 +88,8 @@ public abstract class DoubleMatrixAbs<
     /**
      * Decrement all values of this matrix by the decrement on a value by value basis. This only works if this matrix is
      * mutable.
-     * @param decrement RM; the matrix that contains the values by which to decrement the corresponding values
-     * @return AV; this modified matrix
+     * @param decrement the matrix that contains the values by which to decrement the corresponding values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case this matrix is immutable
      * @throws ValueRuntimeException when the sizes of the matrices differ, or <code>decrement</code> is null
      */
@@ -105,9 +105,9 @@ public abstract class DoubleMatrixAbs<
      * Instantiate a new relative matrix of the class of this absolute matrix. This can be used instead of the
      * DoubleMatrix.instiantiate() methods in case another matrix of this absolute matrix class is known. The method is faster
      * than DoubleMatrix.instantiate, and it will also work if the matrix is user-defined.
-     * @param dmd DoubleMatrixData; the data used to instantiate the matrix
-     * @param displayUnit RU; the display unit of the relative matrix
-     * @return RM; a relative matrix of the correct type, belonging to this absolute matrix type
+     * @param dmd the data used to instantiate the matrix
+     * @param displayUnit the display unit of the relative matrix
+     * @return a relative matrix of the correct type, belonging to this absolute matrix type
      */
     public abstract RM instantiateMatrixRel(DoubleMatrixData dmd, RU displayUnit);
 
@@ -115,9 +115,9 @@ public abstract class DoubleMatrixAbs<
      * Instantiate a new relative vector of the class of this absolute matrix. This can be used instead of the
      * DoubleVector.instiantiate() methods in case another matrix of this absolute matrix class is known. The method is faster
      * than DoubleVector.instantiate, and it will also work if the matrix or vector is user-defined.
-     * @param dvd DoubleVectorData; the data used to instantiate the vector
-     * @param displayUnit RU; the display unit of the relative vector
-     * @return RV; a relative vector of the correct type, belonging to this absolute matrix type
+     * @param dvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the relative vector
+     * @return a relative vector of the correct type, belonging to this absolute matrix type
      */
     public abstract RV instantiateVectorRel(DoubleVectorData dvd, RU displayUnit);
 
@@ -125,9 +125,9 @@ public abstract class DoubleMatrixAbs<
      * Instantiate a new relative scalar for the class of this absolute matrix. This can be used instead of the
      * DoubleScalar.instiantiate() methods in case a matrix of this class is known. The method is faster than
      * DoubleScalar.instantiate, and it will also work if the matrix and/or scalar are user-defined.
-     * @param valueSI double; the SI value of the relative scalar
-     * @param displayUnit RU; the unit in which the relative value will be displayed
-     * @return R; a relative scalar of the correct type, belonging to this absolute matrix type
+     * @param valueSI the SI value of the relative scalar
+     * @param displayUnit the unit in which the relative value will be displayed
+     * @return a relative scalar of the correct type, belonging to this absolute matrix type
      */
     public abstract R instantiateScalarRelSI(double valueSI, RU displayUnit);
 

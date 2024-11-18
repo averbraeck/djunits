@@ -55,7 +55,7 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Construct FloatFlowVolume scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatFlowVolume(final float value, final FlowVolumeUnit unit)
@@ -74,7 +74,7 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Construct FloatFlowVolume scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatFlowVolume(final double value, final FlowVolumeUnit unit)
@@ -90,7 +90,7 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Construct FloatFlowVolume scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatFlowVolume instantiateSI(final float value)
@@ -102,7 +102,7 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatFlowVolume interpolate(final FloatFlowVolume zero, final FloatFlowVolume one, final float ratio)
@@ -177,8 +177,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
      * Returns a FloatFlowVolume representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatFlowVolume
-     * @return FloatFlowVolume; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatFlowVolume
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -206,9 +206,9 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Returns a FloatFlowVolume based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatFlowVolume; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -226,8 +226,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the division of FloatFlowVolume and FloatFlowVolume, which results in a FloatDimensionless scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatDimensionless; scalar as a division of FloatFlowVolume and FloatFlowVolume
+     * @param v scalar
+     * @return scalar as a division of FloatFlowVolume and FloatFlowVolume
      */
     public final FloatDimensionless divide(final FloatFlowVolume v)
     {
@@ -236,8 +236,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the multiplication of FloatFlowVolume and FloatDuration, which results in a FloatVolume scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatVolume; scalar as a multiplication of FloatFlowVolume and FloatDuration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatFlowVolume and FloatDuration
      */
     public final FloatVolume times(final FloatDuration v)
     {
@@ -246,8 +246,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the division of FloatFlowVolume and FloatFrequency, which results in a FloatVolume scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatVolume; scalar as a division of FloatFlowVolume and FloatFrequency
+     * @param v scalar
+     * @return scalar as a division of FloatFlowVolume and FloatFrequency
      */
     public final FloatVolume divide(final FloatFrequency v)
     {
@@ -256,8 +256,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the division of FloatFlowVolume and FloatVolume, which results in a FloatFrequency scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatFrequency; scalar as a division of FloatFlowVolume and FloatVolume
+     * @param v scalar
+     * @return scalar as a division of FloatFlowVolume and FloatVolume
      */
     public final FloatFrequency divide(final FloatVolume v)
     {
@@ -266,8 +266,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the division of FloatFlowVolume and FloatArea, which results in a FloatSpeed scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatSpeed; scalar as a division of FloatFlowVolume and FloatArea
+     * @param v scalar
+     * @return scalar as a division of FloatFlowVolume and FloatArea
      */
     public final FloatSpeed divide(final FloatArea v)
     {
@@ -276,8 +276,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the division of FloatFlowVolume and FloatSpeed, which results in a FloatArea scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatArea; scalar as a division of FloatFlowVolume and FloatSpeed
+     * @param v scalar
+     * @return scalar as a division of FloatFlowVolume and FloatSpeed
      */
     public final FloatArea divide(final FloatSpeed v)
     {
@@ -286,8 +286,8 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
 
     /**
      * Calculate the multiplication of FloatFlowVolume and FloatDensity, which results in a FloatFlowMass scalar.
-     * @param v FloatFlowVolume; scalar
-     * @return FloatFlowMass; scalar as a multiplication of FloatFlowVolume and FloatDensity
+     * @param v scalar
+     * @return scalar as a multiplication of FloatFlowVolume and FloatDensity
      */
     public final FloatFlowMass times(final FloatDensity v)
     {

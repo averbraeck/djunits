@@ -41,7 +41,7 @@ public final class Quantities implements Serializable
 
     /**
      * Register the baseUnit in the UnitType registries.
-     * @param quantity Quantity&lt;?&gt;; the quantity to register.
+     * @param quantity the quantity to register.
      */
     public void register(final Quantity<?> quantity)
     {
@@ -57,7 +57,7 @@ public final class Quantities implements Serializable
 
     /**
      * Unregister the baseUnit in the UnitType registries.
-     * @param baseUnit Quantity&lt;?&gt;; the quantity to register.
+     * @param baseUnit the quantity to register.
      */
     public void unregister(final Quantity<?> baseUnit)
     {
@@ -69,7 +69,7 @@ public final class Quantities implements Serializable
 
     /**
      * Retrieve a safe copy of the quantity set registered for an SI fingerprint.
-     * @param siDimensions SIDimensions; the SI dimensions to search for
+     * @param siDimensions the SI dimensions to search for
      * @return a safe copy of the baseUnit set registered for this SI dimensions fingerprint
      */
     public Set<Quantity<?>> getQuantities(final SIDimensions siDimensions)
@@ -84,8 +84,8 @@ public final class Quantities implements Serializable
 
     /**
      * Return the Quantity for a given name of a unit class, or null if it has not been registered.
-     * @param unitClassName String; the unit class name to search for, e.g., "LengthUnit"
-     * @return Quantity; the quantity belonging to the class, or null if not found
+     * @param unitClassName the unit class name to search for, e.g., "LengthUnit"
+     * @return the quantity belonging to the class, or null if not found
      */
     public Quantity<?> getQuantity(final String unitClassName)
     {

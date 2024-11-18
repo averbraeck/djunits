@@ -12,8 +12,8 @@ public interface FloatFunction
 {
     /**
      * Carry out a specific transformation function on a float value.
-     * @param value float; the value to transform
-     * @return float; the transformed value
+     * @param value the value to transform
+     * @return the transformed value
      */
     float apply(float value);
 

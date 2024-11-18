@@ -58,8 +58,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Construct ElectricalPotential scalar.
-     * @param value double; the double value
-     * @param unit ElectricalPotentialUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalPotential(final double value, final ElectricalPotentialUnit unit)
     {
@@ -68,7 +68,7 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Construct ElectricalPotential scalar.
-     * @param value ElectricalPotential; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalPotential(final ElectricalPotential value)
     {
@@ -83,8 +83,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Construct ElectricalPotential scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalPotential; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalPotential instantiateSI(final double value)
     {
@@ -93,10 +93,10 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalPotential; the low value
-     * @param one ElectricalPotential; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalPotential; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalPotential interpolate(final ElectricalPotential zero, final ElectricalPotential one,
             final double ratio)
@@ -107,9 +107,9 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalPotential; the first scalar
-     * @param r2 ElectricalPotential; the second scalar
-     * @return ElectricalPotential; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalPotential max(final ElectricalPotential r1, final ElectricalPotential r2)
     {
@@ -118,10 +118,10 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalPotential; the first scalar
-     * @param r2 ElectricalPotential; the second scalar
-     * @param rn ElectricalPotential...; the other scalars
-     * @return ElectricalPotential; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalPotential max(final ElectricalPotential r1, final ElectricalPotential r2,
             final ElectricalPotential... rn)
@@ -139,9 +139,9 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalPotential; the first scalar
-     * @param r2 ElectricalPotential; the second scalar
-     * @return ElectricalPotential; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalPotential min(final ElectricalPotential r1, final ElectricalPotential r2)
     {
@@ -150,10 +150,10 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalPotential; the first scalar
-     * @param r2 ElectricalPotential; the second scalar
-     * @param rn ElectricalPotential...; the other scalars
-     * @return ElectricalPotential; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalPotential min(final ElectricalPotential r1, final ElectricalPotential r2,
             final ElectricalPotential... rn)
@@ -173,8 +173,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
      * Returns a ElectricalPotential representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalPotential
-     * @return ElectricalPotential; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalPotential
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -202,9 +202,9 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Returns a ElectricalPotential based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalPotential; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -223,8 +223,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Calculate the division of ElectricalPotential and ElectricalPotential, which results in a Dimensionless scalar.
-     * @param v ElectricalPotential; scalar
-     * @return Dimensionless; scalar as a division of ElectricalPotential and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of ElectricalPotential and ElectricalPotential
      */
     public final Dimensionless divide(final ElectricalPotential v)
     {
@@ -233,8 +233,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Calculate the multiplication of ElectricalPotential and ElectricalCurrent, which results in a Power scalar.
-     * @param v ElectricalPotential; scalar
-     * @return Power; scalar as a multiplication of ElectricalPotential and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalPotential and ElectricalCurrent
      */
     public final Power times(final ElectricalCurrent v)
     {
@@ -243,8 +243,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Calculate the division of ElectricalPotential and ElectricalCurrent, which results in a ElectricalResistance scalar.
-     * @param v ElectricalPotential; scalar
-     * @return ElectricalResistance; scalar as a division of ElectricalPotential and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of ElectricalPotential and ElectricalCurrent
      */
     public final ElectricalResistance divide(final ElectricalCurrent v)
     {
@@ -253,8 +253,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Calculate the division of ElectricalPotential and ElectricalResistance, which results in a ElectricalCurrent scalar.
-     * @param v ElectricalPotential; scalar
-     * @return ElectricalCurrent; scalar as a division of ElectricalPotential and ElectricalResistance
+     * @param v scalar
+     * @return scalar as a division of ElectricalPotential and ElectricalResistance
      */
     public final ElectricalCurrent divide(final ElectricalResistance v)
     {
@@ -263,8 +263,8 @@ public class ElectricalPotential extends DoubleScalarRel<ElectricalPotentialUnit
 
     /**
      * Calculate the multiplication of ElectricalPotential and Duration, which results in a MagneticFlux scalar.
-     * @param v ElectricalPotential; scalar
-     * @return MagneticFlux; scalar as a multiplication of ElectricalPotential and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalPotential and Duration
      */
     public final MagneticFlux times(final Duration v)
     {

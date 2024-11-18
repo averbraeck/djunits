@@ -48,7 +48,7 @@ public class SerializableTest
     }
 
     /**
-     * @param srcFolder File; folder to look for subfolders and/or java files
+     * @param srcFolder folder to look for subfolders and/or java files
      * @throws IOException on i/o error
      * @throws ClassNotFoundException on error
      */
@@ -71,7 +71,7 @@ public class SerializableTest
     }
 
     /**
-     * @param javaFile File; java file to process
+     * @param javaFile java file to process
      * @throws IOException on error
      * @throws ClassNotFoundException on error
      */

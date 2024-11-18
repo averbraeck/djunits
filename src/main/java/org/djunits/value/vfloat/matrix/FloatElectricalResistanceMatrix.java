@@ -32,8 +32,8 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
 
     /**
      * Construct a FloatElectricalResistanceMatrix from an internal data object.
-     * @param data FloatMatrixData; the internal data object for the matrix
-     * @param displayUnit ElectricalResistanceUnit; the display unit of the matrix data
+     * @param data the internal data object for the matrix
+     * @param displayUnit the display unit of the matrix data
      */
     public FloatElectricalResistanceMatrix(final FloatMatrixData data, final ElectricalResistanceUnit displayUnit)
     {
@@ -45,9 +45,9 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
     /**
      * Construct a FloatElectricalResistanceMatrix from a float[][] object. The float values are expressed in the displayUnit,
      * and will be printed using the displayUnit.
-     * @param data float[][]; the data for the matrix, expressed in the displayUnit
-     * @param displayUnit ElectricalResistanceUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatElectricalResistanceMatrix(final float[][] data, final ElectricalResistanceUnit displayUnit,
             final StorageType storageType)
@@ -58,8 +58,8 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
     /**
      * Construct a FloatElectricalResistanceMatrix from a float[][] object. The float values are expressed in the displayUnit.
      * Assume that the StorageType is DENSE since we offer the data as an array of an array.
-     * @param data float[][]; the data for the matrix
-     * @param displayUnit ElectricalResistanceUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the matrix
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public FloatElectricalResistanceMatrix(final float[][] data, final ElectricalResistanceUnit displayUnit)
     {
@@ -68,8 +68,8 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
 
     /**
      * Construct a FloatElectricalResistanceMatrix from a float[][] object with SI-unit values.
-     * @param data float[][]; the data for the matrix, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatElectricalResistanceMatrix(final float[][] data, final StorageType storageType)
     {
@@ -79,7 +79,7 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
     /**
      * Construct a FloatElectricalResistanceMatrix from a float[][] object with SI-unit values. Assume that the StorageType is
      * DENSE since we offer the data as an array of an array.
-     * @param data float[][]; the data for the matrix, in SI units
+     * @param data the data for the matrix, in SI units
      */
     public FloatElectricalResistanceMatrix(final float[][] data)
     {
@@ -92,9 +92,9 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * Construct a FloatElectricalResistanceMatrix from an array of an array of FloatElectricalResistance objects. The
      * FloatElectricalResistance values are each expressed in their own unit, but will be internally stored as SI values, all
      * expressed in the displayUnit when printing.
-     * @param data FloatElectricalResistance[][]; the data for the matrix
-     * @param displayUnit ElectricalResistanceUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatElectricalResistanceMatrix(final FloatElectricalResistance[][] data, final ElectricalResistanceUnit displayUnit,
             final StorageType storageType)
@@ -107,8 +107,8 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * FloatElectricalResistance values are each expressed in their own unit, but will be internally stored as SI values, all
      * expressed in the displayUnit when printing. Assume that the StorageType is DENSE since we offer the data as an array of
      * an array.
-     * @param data FloatElectricalResistance[][]; the data for the matrix
-     * @param displayUnit ElectricalResistanceUnit; the display unit of the values when printing
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the values when printing
      */
     public FloatElectricalResistanceMatrix(final FloatElectricalResistance[][] data, final ElectricalResistanceUnit displayUnit)
     {
@@ -119,8 +119,8 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * Construct a FloatElectricalResistanceMatrix from an array of an array of FloatElectricalResistance objects. The
      * FloatElectricalResistance values are each expressed in their own unit, but will be internally stored as SI values, and
      * expressed using SI units when printing. since we offer the data as an array of an array.
-     * @param data FloatElectricalResistance[][]; the data for the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatElectricalResistanceMatrix(final FloatElectricalResistance[][] data, final StorageType storageType)
     {
@@ -132,7 +132,7 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * FloatElectricalResistance values are each expressed in their own unit, but will be internally stored as SI values, and
      * expressed using SI units when printing. Assume that the StorageType is DENSE since we offer the data as an array of an
      * array.
-     * @param data FloatElectricalResistance[][]; the data for the matrix
+     * @param data the data for the matrix
      */
     public FloatElectricalResistanceMatrix(final FloatElectricalResistance[][] data)
     {
@@ -145,11 +145,11 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * Construct a FloatElectricalResistanceMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit
      * indicates the unit in which the values in the collection are expressed, as well as the unit in which they will be
      * printed.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param displayUnit ElectricalResistanceUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatElectricalResistanceMatrix(
             final Collection<FloatSparseValue<ElectricalResistanceUnit, FloatElectricalResistance>> data,
@@ -162,10 +162,10 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * Construct a FloatElectricalResistanceMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit
      * indicates the unit in which the values in the collection are expressed, as well as the unit in which they will be
      * printed. Assume the storage type is SPARSE, since we offer the data as a collection.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param displayUnit ElectricalResistanceUnit; the display unit of the matrix data, and the unit of the data points
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param displayUnit the display unit of the matrix data, and the unit of the data points
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public FloatElectricalResistanceMatrix(
             final Collection<FloatSparseValue<ElectricalResistanceUnit, FloatElectricalResistance>> data,
@@ -178,10 +178,10 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * Construct a FloatElectricalResistanceMatrix from a (sparse) collection of FloatSparseValue objects. The displayUnit
      * indicates the unit in which the values in the collection are expressed, as well as the unit in which they will be
      * printed. Use the SI unit or base unit as the displayUnit.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Matrix
      */
     public FloatElectricalResistanceMatrix(
             final Collection<FloatSparseValue<ElectricalResistanceUnit, FloatElectricalResistance>> data, final int rows,
@@ -195,9 +195,9 @@ public class FloatElectricalResistanceMatrix extends FloatMatrixRel<ElectricalRe
      * indicates the unit in which the values in the collection are expressed, as well as the unit in which they will be
      * printed. Use the SI unit or base unit as the displayUnit. Assume the storage type is SPARSE, since we offer the data as a
      * collection.
-     * @param data Collection&lt;FloatSparseValue&gt;; the data for the matrix
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
+     * @param data the data for the matrix
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
      */
     public FloatElectricalResistanceMatrix(
             final Collection<FloatSparseValue<ElectricalResistanceUnit, FloatElectricalResistance>> data, final int rows,

@@ -55,7 +55,7 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
 
     /**
      * Construct FloatElectricalResistance scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatElectricalResistance(final float value, final ElectricalResistanceUnit unit)
@@ -74,7 +74,7 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
 
     /**
      * Construct FloatElectricalResistance scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatElectricalResistance(final double value, final ElectricalResistanceUnit unit)
@@ -90,7 +90,7 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
 
     /**
      * Construct FloatElectricalResistance scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatElectricalResistance instantiateSI(final float value)
@@ -102,7 +102,7 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatElectricalResistance interpolate(final FloatElectricalResistance zero,
@@ -180,8 +180,8 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
      * Returns a FloatElectricalResistance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatElectricalResistance
-     * @return FloatElectricalResistance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatElectricalResistance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -209,9 +209,9 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
 
     /**
      * Returns a FloatElectricalResistance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatElectricalResistance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -231,8 +231,8 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
     /**
      * Calculate the division of FloatElectricalResistance and FloatElectricalResistance, which results in a FloatDimensionless
      * scalar.
-     * @param v FloatElectricalResistance; scalar
-     * @return FloatDimensionless; scalar as a division of FloatElectricalResistance and FloatElectricalResistance
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalResistance and FloatElectricalResistance
      */
     public final FloatDimensionless divide(final FloatElectricalResistance v)
     {
@@ -242,8 +242,8 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
     /**
      * Calculate the multiplication of FloatElectricalResistance and FloatElectricalConductance, which results in a
      * FloatDimensionless scalar.
-     * @param v FloatElectricalResistance; scalar
-     * @return FloatDimensionless; scalar as a multiplication of FloatElectricalResistance and FloatElectricalConductance
+     * @param v scalar
+     * @return scalar as a multiplication of FloatElectricalResistance and FloatElectricalConductance
      */
     public final FloatDimensionless times(final FloatElectricalConductance v)
     {
@@ -253,8 +253,8 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
     /**
      * Calculate the multiplication of FloatElectricalResistance and FloatElectricalCurrent, which results in a
      * FloatElectricalPotential scalar.
-     * @param v FloatElectricalResistance; scalar
-     * @return FloatElectricalPotential; scalar as a multiplication of FloatElectricalResistance and FloatElectricalCurrent
+     * @param v scalar
+     * @return scalar as a multiplication of FloatElectricalResistance and FloatElectricalCurrent
      */
     public final FloatElectricalPotential times(final FloatElectricalCurrent v)
     {
@@ -264,8 +264,8 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
     /**
      * Calculate the multiplication of FloatElectricalResistance and FloatDuration, which results in a FloatElectricalInductance
      * scalar.
-     * @param v FloatElectricalResistance; scalar
-     * @return FloatElectricalInductance; scalar as a multiplication of FloatElectricalResistance and FloatDuration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatElectricalResistance and FloatDuration
      */
     public final FloatElectricalInductance times(final FloatDuration v)
     {

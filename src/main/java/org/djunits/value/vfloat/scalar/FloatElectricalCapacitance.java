@@ -58,7 +58,7 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
 
     /**
      * Construct FloatElectricalCapacitance scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatElectricalCapacitance(final float value, final ElectricalCapacitanceUnit unit)
@@ -77,7 +77,7 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
 
     /**
      * Construct FloatElectricalCapacitance scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatElectricalCapacitance(final double value, final ElectricalCapacitanceUnit unit)
@@ -93,7 +93,7 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
 
     /**
      * Construct FloatElectricalCapacitance scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatElectricalCapacitance instantiateSI(final float value)
@@ -105,7 +105,7 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatElectricalCapacitance interpolate(final FloatElectricalCapacitance zero,
@@ -183,8 +183,8 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
      * Returns a FloatElectricalCapacitance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatElectricalCapacitance
-     * @return FloatElectricalCapacitance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatElectricalCapacitance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -212,9 +212,9 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
 
     /**
      * Returns a FloatElectricalCapacitance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatElectricalCapacitance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -234,8 +234,8 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
     /**
      * Calculate the division of FloatElectricalCapacitance and FloatElectricalCapacitance, which results in a
      * FloatDimensionless scalar.
-     * @param v FloatElectricalCapacitance; scalar
-     * @return FloatDimensionless; scalar as a division of FloatElectricalCapacitance and FloatElectricalCapacitance
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalCapacitance and FloatElectricalCapacitance
      */
     public final FloatDimensionless divide(final FloatElectricalCapacitance v)
     {
@@ -245,8 +245,8 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
     /**
      * Calculate the multiplication of FloatElectricalCapacitance and FloatElectricalPotential, which results in a
      * FloatElectricalCharge scalar.
-     * @param v FloatElectricalCapacitance; scalar
-     * @return FloatElectricalCharge; scalar as a multiplication of FloatElectricalCapacitance and FloatElectricalPotential
+     * @param v scalar
+     * @return scalar as a multiplication of FloatElectricalCapacitance and FloatElectricalPotential
      */
     public final FloatElectricalCharge times(final FloatElectricalPotential v)
     {
@@ -256,8 +256,8 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
     /**
      * Calculate the division of FloatElectricalCapacitance and FloatDuration, which results in a FloatElectricalConductance
      * scalar.
-     * @param v FloatElectricalCapacitance; scalar
-     * @return FloatElectricalConductance; scalar as a division of FloatElectricalCapacitance and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalCapacitance and FloatDuration
      */
     public final FloatElectricalConductance divide(final FloatDuration v)
     {
@@ -267,8 +267,8 @@ public class FloatElectricalCapacitance extends FloatScalarRel<ElectricalCapacit
     /**
      * Calculate the division of FloatElectricalCapacitance and FloatElectricalConductance, which results in a FloatDuration
      * scalar.
-     * @param v FloatElectricalCapacitance; scalar
-     * @return FloatDuration; scalar as a division of FloatElectricalCapacitance and FloatElectricalConductance
+     * @param v scalar
+     * @return scalar as a division of FloatElectricalCapacitance and FloatElectricalConductance
      */
     public final FloatDuration divide(final FloatElectricalConductance v)
     {

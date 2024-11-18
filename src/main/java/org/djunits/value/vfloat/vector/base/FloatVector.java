@@ -42,8 +42,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Construct a new FloatVector.
-     * @param data FloatVectorData; an internal data object
-     * @param unit U; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     FloatVector(final FloatVectorData data, final U unit)
     {
@@ -56,9 +56,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Instantiate a new vector of the class of this vector. This can be used instead of the FloatVector.instiantiate() methods
      * in case another vector of this class is known. The method is faster than FloatVector.instantiate, and it will also work
      * if the vector is user-defined.
-     * @param fvd FloatVectorData; the data used to instantiate the vector
-     * @param displayUnit U; the display unit of the vector
-     * @return V; a vector of the correct type
+     * @param fvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the vector
+     * @return a vector of the correct type
      */
     public abstract V instantiateVector(FloatVectorData fvd, U displayUnit);
 
@@ -66,9 +66,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
      * Instantiate a new scalar for the class of this vector. This can be used instead of the FloatScalar.instiantiate() methods
      * in case a vector of this class is known. The method is faster than FloatScalar.instantiate, and it will also work if the
      * vector and/or scalar are user-defined.
-     * @param valueSI float; the SI value of the scalar
-     * @param displayUnit U; the unit in which the value will be displayed
-     * @return S; a scalar of the correct type, belonging to the vector type
+     * @param valueSI the SI value of the scalar
+     * @param displayUnit the unit in which the value will be displayed
+     * @return a scalar of the correct type, belonging to the vector type
      */
     public abstract S instantiateScalarSI(float valueSI, U displayUnit);
 
@@ -86,7 +86,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Create a float[] array filled with the values in the standard SI unit.
-     * @return float[]; array of values in the standard SI unit
+     * @return array of values in the standard SI unit
      */
     public final float[] getValuesSI()
     {
@@ -95,7 +95,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Create a float[] array filled with the values in the original unit.
-     * @return float[]; the values in the original unit
+     * @return the values in the original unit
      */
     public final float[] getValuesInUnit()
     {
@@ -104,8 +104,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Create a float[] array filled with the values converted into a specified unit.
-     * @param targetUnit U; the unit into which the values are converted for use
-     * @return float[]; the values converted into the specified unit
+     * @param targetUnit the unit into which the values are converted for use
+     * @return the values converted into the specified unit
      */
     public final float[] getValuesInUnit(final U targetUnit)
     {
@@ -125,7 +125,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Check that a provided index is valid.
-     * @param index int; the value to check
+     * @param index the value to check
      * @throws IndexOutOfBoundsException when index is invalid
      */
     protected final void checkIndex(final int index) throws IndexOutOfBoundsException
@@ -139,8 +139,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the value stored at a specified position in the standard SI unit.
-     * @param index int; index of the value to retrieve
-     * @return float; value at position index in the standard SI unit
+     * @param index index of the value to retrieve
+     * @return value at position index in the standard SI unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final float getSI(final int index) throws IndexOutOfBoundsException
@@ -157,8 +157,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the value stored at a specified position in the original unit.
-     * @param index int; index of the value to retrieve
-     * @return float; value at position index in the original unit
+     * @param index index of the value to retrieve
+     * @return value at position index in the original unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final float getInUnit(final int index) throws IndexOutOfBoundsException
@@ -168,9 +168,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Retrieve the value stored at a specified position converted into a specified unit.
-     * @param index int; index of the value to retrieve
-     * @param targetUnit U; the unit for the result
-     * @return float; value at position index converted into the specified unit
+     * @param index index of the value to retrieve
+     * @param targetUnit the unit for the result
+     * @return value at position index converted into the specified unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final float getInUnit(final int index, final U targetUnit) throws IndexOutOfBoundsException
@@ -180,8 +180,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the value, specified in the standard SI unit, at the specified position.
-     * @param index int; the index of the value to set
-     * @param valueSI float; the value, specified in the standard SI unit
+     * @param index the index of the value to set
+     * @param valueSI the value, specified in the standard SI unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public final void setSI(final int index, final float valueSI) throws IndexOutOfBoundsException
@@ -193,8 +193,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the value, specified in the (current) display unit, at the specified position.
-     * @param index int; the index of the value to set
-     * @param valueInUnit float; the value, specified in the (current) display unit
+     * @param index the index of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int index, final float valueInUnit) throws IndexOutOfBoundsException
@@ -204,9 +204,9 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the value, specified in the <code>valueUnit</code>, at the specified position.
-     * @param index int; the index of the value to set
-     * @param valueInUnit float; the value, specified in the (current) display unit
-     * @param valueUnit U; the unit in which the <code>valueInUnit</code> is expressed
+     * @param index the index of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
+     * @param valueUnit the unit in which the <code>valueInUnit</code> is expressed
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void setInUnit(final int index, final float valueInUnit, final U valueUnit) throws IndexOutOfBoundsException
@@ -216,8 +216,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Set the scalar value at the specified position.
-     * @param index int; the index of the value to set
-     * @param value S; the value to set
+     * @param index the index of the value to set
+     * @param value the value to set
      * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
      */
     public void set(final int index, final S value) throws IndexOutOfBoundsException
@@ -274,8 +274,8 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Execute a function on a cell by cell basis. Note: May be expensive when used on sparse data.
-     * @param floatFunction FloatFunction; the function to apply
-     * @return V; this updated vector
+     * @param floatFunction the function to apply
+     * @return this updated vector
      */
     @SuppressWarnings("unchecked")
     public final V assign(final FloatFunction floatFunction)
@@ -373,7 +373,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Centralized size equality check.
-     * @param other FloatVector&lt;?, ?, ?&gt;; other FloatVector
+     * @param other other FloatVector
      * @throws NullPointerException when other vector is null
      * @throws ValueRuntimeException when vectors have unequal size
      */

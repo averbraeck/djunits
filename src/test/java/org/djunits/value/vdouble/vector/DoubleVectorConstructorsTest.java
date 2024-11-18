@@ -1330,7 +1330,7 @@ public class DoubleVectorConstructorsTest
 
     /**
      * Compare two double arrays.
-     * @param reference double[]; the reference values
+     * @param reference the reference values
      * @param got double[] the values that should match the reference values
      */
     public void compareValues(final double[] reference, final double[] got)
@@ -1344,8 +1344,8 @@ public class DoubleVectorConstructorsTest
 
     /**
      * Compare two double arrays with factor and offset (derived from a scale).
-     * @param scale Scale; the scale
-     * @param reference double[]; the reference values
+     * @param scale the scale
+     * @param reference the reference values
      * @param got double[] the values that should match the reference values
      */
     public void compareValuesWithScale(final Scale scale, final double[] reference, final double[] got)

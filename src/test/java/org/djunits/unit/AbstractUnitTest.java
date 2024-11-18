@@ -15,8 +15,8 @@ public abstract class AbstractUnitTest<U extends Unit<U>>
     /**
      * Verify the localization of the name and abbreviation.
      * @param u Unit to check
-     * @param expectedName String; expected name in the resources
-     * @param expectedAbbreviation String; expected abbreviation in the resources
+     * @param expectedName expected name in the resources
+     * @param expectedAbbreviation expected abbreviation in the resources
      */
     protected final void checkUnitNameAndAbbreviation(final U u, final String expectedName, final String expectedAbbreviation)
     {

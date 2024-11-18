@@ -17,8 +17,8 @@ public final class Determinant
     /**
      * Method that calculates determinant of given matrix. From:
      * https://gist.githubusercontent.com/Cellane/398372/raw/23a3e321daa52d4c6b68795aae093bf773ce2940/MatrixOperations.java
-     * @param matrix double[][]; matrix of which we need to know the determinant
-     * @return double; the determinant of given matrix
+     * @param matrix matrix of which we need to know the determinant
+     * @return the determinant of given matrix
      */
     public static double det(final double[][] matrix)
     {
@@ -60,8 +60,8 @@ public final class Determinant
     /**
      * Method that calculates determinant of given matrix. From:
      * https://gist.githubusercontent.com/Cellane/398372/raw/23a3e321daa52d4c6b68795aae093bf773ce2940/MatrixOperations.java
-     * @param matrix float[][]; matrix of which we need to know the determinant
-     * @return float; the determinant of given matrix
+     * @param matrix matrix of which we need to know the determinant
+     * @return the determinant of given matrix
      */
     public static float det(final float[][] matrix)
     {
@@ -102,7 +102,7 @@ public final class Determinant
 
     /**
      * Program entry point.
-     * @param args String[]; the command line arguments (not used)
+     * @param args the command line arguments (not used)
      */
     public static void main(final String[] args)
     {

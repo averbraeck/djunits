@@ -35,7 +35,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Construct a new IndexedValue.
-     * @param displayUnit U; the unit of the new AbstractValue
+     * @param displayUnit the unit of the new AbstractValue
      */
     public IndexedValue(final U displayUnit)
     {
@@ -58,19 +58,19 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Retrieve the data object. Method can only be used within package and by subclasses.
-     * @return D; the internal data
+     * @return the internal data
      */
     protected abstract D getData();
 
     /**
      * Set the data object. Method can only be used within package and by subclasses.
-     * @param data D; the internal data
+     * @param data the internal data
      */
     protected abstract void setData(D data);
 
     /**
      * Return the StorageType (DENSE, SPARSE, etc.) for the stored vector.
-     * @return StorageType; the storage type (DENSE, SPARSE, etc.) for the stored vector
+     * @return the storage type (DENSE, SPARSE, etc.) for the stored vector
      */
     public final StorageType getStorageType()
     {
@@ -102,7 +102,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Change the copyOnWrite flag.
-     * @param copyOnWrite boolean; the new value for the copyOnWrite flag
+     * @param copyOnWrite the new value for the copyOnWrite flag
      */
     protected final void setCopyOnWrite(final boolean copyOnWrite)
     {
@@ -111,7 +111,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Return whether the data is mutable or not.
-     * @return boolean; whether the data is mutable or not
+     * @return whether the data is mutable or not
      */
     public final boolean isMutable()
     {
@@ -120,7 +120,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Set helper flag to indicate whether the data is mutable or not.
-     * @param mutable boolean; helper flag to indicate whether the data is mutable or not
+     * @param mutable helper flag to indicate whether the data is mutable or not
      */
     protected final void setMutable(final boolean mutable)
     {
@@ -129,7 +129,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Turn the immutable flag on for this vector.
-     * @return T; the vector with a raised immutable flag
+     * @return the vector with a raised immutable flag
      */
     public final T immutable()
     {
@@ -145,7 +145,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Turn the immutable flag off for this internal storage.
-     * @return T; the internal storage with a cleared immutable flag
+     * @return the internal storage with a cleared immutable flag
      */
     public final T mutable()
     {
@@ -161,7 +161,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Return whether the internal storage type of the indexed value is dense or not.
-     * @return boolean; whether the internal storage type of the indexed value is dense or not
+     * @return whether the internal storage type of the indexed value is dense or not
      */
     public final boolean isDense()
     {
@@ -170,7 +170,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Return whether the internal storage type of the indexed value is sparse or not.
-     * @return boolean; whether the internal storage type of the indexed value is sparse or not
+     * @return whether the internal storage type of the indexed value is sparse or not
      */
     public final boolean isSparse()
     {
@@ -179,7 +179,7 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
 
     /**
      * Count the number of cells that have a non-zero SI value.
-     * @return int; the number of cells having non-zero SI value
+     * @return the number of cells having non-zero SI value
      */
     public final int cardinality()
     {
@@ -189,20 +189,20 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
     /**
      * Create and return a dense version of this internal storage. When the data was already dense, the current version is
      * returned and no copy will be made of the data.
-     * @return T; a dense version of this internal storage
+     * @return a dense version of this internal storage
      */
     public abstract T toDense();
 
     /**
      * Create and return a sparse version of this internal storage. When the data was already sparse, the current version is
      * returned and no copy will be made of the data.
-     * @return T; a sparse version of this internal storage
+     * @return a sparse version of this internal storage
      */
     public abstract T toSparse();
 
     /**
      * Return the class of the corresponding scalar.
-     * @return Class&lt;S&gt;; the class of the corresponding scalar
+     * @return the class of the corresponding scalar
      */
     public abstract Class<S> getScalarClass();
 

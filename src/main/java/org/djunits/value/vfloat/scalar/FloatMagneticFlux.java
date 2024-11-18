@@ -58,7 +58,7 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Construct FloatMagneticFlux scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatMagneticFlux(final float value, final MagneticFluxUnit unit)
@@ -77,7 +77,7 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Construct FloatMagneticFlux scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatMagneticFlux(final double value, final MagneticFluxUnit unit)
@@ -93,7 +93,7 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Construct FloatMagneticFlux scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatMagneticFlux instantiateSI(final float value)
@@ -105,7 +105,7 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatMagneticFlux interpolate(final FloatMagneticFlux zero, final FloatMagneticFlux one, final float ratio)
@@ -180,8 +180,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
      * Returns a FloatMagneticFlux representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatMagneticFlux
-     * @return FloatMagneticFlux; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatMagneticFlux
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -208,9 +208,9 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Returns a FloatMagneticFlux based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatMagneticFlux; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -229,8 +229,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Calculate the division of FloatMagneticFlux and FloatMagneticFlux, which results in a FloatDimensionless scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatDimensionless; scalar as a division of FloatMagneticFlux and FloatMagneticFlux
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatMagneticFlux
      */
     public final FloatDimensionless divide(final FloatMagneticFlux v)
     {
@@ -239,8 +239,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Calculate the division of FloatMagneticFlux and FloatElectricalPotential, which results in a FloatDuration scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatDuration; scalar as a division of FloatMagneticFlux and FloatElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatElectricalPotential
      */
     public final FloatDuration divide(final FloatElectricalPotential v)
     {
@@ -249,8 +249,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Calculate the division of FloatMagneticFlux and FloatDuration, which results in a FloatElectricalPotential scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatElectricalPotential; scalar as a division of FloatMagneticFlux and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatDuration
      */
     public final FloatElectricalPotential divide(final FloatDuration v)
     {
@@ -259,8 +259,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Calculate the division of FloatMagneticFlux and FloatArea, which results in a FloatMagneticFluxDensity scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatMagneticFluxDensity; scalar as a division of FloatMagneticFlux and FloatArea
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatArea
      */
     public final FloatMagneticFluxDensity divide(final FloatArea v)
     {
@@ -269,8 +269,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
 
     /**
      * Calculate the division of FloatMagneticFlux and FloatMagneticFluxDensity, which results in a FloatArea scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatArea; scalar as a division of FloatMagneticFlux and FloatMagneticFluxDensity
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatMagneticFluxDensity
      */
     public final FloatArea divide(final FloatMagneticFluxDensity v)
     {
@@ -280,8 +280,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
     /**
      * Calculate the division of FloatMagneticFlux and FloatElectricalCurrent, which results in a FloatElectricalInductance
      * scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatElectricalInductance; scalar as a division of FloatMagneticFlux and FloatElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatElectricalCurrent
      */
     public final FloatElectricalInductance divide(final FloatElectricalCurrent v)
     {
@@ -291,8 +291,8 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
     /**
      * Calculate the division of FloatMagneticFlux and FloatElectricalInductance, which results in a FloatElectricalCurrent
      * scalar.
-     * @param v FloatMagneticFlux; scalar
-     * @return FloatElectricalCurrent; scalar as a division of FloatMagneticFlux and FloatElectricalInductance
+     * @param v scalar
+     * @return scalar as a division of FloatMagneticFlux and FloatElectricalInductance
      */
     public final FloatElectricalCurrent divide(final FloatElectricalInductance v)
     {

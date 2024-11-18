@@ -55,8 +55,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Construct ElectricalConductance scalar.
-     * @param value double; the double value
-     * @param unit ElectricalConductanceUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalConductance(final double value, final ElectricalConductanceUnit unit)
     {
@@ -65,7 +65,7 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Construct ElectricalConductance scalar.
-     * @param value ElectricalConductance; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalConductance(final ElectricalConductance value)
     {
@@ -80,8 +80,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Construct ElectricalConductance scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalConductance; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalConductance instantiateSI(final double value)
     {
@@ -90,10 +90,10 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalConductance; the low value
-     * @param one ElectricalConductance; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalConductance; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalConductance interpolate(final ElectricalConductance zero, final ElectricalConductance one,
             final double ratio)
@@ -104,9 +104,9 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalConductance; the first scalar
-     * @param r2 ElectricalConductance; the second scalar
-     * @return ElectricalConductance; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalConductance max(final ElectricalConductance r1, final ElectricalConductance r2)
     {
@@ -115,10 +115,10 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalConductance; the first scalar
-     * @param r2 ElectricalConductance; the second scalar
-     * @param rn ElectricalConductance...; the other scalars
-     * @return ElectricalConductance; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalConductance max(final ElectricalConductance r1, final ElectricalConductance r2,
             final ElectricalConductance... rn)
@@ -136,9 +136,9 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalConductance; the first scalar
-     * @param r2 ElectricalConductance; the second scalar
-     * @return ElectricalConductance; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalConductance min(final ElectricalConductance r1, final ElectricalConductance r2)
     {
@@ -147,10 +147,10 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalConductance; the first scalar
-     * @param r2 ElectricalConductance; the second scalar
-     * @param rn ElectricalConductance...; the other scalars
-     * @return ElectricalConductance; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalConductance min(final ElectricalConductance r1, final ElectricalConductance r2,
             final ElectricalConductance... rn)
@@ -170,8 +170,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
      * Returns a ElectricalConductance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalConductance
-     * @return ElectricalConductance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalConductance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -199,9 +199,9 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Returns a ElectricalConductance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalConductance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -220,8 +220,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Calculate the division of ElectricalConductance and ElectricalConductance, which results in a Dimensionless scalar.
-     * @param v ElectricalConductance; scalar
-     * @return Dimensionless; scalar as a division of ElectricalConductance and ElectricalConductance
+     * @param v scalar
+     * @return scalar as a division of ElectricalConductance and ElectricalConductance
      */
     public final Dimensionless divide(final ElectricalConductance v)
     {
@@ -230,8 +230,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Calculate the multiplication of ElectricalConductance and ElectricalResistance, which results in a Dimensionless scalar.
-     * @param v ElectricalConductance; scalar
-     * @return Dimensionless; scalar as a multiplication of ElectricalConductance and ElectricalResistance
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalConductance and ElectricalResistance
      */
     public final Dimensionless times(final ElectricalResistance v)
     {
@@ -241,8 +241,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
     /**
      * Calculate the multiplication of ElectricalConductance and ElectricalPotential, which results in a ElectricalCurrent
      * scalar.
-     * @param v ElectricalConductance; scalar
-     * @return ElectricalCurrent; scalar as a multiplication of ElectricalConductance and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalConductance and ElectricalPotential
      */
     public final ElectricalCurrent times(final ElectricalPotential v)
     {
@@ -251,8 +251,8 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
 
     /**
      * Calculate the multiplication of ElectricalConductance and Duration, which results in a ElectricalCapacitance scalar.
-     * @param v ElectricalConductance; scalar
-     * @return ElectricalCapacitance; scalar as a multiplication of ElectricalConductance and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalConductance and Duration
      */
     public final ElectricalCapacitance times(final Duration v)
     {

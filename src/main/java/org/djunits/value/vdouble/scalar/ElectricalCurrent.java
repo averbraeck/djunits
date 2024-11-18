@@ -56,8 +56,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Construct ElectricalCurrent scalar.
-     * @param value double; the double value
-     * @param unit ElectricalCurrentUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalCurrent(final double value, final ElectricalCurrentUnit unit)
     {
@@ -66,7 +66,7 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Construct ElectricalCurrent scalar.
-     * @param value ElectricalCurrent; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalCurrent(final ElectricalCurrent value)
     {
@@ -81,8 +81,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Construct ElectricalCurrent scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalCurrent; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalCurrent instantiateSI(final double value)
     {
@@ -91,10 +91,10 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalCurrent; the low value
-     * @param one ElectricalCurrent; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalCurrent; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalCurrent interpolate(final ElectricalCurrent zero, final ElectricalCurrent one, final double ratio)
     {
@@ -104,9 +104,9 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalCurrent; the first scalar
-     * @param r2 ElectricalCurrent; the second scalar
-     * @return ElectricalCurrent; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalCurrent max(final ElectricalCurrent r1, final ElectricalCurrent r2)
     {
@@ -115,10 +115,10 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalCurrent; the first scalar
-     * @param r2 ElectricalCurrent; the second scalar
-     * @param rn ElectricalCurrent...; the other scalars
-     * @return ElectricalCurrent; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalCurrent max(final ElectricalCurrent r1, final ElectricalCurrent r2, final ElectricalCurrent... rn)
     {
@@ -135,9 +135,9 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalCurrent; the first scalar
-     * @param r2 ElectricalCurrent; the second scalar
-     * @return ElectricalCurrent; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalCurrent min(final ElectricalCurrent r1, final ElectricalCurrent r2)
     {
@@ -146,10 +146,10 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalCurrent; the first scalar
-     * @param r2 ElectricalCurrent; the second scalar
-     * @param rn ElectricalCurrent...; the other scalars
-     * @return ElectricalCurrent; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalCurrent min(final ElectricalCurrent r1, final ElectricalCurrent r2, final ElectricalCurrent... rn)
     {
@@ -168,8 +168,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
      * Returns a ElectricalCurrent representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalCurrent
-     * @return ElectricalCurrent; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalCurrent
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -196,9 +196,9 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Returns a ElectricalCurrent based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalCurrent; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -217,8 +217,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Calculate the division of ElectricalCurrent and ElectricalCurrent, which results in a Dimensionless scalar.
-     * @param v ElectricalCurrent; scalar
-     * @return Dimensionless; scalar as a division of ElectricalCurrent and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of ElectricalCurrent and ElectricalCurrent
      */
     public final Dimensionless divide(final ElectricalCurrent v)
     {
@@ -227,8 +227,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Calculate the multiplication of ElectricalCurrent and ElectricalPotential, which results in a Power scalar.
-     * @param v ElectricalCurrent; scalar
-     * @return Power; scalar as a multiplication of ElectricalCurrent and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCurrent and ElectricalPotential
      */
     public final Power times(final ElectricalPotential v)
     {
@@ -237,8 +237,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Calculate the multiplication of ElectricalCurrent and Duration, which results in a ElectricalCharge scalar.
-     * @param v ElectricalCurrent; scalar
-     * @return ElectricalCharge; scalar as a multiplication of ElectricalCurrent and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCurrent and Duration
      */
     public final ElectricalCharge times(final Duration v)
     {
@@ -248,8 +248,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
     /**
      * Calculate the multiplication of ElectricalCurrent and ElectricalResistance, which results in a ElectricalPotential
      * scalar.
-     * @param v ElectricalCurrent; scalar
-     * @return ElectricalPotential; scalar as a multiplication of ElectricalCurrent and ElectricalResistance
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCurrent and ElectricalResistance
      */
     public final ElectricalPotential times(final ElectricalResistance v)
     {
@@ -258,8 +258,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Calculate the division of ElectricalCurrent and ElectricalPotential, which results in a ElectricalConductance scalar.
-     * @param v ElectricalCurrent; scalar
-     * @return ElectricalConductance; scalar as a division of ElectricalCurrent and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of ElectricalCurrent and ElectricalPotential
      */
     public final ElectricalConductance divide(final ElectricalPotential v)
     {
@@ -268,8 +268,8 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
 
     /**
      * Calculate the division of ElectricalCurrent and ElectricalConductance, which results in a ElectricalPotential scalar.
-     * @param v ElectricalCurrent; scalar
-     * @return ElectricalPotential; scalar as a division of ElectricalCurrent and ElectricalConductance
+     * @param v scalar
+     * @return scalar as a division of ElectricalCurrent and ElectricalConductance
      */
     public final ElectricalPotential divide(final ElectricalConductance v)
     {

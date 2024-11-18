@@ -45,8 +45,8 @@ public abstract class FloatMatrixRelWithAbs<
 
     /**
      * Construct a new Relative Mutable FloatMatrix.
-     * @param data FloatMatrixData; an internal data object
-     * @param unit RU; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     protected FloatMatrixRelWithAbs(final FloatMatrixData data, final RU unit)
     {
@@ -64,9 +64,9 @@ public abstract class FloatMatrixRelWithAbs<
      * Instantiate a new absolute matrix of the class of this relative matrix. This can be used instead of the
      * FloatMatrix.instiantiate() methods in case another matrix of this relative with absolute class is known. The method is
      * faster than FloatMatrix.instantiate, and it will also work if the matrix is user-defined.
-     * @param dmd FloatMatrixData; the data used to instantiate the matrix
-     * @param displayUnit AU; the display unit of the absolute matrix
-     * @return AM; an absolute matrix of the correct type, belonging to this relative matrix type
+     * @param dmd the data used to instantiate the matrix
+     * @param displayUnit the display unit of the absolute matrix
+     * @return an absolute matrix of the correct type, belonging to this relative matrix type
      */
     public abstract AM instantiateMatrixAbs(FloatMatrixData dmd, AU displayUnit);
 
@@ -74,9 +74,9 @@ public abstract class FloatMatrixRelWithAbs<
      * Instantiate a new absolute vector of the class of this relative matrix. This can be used instead of the
      * FloatVector.instiantiate() methods in case another matrix of this relative with absolute class is known. The method is
      * faster than FloatVector.instantiate, and it will also work if the matrix or vector is user-defined.
-     * @param dvd FloatVectorData; the data used to instantiate the vector
-     * @param displayUnit AU; the display unit of the absolute vector
-     * @return AV; an absolute vector of the correct type, belonging to this relative matrix type
+     * @param dvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the absolute vector
+     * @return an absolute vector of the correct type, belonging to this relative matrix type
      */
     public abstract AV instantiateVectorAbs(FloatVectorData dvd, AU displayUnit);
 
@@ -84,9 +84,9 @@ public abstract class FloatMatrixRelWithAbs<
      * Instantiate a new absolute scalar for the class of this relative matrix. This can be used instead of the
      * FloatScalar.instiantiate() methods in case a matrix of this class is known. The method is faster than
      * FloatScalar.instantiate, and it will also work if the matrix and/or scalar are user-defined.
-     * @param valueSI float; the SI value of the absolute scalar
-     * @param displayUnit AU; the unit in which the absolute value will be displayed
-     * @return A; an absolute scalar of the correct type, belonging to this relative matrix type
+     * @param valueSI the SI value of the absolute scalar
+     * @param displayUnit the unit in which the absolute value will be displayed
+     * @return an absolute scalar of the correct type, belonging to this relative matrix type
      */
     public abstract A instantiateScalarAbsSI(float valueSI, AU displayUnit);
 

@@ -40,8 +40,8 @@ public abstract class FloatVectorAbs<
 
     /**
      * Construct a new Relative Mutable FloatVector.
-     * @param data FloatVectorData; an internal data object
-     * @param unit AU; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     protected FloatVectorAbs(final FloatVectorData data, final AU unit)
     {
@@ -68,8 +68,8 @@ public abstract class FloatVectorAbs<
 
     /**
      * Decrement all values of this vector by the decrement. This only works if the vector is mutable.
-     * @param decrement R; the scalar by which to decrement all values
-     * @return AV; this modified vector
+     * @param decrement the scalar by which to decrement all values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable
      */
     @SuppressWarnings("unchecked")
@@ -83,8 +83,8 @@ public abstract class FloatVectorAbs<
     /**
      * Decrement all values of this vector by the decrement on a value by value basis. This only works if this vector is
      * mutable.
-     * @param decrement RV; the vector that contains the values by which to decrement the corresponding values
-     * @return AV; this modified vector
+     * @param decrement the vector that contains the values by which to decrement the corresponding values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable or when the sizes of the vectors differ
      */
     @SuppressWarnings("unchecked")
@@ -99,9 +99,9 @@ public abstract class FloatVectorAbs<
      * Instantiate a new relative vector of the class of this absolute vector. This can be used instead of the
      * FloatVector.instiantiate() methods in case another vector of this absolute vector class is known. The method is faster
      * than FloatVector.instantiate, and it will also work if the vector is user-defined.
-     * @param dvd FloatVectorData; the data used to instantiate the vector
-     * @param displayUnit RU; the display unit of the relative vector
-     * @return RV; a relative vector of the correct type, belonging to this absolute vector type
+     * @param dvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the relative vector
+     * @return a relative vector of the correct type, belonging to this absolute vector type
      */
     public abstract RV instantiateVectorRel(FloatVectorData dvd, RU displayUnit);
 
@@ -109,9 +109,9 @@ public abstract class FloatVectorAbs<
      * Instantiate a new relative scalar for the class of this absolute vector. This can be used instead of the
      * FloatScalar.instiantiate() methods in case a vector of this class is known. The method is faster than
      * FloatScalar.instantiate, and it will also work if the vector and/or scalar are user-defined.
-     * @param valueSI float; the SI value of the relative scalar
-     * @param displayUnit RU; the unit in which the relative value will be displayed
-     * @return R; a relative scalar of the correct type, belonging to this absolute vector type
+     * @param valueSI the SI value of the relative scalar
+     * @param displayUnit the unit in which the relative value will be displayed
+     * @return a relative scalar of the correct type, belonging to this absolute vector type
      */
     public abstract R instantiateScalarRelSI(float valueSI, RU displayUnit);
 

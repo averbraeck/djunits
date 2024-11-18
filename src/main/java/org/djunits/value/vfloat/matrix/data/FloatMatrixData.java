@@ -44,7 +44,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Construct a new DoubleMatrixData store.
-     * @param storageType StorageType; the data type
+     * @param storageType the data type
      */
     public FloatMatrixData(final StorageType storageType)
     {
@@ -58,9 +58,9 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Instantiate a FloatMatrixData with the right data type. The float array is of the form f[rows][columns] so each value can
      * be found with f[row][column].
-     * @param values float[][]; the (SI) values to store
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
+     * @param values the (SI) values to store
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
      * @return the FloatMatrixData with the right data type
      * @throws ValueRuntimeException when values is ragged
      * @throws NullPointerException when values are null, or storageType is null
@@ -97,10 +97,10 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Instantiate a FloatMatrixData with the right data type.
-     * @param values Collection&lt;FloatSparseValue&lt;U, S&gt;&gt;; the (sparse [X, Y, SI]) values to store
-     * @param rows int; the number of rows of the matrix
-     * @param cols int; the number of columns of the matrix
-     * @param storageType StorageType; the data type to use
+     * @param values the (sparse [X, Y, SI]) values to store
+     * @param rows the number of rows of the matrix
+     * @param cols the number of columns of the matrix
+     * @param storageType the data type to use
      * @return the FloatMatrixData with the right data type
      * @throws NullPointerException when values are null, or storageType is null
      * @throws ValueRuntimeException when rows &lt; 0 or cols &lt; 0
@@ -140,8 +140,8 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Instantiate a FloatMatrixData with the right data type. The FloatScalar array is of the form fs[rows][columns] so each
      * value can be found with fs[row][column].
-     * @param values S[][]; the values to store
-     * @param storageType StorageType; the data type to use
+     * @param values the values to store
+     * @param storageType the data type to use
      * @return the FloatMatrixData with the right data type
      * @throws NullPointerException when values is null, or storageType is null
      * @throws ValueRuntimeException when values is ragged
@@ -186,7 +186,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Retrieve the row count.
-     * @return int; the number of rows of the matrix
+     * @return the number of rows of the matrix
      */
     public int rows()
     {
@@ -195,7 +195,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Retrieve the column count.
-     * @return int; the number of columns of the matrix
+     * @return the number of columns of the matrix
      */
     public int cols()
     {
@@ -204,35 +204,35 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Return the data of this matrix in dense storage format.
-     * @return FloatMatrixDataDense; the dense transformation of this data
+     * @return the dense transformation of this data
      */
     public abstract FloatMatrixDataDense toDense();
 
     /**
      * Return the data of this matrix in sparse storage format.
-     * @return FloatMatrixDataSparse; the sparse transformation of this data
+     * @return the sparse transformation of this data
      */
     public abstract FloatMatrixDataSparse toSparse();
 
     /**
      * Retrieve one value from this data.
-     * @param row int; the row number to get the value for
-     * @param col int; the column number to get the value for
+     * @param row the row number to get the value for
+     * @param col the column number to get the value for
      * @return the value at the [row, col] point
      */
     public abstract float getSI(int row, int col);
 
     /**
      * Sets a value at the [row, col] point in the matrix.
-     * @param row int; the row number to set the value for
-     * @param col int; the column number to set the value for
-     * @param valueSI float; the value at the index
+     * @param row the row number to set the value for
+     * @param col the column number to set the value for
+     * @param valueSI the value at the index
      */
     public abstract void setSI(int row, int col, float valueSI);
 
     /**
      * Compute and return the sum of the values of all cells of this matrix.
-     * @return float; the sum of the values of all cells
+     * @return the sum of the values of all cells
      */
     public final float zSum()
     {
@@ -243,20 +243,20 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Create and return a deep copy of the data in dense format. The float array is of the form f[rows][columns] so each value
      * can be found with f[row][column].
-     * @return float[][]; a safe, dense copy of matrixSI as a matrix
+     * @return a safe, dense copy of matrixSI as a matrix
      */
     public abstract float[][] getDenseMatrixSI();
 
     /**
      * Create and return a deep copy of the data in dense format. The double array is of the form d[rows][columns] so each value
      * can be found with d[row][column].
-     * @return double[][]; a safe, dense copy of matrixSI as a matrix
+     * @return a safe, dense copy of matrixSI as a matrix
      */
     public abstract double[][] getDoubleDenseMatrixSI();
 
     /**
      * Check that a 2D array of float is not null, not empty and not jagged; i.e. all rows have the same length.
-     * @param values float[][]; the 2D array to check
+     * @param values the 2D array to check
      * @return the values in case the method is used in a constructor
      * @throws NullPointerException when <code>values</code> is null
      * @throws ValueRuntimeException when <code>values</code> is jagged
@@ -276,7 +276,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Check that a 2D array of float is not null, not empty and not jagged; i.e. all rows have the same length.
-     * @param values S[][]; the 2D array to check
+     * @param values the 2D array to check
      * @return the values in case the method is used in a constructor
      * @throws NullPointerException when <code>values</code> is null
      * @throws ValueRuntimeException when <code>values</code> is jagged
@@ -303,7 +303,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Check the sizes of this data object and the other data object.
-     * @param other FloatMatrixData; the other data object
+     * @param other the other data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
     protected void checkSizes(final FloatMatrixData other) throws ValueRuntimeException
@@ -320,16 +320,16 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Apply an operation to each cell.
-     * @param doubleFunction FloatFunction; the operation to apply
-     * @return FloatMatrixData; this (modified) double vector data object
+     * @param doubleFunction the operation to apply
+     * @return this (modified) double vector data object
      */
     public abstract FloatMatrixData assign(FloatFunction doubleFunction);
 
     /**
      * Apply a binary operation on a cell by cell basis.
-     * @param floatFunction FloatFunction2; the binary operation to apply
-     * @param right FloatMatrixData; the right operand for the binary operation
-     * @return FloatMatrixData; this (modified) double matrix data object
+     * @param floatFunction the binary operation to apply
+     * @param right the right operand for the binary operation
+     * @return this (modified) double matrix data object
      * @throws ValueRuntimeException when the sizes of the vectors do not match
      */
     abstract FloatMatrixData assign(FloatFunction2 floatFunction, FloatMatrixData right) throws ValueRuntimeException;
@@ -337,7 +337,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Add two matrices on a cell-by-cell basis. If both matrices are sparse, a sparse matrix is returned, otherwise a dense
      * matrix is returned.
-     * @param right FloatMatrixData; the other data object to add
+     * @param right the other data object to add
      * @return the sum of this data object and the other data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
@@ -345,8 +345,8 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Add a matrix to this matrix on a cell-by-cell basis. The type of matrix (sparse, dense) stays the same.
-     * @param right FloatMatrixData; the other data object to add
-     * @return FloatMatrixData; this modified float matrix data object
+     * @param right the other data object to add
+     * @return this modified float matrix data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
     public final FloatMatrixData incrementBy(final FloatMatrixData right) throws ValueRuntimeException
@@ -364,7 +364,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Subtract two matrices on a cell-by-cell basis. If both matrices are sparse, a sparse matrix is returned, otherwise a
      * dense matrix is returned.
-     * @param right FloatMatrixData; the other data object to subtract
+     * @param right the other data object to subtract
      * @return the sum of this data object and the other data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
@@ -372,8 +372,8 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Subtract a matrix from this matrix on a cell-by-cell basis. The type of matrix (sparse, dense) stays the same.
-     * @param decrement FloatMatrixData; the other data object to subtract
-     * @return FloatMatrixData; this modified float matrix data object
+     * @param decrement the other data object to subtract
+     * @return this modified float matrix data object
      * @throws ValueRuntimeException if matrices have different lengths
      */
     public final FloatMatrixData decrementBy(final FloatMatrixData decrement) throws ValueRuntimeException
@@ -391,8 +391,8 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Multiply two matrices on a cell-by-cell basis. If both matrices are dense, a dense matrix is returned, otherwise a sparse
      * matrix is returned.
-     * @param right FloatMatrixData; the other data object to multiply with
-     * @return FloatMatrixData; a new double matrix data store holding the result of the multiplications
+     * @param right the other data object to multiply with
+     * @return a new double matrix data store holding the result of the multiplications
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public abstract FloatMatrixData times(FloatMatrixData right) throws ValueRuntimeException;
@@ -400,8 +400,8 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Multiply a matrix with the values of another matrix on a cell-by-cell basis. The type of matrix (sparse, dense) stays the
      * same.
-     * @param right FloatMatrixData; the other data object to multiply with
-     * @return FloatMatrixData; this modified data store
+     * @param right the other data object to multiply with
+     * @return this modified data store
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public final FloatMatrixData multiplyBy(final FloatMatrixData right) throws ValueRuntimeException
@@ -419,7 +419,7 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Divide two matrices on a cell-by-cell basis. If both matrices are dense, a dense matrix is returned, otherwise a sparse
      * matrix is returned.
-     * @param right FloatMatrixData; the other data object to divide by
+     * @param right the other data object to divide by
      * @return the sum of this data object and the other data object
      * @throws ValueRuntimeException if matrices have different sizes
      */
@@ -428,8 +428,8 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
     /**
      * Divide the values of a matrix by the values of another matrix on a cell-by-cell basis. The type of matrix (sparse, dense)
      * stays the same.
-     * @param right FloatMatrixData; the other data object to divide by
-     * @return FloatMatrixData; this modified data store
+     * @param right the other data object to divide by
+     * @return this modified data store
      * @throws ValueRuntimeException if matrices have different sizes
      */
     public final FloatMatrixData divideBy(final FloatMatrixData right) throws ValueRuntimeException
@@ -467,9 +467,9 @@ public abstract class FloatMatrixData extends Storage<FloatMatrixData> implement
 
     /**
      * Compare contents of a dense and a sparse matrix.
-     * @param dm FloatMatrixDataDense; the dense matrix
-     * @param sm FloatMatrixDataSparse; the sparse matrix
-     * @return boolean; true if the contents are equal
+     * @param dm the dense matrix
+     * @param sm the sparse matrix
+     * @return true if the contents are equal
      */
     protected boolean compareDenseMatrixWithSparseMatrix(final FloatMatrixDataDense dm, final FloatMatrixDataSparse sm)
     {

@@ -34,8 +34,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Construct a new Relative Mutable FloatMatrix.
-     * @param data FloatMatrixData; an internal data object
-     * @param unit U; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     protected FloatMatrixRel(final FloatMatrixData data, final U unit)
     {
@@ -44,7 +44,7 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Compute the sum of all SI values of this matrix.
-     * @return S; the sum of all values of this matrix with the same display unit as this matrix
+     * @return the sum of all values of this matrix with the same display unit as this matrix
      */
     public final S zSum()
     {
@@ -65,8 +65,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Increment all values of this matrix by the increment. This only works if the matrix is mutable.
-     * @param increment S; the scalar by which to increment all values
-     * @return RM; this modified matrix
+     * @param increment the scalar by which to increment all values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case this matrix is immutable
      */
     @SuppressWarnings("unchecked")
@@ -80,8 +80,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
     /**
      * Increment all values of this matrix by the increment on a value by value basis. This only works if this matrix is
      * mutable.
-     * @param increment RM; the matrix that contains the values by which to increment the corresponding values
-     * @return RM; this modified matrix
+     * @param increment the matrix that contains the values by which to increment the corresponding values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case this matrix is immutable or when the sizes of the matrices differ
      */
     @SuppressWarnings("unchecked")
@@ -94,8 +94,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Decrement all values of this matrix by the decrement. This only works if this matrix is mutable.
-     * @param decrement S; the scalar by which to decrement all values
-     * @return RM; this modified matrix
+     * @param decrement the scalar by which to decrement all values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case this matrix is immutable
      */
     @SuppressWarnings("unchecked")
@@ -109,8 +109,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
     /**
      * Decrement this Relative matrix by another Relative matrix. The operation is done value by value. This is only allowed if
      * this matrix is mutable.
-     * @param decrement RM; the matrix that contains the values by which to decrement the corresponding values
-     * @return RM; this modified matrix
+     * @param decrement the matrix that contains the values by which to decrement the corresponding values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case this matrix is immutable or when the sizes of the matrices differ
      */
     @SuppressWarnings("unchecked")
@@ -123,8 +123,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Multiply all values of this matrix by the multiplier. This only works if the matrix is mutable.
-     * @param multiplier float; the factor by which to multiply all values
-     * @return RM; this modified matrix
+     * @param multiplier the factor by which to multiply all values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case the matrix is immutable
      */
     public RM multiplyBy(final float multiplier)
@@ -134,8 +134,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Divide all values of this matrix by the divisor. This only works if the matrix is mutable.
-     * @param divisor float; the value by which to divide all values
-     * @return RM; this modified matrix
+     * @param divisor the value by which to divide all values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case the matrix is immutable
      */
     public RM divideBy(final float divisor)
@@ -145,8 +145,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
     
     /**
      * Multiply all values of this matrix by the multiplier. This only works if the matrix is mutable.
-     * @param multiplier float; the factor by which to multiply all values
-     * @return RM; this modified matrix
+     * @param multiplier the factor by which to multiply all values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case the matrix is immutable
      */
     public RM multiplyBy(final double multiplier)
@@ -156,8 +156,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
 
     /**
      * Divide all values of this matrix by the divisor. This only works if the matrix is mutable.
-     * @param divisor float; the value by which to divide all values
-     * @return RM; this modified matrix
+     * @param divisor the value by which to divide all values
+     * @return this modified matrix
      * @throws ValueRuntimeException in case the matrix is immutable
      */
     public RM divideBy(final double divisor)
@@ -169,8 +169,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
      * Multiply a Relative value with this Relative value for a matrix or matrix. The multiplication is done value by value and
      * store the result in a new Relative value. If both operands are dense, the result is a dense matrix or matrix, otherwise
      * the result is a sparse matrix or matrix.
-     * @param rel MT; the right operand, which can be any matrix type
-     * @return FloatSIMatrix; the multiplication of this matrix and the operand
+     * @param rel the right operand, which can be any matrix type
+     * @return the multiplication of this matrix and the operand
      * @throws ValueRuntimeException in case this matrix or matrix and the operand have a different size
      * @throws UnitException on unit error
      * @param <UT> the unit type of the multiplier
@@ -204,8 +204,8 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
      * Divide this Relative matrix by another Relative matrix. The operation is done value by value and store the result is
      * stored in a new Relative matrix. If both operands are dense, the result is a dense matrix, otherwise the result is a
      * sparse matrix. TODO discuss dense or sparseness of result.
-     * @param rel MT; the right operand, which can be any matrix type
-     * @return FloatSIMatrix; the division of this matrix and the operand
+     * @param rel the right operand, which can be any matrix type
+     * @return the division of this matrix and the operand
      * @throws ValueRuntimeException in case this matrix or matrix and the operand have a different size
      * @throws UnitException on unit error
      * @param <UT> the unit type of the multiplier

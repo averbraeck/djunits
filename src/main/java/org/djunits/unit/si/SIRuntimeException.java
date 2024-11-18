@@ -24,8 +24,8 @@ public class SIRuntimeException extends RuntimeException
 
     /**
      * Construct a new SIRuntimeException with specified message and cause.
-     * @param message String; String
-     * @param cause Throwable; Throwable
+     * @param message String
+     * @param cause Throwable
      */
     public SIRuntimeException(final String message, final Throwable cause)
     {
@@ -34,7 +34,7 @@ public class SIRuntimeException extends RuntimeException
 
     /**
      * Construct a new SIRuntimeException with specified message.
-     * @param message String; String
+     * @param message String
      */
     public SIRuntimeException(final String message)
     {
@@ -43,7 +43,7 @@ public class SIRuntimeException extends RuntimeException
 
     /**
      * Construct a new SIRuntimeException with specified cause.
-     * @param cause Throwable; Throwable
+     * @param cause Throwable
      */
     public SIRuntimeException(final Throwable cause)
     {

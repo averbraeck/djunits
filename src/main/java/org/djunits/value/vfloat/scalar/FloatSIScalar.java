@@ -72,8 +72,8 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Construct SI scalar.
-     * @param value float; the float value
-     * @param unit SIUnit; unit for the float value
+     * @param value the float value
+     * @param unit unit for the float value
      */
     public FloatSIScalar(final float value, final SIUnit unit)
     {
@@ -82,7 +82,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Construct SI scalar.
-     * @param value FloatSIScalar; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public FloatSIScalar(final FloatSIScalar value)
     {
@@ -97,9 +97,9 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Construct SI scalar.
-     * @param value float; the float value in SI units
-     * @param unit SIUnit; the unit to use for the SI scalar
-     * @return FloatSIScalar; the new scalar with the SI value
+     * @param value the float value in SI units
+     * @param unit the unit to use for the SI scalar
+     * @return the new scalar with the SI value
      */
     public static final FloatSIScalar instantiateSI(final float value, final SIUnit unit)
     {
@@ -108,10 +108,10 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Interpolate between two values.
-     * @param zero FloatSIScalar; the low value
-     * @param one FloatSIScalar; the high value
-     * @param ratio float; the ratio between 0 and 1, inclusive
-     * @return FloatSIScalar; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static FloatSIScalar interpolate(final FloatSIScalar zero, final FloatSIScalar one, final float ratio)
     {
@@ -121,9 +121,9 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 FloatSIScalar; the first scalar
-     * @param r2 FloatSIScalar; the second scalar
-     * @return FloatSIScalar; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static FloatSIScalar max(final FloatSIScalar r1, final FloatSIScalar r2)
     {
@@ -132,10 +132,10 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 FloatSIScalar; the first scalar
-     * @param r2 FloatSIScalar; the second scalar
-     * @param rn FloatSIScalar...; the other scalars
-     * @return FloatSIScalar; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static FloatSIScalar max(final FloatSIScalar r1, final FloatSIScalar r2, final FloatSIScalar... rn)
     {
@@ -152,9 +152,9 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 FloatSIScalar; the first scalar
-     * @param r2 FloatSIScalar; the second scalar
-     * @return FloatSIScalar; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static FloatSIScalar min(final FloatSIScalar r1, final FloatSIScalar r2)
     {
@@ -163,10 +163,10 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 FloatSIScalar; the first scalar
-     * @param r2 FloatSIScalar; the second scalar
-     * @param rn FloatSIScalar...; the other scalars
-     * @return FloatSIScalar; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static FloatSIScalar min(final FloatSIScalar r1, final FloatSIScalar r2, final FloatSIScalar... rn)
     {
@@ -191,8 +191,8 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
      * Returns an FloatSIScalar representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the float value in the unit, followed by the official abbreviation of the unit. Spaces are allowed,
      * but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatSIScalar
-     * @return FloatSIScalar; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatSIScalar
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -220,9 +220,9 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Returns an FloatSIScalar based on a value and the textual representation of the unit.
-     * @param value float; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatSIScalar; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -257,8 +257,8 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar transformed to a scalar in the given unit. Of course the SI dimensionality has to match,
      * otherwise the scalar cannot be transformed. The compiler will check the alignment between the return value and the unit.
-     * @param displayUnit KU; the unit in which the scalar needs to be expressed
-     * @return S; the scalar that has been transformed into the right scalar type and unit
+     * @param displayUnit the unit in which the scalar needs to be expressed
+     * @return the scalar that has been transformed into the right scalar type and unit
      * @param <U> the unit type
      * @param <S> the scalar type
      */
@@ -274,7 +274,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a absorbeddose.
-     * @return FloatAbsorbedDose; the current scalar as a absorbeddose
+     * @return the current scalar as a absorbeddose
      */
     public final FloatAbsorbedDose asAbsorbedDose()
     {
@@ -286,7 +286,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a absorbeddose, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAbsorbedDose; the current scalar as a absorbeddose
+     * @return the current scalar as a absorbeddose
      */
     public final FloatAbsorbedDose asAbsorbedDose(final AbsorbedDoseUnit displayUnit)
     {
@@ -299,7 +299,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a acceleration.
-     * @return FloatAcceleration; the current scalar as a acceleration
+     * @return the current scalar as a acceleration
      */
     public final FloatAcceleration asAcceleration()
     {
@@ -311,7 +311,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a acceleration, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAcceleration; the current scalar as a acceleration
+     * @return the current scalar as a acceleration
      */
     public final FloatAcceleration asAcceleration(final AccelerationUnit displayUnit)
     {
@@ -324,7 +324,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a amountofsubstance.
-     * @return FloatAmountOfSubstance; the current scalar as a amountofsubstance
+     * @return the current scalar as a amountofsubstance
      */
     public final FloatAmountOfSubstance asAmountOfSubstance()
     {
@@ -336,7 +336,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a amountofsubstance, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAmountOfSubstance; the current scalar as a amountofsubstance
+     * @return the current scalar as a amountofsubstance
      */
     public final FloatAmountOfSubstance asAmountOfSubstance(final AmountOfSubstanceUnit displayUnit)
     {
@@ -349,7 +349,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a angularacceleration.
-     * @return FloatAngularAcceleration; the current scalar as a angularacceleration
+     * @return the current scalar as a angularacceleration
      */
     public final FloatAngularAcceleration asAngularAcceleration()
     {
@@ -361,7 +361,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a angularacceleration, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAngularAcceleration; the current scalar as a angularacceleration
+     * @return the current scalar as a angularacceleration
      */
     public final FloatAngularAcceleration asAngularAcceleration(final AngularAccelerationUnit displayUnit)
     {
@@ -374,7 +374,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a angularvelocity.
-     * @return FloatAngularVelocity; the current scalar as a angularvelocity
+     * @return the current scalar as a angularvelocity
      */
     public final FloatAngularVelocity asAngularVelocity()
     {
@@ -386,7 +386,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a angularvelocity, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAngularVelocity; the current scalar as a angularvelocity
+     * @return the current scalar as a angularvelocity
      */
     public final FloatAngularVelocity asAngularVelocity(final AngularVelocityUnit displayUnit)
     {
@@ -399,7 +399,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a area.
-     * @return FloatArea; the current scalar as a area
+     * @return the current scalar as a area
      */
     public final FloatArea asArea()
     {
@@ -411,7 +411,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a area, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatArea; the current scalar as a area
+     * @return the current scalar as a area
      */
     public final FloatArea asArea(final AreaUnit displayUnit)
     {
@@ -424,7 +424,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a catalyticactivity.
-     * @return FloatCatalyticActivity; the current scalar as a catalyticactivity
+     * @return the current scalar as a catalyticactivity
      */
     public final FloatCatalyticActivity asCatalyticActivity()
     {
@@ -436,7 +436,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a catalyticactivity, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatCatalyticActivity; the current scalar as a catalyticactivity
+     * @return the current scalar as a catalyticactivity
      */
     public final FloatCatalyticActivity asCatalyticActivity(final CatalyticActivityUnit displayUnit)
     {
@@ -449,7 +449,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a density.
-     * @return FloatDensity; the current scalar as a density
+     * @return the current scalar as a density
      */
     public final FloatDensity asDensity()
     {
@@ -461,7 +461,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a density, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatDensity; the current scalar as a density
+     * @return the current scalar as a density
      */
     public final FloatDensity asDensity(final DensityUnit displayUnit)
     {
@@ -474,7 +474,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a dimensionless.
-     * @return FloatDimensionless; the current scalar as a dimensionless
+     * @return the current scalar as a dimensionless
      */
     public final FloatDimensionless asDimensionless()
     {
@@ -486,7 +486,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a dimensionless, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatDimensionless; the current scalar as a dimensionless
+     * @return the current scalar as a dimensionless
      */
     public final FloatDimensionless asDimensionless(final DimensionlessUnit displayUnit)
     {
@@ -499,7 +499,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalcapacitance.
-     * @return FloatElectricalCapacitance; the current scalar as a electricalcapacitance
+     * @return the current scalar as a electricalcapacitance
      */
     public final FloatElectricalCapacitance asElectricalCapacitance()
     {
@@ -511,7 +511,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalcapacitance, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalCapacitance; the current scalar as a electricalcapacitance
+     * @return the current scalar as a electricalcapacitance
      */
     public final FloatElectricalCapacitance asElectricalCapacitance(final ElectricalCapacitanceUnit displayUnit)
     {
@@ -524,7 +524,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalcharge.
-     * @return FloatElectricalCharge; the current scalar as a electricalcharge
+     * @return the current scalar as a electricalcharge
      */
     public final FloatElectricalCharge asElectricalCharge()
     {
@@ -536,7 +536,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalcharge, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalCharge; the current scalar as a electricalcharge
+     * @return the current scalar as a electricalcharge
      */
     public final FloatElectricalCharge asElectricalCharge(final ElectricalChargeUnit displayUnit)
     {
@@ -549,7 +549,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalconductance.
-     * @return FloatElectricalConductance; the current scalar as a electricalconductance
+     * @return the current scalar as a electricalconductance
      */
     public final FloatElectricalConductance asElectricalConductance()
     {
@@ -561,7 +561,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalconductance, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalConductance; the current scalar as a electricalconductance
+     * @return the current scalar as a electricalconductance
      */
     public final FloatElectricalConductance asElectricalConductance(final ElectricalConductanceUnit displayUnit)
     {
@@ -574,7 +574,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalcurrent.
-     * @return FloatElectricalCurrent; the current scalar as a electricalcurrent
+     * @return the current scalar as a electricalcurrent
      */
     public final FloatElectricalCurrent asElectricalCurrent()
     {
@@ -586,7 +586,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalcurrent, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalCurrent; the current scalar as a electricalcurrent
+     * @return the current scalar as a electricalcurrent
      */
     public final FloatElectricalCurrent asElectricalCurrent(final ElectricalCurrentUnit displayUnit)
     {
@@ -599,7 +599,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalinductance.
-     * @return FloatElectricalInductance; the current scalar as a electricalinductance
+     * @return the current scalar as a electricalinductance
      */
     public final FloatElectricalInductance asElectricalInductance()
     {
@@ -611,7 +611,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalinductance, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalInductance; the current scalar as a electricalinductance
+     * @return the current scalar as a electricalinductance
      */
     public final FloatElectricalInductance asElectricalInductance(final ElectricalInductanceUnit displayUnit)
     {
@@ -624,7 +624,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalpotential.
-     * @return FloatElectricalPotential; the current scalar as a electricalpotential
+     * @return the current scalar as a electricalpotential
      */
     public final FloatElectricalPotential asElectricalPotential()
     {
@@ -636,7 +636,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalpotential, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalPotential; the current scalar as a electricalpotential
+     * @return the current scalar as a electricalpotential
      */
     public final FloatElectricalPotential asElectricalPotential(final ElectricalPotentialUnit displayUnit)
     {
@@ -649,7 +649,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a electricalresistance.
-     * @return FloatElectricalResistance; the current scalar as a electricalresistance
+     * @return the current scalar as a electricalresistance
      */
     public final FloatElectricalResistance asElectricalResistance()
     {
@@ -661,7 +661,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a electricalresistance, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatElectricalResistance; the current scalar as a electricalresistance
+     * @return the current scalar as a electricalresistance
      */
     public final FloatElectricalResistance asElectricalResistance(final ElectricalResistanceUnit displayUnit)
     {
@@ -674,7 +674,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a energy.
-     * @return FloatEnergy; the current scalar as a energy
+     * @return the current scalar as a energy
      */
     public final FloatEnergy asEnergy()
     {
@@ -686,7 +686,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a energy, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatEnergy; the current scalar as a energy
+     * @return the current scalar as a energy
      */
     public final FloatEnergy asEnergy(final EnergyUnit displayUnit)
     {
@@ -699,7 +699,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a equivalentdose.
-     * @return FloatEquivalentDose; the current scalar as a equivalentdose
+     * @return the current scalar as a equivalentdose
      */
     public final FloatEquivalentDose asEquivalentDose()
     {
@@ -711,7 +711,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a equivalentdose, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatEquivalentDose; the current scalar as a equivalentdose
+     * @return the current scalar as a equivalentdose
      */
     public final FloatEquivalentDose asEquivalentDose(final EquivalentDoseUnit displayUnit)
     {
@@ -724,7 +724,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a flowmass.
-     * @return FloatFlowMass; the current scalar as a flowmass
+     * @return the current scalar as a flowmass
      */
     public final FloatFlowMass asFlowMass()
     {
@@ -736,7 +736,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a flowmass, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatFlowMass; the current scalar as a flowmass
+     * @return the current scalar as a flowmass
      */
     public final FloatFlowMass asFlowMass(final FlowMassUnit displayUnit)
     {
@@ -749,7 +749,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a flowvolume.
-     * @return FloatFlowVolume; the current scalar as a flowvolume
+     * @return the current scalar as a flowvolume
      */
     public final FloatFlowVolume asFlowVolume()
     {
@@ -761,7 +761,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a flowvolume, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatFlowVolume; the current scalar as a flowvolume
+     * @return the current scalar as a flowvolume
      */
     public final FloatFlowVolume asFlowVolume(final FlowVolumeUnit displayUnit)
     {
@@ -774,7 +774,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a force.
-     * @return FloatForce; the current scalar as a force
+     * @return the current scalar as a force
      */
     public final FloatForce asForce()
     {
@@ -786,7 +786,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a force, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatForce; the current scalar as a force
+     * @return the current scalar as a force
      */
     public final FloatForce asForce(final ForceUnit displayUnit)
     {
@@ -799,7 +799,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a frequency.
-     * @return FloatFrequency; the current scalar as a frequency
+     * @return the current scalar as a frequency
      */
     public final FloatFrequency asFrequency()
     {
@@ -811,7 +811,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a frequency, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatFrequency; the current scalar as a frequency
+     * @return the current scalar as a frequency
      */
     public final FloatFrequency asFrequency(final FrequencyUnit displayUnit)
     {
@@ -824,7 +824,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a illuminance.
-     * @return FloatIlluminance; the current scalar as a illuminance
+     * @return the current scalar as a illuminance
      */
     public final FloatIlluminance asIlluminance()
     {
@@ -836,7 +836,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a illuminance, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatIlluminance; the current scalar as a illuminance
+     * @return the current scalar as a illuminance
      */
     public final FloatIlluminance asIlluminance(final IlluminanceUnit displayUnit)
     {
@@ -849,7 +849,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a lineardensity.
-     * @return FloatLinearDensity; the current scalar as a lineardensity
+     * @return the current scalar as a lineardensity
      */
     public final FloatLinearDensity asLinearDensity()
     {
@@ -861,7 +861,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a lineardensity, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLinearDensity; the current scalar as a lineardensity
+     * @return the current scalar as a lineardensity
      */
     public final FloatLinearDensity asLinearDensity(final LinearDensityUnit displayUnit)
     {
@@ -874,7 +874,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a luminousflux.
-     * @return FloatLuminousFlux; the current scalar as a luminousflux
+     * @return the current scalar as a luminousflux
      */
     public final FloatLuminousFlux asLuminousFlux()
     {
@@ -886,7 +886,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a luminousflux, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLuminousFlux; the current scalar as a luminousflux
+     * @return the current scalar as a luminousflux
      */
     public final FloatLuminousFlux asLuminousFlux(final LuminousFluxUnit displayUnit)
     {
@@ -899,7 +899,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a luminousintensity.
-     * @return FloatLuminousIntensity; the current scalar as a luminousintensity
+     * @return the current scalar as a luminousintensity
      */
     public final FloatLuminousIntensity asLuminousIntensity()
     {
@@ -911,7 +911,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a luminousintensity, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLuminousIntensity; the current scalar as a luminousintensity
+     * @return the current scalar as a luminousintensity
      */
     public final FloatLuminousIntensity asLuminousIntensity(final LuminousIntensityUnit displayUnit)
     {
@@ -924,7 +924,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a magneticfluxdensity.
-     * @return FloatMagneticFluxDensity; the current scalar as a magneticfluxdensity
+     * @return the current scalar as a magneticfluxdensity
      */
     public final FloatMagneticFluxDensity asMagneticFluxDensity()
     {
@@ -936,7 +936,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a magneticfluxdensity, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMagneticFluxDensity; the current scalar as a magneticfluxdensity
+     * @return the current scalar as a magneticfluxdensity
      */
     public final FloatMagneticFluxDensity asMagneticFluxDensity(final MagneticFluxDensityUnit displayUnit)
     {
@@ -949,7 +949,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a magneticflux.
-     * @return FloatMagneticFlux; the current scalar as a magneticflux
+     * @return the current scalar as a magneticflux
      */
     public final FloatMagneticFlux asMagneticFlux()
     {
@@ -961,7 +961,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a magneticflux, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMagneticFlux; the current scalar as a magneticflux
+     * @return the current scalar as a magneticflux
      */
     public final FloatMagneticFlux asMagneticFlux(final MagneticFluxUnit displayUnit)
     {
@@ -974,7 +974,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a mass.
-     * @return FloatMass; the current scalar as a mass
+     * @return the current scalar as a mass
      */
     public final FloatMass asMass()
     {
@@ -986,7 +986,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a mass, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMass; the current scalar as a mass
+     * @return the current scalar as a mass
      */
     public final FloatMass asMass(final MassUnit displayUnit)
     {
@@ -999,7 +999,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a momentum.
-     * @return FloatMomentum; the current scalar as a momentum
+     * @return the current scalar as a momentum
      */
     public final FloatMomentum asMomentum()
     {
@@ -1011,7 +1011,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a momentum, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatMomentum; the current scalar as a momentum
+     * @return the current scalar as a momentum
      */
     public final FloatMomentum asMomentum(final MomentumUnit displayUnit)
     {
@@ -1024,7 +1024,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a power.
-     * @return FloatPower; the current scalar as a power
+     * @return the current scalar as a power
      */
     public final FloatPower asPower()
     {
@@ -1036,7 +1036,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a power, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatPower; the current scalar as a power
+     * @return the current scalar as a power
      */
     public final FloatPower asPower(final PowerUnit displayUnit)
     {
@@ -1049,7 +1049,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a pressure.
-     * @return FloatPressure; the current scalar as a pressure
+     * @return the current scalar as a pressure
      */
     public final FloatPressure asPressure()
     {
@@ -1061,7 +1061,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a pressure, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatPressure; the current scalar as a pressure
+     * @return the current scalar as a pressure
      */
     public final FloatPressure asPressure(final PressureUnit displayUnit)
     {
@@ -1074,7 +1074,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a radioactivity.
-     * @return FloatRadioActivity; the current scalar as a radioactivity
+     * @return the current scalar as a radioactivity
      */
     public final FloatRadioActivity asRadioActivity()
     {
@@ -1086,7 +1086,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a radioactivity, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatRadioActivity; the current scalar as a radioactivity
+     * @return the current scalar as a radioactivity
      */
     public final FloatRadioActivity asRadioActivity(final RadioActivityUnit displayUnit)
     {
@@ -1099,7 +1099,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a solidangle.
-     * @return FloatSolidAngle; the current scalar as a solidangle
+     * @return the current scalar as a solidangle
      */
     public final FloatSolidAngle asSolidAngle()
     {
@@ -1111,7 +1111,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a solidangle, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatSolidAngle; the current scalar as a solidangle
+     * @return the current scalar as a solidangle
      */
     public final FloatSolidAngle asSolidAngle(final SolidAngleUnit displayUnit)
     {
@@ -1124,7 +1124,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a speed.
-     * @return FloatSpeed; the current scalar as a speed
+     * @return the current scalar as a speed
      */
     public final FloatSpeed asSpeed()
     {
@@ -1136,7 +1136,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a speed, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatSpeed; the current scalar as a speed
+     * @return the current scalar as a speed
      */
     public final FloatSpeed asSpeed(final SpeedUnit displayUnit)
     {
@@ -1149,7 +1149,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a torque.
-     * @return FloatTorque; the current scalar as a torque
+     * @return the current scalar as a torque
      */
     public final FloatTorque asTorque()
     {
@@ -1161,7 +1161,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a torque, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatTorque; the current scalar as a torque
+     * @return the current scalar as a torque
      */
     public final FloatTorque asTorque(final TorqueUnit displayUnit)
     {
@@ -1174,7 +1174,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a volume.
-     * @return FloatVolume; the current scalar as a volume
+     * @return the current scalar as a volume
      */
     public final FloatVolume asVolume()
     {
@@ -1186,7 +1186,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a volume, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatVolume; the current scalar as a volume
+     * @return the current scalar as a volume
      */
     public final FloatVolume asVolume(final VolumeUnit displayUnit)
     {
@@ -1199,7 +1199,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a angle.
-     * @return FloatAngle; the current scalar as a angle
+     * @return the current scalar as a angle
      */
     public final FloatAngle asAngle()
     {
@@ -1211,7 +1211,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a angle, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatAngle; the current scalar as a angle
+     * @return the current scalar as a angle
      */
     public final FloatAngle asAngle(final AngleUnit displayUnit)
     {
@@ -1224,7 +1224,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a length.
-     * @return FloatLength; the current scalar as a length
+     * @return the current scalar as a length
      */
     public final FloatLength asLength()
     {
@@ -1236,7 +1236,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a length, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatLength; the current scalar as a length
+     * @return the current scalar as a length
      */
     public final FloatLength asLength(final LengthUnit displayUnit)
     {
@@ -1249,7 +1249,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a temperature.
-     * @return FloatTemperature; the current scalar as a temperature
+     * @return the current scalar as a temperature
      */
     public final FloatTemperature asTemperature()
     {
@@ -1261,7 +1261,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a temperature, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatTemperature; the current scalar as a temperature
+     * @return the current scalar as a temperature
      */
     public final FloatTemperature asTemperature(final TemperatureUnit displayUnit)
     {
@@ -1274,7 +1274,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 
     /**
      * Return the current scalar as a duration.
-     * @return FloatDuration; the current scalar as a duration
+     * @return the current scalar as a duration
      */
     public final FloatDuration asDuration()
     {
@@ -1286,7 +1286,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     /**
      * Return the current scalar as a duration, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FloatDuration; the current scalar as a duration
+     * @return the current scalar as a duration
      */
     public final FloatDuration asDuration(final DurationUnit displayUnit)
     {

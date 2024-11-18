@@ -57,8 +57,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Construct ElectricalCapacitance scalar.
-     * @param value double; the double value
-     * @param unit ElectricalCapacitanceUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalCapacitance(final double value, final ElectricalCapacitanceUnit unit)
     {
@@ -67,7 +67,7 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Construct ElectricalCapacitance scalar.
-     * @param value ElectricalCapacitance; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalCapacitance(final ElectricalCapacitance value)
     {
@@ -82,8 +82,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Construct ElectricalCapacitance scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalCapacitance; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalCapacitance instantiateSI(final double value)
     {
@@ -92,10 +92,10 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalCapacitance; the low value
-     * @param one ElectricalCapacitance; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalCapacitance; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalCapacitance interpolate(final ElectricalCapacitance zero, final ElectricalCapacitance one,
             final double ratio)
@@ -106,9 +106,9 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalCapacitance; the first scalar
-     * @param r2 ElectricalCapacitance; the second scalar
-     * @return ElectricalCapacitance; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalCapacitance max(final ElectricalCapacitance r1, final ElectricalCapacitance r2)
     {
@@ -117,10 +117,10 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalCapacitance; the first scalar
-     * @param r2 ElectricalCapacitance; the second scalar
-     * @param rn ElectricalCapacitance...; the other scalars
-     * @return ElectricalCapacitance; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalCapacitance max(final ElectricalCapacitance r1, final ElectricalCapacitance r2,
             final ElectricalCapacitance... rn)
@@ -138,9 +138,9 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalCapacitance; the first scalar
-     * @param r2 ElectricalCapacitance; the second scalar
-     * @return ElectricalCapacitance; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalCapacitance min(final ElectricalCapacitance r1, final ElectricalCapacitance r2)
     {
@@ -149,10 +149,10 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalCapacitance; the first scalar
-     * @param r2 ElectricalCapacitance; the second scalar
-     * @param rn ElectricalCapacitance...; the other scalars
-     * @return ElectricalCapacitance; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalCapacitance min(final ElectricalCapacitance r1, final ElectricalCapacitance r2,
             final ElectricalCapacitance... rn)
@@ -172,8 +172,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
      * Returns a ElectricalCapacitance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalCapacitance
-     * @return ElectricalCapacitance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalCapacitance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -201,9 +201,9 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Returns a ElectricalCapacitance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalCapacitance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -222,8 +222,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Calculate the division of ElectricalCapacitance and ElectricalCapacitance, which results in a Dimensionless scalar.
-     * @param v ElectricalCapacitance; scalar
-     * @return Dimensionless; scalar as a division of ElectricalCapacitance and ElectricalCapacitance
+     * @param v scalar
+     * @return scalar as a division of ElectricalCapacitance and ElectricalCapacitance
      */
     public final Dimensionless divide(final ElectricalCapacitance v)
     {
@@ -233,8 +233,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
     /**
      * Calculate the multiplication of ElectricalCapacitance and ElectricalPotential, which results in a ElectricalCharge
      * scalar.
-     * @param v ElectricalCapacitance; scalar
-     * @return ElectricalCharge; scalar as a multiplication of ElectricalCapacitance and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCapacitance and ElectricalPotential
      */
     public final ElectricalCharge times(final ElectricalPotential v)
     {
@@ -243,8 +243,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Calculate the division of ElectricalCapacitance and Duration, which results in a ElectricalConductance scalar.
-     * @param v ElectricalCapacitance; scalar
-     * @return ElectricalConductance; scalar as a division of ElectricalCapacitance and Duration
+     * @param v scalar
+     * @return scalar as a division of ElectricalCapacitance and Duration
      */
     public final ElectricalConductance divide(final Duration v)
     {
@@ -253,8 +253,8 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
 
     /**
      * Calculate the division of ElectricalCapacitance and ElectricalConductance, which results in a Duration scalar.
-     * @param v ElectricalCapacitance; scalar
-     * @return Duration; scalar as a division of ElectricalCapacitance and ElectricalConductance
+     * @param v scalar
+     * @return scalar as a division of ElectricalCapacitance and ElectricalConductance
      */
     public final Duration divide(final ElectricalConductance v)
     {

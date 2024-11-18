@@ -75,8 +75,8 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Construct an SIVector from an internal data object.
-     * @param data DoubleVectorData; the internal data object for the vector
-     * @param displayUnit SIUnit; the display unit of the vector data
+     * @param data the internal data object for the vector
+     * @param displayUnit the display unit of the vector data
      */
     public SIVector(final DoubleVectorData data, final SIUnit displayUnit)
     {
@@ -88,9 +88,9 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Construct an SIVector from a double[] object. The double values are expressed in the displayUnit, and will be printed
      * using the displayUnit.
-     * @param data double[]; the data for the vector, expressed in the displayUnit
-     * @param displayUnit SIUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SIVector(final double[] data, final SIUnit displayUnit, final StorageType storageType)
     {
@@ -100,8 +100,8 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Construct an SIVector from a double[] object. The double values are expressed in the displayUnit. Assume that the
      * StorageType is DENSE since we offer the data as an array.
-     * @param data double[]; the data for the vector
-     * @param displayUnit SIUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the vector
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public SIVector(final double[] data, final SIUnit displayUnit)
     {
@@ -113,9 +113,9 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Construct an SIVector from an array of SIScalar objects. The SIScalar values are each expressed in their own unit, but
      * will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data SIScalar[]; the data for the vector
-     * @param displayUnit SIUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SIVector(final SIScalar[] data, final SIUnit displayUnit, final StorageType storageType)
     {
@@ -126,8 +126,8 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * Construct an SIVector from an array of SIScalar objects. The SIScalar values are each expressed in their own unit, but
      * will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the StorageType is
      * DENSE since we offer the data as an array.
-     * @param data SIScalar[]; the data for the vector
-     * @param displayUnit SIUnit; the display unit of the values when printing
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
      */
     public SIVector(final SIScalar[] data, final SIUnit displayUnit)
     {
@@ -143,10 +143,10 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * as well as the unit in which they will be printed. In case the list contains SIScalar objects, each SIScalar has its own
      * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;SIScalar&gt;; the data for the vector
-     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SIVector(final List<? extends Number> data, final SIUnit displayUnit, final StorageType storageType)
     {
@@ -164,8 +164,8 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we offer
      * the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;SIScalar&gt;; the data for the vector
-     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public SIVector(final List<? extends Number> data, final SIUnit displayUnit)
@@ -184,11 +184,11 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * unit in which they will be printed. In case the map contains SIScalar objects, each SIScalar has its own unit, and the
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SIScalar&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public SIVector(final Map<Integer, ? extends Number> data, final int size, final SIUnit displayUnit,
             final StorageType storageType)
@@ -210,9 +210,9 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
      * a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, SIScalar&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit SIUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public SIVector(final Map<Integer, ? extends Number> data, final int size, final SIUnit displayUnit)
@@ -230,10 +230,10 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Returns an SIVector based on an array of values and the textual representation of the unit.
-     * @param value double[]; the values to use
-     * @param unitString String; the textual representation of the unit
-     * @param storageType StorageType; the storage type to use
-     * @return SIVector; the vector representation of the values in their unit
+     * @param value the values to use
+     * @param unitString the textual representation of the unit
+     * @param storageType the storage type to use
+     * @return the vector representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -259,10 +259,10 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Returns an SIVector based on an array of values and the textual representation of the unit.
-     * @param valueList List&lt;Double&gt;; the values to use
-     * @param unitString String; the textual representation of the unit
-     * @param storageType StorageType; the storage type to use
-     * @return SIVector; the vector representation of the values in their unit
+     * @param valueList the values to use
+     * @param unitString the textual representation of the unit
+     * @param storageType the storage type to use
+     * @return the vector representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -288,11 +288,11 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Returns an SIVector based on a (sparse) map of values and the textual representation of the unit.
-     * @param valueMap Map&lt;Integer, Double&gt;; the values to use
-     * @param unitString String; the textual representation of the unit
-     * @param length int; the size of the vector
-     * @param storageType StorageType; the storage type to use
-     * @return SIVector; the vector representation of the values in their unit
+     * @param valueMap the values to use
+     * @param unitString the textual representation of the unit
+     * @param length the size of the vector
+     * @param storageType the storage type to use
+     * @return the vector representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -341,7 +341,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a absorbeddose vector.
-     * @return AbsorbedDoseVector; the current vector as a absorbeddose vector
+     * @return the current vector as a absorbeddose vector
      */
     public final AbsorbedDoseVector asAbsorbedDose()
     {
@@ -353,7 +353,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a absorbeddose vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AbsorbedDoseVector; the current vector as a absorbeddose vector
+     * @return the current vector as a absorbeddose vector
      */
     public final AbsorbedDoseVector asAbsorbedDose(final AbsorbedDoseUnit displayUnit)
     {
@@ -366,7 +366,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a acceleration vector.
-     * @return AccelerationVector; the current vector as a acceleration vector
+     * @return the current vector as a acceleration vector
      */
     public final AccelerationVector asAcceleration()
     {
@@ -378,7 +378,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a acceleration vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AccelerationVector; the current vector as a acceleration vector
+     * @return the current vector as a acceleration vector
      */
     public final AccelerationVector asAcceleration(final AccelerationUnit displayUnit)
     {
@@ -391,7 +391,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a amountofsubstance vector.
-     * @return AmountOfSubstanceVector; the current vector as a amountofsubstance vector
+     * @return the current vector as a amountofsubstance vector
      */
     public final AmountOfSubstanceVector asAmountOfSubstance()
     {
@@ -403,7 +403,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a amountofsubstance vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AmountOfSubstanceVector; the current vector as a amountofsubstance vector
+     * @return the current vector as a amountofsubstance vector
      */
     public final AmountOfSubstanceVector asAmountOfSubstance(final AmountOfSubstanceUnit displayUnit)
     {
@@ -416,7 +416,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a angularacceleration vector.
-     * @return AngularAccelerationVector; the current vector as a angularacceleration vector
+     * @return the current vector as a angularacceleration vector
      */
     public final AngularAccelerationVector asAngularAcceleration()
     {
@@ -428,7 +428,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a angularacceleration vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AngularAccelerationVector; the current vector as a angularacceleration vector
+     * @return the current vector as a angularacceleration vector
      */
     public final AngularAccelerationVector asAngularAcceleration(final AngularAccelerationUnit displayUnit)
     {
@@ -441,7 +441,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a angularvelocity vector.
-     * @return AngularVelocityVector; the current vector as a angularvelocity vector
+     * @return the current vector as a angularvelocity vector
      */
     public final AngularVelocityVector asAngularVelocity()
     {
@@ -453,7 +453,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a angularvelocity vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AngularVelocityVector; the current vector as a angularvelocity vector
+     * @return the current vector as a angularvelocity vector
      */
     public final AngularVelocityVector asAngularVelocity(final AngularVelocityUnit displayUnit)
     {
@@ -466,7 +466,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a area vector.
-     * @return AreaVector; the current vector as a area vector
+     * @return the current vector as a area vector
      */
     public final AreaVector asArea()
     {
@@ -478,7 +478,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a area vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AreaVector; the current vector as a area vector
+     * @return the current vector as a area vector
      */
     public final AreaVector asArea(final AreaUnit displayUnit)
     {
@@ -491,7 +491,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a catalyticactivity vector.
-     * @return CatalyticActivityVector; the current vector as a catalyticactivity vector
+     * @return the current vector as a catalyticactivity vector
      */
     public final CatalyticActivityVector asCatalyticActivity()
     {
@@ -503,7 +503,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a catalyticactivity vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return CatalyticActivityVector; the current vector as a catalyticactivity vector
+     * @return the current vector as a catalyticactivity vector
      */
     public final CatalyticActivityVector asCatalyticActivity(final CatalyticActivityUnit displayUnit)
     {
@@ -516,7 +516,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a density vector.
-     * @return DensityVector; the current vector as a density vector
+     * @return the current vector as a density vector
      */
     public final DensityVector asDensity()
     {
@@ -528,7 +528,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a density vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return DensityVector; the current vector as a density vector
+     * @return the current vector as a density vector
      */
     public final DensityVector asDensity(final DensityUnit displayUnit)
     {
@@ -541,7 +541,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a dimensionless vector.
-     * @return DimensionlessVector; the current vector as a dimensionless vector
+     * @return the current vector as a dimensionless vector
      */
     public final DimensionlessVector asDimensionless()
     {
@@ -553,7 +553,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a dimensionless vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return DimensionlessVector; the current vector as a dimensionless vector
+     * @return the current vector as a dimensionless vector
      */
     public final DimensionlessVector asDimensionless(final DimensionlessUnit displayUnit)
     {
@@ -566,7 +566,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalcapacitance vector.
-     * @return ElectricalCapacitanceVector; the current vector as a electricalcapacitance vector
+     * @return the current vector as a electricalcapacitance vector
      */
     public final ElectricalCapacitanceVector asElectricalCapacitance()
     {
@@ -578,7 +578,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalcapacitance vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalCapacitanceVector; the current vector as a electricalcapacitance vector
+     * @return the current vector as a electricalcapacitance vector
      */
     public final ElectricalCapacitanceVector asElectricalCapacitance(final ElectricalCapacitanceUnit displayUnit)
     {
@@ -591,7 +591,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalcharge vector.
-     * @return ElectricalChargeVector; the current vector as a electricalcharge vector
+     * @return the current vector as a electricalcharge vector
      */
     public final ElectricalChargeVector asElectricalCharge()
     {
@@ -603,7 +603,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalcharge vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalChargeVector; the current vector as a electricalcharge vector
+     * @return the current vector as a electricalcharge vector
      */
     public final ElectricalChargeVector asElectricalCharge(final ElectricalChargeUnit displayUnit)
     {
@@ -616,7 +616,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalconductance vector.
-     * @return ElectricalConductanceVector; the current vector as a electricalconductance vector
+     * @return the current vector as a electricalconductance vector
      */
     public final ElectricalConductanceVector asElectricalConductance()
     {
@@ -628,7 +628,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalconductance vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalConductanceVector; the current vector as a electricalconductance vector
+     * @return the current vector as a electricalconductance vector
      */
     public final ElectricalConductanceVector asElectricalConductance(final ElectricalConductanceUnit displayUnit)
     {
@@ -641,7 +641,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalcurrent vector.
-     * @return ElectricalCurrentVector; the current vector as a electricalcurrent vector
+     * @return the current vector as a electricalcurrent vector
      */
     public final ElectricalCurrentVector asElectricalCurrent()
     {
@@ -653,7 +653,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalcurrent vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalCurrentVector; the current vector as a electricalcurrent vector
+     * @return the current vector as a electricalcurrent vector
      */
     public final ElectricalCurrentVector asElectricalCurrent(final ElectricalCurrentUnit displayUnit)
     {
@@ -666,7 +666,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalinductance vector.
-     * @return ElectricalInductanceVector; the current vector as a electricalinductance vector
+     * @return the current vector as a electricalinductance vector
      */
     public final ElectricalInductanceVector asElectricalInductance()
     {
@@ -678,7 +678,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalinductance vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalInductanceVector; the current vector as a electricalinductance vector
+     * @return the current vector as a electricalinductance vector
      */
     public final ElectricalInductanceVector asElectricalInductance(final ElectricalInductanceUnit displayUnit)
     {
@@ -691,7 +691,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalpotential vector.
-     * @return ElectricalPotentialVector; the current vector as a electricalpotential vector
+     * @return the current vector as a electricalpotential vector
      */
     public final ElectricalPotentialVector asElectricalPotential()
     {
@@ -703,7 +703,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalpotential vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalPotentialVector; the current vector as a electricalpotential vector
+     * @return the current vector as a electricalpotential vector
      */
     public final ElectricalPotentialVector asElectricalPotential(final ElectricalPotentialUnit displayUnit)
     {
@@ -716,7 +716,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a electricalresistance vector.
-     * @return ElectricalResistanceVector; the current vector as a electricalresistance vector
+     * @return the current vector as a electricalresistance vector
      */
     public final ElectricalResistanceVector asElectricalResistance()
     {
@@ -728,7 +728,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a electricalresistance vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalResistanceVector; the current vector as a electricalresistance vector
+     * @return the current vector as a electricalresistance vector
      */
     public final ElectricalResistanceVector asElectricalResistance(final ElectricalResistanceUnit displayUnit)
     {
@@ -741,7 +741,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a energy vector.
-     * @return EnergyVector; the current vector as a energy vector
+     * @return the current vector as a energy vector
      */
     public final EnergyVector asEnergy()
     {
@@ -753,7 +753,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a energy vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return EnergyVector; the current vector as a energy vector
+     * @return the current vector as a energy vector
      */
     public final EnergyVector asEnergy(final EnergyUnit displayUnit)
     {
@@ -766,7 +766,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a equivalentdose vector.
-     * @return EquivalentDoseVector; the current vector as a equivalentdose vector
+     * @return the current vector as a equivalentdose vector
      */
     public final EquivalentDoseVector asEquivalentDose()
     {
@@ -778,7 +778,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a equivalentdose vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return EquivalentDoseVector; the current vector as a equivalentdose vector
+     * @return the current vector as a equivalentdose vector
      */
     public final EquivalentDoseVector asEquivalentDose(final EquivalentDoseUnit displayUnit)
     {
@@ -791,7 +791,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a flowmass vector.
-     * @return FlowMassVector; the current vector as a flowmass vector
+     * @return the current vector as a flowmass vector
      */
     public final FlowMassVector asFlowMass()
     {
@@ -803,7 +803,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a flowmass vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FlowMassVector; the current vector as a flowmass vector
+     * @return the current vector as a flowmass vector
      */
     public final FlowMassVector asFlowMass(final FlowMassUnit displayUnit)
     {
@@ -816,7 +816,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a flowvolume vector.
-     * @return FlowVolumeVector; the current vector as a flowvolume vector
+     * @return the current vector as a flowvolume vector
      */
     public final FlowVolumeVector asFlowVolume()
     {
@@ -828,7 +828,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a flowvolume vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FlowVolumeVector; the current vector as a flowvolume vector
+     * @return the current vector as a flowvolume vector
      */
     public final FlowVolumeVector asFlowVolume(final FlowVolumeUnit displayUnit)
     {
@@ -841,7 +841,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a force vector.
-     * @return ForceVector; the current vector as a force vector
+     * @return the current vector as a force vector
      */
     public final ForceVector asForce()
     {
@@ -853,7 +853,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a force vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ForceVector; the current vector as a force vector
+     * @return the current vector as a force vector
      */
     public final ForceVector asForce(final ForceUnit displayUnit)
     {
@@ -866,7 +866,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a frequency vector.
-     * @return FrequencyVector; the current vector as a frequency vector
+     * @return the current vector as a frequency vector
      */
     public final FrequencyVector asFrequency()
     {
@@ -878,7 +878,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a frequency vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FrequencyVector; the current vector as a frequency vector
+     * @return the current vector as a frequency vector
      */
     public final FrequencyVector asFrequency(final FrequencyUnit displayUnit)
     {
@@ -891,7 +891,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a illuminance vector.
-     * @return IlluminanceVector; the current vector as a illuminance vector
+     * @return the current vector as a illuminance vector
      */
     public final IlluminanceVector asIlluminance()
     {
@@ -903,7 +903,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a illuminance vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return IlluminanceVector; the current vector as a illuminance vector
+     * @return the current vector as a illuminance vector
      */
     public final IlluminanceVector asIlluminance(final IlluminanceUnit displayUnit)
     {
@@ -916,7 +916,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a lineardensity vector.
-     * @return LinearDensityVector; the current vector as a lineardensity vector
+     * @return the current vector as a lineardensity vector
      */
     public final LinearDensityVector asLinearDensity()
     {
@@ -928,7 +928,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a lineardensity vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LinearDensityVector; the current vector as a lineardensity vector
+     * @return the current vector as a lineardensity vector
      */
     public final LinearDensityVector asLinearDensity(final LinearDensityUnit displayUnit)
     {
@@ -941,7 +941,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a luminousflux vector.
-     * @return LuminousFluxVector; the current vector as a luminousflux vector
+     * @return the current vector as a luminousflux vector
      */
     public final LuminousFluxVector asLuminousFlux()
     {
@@ -953,7 +953,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a luminousflux vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LuminousFluxVector; the current vector as a luminousflux vector
+     * @return the current vector as a luminousflux vector
      */
     public final LuminousFluxVector asLuminousFlux(final LuminousFluxUnit displayUnit)
     {
@@ -966,7 +966,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a luminousintensity vector.
-     * @return LuminousIntensityVector; the current vector as a luminousintensity vector
+     * @return the current vector as a luminousintensity vector
      */
     public final LuminousIntensityVector asLuminousIntensity()
     {
@@ -978,7 +978,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a luminousintensity vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LuminousIntensityVector; the current vector as a luminousintensity vector
+     * @return the current vector as a luminousintensity vector
      */
     public final LuminousIntensityVector asLuminousIntensity(final LuminousIntensityUnit displayUnit)
     {
@@ -991,7 +991,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a magneticfluxdensity vector.
-     * @return MagneticFluxDensityVector; the current vector as a magneticfluxdensity vector
+     * @return the current vector as a magneticfluxdensity vector
      */
     public final MagneticFluxDensityVector asMagneticFluxDensity()
     {
@@ -1003,7 +1003,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a magneticfluxdensity vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MagneticFluxDensityVector; the current vector as a magneticfluxdensity vector
+     * @return the current vector as a magneticfluxdensity vector
      */
     public final MagneticFluxDensityVector asMagneticFluxDensity(final MagneticFluxDensityUnit displayUnit)
     {
@@ -1016,7 +1016,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a magneticflux vector.
-     * @return MagneticFluxVector; the current vector as a magneticflux vector
+     * @return the current vector as a magneticflux vector
      */
     public final MagneticFluxVector asMagneticFlux()
     {
@@ -1028,7 +1028,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a magneticflux vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MagneticFluxVector; the current vector as a magneticflux vector
+     * @return the current vector as a magneticflux vector
      */
     public final MagneticFluxVector asMagneticFlux(final MagneticFluxUnit displayUnit)
     {
@@ -1041,7 +1041,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a mass vector.
-     * @return MassVector; the current vector as a mass vector
+     * @return the current vector as a mass vector
      */
     public final MassVector asMass()
     {
@@ -1053,7 +1053,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a mass vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MassVector; the current vector as a mass vector
+     * @return the current vector as a mass vector
      */
     public final MassVector asMass(final MassUnit displayUnit)
     {
@@ -1066,7 +1066,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a momentum vector.
-     * @return MomentumVector; the current vector as a momentum vector
+     * @return the current vector as a momentum vector
      */
     public final MomentumVector asMomentum()
     {
@@ -1078,7 +1078,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a momentum vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MomentumVector; the current vector as a momentum vector
+     * @return the current vector as a momentum vector
      */
     public final MomentumVector asMomentum(final MomentumUnit displayUnit)
     {
@@ -1091,7 +1091,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a power vector.
-     * @return PowerVector; the current vector as a power vector
+     * @return the current vector as a power vector
      */
     public final PowerVector asPower()
     {
@@ -1103,7 +1103,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a power vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return PowerVector; the current vector as a power vector
+     * @return the current vector as a power vector
      */
     public final PowerVector asPower(final PowerUnit displayUnit)
     {
@@ -1116,7 +1116,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a pressure vector.
-     * @return PressureVector; the current vector as a pressure vector
+     * @return the current vector as a pressure vector
      */
     public final PressureVector asPressure()
     {
@@ -1128,7 +1128,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a pressure vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return PressureVector; the current vector as a pressure vector
+     * @return the current vector as a pressure vector
      */
     public final PressureVector asPressure(final PressureUnit displayUnit)
     {
@@ -1141,7 +1141,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a radioactivity vector.
-     * @return RadioActivityVector; the current vector as a radioactivity vector
+     * @return the current vector as a radioactivity vector
      */
     public final RadioActivityVector asRadioActivity()
     {
@@ -1153,7 +1153,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a radioactivity vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return RadioActivityVector; the current vector as a radioactivity vector
+     * @return the current vector as a radioactivity vector
      */
     public final RadioActivityVector asRadioActivity(final RadioActivityUnit displayUnit)
     {
@@ -1166,7 +1166,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a solidangle vector.
-     * @return SolidAngleVector; the current vector as a solidangle vector
+     * @return the current vector as a solidangle vector
      */
     public final SolidAngleVector asSolidAngle()
     {
@@ -1178,7 +1178,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a solidangle vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return SolidAngleVector; the current vector as a solidangle vector
+     * @return the current vector as a solidangle vector
      */
     public final SolidAngleVector asSolidAngle(final SolidAngleUnit displayUnit)
     {
@@ -1191,7 +1191,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a speed vector.
-     * @return SpeedVector; the current vector as a speed vector
+     * @return the current vector as a speed vector
      */
     public final SpeedVector asSpeed()
     {
@@ -1203,7 +1203,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a speed vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return SpeedVector; the current vector as a speed vector
+     * @return the current vector as a speed vector
      */
     public final SpeedVector asSpeed(final SpeedUnit displayUnit)
     {
@@ -1216,7 +1216,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a torque vector.
-     * @return TorqueVector; the current vector as a torque vector
+     * @return the current vector as a torque vector
      */
     public final TorqueVector asTorque()
     {
@@ -1228,7 +1228,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a torque vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return TorqueVector; the current vector as a torque vector
+     * @return the current vector as a torque vector
      */
     public final TorqueVector asTorque(final TorqueUnit displayUnit)
     {
@@ -1241,7 +1241,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a volume vector.
-     * @return VolumeVector; the current vector as a volume vector
+     * @return the current vector as a volume vector
      */
     public final VolumeVector asVolume()
     {
@@ -1253,7 +1253,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a volume vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return VolumeVector; the current vector as a volume vector
+     * @return the current vector as a volume vector
      */
     public final VolumeVector asVolume(final VolumeUnit displayUnit)
     {
@@ -1266,7 +1266,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a angle vector.
-     * @return AngleVector; the current vector as a angle vector
+     * @return the current vector as a angle vector
      */
     public final AngleVector asAngle()
     {
@@ -1278,7 +1278,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a angle vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AngleVector; the current vector as a angle vector
+     * @return the current vector as a angle vector
      */
     public final AngleVector asAngle(final AngleUnit displayUnit)
     {
@@ -1291,7 +1291,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a length vector.
-     * @return LengthVector; the current vector as a length vector
+     * @return the current vector as a length vector
      */
     public final LengthVector asLength()
     {
@@ -1303,7 +1303,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a length vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LengthVector; the current vector as a length vector
+     * @return the current vector as a length vector
      */
     public final LengthVector asLength(final LengthUnit displayUnit)
     {
@@ -1316,7 +1316,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a temperature vector.
-     * @return TemperatureVector; the current vector as a temperature vector
+     * @return the current vector as a temperature vector
      */
     public final TemperatureVector asTemperature()
     {
@@ -1328,7 +1328,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a temperature vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return TemperatureVector; the current vector as a temperature vector
+     * @return the current vector as a temperature vector
      */
     public final TemperatureVector asTemperature(final TemperatureUnit displayUnit)
     {
@@ -1341,7 +1341,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
 
     /**
      * Return the current vector as a duration vector.
-     * @return DurationVector; the current vector as a duration vector
+     * @return the current vector as a duration vector
      */
     public final DurationVector asDuration()
     {
@@ -1353,7 +1353,7 @@ public class SIVector extends DoubleVectorRel<SIUnit, SIScalar, SIVector>
     /**
      * Return the current vector as a duration vector, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return DurationVector; the current vector as a duration vector
+     * @return the current vector as a duration vector
      */
     public final DurationVector asDuration(final DurationUnit displayUnit)
     {

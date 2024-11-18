@@ -24,10 +24,10 @@ public class UnitRuntimeException extends RuntimeException
 
     /**
      * Construct a new UnitRuntimeException.
-     * @param message String; String
-     * @param cause Throwable; Throwable
+     * @param message String
+     * @param cause Throwable
      * @param enableSuppression boolean;am
-     * @param writableStackTrace boolean; boolean
+     * @param writableStackTrace boolean
      */
     public UnitRuntimeException(final String message, final Throwable cause, final boolean enableSuppression,
             final boolean writableStackTrace)
@@ -37,8 +37,8 @@ public class UnitRuntimeException extends RuntimeException
 
     /**
      * Construct a new UnitRuntimeException with some default values.
-     * @param message String; String
-     * @param cause Throwable; Throwable
+     * @param message String
+     * @param cause Throwable
      */
     public UnitRuntimeException(final String message, final Throwable cause)
     {
@@ -47,7 +47,7 @@ public class UnitRuntimeException extends RuntimeException
 
     /**
      * Construct a new UnitRuntimeException with some default values.
-     * @param message String; String
+     * @param message String
      */
     public UnitRuntimeException(final String message)
     {
@@ -56,7 +56,7 @@ public class UnitRuntimeException extends RuntimeException
 
     /**
      * Construct a new UnitRuntimeException with some default values.
-     * @param cause Throwable; Throwable
+     * @param cause Throwable
      */
     public UnitRuntimeException(final Throwable cause)
     {

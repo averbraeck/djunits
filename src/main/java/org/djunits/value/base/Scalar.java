@@ -24,7 +24,7 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
 
     /**
      * Construct a new Scalar.
-     * @param displayUnit U; the unit of the new AbstractScalar
+     * @param displayUnit the unit of the new AbstractScalar
      */
     protected Scalar(final U displayUnit)
     {
@@ -49,79 +49,79 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
 
     /**
      * Test if this DoubleScalar is less than another DoubleScalar.
-     * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is less than o; false otherwise
+     * @param o the right hand side operand of the comparison
+     * @return true if this is less than o; false otherwise
      */
     public abstract boolean lt(S o);
 
     /**
      * Test if this DoubleScalar is less than or equal to another DoubleScalar.
-     * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is less than or equal to o; false otherwise
+     * @param o the right hand side operand of the comparison
+     * @return true if this is less than or equal to o; false otherwise
      */
     public abstract boolean le(S o);
 
     /**
      * Test if this DoubleScalar is greater than another DoubleScalar.
-     * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is greater than o; false otherwise
+     * @param o the right hand side operand of the comparison
+     * @return true if this is greater than o; false otherwise
      */
     public abstract boolean gt(S o);
 
     /**
      * Test if this DoubleScalar is greater than or equal to another DoubleScalar.
-     * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is greater than or equal to o; false otherwise
+     * @param o the right hand side operand of the comparison
+     * @return true if this is greater than or equal to o; false otherwise
      */
     public abstract boolean ge(S o);
 
     /**
      * Test if this DoubleScalar is equal to another DoubleScalar.
-     * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is equal to o; false otherwise
+     * @param o the right hand side operand of the comparison
+     * @return true if this is equal to o; false otherwise
      */
     public abstract boolean eq(S o);
 
     /**
      * Test if this DoubleScalar is not equal to another DoubleScalar.
-     * @param o T, a relative typed DoubleScalar; the right hand side operand of the comparison
-     * @return boolean; true if this is not equal to o; false otherwise
+     * @param o the right hand side operand of the comparison
+     * @return true if this is not equal to o; false otherwise
      */
     public abstract boolean ne(S o);
 
     /**
      * Test if this DoubleScalar is less than 0.0.
-     * @return boolean; true if this is less than 0.0; false if this is not less than 0.0
+     * @return true if this is less than 0.0; false if this is not less than 0.0
      */
     public abstract boolean lt0();
 
     /**
      * Test if this DoubleScalar is less than or equal to 0.0.
-     * @return boolean; true if this is less than or equal to 0.0; false if this is not less than or equal to 0.0
+     * @return true if this is less than or equal to 0.0; false if this is not less than or equal to 0.0
      */
     public abstract boolean le0();
 
     /**
      * Test if this DoubleScalar is greater than 0.0.
-     * @return boolean; true if this is greater than 0.0; false if this is not greater than 0.0
+     * @return true if this is greater than 0.0; false if this is not greater than 0.0
      */
     public abstract boolean gt0();
 
     /**
      * Test if this DoubleScalar is greater than or equal to 0.0.
-     * @return boolean; true if this is greater than or equal to 0.0; false if this is not greater than or equal to 0.0
+     * @return true if this is greater than or equal to 0.0; false if this is not greater than or equal to 0.0
      */
     public abstract boolean ge0();
 
     /**
      * Test if this DoubleScalar is equal to 0.0.
-     * @return boolean; true if this is equal to 0.0; false if this is not equal to 0.0
+     * @return true if this is equal to 0.0; false if this is not equal to 0.0
      */
     public abstract boolean eq0();
 
     /**
      * Test if this DoubleScalar is not equal to 0.0.
-     * @return boolean; true if this is not equal to 0.0; false if this is equal to 0.0
+     * @return true if this is not equal to 0.0; false if this is equal to 0.0
      */
     public abstract boolean ne0();
 
@@ -135,7 +135,7 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     /**
      * Concise textual representation of this value, without the engineering formatting, so without trailing zeroes. A space is
      * added between the number and the unit.
-     * @param displayUnit U; the display unit for the value
+     * @param displayUnit the display unit for the value
      * @return a String with the value with the default textual representation of the provided unit attached.
      */
     public abstract String toTextualString(U displayUnit);
@@ -150,15 +150,15 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     /**
      * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
      * added between the number and the unit.
-     * @param displayUnit U; the display unit for the value
+     * @param displayUnit the display unit for the value
      * @return a String with the value with the default display representation of the provided unit attached.
      */
     public abstract String toDisplayString(U displayUnit);
 
     /**
      * Format a string according to the current locale and the standard (minimized) format, such as "3.14" or "300.0".
-     * @param d double; the number to format
-     * @return String; the formatted number using the current Locale
+     * @param d the number to format
+     * @return the formatted number using the current Locale
      */
     public String format(final double d)
     {
@@ -169,9 +169,9 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
 
     /**
      * Format a string according to the current locale and the provided format string.
-     * @param d double; the number to format
-     * @param format String; the formatting string to use for the number
-     * @return String; the formatted number using the current Locale and the format string
+     * @param d the number to format
+     * @param format the formatting string to use for the number
+     * @return the formatted number using the current Locale and the format string
      */
     public String format(final double d, final String format)
     {

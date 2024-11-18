@@ -195,7 +195,7 @@ public interface FloatMathFunctions
 
     /**
      * Function that returns <code>Math.pow(a, b)</code>.
-     * @param b float; power parameter
+     * @param b power parameter
      * @return power function
      */
     @SuppressWarnings("checkstyle:methodname")
@@ -309,7 +309,7 @@ public interface FloatMathFunctions
 
     /**
      * Function that returns <code>a + b</code>.
-     * @param b float; increment
+     * @param b increment
      * @return power function
      */
     @SuppressWarnings("checkstyle:methodname")
@@ -327,7 +327,7 @@ public interface FloatMathFunctions
 
     /**
      * Function that returns <code>a - b</code>.
-     * @param b float; decrement
+     * @param b decrement
      * @return power function
      */
     @SuppressWarnings("checkstyle:methodname")
@@ -345,7 +345,7 @@ public interface FloatMathFunctions
 
     /**
      * Function that returns <code>a * b</code>.
-     * @param b float; multiplier
+     * @param b multiplier
      * @return power function
      */
     @SuppressWarnings("checkstyle:methodname")
@@ -363,7 +363,7 @@ public interface FloatMathFunctions
 
     /**
      * Function that returns <code>a / b</code>.
-     * @param b float; divisor
+     * @param b divisor
      * @return power function
      */
     @SuppressWarnings("checkstyle:methodname")

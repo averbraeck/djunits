@@ -29,8 +29,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
 
     /**
      * Construct a new Relative Mutable DoubleVector.
-     * @param data DoubleVectorData; an internal data object
-     * @param unit U; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     protected DoubleVectorRel(final DoubleVectorData data, final U unit)
     {
@@ -39,7 +39,7 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
 
     /**
      * Compute the sum of all SI values of this vector.
-     * @return S; the sum of all SI values of this vector with the same display unit as this vector
+     * @return the sum of all SI values of this vector with the same display unit as this vector
      */
     public final S zSum()
     {
@@ -60,8 +60,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
 
     /**
      * Increment all values of this vector by the increment. This only works if the vector is mutable.
-     * @param increment S; the scalar by which to increment all values
-     * @return RV; this modified vector
+     * @param increment the scalar by which to increment all values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable
      */
     @SuppressWarnings("unchecked")
@@ -75,8 +75,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
     /**
      * Increment all values of this vector by the increment on a value by value basis. This only works if this vector is
      * mutable.
-     * @param increment RV; the vector that contains the values by which to increment the corresponding values
-     * @return RV; this modified vector
+     * @param increment the vector that contains the values by which to increment the corresponding values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable, when the sizes of the vectors differ, or
      *             <code>increment</code> is null
      */
@@ -90,8 +90,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
 
     /**
      * Decrement all values of this vector by the decrement. This only works if the vector is mutable.
-     * @param decrement S; the scalar by which to decrement all values
-     * @return RV; this modified vector
+     * @param decrement the scalar by which to decrement all values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable
      */
     @SuppressWarnings("unchecked")
@@ -105,8 +105,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
     /**
      * Decrement all values of this vector by the decrement on a value by value basis. This only works if this vector is
      * mutable.
-     * @param decrement RV; the vector that contains the values by which to decrement the corresponding values
-     * @return RV; this modified vector
+     * @param decrement the vector that contains the values by which to decrement the corresponding values
+     * @return this modified vector
      * @throws ValueRuntimeException in case this vector is immutable, when the sizes of the vectors differ, or
      *             <code>decrement</code> is null
      */
@@ -120,8 +120,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
 
     /**
      * Multiply all values of this vector by the multiplier. This only works if the vector is mutable.
-     * @param multiplier double; the factor by which to multiply all values
-     * @return RV; this modified vector
+     * @param multiplier the factor by which to multiply all values
+     * @return this modified vector
      * @throws ValueRuntimeException in case the vector is immutable
      */
     public RV multiplyBy(final double multiplier)
@@ -131,8 +131,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
 
     /**
      * Divide all values of this vector by the divisor. This only works if the vector is mutable.
-     * @param divisor double; the value by which to divide all values
-     * @return RV; this modified vector
+     * @param divisor the value by which to divide all values
+     * @return this modified vector
      * @throws ValueRuntimeException in case the vector is immutable
      */
     public RV divideBy(final double divisor)
@@ -144,8 +144,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
      * Multiply a Relative value with this Relative value for a vector or matrix. The multiplication is done value by value and
      * store the result in a new Relative value. If both operands are dense, the result is a dense vector or matrix, otherwise
      * the result is a sparse vector or matrix.
-     * @param rel VT; the right operand, which can be any vector type
-     * @return SIVector; the multiplication of this vector and the operand
+     * @param rel the right operand, which can be any vector type
+     * @return the multiplication of this vector and the operand
      * @throws ValueRuntimeException in case this vector or matrix and the operand have a different size
      * @throws UnitException on unit error
      * @param <UT> the unit type of the multiplier
@@ -165,8 +165,8 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
      * Divide this Relative value by a Relative value for a vector or matrix. The division is done value by value and store the
      * result in a new Relative value. If both operands are dense, the result is a dense vector or matrix, otherwise the result
      * is a sparse vector or matrix.
-     * @param rel VT; the right operand, which can be any vector type
-     * @return SIVector; the division of this vector and the operand
+     * @param rel the right operand, which can be any vector type
+     * @return the division of this vector and the operand
      * @throws ValueRuntimeException in case this vector or matrix and the operand have a different size
      * @throws UnitException on unit error
      * @param <UT> the unit type of the multiplier

@@ -24,10 +24,10 @@ public class UnitException extends Exception
 
     /**
      * Construct a new UnitException.
-     * @param message String; String
-     * @param cause Throwable; Throwable
-     * @param enableSuppression boolean;
-     * @param writableStackTrace boolean; boolean
+     * @param message String
+     * @param cause Throwable
+     * @param enableSuppression boolean 
+     * @param writableStackTrace boolean
      */
     public UnitException(final String message, final Throwable cause, final boolean enableSuppression,
             final boolean writableStackTrace)
@@ -37,8 +37,8 @@ public class UnitException extends Exception
 
     /**
      * Construct a new UnitException with some default values.
-     * @param message String; String
-     * @param cause Throwable; Throwable
+     * @param message String
+     * @param cause Throwable
      */
     public UnitException(final String message, final Throwable cause)
     {
@@ -47,7 +47,7 @@ public class UnitException extends Exception
 
     /**
      * Construct a new UnitException with some default values.
-     * @param message String; String
+     * @param message String
      */
     public UnitException(final String message)
     {
@@ -56,7 +56,7 @@ public class UnitException extends Exception
 
     /**
      * Construct a new UnitException with some default values.
-     * @param cause Throwable; Throwable
+     * @param cause Throwable
      */
     public UnitException(final Throwable cause)
     {

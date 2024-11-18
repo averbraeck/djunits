@@ -650,9 +650,9 @@ public class FloatVectorMethodTest
 
     /**
      * Check that two arrays and a sum array match.
-     * @param left float[]; the left array
-     * @param right float[]; the right array
-     * @param sum float[]; the sum array
+     * @param left the left array
+     * @param right the right array
+     * @param sum the sum array
      */
     public void compareSum(final float[] left, final float[] right, final float[] sum)
     {

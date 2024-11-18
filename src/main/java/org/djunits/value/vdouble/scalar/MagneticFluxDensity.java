@@ -55,8 +55,8 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Construct MagneticFluxDensity scalar.
-     * @param value double; the double value
-     * @param unit MagneticFluxDensityUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public MagneticFluxDensity(final double value, final MagneticFluxDensityUnit unit)
     {
@@ -65,7 +65,7 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Construct MagneticFluxDensity scalar.
-     * @param value MagneticFluxDensity; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public MagneticFluxDensity(final MagneticFluxDensity value)
     {
@@ -80,8 +80,8 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Construct MagneticFluxDensity scalar.
-     * @param value double; the double value in SI units
-     * @return MagneticFluxDensity; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final MagneticFluxDensity instantiateSI(final double value)
     {
@@ -90,10 +90,10 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Interpolate between two values.
-     * @param zero MagneticFluxDensity; the low value
-     * @param one MagneticFluxDensity; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return MagneticFluxDensity; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static MagneticFluxDensity interpolate(final MagneticFluxDensity zero, final MagneticFluxDensity one,
             final double ratio)
@@ -104,9 +104,9 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 MagneticFluxDensity; the first scalar
-     * @param r2 MagneticFluxDensity; the second scalar
-     * @return MagneticFluxDensity; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static MagneticFluxDensity max(final MagneticFluxDensity r1, final MagneticFluxDensity r2)
     {
@@ -115,10 +115,10 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 MagneticFluxDensity; the first scalar
-     * @param r2 MagneticFluxDensity; the second scalar
-     * @param rn MagneticFluxDensity...; the other scalars
-     * @return MagneticFluxDensity; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static MagneticFluxDensity max(final MagneticFluxDensity r1, final MagneticFluxDensity r2,
             final MagneticFluxDensity... rn)
@@ -136,9 +136,9 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 MagneticFluxDensity; the first scalar
-     * @param r2 MagneticFluxDensity; the second scalar
-     * @return MagneticFluxDensity; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static MagneticFluxDensity min(final MagneticFluxDensity r1, final MagneticFluxDensity r2)
     {
@@ -147,10 +147,10 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 MagneticFluxDensity; the first scalar
-     * @param r2 MagneticFluxDensity; the second scalar
-     * @param rn MagneticFluxDensity...; the other scalars
-     * @return MagneticFluxDensity; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static MagneticFluxDensity min(final MagneticFluxDensity r1, final MagneticFluxDensity r2,
             final MagneticFluxDensity... rn)
@@ -170,8 +170,8 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
      * Returns a MagneticFluxDensity representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a MagneticFluxDensity
-     * @return MagneticFluxDensity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a MagneticFluxDensity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -199,9 +199,9 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Returns a MagneticFluxDensity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return MagneticFluxDensity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -220,8 +220,8 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Calculate the division of MagneticFluxDensity and MagneticFluxDensity, which results in a Dimensionless scalar.
-     * @param v MagneticFluxDensity; scalar
-     * @return Dimensionless; scalar as a division of MagneticFluxDensity and MagneticFluxDensity
+     * @param v scalar
+     * @return scalar as a division of MagneticFluxDensity and MagneticFluxDensity
      */
     public final Dimensionless divide(final MagneticFluxDensity v)
     {
@@ -230,8 +230,8 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
 
     /**
      * Calculate the multiplication of MagneticFluxDensity and Area, which results in a MagneticFlux scalar.
-     * @param v MagneticFluxDensity; scalar
-     * @return MagneticFlux; scalar as a multiplication of MagneticFluxDensity and Area
+     * @param v scalar
+     * @return scalar as a multiplication of MagneticFluxDensity and Area
      */
     public final MagneticFlux times(final Area v)
     {

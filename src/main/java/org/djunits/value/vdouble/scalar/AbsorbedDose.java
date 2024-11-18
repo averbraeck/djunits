@@ -50,8 +50,8 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Construct AbsorbedDose scalar.
-     * @param value double; the double value
-     * @param unit AbsorbedDoseUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public AbsorbedDose(final double value, final AbsorbedDoseUnit unit)
     {
@@ -60,7 +60,7 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Construct AbsorbedDose scalar.
-     * @param value AbsorbedDose; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public AbsorbedDose(final AbsorbedDose value)
     {
@@ -75,8 +75,8 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Construct AbsorbedDose scalar.
-     * @param value double; the double value in SI units
-     * @return AbsorbedDose; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final AbsorbedDose instantiateSI(final double value)
     {
@@ -85,10 +85,10 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Interpolate between two values.
-     * @param zero AbsorbedDose; the low value
-     * @param one AbsorbedDose; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return AbsorbedDose; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static AbsorbedDose interpolate(final AbsorbedDose zero, final AbsorbedDose one, final double ratio)
     {
@@ -98,9 +98,9 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 AbsorbedDose; the first scalar
-     * @param r2 AbsorbedDose; the second scalar
-     * @return AbsorbedDose; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static AbsorbedDose max(final AbsorbedDose r1, final AbsorbedDose r2)
     {
@@ -109,10 +109,10 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 AbsorbedDose; the first scalar
-     * @param r2 AbsorbedDose; the second scalar
-     * @param rn AbsorbedDose...; the other scalars
-     * @return AbsorbedDose; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static AbsorbedDose max(final AbsorbedDose r1, final AbsorbedDose r2, final AbsorbedDose... rn)
     {
@@ -129,9 +129,9 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 AbsorbedDose; the first scalar
-     * @param r2 AbsorbedDose; the second scalar
-     * @return AbsorbedDose; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static AbsorbedDose min(final AbsorbedDose r1, final AbsorbedDose r2)
     {
@@ -140,10 +140,10 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 AbsorbedDose; the first scalar
-     * @param r2 AbsorbedDose; the second scalar
-     * @param rn AbsorbedDose...; the other scalars
-     * @return AbsorbedDose; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static AbsorbedDose min(final AbsorbedDose r1, final AbsorbedDose r2, final AbsorbedDose... rn)
     {
@@ -162,8 +162,8 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
      * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a AbsorbedDose
-     * @return AbsorbedDose; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a AbsorbedDose
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -191,9 +191,9 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return AbsorbedDose; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -211,8 +211,8 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
 
     /**
      * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless scalar.
-     * @param v AbsorbedDose; scalar
-     * @return Dimensionless; scalar as a division of AbsorbedDose and AbsorbedDose
+     * @param v scalar
+     * @return scalar as a division of AbsorbedDose and AbsorbedDose
      */
     public final Dimensionless divide(final AbsorbedDose v)
     {

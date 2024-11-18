@@ -145,8 +145,8 @@ public enum SIPrefixes
 
     /**
      * Look up and return the prefix information for the given prefix key (e.g., "G" for "giga").
-     * @param prefixKey String; the prefix key, e.g., "G" for "giga"
-     * @return SIPrefix; the SIPrefix information, or null if the <code>prefixKey</code> does not exist
+     * @param prefixKey the prefix key, e.g., "G" for "giga"
+     * @return the SIPrefix information, or null if the <code>prefixKey</code> does not exist
      */
     public static SIPrefix getUnit(final String prefixKey)
     {
@@ -155,8 +155,8 @@ public enum SIPrefixes
 
     /**
      * Look up and return the prefix information for the given prefix key (e.g., "/n" for "per nano").
-     * @param prefixKey String; the prefix key, e.g., "/n" for "per nano"
-     * @return SIPrefix; the SIPrefix information, or null if the <code>prefixKey</code> does not exist
+     * @param prefixKey the prefix key, e.g., "/n" for "per nano"
+     * @return the SIPrefix information, or null if the <code>prefixKey</code> does not exist
      */
     public static SIPrefix getPerUnit(final String prefixKey)
     {
@@ -166,8 +166,8 @@ public enum SIPrefixes
     /**
      * Return the prefix information for the given prefix key (e.g., "G" for "giga"), with an offset of a factor 1000 for units
      * that have "kilo" as the default.
-     * @param prefixKey String; the prefix key, e.g., "G" for "giga"
-     * @return SIPrefix; the SIPrefix information, with an offset of 1000. So "k" will return 1, and "" will return 1.0E-3.
+     * @param prefixKey the prefix key, e.g., "G" for "giga"
+     * @return the SIPrefix information, with an offset of 1000. So "k" will return 1, and "" will return 1.0E-3.
      */
     public static SIPrefix getKiloUnit(final String prefixKey)
     {

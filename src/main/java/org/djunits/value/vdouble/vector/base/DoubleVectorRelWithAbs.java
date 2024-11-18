@@ -38,8 +38,8 @@ public abstract class DoubleVectorRelWithAbs<
 
     /**
      * Construct a new Relative Mutable DoubleVector.
-     * @param data DoubleVectorData; an internal data object
-     * @param unit RU; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     protected DoubleVectorRelWithAbs(final DoubleVectorData data, final RU unit)
     {
@@ -57,9 +57,9 @@ public abstract class DoubleVectorRelWithAbs<
      * Instantiate a new absolute vector of the class of this relative vector. This can be used instead of the
      * DoubleVector.instiantiate() methods in case another vector of this relative with absolute class is known. The method is
      * faster than DoubleVector.instantiate, and it will also work if the vector is user-defined.
-     * @param dvd DoubleVectorData; the data used to instantiate the vector
-     * @param displayUnit AU; the display unit of the absolute vector
-     * @return AV; an absolute vector of the correct type, belonging to this relative vector type
+     * @param dvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the absolute vector
+     * @return an absolute vector of the correct type, belonging to this relative vector type
      */
     public abstract AV instantiateVectorAbs(DoubleVectorData dvd, AU displayUnit);
 
@@ -67,9 +67,9 @@ public abstract class DoubleVectorRelWithAbs<
      * Instantiate a new absolute scalar for the class of this relative vector. This can be used instead of the
      * DoubleScalar.instiantiate() methods in case a vector of this class is known. The method is faster than
      * DoubleScalar.instantiate, and it will also work if the vector and/or scalar are user-defined.
-     * @param valueSI double; the SI value of the absolute scalar
-     * @param displayUnit AU; the unit in which the absolute value will be displayed
-     * @return A; an absolute scalar of the correct type, belonging to this relative vector type
+     * @param valueSI the SI value of the absolute scalar
+     * @param displayUnit the unit in which the absolute value will be displayed
+     * @return an absolute scalar of the correct type, belonging to this relative vector type
      */
     public abstract A instantiateScalarAbsSI(double valueSI, AU displayUnit);
 }

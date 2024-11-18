@@ -25,8 +25,8 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Construct a new Relative Immutable DoubleScalar.
-     * @param value double; the value of the new Relative Immutable DoubleScalar
-     * @param unit U; the unit of the new Relative Immutable DoubleScalar
+     * @param value the value of the new Relative Immutable DoubleScalar
+     * @param unit the unit of the new Relative Immutable DoubleScalar
      */
     public DoubleScalarRel(final double value, final U unit)
     {
@@ -35,7 +35,7 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Construct a new Relative Immutable DoubleScalar from an existing Relative Immutable DoubleScalar.
-     * @param value R, a relative typed DoubleScalar; the reference
+     * @param value the reference
      */
     public DoubleScalarRel(final R value)
     {
@@ -44,8 +44,8 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Construct a new Relative Immutable DoubleScalar of the right type. Each extending class must implement this method.
-     * @param value double; the double value
-     * @param unit U; the unit
+     * @param value the double value
+     * @param unit the unit
      * @return R a new relative instance of the DoubleScalar of the right type
      */
     public abstract R instantiateRel(double value, U unit);
@@ -76,8 +76,8 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Multiply this scalar by another scalar and create a new scalar.
-     * @param otherScalar DoubleScalarRel&lt;?, ?&gt;; the value by which this scalar is multiplied
-     * @return DoubleScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
+     * @param otherScalar the value by which this scalar is multiplied
+     * @return a new scalar instance with correct SI dimensions
      */
     public SIScalar times(final DoubleScalarRel<?, ?> otherScalar)
     {
@@ -86,14 +86,14 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
 
     /**
      * Create the reciprocal of this scalar with the correct dimensions.
-     * @return DoubleScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
+     * @return a new scalar instance with correct SI dimensions
      */
     public abstract DoubleScalarRel<?, ?> reciprocal();
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
-     * @param otherScalar DoubleScalarRel&lt;?, ?&gt;; the value by which this scalar is divided
-     * @return DoubleScalar&lt;?&gt;; a new scalar instance with correct SI dimensions
+     * @param otherScalar the value by which this scalar is divided
+     * @return a new scalar instance with correct SI dimensions
      */
     public SIScalar divide(final DoubleScalarRel<?, ?> otherScalar)
     {

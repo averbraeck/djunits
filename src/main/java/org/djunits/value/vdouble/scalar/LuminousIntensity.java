@@ -53,8 +53,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Construct LuminousIntensity scalar.
-     * @param value double; the double value
-     * @param unit LuminousIntensityUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public LuminousIntensity(final double value, final LuminousIntensityUnit unit)
     {
@@ -63,7 +63,7 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Construct LuminousIntensity scalar.
-     * @param value LuminousIntensity; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public LuminousIntensity(final LuminousIntensity value)
     {
@@ -78,8 +78,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Construct LuminousIntensity scalar.
-     * @param value double; the double value in SI units
-     * @return LuminousIntensity; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final LuminousIntensity instantiateSI(final double value)
     {
@@ -88,10 +88,10 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Interpolate between two values.
-     * @param zero LuminousIntensity; the low value
-     * @param one LuminousIntensity; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return LuminousIntensity; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static LuminousIntensity interpolate(final LuminousIntensity zero, final LuminousIntensity one, final double ratio)
     {
@@ -101,9 +101,9 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 LuminousIntensity; the first scalar
-     * @param r2 LuminousIntensity; the second scalar
-     * @return LuminousIntensity; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static LuminousIntensity max(final LuminousIntensity r1, final LuminousIntensity r2)
     {
@@ -112,10 +112,10 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 LuminousIntensity; the first scalar
-     * @param r2 LuminousIntensity; the second scalar
-     * @param rn LuminousIntensity...; the other scalars
-     * @return LuminousIntensity; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static LuminousIntensity max(final LuminousIntensity r1, final LuminousIntensity r2, final LuminousIntensity... rn)
     {
@@ -132,9 +132,9 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 LuminousIntensity; the first scalar
-     * @param r2 LuminousIntensity; the second scalar
-     * @return LuminousIntensity; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static LuminousIntensity min(final LuminousIntensity r1, final LuminousIntensity r2)
     {
@@ -143,10 +143,10 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 LuminousIntensity; the first scalar
-     * @param r2 LuminousIntensity; the second scalar
-     * @param rn LuminousIntensity...; the other scalars
-     * @return LuminousIntensity; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static LuminousIntensity min(final LuminousIntensity r1, final LuminousIntensity r2, final LuminousIntensity... rn)
     {
@@ -165,8 +165,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
      * Returns a LuminousIntensity representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a LuminousIntensity
-     * @return LuminousIntensity; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a LuminousIntensity
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -193,9 +193,9 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Returns a LuminousIntensity based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return LuminousIntensity; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -214,8 +214,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Calculate the division of LuminousIntensity and LuminousIntensity, which results in a Dimensionless scalar.
-     * @param v LuminousIntensity; scalar
-     * @return Dimensionless; scalar as a division of LuminousIntensity and LuminousIntensity
+     * @param v scalar
+     * @return scalar as a division of LuminousIntensity and LuminousIntensity
      */
     public final Dimensionless divide(final LuminousIntensity v)
     {
@@ -224,8 +224,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
 
     /**
      * Calculate the multiplication of LuminousIntensity and SolidAngle, which results in a LuminousFlux scalar.
-     * @param v LuminousIntensity; scalar
-     * @return LuminousFlux; scalar as a multiplication of LuminousIntensity and SolidAngle
+     * @param v scalar
+     * @return scalar as a multiplication of LuminousIntensity and SolidAngle
      */
     public final LuminousFlux times(final SolidAngle v)
     {

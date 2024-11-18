@@ -30,8 +30,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
 
     /**
      * Construct an TorqueVector from an internal data object.
-     * @param data DoubleVectorData; the internal data object for the vector
-     * @param displayUnit TorqueUnit; the display unit of the vector data
+     * @param data the internal data object for the vector
+     * @param displayUnit the display unit of the vector data
      */
     public TorqueVector(final DoubleVectorData data, final TorqueUnit displayUnit)
     {
@@ -43,9 +43,9 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
     /**
      * Construct an TorqueVector from a double[] object. The double values are expressed in the displayUnit, and will be printed
      * using the displayUnit.
-     * @param data double[]; the data for the vector, expressed in the displayUnit
-     * @param displayUnit TorqueUnit; the unit of the values in the data array, and display unit when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, expressed in the displayUnit
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final double[] data, final TorqueUnit displayUnit, final StorageType storageType)
     {
@@ -55,8 +55,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
     /**
      * Construct an TorqueVector from a double[] object. The double values are expressed in the displayUnit. Assume that the
      * StorageType is DENSE since we offer the data as an array.
-     * @param data double[]; the data for the vector
-     * @param displayUnit TorqueUnit; the unit of the values in the data array, and display unit when printing
+     * @param data the data for the vector
+     * @param displayUnit the unit of the values in the data array, and display unit when printing
      */
     public TorqueVector(final double[] data, final TorqueUnit displayUnit)
     {
@@ -65,8 +65,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
 
     /**
      * Construct an TorqueVector from a double[] object with SI-unit values.
-     * @param data double[]; the data for the vector, in SI units
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector, in SI units
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final double[] data, final StorageType storageType)
     {
@@ -76,7 +76,7 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
     /**
      * Construct an TorqueVector from a double[] object with SI-unit values. Assume that the StorageType is DENSE since we offer
      * the data as an array.
-     * @param data double[]; the data for the vector, in SI units
+     * @param data the data for the vector, in SI units
      */
     public TorqueVector(final double[] data)
     {
@@ -88,9 +88,9 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
     /**
      * Construct an TorqueVector from an array of Torque objects. The Torque values are each expressed in their own unit, but
      * will be internally stored as SI values, all expressed in the displayUnit when printing.
-     * @param data Torque[]; the data for the vector
-     * @param displayUnit TorqueUnit; the display unit of the values when printing
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final Torque[] data, final TorqueUnit displayUnit, final StorageType storageType)
     {
@@ -101,8 +101,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * Construct an TorqueVector from an array of Torque objects. The Torque values are each expressed in their own unit, but
      * will be internally stored as SI values, all expressed in the displayUnit when printing. Assume that the StorageType is
      * DENSE since we offer the data as an array.
-     * @param data Torque[]; the data for the vector
-     * @param displayUnit TorqueUnit; the display unit of the values when printing
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the values when printing
      */
     public TorqueVector(final Torque[] data, final TorqueUnit displayUnit)
     {
@@ -112,8 +112,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
     /**
      * Construct an TorqueVector from an array of Torque objects. The Torque values are each expressed in their own unit, but
      * will be internally stored as SI values, and expressed using SI units when printing. since we offer the data as an array.
-     * @param data Torque[]; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final Torque[] data, final StorageType storageType)
     {
@@ -124,7 +124,7 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * Construct an TorqueVector from an array of Torque objects. The Torque values are each expressed in their own unit, but
      * will be internally stored as SI values, and expressed using SI units when printing. Assume that the StorageType is DENSE
      * since we offer the data as an array.
-     * @param data Torque[]; the data for the vector
+     * @param data the data for the vector
      */
     public TorqueVector(final Torque[] data)
     {
@@ -140,10 +140,10 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * well as the unit in which they will be printed. In case the list contains Torque objects, each Torque has its own unit,
      * and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;Torque&gt;; the data for the vector
-     * @param displayUnit TorqueUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final List<? extends Number> data, final TorqueUnit displayUnit, final StorageType storageType)
     {
@@ -161,8 +161,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * and the displayUnit is just used for printing. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we offer
      * the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;Torque&gt;; the data for the vector
-     * @param displayUnit TorqueUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public TorqueVector(final List<? extends Number> data, final TorqueUnit displayUnit)
@@ -175,8 +175,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * Double, assume that they are expressed using SI units. When the data consists of Torque objects, they each have their own
      * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
      * base values, and expressed using the display unit or base unit when printing.
-     * @param data List&lt;Double&gt; or List&lt;Torque&gt;; the data for the vector
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final List<? extends Number> data, final StorageType storageType)
     {
@@ -189,7 +189,7 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * unit, but will be printed using SI units or base units. The values but will always be internally stored as SI values or
      * base values, and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we
      * offer the data as a List.
-     * @param data List&lt;Double&gt; or List&lt;Torque&gt;; the data for the vector
+     * @param data the data for the vector
      */
     public TorqueVector(final List<? extends Number> data)
     {
@@ -207,11 +207,11 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * unit in which they will be printed. In case the map contains Torque objects, each Torque has its own unit, and the
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Torque&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit TorqueUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final Map<Integer, ? extends Number> data, final int size, final TorqueUnit displayUnit,
             final StorageType storageType)
@@ -233,9 +233,9 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * displayUnit is just used for printing. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
      * a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Torque&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param displayUnit TorqueUnit; the display unit of the vector data, and the unit of the data points when the data is
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
      *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public TorqueVector(final Map<Integer, ? extends Number> data, final int size, final TorqueUnit displayUnit)
@@ -250,9 +250,9 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * assume that they are expressed using SI units. When the data consists of Torque objects, they each have their own unit,
      * but will be printed using SI units or base units. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Torque&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
-     * @param storageType StorageType; the StorageType (SPARSE or DENSE) to use for constructing the Vector
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
+     * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public TorqueVector(final Map<Integer, ? extends Number> data, final int size, final StorageType storageType)
     {
@@ -267,8 +267,8 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
      * but will be printed using SI units or base units. The values but will always be internally stored as SI values or base
      * values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer
      * the data as a Map.
-     * @param data Map&lt;Integer, Double&gt; or Map&lt;Integer, Torque&gt;; the data for the vector
-     * @param size int; the size off the vector, i.e., the highest index
+     * @param data the data for the vector
+     * @param size the size off the vector, i.e., the highest index
      */
     public TorqueVector(final Map<Integer, ? extends Number> data, final int size)
     {

@@ -59,7 +59,7 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Construct FloatSpeed scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatSpeed(final float value, final SpeedUnit unit)
@@ -78,7 +78,7 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Construct FloatSpeed scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatSpeed(final double value, final SpeedUnit unit)
@@ -94,7 +94,7 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Construct FloatSpeed scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatSpeed instantiateSI(final float value)
@@ -106,7 +106,7 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatSpeed interpolate(final FloatSpeed zero, final FloatSpeed one, final float ratio)
@@ -181,8 +181,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
      * Returns a FloatSpeed representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatSpeed
-     * @return FloatSpeed; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatSpeed
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -210,9 +210,9 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Returns a FloatSpeed based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatSpeed; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -230,8 +230,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the division of FloatSpeed and FloatSpeed, which results in a FloatDimensionless scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatDimensionless; scalar as a division of FloatSpeed and FloatSpeed
+     * @param v scalar
+     * @return scalar as a division of FloatSpeed and FloatSpeed
      */
     public final FloatDimensionless divide(final FloatSpeed v)
     {
@@ -240,8 +240,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatArea, which results in a FloatFlowVolume scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatFlowVolume; scalar as a multiplication of FloatSpeed and FloatArea
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatArea
      */
     public final FloatFlowVolume times(final FloatArea v)
     {
@@ -250,8 +250,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatForce, which results in a FloatPower scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatPower; scalar as a multiplication of FloatSpeed and FloatForce
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatForce
      */
     public final FloatPower times(final FloatForce v)
     {
@@ -260,8 +260,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatFrequency, which results in a FloatAcceleration scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatAcceleration; scalar as a multiplication of FloatSpeed and FloatFrequency
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatFrequency
      */
     public final FloatAcceleration times(final FloatFrequency v)
     {
@@ -270,8 +270,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the division of FloatSpeed and FloatLength, which results in a FloatFrequency scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatFrequency; scalar as a division of FloatSpeed and FloatLength
+     * @param v scalar
+     * @return scalar as a division of FloatSpeed and FloatLength
      */
     public final FloatFrequency divide(final FloatLength v)
     {
@@ -280,8 +280,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the division of FloatSpeed and FloatFrequency, which results in a FloatLength scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatLength; scalar as a division of FloatSpeed and FloatFrequency
+     * @param v scalar
+     * @return scalar as a division of FloatSpeed and FloatFrequency
      */
     public final FloatLength divide(final FloatFrequency v)
     {
@@ -290,8 +290,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatLinearDensity, which results in a FloatFrequency scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatFrequency; scalar as a multiplication of FloatSpeed and FloatLinearDensity
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatLinearDensity
      */
     public final FloatFrequency times(final FloatLinearDensity v)
     {
@@ -300,8 +300,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatDuration, which results in a FloatLength scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatLength; scalar as a multiplication of FloatSpeed and FloatDuration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatDuration
      */
     public final FloatLength times(final FloatDuration v)
     {
@@ -310,8 +310,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the division of FloatSpeed and FloatDuration, which results in a FloatAcceleration scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatAcceleration; scalar as a division of FloatSpeed and FloatDuration
+     * @param v scalar
+     * @return scalar as a division of FloatSpeed and FloatDuration
      */
     public final FloatAcceleration divide(final FloatDuration v)
     {
@@ -320,8 +320,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the division of FloatSpeed and FloatAcceleration, which results in a FloatDuration scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatDuration; scalar as a division of FloatSpeed and FloatAcceleration
+     * @param v scalar
+     * @return scalar as a division of FloatSpeed and FloatAcceleration
      */
     public final FloatDuration divide(final FloatAcceleration v)
     {
@@ -330,8 +330,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatFlowMass, which results in a FloatForce scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatForce; scalar as a multiplication of FloatSpeed and FloatFlowMass
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatFlowMass
      */
     public final FloatForce times(final FloatFlowMass v)
     {
@@ -340,8 +340,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatMass, which results in a FloatMomentum scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatMomentum; scalar as a multiplication of FloatSpeed and FloatMass
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatMass
      */
     public final FloatMomentum times(final FloatMass v)
     {
@@ -350,8 +350,8 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
 
     /**
      * Calculate the multiplication of FloatSpeed and FloatMomentum, which results in a FloatEnergy scalar.
-     * @param v FloatSpeed; scalar
-     * @return FloatEnergy; scalar as a multiplication of FloatSpeed and FloatMomentum
+     * @param v scalar
+     * @return scalar as a multiplication of FloatSpeed and FloatMomentum
      */
     public final FloatEnergy times(final FloatMomentum v)
     {

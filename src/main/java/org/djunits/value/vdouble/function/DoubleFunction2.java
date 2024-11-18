@@ -12,9 +12,9 @@ public interface DoubleFunction2
 {
     /**
      * Apply a function on two float values.
-     * @param leftValue double; the value of the left operand
-     * @param rightValue double; the value of the right operand
-     * @return double; the result of the operation
+     * @param leftValue the value of the left operand
+     * @param rightValue the value of the right operand
+     * @return the result of the operation
      */
     double apply(double leftValue, double rightValue);
 

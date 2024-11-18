@@ -74,8 +74,8 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Construct a new Relative Double SIMatrix on the basis of a data object.
-     * @param data DoubleMatrixData; an internal data object
-     * @param unit SIUnit; the unit
+     * @param data an internal data object
+     * @param unit the unit
      */
     public SIMatrix(final DoubleMatrixData data, final SIUnit unit)
     {
@@ -84,9 +84,9 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Construct a new Relative Double SIMatrix with a unit for the float values that will also be used for the displayUnit.
-     * @param values double[][]; the values of the entries in the new Relative Double SIMatrix
-     * @param unit SIUnit; the unit of the new Relative Double SIMatrix
-     * @param storageType StorageType; the data type to use (e.g., DENSE or SPARSE)
+     * @param values the values of the entries in the new Relative Double SIMatrix
+     * @param unit the unit of the new Relative Double SIMatrix
+     * @param storageType the data type to use (e.g., DENSE or SPARSE)
      * @throws ValueRuntimeException when values is null
      */
     public SIMatrix(final double[][] values, final SIUnit unit, final StorageType storageType) throws ValueRuntimeException
@@ -97,8 +97,8 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Construct a new Relative Double SIMatrix with a unit for the float values that will also be used for the displayUnit.
      * Assume the StorageType is DENSE since we offer the content as an array.
-     * @param values double[][]; the values of the entries in the new Relative Double SIMatrix
-     * @param unit SIUnit; the unit of the new Relative Double SIMatrix
+     * @param values the values of the entries in the new Relative Double SIMatrix
+     * @param unit the unit of the new Relative Double SIMatrix
      * @throws ValueRuntimeException when values is null
      */
     public SIMatrix(final double[][] values, final SIUnit unit) throws ValueRuntimeException
@@ -120,10 +120,10 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Returns an SIMatrix based on an array of values and the textual representation of the unit.
-     * @param values double[][]; the values to use
-     * @param unitString String; the textual representation of the unit
-     * @param storageType StorageType; the storage type to use
-     * @return SIMatrix; the matrix representation of the values in their unit
+     * @param values the values to use
+     * @param unitString the textual representation of the unit
+     * @param storageType the storage type to use
+     * @return the matrix representation of the values in their unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -177,7 +177,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a absorbeddose matrix.
-     * @return AbsorbedDoseMatrix; the current matrix as a absorbeddose matrix
+     * @return the current matrix as a absorbeddose matrix
      */
     public final AbsorbedDoseMatrix asAbsorbedDose()
     {
@@ -189,7 +189,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a absorbeddose matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AbsorbedDoseMatrix; the current matrix as a absorbeddose matrix
+     * @return the current matrix as a absorbeddose matrix
      */
     public final AbsorbedDoseMatrix asAbsorbedDose(final AbsorbedDoseUnit displayUnit)
     {
@@ -202,7 +202,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a acceleration matrix.
-     * @return AccelerationMatrix; the current matrix as a acceleration matrix
+     * @return the current matrix as a acceleration matrix
      */
     public final AccelerationMatrix asAcceleration()
     {
@@ -214,7 +214,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a acceleration matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AccelerationMatrix; the current matrix as a acceleration matrix
+     * @return the current matrix as a acceleration matrix
      */
     public final AccelerationMatrix asAcceleration(final AccelerationUnit displayUnit)
     {
@@ -227,7 +227,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a amountofsubstance matrix.
-     * @return AmountOfSubstanceMatrix; the current matrix as a amountofsubstance matrix
+     * @return the current matrix as a amountofsubstance matrix
      */
     public final AmountOfSubstanceMatrix asAmountOfSubstance()
     {
@@ -239,7 +239,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a amountofsubstance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AmountOfSubstanceMatrix; the current matrix as a amountofsubstance matrix
+     * @return the current matrix as a amountofsubstance matrix
      */
     public final AmountOfSubstanceMatrix asAmountOfSubstance(final AmountOfSubstanceUnit displayUnit)
     {
@@ -252,7 +252,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a angularacceleration matrix.
-     * @return AngularAccelerationMatrix; the current matrix as a angularacceleration matrix
+     * @return the current matrix as a angularacceleration matrix
      */
     public final AngularAccelerationMatrix asAngularAcceleration()
     {
@@ -264,7 +264,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a angularacceleration matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AngularAccelerationMatrix; the current matrix as a angularacceleration matrix
+     * @return the current matrix as a angularacceleration matrix
      */
     public final AngularAccelerationMatrix asAngularAcceleration(final AngularAccelerationUnit displayUnit)
     {
@@ -277,7 +277,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a angularvelocity matrix.
-     * @return AngularVelocityMatrix; the current matrix as a angularvelocity matrix
+     * @return the current matrix as a angularvelocity matrix
      */
     public final AngularVelocityMatrix asAngularVelocity()
     {
@@ -289,7 +289,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a angularvelocity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AngularVelocityMatrix; the current matrix as a angularvelocity matrix
+     * @return the current matrix as a angularvelocity matrix
      */
     public final AngularVelocityMatrix asAngularVelocity(final AngularVelocityUnit displayUnit)
     {
@@ -302,7 +302,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a area matrix.
-     * @return AreaMatrix; the current matrix as a area matrix
+     * @return the current matrix as a area matrix
      */
     public final AreaMatrix asArea()
     {
@@ -314,7 +314,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a area matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AreaMatrix; the current matrix as a area matrix
+     * @return the current matrix as a area matrix
      */
     public final AreaMatrix asArea(final AreaUnit displayUnit)
     {
@@ -327,7 +327,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a catalyticactivity matrix.
-     * @return CatalyticActivityMatrix; the current matrix as a catalyticactivity matrix
+     * @return the current matrix as a catalyticactivity matrix
      */
     public final CatalyticActivityMatrix asCatalyticActivity()
     {
@@ -339,7 +339,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a catalyticactivity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return CatalyticActivityMatrix; the current matrix as a catalyticactivity matrix
+     * @return the current matrix as a catalyticactivity matrix
      */
     public final CatalyticActivityMatrix asCatalyticActivity(final CatalyticActivityUnit displayUnit)
     {
@@ -352,7 +352,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a density matrix.
-     * @return DensityMatrix; the current matrix as a density matrix
+     * @return the current matrix as a density matrix
      */
     public final DensityMatrix asDensity()
     {
@@ -364,7 +364,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a density matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return DensityMatrix; the current matrix as a density matrix
+     * @return the current matrix as a density matrix
      */
     public final DensityMatrix asDensity(final DensityUnit displayUnit)
     {
@@ -377,7 +377,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a dimensionless matrix.
-     * @return DimensionlessMatrix; the current matrix as a dimensionless matrix
+     * @return the current matrix as a dimensionless matrix
      */
     public final DimensionlessMatrix asDimensionless()
     {
@@ -389,7 +389,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a dimensionless matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return DimensionlessMatrix; the current matrix as a dimensionless matrix
+     * @return the current matrix as a dimensionless matrix
      */
     public final DimensionlessMatrix asDimensionless(final DimensionlessUnit displayUnit)
     {
@@ -402,7 +402,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalcapacitance matrix.
-     * @return ElectricalCapacitanceMatrix; the current matrix as a electricalcapacitance matrix
+     * @return the current matrix as a electricalcapacitance matrix
      */
     public final ElectricalCapacitanceMatrix asElectricalCapacitance()
     {
@@ -414,7 +414,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalcapacitance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalCapacitanceMatrix; the current matrix as a electricalcapacitance matrix
+     * @return the current matrix as a electricalcapacitance matrix
      */
     public final ElectricalCapacitanceMatrix asElectricalCapacitance(final ElectricalCapacitanceUnit displayUnit)
     {
@@ -427,7 +427,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalcharge matrix.
-     * @return ElectricalChargeMatrix; the current matrix as a electricalcharge matrix
+     * @return the current matrix as a electricalcharge matrix
      */
     public final ElectricalChargeMatrix asElectricalCharge()
     {
@@ -439,7 +439,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalcharge matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalChargeMatrix; the current matrix as a electricalcharge matrix
+     * @return the current matrix as a electricalcharge matrix
      */
     public final ElectricalChargeMatrix asElectricalCharge(final ElectricalChargeUnit displayUnit)
     {
@@ -452,7 +452,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalconductance matrix.
-     * @return ElectricalConductanceMatrix; the current matrix as a electricalconductance matrix
+     * @return the current matrix as a electricalconductance matrix
      */
     public final ElectricalConductanceMatrix asElectricalConductance()
     {
@@ -464,7 +464,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalconductance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalConductanceMatrix; the current matrix as a electricalconductance matrix
+     * @return the current matrix as a electricalconductance matrix
      */
     public final ElectricalConductanceMatrix asElectricalConductance(final ElectricalConductanceUnit displayUnit)
     {
@@ -477,7 +477,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalcurrent matrix.
-     * @return ElectricalCurrentMatrix; the current matrix as a electricalcurrent matrix
+     * @return the current matrix as a electricalcurrent matrix
      */
     public final ElectricalCurrentMatrix asElectricalCurrent()
     {
@@ -489,7 +489,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalcurrent matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalCurrentMatrix; the current matrix as a electricalcurrent matrix
+     * @return the current matrix as a electricalcurrent matrix
      */
     public final ElectricalCurrentMatrix asElectricalCurrent(final ElectricalCurrentUnit displayUnit)
     {
@@ -502,7 +502,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalinductance matrix.
-     * @return ElectricalInductanceMatrix; the current matrix as a electricalinductance matrix
+     * @return the current matrix as a electricalinductance matrix
      */
     public final ElectricalInductanceMatrix asElectricalInductance()
     {
@@ -514,7 +514,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalinductance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalInductanceMatrix; the current matrix as a electricalinductance matrix
+     * @return the current matrix as a electricalinductance matrix
      */
     public final ElectricalInductanceMatrix asElectricalInductance(final ElectricalInductanceUnit displayUnit)
     {
@@ -527,7 +527,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalpotential matrix.
-     * @return ElectricalPotentialMatrix; the current matrix as a electricalpotential matrix
+     * @return the current matrix as a electricalpotential matrix
      */
     public final ElectricalPotentialMatrix asElectricalPotential()
     {
@@ -539,7 +539,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalpotential matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalPotentialMatrix; the current matrix as a electricalpotential matrix
+     * @return the current matrix as a electricalpotential matrix
      */
     public final ElectricalPotentialMatrix asElectricalPotential(final ElectricalPotentialUnit displayUnit)
     {
@@ -552,7 +552,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a electricalresistance matrix.
-     * @return ElectricalResistanceMatrix; the current matrix as a electricalresistance matrix
+     * @return the current matrix as a electricalresistance matrix
      */
     public final ElectricalResistanceMatrix asElectricalResistance()
     {
@@ -564,7 +564,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a electricalresistance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ElectricalResistanceMatrix; the current matrix as a electricalresistance matrix
+     * @return the current matrix as a electricalresistance matrix
      */
     public final ElectricalResistanceMatrix asElectricalResistance(final ElectricalResistanceUnit displayUnit)
     {
@@ -577,7 +577,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a energy matrix.
-     * @return EnergyMatrix; the current matrix as a energy matrix
+     * @return the current matrix as a energy matrix
      */
     public final EnergyMatrix asEnergy()
     {
@@ -589,7 +589,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a energy matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return EnergyMatrix; the current matrix as a energy matrix
+     * @return the current matrix as a energy matrix
      */
     public final EnergyMatrix asEnergy(final EnergyUnit displayUnit)
     {
@@ -602,7 +602,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a equivalentdose matrix.
-     * @return EquivalentDoseMatrix; the current matrix as a equivalentdose matrix
+     * @return the current matrix as a equivalentdose matrix
      */
     public final EquivalentDoseMatrix asEquivalentDose()
     {
@@ -614,7 +614,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a equivalentdose matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return EquivalentDoseMatrix; the current matrix as a equivalentdose matrix
+     * @return the current matrix as a equivalentdose matrix
      */
     public final EquivalentDoseMatrix asEquivalentDose(final EquivalentDoseUnit displayUnit)
     {
@@ -627,7 +627,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a flowmass matrix.
-     * @return FlowMassMatrix; the current matrix as a flowmass matrix
+     * @return the current matrix as a flowmass matrix
      */
     public final FlowMassMatrix asFlowMass()
     {
@@ -639,7 +639,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a flowmass matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FlowMassMatrix; the current matrix as a flowmass matrix
+     * @return the current matrix as a flowmass matrix
      */
     public final FlowMassMatrix asFlowMass(final FlowMassUnit displayUnit)
     {
@@ -652,7 +652,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a flowvolume matrix.
-     * @return FlowVolumeMatrix; the current matrix as a flowvolume matrix
+     * @return the current matrix as a flowvolume matrix
      */
     public final FlowVolumeMatrix asFlowVolume()
     {
@@ -664,7 +664,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a flowvolume matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FlowVolumeMatrix; the current matrix as a flowvolume matrix
+     * @return the current matrix as a flowvolume matrix
      */
     public final FlowVolumeMatrix asFlowVolume(final FlowVolumeUnit displayUnit)
     {
@@ -677,7 +677,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a force matrix.
-     * @return ForceMatrix; the current matrix as a force matrix
+     * @return the current matrix as a force matrix
      */
     public final ForceMatrix asForce()
     {
@@ -689,7 +689,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a force matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return ForceMatrix; the current matrix as a force matrix
+     * @return the current matrix as a force matrix
      */
     public final ForceMatrix asForce(final ForceUnit displayUnit)
     {
@@ -702,7 +702,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a frequency matrix.
-     * @return FrequencyMatrix; the current matrix as a frequency matrix
+     * @return the current matrix as a frequency matrix
      */
     public final FrequencyMatrix asFrequency()
     {
@@ -714,7 +714,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a frequency matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return FrequencyMatrix; the current matrix as a frequency matrix
+     * @return the current matrix as a frequency matrix
      */
     public final FrequencyMatrix asFrequency(final FrequencyUnit displayUnit)
     {
@@ -727,7 +727,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a illuminance matrix.
-     * @return IlluminanceMatrix; the current matrix as a illuminance matrix
+     * @return the current matrix as a illuminance matrix
      */
     public final IlluminanceMatrix asIlluminance()
     {
@@ -739,7 +739,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a illuminance matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return IlluminanceMatrix; the current matrix as a illuminance matrix
+     * @return the current matrix as a illuminance matrix
      */
     public final IlluminanceMatrix asIlluminance(final IlluminanceUnit displayUnit)
     {
@@ -752,7 +752,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a lineardensity matrix.
-     * @return LinearDensityMatrix; the current matrix as a lineardensity matrix
+     * @return the current matrix as a lineardensity matrix
      */
     public final LinearDensityMatrix asLinearDensity()
     {
@@ -764,7 +764,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a lineardensity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LinearDensityMatrix; the current matrix as a lineardensity matrix
+     * @return the current matrix as a lineardensity matrix
      */
     public final LinearDensityMatrix asLinearDensity(final LinearDensityUnit displayUnit)
     {
@@ -777,7 +777,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a luminousflux matrix.
-     * @return LuminousFluxMatrix; the current matrix as a luminousflux matrix
+     * @return the current matrix as a luminousflux matrix
      */
     public final LuminousFluxMatrix asLuminousFlux()
     {
@@ -789,7 +789,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a luminousflux matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LuminousFluxMatrix; the current matrix as a luminousflux matrix
+     * @return the current matrix as a luminousflux matrix
      */
     public final LuminousFluxMatrix asLuminousFlux(final LuminousFluxUnit displayUnit)
     {
@@ -802,7 +802,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a luminousintensity matrix.
-     * @return LuminousIntensityMatrix; the current matrix as a luminousintensity matrix
+     * @return the current matrix as a luminousintensity matrix
      */
     public final LuminousIntensityMatrix asLuminousIntensity()
     {
@@ -814,7 +814,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a luminousintensity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LuminousIntensityMatrix; the current matrix as a luminousintensity matrix
+     * @return the current matrix as a luminousintensity matrix
      */
     public final LuminousIntensityMatrix asLuminousIntensity(final LuminousIntensityUnit displayUnit)
     {
@@ -827,7 +827,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a magneticfluxdensity matrix.
-     * @return MagneticFluxDensityMatrix; the current matrix as a magneticfluxdensity matrix
+     * @return the current matrix as a magneticfluxdensity matrix
      */
     public final MagneticFluxDensityMatrix asMagneticFluxDensity()
     {
@@ -839,7 +839,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a magneticfluxdensity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MagneticFluxDensityMatrix; the current matrix as a magneticfluxdensity matrix
+     * @return the current matrix as a magneticfluxdensity matrix
      */
     public final MagneticFluxDensityMatrix asMagneticFluxDensity(final MagneticFluxDensityUnit displayUnit)
     {
@@ -852,7 +852,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a magneticflux matrix.
-     * @return MagneticFluxMatrix; the current matrix as a magneticflux matrix
+     * @return the current matrix as a magneticflux matrix
      */
     public final MagneticFluxMatrix asMagneticFlux()
     {
@@ -864,7 +864,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a magneticflux matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MagneticFluxMatrix; the current matrix as a magneticflux matrix
+     * @return the current matrix as a magneticflux matrix
      */
     public final MagneticFluxMatrix asMagneticFlux(final MagneticFluxUnit displayUnit)
     {
@@ -877,7 +877,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a mass matrix.
-     * @return MassMatrix; the current matrix as a mass matrix
+     * @return the current matrix as a mass matrix
      */
     public final MassMatrix asMass()
     {
@@ -889,7 +889,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a mass matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MassMatrix; the current matrix as a mass matrix
+     * @return the current matrix as a mass matrix
      */
     public final MassMatrix asMass(final MassUnit displayUnit)
     {
@@ -902,7 +902,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a momentum matrix.
-     * @return MomentumMatrix; the current matrix as a momentum matrix
+     * @return the current matrix as a momentum matrix
      */
     public final MomentumMatrix asMomentum()
     {
@@ -914,7 +914,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a momentum matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return MomentumMatrix; the current matrix as a momentum matrix
+     * @return the current matrix as a momentum matrix
      */
     public final MomentumMatrix asMomentum(final MomentumUnit displayUnit)
     {
@@ -927,7 +927,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a power matrix.
-     * @return PowerMatrix; the current matrix as a power matrix
+     * @return the current matrix as a power matrix
      */
     public final PowerMatrix asPower()
     {
@@ -939,7 +939,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a power matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return PowerMatrix; the current matrix as a power matrix
+     * @return the current matrix as a power matrix
      */
     public final PowerMatrix asPower(final PowerUnit displayUnit)
     {
@@ -952,7 +952,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a pressure matrix.
-     * @return PressureMatrix; the current matrix as a pressure matrix
+     * @return the current matrix as a pressure matrix
      */
     public final PressureMatrix asPressure()
     {
@@ -964,7 +964,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a pressure matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return PressureMatrix; the current matrix as a pressure matrix
+     * @return the current matrix as a pressure matrix
      */
     public final PressureMatrix asPressure(final PressureUnit displayUnit)
     {
@@ -977,7 +977,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a radioactivity matrix.
-     * @return RadioActivityMatrix; the current matrix as a radioactivity matrix
+     * @return the current matrix as a radioactivity matrix
      */
     public final RadioActivityMatrix asRadioActivity()
     {
@@ -989,7 +989,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a radioactivity matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return RadioActivityMatrix; the current matrix as a radioactivity matrix
+     * @return the current matrix as a radioactivity matrix
      */
     public final RadioActivityMatrix asRadioActivity(final RadioActivityUnit displayUnit)
     {
@@ -1002,7 +1002,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a solidangle matrix.
-     * @return SolidAngleMatrix; the current matrix as a solidangle matrix
+     * @return the current matrix as a solidangle matrix
      */
     public final SolidAngleMatrix asSolidAngle()
     {
@@ -1014,7 +1014,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a solidangle matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return SolidAngleMatrix; the current matrix as a solidangle matrix
+     * @return the current matrix as a solidangle matrix
      */
     public final SolidAngleMatrix asSolidAngle(final SolidAngleUnit displayUnit)
     {
@@ -1027,7 +1027,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a speed matrix.
-     * @return SpeedMatrix; the current matrix as a speed matrix
+     * @return the current matrix as a speed matrix
      */
     public final SpeedMatrix asSpeed()
     {
@@ -1039,7 +1039,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a speed matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return SpeedMatrix; the current matrix as a speed matrix
+     * @return the current matrix as a speed matrix
      */
     public final SpeedMatrix asSpeed(final SpeedUnit displayUnit)
     {
@@ -1052,7 +1052,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a torque matrix.
-     * @return TorqueMatrix; the current matrix as a torque matrix
+     * @return the current matrix as a torque matrix
      */
     public final TorqueMatrix asTorque()
     {
@@ -1064,7 +1064,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a torque matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return TorqueMatrix; the current matrix as a torque matrix
+     * @return the current matrix as a torque matrix
      */
     public final TorqueMatrix asTorque(final TorqueUnit displayUnit)
     {
@@ -1077,7 +1077,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a volume matrix.
-     * @return VolumeMatrix; the current matrix as a volume matrix
+     * @return the current matrix as a volume matrix
      */
     public final VolumeMatrix asVolume()
     {
@@ -1089,7 +1089,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a volume matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return VolumeMatrix; the current matrix as a volume matrix
+     * @return the current matrix as a volume matrix
      */
     public final VolumeMatrix asVolume(final VolumeUnit displayUnit)
     {
@@ -1102,7 +1102,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a angle matrix.
-     * @return AngleMatrix; the current matrix as a angle matrix
+     * @return the current matrix as a angle matrix
      */
     public final AngleMatrix asAngle()
     {
@@ -1114,7 +1114,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a angle matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return AngleMatrix; the current matrix as a angle matrix
+     * @return the current matrix as a angle matrix
      */
     public final AngleMatrix asAngle(final AngleUnit displayUnit)
     {
@@ -1127,7 +1127,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a length matrix.
-     * @return LengthMatrix; the current matrix as a length matrix
+     * @return the current matrix as a length matrix
      */
     public final LengthMatrix asLength()
     {
@@ -1139,7 +1139,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a length matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return LengthMatrix; the current matrix as a length matrix
+     * @return the current matrix as a length matrix
      */
     public final LengthMatrix asLength(final LengthUnit displayUnit)
     {
@@ -1152,7 +1152,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a temperature matrix.
-     * @return TemperatureMatrix; the current matrix as a temperature matrix
+     * @return the current matrix as a temperature matrix
      */
     public final TemperatureMatrix asTemperature()
     {
@@ -1164,7 +1164,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a temperature matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return TemperatureMatrix; the current matrix as a temperature matrix
+     * @return the current matrix as a temperature matrix
      */
     public final TemperatureMatrix asTemperature(final TemperatureUnit displayUnit)
     {
@@ -1177,7 +1177,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
 
     /**
      * Return the current matrix as a duration matrix.
-     * @return DurationMatrix; the current matrix as a duration matrix
+     * @return the current matrix as a duration matrix
      */
     public final DurationMatrix asDuration()
     {
@@ -1189,7 +1189,7 @@ public class SIMatrix extends DoubleMatrixRel<SIUnit, SIScalar, SIVector, SIMatr
     /**
      * Return the current matrix as a duration matrix, and provide a display unit.
      * @param displayUnit the unit in which the value will be displayed
-     * @return DurationMatrix; the current matrix as a duration matrix
+     * @return the current matrix as a duration matrix
      */
     public final DurationMatrix asDuration(final DurationUnit displayUnit)
     {

@@ -55,9 +55,9 @@ public class ForceUnit extends Unit<ForceUnit>
 
     /**
      * Determine the conversion factor to the base force unit, given a mass unit and an acceleration unit.
-     * @param mass MassUnit; the used mass unit, e.g. lb
-     * @param acceleration AccelerationUnit; the used acceleration unit, e.g. ft/s2
-     * @return double; the conversion factor from the provided units (e.g. lb.ft/s2) to the standard unit (e.g., kg.m/s2)
+     * @param mass the used mass unit, e.g. lb
+     * @param acceleration the used acceleration unit, e.g. ft/s2
+     * @return the conversion factor from the provided units (e.g. lb.ft/s2) to the standard unit (e.g., kg.m/s2)
      */
     private static double factorMA(final MassUnit mass, final AccelerationUnit acceleration)
     {

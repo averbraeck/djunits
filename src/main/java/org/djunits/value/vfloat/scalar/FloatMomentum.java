@@ -56,7 +56,7 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Construct FloatMomentum scalar.
-     * @param value float; the float value
+     * @param value the float value
      * @param unit unit for the float value
      */
     public FloatMomentum(final float value, final MomentumUnit unit)
@@ -75,7 +75,7 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Construct FloatMomentum scalar using a double value.
-     * @param value double; the double value
+     * @param value the double value
      * @param unit unit for the resulting float value
      */
     public FloatMomentum(final double value, final MomentumUnit unit)
@@ -91,7 +91,7 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Construct FloatMomentum scalar.
-     * @param value float; the float value in SI units
+     * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
     public static final FloatMomentum instantiateSI(final float value)
@@ -103,7 +103,7 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
      * Interpolate between two values.
      * @param zero the low value
      * @param one the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
+     * @param ratio the ratio between 0 and 1, inclusive
      * @return a Scalar at the ratio between
      */
     public static FloatMomentum interpolate(final FloatMomentum zero, final FloatMomentum one, final float ratio)
@@ -178,8 +178,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
      * Returns a FloatMomentum representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a FloatMomentum
-     * @return FloatMomentum; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a FloatMomentum
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -207,9 +207,9 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Returns a FloatMomentum based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return FloatMomentum; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -227,8 +227,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the division of FloatMomentum and FloatMomentum, which results in a FloatDimensionless scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatDimensionless; scalar as a division of FloatMomentum and FloatMomentum
+     * @param v scalar
+     * @return scalar as a division of FloatMomentum and FloatMomentum
      */
     public final FloatDimensionless divide(final FloatMomentum v)
     {
@@ -237,8 +237,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the division of FloatMomentum and FloatSpeed, which results in a FloatMass scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatMass; scalar as a division of FloatMomentum and FloatSpeed
+     * @param v scalar
+     * @return scalar as a division of FloatMomentum and FloatSpeed
      */
     public final FloatMass divide(final FloatSpeed v)
     {
@@ -247,8 +247,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the division of FloatMomentum and FloatMass, which results in a FloatSpeed scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatSpeed; scalar as a division of FloatMomentum and FloatMass
+     * @param v scalar
+     * @return scalar as a division of FloatMomentum and FloatMass
      */
     public final FloatSpeed divide(final FloatMass v)
     {
@@ -257,8 +257,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the division of FloatMomentum and FloatLength, which results in a FloatFlowMass scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatFlowMass; scalar as a division of FloatMomentum and FloatLength
+     * @param v scalar
+     * @return scalar as a division of FloatMomentum and FloatLength
      */
     public final FloatFlowMass divide(final FloatLength v)
     {
@@ -267,8 +267,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the division of FloatMomentum and FloatFlowMass, which results in a FloatLength scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatLength; scalar as a division of FloatMomentum and FloatFlowMass
+     * @param v scalar
+     * @return scalar as a division of FloatMomentum and FloatFlowMass
      */
     public final FloatLength divide(final FloatFlowMass v)
     {
@@ -277,8 +277,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the multiplication of FloatMomentum and FloatSpeed, which results in a FloatEnergy scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatEnergy; scalar as a multiplication of FloatMomentum and FloatSpeed
+     * @param v scalar
+     * @return scalar as a multiplication of FloatMomentum and FloatSpeed
      */
     public final FloatEnergy times(final FloatSpeed v)
     {
@@ -287,8 +287,8 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
 
     /**
      * Calculate the multiplication of FloatMomentum and FloatAcceleration, which results in a FloatPower scalar.
-     * @param v FloatMomentum; scalar
-     * @return FloatPower; scalar as a multiplication of FloatMomentum and FloatAcceleration
+     * @param v scalar
+     * @return scalar as a multiplication of FloatMomentum and FloatAcceleration
      */
     public final FloatPower times(final FloatAcceleration v)
     {

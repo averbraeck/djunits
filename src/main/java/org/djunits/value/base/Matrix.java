@@ -30,7 +30,7 @@ public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extend
 
     /**
      * Construct a new Matrix.
-     * @param displayUnit U; the unit of the new AbstractValue
+     * @param displayUnit the unit of the new AbstractValue
      */
     public Matrix(final U displayUnit)
     {
@@ -39,79 +39,79 @@ public abstract class Matrix<U extends Unit<U>, S extends Scalar<U, S>, V extend
 
     /**
      * Retrieve the number of rows of the matrix.
-     * @return int; the number of rows of the matrix
+     * @return the number of rows of the matrix
      */
     public abstract int rows();
 
     /**
      * Retrieve the number of columns of the matrix.
-     * @return int; the number of columns of the matrix
+     * @return the number of columns of the matrix
      */
     public abstract int cols();
 
     /**
      * Return the class of the corresponding vector.
-     * @return Class&lt;V&gt;; the class of the corresponding vector
+     * @return the class of the corresponding vector
      */
     public abstract Class<V> getVectorClass();
 
     /**
      * Retrieve a value from the matrix.
-     * @param row int; row of the value to retrieve
-     * @param column int; column of the value to retrieve
-     * @return S; the value as a Scalar
+     * @param row row of the value to retrieve
+     * @param column column of the value to retrieve
+     * @return the value as a Scalar
      * @throws IndexOutOfBoundsException in case row or column is out of bounds
      */
     public abstract S get(int row, int column) throws IndexOutOfBoundsException;
 
     /**
      * Return the vector as a 2D-array of scalars.
-     * @return S[][]; the vector as a 2D-array of scalars
+     * @return the vector as a 2D-array of scalars
      */
     public abstract S[][] getScalars();
 
     /**
      * Retrieve a row from the matrix as a vector.
-     * @param row int; row of the values to retrieve
-     * @return V; the row as a Vector
+     * @param row row of the values to retrieve
+     * @return the row as a Vector
      * @throws IndexOutOfBoundsException in case row is out of bounds
      */
     public abstract V getRow(int row) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve a column from the matrix as a vector.
-     * @param column int; column of the values to retrieve
-     * @return V; the column as a Vector
+     * @param column column of the values to retrieve
+     * @return the column as a Vector
      * @throws IndexOutOfBoundsException in case column is out of bounds
      */
     public abstract V getColumn(int column) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve the main diagonal of the matrix as a vector.
-     * @return V; the main diagonal as a Vector
+     * @return the main diagonal as a Vector
      * @throws ValueRuntimeException in case the matrix is not square
      */
     public abstract V getDiagonal() throws ValueRuntimeException;
 
     /**
      * Retrieve a row from the matrix as an array of scalars.
-     * @param row int; row of the values to retrieve
-     * @return S[]; the row as a Scalar array
+     * @param row row of the values to retrieve
+     * @return the row as a Scalar array
      * @throws IndexOutOfBoundsException in case row is out of bounds
      */
     public abstract S[] getRowScalars(int row) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve a column from the matrix as an array of scalars.
-     * @param column int; column of the values to retrieve
-     * @return S[]; the column as a Scalar array
+     * @param column column of the values to retrieve
+     * @return the column as a Scalar array
      * @throws IndexOutOfBoundsException in case column is out of bounds
      */
     public abstract S[] getColumnScalars(int column) throws IndexOutOfBoundsException;
 
     /**
      * Retrieve the main diagonal of the matrix as an array of scalars.
-     * @return V; the main diagonal as a Scalar array
+     * @return the main diagonal as a Scalar array
      * @throws ValueRuntimeException in case the matrix is not square
      */
     public abstract S[] getDiagonalScalars() throws ValueRuntimeException;

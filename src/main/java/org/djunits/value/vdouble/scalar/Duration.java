@@ -62,8 +62,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Construct Duration scalar.
-     * @param value double; double value
-     * @param unit DurationUnit; unit for the double value
+     * @param value double value
+     * @param unit unit for the double value
      */
     public Duration(final double value, final DurationUnit unit)
     {
@@ -72,7 +72,7 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Construct Duration scalar.
-     * @param value Duration; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Duration(final Duration value)
     {
@@ -93,8 +93,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Construct Duration scalar.
-     * @param value double; the double value in SI units
-     * @return Duration; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Duration instantiateSI(final double value)
     {
@@ -103,10 +103,10 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Interpolate between two values.
-     * @param zero Duration; the low value
-     * @param one Duration; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Duration; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Duration interpolate(final Duration zero, final Duration one, final double ratio)
     {
@@ -116,9 +116,9 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Duration; the first scalar
-     * @param r2 Duration; the second scalar
-     * @return Duration; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Duration max(final Duration r1, final Duration r2)
     {
@@ -127,10 +127,10 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Duration; the first scalar
-     * @param r2 Duration; the second scalar
-     * @param rn Duration...; the other scalars
-     * @return Duration; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Duration max(final Duration r1, final Duration r2, final Duration... rn)
     {
@@ -147,9 +147,9 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Duration; the first scalar
-     * @param r2 Duration; the second scalar
-     * @return Duration; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Duration min(final Duration r1, final Duration r2)
     {
@@ -158,10 +158,10 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Duration; the first scalar
-     * @param r2 Duration; the second scalar
-     * @param rn Duration...; the other scalars
-     * @return Duration; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Duration min(final Duration r1, final Duration r2, final Duration... rn)
     {
@@ -180,8 +180,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
      * Returns a Duration representation of a textual representation of a value with a unit. The String representation that can
      * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Duration
-     * @return Duration; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Duration
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -209,9 +209,9 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Returns a Duration based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Duration; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -229,8 +229,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the division of Duration and Duration, which results in a Dimensionless scalar.
-     * @param v Duration; scalar
-     * @return Dimensionless; scalar as a division of Duration and Duration
+     * @param v scalar
+     * @return scalar as a division of Duration and Duration
      */
     public final Dimensionless divide(final Duration v)
     {
@@ -239,8 +239,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and Frequency, which results in a Dimensionless scalar.
-     * @param v Duration; scalar
-     * @return Dimensionless; scalar as a multiplication of Duration and Frequency
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and Frequency
      */
     public final Dimensionless times(final Frequency v)
     {
@@ -249,8 +249,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and ElectricalCurrent, which results in a ElectricalCharge scalar.
-     * @param v Duration; scalar
-     * @return ElectricalCharge; scalar as a multiplication of Duration and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and ElectricalCurrent
      */
     public final ElectricalCharge times(final ElectricalCurrent v)
     {
@@ -259,8 +259,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and FlowMass, which results in a Mass scalar.
-     * @param v Duration; scalar
-     * @return Mass; scalar as a multiplication of Duration and FlowMass
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and FlowMass
      */
     public final Mass times(final FlowMass v)
     {
@@ -269,8 +269,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and FlowVolume, which results in a Volume scalar.
-     * @param v Duration; scalar
-     * @return Volume; scalar as a multiplication of Duration and FlowVolume
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and FlowVolume
      */
     public final Volume times(final FlowVolume v)
     {
@@ -279,8 +279,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and Acceleration, which results in a Speed scalar.
-     * @param v Duration; scalar
-     * @return Speed; scalar as a multiplication of Duration and Acceleration
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and Acceleration
      */
     public final Speed times(final Acceleration v)
     {
@@ -289,8 +289,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and Power, which results in a Energy scalar.
-     * @param v Duration; scalar
-     * @return Energy; scalar as a multiplication of Duration and Power
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and Power
      */
     public final Energy times(final Power v)
     {
@@ -299,8 +299,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and Speed, which results in a Length scalar.
-     * @param v Duration; scalar
-     * @return Length; scalar as a multiplication of Duration and Speed
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and Speed
      */
     public final Length times(final Speed v)
     {
@@ -309,8 +309,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and ElectricalPotential, which results in a MagneticFlux scalar.
-     * @param v Duration; scalar
-     * @return MagneticFlux; scalar as a multiplication of Duration and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and ElectricalPotential
      */
     public final MagneticFlux times(final ElectricalPotential v)
     {
@@ -319,8 +319,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and ElectricalResistance, which results in a ElectricalInductance scalar.
-     * @param v Duration; scalar
-     * @return ElectricalInductance; scalar as a multiplication of Duration and ElectricalResistance
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and ElectricalResistance
      */
     public final ElectricalInductance times(final ElectricalResistance v)
     {
@@ -329,8 +329,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and ElectricalConductance, which results in a ElectricalCapacitance scalar.
-     * @param v Duration; scalar
-     * @return ElectricalCapacitance; scalar as a multiplication of Duration and ElectricalConductance
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and ElectricalConductance
      */
     public final ElectricalCapacitance times(final ElectricalConductance v)
     {
@@ -339,8 +339,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and AngularVelocity, which results in a Angle scalar.
-     * @param v Duration; scalar
-     * @return Angle; scalar as a multiplication of Duration and AngularVelocity
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and AngularVelocity
      */
     public final Angle times(final AngularVelocity v)
     {
@@ -349,8 +349,8 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
 
     /**
      * Calculate the multiplication of Duration and AngularAcceleration, which results in a AngularVelocity scalar.
-     * @param v Duration; scalar
-     * @return AngularVelocity; scalar as a multiplication of Duration and AngularAcceleration
+     * @param v scalar
+     * @return scalar as a multiplication of Duration and AngularAcceleration
      */
     public final AngularVelocity times(final AngularAcceleration v)
     {

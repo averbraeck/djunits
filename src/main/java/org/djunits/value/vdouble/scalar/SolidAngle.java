@@ -51,8 +51,8 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Construct SolidAngle scalar.
-     * @param value double; the double value
-     * @param unit SolidAngleUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public SolidAngle(final double value, final SolidAngleUnit unit)
     {
@@ -61,7 +61,7 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Construct SolidAngle scalar.
-     * @param value SolidAngle; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public SolidAngle(final SolidAngle value)
     {
@@ -76,8 +76,8 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Construct SolidAngle scalar.
-     * @param value double; the double value in SI units
-     * @return SolidAngle; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final SolidAngle instantiateSI(final double value)
     {
@@ -86,10 +86,10 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Interpolate between two values.
-     * @param zero SolidAngle; the low value
-     * @param one SolidAngle; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return SolidAngle; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static SolidAngle interpolate(final SolidAngle zero, final SolidAngle one, final double ratio)
     {
@@ -99,9 +99,9 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 SolidAngle; the first scalar
-     * @param r2 SolidAngle; the second scalar
-     * @return SolidAngle; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static SolidAngle max(final SolidAngle r1, final SolidAngle r2)
     {
@@ -110,10 +110,10 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 SolidAngle; the first scalar
-     * @param r2 SolidAngle; the second scalar
-     * @param rn SolidAngle...; the other scalars
-     * @return SolidAngle; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static SolidAngle max(final SolidAngle r1, final SolidAngle r2, final SolidAngle... rn)
     {
@@ -130,9 +130,9 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 SolidAngle; the first scalar
-     * @param r2 SolidAngle; the second scalar
-     * @return SolidAngle; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static SolidAngle min(final SolidAngle r1, final SolidAngle r2)
     {
@@ -141,10 +141,10 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 SolidAngle; the first scalar
-     * @param r2 SolidAngle; the second scalar
-     * @param rn SolidAngle...; the other scalars
-     * @return SolidAngle; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static SolidAngle min(final SolidAngle r1, final SolidAngle r2, final SolidAngle... rn)
     {
@@ -163,8 +163,8 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
      * Returns a SolidAngle representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a SolidAngle
-     * @return SolidAngle; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a SolidAngle
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -192,9 +192,9 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Returns a SolidAngle based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return SolidAngle; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -212,8 +212,8 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Calculate the division of SolidAngle and SolidAngle, which results in a Dimensionless scalar.
-     * @param v SolidAngle; scalar
-     * @return Dimensionless; scalar as a division of SolidAngle and SolidAngle
+     * @param v scalar
+     * @return scalar as a division of SolidAngle and SolidAngle
      */
     public final Dimensionless divide(final SolidAngle v)
     {
@@ -222,8 +222,8 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 
     /**
      * Calculate the multiplication of SolidAngle and LuminousIntensity, which results in a LuminousFlux scalar.
-     * @param v SolidAngle; scalar
-     * @return LuminousFlux; scalar as a multiplication of SolidAngle and LuminousIntensity
+     * @param v scalar
+     * @return scalar as a multiplication of SolidAngle and LuminousIntensity
      */
     public final LuminousFlux times(final LuminousIntensity v)
     {

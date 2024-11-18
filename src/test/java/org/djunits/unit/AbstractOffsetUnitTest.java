@@ -17,11 +17,11 @@ public class AbstractOffsetUnitTest<OU extends Unit<OU>> extends AbstractUnitTes
     /**
      * Verify one length conversion factor to standard unit and the localization of the name and abbreviation.
      * @param ou Unit to check
-     * @param expectedRatio Double; expected ratio
-     * @param expectedOffset Double; expected offset
-     * @param precision Double; precision of verification
-     * @param expectedName String; expected name in the resources
-     * @param expectedAbbreviation String; expected abbreviation in the resources
+     * @param expectedRatio expected ratio
+     * @param expectedOffset expected offset
+     * @param precision precision of verification
+     * @param expectedName expected name in the resources
+     * @param expectedAbbreviation expected abbreviation in the resources
      */
     protected final void checkUnitRatioOffsetNameAndAbbreviation(final OU ou, final double expectedRatio,
             final double expectedOffset, final double precision, final String expectedName, final String expectedAbbreviation)
@@ -37,8 +37,8 @@ public class AbstractOffsetUnitTest<OU extends Unit<OU>> extends AbstractUnitTes
     }
 
     /**
-     * @param fromUnit U; the unit to convert from
-     * @param toUnit U; the unit to convert to
+     * @param fromUnit the unit to convert from
+     * @param toUnit the unit to convert to
      * @return multiplication factor to convert a value from fromUnit to toUnit
      */
     public final double getMultiplicationFactorTo(final OU fromUnit, final OU toUnit)

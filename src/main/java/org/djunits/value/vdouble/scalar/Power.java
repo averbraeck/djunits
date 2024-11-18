@@ -58,8 +58,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Construct Power scalar.
-     * @param value double; the double value
-     * @param unit PowerUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public Power(final double value, final PowerUnit unit)
     {
@@ -68,7 +68,7 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Construct Power scalar.
-     * @param value Power; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public Power(final Power value)
     {
@@ -83,8 +83,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Construct Power scalar.
-     * @param value double; the double value in SI units
-     * @return Power; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final Power instantiateSI(final double value)
     {
@@ -93,10 +93,10 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Interpolate between two values.
-     * @param zero Power; the low value
-     * @param one Power; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return Power; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static Power interpolate(final Power zero, final Power one, final double ratio)
     {
@@ -105,9 +105,9 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 Power; the first scalar
-     * @param r2 Power; the second scalar
-     * @return Power; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static Power max(final Power r1, final Power r2)
     {
@@ -116,10 +116,10 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 Power; the first scalar
-     * @param r2 Power; the second scalar
-     * @param rn Power...; the other scalars
-     * @return Power; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static Power max(final Power r1, final Power r2, final Power... rn)
     {
@@ -136,9 +136,9 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 Power; the first scalar
-     * @param r2 Power; the second scalar
-     * @return Power; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static Power min(final Power r1, final Power r2)
     {
@@ -147,10 +147,10 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 Power; the first scalar
-     * @param r2 Power; the second scalar
-     * @param rn Power...; the other scalars
-     * @return Power; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static Power min(final Power r1, final Power r2, final Power... rn)
     {
@@ -169,8 +169,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
      * Returns a Power representation of a textual representation of a value with a unit. The String representation that can be
      * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
      * but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a Power
-     * @return Power; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a Power
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -198,9 +198,9 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Returns a Power based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return Power; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -218,8 +218,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Power, which results in a Dimensionless scalar.
-     * @param v Power; scalar
-     * @return Dimensionless; scalar as a division of Power and Power
+     * @param v scalar
+     * @return scalar as a division of Power and Power
      */
     public final Dimensionless divide(final Power v)
     {
@@ -228,8 +228,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the multiplication of Power and Duration, which results in a Energy scalar.
-     * @param v Power; scalar
-     * @return Energy; scalar as a multiplication of Power and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of Power and Duration
      */
     public final Energy times(final Duration v)
     {
@@ -238,8 +238,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Frequency, which results in a Energy scalar.
-     * @param v Power; scalar
-     * @return Energy; scalar as a division of Power and Frequency
+     * @param v scalar
+     * @return scalar as a division of Power and Frequency
      */
     public final Energy divide(final Frequency v)
     {
@@ -248,8 +248,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Energy, which results in a Frequency scalar.
-     * @param v Power; scalar
-     * @return Frequency; scalar as a division of Power and Energy
+     * @param v scalar
+     * @return scalar as a division of Power and Energy
      */
     public final Frequency divide(final Energy v)
     {
@@ -258,8 +258,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Speed, which results in a Force scalar.
-     * @param v Power; scalar
-     * @return Force; scalar as a division of Power and Speed
+     * @param v scalar
+     * @return scalar as a division of Power and Speed
      */
     public final Force divide(final Speed v)
     {
@@ -268,8 +268,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Force, which results in a Speed scalar.
-     * @param v Power; scalar
-     * @return Speed; scalar as a division of Power and Force
+     * @param v scalar
+     * @return scalar as a division of Power and Force
      */
     public final Speed divide(final Force v)
     {
@@ -278,8 +278,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and ElectricalPotential, which results in a ElectricalCurrent scalar.
-     * @param v Power; scalar
-     * @return ElectricalCurrent; scalar as a division of Power and ElectricalPotential
+     * @param v scalar
+     * @return scalar as a division of Power and ElectricalPotential
      */
     public final ElectricalCurrent divide(final ElectricalPotential v)
     {
@@ -288,8 +288,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and ElectricalCurrent, which results in a ElectricalPotential scalar.
-     * @param v Power; scalar
-     * @return ElectricalPotential; scalar as a division of Power and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a division of Power and ElectricalCurrent
      */
     public final ElectricalPotential divide(final ElectricalCurrent v)
     {
@@ -298,8 +298,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Acceleration, which results in a Momentum scalar.
-     * @param v Power; scalar
-     * @return Momentum; scalar as a division of Power and Acceleration
+     * @param v scalar
+     * @return scalar as a division of Power and Acceleration
      */
     public final Momentum divide(final Acceleration v)
     {
@@ -308,8 +308,8 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
 
     /**
      * Calculate the division of Power and Momentum, which results in a Acceleration scalar.
-     * @param v Power; scalar
-     * @return Acceleration; scalar as a division of Power and Momentum
+     * @param v scalar
+     * @return scalar as a division of Power and Momentum
      */
     public final Acceleration divide(final Momentum v)
     {

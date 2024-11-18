@@ -55,8 +55,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Construct ElectricalResistance scalar.
-     * @param value double; the double value
-     * @param unit ElectricalResistanceUnit; unit for the double value
+     * @param value the double value
+     * @param unit unit for the double value
      */
     public ElectricalResistance(final double value, final ElectricalResistanceUnit unit)
     {
@@ -65,7 +65,7 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Construct ElectricalResistance scalar.
-     * @param value ElectricalResistance; Scalar from which to construct this instance
+     * @param value Scalar from which to construct this instance
      */
     public ElectricalResistance(final ElectricalResistance value)
     {
@@ -80,8 +80,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Construct ElectricalResistance scalar.
-     * @param value double; the double value in SI units
-     * @return ElectricalResistance; the new scalar with the SI value
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
      */
     public static final ElectricalResistance instantiateSI(final double value)
     {
@@ -90,10 +90,10 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Interpolate between two values.
-     * @param zero ElectricalResistance; the low value
-     * @param one ElectricalResistance; the high value
-     * @param ratio double; the ratio between 0 and 1, inclusive
-     * @return ElectricalResistance; a Scalar at the ratio between
+     * @param zero the low value
+     * @param one the high value
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Scalar at the ratio between
      */
     public static ElectricalResistance interpolate(final ElectricalResistance zero, final ElectricalResistance one,
             final double ratio)
@@ -104,9 +104,9 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Return the maximum value of two relative scalars.
-     * @param r1 ElectricalResistance; the first scalar
-     * @param r2 ElectricalResistance; the second scalar
-     * @return ElectricalResistance; the maximum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
      */
     public static ElectricalResistance max(final ElectricalResistance r1, final ElectricalResistance r2)
     {
@@ -115,10 +115,10 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Return the maximum value of more than two relative scalars.
-     * @param r1 ElectricalResistance; the first scalar
-     * @param r2 ElectricalResistance; the second scalar
-     * @param rn ElectricalResistance...; the other scalars
-     * @return ElectricalResistance; the maximum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
      */
     public static ElectricalResistance max(final ElectricalResistance r1, final ElectricalResistance r2,
             final ElectricalResistance... rn)
@@ -136,9 +136,9 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Return the minimum value of two relative scalars.
-     * @param r1 ElectricalResistance; the first scalar
-     * @param r2 ElectricalResistance; the second scalar
-     * @return ElectricalResistance; the minimum value of two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
      */
     public static ElectricalResistance min(final ElectricalResistance r1, final ElectricalResistance r2)
     {
@@ -147,10 +147,10 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Return the minimum value of more than two relative scalars.
-     * @param r1 ElectricalResistance; the first scalar
-     * @param r2 ElectricalResistance; the second scalar
-     * @param rn ElectricalResistance...; the other scalars
-     * @return ElectricalResistance; the minimum value of more than two relative scalars
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
      */
     public static ElectricalResistance min(final ElectricalResistance r1, final ElectricalResistance r2,
             final ElectricalResistance... rn)
@@ -170,8 +170,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
      * Returns a ElectricalResistance representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text String; the textual representation to parse into a ElectricalResistance
-     * @return ElectricalResistance; the Scalar representation of the value in its unit
+     * @param text the textual representation to parse into a ElectricalResistance
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
@@ -199,9 +199,9 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Returns a ElectricalResistance based on a value and the textual representation of the unit, which can be localized.
-     * @param value double; the value to use
-     * @param unitString String; the textual representation of the unit
-     * @return ElectricalResistance; the Scalar representation of the value in its unit
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
@@ -220,8 +220,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Calculate the division of ElectricalResistance and ElectricalResistance, which results in a Dimensionless scalar.
-     * @param v ElectricalResistance; scalar
-     * @return Dimensionless; scalar as a division of ElectricalResistance and ElectricalResistance
+     * @param v scalar
+     * @return scalar as a division of ElectricalResistance and ElectricalResistance
      */
     public final Dimensionless divide(final ElectricalResistance v)
     {
@@ -230,8 +230,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Calculate the multiplication of ElectricalResistance and ElectricalConductance, which results in a Dimensionless scalar.
-     * @param v ElectricalResistance; scalar
-     * @return Dimensionless; scalar as a multiplication of ElectricalResistance and ElectricalConductance
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalResistance and ElectricalConductance
      */
     public final Dimensionless times(final ElectricalConductance v)
     {
@@ -241,8 +241,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
     /**
      * Calculate the multiplication of ElectricalResistance and ElectricalCurrent, which results in a ElectricalPotential
      * scalar.
-     * @param v ElectricalResistance; scalar
-     * @return ElectricalPotential; scalar as a multiplication of ElectricalResistance and ElectricalCurrent
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalResistance and ElectricalCurrent
      */
     public final ElectricalPotential times(final ElectricalCurrent v)
     {
@@ -251,8 +251,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
 
     /**
      * Calculate the multiplication of ElectricalResistance and Duration, which results in a ElectricalInductance scalar.
-     * @param v ElectricalResistance; scalar
-     * @return ElectricalInductance; scalar as a multiplication of ElectricalResistance and Duration
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalResistance and Duration
      */
     public final ElectricalInductance times(final Duration v)
     {

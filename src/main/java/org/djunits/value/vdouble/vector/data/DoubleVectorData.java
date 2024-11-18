@@ -39,7 +39,7 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Construct a new DoubleVectorData object.
-     * @param storageType StorageType; the data type.
+     * @param storageType the data type.
      */
     DoubleVectorData(final StorageType storageType)
     {
@@ -52,10 +52,10 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param values double[]; the (SI) values to store
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
-     * @return DoubleVectorData; the DoubleVectorData with the right data type
+     * @param values the (SI) values to store
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
+     * @return the DoubleVectorData with the right data type
      * @throws NullPointerException when values are null, or storageType is null
      */
     public static DoubleVectorData instantiate(final double[] values, final Scale scale, final StorageType storageType)
@@ -89,10 +89,10 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param values List&lt;? extends Number&gt;; the values to store; can be either list of numbers, or a list of scalars
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
-     * @return DoubleVectorData; the DoubleVectorData with the right data type
+     * @param values the values to store; can be either list of numbers, or a list of scalars
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
+     * @return the DoubleVectorData with the right data type
      * @throws NullPointerException when list is null, or storageType is null
      */
     public static DoubleVectorData instantiate(final List<? extends Number> values, final Scale scale,
@@ -181,9 +181,9 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param values S[]; the values to store
-     * @param storageType StorageType; the data type to use
-     * @return DoubleVectorData; the DoubleVectorData with the right data type
+     * @param values the values to store
+     * @param storageType the data type to use
+     * @return the DoubleVectorData with the right data type
      * @throws NullPointerException when values is null, or storageType is null
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
@@ -243,11 +243,11 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Instantiate a DoubleVectorData with the right data type.
-     * @param valueMap Map&lt;Integer,? extends Number&gt;; the Number or Scalar values to store
-     * @param size int; the size of the vector to pad with 0 after last entry in map
-     * @param scale Scale; the scale of the unit to use for conversion to SI
-     * @param storageType StorageType; the data type to use
-     * @return DoubleVectorData; the DoubleVectorData with the right data type
+     * @param valueMap the Number or Scalar values to store
+     * @param size the size of the vector to pad with 0 after last entry in map
+     * @param scale the scale of the unit to use for conversion to SI
+     * @param storageType the data type to use
+     * @return the DoubleVectorData with the right data type
      * @throws IllegalArgumentException when length &lt; 0
      * @throws NullPointerException when values is null, or storageType is null
      * @throws IndexOutOfBoundsException when one of the keys is out of range with the given size
@@ -346,39 +346,39 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Retrieve the size of the vector.
-     * @return int; the size of the vector
+     * @return the size of the vector
      */
     public abstract int size();
 
     /**
      * Return the densely stored equivalent of this data.
-     * @return DoubleVectorDataDense; the dense transformation of this data
+     * @return the dense transformation of this data
      */
     public abstract DoubleVectorDataDense toDense();
 
     /**
      * Return the sparsely stored equivalent of this data.
-     * @return DoubleVectorDataSparse; the sparse transformation of this data
+     * @return the sparse transformation of this data
      */
     public abstract DoubleVectorDataSparse toSparse();
 
     /**
      * Retrieve the SI value of one element of this data.
-     * @param index int; the index to get the value for
-     * @return double; the value at the index
+     * @param index the index to get the value for
+     * @return the value at the index
      */
     public abstract double getSI(int index);
 
     /**
      * Sets a value at the index in the vector.
-     * @param index int; the index to set the value for
-     * @param valueSI double; the value at the index
+     * @param index the index to set the value for
+     * @param valueSI the value at the index
      */
     public abstract void setSI(int index, double valueSI);
 
     /**
      * Compute and return the sum of all values.
-     * @return double; the sum of the values of all cells
+     * @return the sum of the values of all cells
      */
     public final double zSum()
     {
@@ -387,13 +387,13 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Create and return a dense copy of the data.
-     * @return double[]; a safe copy of VectorSI
+     * @return a safe copy of VectorSI
      */
     public abstract double[] getDenseVectorSI();
 
     /**
      * Check the sizes of this data object and the other data object.
-     * @param other DoubleVectorData; the other data object
+     * @param other the other data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     protected void checkSizes(final DoubleVectorData other) throws ValueRuntimeException
@@ -410,16 +410,16 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Apply an operation to each cell.
-     * @param doubleFunction DoubleFunction; the operation to apply
-     * @return DoubleVectorData; this (modified) double vector data object
+     * @param doubleFunction the operation to apply
+     * @return this (modified) double vector data object
      */
     public abstract DoubleVectorData assign(DoubleFunction doubleFunction);
 
     /**
      * Apply a binary operation on a cell by cell basis.
-     * @param doubleFunction2 DoubleFunction2; the binary operation to apply
-     * @param right DoubleVectorData; the right operand for the binary operation
-     * @return DoubleVectorData; this (modified) double vector data object
+     * @param doubleFunction2 the binary operation to apply
+     * @param right the right operand for the binary operation
+     * @return this (modified) double vector data object
      * @throws ValueRuntimeException when the sizes of the vectors do not match
      */
     abstract DoubleVectorData assign(DoubleFunction2 doubleFunction2, DoubleVectorData right) throws ValueRuntimeException;
@@ -427,16 +427,16 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /**
      * Add two vectors on a cell-by-cell basis. If both vectors are sparse, a sparse vector is returned, otherwise a dense
      * vector is returned. Neither of the two objects is changed.
-     * @param right DoubleVectorData; the other data object to add
-     * @return DoubleVectorData; the sum of this data object and the other data object as a new data object
+     * @param right the other data object to add
+     * @return the sum of this data object and the other data object as a new data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract DoubleVectorData plus(DoubleVectorData right) throws ValueRuntimeException;
 
     /**
      * Add a vector to this vector on a cell-by-cell basis. The type of vector (sparse, dense) stays the same.
-     * @param right DoubleVectorData; the other data object to add
-     * @return DoubleVectorData; this modified double vector data object
+     * @param right the other data object to add
+     * @return this modified double vector data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final DoubleVectorData incrementBy(final DoubleVectorData right) throws ValueRuntimeException
@@ -454,16 +454,16 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /**
      * Subtract two vectors on a cell-by-cell basis. If both vectors are sparse, a sparse vector is returned, otherwise a dense
      * vector is returned. Neither of the two objects is changed.
-     * @param right DoubleVectorData; the other data object to subtract
-     * @return DoubleVectorData; the difference of this data object and the other data object as a new data object
+     * @param right the other data object to subtract
+     * @return the difference of this data object and the other data object as a new data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract DoubleVectorData minus(DoubleVectorData right) throws ValueRuntimeException;
 
     /**
      * Subtract a vector from this vector on a cell-by-cell basis. The type of vector (sparse, dense) stays the same.
-     * @param right DoubleVectorData; the other data object to subtract
-     * @return DoubleVectorData; this modified double vector data object
+     * @param right the other data object to subtract
+     * @return this modified double vector data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final DoubleVectorData decrementBy(final DoubleVectorData right) throws ValueRuntimeException
@@ -481,8 +481,8 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /**
      * Multiply two vectors on a cell-by-cell basis. If both vectors are dense, a dense vector is returned, otherwise a sparse
      * vector is returned.
-     * @param right DoubleVectorData; the other data object to multiply with
-     * @return DoubleVectorData; a new double vector data store holding the result of the multiplications
+     * @param right the other data object to multiply with
+     * @return a new double vector data store holding the result of the multiplications
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract DoubleVectorData times(DoubleVectorData right) throws ValueRuntimeException;
@@ -490,8 +490,8 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /**
      * Multiply a vector with the values of another vector on a cell-by-cell basis. The type of vector (sparse, dense) stays the
      * same.
-     * @param right DoubleVectorData; the other data object to multiply with
-     * @return DoubleVectordata; this modified double vector data store
+     * @param right the other data object to multiply with
+     * @return this modified double vector data store
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final DoubleVectorData multiplyBy(final DoubleVectorData right) throws ValueRuntimeException
@@ -510,8 +510,8 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /**
      * Divide two vectors on a cell-by-cell basis. If this vector is sparse and <code>right</code> is dense, a sparse vector is
      * returned, otherwise a dense vector is returned.
-     * @param right DoubleVectorData; the other data object to divide by
-     * @return DoubleVectorData; the ratios of the values of this data object and the other data object
+     * @param right the other data object to divide by
+     * @return the ratios of the values of this data object and the other data object
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public abstract DoubleVectorData divide(DoubleVectorData right) throws ValueRuntimeException;
@@ -519,8 +519,8 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
     /**
      * Divide the values of a vector by the values of another vector on a cell-by-cell basis. The type of vector (sparse, dense)
      * stays the same.
-     * @param right DoubleVectorData; the other data object to divide by
-     * @return DoubleVectorData; this modified double vector data store
+     * @param right the other data object to divide by
+     * @return this modified double vector data store
      * @throws ValueRuntimeException if vectors have different lengths
      */
     public final DoubleVectorData divideBy(final DoubleVectorData right) throws ValueRuntimeException
@@ -555,9 +555,9 @@ public abstract class DoubleVectorData extends Storage<DoubleVectorData> impleme
 
     /**
      * Compare contents of a dense and a sparse vector.
-     * @param dm DoubleVectorDataDense; the dense vector
-     * @param sm DoubleVectorDataSparse; the sparse vector
-     * @return boolean; true if the contents are equal
+     * @param dm the dense vector
+     * @param sm the sparse vector
+     * @return true if the contents are equal
      */
     protected boolean compareDenseVectorWithSparseVector(final DoubleVectorDataDense dm, final DoubleVectorDataSparse sm)
     {

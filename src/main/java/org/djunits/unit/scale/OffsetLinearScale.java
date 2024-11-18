@@ -49,9 +49,9 @@ public class OffsetLinearScale extends LinearScale
 
     /**
      * Construct a Scale for linear transformations with an offset, e.g. for Temperature.
-     * @param conversionFactorToStandardUnit double; the conversion factor by which this number has to be multiplied to convert
+     * @param conversionFactorToStandardUnit the conversion factor by which this number has to be multiplied to convert
      *            it to the standard (e.g., SI) unit.
-     * @param offsetToStandardUnit the offset that has to be taken into account for conversions; when converting to a standard
+     * @param offsetToStandardUnit when converting to a standard
      *            unit, the offset is applied first.
      */
     public OffsetLinearScale(final double conversionFactorToStandardUnit, final double offsetToStandardUnit)
@@ -74,7 +74,7 @@ public class OffsetLinearScale extends LinearScale
 
     /**
      * Retrieve the offset from the standard unit.
-     * @return double; the offset from the standard unit
+     * @return the offset from the standard unit
      */
     public final double getOffsetToStandardUnit()
     {
