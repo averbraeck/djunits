@@ -8,7 +8,7 @@ import org.djunits.unit.Unit;
  * associated Relative type, indicated by the interface AbsWithRel. Values are Absolute when the sum of two values makes no
  * sense, but the difference does (but results in a Relative).
  * <p>
- * Copyright (c) 2015-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2015-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>

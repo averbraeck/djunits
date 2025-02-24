@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * TimeUnit.EPOCH values with real calendar values with a precision of several minutes.
  * </p>
  * <p>
- * Copyright (c) 2013-2024 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
+ * Copyright (c) 2013-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. <br>
  * All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
