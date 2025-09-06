@@ -308,7 +308,7 @@ public abstract class DoubleMatrix<U extends Unit<U>, S extends DoubleScalar<U, 
     public S get(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
-        return DoubleScalar.instantiateSI(getSI(row, column), getDisplayUnit());
+        return instantiateScalarSI(getSI(row, column), getDisplayUnit());
     }
 
     @Override

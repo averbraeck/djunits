@@ -308,7 +308,7 @@ public abstract class FloatMatrix<U extends Unit<U>, S extends FloatScalar<U, S>
     public S get(final int row, final int column) throws IndexOutOfBoundsException
     {
         checkIndex(row, column);
-        return FloatScalar.instantiateSI(getSI(row, column), getDisplayUnit());
+        return instantiateScalarSI(getSI(row, column), getDisplayUnit());
     }
 
     @Override

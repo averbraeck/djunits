@@ -336,22 +336,6 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     /**
-     * Instantiate the DoubleScalar with an SI value and add the displayUnit later. Rigid check on types by the compiler.
-     * @param valueSI the SIvalue
-     * @param displayUnit the unit in which the value will be displayed
-     * @return an instantiated DoubleScalar with the SI value and the display unit
-     * @param <U> the unit
-     * @param <S> the return type
-     */
-    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiateSI(final double valueSI,
-            final U displayUnit)
-    {
-        S result = instantiateAnonymous(valueSI, displayUnit.getStandardUnit());
-        result.setDisplayUnit(displayUnit);
-        return result;
-    }
-
-    /**
      * Instantiate the DoubleScalar based on its unit. Loose check for types on the compiler. This allows the unit to be
      * specified as a Unit&lt;?&gt; type.<br>
      * <b>Note</b> that it is possible to make mistakes with anonymous units.

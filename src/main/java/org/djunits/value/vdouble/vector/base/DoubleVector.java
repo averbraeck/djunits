@@ -154,7 +154,7 @@ public abstract class DoubleVector<U extends Unit<U>, S extends DoubleScalar<U, 
     @Override
     public S get(final int index) throws IndexOutOfBoundsException
     {
-        return DoubleScalar.instantiateSI(getSI(index), getDisplayUnit());
+        return instantiateScalarSI(getSI(index), getDisplayUnit());
     }
 
     /**

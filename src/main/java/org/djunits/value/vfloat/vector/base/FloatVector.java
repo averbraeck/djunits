@@ -152,7 +152,7 @@ public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>
     @Override
     public S get(final int index) throws IndexOutOfBoundsException
     {
-        return FloatScalar.instantiateSI(getSI(index), getDisplayUnit());
+        return instantiateScalarSI(getSI(index), getDisplayUnit());
     }
 
     /**
