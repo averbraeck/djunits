@@ -225,7 +225,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
      */
     public String toStringSIPrefixed()
     {
-        return toStringSIPrefixed(-24, 26);
+        return toStringSIPrefixed(-30, 32);
     }
 
     /**
@@ -246,7 +246,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         // width makes this hard; This feels like an expensive way.
         String check = String.format(this.si >= 0 ? "%10.8E" : "%10.7E", this.si);
         int exponent = Integer.parseInt(check.substring(check.indexOf("E") + 1));
-        if (exponent < -24 || exponent < smallestPower || exponent > 24 + 2 || exponent > biggestPower)
+        if (exponent < -30 || exponent < smallestPower || exponent > 30 + 2 || exponent > biggestPower)
         {
             // Out of SI prefix range; do not scale.
             return String.format(this.si >= 0 ? "%10.4E" : "%10.3E", this.si) + " "
