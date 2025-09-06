@@ -1,19 +1,11 @@
 package org.djunits.value.vdouble.scalar.base;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIPrefixes;
-import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.Absolute;
 import org.djunits.value.base.Scalar;
 import org.djunits.value.formatter.Format;
 import org.djunits.value.util.ValueUtil;
-import org.djunits.value.vdouble.scalar.SIScalar;
 
 /**
  * The most basic abstract class for the DoubleScalar.
@@ -322,71 +314,6 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         if (Double.doubleToLongBits(this.getSI()) != Double.doubleToLongBits(other.getSI()))
             return false;
         return true;
-    }
-
-    /**********************************************************************************/
-    /********************************* STATIC METHODS *********************************/
-    /**********************************************************************************/
-
-    /** The cache to make the lookup of the constructor for a Scalar belonging to a unit faster. */
-    private static final Map<Unit<?>, Constructor<? extends DoubleScalar<?, ?>>> CACHE = new HashMap<>();
-
-    /**
-     * Instantiate the DoubleScalar based on its unit. Rigid check on types by the compiler.
-     * @param value the value
-     * @param unit the unit in which the value is expressed
-     * @return an instantiated DoubleScalar with the value expressed in the unit
-     * @param <U> the unit
-     * @param <S> the return type
-     */
-    public static <U extends Unit<U>, S extends DoubleScalar<U, S>> S instantiate(final double value, final U unit)
-    {
-        return instantiateAnonymous(value, unit);
-    }
-
-    /**
-     * Instantiate the DoubleScalar based on its unit. Loose check for types on the compiler. This allows the unit to be
-     * specified as a Unit&lt;?&gt; type.<br>
-     * <b>Note</b> that it is possible to make mistakes with anonymous units.
-     * @param value the value
-     * @param unit the unit in which the value is expressed
-     * @return an instantiated DoubleScalar with the value expressed in the unit
-     * @param <S> the return type
-     */
-    @SuppressWarnings("unchecked")
-    public static <S extends DoubleScalar<?, S>> S instantiateAnonymous(final double value, final Unit<?> unit)
-    {
-        try
-        {
-            Constructor<? extends DoubleScalar<?, ?>> scalarConstructor = CACHE.get(unit);
-            if (scalarConstructor == null)
-            {
-                if (!unit.getClass().getSimpleName().endsWith("Unit"))
-                {
-                    throw new ClassNotFoundException("Unit " + unit.getClass().getSimpleName()
-                            + " name does noet end with 'Unit'. Cannot find corresponding scalar");
-                }
-                Class<? extends DoubleScalar<?, ?>> scalarClass;
-                if (unit instanceof SIUnit)
-                {
-                    scalarClass = SIScalar.class;
-                }
-                else
-                {
-                    scalarClass = (Class<DoubleScalar<?, ?>>) Class
-                            .forName("org.djunits.value.vdouble.scalar." + unit.getClass().getSimpleName().replace("Unit", ""));
-                }
-                scalarConstructor = scalarClass.getDeclaredConstructor(double.class, unit.getClass());
-                CACHE.put(unit, scalarConstructor);
-            }
-            return (S) scalarConstructor.newInstance(value, unit);
-        }
-        catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-                | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception)
-        {
-            throw new UnitRuntimeException(
-                    "Cannot instantiate DoubleScalar of unit " + unit.toString() + ". Reason: " + exception.getMessage());
-        }
     }
 
 }
