@@ -389,30 +389,4 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
         }
     }
 
-    /**
-     * Multiply two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left the left operand
-     * @param right the right operand
-     * @return the product of the two values
-     */
-    public static FloatSIScalar multiply(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
-    {
-        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
-                .plus(right.getDisplayUnit().getQuantity().getSiDimensions()));
-        return new FloatSIScalar(left.getSI() * right.getSI(), targetUnit);
-    }
-
-    /**
-     * Divide two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left the left operand
-     * @param right the right operand
-     * @return the ratio of the two values
-     */
-    public static FloatSIScalar divide(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
-    {
-        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
-                .minus(right.getDisplayUnit().getQuantity().getSiDimensions()));
-        return new FloatSIScalar(left.getSI() / right.getSI(), targetUnit);
-    }
-
 }

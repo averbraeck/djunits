@@ -580,7 +580,7 @@ public class FloatScalarTest
         float rightValue = 234.5f;
         FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
-        FloatSIScalar result = FloatScalar.multiply(left, right);
+        FloatSIScalar result = FloatSIScalar.multiply(left, right);
         assertEquals(left.getSI() * right.getSI(), result.getSI(), 0.001,
                 "value of element should be SI multiply of contributing elements");
     }
@@ -595,7 +595,7 @@ public class FloatScalarTest
         float rightValue = 234.5f;
         FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
         FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
-        FloatSIScalar result = FloatScalar.divide(left, right);
+        FloatSIScalar result = FloatSIScalar.divide(left, right);
         assertEquals(left.getSI() / right.getSI(), result.getSI(), 0.001,
                 "value of element should be SI divide of contributing elements");
     }

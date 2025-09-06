@@ -2,6 +2,7 @@ package org.djunits.value.vfloat.scalar.base;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.Relative;
+import org.djunits.value.vfloat.scalar.FloatDimensionless;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 
 /**
@@ -80,14 +81,17 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
      */
     public FloatSIScalar times(final FloatScalarRel<?, ?> otherScalar)
     {
-        return FloatScalar.multiply(this, otherScalar);
+        return FloatSIScalar.multiply(this, otherScalar);
     }
 
     /**
      * Create the reciprocal of this scalar with the correct dimensions.
      * @return a new scalar instance with correct SI dimensions
      */
-    public abstract FloatScalarRel<?, ?> reciprocal();
+    public FloatScalarRel<?, ?> reciprocal()
+    {
+        return FloatSIScalar.divide(FloatDimensionless.ONE, this);
+    }
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
@@ -96,7 +100,7 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
      */
     public FloatSIScalar divide(final FloatScalarRel<?, ?> otherScalar)
     {
-        return FloatScalar.divide(this, otherScalar);
+        return FloatSIScalar.divide(this, otherScalar);
     }
 
     /**********************************************************************************/

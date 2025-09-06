@@ -185,7 +185,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     {
         return this.getSI();
     }
-
+    
     /**********************************************************************************/
     /********************************* GENERIC METHODS ********************************/
     /**********************************************************************************/
@@ -387,32 +387,6 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
             throw new UnitRuntimeException(
                     "Cannot instantiate DoubleScalar of unit " + unit.toString() + ". Reason: " + exception.getMessage());
         }
-    }
-
-    /**
-     * Multiply two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left the left operand
-     * @param right the right operand
-     * @return the product of the two values
-     */
-    public static SIScalar multiply(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
-    {
-        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
-                .plus(right.getDisplayUnit().getQuantity().getSiDimensions()));
-        return new SIScalar(left.getSI() * right.getSI(), targetUnit);
-    }
-
-    /**
-     * Divide two values; the result is a new instance with a different (existing or generated) SI unit.
-     * @param left the left operand
-     * @param right the right operand
-     * @return the ratio of the two values
-     */
-    public static SIScalar divide(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
-    {
-        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
-                .minus(right.getDisplayUnit().getQuantity().getSiDimensions()));
-        return new SIScalar(left.getSI() / right.getSI(), targetUnit);
     }
 
 }

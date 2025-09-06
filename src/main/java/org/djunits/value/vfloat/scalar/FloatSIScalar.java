@@ -64,7 +64,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
 public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 {
     /** */
@@ -181,10 +181,36 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
         return minr;
     }
 
+    /**
+     * Multiply two values; the result is a new instance with a different (existing or generated) SI unit.
+     * @param left the left operand
+     * @param right the right operand
+     * @return the product of the two values
+     */
+    public static FloatSIScalar multiply(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
+    {
+        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
+                .plus(right.getDisplayUnit().getQuantity().getSiDimensions()));
+        return new FloatSIScalar(left.getSI() * right.getSI(), targetUnit);
+    }
+
+    /**
+     * Divide two values; the result is a new instance with a different (existing or generated) SI unit.
+     * @param left the left operand
+     * @param right the right operand
+     * @return the ratio of the two values
+     */
+    public static FloatSIScalar divide(final FloatScalarRel<?, ?> left, final FloatScalarRel<?, ?> right)
+    {
+        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
+                .minus(right.getDisplayUnit().getQuantity().getSiDimensions()));
+        return new FloatSIScalar(left.getSI() / right.getSI(), targetUnit);
+    }
+
     @Override
     public FloatSIScalar reciprocal()
     {
-        return FloatScalar.divide(FloatDimensionless.ONE, this);
+        return FloatSIScalar.divide(FloatDimensionless.ONE, this);
     }
 
     /**
@@ -206,8 +232,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " for FloatSIScalar not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit for FloatSIScalar not found", unitString);
             return new FloatSIScalar(f, unit);
         }
         catch (Exception exception)

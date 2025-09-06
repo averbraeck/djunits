@@ -2,6 +2,7 @@ package org.djunits.value.vdouble.scalar.base;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.Relative;
+import org.djunits.value.vdouble.scalar.Dimensionless;
 import org.djunits.value.vdouble.scalar.SIScalar;
 
 /**
@@ -80,14 +81,8 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
      */
     public SIScalar times(final DoubleScalarRel<?, ?> otherScalar)
     {
-        return DoubleScalar.multiply(this, otherScalar);
+        return SIScalar.multiply(this, otherScalar);
     }
-
-    /**
-     * Create the reciprocal of this scalar with the correct dimensions.
-     * @return a new scalar instance with correct SI dimensions
-     */
-    public abstract DoubleScalarRel<?, ?> reciprocal();
 
     /**
      * Divide this scalar by another scalar and create a new scalar.
@@ -96,7 +91,16 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
      */
     public SIScalar divide(final DoubleScalarRel<?, ?> otherScalar)
     {
-        return DoubleScalar.divide(this, otherScalar);
+        return SIScalar.divide(this, otherScalar);
+    }
+
+    /**
+     * Create the reciprocal of this scalar with the correct dimensions.
+     * @return a new scalar instance with correct SI dimensions
+     */
+    public DoubleScalarRel<?, ?> reciprocal()
+    {
+        return SIScalar.divide(Dimensionless.ONE, this);
     }
 
     /**********************************************************************************/

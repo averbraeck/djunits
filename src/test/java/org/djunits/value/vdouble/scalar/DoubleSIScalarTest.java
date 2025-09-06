@@ -42,7 +42,7 @@ public class DoubleSIScalarTest
     {
         Duration d = Duration.ofSI(10.0);
         Length l = Length.valueOf("50.0 m");
-        SIScalar pace = DoubleScalar.divide(d, l);
+        SIScalar pace = SIScalar.divide(d, l);
         // system.out.println("pace = " + pace);
         assertEquals("s/m", pace.getDisplayUnit().toString(),
                 "pace has as unit " + pace.getDisplayUnit().toString() + " instead of s/m");
@@ -123,7 +123,7 @@ public class DoubleSIScalarTest
                 {
                     DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
                     DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
-                    SIScalar scalar12a = DoubleScalar.multiply(scalar1, scalar2);
+                    SIScalar scalar12a = SIScalar.multiply(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.times(scalar2);
                     SIScalar scalar12c = scalar2.times(scalar1);
                     assertEquals(scalar12a.si, scalar12b.si, scalar12a.si / 10000.0);
@@ -164,7 +164,7 @@ public class DoubleSIScalarTest
                 {
                     DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
                     DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
-                    SIScalar scalar12a = DoubleScalar.divide(scalar1, scalar2);
+                    SIScalar scalar12a = SIScalar.divide(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.divide(scalar2);
                     SIScalar scalar12c = scalar2.divide(scalar1);
                     assertEquals(scalar12a.si, scalar12b.si, scalar12a.si / 10000.0);

@@ -15,9 +15,11 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;
 import org.djunits.util.ClassUtil;
+import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarAbs;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
+import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
@@ -291,7 +293,7 @@ public class ScalarOperationsTest
                     double resultSI = ((DoubleScalarRel<?, ?>) result).getSI();
                     assertEquals(expectedValue, resultSI, 0.01, "Result of operation");
                 }
-                DoubleScalarRel<?, ?> result = multiply ? DoubleScalar.multiply(left, right) : DoubleScalar.divide(left, right);
+                DoubleScalarRel<?, ?> result = multiply ? SIScalar.multiply(left, right) : SIScalar.divide(left, right);
                 // System.out.println("result is " + result);
                 String resultCoefficients = result.getDisplayUnit().getQuantity().getSiDimensions().toString();
                 assertEquals(resultCoefficients, returnSI, "SI coefficients of result of " + left.getClass().getSimpleName()
@@ -322,7 +324,8 @@ public class ScalarOperationsTest
                     float resultSI = ((FloatScalarRel<?, ?>) result).getSI();
                     assertEquals(expectedValue, resultSI, 0.01, "Result of operation");
                 }
-                FloatScalarRel<?, ?> result = multiply ? FloatScalar.multiply(left, right) : FloatScalar.divide(left, right);
+                FloatScalarRel<?, ?> result =
+                        multiply ? FloatSIScalar.multiply(left, right) : FloatSIScalar.divide(left, right);
                 // System.out.println("result is " + result);
                 String resultCoefficients = result.getDisplayUnit().getQuantity().getSiDimensions().toString();
                 assertEquals(resultCoefficients, returnSI, "SI coefficients of result should match expected SI coefficients");
@@ -804,8 +807,7 @@ public class ScalarOperationsTest
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (DoubleScalarRel<?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
-            Method interpolate =
-                    ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, double.class);
+            Method interpolate = ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, double.class);
             DoubleScalar<?, ?> result;
             for (double ratio : new double[] {0.0, 0.1, 0.3, 1.0})
             {

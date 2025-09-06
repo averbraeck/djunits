@@ -1,8 +1,5 @@
 package org.djunits.userdefined;
 
-import org.djunits.value.vfloat.scalar.FloatDimensionless;
-import org.djunits.value.vfloat.scalar.FloatSIScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 
 /**
@@ -49,11 +46,5 @@ public class FloatJerk extends FloatScalarRel<JerkUnit, FloatJerk>
     public static FloatJerk ofSI(final float valueSI)
     {
         return new FloatJerk(valueSI, JerkUnit.SI);
-    }
-
-    @Override
-    public FloatSIScalar reciprocal()
-    {
-        return FloatScalar.divide(FloatDimensionless.ONE, this);
     }
 }

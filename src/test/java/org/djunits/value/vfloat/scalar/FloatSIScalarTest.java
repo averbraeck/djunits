@@ -42,7 +42,7 @@ public class FloatSIScalarTest
     {
         FloatDuration d = FloatDuration.ofSI(10.0f);
         FloatLength l = FloatLength.valueOf("50.0 m");
-        FloatSIScalar pace = FloatScalar.divide(d, l);
+        FloatSIScalar pace = FloatSIScalar.divide(d, l);
         // system.out.println("pace = " + pace);
         assertEquals("s/m", pace.getDisplayUnit().toString(),
                 "pace has as unit " + pace.getDisplayUnit().toString() + " instead of s/m");
@@ -133,7 +133,7 @@ public class FloatSIScalarTest
                     }
                     FloatScalarRel<?, ?> scalar1 = (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit1);
                     FloatScalarRel<?, ?> scalar2 = (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(0.5f, unit2);
-                    FloatSIScalar scalar12a = FloatScalar.multiply(scalar1, scalar2);
+                    FloatSIScalar scalar12a = FloatSIScalar.multiply(scalar1, scalar2);
                     FloatSIScalar scalar12b = scalar1.times(scalar2);
                     FloatSIScalar scalar12c = scalar2.times(scalar1);
                     assertEquals(scalar12a.si, scalar12b.si, scalar12a.si / 10000.0);
@@ -184,7 +184,7 @@ public class FloatSIScalarTest
                     }
                     FloatScalarRel<?, ?> scalar1 = (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(12.0f, unit1);
                     FloatScalarRel<?, ?> scalar2 = (FloatScalarRel<?, ?>) FloatScalar.instantiateAnonymous(0.5f, unit2);
-                    FloatSIScalar scalar12a = FloatScalar.divide(scalar1, scalar2);
+                    FloatSIScalar scalar12a = FloatSIScalar.divide(scalar1, scalar2);
                     FloatSIScalar scalar12b = scalar1.divide(scalar2);
                     FloatSIScalar scalar12c = scalar2.divide(scalar1);
                     assertEquals(scalar12a.si, scalar12b.si, scalar12a.si / 10000.0);

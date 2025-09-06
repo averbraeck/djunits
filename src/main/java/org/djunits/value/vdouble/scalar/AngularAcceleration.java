@@ -6,7 +6,6 @@ import org.djunits.unit.AngularAccelerationUnit;
 import org.djunits.unit.AngularVelocityUnit;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.FrequencyUnit;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -22,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
 public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit, AngularAcceleration>
 {
     /** */
@@ -261,7 +260,45 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
     @Override
     public SIScalar reciprocal()
     {
-        return DoubleScalar.divide(Dimensionless.ONE, this);
+        return SIScalar.divide(Dimensionless.ONE, this);
+    }
+
+    /**
+     * Multiply two scalars that result in a scalar of type AngularAcceleration.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the multiplication of both scalars as an instance of AngularAcceleration
+     */
+    public static AngularAcceleration multiply(final DoubleScalarRel<?, ?> scalar1, final DoubleScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(
+                !scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                        .plus(scalar2.getDisplayUnit().getQuantity().getSiDimensions())
+                        .equals(AngularAccelerationUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Multiplying %s by %s does not result in instance of type AngularAcceleration",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new AngularAcceleration(scalar1.si * scalar2.si, AngularAccelerationUnit.SI);
+    }
+
+    /**
+     * Divide two scalars that result in a scalar of type AngularAcceleration.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the division of scalar1 by scalar2 as an instance of AngularAcceleration
+     */
+    public static AngularAcceleration divide(final DoubleScalarRel<?, ?> scalar1, final DoubleScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(
+                !scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                        .minus(scalar2.getDisplayUnit().getQuantity().getSiDimensions())
+                        .equals(AngularAccelerationUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Dividing %s by %s does not result in an instance of type AngularAcceleration",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new AngularAcceleration(scalar1.si / scalar2.si, AngularAccelerationUnit.SI);
     }
 
 }

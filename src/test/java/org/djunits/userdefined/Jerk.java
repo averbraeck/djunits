@@ -1,8 +1,5 @@
 package org.djunits.userdefined;
 
-import org.djunits.value.vdouble.scalar.Dimensionless;
-import org.djunits.value.vdouble.scalar.SIScalar;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 
 /**
@@ -49,12 +46,6 @@ public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
     public static Jerk ofSI(final double valueSI)
     {
         return new Jerk(valueSI, JerkUnit.SI);
-    }
-
-    @Override
-    public SIScalar reciprocal()
-    {
-        return DoubleScalar.divide(Dimensionless.ONE, this);
     }
 
 }

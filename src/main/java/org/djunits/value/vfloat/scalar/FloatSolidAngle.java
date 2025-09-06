@@ -5,7 +5,6 @@ import java.util.Locale;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.LuminousFluxUnit;
 import org.djunits.unit.SolidAngleUnit;
-import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -21,7 +20,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
 public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAngle>
 {
     /** */
@@ -241,7 +240,41 @@ public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAn
     @Override
     public FloatSIScalar reciprocal()
     {
-        return FloatScalar.divide(FloatDimensionless.ONE, this);
+        return FloatSIScalar.divide(FloatDimensionless.ONE, this);
+    }
+
+    /**
+     * Multiply two scalars that result in a scalar of type FloatSolidAngle.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the multiplication of both scalars as an instance of FloatSolidAngle
+     */
+    public static FloatSolidAngle multiply(final FloatScalarRel<?, ?> scalar1, final FloatScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(!scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                .plus(scalar2.getDisplayUnit().getQuantity().getSiDimensions()).equals(SolidAngleUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Multiplying %s by %s does not result in instance of type FloatSolidAngle",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new FloatSolidAngle(scalar1.si * scalar2.si, SolidAngleUnit.SI);
+    }
+
+    /**
+     * Divide two scalars that result in a scalar of type FloatSolidAngle.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the division of scalar1 by scalar2 as an instance of FloatSolidAngle
+     */
+    public static FloatSolidAngle divide(final FloatScalarRel<?, ?> scalar1, final FloatScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(!scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                .minus(scalar2.getDisplayUnit().getQuantity().getSiDimensions()).equals(SolidAngleUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Dividing %s by %s does not result in an instance of type FloatSolidAngle",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new FloatSolidAngle(scalar1.si / scalar2.si, SolidAngleUnit.SI);
     }
 
 }

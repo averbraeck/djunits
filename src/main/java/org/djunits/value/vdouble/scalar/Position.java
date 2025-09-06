@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
 public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit, Length>
 {
     /** */

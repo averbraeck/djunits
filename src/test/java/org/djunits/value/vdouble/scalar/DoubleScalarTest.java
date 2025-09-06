@@ -652,7 +652,7 @@ public class DoubleScalarTest
         double rightValue = 234.5;
         Length left = new Length(leftValue, LengthUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
-        SIScalar result = DoubleScalar.multiply(left, right);
+        SIScalar result = SIScalar.multiply(left, right);
         assertEquals(left.getSI() * right.getSI(), result.getSI(), 0.001,
                 "value of element should be SI multiply of contributing elements");
     }
@@ -667,7 +667,7 @@ public class DoubleScalarTest
         double rightValue = 234.5;
         Length left = new Length(leftValue, LengthUnit.MILE);
         Length right = new Length(rightValue, LengthUnit.MILE);
-        SIScalar result = DoubleScalar.divide(left, right);
+        SIScalar result = SIScalar.divide(left, right);
         assertEquals(left.getSI() / right.getSI(), result.getSI(), 0.001,
                 "value of element should be SI divide of contributing elements");
     }

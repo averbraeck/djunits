@@ -64,7 +64,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
 public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
 {
     /** */
@@ -181,10 +181,36 @@ public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
         return minr;
     }
 
+    /**
+     * Multiply two values; the result is a new instance with a different (existing or generated) SI unit.
+     * @param left the left operand
+     * @param right the right operand
+     * @return the product of the two values
+     */
+    public static SIScalar multiply(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
+    {
+        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
+                .plus(right.getDisplayUnit().getQuantity().getSiDimensions()));
+        return new SIScalar(left.getSI() * right.getSI(), targetUnit);
+    }
+
+    /**
+     * Divide two values; the result is a new instance with a different (existing or generated) SI unit.
+     * @param left the left operand
+     * @param right the right operand
+     * @return the ratio of the two values
+     */
+    public static SIScalar divide(final DoubleScalarRel<?, ?> left, final DoubleScalarRel<?, ?> right)
+    {
+        SIUnit targetUnit = Unit.lookupOrCreateUnitWithSIDimensions(left.getDisplayUnit().getQuantity().getSiDimensions()
+                .minus(right.getDisplayUnit().getQuantity().getSiDimensions()));
+        return new SIScalar(left.getSI() / right.getSI(), targetUnit);
+    }
+
     @Override
     public SIScalar reciprocal()
     {
-        return DoubleScalar.divide(Dimensionless.ONE, this);
+        return divide(Dimensionless.ONE, this);
     }
 
     /**
@@ -206,8 +232,7 @@ public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             SIUnit unit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(unitString));
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " for SIScalar not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s for SIScalar not found", unitString);
             return new SIScalar(d, unit);
         }
         catch (Exception exception)
