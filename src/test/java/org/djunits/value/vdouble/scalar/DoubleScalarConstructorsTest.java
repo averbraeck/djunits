@@ -17,7 +17,7 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vdouble.scalar.base.DoubleScalar;
-import org.djunits.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -76,7 +76,7 @@ public class DoubleScalarConstructorsTest implements UNITS
     {
         try
         {
-            DoubleScalar.instantiateAnonymous(123.456, BadUnitClass.SI);
+            SIScalar.instantiateAnonymous(123.456, BadUnitClass.SI);
         }
         catch (UnitRuntimeException ure)
         {
@@ -85,7 +85,7 @@ public class DoubleScalarConstructorsTest implements UNITS
 
         try
         {
-            FloatScalar.instantiateAnonymous(123.456f, BadUnitClass.SI);
+            FloatSIScalar.instantiateAnonymous(123.456f, BadUnitClass.SI);
         }
         catch (UnitRuntimeException ure)
         {

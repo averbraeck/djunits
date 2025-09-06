@@ -21,7 +21,6 @@ import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.unit.util.UnitRuntimeException;
 import org.djunits.value.CLASSNAMES;
-import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.junit.jupiter.api.Test;
 
@@ -121,8 +120,8 @@ public class DoubleSIScalarTest
                 SIDimensions siDim2 = quantity2.getSiDimensions();
                 for (Unit<?> unit2 : quantity2.getUnitsById().values())
                 {
-                    DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
-                    DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
+                    DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) SIScalar.instantiateAnonymous(12.0, unit1);
+                    DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) SIScalar.instantiateAnonymous(0.5, unit2);
                     SIScalar scalar12a = SIScalar.multiply(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.times(scalar2);
                     SIScalar scalar12c = scalar2.times(scalar1);
@@ -162,8 +161,8 @@ public class DoubleSIScalarTest
                 SIDimensions siDim2 = quantity2.getSiDimensions();
                 for (Unit<?> unit2 : quantity2.getUnitsById().values())
                 {
-                    DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit1);
-                    DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(0.5, unit2);
+                    DoubleScalarRel<?, ?> scalar1 = (DoubleScalarRel<?, ?>) SIScalar.instantiateAnonymous(12.0, unit1);
+                    DoubleScalarRel<?, ?> scalar2 = (DoubleScalarRel<?, ?>) SIScalar.instantiateAnonymous(0.5, unit2);
                     SIScalar scalar12a = SIScalar.divide(scalar1, scalar2);
                     SIScalar scalar12b = scalar1.divide(scalar2);
                     SIScalar scalar12c = scalar2.divide(scalar1);
@@ -204,7 +203,7 @@ public class DoubleSIScalarTest
             Quantity<?> quantity = Quantities.INSTANCE.getQuantity(type + "Unit");
             for (Unit<?> unit : quantity.getUnitsById().values())
             {
-                DoubleScalarRel<?, ?> scalar = (DoubleScalarRel<?, ?>) DoubleScalar.instantiateAnonymous(12.0, unit);
+                DoubleScalarRel<?, ?> scalar = (DoubleScalarRel<?, ?>) SIScalar.instantiateAnonymous(12.0, unit);
                 SIScalar mult = scalar.times(dimless);
                 Method asMethod = SIScalar.class.getDeclaredMethod("as" + type);
                 DoubleScalarRel<?, ?> asScalar = (DoubleScalarRel<?, ?>) asMethod.invoke(mult);
