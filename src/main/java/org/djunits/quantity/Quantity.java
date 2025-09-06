@@ -108,9 +108,9 @@ public class Quantity<U extends Unit<U>> implements Serializable
     }
 
     /**
-     * Register the unit in the map. If the unit supports SI prefixes from yocto to yotta, 20 additional abbreviations are
+     * Register the unit in the map. If the unit supports SI prefixes from quetta to quecto, 24 additional abbreviations are
      * registered. When there is both a unit with an "SI prefix" and a separately registered unit, the most specific
-     * specification will be registered in the map. As an example, when the LengthUnit "METER" is registered, all 20 units such
+     * specification will be registered in the map. As an example, when the LengthUnit "METER" is registered, all 24 units such
      * as the millimeter and the kilometer are registered as well. When earlier or later the "KILOMETER" is created as a
      * separate unit, the "km" lookup will result in the "KILOMETER" registration rather than in the "METER" registration with a
      * factor of 1000.
