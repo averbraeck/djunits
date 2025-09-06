@@ -291,7 +291,7 @@ public class ForceVector extends DoubleVectorRel<ForceUnit, Force, ForceVector>
     @Override
     public Force instantiateScalarSI(final double valueSI, final ForceUnit displayUnit)
     {
-        Force result = Force.instantiateSI(valueSI);
+        Force result = Force.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

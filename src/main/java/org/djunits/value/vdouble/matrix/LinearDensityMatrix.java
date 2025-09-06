@@ -222,7 +222,7 @@ public class LinearDensityMatrix
     @Override
     public LinearDensity instantiateScalarSI(final double valueSI, final LinearDensityUnit displayUnit)
     {
-        LinearDensity result = LinearDensity.instantiateSI(valueSI);
+        LinearDensity result = LinearDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

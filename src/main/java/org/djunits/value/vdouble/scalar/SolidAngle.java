@@ -79,7 +79,7 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final SolidAngle instantiateSI(final double value)
+    public static final SolidAngle ofSI(final double value)
     {
         return new SolidAngle(value, SolidAngleUnit.SI);
     }

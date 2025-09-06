@@ -291,7 +291,7 @@ public class EnergyVector extends DoubleVectorRel<EnergyUnit, Energy, EnergyVect
     @Override
     public Energy instantiateScalarSI(final double valueSI, final EnergyUnit displayUnit)
     {
-        Energy result = Energy.instantiateSI(valueSI);
+        Energy result = Energy.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

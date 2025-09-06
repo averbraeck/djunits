@@ -75,7 +75,7 @@ public class FloatDirection extends FloatScalarAbs<DirectionUnit, FloatDirection
      * @param value the float value in BASE units
      * @return the new scalar with the BASE value
      */
-    public static final FloatDirection instantiateSI(final float value)
+    public static final FloatDirection ofSI(final float value)
     {
         return new FloatDirection(value, DirectionUnit.DEFAULT);
     }

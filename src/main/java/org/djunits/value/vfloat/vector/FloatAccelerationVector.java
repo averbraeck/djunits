@@ -298,7 +298,7 @@ public class FloatAccelerationVector extends FloatVectorRel<AccelerationUnit, Fl
     @Override
     public FloatAcceleration instantiateScalarSI(final float valueSI, final AccelerationUnit displayUnit)
     {
-        FloatAcceleration result = FloatAcceleration.instantiateSI(valueSI);
+        FloatAcceleration result = FloatAcceleration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

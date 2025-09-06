@@ -66,7 +66,7 @@ public class AbsoluteTemperature
      * @param value value in SI units
      * @return the new scalar with the SI value
      */
-    public static final AbsoluteTemperature instantiateSI(final double value)
+    public static final AbsoluteTemperature ofSI(final double value)
     {
         return new AbsoluteTemperature(value, AbsoluteTemperatureUnit.DEFAULT);
     }

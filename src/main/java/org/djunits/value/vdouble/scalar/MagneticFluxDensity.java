@@ -83,7 +83,7 @@ public class MagneticFluxDensity extends DoubleScalarRel<MagneticFluxDensityUnit
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final MagneticFluxDensity instantiateSI(final double value)
+    public static final MagneticFluxDensity ofSI(final double value)
     {
         return new MagneticFluxDensity(value, MagneticFluxDensityUnit.SI);
     }

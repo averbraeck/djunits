@@ -293,7 +293,7 @@ public class PositionVector extends DoubleVectorAbs<PositionUnit, Position, Posi
     @Override
     public Position instantiateScalarSI(final double valueSI, final PositionUnit displayUnit)
     {
-        Position result = Position.instantiateSI(valueSI);
+        Position result = Position.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -307,7 +307,7 @@ public class PositionVector extends DoubleVectorAbs<PositionUnit, Position, Posi
     @Override
     public Length instantiateScalarRelSI(final double valueSI, final LengthUnit displayUnit)
     {
-        Length result = Length.instantiateSI(valueSI);
+        Length result = Length.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

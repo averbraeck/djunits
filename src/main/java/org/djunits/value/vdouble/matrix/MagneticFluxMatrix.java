@@ -221,7 +221,7 @@ public class MagneticFluxMatrix extends DoubleMatrixRel<MagneticFluxUnit, Magnet
     @Override
     public MagneticFlux instantiateScalarSI(final double valueSI, final MagneticFluxUnit displayUnit)
     {
-        MagneticFlux result = MagneticFlux.instantiateSI(valueSI);
+        MagneticFlux result = MagneticFlux.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

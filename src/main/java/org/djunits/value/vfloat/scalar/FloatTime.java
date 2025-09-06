@@ -83,7 +83,7 @@ public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit,
      * @param value the float value in BASE units
      * @return the new scalar with the BASE value
      */
-    public static final FloatTime instantiateSI(final float value)
+    public static final FloatTime ofSI(final float value)
     {
         return new FloatTime(value, TimeUnit.DEFAULT);
     }

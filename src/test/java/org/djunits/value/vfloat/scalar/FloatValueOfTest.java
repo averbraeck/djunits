@@ -117,14 +117,14 @@ public class FloatValueOfTest
     {
         Locale.setDefault(Locale.US);
         SIUnit m2 = SIUnit.of(new SIDimensions(0, 0, 0, 2, 0, 0, 0, 0, 0));
-        assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.of(10.0f, "m2"));
-        assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.of(10.0f, "m^2"));
-        assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.valueOf("10.0 m2"));
+        assertEquals(FloatSIScalar.ofSI(10.0f, m2), FloatSIScalar.of(10.0f, "m2"));
+        assertEquals(FloatSIScalar.ofSI(10.0f, m2), FloatSIScalar.of(10.0f, "m^2"));
+        assertEquals(FloatSIScalar.ofSI(10.0f, m2), FloatSIScalar.valueOf("10.0 m2"));
         // test if the . in 10.0 is not removed...
-        assertEquals(FloatSIScalar.instantiateSI(10.0f, m2), FloatSIScalar.valueOf("10.0 m^2"));
+        assertEquals(FloatSIScalar.ofSI(10.0f, m2), FloatSIScalar.valueOf("10.0 m^2"));
 
         legal(FloatSIScalar.class, 10.0f, "");
-        assertEquals(FloatSIScalar.instantiateSI(10.0f, SIUnit.DIMLESS), FloatSIScalar.valueOf("10.0"));
+        assertEquals(FloatSIScalar.ofSI(10.0f, SIUnit.DIMLESS), FloatSIScalar.valueOf("10.0"));
 
         legal(FloatSIScalar.class, 10.0f, "m2");
         legal(FloatSIScalar.class, "10.0 m2");
@@ -160,10 +160,10 @@ public class FloatValueOfTest
     public void testFloatArea()
     {
         Locale.setDefault(Locale.US);
-        assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.of(10.0f, "m2"));
-        assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.of(10.0f, "m^2"));
-        assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.valueOf("10.0 m2"));
-        assertEquals(FloatArea.instantiateSI(10.0f), FloatArea.valueOf("10.0 m^2")); // test if the . in 10.0 is not removed...
+        assertEquals(FloatArea.ofSI(10.0f), FloatArea.of(10.0f, "m2"));
+        assertEquals(FloatArea.ofSI(10.0f), FloatArea.of(10.0f, "m^2"));
+        assertEquals(FloatArea.ofSI(10.0f), FloatArea.valueOf("10.0 m2"));
+        assertEquals(FloatArea.ofSI(10.0f), FloatArea.valueOf("10.0 m^2")); // test if the . in 10.0 is not removed...
         assertEquals(new FloatArea(10.0f, AreaUnit.HECTARE), FloatArea.of(10.0f, "ha"));
         assertEquals(new FloatArea(10.0f, AreaUnit.HECTARE), FloatArea.valueOf("10.0 ha"));
 

@@ -92,7 +92,7 @@ public class FloatFrequency extends FloatScalarRel<FrequencyUnit, FloatFrequency
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatFrequency instantiateSI(final float value)
+    public static final FloatFrequency ofSI(final float value)
     {
         return new FloatFrequency(value, FrequencyUnit.SI);
     }
@@ -293,7 +293,7 @@ public class FloatFrequency extends FloatScalarRel<FrequencyUnit, FloatFrequency
     @Override
     public FloatDuration reciprocal()
     {
-        return FloatDuration.instantiateSI(1.0f / this.si);
+        return FloatDuration.ofSI(1.0f / this.si);
     }
 
 }

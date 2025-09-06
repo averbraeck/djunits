@@ -84,7 +84,7 @@ public class ElectricalCurrent extends DoubleScalarRel<ElectricalCurrentUnit, El
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final ElectricalCurrent instantiateSI(final double value)
+    public static final ElectricalCurrent ofSI(final double value)
     {
         return new ElectricalCurrent(value, ElectricalCurrentUnit.SI);
     }

@@ -220,7 +220,7 @@ public class MomentumMatrix extends DoubleMatrixRel<MomentumUnit, Momentum, Mome
     @Override
     public Momentum instantiateScalarSI(final double valueSI, final MomentumUnit displayUnit)
     {
-        Momentum result = Momentum.instantiateSI(valueSI);
+        Momentum result = Momentum.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

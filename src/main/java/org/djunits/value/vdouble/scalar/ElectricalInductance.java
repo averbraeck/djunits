@@ -83,7 +83,7 @@ public class ElectricalInductance extends DoubleScalarRel<ElectricalInductanceUn
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final ElectricalInductance instantiateSI(final double value)
+    public static final ElectricalInductance ofSI(final double value)
     {
         return new ElectricalInductance(value, ElectricalInductanceUnit.SI);
     }

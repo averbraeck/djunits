@@ -293,7 +293,7 @@ public class FloatAreaVector extends FloatVectorRel<AreaUnit, FloatArea, FloatAr
     @Override
     public FloatArea instantiateScalarSI(final float valueSI, final AreaUnit displayUnit)
     {
-        FloatArea result = FloatArea.instantiateSI(valueSI);
+        FloatArea result = FloatArea.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -299,7 +299,7 @@ public class FloatRadioActivityVector extends FloatVectorRel<RadioActivityUnit, 
     @Override
     public FloatRadioActivity instantiateScalarSI(final float valueSI, final RadioActivityUnit displayUnit)
     {
-        FloatRadioActivity result = FloatRadioActivity.instantiateSI(valueSI);
+        FloatRadioActivity result = FloatRadioActivity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

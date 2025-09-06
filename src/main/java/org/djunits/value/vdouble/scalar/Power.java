@@ -86,7 +86,7 @@ public class Power extends DoubleScalarRel<PowerUnit, Power>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Power instantiateSI(final double value)
+    public static final Power ofSI(final double value)
     {
         return new Power(value, PowerUnit.SI);
     }

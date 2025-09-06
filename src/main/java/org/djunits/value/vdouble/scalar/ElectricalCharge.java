@@ -84,7 +84,7 @@ public class ElectricalCharge extends DoubleScalarRel<ElectricalChargeUnit, Elec
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final ElectricalCharge instantiateSI(final double value)
+    public static final ElectricalCharge ofSI(final double value)
     {
         return new ElectricalCharge(value, ElectricalChargeUnit.SI);
     }

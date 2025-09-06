@@ -96,7 +96,7 @@ public class FloatEnergy extends FloatScalarRel<EnergyUnit, FloatEnergy>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatEnergy instantiateSI(final float value)
+    public static final FloatEnergy ofSI(final float value)
     {
         return new FloatEnergy(value, EnergyUnit.SI);
     }

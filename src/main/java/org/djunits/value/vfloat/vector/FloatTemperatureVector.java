@@ -298,7 +298,7 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
     @Override
     public FloatTemperature instantiateScalarSI(final float valueSI, final TemperatureUnit displayUnit)
     {
-        FloatTemperature result = FloatTemperature.instantiateSI(valueSI);
+        FloatTemperature result = FloatTemperature.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -313,7 +313,7 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
     @Override
     public FloatAbsoluteTemperature instantiateScalarAbsSI(final float valueSI, final AbsoluteTemperatureUnit displayUnit)
     {
-        FloatAbsoluteTemperature result = FloatAbsoluteTemperature.instantiateSI(valueSI);
+        FloatAbsoluteTemperature result = FloatAbsoluteTemperature.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

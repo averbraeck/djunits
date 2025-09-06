@@ -303,7 +303,7 @@ public class FloatEquivalentDoseVector
     @Override
     public FloatEquivalentDose instantiateScalarSI(final float valueSI, final EquivalentDoseUnit displayUnit)
     {
-        FloatEquivalentDose result = FloatEquivalentDose.instantiateSI(valueSI);
+        FloatEquivalentDose result = FloatEquivalentDose.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

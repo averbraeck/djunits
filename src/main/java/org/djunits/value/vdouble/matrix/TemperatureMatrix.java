@@ -225,7 +225,7 @@ public class TemperatureMatrix
     @Override
     public Temperature instantiateScalarSI(final double valueSI, final TemperatureUnit displayUnit)
     {
-        Temperature result = Temperature.instantiateSI(valueSI);
+        Temperature result = Temperature.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -245,7 +245,7 @@ public class TemperatureMatrix
     @Override
     public AbsoluteTemperature instantiateScalarAbsSI(final double valueSI, final AbsoluteTemperatureUnit displayUnit)
     {
-        AbsoluteTemperature result = AbsoluteTemperature.instantiateSI(valueSI);
+        AbsoluteTemperature result = AbsoluteTemperature.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

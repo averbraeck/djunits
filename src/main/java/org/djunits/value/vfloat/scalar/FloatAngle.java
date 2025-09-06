@@ -92,7 +92,7 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatAngle instantiateSI(final float value)
+    public static final FloatAngle ofSI(final float value)
     {
         return new FloatAngle(value, AngleUnit.SI);
     }

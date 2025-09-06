@@ -235,7 +235,7 @@ public class FloatElectricalInductanceMatrix extends FloatMatrixRel<ElectricalIn
     @Override
     public FloatElectricalInductance instantiateScalarSI(final float valueSI, final ElectricalInductanceUnit displayUnit)
     {
-        FloatElectricalInductance result = FloatElectricalInductance.instantiateSI(valueSI);
+        FloatElectricalInductance result = FloatElectricalInductance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

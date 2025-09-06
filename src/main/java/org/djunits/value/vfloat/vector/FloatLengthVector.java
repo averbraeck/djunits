@@ -295,7 +295,7 @@ public class FloatLengthVector extends
     @Override
     public FloatLength instantiateScalarSI(final float valueSI, final LengthUnit displayUnit)
     {
-        FloatLength result = FloatLength.instantiateSI(valueSI);
+        FloatLength result = FloatLength.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -309,7 +309,7 @@ public class FloatLengthVector extends
     @Override
     public FloatPosition instantiateScalarAbsSI(final float valueSI, final PositionUnit displayUnit)
     {
-        FloatPosition result = FloatPosition.instantiateSI(valueSI);
+        FloatPosition result = FloatPosition.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

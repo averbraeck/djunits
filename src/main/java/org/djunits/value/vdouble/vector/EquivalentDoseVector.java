@@ -291,7 +291,7 @@ public class EquivalentDoseVector extends DoubleVectorRel<EquivalentDoseUnit, Eq
     @Override
     public EquivalentDose instantiateScalarSI(final double valueSI, final EquivalentDoseUnit displayUnit)
     {
-        EquivalentDose result = EquivalentDose.instantiateSI(valueSI);
+        EquivalentDose result = EquivalentDose.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

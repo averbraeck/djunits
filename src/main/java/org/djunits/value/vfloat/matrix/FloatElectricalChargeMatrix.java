@@ -227,7 +227,7 @@ public class FloatElectricalChargeMatrix extends
     @Override
     public FloatElectricalCharge instantiateScalarSI(final float valueSI, final ElectricalChargeUnit displayUnit)
     {
-        FloatElectricalCharge result = FloatElectricalCharge.instantiateSI(valueSI);
+        FloatElectricalCharge result = FloatElectricalCharge.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

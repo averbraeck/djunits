@@ -227,7 +227,7 @@ public class ElectricalInductanceMatrix extends
     @Override
     public ElectricalInductance instantiateScalarSI(final double valueSI, final ElectricalInductanceUnit displayUnit)
     {
-        ElectricalInductance result = ElectricalInductance.instantiateSI(valueSI);
+        ElectricalInductance result = ElectricalInductance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

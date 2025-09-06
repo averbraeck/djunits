@@ -291,7 +291,7 @@ public class MagneticFluxDensityVector extends DoubleVectorRel<MagneticFluxDensi
     @Override
     public MagneticFluxDensity instantiateScalarSI(final double valueSI, final MagneticFluxDensityUnit displayUnit)
     {
-        MagneticFluxDensity result = MagneticFluxDensity.instantiateSI(valueSI);
+        MagneticFluxDensity result = MagneticFluxDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

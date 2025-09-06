@@ -82,7 +82,7 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final AmountOfSubstance instantiateSI(final double value)
+    public static final AmountOfSubstance ofSI(final double value)
     {
         return new AmountOfSubstance(value, AmountOfSubstanceUnit.SI);
     }

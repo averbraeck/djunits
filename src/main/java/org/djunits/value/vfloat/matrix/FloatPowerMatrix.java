@@ -220,7 +220,7 @@ public class FloatPowerMatrix extends FloatMatrixRel<PowerUnit, FloatPower, Floa
     @Override
     public FloatPower instantiateScalarSI(final float valueSI, final PowerUnit displayUnit)
     {
-        FloatPower result = FloatPower.instantiateSI(valueSI);
+        FloatPower result = FloatPower.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

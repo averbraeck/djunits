@@ -46,7 +46,7 @@ public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
      * @param valueSI the SI value of the new Jerk
      * @return a new Jerk scalar
      */
-    public static Jerk instantiateSI(final double valueSI)
+    public static Jerk ofSI(final double valueSI)
     {
         return new Jerk(valueSI, JerkUnit.SI);
     }

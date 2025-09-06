@@ -220,7 +220,7 @@ public class VolumeMatrix extends DoubleMatrixRel<VolumeUnit, Volume, VolumeVect
     @Override
     public Volume instantiateScalarSI(final double valueSI, final VolumeUnit displayUnit)
     {
-        Volume result = Volume.instantiateSI(valueSI);
+        Volume result = Volume.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

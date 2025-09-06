@@ -291,7 +291,7 @@ public class ElectricalConductanceVector extends DoubleVectorRel<ElectricalCondu
     @Override
     public ElectricalConductance instantiateScalarSI(final double valueSI, final ElectricalConductanceUnit displayUnit)
     {
-        ElectricalConductance result = ElectricalConductance.instantiateSI(valueSI);
+        ElectricalConductance result = ElectricalConductance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

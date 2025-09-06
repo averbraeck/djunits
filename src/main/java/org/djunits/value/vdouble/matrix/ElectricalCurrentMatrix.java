@@ -225,7 +225,7 @@ public class ElectricalCurrentMatrix
     @Override
     public ElectricalCurrent instantiateScalarSI(final double valueSI, final ElectricalCurrentUnit displayUnit)
     {
-        ElectricalCurrent result = ElectricalCurrent.instantiateSI(valueSI);
+        ElectricalCurrent result = ElectricalCurrent.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

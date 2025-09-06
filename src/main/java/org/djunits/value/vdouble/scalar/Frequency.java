@@ -82,7 +82,7 @@ public class Frequency extends DoubleScalarRel<FrequencyUnit, Frequency>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Frequency instantiateSI(final double value)
+    public static final Frequency ofSI(final double value)
     {
         return new Frequency(value, FrequencyUnit.SI);
     }
@@ -282,7 +282,7 @@ public class Frequency extends DoubleScalarRel<FrequencyUnit, Frequency>
     @Override
     public Duration reciprocal()
     {
-        return Duration.instantiateSI(1.0 / this.si);
+        return Duration.ofSI(1.0 / this.si);
     }
 
 }

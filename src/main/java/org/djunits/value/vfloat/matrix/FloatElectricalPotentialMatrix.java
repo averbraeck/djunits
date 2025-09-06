@@ -235,7 +235,7 @@ public class FloatElectricalPotentialMatrix extends FloatMatrixRel<ElectricalPot
     @Override
     public FloatElectricalPotential instantiateScalarSI(final float valueSI, final ElectricalPotentialUnit displayUnit)
     {
-        FloatElectricalPotential result = FloatElectricalPotential.instantiateSI(valueSI);
+        FloatElectricalPotential result = FloatElectricalPotential.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

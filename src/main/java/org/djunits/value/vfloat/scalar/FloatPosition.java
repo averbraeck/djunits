@@ -75,7 +75,7 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
      * @param value the float value in BASE units
      * @return the new scalar with the BASE value
      */
-    public static final FloatPosition instantiateSI(final float value)
+    public static final FloatPosition ofSI(final float value)
     {
         return new FloatPosition(value, PositionUnit.DEFAULT);
     }

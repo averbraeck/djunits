@@ -96,7 +96,7 @@ public class FloatElectricalCurrent extends FloatScalarRel<ElectricalCurrentUnit
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatElectricalCurrent instantiateSI(final float value)
+    public static final FloatElectricalCurrent ofSI(final float value)
     {
         return new FloatElectricalCurrent(value, ElectricalCurrentUnit.SI);
     }

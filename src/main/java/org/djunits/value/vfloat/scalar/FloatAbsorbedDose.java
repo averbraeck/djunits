@@ -90,7 +90,7 @@ public class FloatAbsorbedDose extends FloatScalarRel<AbsorbedDoseUnit, FloatAbs
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatAbsorbedDose instantiateSI(final float value)
+    public static final FloatAbsorbedDose ofSI(final float value)
     {
         return new FloatAbsorbedDose(value, AbsorbedDoseUnit.SI);
     }

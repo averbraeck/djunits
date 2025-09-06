@@ -291,7 +291,7 @@ public class ElectricalResistanceVector extends DoubleVectorRel<ElectricalResist
     @Override
     public ElectricalResistance instantiateScalarSI(final double valueSI, final ElectricalResistanceUnit displayUnit)
     {
-        ElectricalResistance result = ElectricalResistance.instantiateSI(valueSI);
+        ElectricalResistance result = ElectricalResistance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

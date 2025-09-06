@@ -65,7 +65,7 @@ public class Direction extends DoubleScalarAbs<DirectionUnit, Direction, AngleUn
      * @param value value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Direction instantiateSI(final double value)
+    public static final Direction ofSI(final double value)
     {
         return new Direction(value, DirectionUnit.DEFAULT);
     }

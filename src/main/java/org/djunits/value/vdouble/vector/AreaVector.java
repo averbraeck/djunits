@@ -291,7 +291,7 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
     @Override
     public Area instantiateScalarSI(final double valueSI, final AreaUnit displayUnit)
     {
-        Area result = Area.instantiateSI(valueSI);
+        Area result = Area.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

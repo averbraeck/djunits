@@ -101,7 +101,7 @@ public class SIScalar extends DoubleScalarRel<SIUnit, SIScalar>
      * @param unit the unit to use for the SI scalar
      * @return the new scalar with the SI value
      */
-    public static final SIScalar instantiateSI(final double value, final SIUnit unit)
+    public static final SIScalar ofSI(final double value, final SIUnit unit)
     {
         return new SIScalar(value, unit);
     }

@@ -235,7 +235,7 @@ public class FloatMagneticFluxDensityMatrix extends FloatMatrixRel<MagneticFluxD
     @Override
     public FloatMagneticFluxDensity instantiateScalarSI(final float valueSI, final MagneticFluxDensityUnit displayUnit)
     {
-        FloatMagneticFluxDensity result = FloatMagneticFluxDensity.instantiateSI(valueSI);
+        FloatMagneticFluxDensity result = FloatMagneticFluxDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -40,7 +40,7 @@ public class DoubleSIScalarTest
     @Test
     public void testAsScalar()
     {
-        Duration d = Duration.instantiateSI(10.0);
+        Duration d = Duration.ofSI(10.0);
         Length l = Length.valueOf("50.0 m");
         SIScalar pace = DoubleScalar.divide(d, l);
         // system.out.println("pace = " + pace);
@@ -218,7 +218,7 @@ public class DoubleSIScalarTest
                 assertEquals(scalar.si, asScalarDisplayUnit.si, scalar.si / 1000.0);
 
                 // test exception for wrong 'as'
-                SIScalar cd4sr2 = SIScalar.instantiateSI(8.0, SIUnit.of("cd4/sr2"));
+                SIScalar cd4sr2 = SIScalar.ofSI(8.0, SIUnit.of("cd4/sr2"));
                 try
                 {
                     DoubleScalarRel<?, ?> asScalarDim = (DoubleScalarRel<?, ?>) asMethod.invoke(cd4sr2);
@@ -251,7 +251,7 @@ public class DoubleSIScalarTest
     public void testDoubleMethods() throws UnitException
     {
         SIUnit paceUnit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of("s/m"));
-        SIScalar pace1 = SIScalar.instantiateSI(1.0, paceUnit);
+        SIScalar pace1 = SIScalar.ofSI(1.0, paceUnit);
         SIScalar pace1a = new SIScalar(pace1);
         assertEquals(pace1, pace1a);
         SIScalar pace2 = new SIScalar(2.0, paceUnit);
@@ -260,7 +260,7 @@ public class DoubleSIScalarTest
         assertEquals(3.0, pace3.si, 0.001);
         SIScalar pace5 = pace1.instantiateRel(5.0, paceUnit);
         assertEquals(5.0, pace5.si, 0.001);
-        SIScalar pace7 = SIScalar.instantiateSI(14.0, paceUnit).divide(2.0);
+        SIScalar pace7 = SIScalar.ofSI(14.0, paceUnit).divide(2.0);
         assertEquals(7.0, pace7.si, 0.001);
         SIScalar pace4 = SIScalar.interpolate(pace1, pace7, 0.5);
         assertEquals(4.0, pace4.si, 0.001);

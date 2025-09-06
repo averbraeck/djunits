@@ -291,7 +291,7 @@ public class TorqueVector extends DoubleVectorRel<TorqueUnit, Torque, TorqueVect
     @Override
     public Torque instantiateScalarSI(final double valueSI, final TorqueUnit displayUnit)
     {
-        Torque result = Torque.instantiateSI(valueSI);
+        Torque result = Torque.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

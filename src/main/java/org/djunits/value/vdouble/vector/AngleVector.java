@@ -293,7 +293,7 @@ public class AngleVector extends DoubleVectorRelWithAbs<DirectionUnit, Direction
     @Override
     public Angle instantiateScalarSI(final double valueSI, final AngleUnit displayUnit)
     {
-        Angle result = Angle.instantiateSI(valueSI);
+        Angle result = Angle.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -307,7 +307,7 @@ public class AngleVector extends DoubleVectorRelWithAbs<DirectionUnit, Direction
     @Override
     public Direction instantiateScalarAbsSI(final double valueSI, final DirectionUnit displayUnit)
     {
-        Direction result = Direction.instantiateSI(valueSI);
+        Direction result = Direction.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

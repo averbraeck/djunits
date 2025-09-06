@@ -96,7 +96,7 @@ public class FloatLength extends FloatScalarRelWithAbs<PositionUnit, FloatPositi
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatLength instantiateSI(final float value)
+    public static final FloatLength ofSI(final float value)
     {
         return new FloatLength(value, LengthUnit.SI);
     }
@@ -342,7 +342,7 @@ public class FloatLength extends FloatScalarRelWithAbs<PositionUnit, FloatPositi
     @Override
     public FloatLinearDensity reciprocal()
     {
-        return FloatLinearDensity.instantiateSI(1.0f / this.si);
+        return FloatLinearDensity.ofSI(1.0f / this.si);
     }
 
 }

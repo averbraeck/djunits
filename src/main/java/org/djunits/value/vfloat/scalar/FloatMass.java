@@ -95,7 +95,7 @@ public class FloatMass extends FloatScalarRel<MassUnit, FloatMass>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatMass instantiateSI(final float value)
+    public static final FloatMass ofSI(final float value)
     {
         return new FloatMass(value, MassUnit.SI);
     }

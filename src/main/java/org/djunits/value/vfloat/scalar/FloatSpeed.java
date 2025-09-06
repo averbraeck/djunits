@@ -97,7 +97,7 @@ public class FloatSpeed extends FloatScalarRel<SpeedUnit, FloatSpeed>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatSpeed instantiateSI(final float value)
+    public static final FloatSpeed ofSI(final float value)
     {
         return new FloatSpeed(value, SpeedUnit.SI);
     }

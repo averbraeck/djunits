@@ -83,7 +83,7 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final ElectricalConductance instantiateSI(final double value)
+    public static final ElectricalConductance ofSI(final double value)
     {
         return new ElectricalConductance(value, ElectricalConductanceUnit.SI);
     }
@@ -260,7 +260,7 @@ public class ElectricalConductance extends DoubleScalarRel<ElectricalConductance
     @Override
     public ElectricalResistance reciprocal()
     {
-        return ElectricalResistance.instantiateSI(1.0 / this.si);
+        return ElectricalResistance.ofSI(1.0 / this.si);
     }
 
 }

@@ -72,7 +72,7 @@ public class Time extends DoubleScalarAbs<TimeUnit, Time, DurationUnit, Duration
      * @param value value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Time instantiateSI(final double value)
+    public static final Time ofSI(final double value)
     {
         return new Time(value, TimeUnit.DEFAULT);
     }

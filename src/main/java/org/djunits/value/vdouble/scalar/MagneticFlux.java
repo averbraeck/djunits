@@ -84,7 +84,7 @@ public class MagneticFlux extends DoubleScalarRel<MagneticFluxUnit, MagneticFlux
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final MagneticFlux instantiateSI(final double value)
+    public static final MagneticFlux ofSI(final double value)
     {
         return new MagneticFlux(value, MagneticFluxUnit.SI);
     }

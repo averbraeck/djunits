@@ -76,7 +76,7 @@ public class FloatAbsoluteTemperature
      * @param value the float value in BASE units
      * @return the new scalar with the BASE value
      */
-    public static final FloatAbsoluteTemperature instantiateSI(final float value)
+    public static final FloatAbsoluteTemperature ofSI(final float value)
     {
         return new FloatAbsoluteTemperature(value, AbsoluteTemperatureUnit.DEFAULT);
     }

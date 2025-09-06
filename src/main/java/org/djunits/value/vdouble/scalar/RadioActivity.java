@@ -78,7 +78,7 @@ public class RadioActivity extends DoubleScalarRel<RadioActivityUnit, RadioActiv
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final RadioActivity instantiateSI(final double value)
+    public static final RadioActivity ofSI(final double value)
     {
         return new RadioActivity(value, RadioActivityUnit.SI);
     }

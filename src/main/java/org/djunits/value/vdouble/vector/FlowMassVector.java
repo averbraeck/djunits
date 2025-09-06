@@ -291,7 +291,7 @@ public class FlowMassVector extends DoubleVectorRel<FlowMassUnit, FlowMass, Flow
     @Override
     public FlowMass instantiateScalarSI(final double valueSI, final FlowMassUnit displayUnit)
     {
-        FlowMass result = FlowMass.instantiateSI(valueSI);
+        FlowMass result = FlowMass.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

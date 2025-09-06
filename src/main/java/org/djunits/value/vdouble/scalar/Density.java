@@ -80,7 +80,7 @@ public class Density extends DoubleScalarRel<DensityUnit, Density>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Density instantiateSI(final double value)
+    public static final Density ofSI(final double value)
     {
         return new Density(value, DensityUnit.SI);
     }

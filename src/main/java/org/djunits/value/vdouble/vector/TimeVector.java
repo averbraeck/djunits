@@ -293,7 +293,7 @@ public class TimeVector extends DoubleVectorAbs<TimeUnit, Time, TimeVector,
     @Override
     public Time instantiateScalarSI(final double valueSI, final TimeUnit displayUnit)
     {
-        Time result = Time.instantiateSI(valueSI);
+        Time result = Time.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -307,7 +307,7 @@ public class TimeVector extends DoubleVectorAbs<TimeUnit, Time, TimeVector,
     @Override
     public Duration instantiateScalarRelSI(final double valueSI, final DurationUnit displayUnit)
     {
-        Duration result = Duration.instantiateSI(valueSI);
+        Duration result = Duration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

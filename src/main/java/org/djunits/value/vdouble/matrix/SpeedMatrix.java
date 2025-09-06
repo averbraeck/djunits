@@ -220,7 +220,7 @@ public class SpeedMatrix extends DoubleMatrixRel<SpeedUnit, Speed, SpeedVector, 
     @Override
     public Speed instantiateScalarSI(final double valueSI, final SpeedUnit displayUnit)
     {
-        Speed result = Speed.instantiateSI(valueSI);
+        Speed result = Speed.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -220,7 +220,7 @@ public class AreaMatrix extends DoubleMatrixRel<AreaUnit, Area, AreaVector, Area
     @Override
     public Area instantiateScalarSI(final double valueSI, final AreaUnit displayUnit)
     {
-        Area result = Area.instantiateSI(valueSI);
+        Area result = Area.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

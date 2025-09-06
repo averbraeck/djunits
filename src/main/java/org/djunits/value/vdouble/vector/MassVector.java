@@ -291,7 +291,7 @@ public class MassVector extends DoubleVectorRel<MassUnit, Mass, MassVector>
     @Override
     public Mass instantiateScalarSI(final double valueSI, final MassUnit displayUnit)
     {
-        Mass result = Mass.instantiateSI(valueSI);
+        Mass result = Mass.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

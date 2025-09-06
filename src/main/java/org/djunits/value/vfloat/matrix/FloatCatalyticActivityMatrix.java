@@ -229,7 +229,7 @@ public class FloatCatalyticActivityMatrix extends FloatMatrixRel<CatalyticActivi
     @Override
     public FloatCatalyticActivity instantiateScalarSI(final float valueSI, final CatalyticActivityUnit displayUnit)
     {
-        FloatCatalyticActivity result = FloatCatalyticActivity.instantiateSI(valueSI);
+        FloatCatalyticActivity result = FloatCatalyticActivity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -229,7 +229,7 @@ public class FloatLuminousIntensityMatrix extends FloatMatrixRel<LuminousIntensi
     @Override
     public FloatLuminousIntensity instantiateScalarSI(final float valueSI, final LuminousIntensityUnit displayUnit)
     {
-        FloatLuminousIntensity result = FloatLuminousIntensity.instantiateSI(valueSI);
+        FloatLuminousIntensity result = FloatLuminousIntensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

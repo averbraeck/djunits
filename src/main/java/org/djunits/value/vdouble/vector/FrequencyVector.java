@@ -291,7 +291,7 @@ public class FrequencyVector extends DoubleVectorRel<FrequencyUnit, Frequency, F
     @Override
     public Frequency instantiateScalarSI(final double valueSI, final FrequencyUnit displayUnit)
     {
-        Frequency result = Frequency.instantiateSI(valueSI);
+        Frequency result = Frequency.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

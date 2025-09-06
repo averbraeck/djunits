@@ -82,7 +82,7 @@ public class LuminousFlux extends DoubleScalarRel<LuminousFluxUnit, LuminousFlux
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final LuminousFlux instantiateSI(final double value)
+    public static final LuminousFlux ofSI(final double value)
     {
         return new LuminousFlux(value, LuminousFluxUnit.SI);
     }

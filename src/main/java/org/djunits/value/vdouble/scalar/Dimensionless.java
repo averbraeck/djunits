@@ -115,7 +115,7 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Dimensionless instantiateSI(final double value)
+    public static final Dimensionless ofSI(final double value)
     {
         return new Dimensionless(value, DimensionlessUnit.SI);
     }
@@ -815,7 +815,7 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
     @Override
     public Dimensionless reciprocal()
     {
-        return Dimensionless.instantiateSI(1.0 / this.si);
+        return Dimensionless.ofSI(1.0 / this.si);
     }
 
 }

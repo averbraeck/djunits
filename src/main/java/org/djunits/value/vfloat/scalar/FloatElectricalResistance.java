@@ -93,7 +93,7 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatElectricalResistance instantiateSI(final float value)
+    public static final FloatElectricalResistance ofSI(final float value)
     {
         return new FloatElectricalResistance(value, ElectricalResistanceUnit.SI);
     }
@@ -273,7 +273,7 @@ public class FloatElectricalResistance extends FloatScalarRel<ElectricalResistan
     @Override
     public FloatElectricalConductance reciprocal()
     {
-        return FloatElectricalConductance.instantiateSI(1.0f / this.si);
+        return FloatElectricalConductance.ofSI(1.0f / this.si);
     }
 
 }

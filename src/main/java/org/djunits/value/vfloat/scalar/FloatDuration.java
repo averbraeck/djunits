@@ -100,7 +100,7 @@ public class FloatDuration extends FloatScalarRelWithAbs<TimeUnit, FloatTime, Du
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatDuration instantiateSI(final float value)
+    public static final FloatDuration ofSI(final float value)
     {
         return new FloatDuration(value, DurationUnit.SI);
     }
@@ -370,7 +370,7 @@ public class FloatDuration extends FloatScalarRelWithAbs<TimeUnit, FloatTime, Du
     @Override
     public FloatFrequency reciprocal()
     {
-        return FloatFrequency.instantiateSI(1.0f / this.si);
+        return FloatFrequency.ofSI(1.0f / this.si);
     }
 
 }

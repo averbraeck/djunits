@@ -293,7 +293,7 @@ public class LengthVector extends DoubleVectorRelWithAbs<PositionUnit, Position,
     @Override
     public Length instantiateScalarSI(final double valueSI, final LengthUnit displayUnit)
     {
-        Length result = Length.instantiateSI(valueSI);
+        Length result = Length.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -307,7 +307,7 @@ public class LengthVector extends DoubleVectorRelWithAbs<PositionUnit, Position,
     @Override
     public Position instantiateScalarAbsSI(final double valueSI, final PositionUnit displayUnit)
     {
-        Position result = Position.instantiateSI(valueSI);
+        Position result = Position.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

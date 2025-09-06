@@ -87,7 +87,7 @@ public class Speed extends DoubleScalarRel<SpeedUnit, Speed>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Speed instantiateSI(final double value)
+    public static final Speed ofSI(final double value)
     {
         return new Speed(value, SpeedUnit.SI);
     }

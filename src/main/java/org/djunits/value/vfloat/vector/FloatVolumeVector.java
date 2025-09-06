@@ -293,7 +293,7 @@ public class FloatVolumeVector extends FloatVectorRel<VolumeUnit, FloatVolume, F
     @Override
     public FloatVolume instantiateScalarSI(final float valueSI, final VolumeUnit displayUnit)
     {
-        FloatVolume result = FloatVolume.instantiateSI(valueSI);
+        FloatVolume result = FloatVolume.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

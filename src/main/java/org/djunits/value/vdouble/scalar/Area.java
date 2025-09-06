@@ -84,7 +84,7 @@ public class Area extends DoubleScalarRel<AreaUnit, Area>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Area instantiateSI(final double value)
+    public static final Area ofSI(final double value)
     {
         return new Area(value, AreaUnit.SI);
     }

@@ -303,7 +303,7 @@ public class FloatAngularVelocityVector
     @Override
     public FloatAngularVelocity instantiateScalarSI(final float valueSI, final AngularVelocityUnit displayUnit)
     {
-        FloatAngularVelocity result = FloatAngularVelocity.instantiateSI(valueSI);
+        FloatAngularVelocity result = FloatAngularVelocity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -293,7 +293,7 @@ public class FloatFlowMassVector extends FloatVectorRel<FlowMassUnit, FloatFlowM
     @Override
     public FloatFlowMass instantiateScalarSI(final float valueSI, final FlowMassUnit displayUnit)
     {
-        FloatFlowMass result = FloatFlowMass.instantiateSI(valueSI);
+        FloatFlowMass result = FloatFlowMass.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

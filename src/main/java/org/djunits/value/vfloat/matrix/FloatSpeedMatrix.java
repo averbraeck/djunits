@@ -220,7 +220,7 @@ public class FloatSpeedMatrix extends FloatMatrixRel<SpeedUnit, FloatSpeed, Floa
     @Override
     public FloatSpeed instantiateScalarSI(final float valueSI, final SpeedUnit displayUnit)
     {
-        FloatSpeed result = FloatSpeed.instantiateSI(valueSI);
+        FloatSpeed result = FloatSpeed.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

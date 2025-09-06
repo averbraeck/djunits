@@ -84,7 +84,7 @@ public class AngularAcceleration extends DoubleScalarRel<AngularAccelerationUnit
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final AngularAcceleration instantiateSI(final double value)
+    public static final AngularAcceleration ofSI(final double value)
     {
         return new AngularAcceleration(value, AngularAccelerationUnit.SI);
     }

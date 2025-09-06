@@ -94,7 +94,7 @@ public class FloatTorque extends FloatScalarRel<TorqueUnit, FloatTorque>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatTorque instantiateSI(final float value)
+    public static final FloatTorque ofSI(final float value)
     {
         return new FloatTorque(value, TorqueUnit.SI);
     }

@@ -94,7 +94,7 @@ public class FloatArea extends FloatScalarRel<AreaUnit, FloatArea>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatArea instantiateSI(final float value)
+    public static final FloatArea ofSI(final float value)
     {
         return new FloatArea(value, AreaUnit.SI);
     }

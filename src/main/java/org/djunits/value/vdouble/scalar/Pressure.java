@@ -80,7 +80,7 @@ public class Pressure extends DoubleScalarRel<PressureUnit, Pressure>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Pressure instantiateSI(final double value)
+    public static final Pressure ofSI(final double value)
     {
         return new Pressure(value, PressureUnit.SI);
     }

@@ -93,7 +93,7 @@ public class FloatElectricalInductance extends FloatScalarRel<ElectricalInductan
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatElectricalInductance instantiateSI(final float value)
+    public static final FloatElectricalInductance ofSI(final float value)
     {
         return new FloatElectricalInductance(value, ElectricalInductanceUnit.SI);
     }

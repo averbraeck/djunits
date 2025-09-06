@@ -89,7 +89,7 @@ public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAn
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatSolidAngle instantiateSI(final float value)
+    public static final FloatSolidAngle ofSI(final float value)
     {
         return new FloatSolidAngle(value, SolidAngleUnit.SI);
     }

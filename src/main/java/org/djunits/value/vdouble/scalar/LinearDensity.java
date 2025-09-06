@@ -80,7 +80,7 @@ public class LinearDensity extends DoubleScalarRel<LinearDensityUnit, LinearDens
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final LinearDensity instantiateSI(final double value)
+    public static final LinearDensity ofSI(final double value)
     {
         return new LinearDensity(value, LinearDensityUnit.SI);
     }
@@ -261,7 +261,7 @@ public class LinearDensity extends DoubleScalarRel<LinearDensityUnit, LinearDens
     @Override
     public Length reciprocal()
     {
-        return Length.instantiateSI(1.0 / this.si);
+        return Length.ofSI(1.0 / this.si);
     }
 
 }

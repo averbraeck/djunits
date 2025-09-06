@@ -224,7 +224,7 @@ public class FloatLuminousFluxMatrix
     @Override
     public FloatLuminousFlux instantiateScalarSI(final float valueSI, final LuminousFluxUnit displayUnit)
     {
-        FloatLuminousFlux result = FloatLuminousFlux.instantiateSI(valueSI);
+        FloatLuminousFlux result = FloatLuminousFlux.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

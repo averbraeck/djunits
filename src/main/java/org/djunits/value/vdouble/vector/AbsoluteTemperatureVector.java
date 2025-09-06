@@ -293,7 +293,7 @@ public class AbsoluteTemperatureVector extends DoubleVectorAbs<AbsoluteTemperatu
     @Override
     public AbsoluteTemperature instantiateScalarSI(final double valueSI, final AbsoluteTemperatureUnit displayUnit)
     {
-        AbsoluteTemperature result = AbsoluteTemperature.instantiateSI(valueSI);
+        AbsoluteTemperature result = AbsoluteTemperature.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -307,7 +307,7 @@ public class AbsoluteTemperatureVector extends DoubleVectorAbs<AbsoluteTemperatu
     @Override
     public Temperature instantiateScalarRelSI(final double valueSI, final TemperatureUnit displayUnit)
     {
-        Temperature result = Temperature.instantiateSI(valueSI);
+        Temperature result = Temperature.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

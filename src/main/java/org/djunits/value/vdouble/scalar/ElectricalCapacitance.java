@@ -85,7 +85,7 @@ public class ElectricalCapacitance extends DoubleScalarRel<ElectricalCapacitance
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final ElectricalCapacitance instantiateSI(final double value)
+    public static final ElectricalCapacitance ofSI(final double value)
     {
         return new ElectricalCapacitance(value, ElectricalCapacitanceUnit.SI);
     }

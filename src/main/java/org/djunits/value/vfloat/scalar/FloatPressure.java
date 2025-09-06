@@ -90,7 +90,7 @@ public class FloatPressure extends FloatScalarRel<PressureUnit, FloatPressure>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatPressure instantiateSI(final float value)
+    public static final FloatPressure ofSI(final float value)
     {
         return new FloatPressure(value, PressureUnit.SI);
     }

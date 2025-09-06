@@ -221,7 +221,7 @@ public class FloatPressureMatrix extends FloatMatrixRel<PressureUnit, FloatPress
     @Override
     public FloatPressure instantiateScalarSI(final float valueSI, final PressureUnit displayUnit)
     {
-        FloatPressure result = FloatPressure.instantiateSI(valueSI);
+        FloatPressure result = FloatPressure.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

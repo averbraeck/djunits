@@ -88,7 +88,7 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Angle instantiateSI(final double value)
+    public static final Angle ofSI(final double value)
     {
         return new Angle(value, AngleUnit.SI);
     }

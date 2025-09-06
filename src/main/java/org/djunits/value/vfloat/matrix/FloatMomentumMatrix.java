@@ -221,7 +221,7 @@ public class FloatMomentumMatrix extends FloatMatrixRel<MomentumUnit, FloatMomen
     @Override
     public FloatMomentum instantiateScalarSI(final float valueSI, final MomentumUnit displayUnit)
     {
-        FloatMomentum result = FloatMomentum.instantiateSI(valueSI);
+        FloatMomentum result = FloatMomentum.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

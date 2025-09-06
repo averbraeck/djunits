@@ -93,7 +93,7 @@ public class FloatLuminousIntensity extends FloatScalarRel<LuminousIntensityUnit
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatLuminousIntensity instantiateSI(final float value)
+    public static final FloatLuminousIntensity ofSI(final float value)
     {
         return new FloatLuminousIntensity(value, LuminousIntensityUnit.SI);
     }

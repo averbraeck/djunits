@@ -46,7 +46,7 @@ public class FloatJerk extends FloatScalarRel<JerkUnit, FloatJerk>
      * @param valueSI the SI value of the new Jerk
      * @return a new FloatJerk scalar
      */
-    public static FloatJerk instantiateSI(final float valueSI)
+    public static FloatJerk ofSI(final float valueSI)
     {
         return new FloatJerk(valueSI, JerkUnit.SI);
     }

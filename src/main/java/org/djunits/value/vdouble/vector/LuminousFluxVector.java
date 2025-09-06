@@ -291,7 +291,7 @@ public class LuminousFluxVector extends DoubleVectorRel<LuminousFluxUnit, Lumino
     @Override
     public LuminousFlux instantiateScalarSI(final double valueSI, final LuminousFluxUnit displayUnit)
     {
-        LuminousFlux result = LuminousFlux.instantiateSI(valueSI);
+        LuminousFlux result = LuminousFlux.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

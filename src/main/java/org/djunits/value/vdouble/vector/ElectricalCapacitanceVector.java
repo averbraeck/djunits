@@ -291,7 +291,7 @@ public class ElectricalCapacitanceVector extends DoubleVectorRel<ElectricalCapac
     @Override
     public ElectricalCapacitance instantiateScalarSI(final double valueSI, final ElectricalCapacitanceUnit displayUnit)
     {
-        ElectricalCapacitance result = ElectricalCapacitance.instantiateSI(valueSI);
+        ElectricalCapacitance result = ElectricalCapacitance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

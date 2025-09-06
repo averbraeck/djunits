@@ -221,7 +221,7 @@ public class FlowVolumeMatrix extends DoubleMatrixRel<FlowVolumeUnit, FlowVolume
     @Override
     public FlowVolume instantiateScalarSI(final double valueSI, final FlowVolumeUnit displayUnit)
     {
-        FlowVolume result = FlowVolume.instantiateSI(valueSI);
+        FlowVolume result = FlowVolume.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -226,7 +226,7 @@ public class FloatDimensionlessMatrix
     @Override
     public FloatDimensionless instantiateScalarSI(final float valueSI, final DimensionlessUnit displayUnit)
     {
-        FloatDimensionless result = FloatDimensionless.instantiateSI(valueSI);
+        FloatDimensionless result = FloatDimensionless.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -127,7 +127,7 @@ public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatD
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatDimensionless instantiateSI(final float value)
+    public static final FloatDimensionless ofSI(final float value)
     {
         return new FloatDimensionless(value, DimensionlessUnit.SI);
     }
@@ -842,7 +842,7 @@ public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatD
     @Override
     public FloatDimensionless reciprocal()
     {
-        return FloatDimensionless.instantiateSI(1.0f / this.si);
+        return FloatDimensionless.ofSI(1.0f / this.si);
     }
 
 }

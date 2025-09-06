@@ -84,7 +84,7 @@ public class Volume extends DoubleScalarRel<VolumeUnit, Volume>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Volume instantiateSI(final double value)
+    public static final Volume ofSI(final double value)
     {
         return new Volume(value, VolumeUnit.SI);
     }

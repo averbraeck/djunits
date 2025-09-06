@@ -122,14 +122,14 @@ public class DoubleValueOfTest
     {
         Locale.setDefault(Locale.US);
         SIUnit m2 = SIUnit.of(new SIDimensions(0, 0, 0, 2, 0, 0, 0, 0, 0));
-        assertEquals(SIScalar.instantiateSI(10.0, m2), SIScalar.of(10.0, "m2"));
-        assertEquals(SIScalar.instantiateSI(10.0, m2), SIScalar.of(10.0, "m^2"));
-        assertEquals(SIScalar.instantiateSI(10.0, m2), SIScalar.valueOf("10.0 m2"));
+        assertEquals(SIScalar.ofSI(10.0, m2), SIScalar.of(10.0, "m2"));
+        assertEquals(SIScalar.ofSI(10.0, m2), SIScalar.of(10.0, "m^2"));
+        assertEquals(SIScalar.ofSI(10.0, m2), SIScalar.valueOf("10.0 m2"));
         // test if the . in 10.0 is not removed...
-        assertEquals(SIScalar.instantiateSI(10.0, m2), SIScalar.valueOf("10.0 m^2"));
+        assertEquals(SIScalar.ofSI(10.0, m2), SIScalar.valueOf("10.0 m^2"));
 
         legal(SIScalar.class, 10.0, "");
-        assertEquals(SIScalar.instantiateSI(10.0, SIUnit.DIMLESS), SIScalar.valueOf("10.0"));
+        assertEquals(SIScalar.ofSI(10.0, SIUnit.DIMLESS), SIScalar.valueOf("10.0"));
 
         legal(SIScalar.class, 10.0, "m2");
         legal(SIScalar.class, "10.0 m2");
@@ -165,10 +165,10 @@ public class DoubleValueOfTest
     public void testArea()
     {
         Locale.setDefault(Locale.US);
-        assertEquals(Area.instantiateSI(10.0), Area.of(10.0, "m2"));
-        assertEquals(Area.instantiateSI(10.0), Area.of(10.0, "m^2"));
-        assertEquals(Area.instantiateSI(10.0), Area.valueOf("10.0 m2"));
-        assertEquals(Area.instantiateSI(10.0), Area.valueOf("10.0 m^2")); // test if the . in 10.0 is not removed...
+        assertEquals(Area.ofSI(10.0), Area.of(10.0, "m2"));
+        assertEquals(Area.ofSI(10.0), Area.of(10.0, "m^2"));
+        assertEquals(Area.ofSI(10.0), Area.valueOf("10.0 m2"));
+        assertEquals(Area.ofSI(10.0), Area.valueOf("10.0 m^2")); // test if the . in 10.0 is not removed...
         assertEquals(new Area(10.0, AreaUnit.HECTARE), Area.of(10.0, "ha"));
         assertEquals(new Area(10.0, AreaUnit.HECTARE), Area.valueOf("10.0 ha"));
 

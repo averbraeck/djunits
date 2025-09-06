@@ -298,7 +298,7 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
     @Override
     public FloatMagneticFlux instantiateScalarSI(final float valueSI, final MagneticFluxUnit displayUnit)
     {
-        FloatMagneticFlux result = FloatMagneticFlux.instantiateSI(valueSI);
+        FloatMagneticFlux result = FloatMagneticFlux.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

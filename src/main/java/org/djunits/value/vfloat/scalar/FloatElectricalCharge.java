@@ -96,7 +96,7 @@ public class FloatElectricalCharge extends FloatScalarRel<ElectricalChargeUnit, 
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatElectricalCharge instantiateSI(final float value)
+    public static final FloatElectricalCharge ofSI(final float value)
     {
         return new FloatElectricalCharge(value, ElectricalChargeUnit.SI);
     }

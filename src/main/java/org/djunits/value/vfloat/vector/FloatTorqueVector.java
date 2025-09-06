@@ -293,7 +293,7 @@ public class FloatTorqueVector extends FloatVectorRel<TorqueUnit, FloatTorque, F
     @Override
     public FloatTorque instantiateScalarSI(final float valueSI, final TorqueUnit displayUnit)
     {
-        FloatTorque result = FloatTorque.instantiateSI(valueSI);
+        FloatTorque result = FloatTorque.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

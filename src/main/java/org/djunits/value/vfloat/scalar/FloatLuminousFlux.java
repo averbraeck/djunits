@@ -94,7 +94,7 @@ public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLum
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatLuminousFlux instantiateSI(final float value)
+    public static final FloatLuminousFlux ofSI(final float value)
     {
         return new FloatLuminousFlux(value, LuminousFluxUnit.SI);
     }

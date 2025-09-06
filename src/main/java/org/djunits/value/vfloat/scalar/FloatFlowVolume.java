@@ -93,7 +93,7 @@ public class FloatFlowVolume extends FloatScalarRel<FlowVolumeUnit, FloatFlowVol
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatFlowVolume instantiateSI(final float value)
+    public static final FloatFlowVolume ofSI(final float value)
     {
         return new FloatFlowVolume(value, FlowVolumeUnit.SI);
     }

@@ -224,7 +224,7 @@ public class FloatAbsorbedDoseMatrix
     @Override
     public FloatAbsorbedDose instantiateScalarSI(final float valueSI, final AbsorbedDoseUnit displayUnit)
     {
-        FloatAbsorbedDose result = FloatAbsorbedDose.instantiateSI(valueSI);
+        FloatAbsorbedDose result = FloatAbsorbedDose.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

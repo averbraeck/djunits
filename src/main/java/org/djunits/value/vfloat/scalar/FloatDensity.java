@@ -90,7 +90,7 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatDensity instantiateSI(final float value)
+    public static final FloatDensity ofSI(final float value)
     {
         return new FloatDensity(value, DensityUnit.SI);
     }

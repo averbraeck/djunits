@@ -78,7 +78,7 @@ public class AbsorbedDose extends DoubleScalarRel<AbsorbedDoseUnit, AbsorbedDose
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final AbsorbedDose instantiateSI(final double value)
+    public static final AbsorbedDose ofSI(final double value)
     {
         return new AbsorbedDose(value, AbsorbedDoseUnit.SI);
     }

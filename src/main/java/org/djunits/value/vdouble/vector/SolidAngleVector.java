@@ -291,7 +291,7 @@ public class SolidAngleVector extends DoubleVectorRel<SolidAngleUnit, SolidAngle
     @Override
     public SolidAngle instantiateScalarSI(final double valueSI, final SolidAngleUnit displayUnit)
     {
-        SolidAngle result = SolidAngle.instantiateSI(valueSI);
+        SolidAngle result = SolidAngle.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

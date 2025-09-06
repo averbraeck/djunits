@@ -86,7 +86,7 @@ public class Energy extends DoubleScalarRel<EnergyUnit, Energy>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Energy instantiateSI(final double value)
+    public static final Energy ofSI(final double value)
     {
         return new Energy(value, EnergyUnit.SI);
     }

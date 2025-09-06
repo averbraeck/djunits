@@ -94,7 +94,7 @@ public class FloatAmountOfSubstance extends FloatScalarRel<AmountOfSubstanceUnit
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatAmountOfSubstance instantiateSI(final float value)
+    public static final FloatAmountOfSubstance ofSI(final float value)
     {
         return new FloatAmountOfSubstance(value, AmountOfSubstanceUnit.SI);
     }

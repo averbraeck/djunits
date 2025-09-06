@@ -223,7 +223,7 @@ public class DurationMatrix extends
     @Override
     public Duration instantiateScalarSI(final double valueSI, final DurationUnit displayUnit)
     {
-        Duration result = Duration.instantiateSI(valueSI);
+        Duration result = Duration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -243,7 +243,7 @@ public class DurationMatrix extends
     @Override
     public Time instantiateScalarAbsSI(final double valueSI, final TimeUnit displayUnit)
     {
-        Time result = Time.instantiateSI(valueSI);
+        Time result = Time.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

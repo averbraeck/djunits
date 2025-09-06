@@ -40,7 +40,7 @@ public class FloatSIScalarTest
     @Test
     public void testAsScalar()
     {
-        FloatDuration d = FloatDuration.instantiateSI(10.0f);
+        FloatDuration d = FloatDuration.ofSI(10.0f);
         FloatLength l = FloatLength.valueOf("50.0 m");
         FloatSIScalar pace = FloatScalar.divide(d, l);
         // system.out.println("pace = " + pace);
@@ -238,7 +238,7 @@ public class FloatSIScalarTest
                 assertEquals(scalar.si, asScalarDisplayUnit.si, scalar.si / 1000.0);
 
                 // test exception for wrong 'as'
-                FloatSIScalar cd4sr2 = FloatSIScalar.instantiateSI(8.0f, SIUnit.of("cd4/sr2"));
+                FloatSIScalar cd4sr2 = FloatSIScalar.ofSI(8.0f, SIUnit.of("cd4/sr2"));
                 try
                 {
                     FloatScalarRel<?, ?> asScalarDim = (FloatScalarRel<?, ?>) asMethod.invoke(cd4sr2);
@@ -271,7 +271,7 @@ public class FloatSIScalarTest
     public void testFloatMethods() throws UnitException
     {
         SIUnit paceUnit = Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of("s/m"));
-        FloatSIScalar pace1 = FloatSIScalar.instantiateSI(1.0f, paceUnit);
+        FloatSIScalar pace1 = FloatSIScalar.ofSI(1.0f, paceUnit);
         FloatSIScalar pace1a = new FloatSIScalar(pace1);
         assertEquals(pace1, pace1a);
         FloatSIScalar pace2 = new FloatSIScalar(2.0f, paceUnit);
@@ -280,7 +280,7 @@ public class FloatSIScalarTest
         assertEquals(3.0, pace3.si, 0.001);
         FloatSIScalar pace5 = pace1.instantiateRel(5.0f, paceUnit);
         assertEquals(5.0, pace5.si, 0.001);
-        FloatSIScalar pace7 = FloatSIScalar.instantiateSI(14.0f, paceUnit).divide(2.0f);
+        FloatSIScalar pace7 = FloatSIScalar.ofSI(14.0f, paceUnit).divide(2.0f);
         assertEquals(7.0, pace7.si, 0.001);
         FloatSIScalar pace4 = FloatSIScalar.interpolate(pace1, pace7, 0.5f);
         assertEquals(4.0, pace4.si, 0.001);

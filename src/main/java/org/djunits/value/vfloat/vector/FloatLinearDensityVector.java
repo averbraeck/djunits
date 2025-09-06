@@ -299,7 +299,7 @@ public class FloatLinearDensityVector extends FloatVectorRel<LinearDensityUnit, 
     @Override
     public FloatLinearDensity instantiateScalarSI(final float valueSI, final LinearDensityUnit displayUnit)
     {
-        FloatLinearDensity result = FloatLinearDensity.instantiateSI(valueSI);
+        FloatLinearDensity result = FloatLinearDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

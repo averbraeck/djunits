@@ -220,7 +220,7 @@ public class FloatEnergyMatrix extends FloatMatrixRel<EnergyUnit, FloatEnergy, F
     @Override
     public FloatEnergy instantiateScalarSI(final float valueSI, final EnergyUnit displayUnit)
     {
-        FloatEnergy result = FloatEnergy.instantiateSI(valueSI);
+        FloatEnergy result = FloatEnergy.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

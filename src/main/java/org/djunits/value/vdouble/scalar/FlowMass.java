@@ -84,7 +84,7 @@ public class FlowMass extends DoubleScalarRel<FlowMassUnit, FlowMass>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FlowMass instantiateSI(final double value)
+    public static final FlowMass ofSI(final double value)
     {
         return new FlowMass(value, FlowMassUnit.SI);
     }

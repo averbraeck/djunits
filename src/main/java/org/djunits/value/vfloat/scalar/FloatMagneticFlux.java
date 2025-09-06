@@ -96,7 +96,7 @@ public class FloatMagneticFlux extends FloatScalarRel<MagneticFluxUnit, FloatMag
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatMagneticFlux instantiateSI(final float value)
+    public static final FloatMagneticFlux ofSI(final float value)
     {
         return new FloatMagneticFlux(value, MagneticFluxUnit.SI);
     }

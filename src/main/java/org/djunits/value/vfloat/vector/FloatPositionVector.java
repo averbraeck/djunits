@@ -297,7 +297,7 @@ public class FloatPositionVector
     @Override
     public FloatPosition instantiateScalarSI(final float valueSI, final PositionUnit displayUnit)
     {
-        FloatPosition result = FloatPosition.instantiateSI(valueSI);
+        FloatPosition result = FloatPosition.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -311,7 +311,7 @@ public class FloatPositionVector
     @Override
     public FloatLength instantiateScalarRelSI(final float valueSI, final LengthUnit displayUnit)
     {
-        FloatLength result = FloatLength.instantiateSI(valueSI);
+        FloatLength result = FloatLength.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

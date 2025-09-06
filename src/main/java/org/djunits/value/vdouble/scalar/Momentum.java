@@ -84,7 +84,7 @@ public class Momentum extends DoubleScalarRel<MomentumUnit, Momentum>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Momentum instantiateSI(final double value)
+    public static final Momentum ofSI(final double value)
     {
         return new Momentum(value, MomentumUnit.SI);
     }

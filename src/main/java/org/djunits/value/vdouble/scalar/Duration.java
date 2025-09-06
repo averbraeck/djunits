@@ -96,7 +96,7 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Duration instantiateSI(final double value)
+    public static final Duration ofSI(final double value)
     {
         return new Duration(value, DurationUnit.SI);
     }
@@ -356,7 +356,7 @@ public class Duration extends DoubleScalarRelWithAbs<TimeUnit, Time, DurationUni
     @Override
     public Frequency reciprocal()
     {
-        return Frequency.instantiateSI(1.0 / this.si);
+        return Frequency.ofSI(1.0 / this.si);
     }
 
 }

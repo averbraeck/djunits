@@ -291,7 +291,7 @@ public class DensityVector extends DoubleVectorRel<DensityUnit, Density, Density
     @Override
     public Density instantiateScalarSI(final double valueSI, final DensityUnit displayUnit)
     {
-        Density result = Density.instantiateSI(valueSI);
+        Density result = Density.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

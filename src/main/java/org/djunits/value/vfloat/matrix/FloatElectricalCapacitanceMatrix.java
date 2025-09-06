@@ -236,7 +236,7 @@ public class FloatElectricalCapacitanceMatrix extends FloatMatrixRel<ElectricalC
     @Override
     public FloatElectricalCapacitance instantiateScalarSI(final float valueSI, final ElectricalCapacitanceUnit displayUnit)
     {
-        FloatElectricalCapacitance result = FloatElectricalCapacitance.instantiateSI(valueSI);
+        FloatElectricalCapacitance result = FloatElectricalCapacitance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

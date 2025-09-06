@@ -224,7 +224,7 @@ public class FloatIlluminanceMatrix
     @Override
     public FloatIlluminance instantiateScalarSI(final float valueSI, final IlluminanceUnit displayUnit)
     {
-        FloatIlluminance result = FloatIlluminance.instantiateSI(valueSI);
+        FloatIlluminance result = FloatIlluminance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

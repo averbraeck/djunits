@@ -225,7 +225,7 @@ public class ElectricalPotentialMatrix extends
     @Override
     public ElectricalPotential instantiateScalarSI(final double valueSI, final ElectricalPotentialUnit displayUnit)
     {
-        ElectricalPotential result = ElectricalPotential.instantiateSI(valueSI);
+        ElectricalPotential result = ElectricalPotential.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

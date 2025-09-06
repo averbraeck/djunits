@@ -291,7 +291,7 @@ public class AbsorbedDoseVector extends DoubleVectorRel<AbsorbedDoseUnit, Absorb
     @Override
     public AbsorbedDose instantiateScalarSI(final double valueSI, final AbsorbedDoseUnit displayUnit)
     {
-        AbsorbedDose result = AbsorbedDose.instantiateSI(valueSI);
+        AbsorbedDose result = AbsorbedDose.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -84,7 +84,7 @@ public class Torque extends DoubleScalarRel<TorqueUnit, Torque>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Torque instantiateSI(final double value)
+    public static final Torque ofSI(final double value)
     {
         return new Torque(value, TorqueUnit.SI);
     }

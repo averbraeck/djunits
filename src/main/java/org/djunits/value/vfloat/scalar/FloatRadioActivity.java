@@ -90,7 +90,7 @@ public class FloatRadioActivity extends FloatScalarRel<RadioActivityUnit, FloatR
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatRadioActivity instantiateSI(final float value)
+    public static final FloatRadioActivity ofSI(final float value)
     {
         return new FloatRadioActivity(value, RadioActivityUnit.SI);
     }

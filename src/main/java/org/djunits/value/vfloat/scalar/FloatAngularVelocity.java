@@ -94,7 +94,7 @@ public class FloatAngularVelocity extends FloatScalarRel<AngularVelocityUnit, Fl
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatAngularVelocity instantiateSI(final float value)
+    public static final FloatAngularVelocity ofSI(final float value)
     {
         return new FloatAngularVelocity(value, AngularVelocityUnit.SI);
     }

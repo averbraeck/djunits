@@ -225,7 +225,7 @@ public class CatalyticActivityMatrix
     @Override
     public CatalyticActivity instantiateScalarSI(final double valueSI, final CatalyticActivityUnit displayUnit)
     {
-        CatalyticActivity result = CatalyticActivity.instantiateSI(valueSI);
+        CatalyticActivity result = CatalyticActivity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

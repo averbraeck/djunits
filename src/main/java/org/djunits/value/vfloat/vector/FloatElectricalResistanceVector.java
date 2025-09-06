@@ -306,7 +306,7 @@ public class FloatElectricalResistanceVector
     @Override
     public FloatElectricalResistance instantiateScalarSI(final float valueSI, final ElectricalResistanceUnit displayUnit)
     {
-        FloatElectricalResistance result = FloatElectricalResistance.instantiateSI(valueSI);
+        FloatElectricalResistance result = FloatElectricalResistance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -79,7 +79,7 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Illuminance instantiateSI(final double value)
+    public static final Illuminance ofSI(final double value)
     {
         return new Illuminance(value, IlluminanceUnit.SI);
     }

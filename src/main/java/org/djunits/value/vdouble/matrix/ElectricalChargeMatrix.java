@@ -224,7 +224,7 @@ public class ElectricalChargeMatrix
     @Override
     public ElectricalCharge instantiateScalarSI(final double valueSI, final ElectricalChargeUnit displayUnit)
     {
-        ElectricalCharge result = ElectricalCharge.instantiateSI(valueSI);
+        ElectricalCharge result = ElectricalCharge.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -222,7 +222,7 @@ public class FloatFrequencyMatrix
     @Override
     public FloatFrequency instantiateScalarSI(final float valueSI, final FrequencyUnit displayUnit)
     {
-        FloatFrequency result = FloatFrequency.instantiateSI(valueSI);
+        FloatFrequency result = FloatFrequency.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

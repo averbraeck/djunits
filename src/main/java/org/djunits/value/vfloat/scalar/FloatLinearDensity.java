@@ -92,7 +92,7 @@ public class FloatLinearDensity extends FloatScalarRel<LinearDensityUnit, FloatL
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatLinearDensity instantiateSI(final float value)
+    public static final FloatLinearDensity ofSI(final float value)
     {
         return new FloatLinearDensity(value, LinearDensityUnit.SI);
     }
@@ -275,7 +275,7 @@ public class FloatLinearDensity extends FloatScalarRel<LinearDensityUnit, FloatL
     @Override
     public FloatLength reciprocal()
     {
-        return FloatLength.instantiateSI(1.0f / this.si);
+        return FloatLength.ofSI(1.0f / this.si);
     }
 
 }

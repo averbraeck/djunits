@@ -95,7 +95,7 @@ public class FloatForce extends FloatScalarRel<ForceUnit, FloatForce>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatForce instantiateSI(final float value)
+    public static final FloatForce ofSI(final float value)
     {
         return new FloatForce(value, ForceUnit.SI);
     }

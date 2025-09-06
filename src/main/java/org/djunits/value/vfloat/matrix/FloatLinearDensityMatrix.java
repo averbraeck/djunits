@@ -224,7 +224,7 @@ public class FloatLinearDensityMatrix
     @Override
     public FloatLinearDensity instantiateScalarSI(final float valueSI, final LinearDensityUnit displayUnit)
     {
-        FloatLinearDensity result = FloatLinearDensity.instantiateSI(valueSI);
+        FloatLinearDensity result = FloatLinearDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

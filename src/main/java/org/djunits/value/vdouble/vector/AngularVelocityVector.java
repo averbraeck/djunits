@@ -291,7 +291,7 @@ public class AngularVelocityVector extends DoubleVectorRel<AngularVelocityUnit, 
     @Override
     public AngularVelocity instantiateScalarSI(final double valueSI, final AngularVelocityUnit displayUnit)
     {
-        AngularVelocity result = AngularVelocity.instantiateSI(valueSI);
+        AngularVelocity result = AngularVelocity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

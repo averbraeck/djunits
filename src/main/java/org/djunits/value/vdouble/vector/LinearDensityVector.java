@@ -291,7 +291,7 @@ public class LinearDensityVector extends DoubleVectorRel<LinearDensityUnit, Line
     @Override
     public LinearDensity instantiateScalarSI(final double valueSI, final LinearDensityUnit displayUnit)
     {
-        LinearDensity result = LinearDensity.instantiateSI(valueSI);
+        LinearDensity result = LinearDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

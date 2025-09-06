@@ -221,7 +221,7 @@ public class IlluminanceMatrix extends DoubleMatrixRel<IlluminanceUnit, Illumina
     @Override
     public Illuminance instantiateScalarSI(final double valueSI, final IlluminanceUnit displayUnit)
     {
-        Illuminance result = Illuminance.instantiateSI(valueSI);
+        Illuminance result = Illuminance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

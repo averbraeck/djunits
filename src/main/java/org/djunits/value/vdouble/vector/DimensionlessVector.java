@@ -293,7 +293,7 @@ public class DimensionlessVector extends DoubleVectorRel<DimensionlessUnit, Dime
     @Override
     public Dimensionless instantiateScalarSI(final double valueSI, final DimensionlessUnit displayUnit)
     {
-        Dimensionless result = Dimensionless.instantiateSI(valueSI);
+        Dimensionless result = Dimensionless.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

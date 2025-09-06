@@ -291,7 +291,7 @@ public class PowerVector extends DoubleVectorRel<PowerUnit, Power, PowerVector>
     @Override
     public Power instantiateScalarSI(final double valueSI, final PowerUnit displayUnit)
     {
-        Power result = Power.instantiateSI(valueSI);
+        Power result = Power.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

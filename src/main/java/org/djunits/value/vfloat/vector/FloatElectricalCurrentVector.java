@@ -305,7 +305,7 @@ public class FloatElectricalCurrentVector
     @Override
     public FloatElectricalCurrent instantiateScalarSI(final float valueSI, final ElectricalCurrentUnit displayUnit)
     {
-        FloatElectricalCurrent result = FloatElectricalCurrent.instantiateSI(valueSI);
+        FloatElectricalCurrent result = FloatElectricalCurrent.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

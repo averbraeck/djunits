@@ -94,7 +94,7 @@ public class FloatMomentum extends FloatScalarRel<MomentumUnit, FloatMomentum>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatMomentum instantiateSI(final float value)
+    public static final FloatMomentum ofSI(final float value)
     {
         return new FloatMomentum(value, MomentumUnit.SI);
     }

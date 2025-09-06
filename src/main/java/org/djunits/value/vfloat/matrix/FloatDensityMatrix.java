@@ -221,7 +221,7 @@ public class FloatDensityMatrix extends FloatMatrixRel<DensityUnit, FloatDensity
     @Override
     public FloatDensity instantiateScalarSI(final float valueSI, final DensityUnit displayUnit)
     {
-        FloatDensity result = FloatDensity.instantiateSI(valueSI);
+        FloatDensity result = FloatDensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

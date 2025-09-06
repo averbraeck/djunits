@@ -293,7 +293,7 @@ public class FloatForceVector extends FloatVectorRel<ForceUnit, FloatForce, Floa
     @Override
     public FloatForce instantiateScalarSI(final float valueSI, final ForceUnit displayUnit)
     {
-        FloatForce result = FloatForce.instantiateSI(valueSI);
+        FloatForce result = FloatForce.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

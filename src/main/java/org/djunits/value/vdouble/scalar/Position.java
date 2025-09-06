@@ -65,7 +65,7 @@ public class Position extends DoubleScalarAbs<PositionUnit, Position, LengthUnit
      * @param value value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Position instantiateSI(final double value)
+    public static final Position ofSI(final double value)
     {
         return new Position(value, PositionUnit.DEFAULT);
     }

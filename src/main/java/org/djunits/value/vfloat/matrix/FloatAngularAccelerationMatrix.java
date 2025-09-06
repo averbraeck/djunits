@@ -235,7 +235,7 @@ public class FloatAngularAccelerationMatrix extends FloatMatrixRel<AngularAccele
     @Override
     public FloatAngularAcceleration instantiateScalarSI(final float valueSI, final AngularAccelerationUnit displayUnit)
     {
-        FloatAngularAcceleration result = FloatAngularAcceleration.instantiateSI(valueSI);
+        FloatAngularAcceleration result = FloatAngularAcceleration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

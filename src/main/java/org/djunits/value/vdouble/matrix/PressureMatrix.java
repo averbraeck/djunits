@@ -220,7 +220,7 @@ public class PressureMatrix extends DoubleMatrixRel<PressureUnit, Pressure, Pres
     @Override
     public Pressure instantiateScalarSI(final double valueSI, final PressureUnit displayUnit)
     {
-        Pressure result = Pressure.instantiateSI(valueSI);
+        Pressure result = Pressure.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

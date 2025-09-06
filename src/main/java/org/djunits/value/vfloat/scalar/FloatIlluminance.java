@@ -89,7 +89,7 @@ public class FloatIlluminance extends FloatScalarRel<IlluminanceUnit, FloatIllum
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatIlluminance instantiateSI(final float value)
+    public static final FloatIlluminance ofSI(final float value)
     {
         return new FloatIlluminance(value, IlluminanceUnit.SI);
     }

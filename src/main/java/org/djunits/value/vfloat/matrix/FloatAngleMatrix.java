@@ -223,7 +223,7 @@ public class FloatAngleMatrix extends FloatMatrixRelWithAbs<DirectionUnit, Float
     @Override
     public FloatAngle instantiateScalarSI(final float valueSI, final AngleUnit displayUnit)
     {
-        FloatAngle result = FloatAngle.instantiateSI(valueSI);
+        FloatAngle result = FloatAngle.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -243,7 +243,7 @@ public class FloatAngleMatrix extends FloatMatrixRelWithAbs<DirectionUnit, Float
     @Override
     public FloatDirection instantiateScalarAbsSI(final float valueSI, final DirectionUnit displayUnit)
     {
-        FloatDirection result = FloatDirection.instantiateSI(valueSI);
+        FloatDirection result = FloatDirection.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

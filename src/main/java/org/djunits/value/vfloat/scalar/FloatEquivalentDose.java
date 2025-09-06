@@ -90,7 +90,7 @@ public class FloatEquivalentDose extends FloatScalarRel<EquivalentDoseUnit, Floa
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatEquivalentDose instantiateSI(final float value)
+    public static final FloatEquivalentDose ofSI(final float value)
     {
         return new FloatEquivalentDose(value, EquivalentDoseUnit.SI);
     }

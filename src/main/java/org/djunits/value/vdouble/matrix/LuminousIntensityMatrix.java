@@ -225,7 +225,7 @@ public class LuminousIntensityMatrix
     @Override
     public LuminousIntensity instantiateScalarSI(final double valueSI, final LuminousIntensityUnit displayUnit)
     {
-        LuminousIntensity result = LuminousIntensity.instantiateSI(valueSI);
+        LuminousIntensity result = LuminousIntensity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

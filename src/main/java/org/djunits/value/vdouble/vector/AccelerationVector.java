@@ -291,7 +291,7 @@ public class AccelerationVector extends DoubleVectorRel<AccelerationUnit, Accele
     @Override
     public Acceleration instantiateScalarSI(final double valueSI, final AccelerationUnit displayUnit)
     {
-        Acceleration result = Acceleration.instantiateSI(valueSI);
+        Acceleration result = Acceleration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

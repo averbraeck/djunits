@@ -81,7 +81,7 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final LuminousIntensity instantiateSI(final double value)
+    public static final LuminousIntensity ofSI(final double value)
     {
         return new LuminousIntensity(value, LuminousIntensityUnit.SI);
     }

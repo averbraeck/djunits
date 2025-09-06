@@ -87,7 +87,7 @@ public class Temperature
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
-    public static final Temperature instantiateSI(final double value)
+    public static final Temperature ofSI(final double value)
     {
         return new Temperature(value, TemperatureUnit.SI);
     }

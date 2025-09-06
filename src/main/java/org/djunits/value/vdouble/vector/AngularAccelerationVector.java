@@ -291,7 +291,7 @@ public class AngularAccelerationVector extends DoubleVectorRel<AngularAccelerati
     @Override
     public AngularAcceleration instantiateScalarSI(final double valueSI, final AngularAccelerationUnit displayUnit)
     {
-        AngularAcceleration result = AngularAcceleration.instantiateSI(valueSI);
+        AngularAcceleration result = AngularAcceleration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

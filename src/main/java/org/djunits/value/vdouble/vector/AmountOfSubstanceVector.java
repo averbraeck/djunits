@@ -291,7 +291,7 @@ public class AmountOfSubstanceVector extends DoubleVectorRel<AmountOfSubstanceUn
     @Override
     public AmountOfSubstance instantiateScalarSI(final double valueSI, final AmountOfSubstanceUnit displayUnit)
     {
-        AmountOfSubstance result = AmountOfSubstance.instantiateSI(valueSI);
+        AmountOfSubstance result = AmountOfSubstance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

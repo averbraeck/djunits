@@ -223,7 +223,7 @@ public class FloatTimeMatrix extends FloatMatrixAbs<TimeUnit, FloatTime, FloatTi
     @Override
     public FloatTime instantiateScalarSI(final float valueSI, final TimeUnit displayUnit)
     {
-        FloatTime result = FloatTime.instantiateSI(valueSI);
+        FloatTime result = FloatTime.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
@@ -243,7 +243,7 @@ public class FloatTimeMatrix extends FloatMatrixAbs<TimeUnit, FloatTime, FloatTi
     @Override
     public FloatDuration instantiateScalarRelSI(final float valueSI, final DurationUnit displayUnit)
     {
-        FloatDuration result = FloatDuration.instantiateSI(valueSI);
+        FloatDuration result = FloatDuration.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

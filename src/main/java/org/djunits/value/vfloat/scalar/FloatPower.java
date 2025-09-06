@@ -96,7 +96,7 @@ public class FloatPower extends FloatScalarRel<PowerUnit, FloatPower>
      * @param value the float value in SI units
      * @return the new scalar with the SI value
      */
-    public static final FloatPower instantiateSI(final float value)
+    public static final FloatPower ofSI(final float value)
     {
         return new FloatPower(value, PowerUnit.SI);
     }

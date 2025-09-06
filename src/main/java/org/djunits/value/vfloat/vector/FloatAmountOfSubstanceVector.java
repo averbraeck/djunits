@@ -305,7 +305,7 @@ public class FloatAmountOfSubstanceVector
     @Override
     public FloatAmountOfSubstance instantiateScalarSI(final float valueSI, final AmountOfSubstanceUnit displayUnit)
     {
-        FloatAmountOfSubstance result = FloatAmountOfSubstance.instantiateSI(valueSI);
+        FloatAmountOfSubstance result = FloatAmountOfSubstance.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

@@ -222,7 +222,7 @@ public class RadioActivityMatrix
     @Override
     public RadioActivity instantiateScalarSI(final double valueSI, final RadioActivityUnit displayUnit)
     {
-        RadioActivity result = RadioActivity.instantiateSI(valueSI);
+        RadioActivity result = RadioActivity.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

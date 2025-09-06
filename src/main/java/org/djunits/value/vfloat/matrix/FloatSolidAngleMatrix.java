@@ -224,7 +224,7 @@ public class FloatSolidAngleMatrix
     @Override
     public FloatSolidAngle instantiateScalarSI(final float valueSI, final SolidAngleUnit displayUnit)
     {
-        FloatSolidAngle result = FloatSolidAngle.instantiateSI(valueSI);
+        FloatSolidAngle result = FloatSolidAngle.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }

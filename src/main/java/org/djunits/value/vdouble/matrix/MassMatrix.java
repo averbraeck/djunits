@@ -220,7 +220,7 @@ public class MassMatrix extends DoubleMatrixRel<MassUnit, Mass, MassVector, Mass
     @Override
     public Mass instantiateScalarSI(final double valueSI, final MassUnit displayUnit)
     {
-        Mass result = Mass.instantiateSI(valueSI);
+        Mass result = Mass.ofSI(valueSI);
         result.setDisplayUnit(displayUnit);
         return result;
     }
