@@ -48,12 +48,22 @@ public Jerk(final Jerk value)
 }
 ```
 
-Another method that can be implemented is the `ofSI()` method as a quick generator with the default unit.
+One method that needs to be implemented is the `instantiateRel` method, which is internally used in, for instance, the `plus()` method to create a new instance of `Jerk` after the addition.
+
+```java
+@Override
+public final Jerk instantiateRel(final double value, final JerkUnit unit)
+{
+    return new Jerk(value, unit);
+}
+```
+
+A method that *can* be implemented is the `ofSI()` static method as a quick generator with the default unit.
 
 ```java
 public static Jerk of(final double valueSI)
 {
-    return new Jerk(valueSI, jerkUnit.SI);
+    return new Jerk(valueSI, JerkUnit.SI);
 }
 ```
 
