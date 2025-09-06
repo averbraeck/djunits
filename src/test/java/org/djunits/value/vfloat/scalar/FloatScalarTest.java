@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import org.djunits.quantity.Quantities;
 import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
+import org.djunits.unit.AngleUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
 import org.djunits.unit.SpeedUnit;
@@ -111,6 +112,40 @@ public class FloatScalarTest
         FloatSpeed u = FloatSpeed.ofSI(10.0f).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
         assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
         assertEquals(10.0f, u.getSI());
+    }
+
+
+    /**
+     * Test Angle constants.
+     */
+    @Test
+    public final void testAngleConstants()
+    {
+        assertEquals(AngleUnit.RADIAN, FloatAngle.ZERO.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.ONE.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.PI.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.HALF_PI.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.TAU.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.NaN.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.POSITIVE_INFINITY.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.NEGATIVE_INFINITY.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.POS_MAXVALUE.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, FloatAngle.NEG_MAXVALUE.getDisplayUnit());
+
+        assertEquals(0.0f, FloatAngle.ZERO.getSI());
+        assertEquals(1.0f, FloatAngle.ONE.getSI());
+        assertEquals((float) Math.PI, FloatAngle.PI.getSI(), 1E-6);
+        assertEquals((float) (Math.PI / 2.0), FloatAngle.HALF_PI.getSI(), 1E-6);
+        assertEquals((float) (Math.PI * 2.0), FloatAngle.TAU.getSI(), 1E-6);
+        assertTrue(Float.isNaN(FloatAngle.NaN.getSI()));
+        assertTrue(Float.isInfinite(FloatAngle.POSITIVE_INFINITY.getSI()));
+        assertTrue(FloatAngle.POSITIVE_INFINITY.getSI() > 0);
+        assertTrue(Float.isInfinite(FloatAngle.NEGATIVE_INFINITY.getSI()));
+        assertTrue(FloatAngle.NEGATIVE_INFINITY.getSI() < 0);
+        assertTrue(Float.isFinite(FloatAngle.POS_MAXVALUE.getSI()));
+        assertTrue(FloatAngle.POS_MAXVALUE.getSI() > 0);
+        assertTrue(Float.isFinite(FloatAngle.NEG_MAXVALUE.getSI()));
+        assertTrue(FloatAngle.NEG_MAXVALUE.getSI() < 0);
     }
 
     /**
