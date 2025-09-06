@@ -24,7 +24,6 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
-import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -387,13 +386,13 @@ public class DoubleScalarTest
             {
                 expected = zeroValue + (oneValue - zeroValue) * ratio;
             }
-            Position interpolated = DoubleScalar.interpolate(zeroPosition, onePosition, ratio);
+            Position interpolated = Position.interpolate(zeroPosition, onePosition, ratio);
             assertEquals(expected, interpolated.getInUnit(), 0.001, "interpoated value matches ratio");
-            FloatPosition floatInterpolated = FloatScalar.interpolate(floatZeroPosition, floatOnePosition, (float) ratio);
+            FloatPosition floatInterpolated = FloatPosition.interpolate(floatZeroPosition, floatOnePosition, (float) ratio);
             assertEquals((float) expected, floatInterpolated.getInUnit(), 0.01f, "interpoated value matches ratio");
-            Length interpolatedLength = DoubleScalar.interpolate(zeroLength, oneLength, ratio);
+            Length interpolatedLength = Length.interpolate(zeroLength, oneLength, ratio);
             assertEquals(expected, interpolatedLength.getInUnit(), 0.001, "interpoated value matches ratio");
-            FloatLength floatInterpolatedLength = FloatScalar.interpolate(floatZeroLength, floatOneLength, (float) ratio);
+            FloatLength floatInterpolatedLength = FloatLength.interpolate(floatZeroLength, floatOneLength, (float) ratio);
             assertEquals((float) expected, floatInterpolatedLength.getInUnit(), 0.01f, "interpoated value matches ratio");
         }
     }
@@ -412,36 +411,36 @@ public class DoubleScalarTest
         Position middlePosition = new Position(middle, PositionUnit.FOOT);
         Position highestPosition = new Position(highest, PositionUnit.FOOT);
 
-        Position max = DoubleScalar.max(lowestPosition, highestPosition);
+        Position max = Position.max(lowestPosition, highestPosition);
         assertEquals(highestPosition, max, "max returns highest");
         // Reverse arguments
-        max = DoubleScalar.max(highestPosition, lowestPosition);
+        max = Position.max(highestPosition, lowestPosition);
         assertEquals(highestPosition, max, "max returns highest");
         // Three arguments
-        max = DoubleScalar.max(lowestPosition, middlePosition, highestPosition);
+        max = Position.max(lowestPosition, middlePosition, highestPosition);
         assertEquals(highestPosition, max, "max returns highest");
-        max = DoubleScalar.max(highestPosition, lowestPosition, middlePosition);
+        max = Position.max(highestPosition, lowestPosition, middlePosition);
         assertEquals(highestPosition, max, "max returns highest");
-        max = DoubleScalar.max(lowestPosition, highestPosition, middlePosition);
+        max = Position.max(lowestPosition, highestPosition, middlePosition);
         assertEquals(highestPosition, max, "max returns highest");
         // Lots of arguments
-        max = DoubleScalar.max(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
+        max = Position.max(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
         assertEquals(highestPosition, max, "max returns highest");
 
-        Position min = DoubleScalar.min(lowestPosition, highestPosition);
+        Position min = Position.min(lowestPosition, highestPosition);
         assertEquals(lowestPosition, min, "min returns lowest");
         // Reverse arguments
-        min = DoubleScalar.min(highestPosition, lowestPosition);
+        min = Position.min(highestPosition, lowestPosition);
         assertEquals(lowestPosition, min, "min returns highest");
         // Three arguments
-        min = DoubleScalar.min(lowestPosition, middlePosition, highestPosition);
+        min = Position.min(lowestPosition, middlePosition, highestPosition);
         assertEquals(lowestPosition, min, "min returns lowest");
-        min = DoubleScalar.min(highestPosition, lowestPosition, middlePosition);
+        min = Position.min(highestPosition, lowestPosition, middlePosition);
         assertEquals(lowestPosition, min, "min returns lowest");
-        min = DoubleScalar.min(highestPosition, middlePosition, lowestPosition);
+        min = Position.min(highestPosition, middlePosition, lowestPosition);
         assertEquals(lowestPosition, min, "min returns lowest");
         // Lots of arguments
-        min = DoubleScalar.min(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
+        min = Position.min(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
         assertEquals(lowestPosition, min, "min returns lowest");
     }
 

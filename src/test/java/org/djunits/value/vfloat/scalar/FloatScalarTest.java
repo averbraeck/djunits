@@ -392,36 +392,36 @@ public class FloatScalarTest
         FloatPosition middlePosition = new FloatPosition(middle, PositionUnit.FOOT);
         FloatPosition highestPosition = new FloatPosition(highest, PositionUnit.FOOT);
 
-        FloatPosition max = FloatScalar.max(lowestPosition, highestPosition);
+        FloatPosition max = FloatPosition.max(lowestPosition, highestPosition);
         assertEquals(highestPosition, max, "max returns highest");
         // Reverse arguments
-        max = FloatScalar.max(highestPosition, lowestPosition);
+        max = FloatPosition.max(highestPosition, lowestPosition);
         assertEquals(highestPosition, max, "max returns highest");
         // Three arguments
-        max = FloatScalar.max(lowestPosition, middlePosition, highestPosition);
+        max = FloatPosition.max(lowestPosition, middlePosition, highestPosition);
         assertEquals(highestPosition, max, "max returns highest");
-        max = FloatScalar.max(highestPosition, lowestPosition, middlePosition);
+        max = FloatPosition.max(highestPosition, lowestPosition, middlePosition);
         assertEquals(highestPosition, max, "max returns highest");
-        max = FloatScalar.max(lowestPosition, highestPosition, middlePosition);
+        max = FloatPosition.max(lowestPosition, highestPosition, middlePosition);
         assertEquals(highestPosition, max, "max returns highest");
         // Lots of arguments
-        max = FloatScalar.max(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
+        max = FloatPosition.max(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
         assertEquals(highestPosition, max, "max returns highest");
 
-        FloatPosition min = FloatScalar.min(lowestPosition, highestPosition);
+        FloatPosition min = FloatPosition.min(lowestPosition, highestPosition);
         assertEquals(lowestPosition, min, "min returns lowest");
         // Reverse arguments
-        min = FloatScalar.min(highestPosition, lowestPosition);
+        min = FloatPosition.min(highestPosition, lowestPosition);
         assertEquals(lowestPosition, min, "min returns highest");
         // Three arguments
-        min = FloatScalar.min(lowestPosition, middlePosition, highestPosition);
+        min = FloatPosition.min(lowestPosition, middlePosition, highestPosition);
         assertEquals(lowestPosition, min, "min returns lowest");
-        min = FloatScalar.min(highestPosition, lowestPosition, middlePosition);
+        min = FloatPosition.min(highestPosition, lowestPosition, middlePosition);
         assertEquals(lowestPosition, min, "min returns lowest");
-        min = FloatScalar.min(highestPosition, middlePosition, lowestPosition);
+        min = FloatPosition.min(highestPosition, middlePosition, lowestPosition);
         assertEquals(lowestPosition, min, "min returns lowest");
         // Lots of arguments
-        min = FloatScalar.min(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
+        min = FloatPosition.min(highestPosition, lowestPosition, highestPosition, middlePosition, middlePosition);
         assertEquals(lowestPosition, min, "min returns lowest");
     }
 
