@@ -17,6 +17,7 @@ import org.djunits.unit.PositionUnit;
 import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.Unit;
+import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
@@ -203,6 +204,75 @@ public class DoubleScalarTest
                             "Exception is an IllegalArgumentException");
                 }
             }
+        }
+    }
+
+    /**
+     * Test all "multiply", "divide" and "reciprocal" methods.
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws ClassNotFoundException on error
+     * @throws UnitException on error
+     * @throws InstantiationException on error
+     */
+    @Test
+    public void testAllMulDiv() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
+    {
+        // load all classes
+        assertEquals("m", UNITS.METER.getId());
+
+        double testValue = 4.0;
+        double dimValue = 2.0;
+        for (String type : CLASSNAMES.REL_ALL_LIST)
+        {
+            String className = "org.djunits.value.vdouble.scalar." + type;
+            Class<?> scalarClass = Class.forName(className);
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(type + "Unit");
+            Unit<?> unit = quantity.getStandardUnit();
+            Constructor<?> constructor = scalarClass.getDeclaredConstructor(double.class, unit.getClass());
+            DoubleScalarRel<?, ?> scalar = (DoubleScalarRel<?, ?>) constructor.newInstance(testValue, unit);
+            Dimensionless dimless = Dimensionless.ofSI(dimValue);
+            Method mulMethod = scalarClass.getDeclaredMethod("multiply", DoubleScalarRel.class, DoubleScalarRel.class);
+            Method divMethod = scalarClass.getDeclaredMethod("divide", DoubleScalarRel.class, DoubleScalarRel.class);
+            Method recMethod = scalarClass.getDeclaredMethod("reciprocal");
+
+            DoubleScalar<?, ?> result = (DoubleScalar<?, ?>) mulMethod.invoke(null, scalar, dimless);
+            assertEquals(testValue * dimValue, result.getSI());
+            assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions(),
+                    result.getDisplayUnit().getQuantity().getSiDimensions());
+
+            result = (DoubleScalar<?, ?>) mulMethod.invoke(null, dimless, scalar);
+            assertEquals(testValue * dimValue, result.getSI());
+            assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions(),
+                    result.getDisplayUnit().getQuantity().getSiDimensions());
+
+            result = (DoubleScalar<?, ?>) divMethod.invoke(null, scalar, dimless);
+            assertEquals(testValue / dimValue, result.getSI());
+            assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions(),
+                    result.getDisplayUnit().getQuantity().getSiDimensions());
+
+            // check reciprocal SI dimensions
+            DoubleScalar<?, ?> reciprocal = (DoubleScalar<?, ?>) recMethod.invoke(scalar);
+            result = SIScalar.divide(Dimensionless.ONE, scalar);
+            assertEquals(1.0 / testValue, reciprocal.getSI(), 1E-6);
+            assertEquals(result.getSI(), reciprocal.getSI(), 1E-6);
+            for (int i = 0; i < SIDimensions.NUMBER_DIMENSIONS; i++)
+            {
+                assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions().siDimensions()[i],
+                        0.0 - reciprocal.getDisplayUnit().getQuantity().getSiDimensions().siDimensions()[i]);
+            }
+
+            // check errors
+            Try.testFail(() -> mulMethod.invoke(null, scalar, null));
+            Try.testFail(() -> mulMethod.invoke(null, null, dimless));
+            Try.testFail(() -> divMethod.invoke(null, scalar, null));
+            Try.testFail(() -> divMethod.invoke(null, null, dimless));
+            Try.testFail(() -> mulMethod.invoke(null, scalar, Length.ofSI(2.0)));
+            Try.testFail(() -> divMethod.invoke(null, scalar, Length.ofSI(2.0)));
         }
     }
 

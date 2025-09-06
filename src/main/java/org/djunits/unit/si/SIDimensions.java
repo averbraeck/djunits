@@ -240,6 +240,20 @@ public class SIDimensions implements Serializable
     }
 
     /**
+     * Return the (fractional) SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd.
+     * @return the (fractional) SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd
+     */
+    public double[] siDimensions()
+    {
+        double[] result = new double[NUMBER_DIMENSIONS];
+        for (int i = 0; i < NUMBER_DIMENSIONS; i++)
+        {
+            result[i] = 1.0 * this.dimensions[i] / this.denominator[i];
+        }
+        return result;
+    }
+
+    /**
      * Add a set of SI dimensions to this SIDimensions. Note: as dimensions are considered to be immutable, a new dimension is
      * returned. The original dimension (<code>this</code>) remains unaltered.
      * @param other the dimensions to add (usually as a result of multiplication of scalars)

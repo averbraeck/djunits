@@ -17,12 +17,14 @@ import org.djunits.unit.PositionUnit;
 import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.Unit;
+import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UNITS;
 import org.djunits.unit.util.UnitException;
 import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
+import org.djutils.exceptions.Try;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -205,6 +207,75 @@ public class FloatScalarTest
                             "Exception is an IllegalArgumentException");
                 }
             }
+        }
+    }
+
+    /**
+     * Test all "multiply", "divide" and "reciprocal" methods.
+     * @throws SecurityException on error
+     * @throws NoSuchMethodException on error
+     * @throws InvocationTargetException on error
+     * @throws IllegalArgumentException on error
+     * @throws IllegalAccessException on error
+     * @throws ClassNotFoundException on error
+     * @throws UnitException on error
+     * @throws InstantiationException on error
+     */
+    @Test
+    public void testAllMulDiv() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, UnitException, InstantiationException
+    {
+        // load all classes
+        assertEquals("m", UNITS.METER.getId());
+
+        float testValue = 4.0f;
+        float dimValue = 2.0f;
+        for (String type : CLASSNAMES.REL_ALL_LIST)
+        {
+            String className = "org.djunits.value.vfloat.scalar." + "Float" + type;
+            Class<?> scalarClass = Class.forName(className);
+            Quantity<?> quantity = Quantities.INSTANCE.getQuantity(type + "Unit");
+            Unit<?> unit = quantity.getStandardUnit();
+            Constructor<?> constructor = scalarClass.getDeclaredConstructor(float.class, unit.getClass());
+            FloatScalarRel<?, ?> scalar = (FloatScalarRel<?, ?>) constructor.newInstance(testValue, unit);
+            FloatDimensionless dimless = FloatDimensionless.ofSI(dimValue);
+            Method mulMethod = scalarClass.getDeclaredMethod("multiply", FloatScalarRel.class, FloatScalarRel.class);
+            Method divMethod = scalarClass.getDeclaredMethod("divide", FloatScalarRel.class, FloatScalarRel.class);
+            Method recMethod = scalarClass.getDeclaredMethod("reciprocal");
+
+            FloatScalar<?, ?> result = (FloatScalar<?, ?>) mulMethod.invoke(null, scalar, dimless);
+            assertEquals(testValue * dimValue, result.getSI());
+            assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions(),
+                    result.getDisplayUnit().getQuantity().getSiDimensions());
+
+            result = (FloatScalar<?, ?>) mulMethod.invoke(null, dimless, scalar);
+            assertEquals(testValue * dimValue, result.getSI());
+            assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions(),
+                    result.getDisplayUnit().getQuantity().getSiDimensions());
+
+            result = (FloatScalar<?, ?>) divMethod.invoke(null, scalar, dimless);
+            assertEquals(testValue / dimValue, result.getSI());
+            assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions(),
+                    result.getDisplayUnit().getQuantity().getSiDimensions());
+
+            // check reciprocal SI dimensions
+            FloatScalar<?, ?> reciprocal = (FloatScalar<?, ?>) recMethod.invoke(scalar);
+            result = FloatSIScalar.divide(FloatDimensionless.ONE, scalar);
+            assertEquals(1.0f / testValue, reciprocal.getSI(), 1E-6);
+            assertEquals(result.getSI(), reciprocal.getSI(), 1E-6);
+            for (int i = 0; i < SIDimensions.NUMBER_DIMENSIONS; i++)
+            {
+                assertEquals(scalar.getDisplayUnit().getQuantity().getSiDimensions().siDimensions()[i],
+                        0.0 - reciprocal.getDisplayUnit().getQuantity().getSiDimensions().siDimensions()[i]);
+            }
+
+            // check errors
+            Try.testFail(() -> mulMethod.invoke(null, scalar, null));
+            Try.testFail(() -> mulMethod.invoke(null, null, dimless));
+            Try.testFail(() -> divMethod.invoke(null, scalar, null));
+            Try.testFail(() -> divMethod.invoke(null, null, dimless));
+            Try.testFail(() -> mulMethod.invoke(null, scalar, FloatLength.ofSI(2.0f)));
+            Try.testFail(() -> divMethod.invoke(null, scalar, FloatLength.ofSI(2.0f)));
         }
     }
 
