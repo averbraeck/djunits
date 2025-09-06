@@ -21,6 +21,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
+import org.djutils.exceptions.Try;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -803,16 +804,20 @@ public class ScalarOperationsTest
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (DoubleScalarRel<?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
-            for (double ratio : new double[] {-5, -1, 0, 0.3, 1, 2, 10})
+            Method interpolate =
+                    ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, double.class);
+            DoubleScalar<?, ?> result;
+            for (double ratio : new double[] {0.0, 0.1, 0.3, 1.0})
             {
                 double expectedResult = (1.0 - ratio) * zeroValue + ratio * oneValue;
-                Method interpolate =
-                        ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, double.class);
-                DoubleScalar<?, ?> result;
                 result = (DoubleScalar<?, ?>) interpolate.invoke(null, zero, one, ratio);
                 assertEquals(expectedResult, verifyAbsRelPrecisionAndExtractSI(abs, doubleType, result), 0.01,
                         "Result of operation");
             }
+            Try.testFail(() -> interpolate.invoke(null, zero, one, -0.01));
+            Try.testFail(() -> interpolate.invoke(null, zero, one, 1.01));
+            Try.testFail(() -> interpolate.invoke(null, zero, one, 2.0));
+            Try.testFail(() -> interpolate.invoke(null, zero, one, 10.0));
             double biggestValue = 345.678;
             DoubleScalar<?,
                     ?> biggest = abs
@@ -821,7 +826,7 @@ public class ScalarOperationsTest
                             : (DoubleScalarRel<?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             Method max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass);
-            DoubleScalar<?, ?> result = (DoubleScalar<?, ?>) max.invoke(null, zero, one);
+            result = (DoubleScalar<?, ?>) max.invoke(null, zero, one);
             assertEquals(one, result, "max returns object with maximum value");
             result = (DoubleScalar<?, ?>) max.invoke(null, one, zero);
             assertEquals(one, result, "max returns object with maximum value");
@@ -918,15 +923,20 @@ public class ScalarOperationsTest
                                     getSIUnitInstance(getUnitClass(scalarClass), abs))
                             : (FloatScalarRel<?, ?>) constructor.newInstance(oneValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
-            for (float ratio : new float[] {-5, -1, 0, 0.3f, 1, 2, 10})
+            Method interpolate = ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, float.class);
+            FloatScalar<?, ?> result;
+            for (float ratio : new float[] {0.0f, 0.1f, 0.3f, 1.0f})
             {
                 float expectedResult = (1.0f - ratio) * zeroValue + ratio * oneValue;
-                Method interpolate = ClassUtil.resolveMethod(scalarClass, "interpolate", scalarClass, scalarClass, float.class);
-                FloatScalar<?, ?> result;
                 result = (FloatScalar<?, ?>) interpolate.invoke(null, zero, one, ratio);
                 assertEquals(expectedResult, verifyAbsRelPrecisionAndExtractSI(abs, doubleType, result), 0.01,
                         "Result of operation");
             }
+            Try.testFail(() -> interpolate.invoke(null, zero, one, -0.01f));
+            Try.testFail(() -> interpolate.invoke(null, zero, one, 1.01f));
+            Try.testFail(() -> interpolate.invoke(null, zero, one, 2.0f));
+            Try.testFail(() -> interpolate.invoke(null, zero, one, 10.0f));
+
             float biggestValue = 345.678f;
             FloatScalar<?,
                     ?> biggest = abs
@@ -935,7 +945,7 @@ public class ScalarOperationsTest
                             : (FloatScalarRel<?, ?>) constructor.newInstance(biggestValue,
                                     getSIUnitInstance(getUnitClass(scalarClass), abs));
             Method max = ClassUtil.resolveMethod(scalarClass, "max", scalarClass, scalarClass);
-            FloatScalar<?, ?> result = (FloatScalar<?, ?>) max.invoke(null, zero, one);
+            result = (FloatScalar<?, ?>) max.invoke(null, zero, one);
             assertEquals(one, result, "max return object with maximum value");
             result = (FloatScalar<?, ?>) max.invoke(null, one, zero);
             assertEquals(one, result, "max return object with maximum value");

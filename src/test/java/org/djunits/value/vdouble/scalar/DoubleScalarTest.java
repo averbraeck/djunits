@@ -26,6 +26,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
+import org.djutils.exceptions.Try;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -359,7 +360,7 @@ public class DoubleScalarTest
     @Test
     public final void interpolateTest()
     {
-        double[] ratios = new double[] {0.0, 1.0, 0.5, 0.1, -7.2, 8.04};
+        double[] ratios = new double[] {0.0, 1.0, 0.5, 0.1};
         double zeroValue = 123.4;
         double oneValue = 234.5;
         Position zeroPosition = new Position(zeroValue, PositionUnit.MILE);
@@ -395,6 +396,31 @@ public class DoubleScalarTest
             FloatLength floatInterpolatedLength = FloatLength.interpolate(floatZeroLength, floatOneLength, (float) ratio);
             assertEquals((float) expected, floatInterpolatedLength.getInUnit(), 0.01f, "interpoated value matches ratio");
         }
+
+        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, -0.01), IllegalArgumentException.class);
+        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, 1.01), IllegalArgumentException.class);
+        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, 7.02), IllegalArgumentException.class);
+        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, -8.6), IllegalArgumentException.class);
+
+        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, -0.01), IllegalArgumentException.class);
+        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, 1.01), IllegalArgumentException.class);
+        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, 7.02), IllegalArgumentException.class);
+        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, -8.6), IllegalArgumentException.class);
+
+        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, -0.01f),
+                IllegalArgumentException.class);
+        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, 1.01f),
+                IllegalArgumentException.class);
+        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, 7.02f),
+                IllegalArgumentException.class);
+        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, -8.6f),
+                IllegalArgumentException.class);
+
+        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, -0.01f), IllegalArgumentException.class);
+        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, 1.01f), IllegalArgumentException.class);
+        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, 7.02f), IllegalArgumentException.class);
+        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, -8.6f), IllegalArgumentException.class);
+
     }
 
     /**
