@@ -13,6 +13,7 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
+import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.util.UnitException;
@@ -452,6 +453,20 @@ public class DoubleMatrixMethodTest
                 }
             }
         }
+    }
+
+    /**
+     * Test setDisplayUnit.
+     */
+    @Test
+    public final void testSetDisplayUnit()
+    {
+        SpeedMatrix s = new SpeedMatrix(new double[][] {{10.0, 20.0}, {30.0, 40.0}}, SpeedUnit.KM_PER_HOUR);
+        SpeedMatrix t = s.setDisplayUnit(SpeedUnit.MILE_PER_HOUR);
+        assertTrue(s == t);
+        SpeedMatrix u = new SpeedMatrix(new double[][] {{10.0, 20.0}, {30.0, 40.0}}).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
+        assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
+        assertEquals(10.0, u.getSI(0, 0));
     }
 
     /**

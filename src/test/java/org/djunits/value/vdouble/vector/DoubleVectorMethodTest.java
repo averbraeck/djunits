@@ -13,6 +13,7 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
+import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.util.UnitException;
@@ -315,6 +316,20 @@ public class DoubleVectorMethodTest
                 }
             }
         }
+    }
+
+    /**
+     * Test setDisplayUnit.
+     */
+    @Test
+    public final void testSetDisplayUnit()
+    {
+        SpeedVector s = new SpeedVector(new double[] {10.0, 20.0}, SpeedUnit.KM_PER_HOUR);
+        SpeedVector t = s.setDisplayUnit(SpeedUnit.MILE_PER_HOUR);
+        assertTrue(s == t);
+        SpeedVector u = new SpeedVector(new double[] {10.0, 20.0}).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
+        assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
+        assertEquals(10.0, u.getSI(0));
     }
 
     /**

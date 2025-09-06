@@ -13,6 +13,7 @@ import org.djunits.unit.DirectionUnit;
 import org.djunits.unit.DurationUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
+import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.TimeUnit;
 import org.djunits.unit.util.UnitException;
@@ -315,6 +316,21 @@ public class FloatVectorMethodTest
                 }
             }
         }
+    }
+
+
+    /**
+     * Test setDisplayUnit.
+     */
+    @Test
+    public final void testSetDisplayUnit()
+    {
+        FloatSpeedVector s = new FloatSpeedVector(new float[] {10.0f, 20.0f}, SpeedUnit.KM_PER_HOUR);
+        FloatSpeedVector t = s.setDisplayUnit(SpeedUnit.MILE_PER_HOUR);
+        assertTrue(s == t);
+        FloatSpeedVector u = new FloatSpeedVector(new float[] {10.0f, 20.0f}).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
+        assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
+        assertEquals(10.0f, u.getSI(0));
     }
 
     /**
