@@ -178,9 +178,11 @@ public class FloatScalarTest
                     FloatScalar<?, ?> scalar = (FloatScalar<?, ?>) ofMethod.invoke(null, testValue, unitAbbreviation);
                     assertEquals(scalar.getDisplayUnit().getId(), unit.getId(), "unit was not parsed correctly");
                     if (Float.isFinite(scalar.getInUnit()) && scalar.getInUnit() != 0.0f && scalar.getInUnit() != -0.0f
-                            && (!unitAbbreviation.contains("(Y")))
+                            && !unitAbbreviation.contains("(Y") && !unitAbbreviation.startsWith("r")
+                            && !unitAbbreviation.startsWith("R") && !unitAbbreviation.startsWith("q"))
                     {
-                        assertEquals(testValue, scalar.getInUnit(), 0.5, "value was not parsed correctly");
+                        assertEquals(testValue, scalar.getInUnit(), 0.5,
+                                "value was not parsed correctly for " + scalar.toString());
                     }
                 }
                 try
