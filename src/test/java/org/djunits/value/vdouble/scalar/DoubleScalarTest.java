@@ -13,6 +13,7 @@ import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
+import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;
@@ -99,6 +100,20 @@ public class DoubleScalarTest
         checkContentsAndType(temperatureDS, value, 0.001, AbsoluteTemperatureUnit.KELVIN, true);
         out = temperatureDS.getSI();
         assertEquals(value, out, 0.001, "Value should match");
+    }
+
+    /**
+     * Test setDisplayUnit.
+     */
+    @Test
+    public final void testSetDisplayUnit()
+    {
+        Speed s = new Speed(10.0, SpeedUnit.KM_PER_HOUR);
+        Speed t = s.setDisplayUnit(SpeedUnit.MILE_PER_HOUR);
+        assertTrue(s == t);
+        Speed u = Speed.ofSI(10.0).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
+        assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
+        assertEquals(10.0, u.getSI());
     }
 
     /**

@@ -13,6 +13,7 @@ import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
+import org.djunits.unit.SpeedUnit;
 import org.djunits.unit.TemperatureUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;
@@ -96,6 +97,20 @@ public class FloatScalarTest
         checkContentsAndType(temperatureDS, value, 0.001f, AbsoluteTemperatureUnit.KELVIN, true);
         out = temperatureDS.getSI();
         assertEquals(value, out, 0.001, "Value should match");
+    }
+
+    /**
+     * Test setDisplayUnit.
+     */
+    @Test
+    public final void testSetDisplayUnit()
+    {
+        FloatSpeed s = new FloatSpeed(10.0f, SpeedUnit.KM_PER_HOUR);
+        FloatSpeed t = s.setDisplayUnit(SpeedUnit.MILE_PER_HOUR);
+        assertTrue(s == t);
+        FloatSpeed u = FloatSpeed.ofSI(10.0f).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
+        assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
+        assertEquals(10.0f, u.getSI());
     }
 
     /**
