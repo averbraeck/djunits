@@ -2,7 +2,6 @@ package org.djunits.value.vdouble.scalar.base;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.Relative;
-import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vdouble.scalar.SIScalar;
 
 /**
@@ -30,7 +29,7 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
      */
     public DoubleScalarRel(final double value, final U unit)
     {
-        super(unit, unit.isBaseSIUnit() ? value : ValueUtil.expressAsSIUnit(value, unit));
+        super(value, unit);
     }
 
     /**
@@ -39,7 +38,7 @@ public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarR
      */
     public DoubleScalarRel(final R value)
     {
-        super(value.getDisplayUnit(), value.getSI());
+        super(value);
     }
 
     /**

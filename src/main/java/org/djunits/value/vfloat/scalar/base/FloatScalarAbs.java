@@ -3,7 +3,6 @@ package org.djunits.value.vfloat.scalar.base;
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
-import org.djunits.value.util.ValueUtil;
 
 /**
  * The typed, abstract FloatScalarAbs class that forms the basis of all FloatScalar definitions and extensions.<br>
@@ -33,7 +32,7 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      */
     public FloatScalarAbs(final float value, final AU unit)
     {
-        super(unit, unit.isBaseSIUnit() ? value : (float) ValueUtil.expressAsSIUnit(value, unit));
+        super(value, unit);
     }
 
     /**
@@ -42,7 +41,7 @@ public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      */
     public FloatScalarAbs(final A value)
     {
-        super(value.getDisplayUnit(), value.getSI());
+        super(value);
     }
 
     /**

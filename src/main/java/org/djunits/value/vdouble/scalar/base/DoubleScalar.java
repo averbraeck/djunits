@@ -37,13 +37,23 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /**
      * Construct a new DoubleScalar.
+     * @param value the value to store, expressed in the given unit
      * @param unit the unit
-     * @param si the si value to store
      */
-    public DoubleScalar(final U unit, final double si)
+    public DoubleScalar(final double value, final U unit)
     {
         super(unit);
-        this.si = si;
+        this.si = unit.isBaseSIUnit() ? value : ValueUtil.expressAsSIUnit(value, unit);
+    }
+
+    /**
+     * Construct a new DoubleScalar.
+     * @param value the value to duplicate
+     */
+    public DoubleScalar(final S value)
+    {
+        super(value.getDisplayUnit());
+        this.si = value.getSI();
     }
 
     /**

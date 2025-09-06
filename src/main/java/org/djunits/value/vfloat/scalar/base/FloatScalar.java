@@ -37,13 +37,23 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
 
     /**
      * Construct a new FloatScalar.
+     * @param value the value to store, expressed in the given unit
      * @param unit the unit
-     * @param si the si value to store
      */
-    public FloatScalar(final U unit, final float si)
+    public FloatScalar(final float value, final U unit)
     {
         super(unit);
-        this.si = si;
+        this.si = unit.isBaseSIUnit() ? value : (float) ValueUtil.expressAsSIUnit(value, unit);
+    }
+
+    /**
+     * Construct a new FloatScalar.
+     * @param value the value to duplicate
+     */
+    public FloatScalar(final S value)
+    {
+        super(value.getDisplayUnit());
+        this.si = value.getSI();
     }
 
     /**

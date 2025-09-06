@@ -2,7 +2,6 @@ package org.djunits.value.vfloat.scalar.base;
 
 import org.djunits.unit.Unit;
 import org.djunits.value.Relative;
-import org.djunits.value.util.ValueUtil;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 
 /**
@@ -30,7 +29,7 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
      */
     public FloatScalarRel(final float value, final U unit)
     {
-        super(unit, unit.isBaseSIUnit() ? value : (float) ValueUtil.expressAsSIUnit(value, unit));
+        super(value, unit);
     }
 
     /**
@@ -39,7 +38,7 @@ public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel
      */
     public FloatScalarRel(final R value)
     {
-        super(value.getDisplayUnit(), value.getSI());
+        super(value);
     }
 
     /**

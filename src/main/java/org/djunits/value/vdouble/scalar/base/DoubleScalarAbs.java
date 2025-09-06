@@ -3,7 +3,6 @@ package org.djunits.value.vdouble.scalar.base;
 import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.Unit;
 import org.djunits.value.Absolute;
-import org.djunits.value.util.ValueUtil;
 
 /**
  * The typed, abstract DoubleScalarAbs class that forms the basis of all DoubleScalar definitions and extensions.<br>
@@ -34,7 +33,7 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      */
     public DoubleScalarAbs(final double value, final AU unit)
     {
-        super(unit, unit.isBaseSIUnit() ? value : ValueUtil.expressAsSIUnit(value, unit));
+        super(value, unit);
     }
 
     /**
@@ -43,7 +42,7 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      */
     public DoubleScalarAbs(final A value)
     {
-        super(value.getDisplayUnit(), value.getSI());
+        super(value);
     }
 
     /**
