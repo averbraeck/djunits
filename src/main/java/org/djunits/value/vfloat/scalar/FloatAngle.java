@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
 public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirection, AngleUnit, FloatAngle>
 {
     /** */
@@ -35,6 +35,15 @@ public class FloatAngle extends FloatScalarRelWithAbs<DirectionUnit, FloatDirect
 
     /** Constant with value one. */
     public static final FloatAngle ONE = new FloatAngle(1.0f, AngleUnit.SI);
+
+    /** Constant with value pi. */
+    public static final FloatAngle PI = new FloatAngle((float) Math.PI, AngleUnit.RADIAN);
+
+    /** Constant with value pi/2. */
+    public static final FloatAngle HALF_PI = new FloatAngle((float) (Math.PI / 2.0), AngleUnit.RADIAN);
+
+    /** Constant with value tau. */
+    public static final FloatAngle TAU = new FloatAngle((float) (Math.PI * 2.0), AngleUnit.RADIAN);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")

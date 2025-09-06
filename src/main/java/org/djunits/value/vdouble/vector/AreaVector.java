@@ -13,7 +13,7 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
 import jakarta.annotation.Generated;
 
 /**
- * Double AreaVector, a vector of values with a AreaUnit. 
+ * Double AreaVector, a vector of values with a AreaUnit.
  * <p>
  * Copyright (c) 2013-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
 public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
 
 {
@@ -141,8 +141,8 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
      * the displayUnit is just used for printing. The values but will always be internally stored as SI values or base values,
      * and expressed using the display unit or base unit when printing.
      * @param data the data for the vector as a List&lt;Double&gt; or List&lt;Area&gt;
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Double&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public AreaVector(final List<? extends Number> data, final AreaUnit displayUnit, final StorageType storageType)
@@ -162,8 +162,8 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
      * and expressed using the display unit or base unit when printing. Assume the storage type is DENSE since we offer the data
      * as a List.
      * @param data the data for the vector as a List&lt;Double&gt; or List&lt;Area&gt;
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public AreaVector(final List<? extends Number> data, final AreaUnit displayUnit)
     {
@@ -209,8 +209,8 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
      * the display unit or base unit when printing.
      * @param data the data for the vector as a Map&lt;Integer, Double&gt; or Map&lt;Integer, Area&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Double&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public AreaVector(final Map<Integer, ? extends Number> data, final int size, final AreaUnit displayUnit,
@@ -234,8 +234,8 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
      * the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as a Map.
      * @param data the data for the vector as a Map&lt;Integer, Double&gt; or Map&lt;Integer, Area&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Double&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Double&gt; or List&lt;Number&gt; in general
      */
     public AreaVector(final Map<Integer, ? extends Number> data, final int size, final AreaUnit displayUnit)
     {
@@ -249,7 +249,7 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
      * that they are expressed using SI units. When the data consists of Area objects, they each have their own unit, but will
      * be printed using SI units or base units. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing.
-     * @param data the data for the vector as a Map&lt;Integer, Double&gt; or Map&lt;Integer, Area&gt;; 
+     * @param data the data for the vector as a Map&lt;Integer, Double&gt; or Map&lt;Integer, Area&gt;;
      * @param size the size off the vector, i.e., the highest index
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -266,7 +266,7 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
      * be printed using SI units or base units. The values but will always be internally stored as SI values or base values, and
      * expressed using the display unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as
      * a Map.
-     * @param data the data for the vector as a Map&lt;Integer, Double&gt; or Map&lt;Integer, Area&gt;; 
+     * @param data the data for the vector as a Map&lt;Integer, Double&gt; or Map&lt;Integer, Area&gt;;
      * @param size the size off the vector, i.e., the highest index
      */
     public AreaVector(final Map<Integer, ? extends Number> data, final int size)
@@ -296,5 +296,4 @@ public class AreaVector extends DoubleVectorRel<AreaUnit, Area, AreaVector>
         return result;
     }
 
-   
 }

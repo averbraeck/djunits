@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import org.djunits.quantity.Quantities;
 import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
+import org.djunits.unit.AngleUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.PositionUnit;
 import org.djunits.unit.SpeedUnit;
@@ -114,6 +115,39 @@ public class DoubleScalarTest
         Speed u = Speed.ofSI(10.0).setDisplayUnit(SpeedUnit.KM_PER_HOUR);
         assertEquals(SpeedUnit.KM_PER_HOUR, u.getDisplayUnit());
         assertEquals(10.0, u.getSI());
+    }
+
+    /**
+     * Test Angle constants.
+     */
+    @Test
+    public final void testAngleConstants()
+    {
+        assertEquals(AngleUnit.RADIAN, Angle.ZERO.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.ONE.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.PI.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.HALF_PI.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.TAU.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.NaN.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.POSITIVE_INFINITY.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.NEGATIVE_INFINITY.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.POS_MAXVALUE.getDisplayUnit());
+        assertEquals(AngleUnit.RADIAN, Angle.NEG_MAXVALUE.getDisplayUnit());
+
+        assertEquals(0.0, Angle.ZERO.getSI());
+        assertEquals(1.0, Angle.ONE.getSI());
+        assertEquals(Math.PI, Angle.PI.getSI(), 1E-6);
+        assertEquals(Math.PI / 2.0, Angle.HALF_PI.getSI(), 1E-6);
+        assertEquals(Math.PI * 2.0, Angle.TAU.getSI(), 1E-6);
+        assertTrue(Double.isNaN(Angle.NaN.getSI()));
+        assertTrue(Double.isInfinite(Angle.POSITIVE_INFINITY.getSI()));
+        assertTrue(Angle.POSITIVE_INFINITY.getSI() > 0);
+        assertTrue(Double.isInfinite(Angle.NEGATIVE_INFINITY.getSI()));
+        assertTrue(Angle.NEGATIVE_INFINITY.getSI() < 0);
+        assertTrue(Double.isFinite(Angle.POS_MAXVALUE.getSI()));
+        assertTrue(Angle.POS_MAXVALUE.getSI() > 0);
+        assertTrue(Double.isFinite(Angle.NEG_MAXVALUE.getSI()));
+        assertTrue(Angle.NEG_MAXVALUE.getSI() < 0);
     }
 
     /**

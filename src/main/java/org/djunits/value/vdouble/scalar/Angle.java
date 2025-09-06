@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
 public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, AngleUnit, Angle>
 {
     /** */
@@ -35,6 +35,15 @@ public class Angle extends DoubleScalarRelWithAbs<DirectionUnit, Direction, Angl
 
     /** Constant with value one. */
     public static final Angle ONE = new Angle(1.0, AngleUnit.SI);
+
+    /** Constant with value pi. */
+    public static final Angle PI = new Angle(Math.PI, AngleUnit.RADIAN);
+
+    /** Constant with value pi/2. */
+    public static final Angle HALF_PI = new Angle(Math.PI / 2.0, AngleUnit.RADIAN);
+
+    /** Constant with value tau. */
+    public static final Angle TAU = new Angle(Math.PI * 2.0, AngleUnit.RADIAN);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
