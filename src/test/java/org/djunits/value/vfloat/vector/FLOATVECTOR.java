@@ -68,10 +68,10 @@ public final class FLOATVECTOR
         try
         {
             S[] array = (S[]) Array.newInstance(scalarClass, size);
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] {float.class});
+            Method ofSI = scalarClass.getMethod("ofSI", new Class<?>[] {float.class});
             for (int i = 0; i < size; i++)
             {
-                array[i] = (S) instantiateSI.invoke(null, i + 1.0f);
+                array[i] = (S) ofSI.invoke(null, i + 1.0f);
             }
             return array;
         }
@@ -96,11 +96,11 @@ public final class FLOATVECTOR
         try
         {
             S[] array = (S[]) Array.newInstance(scalarClass, size);
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] {float.class});
+            Method ofSI = scalarClass.getMethod("ofSI", new Class<?>[] {float.class});
             float v = 1.0f;
             for (int i = 0; i < size; i++)
             {
-                array[i] = (S) instantiateSI.invoke(null, (i % 10 == 0) ? v++ : 0.0f);
+                array[i] = (S) ofSI.invoke(null, (i % 10 == 0) ? v++ : 0.0f);
             }
             return array;
         }

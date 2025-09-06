@@ -898,8 +898,8 @@ public class ScalarOperationsTest
                 // Ignore expected exception
             }
 
-            Method instantiateSI = ClassUtil.resolveMethod(scalarClass, "instantiateSI", double.class);
-            result = (DoubleScalar<?, ?>) instantiateSI.invoke(null, zeroValue);
+            Method ofSI = ClassUtil.resolveMethod(scalarClass, "ofSI", double.class);
+            result = (DoubleScalar<?, ?>) ofSI.invoke(null, zeroValue);
             assertEquals(zeroValue, result.getSI(), 0.0001, "SI value was correctly set");
         }
         else
@@ -1011,8 +1011,8 @@ public class ScalarOperationsTest
                 // Ignore expected exception
             }
 
-            Method instantiateSI = ClassUtil.resolveMethod(scalarClass, "instantiateSI", float.class);
-            result = (FloatScalar<?, ?>) instantiateSI.invoke(null, zeroValue);
+            Method ofSI = ClassUtil.resolveMethod(scalarClass, "ofSI", float.class);
+            result = (FloatScalar<?, ?>) ofSI.invoke(null, zeroValue);
             assertEquals(zeroValue, result.getSI(), 0.0001, "SI value was correctly set");
         }
     }

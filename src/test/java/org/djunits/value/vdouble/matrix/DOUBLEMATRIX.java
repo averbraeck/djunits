@@ -92,12 +92,12 @@ public final class DOUBLEMATRIX
         try
         {
             S[][] array = (S[][]) Array.newInstance(scalarClass, rows, cols);
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    array[r][c] = (S) instantiateSI.newInstance(cols * r + c + 1.0 + rand.nextDouble(), unit);
+                    array[r][c] = (S) ofSI.newInstance(cols * r + c + 1.0 + rand.nextDouble(), unit);
                 }
             }
             return array;
@@ -127,13 +127,13 @@ public final class DOUBLEMATRIX
         try
         {
             S[][] array = (S[][]) Array.newInstance(scalarClass, rows, cols);
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    array[r][c] = (r == c) ? (S) instantiateSI.newInstance(r + 1 + rand.nextDouble(), unit)
-                            : (S) instantiateSI.newInstance(0.0, unit);
+                    array[r][c] = (r == c) ? (S) ofSI.newInstance(r + 1 + rand.nextDouble(), unit)
+                            : (S) ofSI.newInstance(0.0, unit);
                 }
             }
             return array;
@@ -162,12 +162,12 @@ public final class DOUBLEMATRIX
         try
         {
             List<DoubleSparseValue<U, S>> matrixList = new ArrayList<>();
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    S v = (S) instantiateSI.newInstance(cols * r + c + 1.0 + rand.nextDouble(), unit);
+                    S v = (S) ofSI.newInstance(cols * r + c + 1.0 + rand.nextDouble(), unit);
                     DoubleSparseValue<U, S> dsv = new DoubleSparseValue<U, S>(r, c, v);
                     matrixList.add(dsv);
                 }
@@ -217,14 +217,14 @@ public final class DOUBLEMATRIX
         try
         {
             List<DoubleSparseValue<U, S>> matrixList = new ArrayList<>();
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {double.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
                     if (r == c)
                     {
-                        S v = (S) instantiateSI.newInstance(r + 1 + rand.nextDouble(), unit);
+                        S v = (S) ofSI.newInstance(r + 1 + rand.nextDouble(), unit);
                         DoubleSparseValue<U, S> dsv = new DoubleSparseValue<U, S>(r, c, v);
                         matrixList.add(dsv);
                     }

@@ -219,7 +219,7 @@ public class DoubleValueOfTest
     {
         try
         {
-            Method insMethod = scalarClass.getDeclaredMethod("instantiateSI", double.class);
+            Method insMethod = scalarClass.getDeclaredMethod("ofSI", double.class);
             Scalar<?, ?> scalar = (Scalar<?, ?>) insMethod.invoke(null, 10.0);
             Unit<?> unit = scalar.getDisplayUnit();
 
@@ -345,7 +345,7 @@ public class DoubleValueOfTest
     {
         try
         {
-            Method insMethod = scalarClass.getDeclaredMethod("instantiateSI", double.class);
+            Method insMethod = scalarClass.getDeclaredMethod("ofSI", double.class);
             Scalar<?, ?> scalar = (Scalar<?, ?>) insMethod.invoke(null, 10.0);
             Unit<?> unit = scalar.getDisplayUnit();
 

@@ -92,12 +92,12 @@ public final class FLOATMATRIX
         try
         {
             S[][] array = (S[][]) Array.newInstance(scalarClass, rows, cols);
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    array[r][c] = (S) instantiateSI.newInstance((float) (cols * r + c + 1.0f + rand.nextFloat()), unit);
+                    array[r][c] = (S) ofSI.newInstance((float) (cols * r + c + 1.0f + rand.nextFloat()), unit);
                 }
             }
             return array;
@@ -127,13 +127,13 @@ public final class FLOATMATRIX
         try
         {
             S[][] array = (S[][]) Array.newInstance(scalarClass, rows, cols);
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    array[r][c] = (r == c) ? (S) instantiateSI.newInstance((float) (r + 1.0f + rand.nextFloat()), unit)
-                            : (S) instantiateSI.newInstance(0.0f, unit);
+                    array[r][c] = (r == c) ? (S) ofSI.newInstance((float) (r + 1.0f + rand.nextFloat()), unit)
+                            : (S) ofSI.newInstance(0.0f, unit);
                 }
             }
             return array;
@@ -162,12 +162,12 @@ public final class FLOATMATRIX
         try
         {
             List<FloatSparseValue<U, S>> matrixList = new ArrayList<>();
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    S v = (S) instantiateSI.newInstance((float) (cols * r + c + 1.0f + rand.nextFloat()), unit);
+                    S v = (S) ofSI.newInstance((float) (cols * r + c + 1.0f + rand.nextFloat()), unit);
                     FloatSparseValue<U, S> dsv = new FloatSparseValue<U, S>(r, c, v);
                     matrixList.add(dsv);
                 }
@@ -216,14 +216,14 @@ public final class FLOATMATRIX
         try
         {
             List<FloatSparseValue<U, S>> matrixList = new ArrayList<>();
-            Constructor<S> instantiateSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
+            Constructor<S> ofSI = scalarClass.getConstructor(new Class<?>[] {float.class, unit.getClass()});
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
                 {
                     if (r == c)
                     {
-                        S v = (S) instantiateSI.newInstance((float) (r + 1.0f + rand.nextFloat()), unit);
+                        S v = (S) ofSI.newInstance((float) (r + 1.0f + rand.nextFloat()), unit);
                         FloatSparseValue<U, S> dsv = new FloatSparseValue<U, S>(r, c, v);
                         matrixList.add(dsv);
                     }

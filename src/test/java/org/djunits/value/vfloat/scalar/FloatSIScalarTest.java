@@ -264,7 +264,7 @@ public class FloatSIScalarTest
     }
 
     /**
-     * Test the min, max, instantiateSI, interpolate, comparison methods.
+     * Test the min, max, ofSI, interpolate, comparison methods.
      * @throws UnitException on error
      */
     @Test

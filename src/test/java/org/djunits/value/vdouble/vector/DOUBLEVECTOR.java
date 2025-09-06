@@ -68,10 +68,10 @@ public final class DOUBLEVECTOR
         try
         {
             S[] array = (S[]) Array.newInstance(scalarClass, size);
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] {double.class});
+            Method ofSI = scalarClass.getMethod("ofSI", new Class<?>[] {double.class});
             for (int i = 0; i < size; i++)
             {
-                array[i] = (S) instantiateSI.invoke(null, i + 1.0d);
+                array[i] = (S) ofSI.invoke(null, i + 1.0d);
             }
             return array;
         }
@@ -96,11 +96,11 @@ public final class DOUBLEVECTOR
         try
         {
             S[] array = (S[]) Array.newInstance(scalarClass, size);
-            Method instantiateSI = scalarClass.getMethod("instantiateSI", new Class<?>[] {double.class});
+            Method ofSI = scalarClass.getMethod("ofSI", new Class<?>[] {double.class});
             double v = 1.0d;
             for (int i = 0; i < size; i++)
             {
-                array[i] = (S) instantiateSI.invoke(null, (i % 10 == 0) ? v++ : 0.0d);
+                array[i] = (S) ofSI.invoke(null, (i % 10 == 0) ? v++ : 0.0d);
             }
             return array;
         }

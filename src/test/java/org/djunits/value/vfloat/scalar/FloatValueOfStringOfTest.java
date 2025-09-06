@@ -60,23 +60,23 @@ public class FloatValueOfStringOfTest
             }
 
             // create a value so we can obtain info
-            Method instantiateSIMethod = null;
+            Method ofSIMethod = null;
             try
             {
-                instantiateSIMethod = scalarClass.getMethod("instantiateSI", float.class);
+                ofSIMethod = scalarClass.getMethod("ofSI", float.class);
             }
             catch (NoSuchMethodException | SecurityException exception)
             {
-                fail("Method instantiateSI not found for Scalar class " + classPath);
+                fail("Method ofSI not found for Scalar class " + classPath);
             }
             Scalar<?, ?> scalarSI = null;
             try
             {
-                scalarSI = (Scalar<?, ?>) instantiateSIMethod.invoke(scalarClass, Float.valueOf(10.0f));
+                scalarSI = (Scalar<?, ?>) ofSIMethod.invoke(scalarClass, Float.valueOf(10.0f));
             }
             catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException exception)
             {
-                fail("Method instantiateSI failed for Scalar class " + classPath);
+                fail("Method ofSI failed for Scalar class " + classPath);
             }
 
             // get the unit
