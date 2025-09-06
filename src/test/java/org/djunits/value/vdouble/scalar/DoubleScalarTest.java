@@ -304,54 +304,6 @@ public class DoubleScalarTest
         }
     }
 
-    /**
-     * Test plus(DoubleScalarAbs, DoubleScalarRel).
-     */
-    @Test
-    public final void binaryplusOfAbsAndRelTest()
-    {
-        double leftValue = 123.4;
-        double rightValue = 234.5;
-        Position left = new Position(leftValue, PositionUnit.MILE);
-        Length right = new Length(rightValue, LengthUnit.MILE);
-        Position result = DoubleScalar.plus(left, right);
-        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI plus of contributing elements");
-        // Reverse parameters
-        result = DoubleScalar.plus(right, left);
-        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI plus of contributing elements");
-    }
-
-    /**
-     * Test minus(DoubleScalarAbs, DoubleScalarRel).
-     */
-    @Test
-    public final void binaryminusOfAbsAndRelTest()
-    {
-        double leftValue = 123.4;
-        double rightValue = 234.5;
-        Position left = new Position(leftValue, PositionUnit.MILE);
-        Length right = new Length(rightValue, LengthUnit.MILE);
-        Position result = DoubleScalar.minus(left, right);
-        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI minus of contributing elements");
-    }
-
-    /**
-     * Test minus(DoubleScalarAbs, DoubleScalarRel).
-     */
-    @Test
-    public final void binaryminusOfAbsAndAbsTest()
-    {
-        double leftValue = 123.4;
-        double rightValue = 234.5;
-        Position left = new Position(leftValue, PositionUnit.MILE);
-        Position right = new Position(rightValue, PositionUnit.MILE);
-        Length result = DoubleScalar.minus(left, right);
-        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI minus of contributing elements");
-    }
 
     /**
      * Test the interpolate methods. Also does the FloatXXX versions.
@@ -614,36 +566,6 @@ public class DoubleScalarTest
                 }
             });
         }
-    }
-
-    /**
-     * Test plus(DoubleScalarRel, DoubleScalarRel).
-     */
-    @Test
-    public final void binaryplusOfRelAndRelTest()
-    {
-        double leftValue = 123.4;
-        double rightValue = 234.5;
-        Length left = new Length(leftValue, LengthUnit.MILE);
-        Length right = new Length(rightValue, LengthUnit.MILE);
-        Length result = DoubleScalar.plus(left, right);
-        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI plus of contributing elements");
-    }
-
-    /**
-     * Test minus(DoubleScalarRel, DoubleScalarRel).
-     */
-    @Test
-    public final void binaryminusOfRelAndRelTest()
-    {
-        double leftValue = 123.4;
-        double rightValue = 234.5;
-        Length left = new Length(leftValue, LengthUnit.MILE);
-        Length right = new Length(rightValue, LengthUnit.MILE);
-        Length result = DoubleScalar.minus(left, right);
-        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI minus of contributing elements");
     }
 
     /**

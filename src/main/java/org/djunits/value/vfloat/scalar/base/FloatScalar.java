@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.djunits.unit.AbsoluteLinearUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIPrefixes;
@@ -378,106 +377,6 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
             throw new UnitRuntimeException(
                     "Cannot instantiate FloatScalar of unit " + unit.toString() + ". Reason: " + exception.getMessage());
         }
-    }
-
-    /**
-     * Add a Relative value to an Absolute value. Return a new instance of the value. The unit of the return value will be the
-     * unit of the left argument.
-     * @param left the left argument
-     * @param right the right argument
-     * @param <AU> Unit; the absolute unit of the parameters and the result
-     * @param <RU> Unit; the relative unit of the parameters and the result
-     * @param <R> the relative type
-     * @param <A> the corresponding absolute type
-     * @return an absolute typed FloatScalar; the sum of the values as an Absolute value
-     */
-    public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends FloatScalarAbs<AU, A, RU, R>> A plus(final A left, final R right)
-    {
-        return left.plus(right);
-    }
-
-    /**
-     * Add an Absolute value to a Relative value. Return a new instance of the value. The unit of the return value will be the
-     * unit of the left argument.
-     * @param left the left argument
-     * @param right the right argument
-     * @param <AU> Unit; the absolute unit of the parameters and the result
-     * @param <RU> Unit; the relative unit of the parameters and the result
-     * @param <R> the relative type
-     * @param <A> the corresponding absolute type
-     * @return an absolute typed FloatScalar; the sum of the values as an Absolute value
-     */
-    public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends FloatScalarAbs<AU, A, RU, R>> A plus(final R left, final A right)
-    {
-        return right.plus(left);
-    }
-
-    /**
-     * Add a Relative value to a Relative value. Return a new instance of the value. The unit of the return value will be the
-     * unit of the left argument.
-     * @param left the left argument
-     * @param right the right argument
-     * @param <U> Unit; the unit of the parameters and the result
-     * @param <R> the relative type
-     * @return a relative typed FloatScalar; the sum of the values as a Relative value
-     */
-    public static <U extends Unit<U>, R extends FloatScalarRel<U, R>> R plus(final R left, final R right)
-    {
-        return left.plus(right);
-    }
-
-    /**
-     * Subtract a Relative value from an absolute value. Return a new instance of the value. The unit of the return value will
-     * be the unit of the left argument.
-     * @param left the left value
-     * @param right the right value
-     * @param <AU> Unit; the absolute unit of the parameters and the result
-     * @param <RU> Unit; the relative unit of the parameters and the result
-     * @param <R> the relative type
-     * @param <A> the corresponding absolute type
-     * @return an absolute typed FloatScalar; the resulting value as an absolute value
-     */
-    public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends FloatScalarAbs<AU, A, RU, R>> A minus(final A left, final R right)
-    {
-        return left.minus(right);
-    }
-
-    /**
-     * Subtract a relative value from a relative value. Return a new instance of the value. The unit of the value will be the
-     * unit of the first argument.
-     * @param left the left value
-     * @param right the right value
-     * @param <U> Unit; the unit of the parameters and the result
-     * @param <R> the relative type
-     * @return a relative typed FloatScalar; the resulting value as a relative value
-     */
-    public static <U extends Unit<U>, R extends FloatScalarRel<U, R>> R minus(final R left, final R right)
-    {
-        return left.minus(right);
-    }
-
-    /**
-     * Subtract two absolute values. Return a new instance of a relative value of the difference. The unit of the value will be
-     * the unit of the first argument.
-     * @param left value 1
-     * @param right value 2
-     * @param <AU> Unit; the absolute unit of the parameters and the result
-     * @param <RU> Unit; the relative unit of the parameters and the result
-     * @param <R> the relative type
-     * @param <A> the corresponding absolute type
-     * @return a relative typed FloatScalar; the difference of the two absolute values as a relative value
-     */
-    public static <AU extends AbsoluteLinearUnit<AU, RU>, RU extends Unit<RU>,
-            R extends FloatScalarRelWithAbs<AU, A, RU, R>,
-            A extends FloatScalarAbs<AU, A, RU, R>> R minus(final A left, final A right)
-    {
-        return left.minus(right);
     }
 
     /**

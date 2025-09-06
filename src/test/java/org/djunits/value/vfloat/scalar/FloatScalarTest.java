@@ -330,55 +330,6 @@ public class FloatScalarTest
     }
 
     /**
-     * Test plus(FloatScalarAbs, FloatScalarRel).
-     */
-    @Test
-    public final void binaryplusOfAbsAndRelTest()
-    {
-        float leftValue = 123.4f;
-        float rightValue = 234.5f;
-        FloatPosition left = new FloatPosition(leftValue, PositionUnit.MILE);
-        FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
-        FloatPosition result = FloatScalar.plus(left, right);
-        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI plus of contributing elements");
-        // Reverse parameters
-        result = FloatScalar.plus(right, left);
-        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI plus of contributing elements");
-    }
-
-    /**
-     * Test minus(FloatScalarAbs, FloatScalarRel).
-     */
-    @Test
-    public final void binaryminusOfAbsAndRelTest()
-    {
-        float leftValue = 123.4f;
-        float rightValue = 234.5f;
-        FloatPosition left = new FloatPosition(leftValue, PositionUnit.MILE);
-        FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
-        FloatPosition result = FloatScalar.minus(left, right);
-        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI minus of contributing elements");
-    }
-
-    /**
-     * Test minus(DoubleScalarAbs, DoubleScalarRel).
-     */
-    @Test
-    public final void binaryminusOfAbsAndAbsTest()
-    {
-        float leftValue = 123.4f;
-        float rightValue = 234.5f;
-        FloatPosition left = new FloatPosition(leftValue, PositionUnit.MILE);
-        FloatPosition right = new FloatPosition(rightValue, PositionUnit.MILE);
-        FloatLength result = FloatScalar.minus(left, right);
-        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI minus of contributing elements");
-    }
-
-    /**
      * Test the max and min methods.
      */
     @Test
@@ -568,36 +519,6 @@ public class FloatScalarTest
                 }
             });
         }
-    }
-
-    /**
-     * Test plus(FloatScalarRel, FloatScalarRel).
-     */
-    @Test
-    public final void binaryplusOfRelAndRelTest()
-    {
-        float leftValue = 123.4f;
-        float rightValue = 234.5f;
-        FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
-        FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
-        FloatLength result = FloatScalar.plus(left, right);
-        assertEquals(left.getSI() + right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI plus of contributing elements");
-    }
-
-    /**
-     * Test minus(FloatScalarRel, FloatScalarRel).
-     */
-    @Test
-    public final void binaryminusOfRelAndRelTest()
-    {
-        float leftValue = 123.4f;
-        float rightValue = 234.5f;
-        FloatLength left = new FloatLength(leftValue, LengthUnit.MILE);
-        FloatLength right = new FloatLength(rightValue, LengthUnit.MILE);
-        FloatLength result = FloatScalar.minus(left, right);
-        assertEquals(left.getSI() - right.getSI(), result.getSI(), 0.001,
-                "value of element should be SI minus of contributing elements");
     }
 
     /**
