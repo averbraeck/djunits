@@ -791,7 +791,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         /** The unit system, e.g. SI or Imperial. */
         private UnitSystem unitSystem;
 
-        /** Whether or not the unit supports SI prefixes from "yotta" (y) to "yocto" (Y). */
+        /** Whether or not the unit supports SI prefixes from "quetta" (Q) to "quecto" (q). */
         private SIPrefixes siPrefixes;
 
         /** The power factor of the SI prefixes, e.g. 2.0 for square meters and 3.0 for cubic meters. */
@@ -816,7 +816,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         }
 
         /**
-         * Return whether SI prefixes, ranging from yotta (y) to yocto (Y), will be generated.
+         * Return whether SI prefixes, ranging from quetta (Q) to quecto (q), will be generated.
          * @return siPrefixes, NONE (e.g., for inch), ALL (e.g., for meter) or KILO (e.g., for kilometer)
          */
         public SIPrefixes getSiPrefixes()
@@ -834,7 +834,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         }
 
         /**
-         * Set whether SI prefixes, ranging from yotta (y) to yocto (Y), are allowed. If not set; this property defaults to
+         * Set whether SI prefixes, ranging from quetta (Q) to quecto (q), are allowed. If not set; this property defaults to
          * <code>false</code>.
          * @param newSiPrefixes SIPrefixes set siPrefixes, NONE (e.g., for inch), ALL (e.g., for meter) or KILO (e.g., for
          *            kilometer)
