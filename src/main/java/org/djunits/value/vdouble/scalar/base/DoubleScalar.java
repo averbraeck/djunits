@@ -227,8 +227,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     /**
-     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large,
-     * e-notation and the plain SI unit are used.
+     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large, e-notation and
+     * the plain SI unit are used.
      * @return formatted value of this DoubleScalar
      */
     public String toStringSIPrefixed()
@@ -237,8 +237,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
     }
 
     /**
-     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the
-     * value is too small or too large, e-notation and the plain SI unit are used.
+     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the value is too
+     * small or too large, e-notation and the plain SI unit are used.
      * @param smallestPower the smallest exponent value that will be written using an SI prefix
      * @param biggestPower the largest exponent value that will be written using an SI prefix
      * @return formatted value of this DoubleScalar
@@ -330,7 +330,7 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
 
     /** The cache to make the lookup of the constructor for a Scalar belonging to a unit faster. */
     private static final Map<Unit<?>, Constructor<? extends DoubleScalar<?, ?>>> CACHE = new HashMap<>();
-    
+
     /**
      * Instantiate the DoubleScalar based on its unit. Rigid check on types by the compiler.
      * @param value the value
@@ -384,8 +384,8 @@ public abstract class DoubleScalar<U extends Unit<U>, S extends DoubleScalar<U, 
         catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
                 | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception)
         {
-            throw new UnitRuntimeException("Cannot instantiate DoubleScalar of unit " + unit.toString() + ". Reason: "
-                    + exception.getMessage());
+            throw new UnitRuntimeException(
+                    "Cannot instantiate DoubleScalar of unit " + unit.toString() + ". Reason: " + exception.getMessage());
         }
     }
 

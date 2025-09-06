@@ -275,8 +275,8 @@ public abstract class DoubleMatrixData extends Storage<DoubleMatrixData> impleme
      * @param <U> the unit type
      * @param <S> the corresponding scalar type
      */
-    protected static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[][] checkRectangularAndNonNull(
-            final S[][] values) throws ValueRuntimeException
+    protected static <U extends Unit<U>, S extends DoubleScalar<U, S>> S[][] checkRectangularAndNonNull(final S[][] values)
+            throws ValueRuntimeException
     {
         Throw.when(null == values, NullPointerException.class, "Cannot create a matrix from a null Scalar[][]");
         for (int row = 0; row < values.length; row++)

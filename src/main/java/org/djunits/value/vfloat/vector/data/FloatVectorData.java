@@ -76,8 +76,7 @@ public abstract class FloatVectorData extends Storage<FloatVectorData> implement
 
     /**
      * Instantiate a FloatVectorData with the right data type.
-     * @param values the values to store, can either be a list of numbers, or a list of
-     *            FloatScalars
+     * @param values the values to store, can either be a list of numbers, or a list of FloatScalars
      * @param scale the scale of the unit to use for conversion to SI
      * @param storageType the data type to use
      * @return the FloatVectorData with the right data type

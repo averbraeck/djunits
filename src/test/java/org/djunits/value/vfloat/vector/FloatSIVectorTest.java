@@ -386,10 +386,9 @@ public class FloatSIVectorTest
 
     /**
      * Verify the contents of a FloatFloatDimensionlessVector.
-     * @param reference the values on which the <code>operation</code> needs to be applied to get the values that must
-     *            be verified
-     * @param operation the operation that converts the <code>reference</code> values to the values that must be
+     * @param reference the values on which the <code>operation</code> needs to be applied to get the values that must be
      *            verified
+     * @param operation the operation that converts the <code>reference</code> values to the values that must be verified
      * @param got the values that must be verified
      */
     public static void verifyDimensionLessVector(final float[] reference, final FloatFunction operation,

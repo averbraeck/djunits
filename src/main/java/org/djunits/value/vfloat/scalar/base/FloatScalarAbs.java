@@ -18,9 +18,9 @@ import org.djunits.value.Absolute;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends FloatScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends FloatScalarRelWithAbs<AU, A, RU, R>> extends FloatScalar<AU, A> implements Absolute<AU, A, RU, R>
+public abstract class FloatScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>, A extends FloatScalarAbs<AU, A, RU, R>,
+        RU extends Unit<RU>, R extends FloatScalarRelWithAbs<AU, A, RU, R>> extends FloatScalar<AU, A>
+        implements Absolute<AU, A, RU, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;

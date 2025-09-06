@@ -16,8 +16,8 @@ import org.djunits.value.vdouble.scalar.SIScalar;
  * @param <U> the unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarRel<U, R>>
-        extends DoubleScalar<U, R> implements Relative<U, R>
+public abstract class DoubleScalarRel<U extends Unit<U>, R extends DoubleScalarRel<U, R>> extends DoubleScalar<U, R>
+        implements Relative<U, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;

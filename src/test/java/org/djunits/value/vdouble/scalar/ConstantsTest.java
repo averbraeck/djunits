@@ -7,8 +7,7 @@ import org.djunits.value.vfloat.scalar.base.FloatConstants;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for the Constants class.
- * <br>
+ * Tests for the Constants class. <br>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers">Peter Knoppers</a>
  */
 public class ConstantsTest

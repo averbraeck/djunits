@@ -55,8 +55,7 @@ public final class EngineeringFormatter
     /**
      * Format a double in Engineering format.
      * @param val the value to format
-     * @param room the width in characters of the result (minimum value is 10; values below this limit will be treated as
-     *            10)
+     * @param room the width in characters of the result (minimum value is 10; values below this limit will be treated as 10)
      * @return the formatted value
      */
     public static String format(final double val, final int room)

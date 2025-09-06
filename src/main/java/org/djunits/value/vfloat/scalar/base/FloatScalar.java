@@ -227,8 +227,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     /**
-     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large,
-     * e-notation and the plain SI unit are used.
+     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large, e-notation and
+     * the plain SI unit are used.
      * @return formatted value of this DoubleScalar
      */
     public String toStringSIPrefixed()
@@ -237,8 +237,8 @@ public abstract class FloatScalar<U extends Unit<U>, S extends FloatScalar<U, S>
     }
 
     /**
-     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the
-     * value is too small or too large, e-notation and the plain SI unit are used.
+     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the value is too
+     * small or too large, e-notation and the plain SI unit are used.
      * @param smallestPower the smallest exponent value that will be written using an SI prefix
      * @param biggestPower the largest exponent value that will be written using an SI prefix
      * @return formatted value of this DoubleScalar

@@ -318,7 +318,6 @@ public class FloatVectorMethodTest
         }
     }
 
-
     /**
      * Test setDisplayUnit.
      */

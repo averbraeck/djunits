@@ -56,7 +56,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
 public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionless>
         implements DimensionlessFunctions<DimensionlessUnit, Dimensionless>
 {
@@ -86,8 +86,8 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
     public static final Dimensionless NEG_MAXVALUE = new Dimensionless(-Double.MAX_VALUE, DimensionlessUnit.SI);
 
     /**
-     * Construct Dimensionless scalar.
-     * @param value the double value
+     * Construct Dimensionless scalar with a unit.
+     * @param value the double value, expressed in the given unit
      * @param unit unit for the double value
      */
     public Dimensionless(final double value, final DimensionlessUnit unit)
@@ -111,7 +111,7 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
     }
 
     /**
-     * Construct Dimensionless scalar.
+     * Construct Dimensionless scalar based on an SI value.
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
@@ -121,14 +121,16 @@ public class Dimensionless extends DoubleScalarRel<DimensionlessUnit, Dimensionl
     }
 
     /**
-     * Interpolate between two values.
-     * @param zero the low value
-     * @param one the high value
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
      * @param ratio the ratio between 0 and 1, inclusive
-     * @return a Scalar at the ratio between
+     * @return a Dimensionless at the given ratio between 0 and 1
      */
     public static Dimensionless interpolate(final Dimensionless zero, final Dimensionless one, final double ratio)
     {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
         return new Dimensionless(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());
     }

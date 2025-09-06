@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
 public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, LengthUnit, FloatLength>
 {
     /** */
@@ -30,8 +30,8 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
     public static final FloatPosition ZERO = new FloatPosition(0.0f, PositionUnit.DEFAULT);
 
     /**
-     * Construct FloatPosition scalar.
-     * @param value the float value
+     * Construct FloatPosition scalar with a unit.
+     * @param value the float value, expressed in the given unit
      * @param unit unit for the float value
      */
     public FloatPosition(final float value, final PositionUnit unit)
@@ -40,8 +40,8 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
     }
 
     /**
-     * Construct FloatPosition scalar using a double value.
-     * @param value the double value
+     * Construct FloatPosition scalar with a unit using a double value.
+     * @param value the double value, expressed in the given unit
      * @param unit unit for the resulting float value
      */
     public FloatPosition(final double value, final PositionUnit unit)
@@ -71,7 +71,7 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
     }
 
     /**
-     * Construct FloatPosition scalar.
+     * Construct FloatPosition scalar based on an BASE unit.
      * @param value the float value in BASE units
      * @return the new scalar with the BASE value
      */
@@ -81,14 +81,16 @@ public class FloatPosition extends FloatScalarAbs<PositionUnit, FloatPosition, L
     }
 
     /**
-     * Interpolate between two values.
-     * @param zero the low value
-     * @param one the high value
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
      * @param ratio the ratio between 0 and 1, inclusive
-     * @return a Scalar at the ratio between
+     * @return a FloatPosition at the given ratio between 0 and 1
      */
     public static FloatPosition interpolate(final FloatPosition zero, final FloatPosition one, final float ratio)
     {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
         return new FloatPosition(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());
     }

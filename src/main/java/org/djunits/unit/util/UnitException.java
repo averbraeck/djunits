@@ -26,7 +26,7 @@ public class UnitException extends Exception
      * Construct a new UnitException.
      * @param message String
      * @param cause Throwable
-     * @param enableSuppression boolean 
+     * @param enableSuppression boolean
      * @param writableStackTrace boolean
      */
     public UnitException(final String message, final Throwable cause, final boolean enableSuppression,

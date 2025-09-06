@@ -25,9 +25,8 @@ import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
  * @param <RV> the relative vector type belonging to the relative matrix type
  * @param <RM> the relative matrix type with this unit
  */
-public abstract class DoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>,
-        RV extends DoubleVectorRel<U, S, RV>, RM extends DoubleMatrixRel<U, S, RV, RM>>
-        extends DoubleMatrix<U, S, RV, RM> implements Relative<U, RM>
+public abstract class DoubleMatrixRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>, RV extends DoubleVectorRel<U, S, RV>,
+        RM extends DoubleMatrixRel<U, S, RV, RM>> extends DoubleMatrix<U, S, RV, RM> implements Relative<U, RM>
 {
     /** */
     private static final long serialVersionUID = 20190908L;

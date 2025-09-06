@@ -114,7 +114,6 @@ public class FloatScalarTest
         assertEquals(10.0f, u.getSI());
     }
 
-
     /**
      * Test Angle constants.
      */

@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
 public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, AmountOfSubstance>
 {
     /** */
@@ -53,8 +53,8 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
     public static final AmountOfSubstance NEG_MAXVALUE = new AmountOfSubstance(-Double.MAX_VALUE, AmountOfSubstanceUnit.SI);
 
     /**
-     * Construct AmountOfSubstance scalar.
-     * @param value the double value
+     * Construct AmountOfSubstance scalar with a unit.
+     * @param value the double value, expressed in the given unit
      * @param unit unit for the double value
      */
     public AmountOfSubstance(final double value, final AmountOfSubstanceUnit unit)
@@ -78,7 +78,7 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
     }
 
     /**
-     * Construct AmountOfSubstance scalar.
+     * Construct AmountOfSubstance scalar based on an SI value.
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
@@ -88,14 +88,16 @@ public class AmountOfSubstance extends DoubleScalarRel<AmountOfSubstanceUnit, Am
     }
 
     /**
-     * Interpolate between two values.
-     * @param zero the low value
-     * @param one the high value
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
      * @param ratio the ratio between 0 and 1, inclusive
-     * @return a Scalar at the ratio between
+     * @return a AmountOfSubstance at the given ratio between 0 and 1
      */
     public static AmountOfSubstance interpolate(final AmountOfSubstance zero, final AmountOfSubstance one, final double ratio)
     {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
         return new AmountOfSubstance(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());
     }

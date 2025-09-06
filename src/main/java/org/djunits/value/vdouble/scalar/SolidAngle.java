@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
 public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
 {
     /** */
@@ -50,8 +50,8 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
     public static final SolidAngle NEG_MAXVALUE = new SolidAngle(-Double.MAX_VALUE, SolidAngleUnit.SI);
 
     /**
-     * Construct SolidAngle scalar.
-     * @param value the double value
+     * Construct SolidAngle scalar with a unit.
+     * @param value the double value, expressed in the given unit
      * @param unit unit for the double value
      */
     public SolidAngle(final double value, final SolidAngleUnit unit)
@@ -75,7 +75,7 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
     }
 
     /**
-     * Construct SolidAngle scalar.
+     * Construct SolidAngle scalar based on an SI value.
      * @param value the double value in SI units
      * @return the new scalar with the SI value
      */
@@ -85,14 +85,16 @@ public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
     }
 
     /**
-     * Interpolate between two values.
-     * @param zero the low value
-     * @param one the high value
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
      * @param ratio the ratio between 0 and 1, inclusive
-     * @return a Scalar at the ratio between
+     * @return a SolidAngle at the given ratio between 0 and 1
      */
     public static SolidAngle interpolate(final SolidAngle zero, final SolidAngle one, final double ratio)
     {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
         return new SolidAngle(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());
     }

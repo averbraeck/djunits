@@ -18,9 +18,8 @@ import org.djunits.value.RelWithAbs;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends DoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends DoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalarRel<RU, R>
+public abstract class DoubleScalarRelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>, A extends DoubleScalarAbs<AU, A, RU, R>,
+        RU extends Unit<RU>, R extends DoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalarRel<RU, R>
         implements RelWithAbs<AU, A, RU, R>
 {
     /**  */

@@ -91,8 +91,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
      * Note that the unit's name and id can be blank, as long as the SI units show that the unit is dimensionless, and the scale
      * is the IdentityScale.
      * </p>
-     * @param builder Builder&lt;U&gt; the object that contains the information about the construction of the
-     *            class
+     * @param builder Builder&lt;U&gt; the object that contains the information about the construction of the class
      * @return the constructed unit
      * @throws UnitRuntimeException when not all fields have been set
      */
@@ -395,11 +394,9 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
      * @param derivedId the new id of the derived unit
      * @param derivedName the new name of the derived unit
      * @param derivedUnitSystem the unit system of the derived unit
-     * @param derivedDefaultDisplayAbbreviation the default abbreviation to use in e.g, the toString() method. Can be
-     *            null.
+     * @param derivedDefaultDisplayAbbreviation the default abbreviation to use in e.g, the toString() method. Can be null.
      * @param derivedDefaultTextualAbbreviation the default textual abbreviation to use in, e.g, typing. Can be null.
-     * @param derivedAbbreviations the other valid abbreviations for the unit, e.g. {"h", "hr", "hour"}. Can be left
-     *            out.
+     * @param derivedAbbreviations the other valid abbreviations for the unit, e.g. {"h", "hr", "hour"}. Can be left out.
      * @return a linearly scaled instance of this unit with new id, abbreviation, name, and unit system
      * @throws UnitRuntimeException when cloning fails
      */
@@ -622,8 +619,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
 
     /**
      * Retrieve the unit base of this unit.
-     * @return the unit base of this unit. if this unit is itself a unit base; the returned value is
-     *         <code>null</code>
+     * @return the unit base of this unit. if this unit is itself a unit base; the returned value is <code>null</code>
      */
     public Quantity<U> getQuantity()
     {
@@ -641,8 +637,7 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
 
     /**
      * Indicate whether this unit has the standard SI signature.
-     * @return true if this unit has the standard SI signature; false if this unit does not have the standard SI
-     *         signature
+     * @return true if this unit has the standard SI signature; false if this unit does not have the standard SI signature
      */
     public boolean isBaseSIUnit()
     {
@@ -841,8 +836,8 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
         /**
          * Set whether SI prefixes, ranging from yotta (y) to yocto (Y), are allowed. If not set; this property defaults to
          * <code>false</code>.
-         * @param newSiPrefixes SIPrefixes set siPrefixes, NONE (e.g., for inch), ALL (e.g., for meter) or KILO
-         *            (e.g., for kilometer)
+         * @param newSiPrefixes SIPrefixes set siPrefixes, NONE (e.g., for inch), ALL (e.g., for meter) or KILO (e.g., for
+         *            kilometer)
          * @param power power factor of the SI prefixes, e.g. 2.0 for square meters and 3.0 for cubic meters
          * @return this builder instance that is being constructed (for method call chaining)
          */
@@ -864,8 +859,8 @@ public class Unit<U extends Unit<U>> implements Serializable, Cloneable
 
         /**
          * Set the id of the unit that this builder builds.
-         * @param newId set the id of the unit that this builder builds (must be set; the default is <code>null</code>
-         *            which is invalid)
+         * @param newId set the id of the unit that this builder builds (must be set; the default is <code>null</code> which is
+         *            invalid)
          * @return this builder instance that is being constructed (for method call chaining)
          */
         public Builder<U> setId(final String newId)

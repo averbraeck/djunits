@@ -86,11 +86,9 @@ public abstract class AbsoluteLinearUnit<AU extends AbsoluteLinearUnit<AU, RU>, 
      * @param derivedId the new id of the derived unit
      * @param derivedName the new name of the derived unit
      * @param derivedUnitSystem the unit system of the derived unit
-     * @param derivedDefaultDisplayAbbreviation the default abbreviation to use in e.g, the toString() method. Can be
-     *            null.
+     * @param derivedDefaultDisplayAbbreviation the default abbreviation to use in e.g, the toString() method. Can be null.
      * @param derivedDefaultTextualAbbreviation the default textual abbreviation to use in, e.g, typing. Can be null.
-     * @param derivedAbbreviations String... any other valid abbreviations for the unit, e.g. {"h", "hr", "hour"}.
-     *            Can be empty.
+     * @param derivedAbbreviations String... any other valid abbreviations for the unit, e.g. {"h", "hr", "hour"}. Can be empty.
      * @return a linearly scaled instance of this unit with new id, abbreviation, name, and unit system
      * @throws UnitRuntimeException when cloning fails
      */

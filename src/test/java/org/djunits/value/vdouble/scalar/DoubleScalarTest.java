@@ -353,7 +353,6 @@ public class DoubleScalarTest
         }
     }
 
-
     /**
      * Test the interpolate methods. Also does the FloatXXX versions.
      */

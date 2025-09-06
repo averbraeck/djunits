@@ -28,7 +28,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T11:42:31.564730700Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T12:29:15.080196400Z")
 public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit, FloatDuration>
 {
     /** */
@@ -38,8 +38,8 @@ public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit,
     public static final FloatTime ZERO = new FloatTime(0.0f, TimeUnit.DEFAULT);
 
     /**
-     * Construct FloatTime scalar.
-     * @param value the float value
+     * Construct FloatTime scalar with a unit.
+     * @param value the float value, expressed in the given unit
      * @param unit unit for the float value
      */
     public FloatTime(final float value, final TimeUnit unit)
@@ -48,8 +48,8 @@ public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit,
     }
 
     /**
-     * Construct FloatTime scalar using a double value.
-     * @param value the double value
+     * Construct FloatTime scalar with a unit using a double value.
+     * @param value the double value, expressed in the given unit
      * @param unit unit for the resulting float value
      */
     public FloatTime(final double value, final TimeUnit unit)
@@ -79,7 +79,7 @@ public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit,
     }
 
     /**
-     * Construct FloatTime scalar.
+     * Construct FloatTime scalar based on an BASE unit.
      * @param value the float value in BASE units
      * @return the new scalar with the BASE value
      */
@@ -89,14 +89,16 @@ public class FloatTime extends FloatScalarAbs<TimeUnit, FloatTime, DurationUnit,
     }
 
     /**
-     * Interpolate between two values.
-     * @param zero the low value
-     * @param one the high value
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
      * @param ratio the ratio between 0 and 1, inclusive
-     * @return a Scalar at the ratio between
+     * @return a FloatTime at the given ratio between 0 and 1
      */
     public static FloatTime interpolate(final FloatTime zero, final FloatTime one, final float ratio)
     {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
         return new FloatTime(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
                 zero.getDisplayUnit());
     }

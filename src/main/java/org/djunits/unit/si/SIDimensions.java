@@ -31,9 +31,9 @@ public class SIDimensions implements Serializable
 
     /** For parsing, the mol has to be parsed before the m, otherwise the "m" from "mol" is eaten; same for "s" and "sr". */
     private static final int[] PARSE_ORDER = new int[] {0, 1, 2, 7, 3, 4, 5, 6, 8};
-    
+
     /** the dimensionless SIDimensions. */
-    public static final SIDimensions DIMLESS = new SIDimensions(0, 0, 0, 0, 0, 0, 0, 0, 0); 
+    public static final SIDimensions DIMLESS = new SIDimensions(0, 0, 0, 0, 0, 0, 0, 0, 0);
 
     /**
      * The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2: mass (kg), 3: length
@@ -51,9 +51,9 @@ public class SIDimensions implements Serializable
     /**
      * Create an immutable SIDimensions instance based on a safe copy of a given dimensions specification. As an example, speed
      * is indicated as length = 1; time = -1 with the other dimensions equal to zero.
-     * @param dimensions The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle
-     *            (sr), 2: mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance
-     *            (mol), 8: luminous intensity (cd).
+     * @param dimensions The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2:
+     *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
+     *            luminous intensity (cd).
      */
     public SIDimensions(final byte[] dimensions)
     {
@@ -67,12 +67,12 @@ public class SIDimensions implements Serializable
     /**
      * Create an immutable fractional SIDimensions instance based on a safe copy of a given specification, separated in a
      * numerator and a denominator.
-     * @param numerator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr),
-     *            2: mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
+     * @param numerator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2: mass
+     *            (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
-     * @param denominator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle
-     *            (sr), 2: mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance
-     *            (mol), 8: luminous intensity (cd).
+     * @param denominator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2:
+     *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
+     *            luminous intensity (cd).
      */
     protected SIDimensions(final byte[] numerator, final byte[] denominator)
     {

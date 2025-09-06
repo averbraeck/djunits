@@ -25,9 +25,8 @@ import org.djunits.value.vfloat.vector.base.FloatVectorRel;
  * @param <RV> the relative vector type belonging to the relative matrix type
  * @param <RM> the relative matrix type with this unit
  */
-public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel<U, S>,
-        RV extends FloatVectorRel<U, S, RV>, RM extends FloatMatrixRel<U, S, RV, RM>>
-        extends FloatMatrix<U, S, RV, RM> implements Relative<U, RM>
+public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel<U, S>, RV extends FloatVectorRel<U, S, RV>,
+        RM extends FloatMatrixRel<U, S, RV, RM>> extends FloatMatrix<U, S, RV, RM> implements Relative<U, RM>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -142,7 +141,7 @@ public abstract class FloatMatrixRel<U extends Unit<U>, S extends FloatScalarRel
     {
         return assign(FloatMathFunctions.DIV(divisor));
     }
-    
+
     /**
      * Multiply all values of this matrix by the multiplier. This only works if the matrix is mutable.
      * @param multiplier the factor by which to multiply all values

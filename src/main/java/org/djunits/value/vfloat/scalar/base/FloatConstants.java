@@ -43,7 +43,8 @@ public final class FloatConstants
     public static final FloatFrequency CESIUM133_FREQUENCY = FloatFrequency.of(9192631770f, "1/s");
 
     /** Electrical charge of one electron. This value is exact since the 2019 redefinition of the SI base units. */
-    public static final FloatElectricalCharge ELECTRONCHARGE = new FloatElectricalCharge(-1.0f, ElectricalChargeUnit.ATOMIC_UNIT);
+    public static final FloatElectricalCharge ELECTRONCHARGE =
+            new FloatElectricalCharge(-1.0f, ElectricalChargeUnit.ATOMIC_UNIT);
 
     /**
      * Mass of an electron. See <a href="https://en.wikipedia.org/wiki/Physical_constant">Wikipedia Physical constant</a>. This
@@ -114,7 +115,6 @@ public final class FloatConstants
 
     /** Golden ratio. */
     public static final FloatDimensionless PHI = new FloatDimensionless(0.5 + 0.5 * Math.sqrt(5.0), DimensionlessUnit.SI);
-
 
     /** Reduced Planck constant, a.k.a. angular Planck constant; Planck constant divided by 2 pi. */
     public static final FloatSIScalar PLANCKREDUCED = PLANCK.divide(TAU);

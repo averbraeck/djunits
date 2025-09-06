@@ -21,8 +21,8 @@ import org.djunits.value.vdouble.vector.data.DoubleVectorData;
  * @param <S> the scalar type belonging to the vector type
  * @param <RV> the relative vector type with this unit
  */
-public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>,
-        RV extends DoubleVectorRel<U, S, RV>> extends DoubleVector<U, S, RV> implements Relative<U, RV>
+public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarRel<U, S>, RV extends DoubleVectorRel<U, S, RV>>
+        extends DoubleVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
     private static final long serialVersionUID = 20190908L;
@@ -174,8 +174,7 @@ public abstract class DoubleVectorRel<U extends Unit<U>, S extends DoubleScalarR
      * @param <VT> the vector type of the multiplier
      */
     public final <UT extends Unit<UT>, ST extends DoubleScalarRel<UT, ST>,
-            VT extends DoubleVectorRel<UT, ST, VT>> SIVector divide(final VT rel)
-                    throws ValueRuntimeException, UnitException
+            VT extends DoubleVectorRel<UT, ST, VT>> SIVector divide(final VT rel) throws ValueRuntimeException, UnitException
     {
         checkSize(rel);
         return new SIVector(this.getData().divide(rel.getData()), SIUnit.of(

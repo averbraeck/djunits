@@ -16,8 +16,8 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
  * @param <U> the unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel<U, R>>
-        extends FloatScalar<U, R> implements Relative<U, R>
+public abstract class FloatScalarRel<U extends Unit<U>, R extends FloatScalarRel<U, R>> extends FloatScalar<U, R>
+        implements Relative<U, R>
 {
     /**  */
     private static final long serialVersionUID = 20150626L;

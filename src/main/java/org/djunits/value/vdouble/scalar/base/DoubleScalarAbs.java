@@ -18,9 +18,8 @@ import org.djunits.value.Absolute;
  * @param <RU> the relative unit
  * @param <R> the Relative class for reference purposes
  */
-public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
-        A extends DoubleScalarAbs<AU, A, RU, R>, RU extends Unit<RU>,
-        R extends DoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalar<AU, A>
+public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>, A extends DoubleScalarAbs<AU, A, RU, R>,
+        RU extends Unit<RU>, R extends DoubleScalarRelWithAbs<AU, A, RU, R>> extends DoubleScalar<AU, A>
         implements Absolute<AU, A, RU, R>
 {
     /**  */
@@ -60,7 +59,7 @@ public abstract class DoubleScalarAbs<AU extends AbsoluteLinearUnit<AU, RU>,
      * @return A a new absolute instance of the DoubleScalar of the right type
      */
     public abstract A instantiateAbs(double value, AU unit);
-    
+
     @Override
     public final A plus(final R increment)
     {

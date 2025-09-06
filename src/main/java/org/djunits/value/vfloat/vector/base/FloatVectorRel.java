@@ -21,8 +21,8 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * @param <S> the scalar type belonging to the vector type
  * @param <RV> the relative vector type with this unit
  */
-public abstract class FloatVectorRel<U extends Unit<U>, S extends FloatScalarRel<U, S>,
-        RV extends FloatVectorRel<U, S, RV>> extends FloatVector<U, S, RV> implements Relative<U, RV>
+public abstract class FloatVectorRel<U extends Unit<U>, S extends FloatScalarRel<U, S>, RV extends FloatVectorRel<U, S, RV>>
+        extends FloatVector<U, S, RV> implements Relative<U, RV>
 {
     /** */
     private static final long serialVersionUID = 20190908L;

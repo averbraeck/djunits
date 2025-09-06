@@ -132,8 +132,8 @@ public final class DOUBLEMATRIX
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    array[r][c] = (r == c) ? (S) ofSI.newInstance(r + 1 + rand.nextDouble(), unit)
-                            : (S) ofSI.newInstance(0.0, unit);
+                    array[r][c] =
+                            (r == c) ? (S) ofSI.newInstance(r + 1 + rand.nextDouble(), unit) : (S) ofSI.newInstance(0.0, unit);
                 }
             }
             return array;

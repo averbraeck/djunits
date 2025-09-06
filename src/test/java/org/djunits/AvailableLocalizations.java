@@ -26,8 +26,8 @@ public final class AvailableLocalizations
      * Build a list of locale names that are available for a given prefix.
      * @param prefix the prefix of the localization file names
      * @param path the path to the resource directory to scan
-     * @return the list of matching locale names (which <b>always</b> starts with "en", even though there
-     *         may not be such a localization file)
+     * @return the list of matching locale names (which <b>always</b> starts with "en", even though there may not be such a
+     *         localization file)
      */
     public static List<String> availableLocalizations(final String prefix, final String path)
     {
