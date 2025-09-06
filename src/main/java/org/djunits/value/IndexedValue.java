@@ -49,11 +49,13 @@ public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>, T 
         return this.displayUnit;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void setDisplayUnit(final U newUnit)
+    public T setDisplayUnit(final U newUnit)
     {
         Throw.whenNull(newUnit, "newUnit may not be null");
         this.displayUnit = newUnit;
+        return (T) this;
     }
 
     /**

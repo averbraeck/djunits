@@ -32,8 +32,9 @@ public interface Value<U extends Unit<U>, T extends Value<U, T>> extends Seriali
     /**
      * Set a new display unit for the value. Internally, the value will stay stored in the default or SI unit.
      * @param newUnit the new display unit of this Value
+     * @return the instance for method chaining
      */
-    void setDisplayUnit(U newUnit);
+    T setDisplayUnit(U newUnit);
 
     /**
      * Indicate whether this is an Absolute Value.

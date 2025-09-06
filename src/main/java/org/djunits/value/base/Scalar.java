@@ -38,11 +38,13 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
         return this.displayUnit;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void setDisplayUnit(final U newUnit)
+    public S setDisplayUnit(final U newUnit)
     {
         Throw.whenNull(newUnit, "newUnit may not be null");
         this.displayUnit = newUnit;
+        return (S) this;
     }
 
     // No hashcode or equals -- has to be implemented on a deeper level
@@ -135,10 +137,10 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     /**
      * Concise textual representation of this value, without the engineering formatting, so without trailing zeroes. A space is
      * added between the number and the unit.
-     * @param displayUnit the display unit for the value
+     * @param withDisplayUnit the display unit for the value
      * @return a String with the value with the default textual representation of the provided unit attached.
      */
-    public abstract String toTextualString(U displayUnit);
+    public abstract String toTextualString(U withDisplayUnit);
 
     /**
      * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
@@ -150,10 +152,10 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     /**
      * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
      * added between the number and the unit.
-     * @param displayUnit the display unit for the value
+     * @param withDisplayUnit the display unit for the value
      * @return a String with the value with the default display representation of the provided unit attached.
      */
-    public abstract String toDisplayString(U displayUnit);
+    public abstract String toDisplayString(U withDisplayUnit);
 
     /**
      * Format a string according to the current locale and the standard (minimized) format, such as "3.14" or "300.0".
@@ -163,7 +165,9 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     public String format(final double d)
     {
         if (d < 1E-5 || d > 1E5)
+        {
             return format(d, "%E");
+        }
         return format(d, "%f");
     }
 
@@ -177,12 +181,18 @@ public abstract class Scalar<U extends Unit<U>, S extends Scalar<U, S>> extends 
     {
         String s = String.format(format, d);
         if (s.contains("e") || s.contains("E"))
+        {
             return s;
+        }
         while (s.endsWith("0") && s.length() > 2)
+        {
             s = s.substring(0, s.length() - 1);
+        }
         String last = s.substring(s.length() - 1);
         if (!"01234567890".contains(last))
+        {
             s += "0";
+        }
         return s;
     }
 
