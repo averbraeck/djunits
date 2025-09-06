@@ -47,6 +47,8 @@ public enum SIPrefixes
     static
     {
         Map<String, SIPrefix> unitPrefixes = new LinkedHashMap<>();
+        unitPrefixes.put("q", new SIPrefix("q", "quecto", 1.0E-30));
+        unitPrefixes.put("r", new SIPrefix("r", "ronto", 1.0E-27));
         unitPrefixes.put("y", new SIPrefix("y", "yocto", 1.0E-24));
         unitPrefixes.put("z", new SIPrefix("z", "zepto", 1.0E-21));
         unitPrefixes.put("a", new SIPrefix("a", "atto", 1.0E-18));
@@ -68,6 +70,8 @@ public enum SIPrefixes
         unitPrefixes.put("E", new SIPrefix("E", "exa", 1.0E18));
         unitPrefixes.put("Z", new SIPrefix("Z", "zetta", 1.0E21));
         unitPrefixes.put("Y", new SIPrefix("Y", "yotta", 1.0E24));
+        unitPrefixes.put("R", new SIPrefix("R", "ronna", 1.0E27));
+        unitPrefixes.put("Q", new SIPrefix("Q", "quetta", 1.0E30));
         UNIT_PREFIXES = Collections.unmodifiableMap(unitPrefixes);
 
         Map<Integer, SIPrefix> factorMap = new LinkedHashMap<>();
@@ -82,6 +86,8 @@ public enum SIPrefixes
         FACTORS = factorMap;
 
         Map<String, SIPrefix> perUnitPrefixes = new LinkedHashMap<>();
+        perUnitPrefixes.put("/q", new SIPrefix("/q", "per quecto", 1.0E30));
+        perUnitPrefixes.put("/r", new SIPrefix("/r", "per ronto", 1.0E27));
         perUnitPrefixes.put("/y", new SIPrefix("/y", "per yocto", 1.0E24));
         perUnitPrefixes.put("/z", new SIPrefix("/z", "per zepto", 1.0E21));
         perUnitPrefixes.put("/a", new SIPrefix("/a", "per atto", 1.0E18));
@@ -103,6 +109,8 @@ public enum SIPrefixes
         perUnitPrefixes.put("/E", new SIPrefix("/E", "per exa", 1.0E-18));
         perUnitPrefixes.put("/Z", new SIPrefix("/Z", "per zetta", 1.0E-21));
         perUnitPrefixes.put("/Y", new SIPrefix("/Y", "per yotta", 1.0E-24));
+        perUnitPrefixes.put("/R", new SIPrefix("/R", "per ronna", 1.0E-27));
+        perUnitPrefixes.put("/Q", new SIPrefix("/Q", "per quetta", 1.0E-30));
         PER_UNIT_PREFIXES = Collections.unmodifiableMap(perUnitPrefixes);
 
         Map<String, SIPrefix> unitPosPrefixes = new LinkedHashMap<>();
@@ -116,9 +124,13 @@ public enum SIPrefixes
         unitPosPrefixes.put("E", new SIPrefix("E", "exa", 1.0E18));
         unitPosPrefixes.put("Z", new SIPrefix("Z", "zetta", 1.0E21));
         unitPosPrefixes.put("Y", new SIPrefix("Y", "yotta", 1.0E24));
+        unitPosPrefixes.put("R", new SIPrefix("R", "ronna", 1.0E27));
+        unitPosPrefixes.put("Q", new SIPrefix("Q", "quetta", 1.0E30));
         UNIT_POS_PREFIXES = Collections.unmodifiableMap(unitPosPrefixes);
 
         Map<String, SIPrefix> kiloPrefixes = new LinkedHashMap<>();
+        kiloPrefixes.put("q", new SIPrefix("q", "quecto", 1.0E-33));
+        kiloPrefixes.put("r", new SIPrefix("r", "ronto", 1.0E-30));
         kiloPrefixes.put("y", new SIPrefix("y", "yocto", 1.0E-27));
         kiloPrefixes.put("z", new SIPrefix("z", "zepto", 1.0E-24));
         kiloPrefixes.put("a", new SIPrefix("a", "atto", 1.0E-21));
@@ -140,6 +152,8 @@ public enum SIPrefixes
         kiloPrefixes.put("E", new SIPrefix("E", "exa", 1.0E15));
         kiloPrefixes.put("Z", new SIPrefix("Z", "zetta", 1.0E18));
         kiloPrefixes.put("Y", new SIPrefix("Y", "yotta", 1.0E21));
+        kiloPrefixes.put("R", new SIPrefix("R", "ronna", 1.0E24));
+        kiloPrefixes.put("Q", new SIPrefix("Q", "quetta", 1.0E27));
         KILO_PREFIXES = Collections.unmodifiableMap(kiloPrefixes);
     }
 
