@@ -56,7 +56,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatDimensionless>
         implements DimensionlessFunctions<DimensionlessUnit, FloatDimensionless>
 {
@@ -227,8 +227,8 @@ public class FloatDimensionless extends FloatScalarRel<DimensionlessUnit, FloatD
             NumberParser numberParser = new NumberParser().lenient().trailing();
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            if (unitString.length() != 0)
-                throw new IllegalArgumentException("Unit " + unitString + " not found for Dimensionless");
+            Throw.when(unitString.length() != 0, IllegalArgumentException.class, "Dimensionless should not have unit %s",
+                    unitString);
             return new FloatDimensionless(f, DimensionlessUnit.SI);
         }
         catch (Exception exception)

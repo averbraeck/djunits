@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatAbsorbedDose extends FloatScalarRel<AbsorbedDoseUnit, FloatAbsorbedDose>
 {
     /** */
@@ -189,8 +189,7 @@ public class FloatAbsorbedDose extends FloatScalarRel<AbsorbedDoseUnit, FloatAbs
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             AbsorbedDoseUnit unit = AbsorbedDoseUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity AbsorbedDose", unitString);
             return new FloatAbsorbedDose(f, unit);
         }
         catch (Exception exception)
@@ -214,11 +213,8 @@ public class FloatAbsorbedDose extends FloatScalarRel<AbsorbedDoseUnit, FloatAbs
         Throw.when(unitString.length() == 0, IllegalArgumentException.class,
                 "Error parsing FloatAbsorbedDose: empty unitString");
         AbsorbedDoseUnit unit = AbsorbedDoseUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new FloatAbsorbedDose(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing FloatAbsorbedDose with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing FloatAbsorbedDose with unit %s", unitString);
+        return new FloatAbsorbedDose(value, unit);
     }
 
     /**

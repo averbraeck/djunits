@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatElectricalConductance extends FloatScalarRel<ElectricalConductanceUnit, FloatElectricalConductance>
 {
     /** */
@@ -197,8 +197,8 @@ public class FloatElectricalConductance extends FloatScalarRel<ElectricalConduct
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             ElectricalConductanceUnit unit = ElectricalConductanceUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity ElectricalConductance",
+                    unitString);
             return new FloatElectricalConductance(f, unit);
         }
         catch (Exception exception)
@@ -222,11 +222,9 @@ public class FloatElectricalConductance extends FloatScalarRel<ElectricalConduct
         Throw.when(unitString.length() == 0, IllegalArgumentException.class,
                 "Error parsing FloatElectricalConductance: empty unitString");
         ElectricalConductanceUnit unit = ElectricalConductanceUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new FloatElectricalConductance(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing FloatElectricalConductance with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing FloatElectricalConductance with unit %s",
+                unitString);
+        return new FloatElectricalConductance(value, unit);
     }
 
     /**

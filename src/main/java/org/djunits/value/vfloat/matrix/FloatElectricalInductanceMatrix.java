@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatElectricalInductanceMatrix extends FloatMatrixRel<ElectricalInductanceUnit, FloatElectricalInductance,
         FloatElectricalInductanceVector, FloatElectricalInductanceMatrix>
 

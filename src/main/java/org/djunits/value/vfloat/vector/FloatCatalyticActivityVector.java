@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatCatalyticActivityVector
         extends FloatVectorRel<CatalyticActivityUnit, FloatCatalyticActivity, FloatCatalyticActivityVector>
 
@@ -146,9 +146,9 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, each FloatCatalyticActivity has its own unit, and the displayUnit is just used for
      * printing. The values but will always be internally stored as SI values or base values, and expressed using the display
      * unit or base unit when printing.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the
-     *            data is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;CatalyticActivity&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatCatalyticActivityVector(final List<? extends Number> data, final CatalyticActivityUnit displayUnit,
@@ -169,9 +169,9 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, each FloatCatalyticActivity has its own unit, and the displayUnit is just used for
      * printing. The values but will always be internally stored as SI values or base values, and expressed using the display
      * unit or base unit when printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the
-     *            data is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;CatalyticActivity&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatCatalyticActivityVector(final List<? extends Number> data, final CatalyticActivityUnit displayUnit)
     {
@@ -184,7 +184,7 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, they each have their own unit, but will be printed using SI units or base units. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;CatalyticActivity&gt;
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatCatalyticActivityVector(final List<? extends Number> data, final StorageType storageType)
@@ -198,7 +198,7 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, they each have their own unit, but will be printed using SI units or base units. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;CatalyticActivity&gt;
      */
     public FloatCatalyticActivityVector(final List<? extends Number> data)
     {
@@ -217,10 +217,10 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, each FloatCatalyticActivity has its own unit, and the displayUnit is just used for
      * printing. The values but will always be internally stored as SI values or base values, and expressed using the display
      * unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatCatalyticActivity&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the
-     *            data is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatCatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size,
@@ -243,10 +243,10 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, each FloatCatalyticActivity has its own unit, and the displayUnit is just used for
      * printing. The values but will always be internally stored as SI values or base values, and expressed using the display
      * unit or base unit when printing. Assume the storage type is SPARSE since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatCatalyticActivity&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the
-     *            data is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatCatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size,
             final CatalyticActivityUnit displayUnit)
@@ -262,7 +262,7 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, they each have their own unit, but will be printed using SI units or base units. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatCatalyticActivity&gt;
      * @param size the size off the vector, i.e., the highest index
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -280,7 +280,7 @@ public class FloatCatalyticActivityVector
      * FloatCatalyticActivity objects, they each have their own unit, but will be printed using SI units or base units. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing. Assume the storage type is SPARSE since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatCatalyticActivity&gt;
      * @param size the size off the vector, i.e., the highest index
      */
     public FloatCatalyticActivityVector(final Map<Integer, ? extends Number> data, final int size)

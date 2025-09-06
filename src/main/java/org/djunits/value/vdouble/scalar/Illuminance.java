@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
 {
     /** */
@@ -178,8 +178,7 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             IlluminanceUnit unit = IlluminanceUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Illuminance", unitString);
             return new Illuminance(d, unit);
         }
         catch (Exception exception)
@@ -203,11 +202,8 @@ public class Illuminance extends DoubleScalarRel<IlluminanceUnit, Illuminance>
         Throw.whenNull(unitString, "Error parsing Illuminance: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Illuminance: empty unitString");
         IlluminanceUnit unit = IlluminanceUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new Illuminance(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing Illuminance with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Illuminance with unit %s", unitString);
+        return new Illuminance(value, unit);
     }
 
     /**

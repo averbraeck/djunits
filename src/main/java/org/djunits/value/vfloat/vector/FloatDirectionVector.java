@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatDirectionVector
         extends FloatVectorAbs<DirectionUnit, FloatDirection, FloatDirectionVector, AngleUnit, FloatAngle, FloatAngleVector>
 {
@@ -143,9 +143,9 @@ public class FloatDirectionVector
      * in the list are expressed, as well as the unit in which they will be printed. In case the list contains FloatDirection
      * objects, each FloatDirection has its own unit, and the displayUnit is just used for printing. The values but will always
      * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Direction&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatDirectionVector(final List<? extends Number> data, final DirectionUnit displayUnit,
@@ -165,9 +165,9 @@ public class FloatDirectionVector
      * objects, each FloatDirection has its own unit, and the displayUnit is just used for printing. The values but will always
      * be internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Direction&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatDirectionVector(final List<? extends Number> data, final DirectionUnit displayUnit)
     {
@@ -179,7 +179,7 @@ public class FloatDirectionVector
      * numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects,
      * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Direction&gt;
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatDirectionVector(final List<? extends Number> data, final StorageType storageType)
@@ -193,7 +193,7 @@ public class FloatDirectionVector
      * they each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Direction&gt;
      */
     public FloatDirectionVector(final List<? extends Number> data)
     {
@@ -211,10 +211,10 @@ public class FloatDirectionVector
      * as well as the unit in which they will be printed. In case the map contains FloatDirection objects, each FloatDirection
      * has its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI
      * values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size, final DirectionUnit displayUnit,
@@ -237,10 +237,10 @@ public class FloatDirectionVector
      * has its own unit, and the displayUnit is just used for printing. The values but will always be internally stored as SI
      * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
      * since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size, final DirectionUnit displayUnit)
     {
@@ -254,7 +254,7 @@ public class FloatDirectionVector
      * Float, assume that they are expressed using SI units. When the data consists of FloatDirection objects, they each have
      * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
      * values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;
      * @param size the size off the vector, i.e., the highest index
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -271,7 +271,7 @@ public class FloatDirectionVector
      * their own unit, but will be printed using SI units or base units. The values but will always be internally stored as SI
      * values or base values, and expressed using the display unit or base unit when printing. Assume the storage type is SPARSE
      * since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatDirection&gt;
      * @param size the size off the vector, i.e., the highest index
      */
     public FloatDirectionVector(final Map<Integer, ? extends Number> data, final int size)

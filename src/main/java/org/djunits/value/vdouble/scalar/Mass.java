@@ -27,7 +27,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class Mass extends DoubleScalarRel<MassUnit, Mass>
 {
     /** */
@@ -183,8 +183,7 @@ public class Mass extends DoubleScalarRel<MassUnit, Mass>
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             MassUnit unit = MassUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Mass", unitString);
             return new Mass(d, unit);
         }
         catch (Exception exception)
@@ -208,11 +207,8 @@ public class Mass extends DoubleScalarRel<MassUnit, Mass>
         Throw.whenNull(unitString, "Error parsing Mass: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Mass: empty unitString");
         MassUnit unit = MassUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new Mass(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing Mass with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Mass with unit %s", unitString);
+        return new Mass(value, unit);
     }
 
     @Override

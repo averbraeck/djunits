@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAngle>
 {
     /** */
@@ -188,8 +188,7 @@ public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAn
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             SolidAngleUnit unit = SolidAngleUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity SolidAngle", unitString);
             return new FloatSolidAngle(f, unit);
         }
         catch (Exception exception)
@@ -213,11 +212,8 @@ public class FloatSolidAngle extends FloatScalarRel<SolidAngleUnit, FloatSolidAn
         Throw.whenNull(unitString, "Error parsing FloatSolidAngle: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatSolidAngle: empty unitString");
         SolidAngleUnit unit = SolidAngleUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new FloatSolidAngle(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing FloatSolidAngle with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing FloatSolidAngle with unit %s", unitString);
+        return new FloatSolidAngle(value, unit);
     }
 
     /**

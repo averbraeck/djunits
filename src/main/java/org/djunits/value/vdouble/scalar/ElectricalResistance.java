@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUnit, ElectricalResistance>
 {
     /** */
@@ -186,8 +186,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             ElectricalResistanceUnit unit = ElectricalResistanceUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity ElectricalResistance",
+                    unitString);
             return new ElectricalResistance(d, unit);
         }
         catch (Exception exception)
@@ -211,11 +211,8 @@ public class ElectricalResistance extends DoubleScalarRel<ElectricalResistanceUn
         Throw.when(unitString.length() == 0, IllegalArgumentException.class,
                 "Error parsing ElectricalResistance: empty unitString");
         ElectricalResistanceUnit unit = ElectricalResistanceUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new ElectricalResistance(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing ElectricalResistance with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing ElectricalResistance with unit %s", unitString);
+        return new ElectricalResistance(value, unit);
     }
 
     /**

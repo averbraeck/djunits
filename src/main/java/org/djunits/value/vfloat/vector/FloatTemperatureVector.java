@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemperatureUnit, FloatAbsoluteTemperature,
         FloatAbsoluteTemperatureVector, TemperatureUnit, FloatTemperature, FloatTemperatureVector>
 {
@@ -145,9 +145,9 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * FloatTemperature objects, each FloatTemperature has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Temperature&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatTemperatureVector(final List<? extends Number> data, final TemperatureUnit displayUnit,
@@ -167,9 +167,9 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * FloatTemperature objects, each FloatTemperature has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Temperature&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatTemperatureVector(final List<? extends Number> data, final TemperatureUnit displayUnit)
     {
@@ -181,7 +181,7 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * contains numbers such as Float, assume that they are expressed using SI units. When the data consists of FloatTemperature
      * objects, they each have their own unit, but will be printed using SI units or base units. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Temperature&gt;
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatTemperatureVector(final List<? extends Number> data, final StorageType storageType)
@@ -195,7 +195,7 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * objects, they each have their own unit, but will be printed using SI units or base units. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;Temperature&gt;
      */
     public FloatTemperatureVector(final List<? extends Number> data)
     {
@@ -213,10 +213,10 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * expressed, as well as the unit in which they will be printed. In case the map contains FloatTemperature objects, each
      * FloatTemperature has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatTemperature&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatTemperatureVector(final Map<Integer, ? extends Number> data, final int size, final TemperatureUnit displayUnit,
@@ -239,10 +239,10 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * FloatTemperature has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is SPARSE since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatTemperature&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is
-     *            expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatTemperatureVector(final Map<Integer, ? extends Number> data, final int size, final TemperatureUnit displayUnit)
     {
@@ -256,7 +256,7 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * such as Float, assume that they are expressed using SI units. When the data consists of FloatTemperature objects, they
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatTemperature&gt;
      * @param size the size off the vector, i.e., the highest index
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -273,7 +273,7 @@ public class FloatTemperatureVector extends FloatVectorRelWithAbs<AbsoluteTemper
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is SPARSE since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatTemperature&gt;
      * @param size the size off the vector, i.e., the highest index
      */
     public FloatTemperatureVector(final Map<Integer, ? extends Number> data, final int size)

@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, LuminousIntensity>
 {
     /** */
@@ -180,8 +180,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             LuminousIntensityUnit unit = LuminousIntensityUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity LuminousIntensity",
+                    unitString);
             return new LuminousIntensity(d, unit);
         }
         catch (Exception exception)
@@ -205,11 +205,8 @@ public class LuminousIntensity extends DoubleScalarRel<LuminousIntensityUnit, Lu
         Throw.when(unitString.length() == 0, IllegalArgumentException.class,
                 "Error parsing LuminousIntensity: empty unitString");
         LuminousIntensityUnit unit = LuminousIntensityUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new LuminousIntensity(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing LuminousIntensity with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing LuminousIntensity with unit %s", unitString);
+        return new LuminousIntensity(value, unit);
     }
 
     /**

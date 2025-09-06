@@ -64,7 +64,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
 {
     /** */
@@ -199,7 +199,7 @@ public class FloatSIScalar extends FloatScalarRel<SIUnit, FloatSIScalar>
     public static FloatSIScalar valueOf(final String text)
     {
         Throw.whenNull(text, "Error parsing SIScalar: unitString is null");
-        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing SIScalar: empty unitString");
+        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing SIScalar: empty string");
         try
         {
             NumberParser numberParser = new NumberParser().lenient().trailing();

@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
 {
     /** */
@@ -189,8 +189,7 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
             float f = numberParser.parseFloat(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             DensityUnit unit = DensityUnit.BASE.getUnitByAbbreviation(unitString);
-            if (unit == null)
-                throw new IllegalArgumentException("Unit " + unitString + " not found");
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Density", unitString);
             return new FloatDensity(f, unit);
         }
         catch (Exception exception)
@@ -214,11 +213,8 @@ public class FloatDensity extends FloatScalarRel<DensityUnit, FloatDensity>
         Throw.whenNull(unitString, "Error parsing FloatDensity: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing FloatDensity: empty unitString");
         DensityUnit unit = DensityUnit.BASE.getUnitByAbbreviation(unitString);
-        if (unit != null)
-        {
-            return new FloatDensity(value, unit);
-        }
-        throw new IllegalArgumentException("Error parsing FloatDensity with unit " + unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing FloatDensity with unit %s", unitString);
+        return new FloatDensity(value, unit);
     }
 
     /**

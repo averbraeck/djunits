@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * @author <a href="https://www.tudelft.nl/averbraeck">Alexander Verbraeck</a>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
  */
-@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2023-07-23T14:06:38.224104100Z")
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T07:51:33.095478900Z")
 public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, FloatMagneticFlux, FloatMagneticFluxVector>
 
 {
@@ -143,9 +143,9 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * FloatMagneticFlux objects, each FloatMagneticFlux has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
-     *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;MagneticFlux&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatMagneticFluxVector(final List<? extends Number> data, final MagneticFluxUnit displayUnit,
@@ -165,9 +165,9 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * FloatMagneticFlux objects, each FloatMagneticFlux has its own unit, and the displayUnit is just used for printing. The
      * values but will always be internally stored as SI values or base values, and expressed using the display unit or base
      * unit when printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
-     *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;MagneticFlux&gt;
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatMagneticFluxVector(final List<? extends Number> data, final MagneticFluxUnit displayUnit)
     {
@@ -180,7 +180,7 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * FloatMagneticFlux objects, they each have their own unit, but will be printed using SI units or base units. The values
      * but will always be internally stored as SI values or base values, and expressed using the display unit or base unit when
      * printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;MagneticFlux&gt;
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatMagneticFluxVector(final List<? extends Number> data, final StorageType storageType)
@@ -194,7 +194,7 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * FloatMagneticFlux objects, they each have their own unit, but will be printed using SI units or base units. The values
      * but will always be internally stored as SI values or base values, and expressed using the display unit or base unit when
      * printing. Assume the storage type is DENSE since we offer the data as a List.
-     * @param data the data for the vector
+     * @param data the data for the vector as a List&lt;Float&gt; or List&lt;MagneticFlux&gt;
      */
     public FloatMagneticFluxVector(final List<? extends Number> data)
     {
@@ -212,10 +212,10 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * expressed, as well as the unit in which they will be printed. In case the map contains FloatMagneticFlux objects, each
      * FloatMagneticFlux has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatMagneticFlux&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
-     *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
     public FloatMagneticFluxVector(final Map<Integer, ? extends Number> data, final int size,
@@ -238,10 +238,10 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * FloatMagneticFlux has its own unit, and the displayUnit is just used for printing. The values but will always be
      * internally stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume
      * the storage type is SPARSE since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatMagneticFlux&gt;
      * @param size the size off the vector, i.e., the highest index
-     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data
-     *            is expressed as List&lt;Float&gt; or List&lt;Number&gt; in general
+     * @param displayUnit the display unit of the vector data, and the unit of the data points when the data is expressed as
+     *            List&lt;Float&gt; or List&lt;Number&gt; in general
      */
     public FloatMagneticFluxVector(final Map<Integer, ? extends Number> data, final int size,
             final MagneticFluxUnit displayUnit)
@@ -256,7 +256,7 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * such as Float, assume that they are expressed using SI units. When the data consists of FloatMagneticFlux objects, they
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatMagneticFlux&gt;
      * @param size the size off the vector, i.e., the highest index
      * @param storageType the StorageType (SPARSE or DENSE) to use for constructing the Vector
      */
@@ -273,7 +273,7 @@ public class FloatMagneticFluxVector extends FloatVectorRel<MagneticFluxUnit, Fl
      * each have their own unit, but will be printed using SI units or base units. The values but will always be internally
      * stored as SI values or base values, and expressed using the display unit or base unit when printing. Assume the storage
      * type is SPARSE since we offer the data as a Map.
-     * @param data the data for the vector
+     * @param data the data for the vector as a Map&lt;Integer, Float&gt; or Map&lt;Integer, FloatMagneticFlux&gt;
      * @param size the size off the vector, i.e., the highest index
      */
     public FloatMagneticFluxVector(final Map<Integer, ? extends Number> data, final int size)

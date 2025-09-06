@@ -22,8 +22,8 @@ public interface RelWithAbs<AU extends AbsoluteLinearUnit<AU, RU>, A extends Abs
         R extends RelWithAbs<AU, A, RU, R>> extends Relative<RU, R>
 {
     /**
-     * Add an Absolute value to this relative value. A new value is returned due to immutability. The unit of the result is
-     * the unit of the absolute operand.
+     * Add an Absolute value to this relative value. A new value is returned due to immutability. The unit of the result is the
+     * unit of the absolute operand.
      * @param abs A the right operand
      * @return the sum of this value and the operand
      */

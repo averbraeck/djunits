@@ -18,8 +18,8 @@ import org.djutils.exceptions.Throw;
  * @param <T> the value type for this unit
  * @param <D> the data storage type
  */
-public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>,
-        T extends IndexedValue<U, S, T, D>, D extends Storage<D>> implements Value<U, T>
+public abstract class IndexedValue<U extends Unit<U>, S extends Scalar<U, S>, T extends IndexedValue<U, S, T, D>,
+        D extends Storage<D>> implements Value<U, T>
 {
     /** */
     private static final long serialVersionUID = 20190927L;
