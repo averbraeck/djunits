@@ -28,10 +28,10 @@ The next paragraphs show how to build a new Relative Scalar type. Building a new
 
 ### Extending a Relative ScalarType from the Abstract Scalar Template
 
-Several Abstract classes are available that simplify creating new `Scalar`, `Vector`, and `Matrix` classes. For the `Scalar` class, these are `AbstractDoubleScalarAbs` and `AbstractDoubleScalarRel`. The `AbstractDoubleScalarRel` class takes two generic arguments: the unit, and the name of the class itself. The 2nd parameter might seem strange, as the definition looks to be self-referential. The way it is used is that in the methods of the Abstract class, the generics argument is needed to specify the return type and argument type for various methods that are implemented in the abstract super class. So the first line of the new Jerk scalar class is:
+Several Abstract classes are available that simplify creating new `Scalar`, `Vector`, and `Matrix` classes. For the `Scalar` class, these are `DoubleScalarAbs` and `DoubleScalarRel`. The `DoubleScalarRel` class takes two generic arguments: the unit, and the name of the class itself. The 2nd parameter might seem strange, as the definition looks to be self-referential. The way it is used is that in the methods of the Abstract class, the generics argument is needed to specify the return type and argument type for various methods that are implemented in the abstract super class. So the first line of the new Jerk scalar class is:
 
 ```java
-public class Jerk extends AbstractDoubleScalarRel<JerkUnit, Jerk>
+public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
 ```
 
 Java abstract classes cannot prescribe anything about constructors in the extending classes. Each scalar class file in DJUNITS should have two constructors, one that takes a double argument, and one that takes an instance of the scalar type that the class file defines; i.c. another Jerk scalar:
@@ -48,13 +48,12 @@ public Jerk(final Jerk value)
 }
 ```
 
-Another method that must be implemented is the `instantiateRel` method. This method is used by the Abstract superclass to instantiate new scalar instances of the right type:
+Another method that can be implemented is the `ofSI()` method as a quick generator with the default unit.
 
 ```java
-@Override
-public final Jerk instantiateRel(final double value, final JerkUnit unit)
+public static Jerk of(final double valueSI)
 {
-    return new Jerk(value, unit);
+    return new Jerk(valueSI, jerkUnit.SI);
 }
 ```
 
@@ -64,6 +63,7 @@ With this minimum amount of code (two constructors, and the instantiateRel metho
 Jerk jerk1 = new Jerk(1.2, JerkUnit.SI);
 Jerk jerk2 = jerk1.times(2.0);
 Jerk jerk3 = new Jerk(4.0, JerkUnit.IN_PER_S3);
+Jerk jerk4 = Jerk.ofSI(5.0);
 ```
 
 ### Extra methods to implement
@@ -73,12 +73,12 @@ Often, extra methods are implemented for common multiplications and divisions in
 ```java
 public final Acceleration multiplyBy(final Duration v)
 {
-    return new Acceleration(this.si * v.si, AccelerationUnit.SI);
+    return Acceleration.ofSI(this.si * v.si);
 }
 
 public final Frequency divideBy(final Acceleration v)
 {
-    return new Frequency(this.si / v.si, FrequencyUnit.SI);
+    return Frequency.ofSI(this.si / v.si);
 }
 ```
 

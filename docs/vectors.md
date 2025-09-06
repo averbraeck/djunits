@@ -95,7 +95,7 @@ The final and third method creates a scalar Jerk from a double value in the SI b
 @Override
 public Jerk instantiateScalarSI(final double valueSI, final JerkUnit displayUnit)
 {
-    Jerk result = Jerk.instantiateSI(valueSI);
+    Jerk result = Jerk.ofSI(valueSI);
     result.setDisplayUnit(displayUnit);
     return result;
 }
