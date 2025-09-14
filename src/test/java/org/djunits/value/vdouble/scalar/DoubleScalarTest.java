@@ -27,7 +27,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalarRel;
 import org.djunits.value.vdouble.scalar.base.DoubleScalarRelWithAbs;
 import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatPosition;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -267,12 +267,12 @@ public class DoubleScalarTest
             }
 
             // check errors
-            Try.testFail(() -> mulMethod.invoke(null, scalar, null));
-            Try.testFail(() -> mulMethod.invoke(null, null, dimless));
-            Try.testFail(() -> divMethod.invoke(null, scalar, null));
-            Try.testFail(() -> divMethod.invoke(null, null, dimless));
-            Try.testFail(() -> mulMethod.invoke(null, scalar, Length.ofSI(2.0)));
-            Try.testFail(() -> divMethod.invoke(null, scalar, Length.ofSI(2.0)));
+            UnitTest.testFail(() -> mulMethod.invoke(null, scalar, null));
+            UnitTest.testFail(() -> mulMethod.invoke(null, null, dimless));
+            UnitTest.testFail(() -> divMethod.invoke(null, scalar, null));
+            UnitTest.testFail(() -> divMethod.invoke(null, null, dimless));
+            UnitTest.testFail(() -> mulMethod.invoke(null, scalar, Length.ofSI(2.0)));
+            UnitTest.testFail(() -> divMethod.invoke(null, scalar, Length.ofSI(2.0)));
         }
     }
 
@@ -467,29 +467,33 @@ public class DoubleScalarTest
             assertEquals((float) expected, floatInterpolatedLength.getInUnit(), 0.01f, "interpoated value matches ratio");
         }
 
-        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, -0.01), IllegalArgumentException.class);
-        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, 1.01), IllegalArgumentException.class);
-        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, 7.02), IllegalArgumentException.class);
-        Try.testFail(() -> Position.interpolate(zeroPosition, onePosition, -8.6), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Position.interpolate(zeroPosition, onePosition, -0.01), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Position.interpolate(zeroPosition, onePosition, 1.01), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Position.interpolate(zeroPosition, onePosition, 7.02), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Position.interpolate(zeroPosition, onePosition, -8.6), IllegalArgumentException.class);
 
-        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, -0.01), IllegalArgumentException.class);
-        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, 1.01), IllegalArgumentException.class);
-        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, 7.02), IllegalArgumentException.class);
-        Try.testFail(() -> Length.interpolate(zeroLength, oneLength, -8.6), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Length.interpolate(zeroLength, oneLength, -0.01), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Length.interpolate(zeroLength, oneLength, 1.01), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Length.interpolate(zeroLength, oneLength, 7.02), IllegalArgumentException.class);
+        UnitTest.testFail(() -> Length.interpolate(zeroLength, oneLength, -8.6), IllegalArgumentException.class);
 
-        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, -0.01f),
+        UnitTest.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, -0.01f),
                 IllegalArgumentException.class);
-        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, 1.01f),
+        UnitTest.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, 1.01f),
                 IllegalArgumentException.class);
-        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, 7.02f),
+        UnitTest.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, 7.02f),
                 IllegalArgumentException.class);
-        Try.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, -8.6f),
+        UnitTest.testFail(() -> FloatPosition.interpolate(floatZeroPosition, floatOnePosition, -8.6f),
                 IllegalArgumentException.class);
 
-        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, -0.01f), IllegalArgumentException.class);
-        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, 1.01f), IllegalArgumentException.class);
-        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, 7.02f), IllegalArgumentException.class);
-        Try.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, -8.6f), IllegalArgumentException.class);
+        UnitTest.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, -0.01f),
+                IllegalArgumentException.class);
+        UnitTest.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, 1.01f),
+                IllegalArgumentException.class);
+        UnitTest.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, 7.02f),
+                IllegalArgumentException.class);
+        UnitTest.testFail(() -> FloatLength.interpolate(floatZeroLength, floatOneLength, -8.6f),
+                IllegalArgumentException.class);
 
     }
 

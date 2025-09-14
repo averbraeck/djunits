@@ -24,7 +24,7 @@ import org.djunits.value.CLASSNAMES;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -270,12 +270,12 @@ public class FloatScalarTest
             }
 
             // check errors
-            Try.testFail(() -> mulMethod.invoke(null, scalar, null));
-            Try.testFail(() -> mulMethod.invoke(null, null, dimless));
-            Try.testFail(() -> divMethod.invoke(null, scalar, null));
-            Try.testFail(() -> divMethod.invoke(null, null, dimless));
-            Try.testFail(() -> mulMethod.invoke(null, scalar, FloatLength.ofSI(2.0f)));
-            Try.testFail(() -> divMethod.invoke(null, scalar, FloatLength.ofSI(2.0f)));
+            UnitTest.testFail(() -> mulMethod.invoke(null, scalar, null));
+            UnitTest.testFail(() -> mulMethod.invoke(null, null, dimless));
+            UnitTest.testFail(() -> divMethod.invoke(null, scalar, null));
+            UnitTest.testFail(() -> divMethod.invoke(null, null, dimless));
+            UnitTest.testFail(() -> mulMethod.invoke(null, scalar, FloatLength.ofSI(2.0f)));
+            UnitTest.testFail(() -> divMethod.invoke(null, scalar, FloatLength.ofSI(2.0f)));
         }
     }
 

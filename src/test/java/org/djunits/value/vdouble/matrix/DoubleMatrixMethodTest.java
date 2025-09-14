@@ -32,7 +32,7 @@ import org.djunits.value.vdouble.scalar.Time;
 import org.djunits.value.vdouble.vector.AreaVector;
 import org.djunits.value.vfloat.matrix.FloatAreaMatrix;
 import org.djunits.value.vfloat.vector.FLOATVECTOR;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -363,7 +363,7 @@ public class DoubleMatrixMethodTest
                 double err = Math.max(det, detCalc) / 10000.0;
                 assertEquals(detCalc, det, err, "Determinant of square matrix with unit " + au.getDefaultTextualAbbreviation()
                         + ", storage = " + storageType + " = " + det + " but should have been " + detCalc);
-                Try.testFail(() -> am.determinantSI(), "Determinant of non-square matrix should have thrown exception");
+                UnitTest.testFail(() -> am.determinantSI(), "Determinant of non-square matrix should have thrown exception");
 
                 // TEST METHODS THAT INVOLVE TWO MATRIX INSTANCES
 
@@ -487,23 +487,24 @@ public class DoubleMatrixMethodTest
                 am = am.immutable();
                 final AreaMatrix amPtr = am;
                 Area fa = Area.of(10.0d, "m^2");
-                Try.testFail(() -> amPtr.assign(DoubleMathFunctions.ABS), "ImmutableMatrix.assign(...) should throw error");
-                Try.testFail(() -> amPtr.decrementBy(fa), "ImmutableMatrix.decrementBy(scalar) should throw error");
-                Try.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableMatrix.decrementBy(matrix) should throw error");
-                Try.testFail(() -> amPtr.incrementBy(fa), "ImmutableMatrix.incrementBy(scalar) should throw error");
-                Try.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableMatrix.incrementBy(matrix) should throw error");
-                Try.testFail(() -> amPtr.divideBy(2.0d), "ImmutableMatrix.divideBy(factor) should throw error");
-                Try.testFail(() -> amPtr.multiplyBy(2.0d), "ImmutableMatrix.multiplyBy(factor) should throw error");
-                Try.testFail(() -> amPtr.set(1, 1, fa), "ImmutableMatrix.set() should throw error");
-                Try.testFail(() -> amPtr.setSI(1, 1, 20.1d), "ImmutableMatrix.setSI() should throw error");
-                Try.testFail(() -> amPtr.setInUnit(1, 1, 15.2d), "ImmutableMatrix.setInUnit(f) should throw error");
-                Try.testFail(() -> amPtr.setInUnit(1, 1, 15.2d, AreaUnit.ARE),
+                UnitTest.testFail(() -> amPtr.assign(DoubleMathFunctions.ABS),
+                        "ImmutableMatrix.assign(...) should throw error");
+                UnitTest.testFail(() -> amPtr.decrementBy(fa), "ImmutableMatrix.decrementBy(scalar) should throw error");
+                UnitTest.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableMatrix.decrementBy(matrix) should throw error");
+                UnitTest.testFail(() -> amPtr.incrementBy(fa), "ImmutableMatrix.incrementBy(scalar) should throw error");
+                UnitTest.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableMatrix.incrementBy(matrix) should throw error");
+                UnitTest.testFail(() -> amPtr.divideBy(2.0d), "ImmutableMatrix.divideBy(factor) should throw error");
+                UnitTest.testFail(() -> amPtr.multiplyBy(2.0d), "ImmutableMatrix.multiplyBy(factor) should throw error");
+                UnitTest.testFail(() -> amPtr.set(1, 1, fa), "ImmutableMatrix.set() should throw error");
+                UnitTest.testFail(() -> amPtr.setSI(1, 1, 20.1d), "ImmutableMatrix.setSI() should throw error");
+                UnitTest.testFail(() -> amPtr.setInUnit(1, 1, 15.2d), "ImmutableMatrix.setInUnit(f) should throw error");
+                UnitTest.testFail(() -> amPtr.setInUnit(1, 1, 15.2d, AreaUnit.ARE),
                         "ImmutableMatrix.setInUnit(f, u) should throw error");
-                Try.testFail(() -> amPtr.abs(), "ImmutableMatrix.abs() should throw error");
-                Try.testFail(() -> amPtr.ceil(), "ImmutableMatrix.ceil() should throw error");
-                Try.testFail(() -> amPtr.floor(), "ImmutableMatrix.floor() should throw error");
-                Try.testFail(() -> amPtr.neg(), "ImmutableMatrix.neg() should throw error");
-                Try.testFail(() -> amPtr.rint(), "ImmutableMatrix.rint() should throw error");
+                UnitTest.testFail(() -> amPtr.abs(), "ImmutableMatrix.abs() should throw error");
+                UnitTest.testFail(() -> amPtr.ceil(), "ImmutableMatrix.ceil() should throw error");
+                UnitTest.testFail(() -> amPtr.floor(), "ImmutableMatrix.floor() should throw error");
+                UnitTest.testFail(() -> amPtr.neg(), "ImmutableMatrix.neg() should throw error");
+                UnitTest.testFail(() -> amPtr.rint(), "ImmutableMatrix.rint() should throw error");
             }
         }
     }

@@ -27,7 +27,7 @@ import org.djunits.value.vdouble.scalar.Duration;
 import org.djunits.value.vdouble.scalar.Position;
 import org.djunits.value.vdouble.scalar.Time;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -350,23 +350,24 @@ public class DoubleVectorMethodTest
                 am = am.immutable();
                 final AreaVector amPtr = am;
                 Area fa = Area.of(10.0d, "m^2");
-                Try.testFail(() -> amPtr.assign(DoubleMathFunctions.ABS), "ImmutableVector.assign(...) should throw error");
-                Try.testFail(() -> amPtr.decrementBy(fa), "ImmutableVector.decrementBy(scalar) should throw error");
-                Try.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableVector.decrementBy(vector) should throw error");
-                Try.testFail(() -> amPtr.incrementBy(fa), "ImmutableVector.incrementBy(scalar) should throw error");
-                Try.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableVector.incrementBy(vector) should throw error");
-                Try.testFail(() -> amPtr.divideBy(2.0d), "ImmutableVector.divideBy(factor) should throw error");
-                Try.testFail(() -> amPtr.multiplyBy(2.0d), "ImmutableVector.multiplyBy(factor) should throw error");
-                Try.testFail(() -> amPtr.set(1, fa), "ImmutableVector.set() should throw error");
-                Try.testFail(() -> amPtr.setSI(1, 20.1d), "ImmutableVector.setSI() should throw error");
-                Try.testFail(() -> amPtr.setInUnit(1, 15.2d), "ImmutableVector.setInUnit(f) should throw error");
-                Try.testFail(() -> amPtr.setInUnit(1, 15.2d, AreaUnit.ARE),
+                UnitTest.testFail(() -> amPtr.assign(DoubleMathFunctions.ABS),
+                        "ImmutableVector.assign(...) should throw error");
+                UnitTest.testFail(() -> amPtr.decrementBy(fa), "ImmutableVector.decrementBy(scalar) should throw error");
+                UnitTest.testFail(() -> amPtr.decrementBy(amPtr), "ImmutableVector.decrementBy(vector) should throw error");
+                UnitTest.testFail(() -> amPtr.incrementBy(fa), "ImmutableVector.incrementBy(scalar) should throw error");
+                UnitTest.testFail(() -> amPtr.incrementBy(amPtr), "ImmutableVector.incrementBy(vector) should throw error");
+                UnitTest.testFail(() -> amPtr.divideBy(2.0d), "ImmutableVector.divideBy(factor) should throw error");
+                UnitTest.testFail(() -> amPtr.multiplyBy(2.0d), "ImmutableVector.multiplyBy(factor) should throw error");
+                UnitTest.testFail(() -> amPtr.set(1, fa), "ImmutableVector.set() should throw error");
+                UnitTest.testFail(() -> amPtr.setSI(1, 20.1d), "ImmutableVector.setSI() should throw error");
+                UnitTest.testFail(() -> amPtr.setInUnit(1, 15.2d), "ImmutableVector.setInUnit(f) should throw error");
+                UnitTest.testFail(() -> amPtr.setInUnit(1, 15.2d, AreaUnit.ARE),
                         "ImmutableVector.setInUnit(f, u) should throw error");
-                Try.testFail(() -> amPtr.abs(), "ImmutableVector.abs() should throw error");
-                Try.testFail(() -> amPtr.ceil(), "ImmutableVector.ceil() should throw error");
-                Try.testFail(() -> amPtr.floor(), "ImmutableVector.floor() should throw error");
-                Try.testFail(() -> amPtr.neg(), "ImmutableVector.neg() should throw error");
-                Try.testFail(() -> amPtr.rint(), "ImmutableVector.rint() should throw error");
+                UnitTest.testFail(() -> amPtr.abs(), "ImmutableVector.abs() should throw error");
+                UnitTest.testFail(() -> amPtr.ceil(), "ImmutableVector.ceil() should throw error");
+                UnitTest.testFail(() -> amPtr.floor(), "ImmutableVector.floor() should throw error");
+                UnitTest.testFail(() -> amPtr.neg(), "ImmutableVector.neg() should throw error");
+                UnitTest.testFail(() -> amPtr.rint(), "ImmutableVector.rint() should throw error");
             }
         }
     }

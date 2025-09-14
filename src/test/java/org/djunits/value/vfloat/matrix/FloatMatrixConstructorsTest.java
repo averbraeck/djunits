@@ -37,7 +37,7 @@ import org.djunits.value.vfloat.scalar.FloatAbsoluteTemperature;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -144,22 +144,23 @@ public class FloatMatrixConstructorsTest
                             assertEquals(zSum, ((FloatMatrixRel<?, ?, ?, ?>) floatMatrix).zSum().getSI(), zSum * 0.0001,
                                     "zSum");
                         }
-                        Try.testFail(() -> floatMatrix.setSI(0, 0, 0), "float matrix should be immutable",
+                        UnitTest.testFail(() -> floatMatrix.setSI(0, 0, 0), "float matrix should be immutable",
                                 ValueRuntimeException.class);
-                        Try.testFail(() -> floatMatrix.setInUnit(0, 0, 0), "float matrix should be immutable",
+                        UnitTest.testFail(() -> floatMatrix.setInUnit(0, 0, 0), "float matrix should be immutable",
                                 ValueRuntimeException.class);
-                        Try.testFail(() -> floatMatrix.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
+                        UnitTest.testFail(() -> floatMatrix.ceil(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
                         FloatMatrix<?, ?, ?, ?> mutable = floatMatrix.mutable();
                         assertTrue(mutable.isMutable(), "mutable float matrix is mutable");
                         mutable.setSI(0, 0, 0);
                         mutable.setInUnit(0, 0, 0);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
                                 "negative index should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
                                 "negative index should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(testValues.length, 0, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(testValues.length, 0, 0),
                                 "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(0, testValues.length, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(0, testValues.length, 0),
                                 "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         mutable.setSI(testValues.length - 1, 0, 0);
                         mutable.setSI(0, testValues.length - 1, 0);
@@ -173,10 +174,14 @@ public class FloatMatrixConstructorsTest
                             }
                         }
                         FloatMatrix<?, ?, ?, ?> immutable = mutable.immutable();
-                        Try.testFail(() -> immutable.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.floor(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.rint(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.neg(), "float matrix should be immutable", ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.ceil(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.floor(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.rint(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.neg(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
                         mutable = floatMatrix.mutable().mutable();
                         mutable.floor();
                         for (int i = 0; i < testValues.length; i++)
@@ -294,22 +299,23 @@ public class FloatMatrixConstructorsTest
                             assertEquals(zSum, ((FloatMatrixRel<?, ?, ?, ?>) floatMatrix).zSum().getSI(), zSum * 0.001, "zSum");
                         }
 
-                        Try.testFail(() -> floatMatrix.setSI(0, 0, 0), "float matrix should be immutable",
+                        UnitTest.testFail(() -> floatMatrix.setSI(0, 0, 0), "float matrix should be immutable",
                                 ValueRuntimeException.class);
-                        Try.testFail(() -> floatMatrix.setInUnit(0, 0, 0), "float matrix should be immutable",
+                        UnitTest.testFail(() -> floatMatrix.setInUnit(0, 0, 0), "float matrix should be immutable",
                                 ValueRuntimeException.class);
-                        Try.testFail(() -> floatMatrix.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
+                        UnitTest.testFail(() -> floatMatrix.ceil(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
                         FloatMatrix<?, ?, ?, ?> mutable = floatMatrix.mutable();
                         assertTrue(mutable.isMutable(), "mutable float matrix is mutable");
                         mutable.setSI(0, 0, 0);
                         mutable.setInUnit(0, 0, 0);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
                                 "negative index should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
                                 "negative index should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(testValues.length, 0, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(testValues.length, 0, 0),
                                 "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(0, testValues.length, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(0, testValues.length, 0),
                                 "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         mutable.setSI(testValues.length - 1, 0, 0);
                         mutable.setSI(0, testValues.length - 1, 0);
@@ -323,10 +329,14 @@ public class FloatMatrixConstructorsTest
                             }
                         }
                         FloatMatrix<?, ?, ?, ?> immutable = mutable.immutable();
-                        Try.testFail(() -> immutable.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.floor(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.rint(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.neg(), "float matrix should be immutable", ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.ceil(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.floor(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.rint(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.neg(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
                         mutable = floatMatrix.mutable().mutable();
                         mutable.floor();
                         for (int i = 0; i < testValues.length; i++)
@@ -446,22 +456,23 @@ public class FloatMatrixConstructorsTest
                                     "zSum");
                         }
 
-                        Try.testFail(() -> floatMatrix.setSI(0, 0, 0), "float matrix should be immutable",
+                        UnitTest.testFail(() -> floatMatrix.setSI(0, 0, 0), "float matrix should be immutable",
                                 ValueRuntimeException.class);
-                        Try.testFail(() -> floatMatrix.setInUnit(0, 0, 0), "float matrix should be immutable",
+                        UnitTest.testFail(() -> floatMatrix.setInUnit(0, 0, 0), "float matrix should be immutable",
                                 ValueRuntimeException.class);
-                        Try.testFail(() -> floatMatrix.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
+                        UnitTest.testFail(() -> floatMatrix.ceil(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
                         FloatMatrix<?, ?, ?, ?> mutable = floatMatrix.mutable();
                         assertTrue(mutable.isMutable(), "mutable float matrix is mutable");
                         mutable.setSI(0, 0, 0);
                         mutable.setInUnit(0, 0, 0);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(-1, 0, 0),
                                 "negative index should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(0, -1, 0),
                                 "negative index should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(rows, 0, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(rows, 0, 0),
                                 "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
-                        Try.testFail(() -> floatMatrix.mutable().setSI(0, cols, 0),
+                        UnitTest.testFail(() -> floatMatrix.mutable().setSI(0, cols, 0),
                                 "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                         mutable.setSI(cols - 1, 0, 0);
                         mutable.setSI(0, rows - 1, 0);
@@ -475,10 +486,14 @@ public class FloatMatrixConstructorsTest
                             }
                         }
                         FloatMatrix<?, ?, ?, ?> immutable = mutable.immutable();
-                        Try.testFail(() -> immutable.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.floor(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.rint(), "float matrix should be immutable", ValueRuntimeException.class);
-                        Try.testFail(() -> immutable.neg(), "float matrix should be immutable", ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.ceil(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.floor(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.rint(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
+                        UnitTest.testFail(() -> immutable.neg(), "float matrix should be immutable",
+                                ValueRuntimeException.class);
                         mutable = original.mutable();
                         mutable.floor();
                         for (int r = 0; r < rows; r++)
@@ -646,10 +661,11 @@ public class FloatMatrixConstructorsTest
                     assertEquals(cardinality, siv.cardinality(), "Cardinality");
                     assertEquals(zSum, siv.zSum().getSI(), zSum * 0.0001, "zSum");
                     assertEquals(FloatSIScalar.class, siv.getScalarClass(), "getScalarClass return SIScalar");
-                    Try.testFail(() -> sivf.setSI(0, 0, 0), "float matrix should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> sivf.setInUnit(0, 0, 0), "float matrix should be immutable",
+                    UnitTest.testFail(() -> sivf.setSI(0, 0, 0), "float matrix should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> sivf.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> sivf.setInUnit(0, 0, 0), "float matrix should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> sivf.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
                     FloatSIMatrix mutable = siv.mutable();
                     assertTrue(siv.equals(siv), "matrix is equal to itself");
                     assertTrue(siv.equals(mutable), "matrix and mutable matrix are considered equal");
@@ -658,13 +674,13 @@ public class FloatMatrixConstructorsTest
                     assertFalse(siv.equals("hello world"), "matrix is not equal to some other object");
                     mutable.setSI(0, 0, 0);
                     mutable.setInUnit(0, 0, 0);
-                    Try.testFail(() -> siv.mutable().setSI(-1, 0, 0), "negative index should have thrown an exception",
+                    UnitTest.testFail(() -> siv.mutable().setSI(-1, 0, 0), "negative index should have thrown an exception",
                             IndexOutOfBoundsException.class);
-                    Try.testFail(() -> siv.mutable().setSI(0, -1, 0), "negative index should have thrown an exception",
+                    UnitTest.testFail(() -> siv.mutable().setSI(0, -1, 0), "negative index should have thrown an exception",
                             IndexOutOfBoundsException.class);
-                    Try.testFail(() -> siv.mutable().setSI(rows, 0, 0),
+                    UnitTest.testFail(() -> siv.mutable().setSI(rows, 0, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
-                    Try.testFail(() -> siv.mutable().setSI(0, cols, 0),
+                    UnitTest.testFail(() -> siv.mutable().setSI(0, cols, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(rows - 1, 0, 0);
                     mutable.setSI(0, cols - 1, 0);
@@ -679,10 +695,10 @@ public class FloatMatrixConstructorsTest
                         }
                     }
                     FloatMatrix<?, ?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "float matrix should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "float matrix should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "float matrix should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "float matrix should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "float matrix should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "float matrix should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "float matrix should be immutable", ValueRuntimeException.class);
                     mutable = sivf.mutable();
                     mutable.floor();
                     for (int r = 0; r < testValues.length; r++)
@@ -735,69 +751,73 @@ public class FloatMatrixConstructorsTest
         }
 
         new FloatAbsoluteTemperatureMatrix(testValues, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new FloatAbsoluteTemperatureMatrix((float[][]) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(testValues, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatAbsoluteTemperatureMatrix(testValues, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(testValues, AbsoluteTemperatureUnit.KELVIN, null),
+        UnitTest.testFail(() -> new FloatAbsoluteTemperatureMatrix(testValues, AbsoluteTemperatureUnit.KELVIN, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
 
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix((FloatAbsoluteTemperature[][]) null,
+        UnitTest.testFail(() -> new FloatAbsoluteTemperatureMatrix((FloatAbsoluteTemperature[][]) null,
                 AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE), "null pointer should have thrown an exception",
                 NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(at, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatAbsoluteTemperatureMatrix(at, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(at, AbsoluteTemperatureUnit.KELVIN, null),
+        UnitTest.testFail(() -> new FloatAbsoluteTemperatureMatrix(at, AbsoluteTemperatureUnit.KELVIN, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
 
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new FloatAbsoluteTemperatureMatrix(
                         (Collection<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>>) null,
                         AbsoluteTemperatureUnit.KELVIN, 10, 10, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new FloatAbsoluteTemperatureMatrix(
                         (Collection<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>>) null,
                         AbsoluteTemperatureUnit.KELVIN, 10, 10, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(
+        UnitTest.testFail(() -> new FloatAbsoluteTemperatureMatrix(
                 new ArrayList<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>>(), null, 10, 10,
                 StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new FloatAbsoluteTemperatureMatrix(
                         new ArrayList<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>>(),
                         AbsoluteTemperatureUnit.KELVIN, 10, 10, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new FloatAbsoluteTemperatureMatrix(
                         new ArrayList<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>>(),
                         AbsoluteTemperatureUnit.KELVIN, -1, 10, StorageType.SPARSE),
                 "negative rows should have thrown an exception", ValueRuntimeException.class);
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new FloatAbsoluteTemperatureMatrix(
                         new ArrayList<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>>(),
                         AbsoluteTemperatureUnit.KELVIN, 10, -1, StorageType.SPARSE),
                 "negative cols should have thrown an exception", ValueRuntimeException.class);
         Collection<FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>> list = new ArrayList<>();
         list.add(new FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>(20, 20, 273.15f));
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(list, AbsoluteTemperatureUnit.KELVIN, 5, 30, StorageType.SPARSE),
+        UnitTest.testFail(
+                () -> new FloatAbsoluteTemperatureMatrix(list, AbsoluteTemperatureUnit.KELVIN, 5, 30, StorageType.SPARSE),
                 "too small rows should have thrown an exception", ValueRuntimeException.class);
-        Try.testFail(() -> new FloatAbsoluteTemperatureMatrix(list, AbsoluteTemperatureUnit.KELVIN, 30, 5, StorageType.SPARSE),
+        UnitTest.testFail(
+                () -> new FloatAbsoluteTemperatureMatrix(list, AbsoluteTemperatureUnit.KELVIN, 30, 5, StorageType.SPARSE),
                 "too small cols should have thrown an exception", ValueRuntimeException.class);
 
-        Try.testFail(() -> list.add(new FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>(-20, 20, 273.15f)),
+        UnitTest.testFail(
+                () -> list.add(new FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>(-20, 20, 273.15f)),
                 "negative row should have thrown an exception", ValueRuntimeException.class);
-        Try.testFail(() -> list.add(new FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>(20, -20, 273.15f)),
+        UnitTest.testFail(
+                () -> list.add(new FloatSparseValue<AbsoluteTemperatureUnit, FloatAbsoluteTemperature>(20, -20, 273.15f)),
                 "negative col should have thrown an exception", ValueRuntimeException.class);
 
         Quantity<?> quantity = Quantities.INSTANCE.getQuantity("AbsoluteTemperature" + "Unit");
         new FloatSIMatrix(testValues, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
-        Try.testFail(() -> new FloatSIMatrix((float[][]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatSIMatrix((float[][]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatSIMatrix(testValues, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatSIMatrix(testValues, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatSIMatrix(testValues, SIUnit.of(quantity.getSiDimensions()), null),
+        UnitTest.testFail(() -> new FloatSIMatrix(testValues, SIUnit.of(quantity.getSiDimensions()), null),
                 "null pointer should have thrown an exception", NullPointerException.class);
     }
 

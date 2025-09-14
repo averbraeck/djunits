@@ -37,7 +37,7 @@ import org.djunits.value.vdouble.scalar.base.DoubleScalar;
 import org.djunits.value.vdouble.vector.base.DoubleVector;
 import org.djunits.value.vdouble.vector.base.DoubleVectorRel;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -117,18 +117,19 @@ public class DoubleVectorConstructorsTest
                         assertEquals(zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001, "zSum");
                     }
 
-                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> doubleVector.ceil(), "double vector should be immutable",
+                            ValueRuntimeException.class);
                     DoubleVector<?, ?, ?> mutable = doubleVector.mutable();
                     assertTrue(mutable.isMutable(), "mutable double vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
-                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            IndexOutOfBoundsException.class);
-                    Try.testFail(() -> doubleVector.mutable().setSI(testValues.length, 0),
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(-1, 0),
+                            "negative index should have thrown an exception", IndexOutOfBoundsException.class);
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(testValues.length, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(testValues.length - 1, 0);
                     mutable.ceil();
@@ -137,10 +138,11 @@ public class DoubleVectorConstructorsTest
                         assertEquals(Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     DoubleVector<?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
                     mutable = doubleVector.mutable().mutable();
                     mutable.floor();
                     for (int index = 0; index < testValues.length; index++)
@@ -256,18 +258,19 @@ public class DoubleVectorConstructorsTest
                             DoubleVectorData.instantiate(doubleValues, IdentityScale.SCALE, storageType), standardUnit);
                     compareValuesWithScale(standardUnit.getScale(), doubleValues, vData.getValuesSI());
 
-                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> doubleVector.ceil(), "double vector should be immutable",
+                            ValueRuntimeException.class);
                     DoubleVector<?, ?, ?> mutable = doubleVector.mutable();
                     assertTrue(mutable.isMutable(), "mutable double vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
-                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            IndexOutOfBoundsException.class);
-                    Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(-1, 0),
+                            "negative index should have thrown an exception", IndexOutOfBoundsException.class);
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(doubleValues.length - 1, 0);
                     mutable.ceil();
@@ -276,10 +279,11 @@ public class DoubleVectorConstructorsTest
                         assertEquals(Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     DoubleVector<?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
                     mutable = doubleVector.mutable().mutable();
                     mutable.floor();
                     for (int index = 0; index < doubleValues.length; index++)
@@ -385,18 +389,19 @@ public class DoubleVectorConstructorsTest
                         assertEquals(zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001, "zSum");
                     }
 
-                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> doubleVector.ceil(), "double vector should be immutable",
+                            ValueRuntimeException.class);
                     DoubleVector<?, ?, ?> mutable = doubleVector.mutable();
                     assertTrue(mutable.isMutable(), "mutable double vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
-                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            IndexOutOfBoundsException.class);
-                    Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(-1, 0),
+                            "negative index should have thrown an exception", IndexOutOfBoundsException.class);
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(doubleValues.length - 1, 0);
                     mutable.ceil();
@@ -405,10 +410,11 @@ public class DoubleVectorConstructorsTest
                         assertEquals(Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     DoubleVector<?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
                     mutable = doubleVector.mutable().mutable();
                     mutable.floor();
                     for (int index = 0; index < doubleValues.length; index++)
@@ -553,18 +559,19 @@ public class DoubleVectorConstructorsTest
                         assertEquals(zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001, "zSum");
                     }
 
-                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> doubleVector.ceil(), "double vector should be immutable",
+                            ValueRuntimeException.class);
                     DoubleVector<?, ?, ?> mutable = doubleVector.mutable();
                     assertTrue(mutable.isMutable(), "mutable double vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
-                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            IndexOutOfBoundsException.class);
-                    Try.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(-1, 0),
+                            "negative index should have thrown an exception", IndexOutOfBoundsException.class);
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(doubleValues.length, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(doubleValues.length - 1, 0);
                     mutable.ceil();
@@ -573,10 +580,11 @@ public class DoubleVectorConstructorsTest
                         assertEquals(Math.ceil(doubleValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     DoubleVector<?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
                     mutable = doubleVector.mutable().mutable();
                     mutable.floor();
                     for (int index = 0; index < doubleValues.length; index++)
@@ -722,18 +730,19 @@ public class DoubleVectorConstructorsTest
                         assertEquals(zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001, "zSum");
                     }
 
-                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> doubleVector.ceil(), "double vector should be immutable",
+                            ValueRuntimeException.class);
                     DoubleVector<?, ?, ?> mutable = doubleVector.mutable();
                     assertTrue(mutable.isMutable(), "mutable double vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
-                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            IndexOutOfBoundsException.class);
-                    Try.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(-1, 0),
+                            "negative index should have thrown an exception", IndexOutOfBoundsException.class);
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(allValues.length - 1, 0);
                     mutable.ceil();
@@ -742,10 +751,11 @@ public class DoubleVectorConstructorsTest
                         assertEquals(Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     DoubleVector<?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
                     mutable = doubleVector.mutable().mutable();
                     mutable.floor();
                     for (int index = 0; index < allValues.length; index++)
@@ -934,18 +944,19 @@ public class DoubleVectorConstructorsTest
                         assertEquals(zSum, ((DoubleVectorRel<?, ?, ?>) doubleVector).zSum().getSI(), 0.001, "zSum");
                     }
 
-                    Try.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setSI(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
+                    UnitTest.testFail(() -> doubleVector.setInUnit(0, 0), "double vector should be immutable",
                             ValueRuntimeException.class);
-                    Try.testFail(() -> doubleVector.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> doubleVector.ceil(), "double vector should be immutable",
+                            ValueRuntimeException.class);
                     DoubleVector<?, ?, ?> mutable = doubleVector.mutable();
                     assertTrue(mutable.isMutable(), "mutable double vector is mutable");
                     mutable.setSI(0, 0);
                     mutable.setInUnit(0, 0);
-                    Try.testFail(() -> doubleVector.mutable().setSI(-1, 0), "negative index should have thrown an exception",
-                            IndexOutOfBoundsException.class);
-                    Try.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(-1, 0),
+                            "negative index should have thrown an exception", IndexOutOfBoundsException.class);
+                    UnitTest.testFail(() -> doubleVector.mutable().setSI(allValues.length, 0),
                             "index just above range should have thrown an exception", IndexOutOfBoundsException.class);
                     mutable.setSI(allValues.length - 1, 0);
                     mutable.ceil();
@@ -954,10 +965,11 @@ public class DoubleVectorConstructorsTest
                         assertEquals(Math.ceil(allValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                     }
                     DoubleVector<?, ?, ?> immutable = mutable.immutable();
-                    Try.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.floor(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
-                    Try.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.floor(), "double vector should be immutable",
+                            ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.rint(), "double vector should be immutable", ValueRuntimeException.class);
+                    UnitTest.testFail(() -> immutable.neg(), "double vector should be immutable", ValueRuntimeException.class);
                     mutable = doubleVector.mutable().mutable();
                     mutable.floor();
                     for (int index = 0; index < allValues.length; index++)
@@ -1116,7 +1128,7 @@ public class DoubleVectorConstructorsTest
                 assertEquals(cardinality, siv.cardinality(), "Cardinality");
                 assertEquals(zSum, siv.zSum().getSI(), 0.001, "zSum");
                 assertEquals(SIScalar.class, siv.getScalarClass(), "getScalarClass return SIScalar");
-                Try.testFail(() -> sivf.ceil(), "double vector should be immutable", ValueRuntimeException.class);
+                UnitTest.testFail(() -> sivf.ceil(), "double vector should be immutable", ValueRuntimeException.class);
                 SIVector mutable = siv.mutable();
                 assertTrue(siv.equals(siv), "vector is equal to itself");
                 assertTrue(siv.equals(mutable), "vector and mutable vector are considered equal");
@@ -1129,11 +1141,16 @@ public class DoubleVectorConstructorsTest
                 {
                     assertEquals(Math.ceil(testValues[index]), mutable.getInUnit(index), 0.001, "ceil");
                 }
-                Try.testFail(() -> sivf.immutable().abs(), "double vector should be immutable", ValueRuntimeException.class);
-                Try.testFail(() -> sivf.immutable().ceil(), "double vector should be immutable", ValueRuntimeException.class);
-                Try.testFail(() -> sivf.immutable().floor(), "double vector should be immutable", ValueRuntimeException.class);
-                Try.testFail(() -> sivf.immutable().rint(), "double vector should be immutable", ValueRuntimeException.class);
-                Try.testFail(() -> sivf.immutable().neg(), "double vector should be immutable", ValueRuntimeException.class);
+                UnitTest.testFail(() -> sivf.immutable().abs(), "double vector should be immutable",
+                        ValueRuntimeException.class);
+                UnitTest.testFail(() -> sivf.immutable().ceil(), "double vector should be immutable",
+                        ValueRuntimeException.class);
+                UnitTest.testFail(() -> sivf.immutable().floor(), "double vector should be immutable",
+                        ValueRuntimeException.class);
+                UnitTest.testFail(() -> sivf.immutable().rint(), "double vector should be immutable",
+                        ValueRuntimeException.class);
+                UnitTest.testFail(() -> sivf.immutable().neg(), "double vector should be immutable",
+                        ValueRuntimeException.class);
 
                 mutable = siv.mutable().mutable();
                 mutable.floor();
@@ -1226,60 +1243,61 @@ public class DoubleVectorConstructorsTest
         }
 
         new AbsoluteTemperatureVector(testValues, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE);
-        Try.testFail(() -> new AbsoluteTemperatureVector((double[]) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
+        UnitTest.testFail(
+                () -> new AbsoluteTemperatureVector((double[]) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(testValues, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(testValues, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(testValues, AbsoluteTemperatureUnit.KELVIN, null),
-                "null pointer should have thrown an exception", NullPointerException.class);
-
-        Try.testFail(() -> new AbsoluteTemperatureVector((AbsoluteTemperature[]) null, AbsoluteTemperatureUnit.KELVIN,
-                StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(at, null, StorageType.DENSE),
-                "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(at, AbsoluteTemperatureUnit.KELVIN, null),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(testValues, AbsoluteTemperatureUnit.KELVIN, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
 
-        Try.testFail(() -> new AbsoluteTemperatureVector((List<AbsoluteTemperature>) null, AbsoluteTemperatureUnit.KELVIN,
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector((AbsoluteTemperature[]) null, AbsoluteTemperatureUnit.KELVIN,
                 StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(at, null, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(at, AbsoluteTemperatureUnit.KELVIN, null),
+                "null pointer should have thrown an exception", NullPointerException.class);
+
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector((List<AbsoluteTemperature>) null, AbsoluteTemperatureUnit.KELVIN,
+                StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
+        UnitTest.testFail(
                 () -> new AbsoluteTemperatureVector((List<Double>) null, AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(al, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(al, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(al, AbsoluteTemperatureUnit.KELVIN, null),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(al, AbsoluteTemperatureUnit.KELVIN, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
 
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new AbsoluteTemperatureVector((Map<Integer, AbsoluteTemperature>) null, 10,
                         AbsoluteTemperatureUnit.KELVIN, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector((Map<Integer, Double>) null, 10, AbsoluteTemperatureUnit.KELVIN,
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector((Map<Integer, Double>) null, 10, AbsoluteTemperatureUnit.KELVIN,
                 StorageType.DENSE), "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(map, 10, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(map, 10, null, StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(map, 10, AbsoluteTemperatureUnit.KELVIN, null),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(map, 10, AbsoluteTemperatureUnit.KELVIN, null),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(map, -1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(map, -1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
                 "negative length should have thrown an exception", IllegalArgumentException.class);
-        Try.testFail(() -> new AbsoluteTemperatureVector(map, 1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
+        UnitTest.testFail(() -> new AbsoluteTemperatureVector(map, 1, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
                 "too small length should have thrown an exception", IndexOutOfBoundsException.class);
 
         map.put(-1, at[0]);
-        Try.testFail(
+        UnitTest.testFail(
                 () -> new AbsoluteTemperatureVector(map, testValues.length, AbsoluteTemperatureUnit.KELVIN, StorageType.SPARSE),
                 "too small length should have thrown an exception", IndexOutOfBoundsException.class);
 
         map.remove(-1); // Remove the offending entry
         Quantity<?> quantity = Quantities.INSTANCE.getQuantity("AbsoluteTemperature" + "Unit");
         new SIVector(testValues, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE);
-        Try.testFail(() -> new SIVector((double[]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
+        UnitTest.testFail(() -> new SIVector((double[]) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SIVector((List<Double>) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
+        UnitTest.testFail(() -> new SIVector((List<Double>) null, SIUnit.of(quantity.getSiDimensions()), StorageType.DENSE),
                 "null pointer should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SIVector(testValues, null, StorageType.DENSE), "null pointer should have thrown an exception",
-                NullPointerException.class);
-        Try.testFail(() -> new SIVector(testValues, SIUnit.of(quantity.getSiDimensions()), null),
+        UnitTest.testFail(() -> new SIVector(testValues, null, StorageType.DENSE),
+                "null pointer should have thrown an exception", NullPointerException.class);
+        UnitTest.testFail(() -> new SIVector(testValues, SIUnit.of(quantity.getSiDimensions()), null),
                 "null pointer should have thrown an exception", NullPointerException.class);
     }
 

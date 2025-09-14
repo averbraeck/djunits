@@ -22,7 +22,7 @@ import org.djunits.value.vdouble.scalar.Length;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.Speed;
 import org.djunits.value.vdouble.vector.SIVector;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -829,11 +829,11 @@ public class DoubleMatrixInstantiateTest
         double[][] d1_1 = new double[1][];
         d1_1[0] = new double[1];
 
-        Try.testFail(() -> new SpeedMatrix((double[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+        UnitTest.testFail(() -> new SpeedMatrix((double[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
                 "constructing matrix with null input should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SpeedMatrix(d1_1, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new SpeedMatrix(d1_1, null, StorageType.DENSE),
                 "constructing matrix with null unit should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SpeedMatrix(d1_1, SpeedUnit.METER_PER_SECOND, null),
+        UnitTest.testFail(() -> new SpeedMatrix(d1_1, SpeedUnit.METER_PER_SECOND, null),
                 "constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
     }
 

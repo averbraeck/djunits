@@ -22,7 +22,7 @@ import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
 import org.djunits.value.vfloat.vector.FloatSIVector;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -841,11 +841,11 @@ public class FloatMatrixInstantiateTest
         float[][] d1_1 = new float[1][];
         d1_1[0] = new float[1];
 
-        Try.testFail(() -> new FloatSpeedMatrix((float[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatSpeedMatrix((float[][]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
                 "constructing matrix with null input should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatSpeedMatrix(d1_1, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatSpeedMatrix(d1_1, null, StorageType.DENSE),
                 "constructing matrix with null unit should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatSpeedMatrix(d1_1, SpeedUnit.METER_PER_SECOND, null),
+        UnitTest.testFail(() -> new FloatSpeedMatrix(d1_1, SpeedUnit.METER_PER_SECOND, null),
                 "constructing matrix with null storage type should have thrown an exception", NullPointerException.class);
     }
 

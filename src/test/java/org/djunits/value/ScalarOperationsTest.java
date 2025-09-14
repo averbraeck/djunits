@@ -23,7 +23,7 @@ import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalar;
 import org.djunits.value.vfloat.scalar.base.FloatScalarAbs;
 import org.djunits.value.vfloat.scalar.base.FloatScalarRel;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -816,10 +816,10 @@ public class ScalarOperationsTest
                 assertEquals(expectedResult, verifyAbsRelPrecisionAndExtractSI(abs, doubleType, result), 0.01,
                         "Result of operation");
             }
-            Try.testFail(() -> interpolate.invoke(null, zero, one, -0.01));
-            Try.testFail(() -> interpolate.invoke(null, zero, one, 1.01));
-            Try.testFail(() -> interpolate.invoke(null, zero, one, 2.0));
-            Try.testFail(() -> interpolate.invoke(null, zero, one, 10.0));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, -0.01));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, 1.01));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, 2.0));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, 10.0));
             double biggestValue = 345.678;
             DoubleScalar<?,
                     ?> biggest = abs
@@ -934,10 +934,10 @@ public class ScalarOperationsTest
                 assertEquals(expectedResult, verifyAbsRelPrecisionAndExtractSI(abs, doubleType, result), 0.01,
                         "Result of operation");
             }
-            Try.testFail(() -> interpolate.invoke(null, zero, one, -0.01f));
-            Try.testFail(() -> interpolate.invoke(null, zero, one, 1.01f));
-            Try.testFail(() -> interpolate.invoke(null, zero, one, 2.0f));
-            Try.testFail(() -> interpolate.invoke(null, zero, one, 10.0f));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, -0.01f));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, 1.01f));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, 2.0f));
+            UnitTest.testFail(() -> interpolate.invoke(null, zero, one, 10.0f));
 
             float biggestValue = 345.678f;
             FloatScalar<?,

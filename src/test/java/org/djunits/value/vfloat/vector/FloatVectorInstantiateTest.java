@@ -24,7 +24,7 @@ import org.djunits.value.vfloat.scalar.FloatLength;
 import org.djunits.value.vfloat.scalar.FloatSIScalar;
 import org.djunits.value.vfloat.scalar.FloatSpeed;
 import org.djunits.value.vfloat.vector.data.FloatVectorData;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -355,11 +355,11 @@ public class FloatVectorInstantiateTest
 
         float[] d1 = new float[1];
 
-        Try.testFail(() -> new FloatSpeedVector((float[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatSpeedVector((float[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
                 "constructing vector with null input should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatSpeedVector(d1, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new FloatSpeedVector(d1, null, StorageType.DENSE),
                 "constructing vector with null unit should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new FloatSpeedVector(d1, SpeedUnit.METER_PER_SECOND, null),
+        UnitTest.testFail(() -> new FloatSpeedVector(d1, SpeedUnit.METER_PER_SECOND, null),
                 "constructing vector with null storage type should have thrown an exception", NullPointerException.class);
     }
 

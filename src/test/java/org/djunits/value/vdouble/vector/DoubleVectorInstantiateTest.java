@@ -23,7 +23,7 @@ import org.djunits.value.vdouble.scalar.Length;
 import org.djunits.value.vdouble.scalar.SIScalar;
 import org.djunits.value.vdouble.scalar.Speed;
 import org.djunits.value.vdouble.vector.data.DoubleVectorData;
-import org.djutils.exceptions.Try;
+import org.djutils.test.UnitTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -335,11 +335,11 @@ public class DoubleVectorInstantiateTest
 
         double[] d1 = new double[1];
 
-        Try.testFail(() -> new SpeedVector((double[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
+        UnitTest.testFail(() -> new SpeedVector((double[]) null, SpeedUnit.METER_PER_SECOND, StorageType.DENSE),
                 "constructing vector with null input should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SpeedVector(d1, null, StorageType.DENSE),
+        UnitTest.testFail(() -> new SpeedVector(d1, null, StorageType.DENSE),
                 "constructing vector with null unit should have thrown an exception", NullPointerException.class);
-        Try.testFail(() -> new SpeedVector(d1, SpeedUnit.METER_PER_SECOND, null),
+        UnitTest.testFail(() -> new SpeedVector(d1, SpeedUnit.METER_PER_SECOND, null),
                 "constructing vector with null storage type should have thrown an exception", NullPointerException.class);
     }
 
