@@ -3,7 +3,7 @@
 
   <groupId>org.djunits</groupId>
   <artifactId>djunits</artifactId>
-  <version>5.4.0</version>
+  <version>5.4.1</version>
 
   <name>Delft Java UNIT System</name>
   <description>Delft Java UNIT System</description>
