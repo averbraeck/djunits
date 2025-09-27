@@ -2,6 +2,7 @@ package org.djunits.unit;
 
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.util.UnitException;
+import org.djutils.logger.CategoryLogger;
 
 /**
  * SIUnit describes a unit with arbitrary SI dimensions for which no predefined unit exists.
@@ -17,7 +18,7 @@ public class SIUnit extends Unit<SIUnit>
     private static final long serialVersionUID = 20190829L;
 
     /** the SI Unit for dimensionless. */
-    public static SIUnit DIMLESS = SIUnit.of(SIDimensions.DIMLESS);
+    public static final SIUnit DIMLESS = SIUnit.of(SIDimensions.DIMLESS);
 
     static
     {
@@ -28,7 +29,7 @@ public class SIUnit extends Unit<SIUnit>
         }
         catch (ClassNotFoundException exception)
         {
-            exception.printStackTrace();
+            CategoryLogger.always().error("Could not find class org.djunits.unit.util.UNITS for initializing SIUnit");
         }
     }
 
