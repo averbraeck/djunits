@@ -27,7 +27,7 @@
 
     <djunits.version>${project.version}</djunits.version>
     <djutils.version>2.4.1</djutils.version>
-    <junit.version>5.13.4</junit.version>
+    <junit.version>5.13.0</junit.version>
     <jakarta.annotation.version>3.0.0</jakarta.annotation.version>
 
     <maven.compiler.version>3.14.0</maven.compiler.version>
