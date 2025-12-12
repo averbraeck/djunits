@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * <br>
  * Copyright (c) 2020-2020 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a> <br>
- * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
+ * @author Alexander Verbraeck
  * @author <a href="https://www.tudelft.nl/pknoppers">Peter Knoppers</a>
  */
 public class SIPrefixFormatterTest

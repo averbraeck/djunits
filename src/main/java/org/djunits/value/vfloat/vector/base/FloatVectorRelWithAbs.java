@@ -13,7 +13,7 @@ import org.djunits.value.vfloat.vector.data.FloatVectorData;
  * Copyright (c) 2019-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
- * @author <a href="https://www.tudelft.nl/averbraeck" target="_blank">Alexander Verbraeck</a>
+ * @author Alexander Verbraeck
  * @param <AU> the absolute unit belonging to the relative unit
  * @param <A> the absolute scalar type belonging to the absolute vector type
  * @param <AV> the (immutable or mutable) absolute vector type

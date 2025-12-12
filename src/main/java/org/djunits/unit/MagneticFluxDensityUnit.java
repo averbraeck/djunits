@@ -12,7 +12,7 @@ import org.djunits.unit.unitsystem.UnitSystem;
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
  * version May 15, 2014 <br>
- * @author <a href="https://www.tudelft.nl/p.knoppers">Peter Knoppers</a>
+ * @author Peter Knoppers
  */
 public class MagneticFluxDensityUnit extends Unit<MagneticFluxDensityUnit>
 {

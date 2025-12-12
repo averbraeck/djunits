@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Compute the determinant of a matrix.
- * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
+ * @author Peter Knoppers
  */
 public final class Determinant
 {

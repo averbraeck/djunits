@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @version $Revision: 954 $, $LastChangedDate: 2022-01-10 03:42:57 +0100 (Mon, 10 Jan 2022) $, by $Author: averbraeck $,
  *          initial version 11 sep. 2015 <br>
- * @author <a href="https://www.tudelft.nl/staff/p.knoppers/">Peter Knoppers</a>
+ * @author Peter Knoppers
  */
 public class EngineeringFormatterTest
 {
