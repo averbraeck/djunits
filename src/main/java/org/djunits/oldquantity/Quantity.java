@@ -1,4 +1,4 @@
-package org.djunits.quantity;
+package org.djunits.oldquantity;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.djunits.locale.UnitLocale;
+import org.djunits.oldlocale.UnitLocale;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.si.SIPrefix;

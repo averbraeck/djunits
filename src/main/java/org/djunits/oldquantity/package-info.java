@@ -6,4 +6,4 @@
  * </p>
  * @author Alexander Verbraeck
  */
-package org.djunits.quantity;
+package org.djunits.oldquantity;

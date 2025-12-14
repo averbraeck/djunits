@@ -2,7 +2,7 @@ package org.djunits.unit.unitsystem;
 
 import java.io.Serializable;
 
-import org.djunits.locale.UnitLocale;
+import org.djunits.oldlocale.UnitLocale;
 
 /**
  * Systems of Units such as SI, including SI-derived; cgs (centimeter-gram-second).

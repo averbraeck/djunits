@@ -1,4 +1,4 @@
-package org.djunits.locale;
+package org.djunits.oldlocale;
 
 import java.io.Serializable;
 import java.util.Locale;
