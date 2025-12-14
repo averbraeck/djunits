@@ -1,0 +1,53 @@
+package org.djunits.old.unit.si;
+
+/**
+ * Runtime Exceptions in SI package.
+ * <p>
+ * Copyright (c) 2013-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
+ * </p>
+ * @author Peter Knoppers
+ */
+public class SIRuntimeException extends RuntimeException
+{
+
+    /** */
+    private static final long serialVersionUID = 20190821L;
+
+    /**
+     * Construct a new SIRuntimeException with all fields set to default values.
+     */
+    public SIRuntimeException()
+    {
+        // Nothing to do here
+    }
+
+    /**
+     * Construct a new SIRuntimeException with specified message and cause.
+     * @param message String
+     * @param cause Throwable
+     */
+    public SIRuntimeException(final String message, final Throwable cause)
+    {
+        super(message, cause);
+    }
+
+    /**
+     * Construct a new SIRuntimeException with specified message.
+     * @param message String
+     */
+    public SIRuntimeException(final String message)
+    {
+        super(message);
+    }
+
+    /**
+     * Construct a new SIRuntimeException with specified cause.
+     * @param cause Throwable
+     */
+    public SIRuntimeException(final Throwable cause)
+    {
+        super(cause);
+    }
+
+}

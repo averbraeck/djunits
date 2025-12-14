@@ -1,0 +1,483 @@
+package org.djunits.old.value.vfloat.vector.base;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import org.djunits.old.unit.Unit;
+import org.djunits.old.value.Absolute;
+import org.djunits.old.value.ValueRuntimeException;
+import org.djunits.old.value.base.Vector;
+import org.djunits.old.value.formatter.Format;
+import org.djunits.old.value.storage.StorageType;
+import org.djunits.old.value.util.ValueUtil;
+import org.djunits.old.value.vfloat.function.FloatFunction;
+import org.djunits.old.value.vfloat.function.FloatMathFunctions;
+import org.djunits.old.value.vfloat.scalar.base.FloatScalar;
+import org.djunits.old.value.vfloat.vector.data.FloatVectorData;
+import org.djutils.exceptions.Throw;
+
+/**
+ * The most basic abstract class for the FloatVector.
+ * <p>
+ * Copyright (c) 2013-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
+ * </p>
+ * @author Alexander Verbraeck
+ * @author Peter Knoppers
+ * @param <U> the unit
+ * @param <S> the scalar with unit U
+ * @param <V> the generic vector type
+ */
+public abstract class FloatVector<U extends Unit<U>, S extends FloatScalar<U, S>, V extends FloatVector<U, S, V>>
+        extends Vector<U, S, V, FloatVectorData>
+{
+    /** */
+    private static final long serialVersionUID = 20161015L;
+
+    /** The stored data as an object, can be sparse or dense. */
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    protected FloatVectorData data;
+
+    /**
+     * Construct a new FloatVector.
+     * @param data an internal data object
+     * @param unit the unit
+     */
+    FloatVector(final FloatVectorData data, final U unit)
+    {
+        super(unit);
+        Throw.whenNull(data, "data cannot be null");
+        this.data = data;
+    }
+
+    /**
+     * Instantiate a new vector of the class of this vector. This can be used instead of the FloatVector.instiantiate() methods
+     * in case another vector of this class is known. The method is faster than FloatVector.instantiate, and it will also work
+     * if the vector is user-defined.
+     * @param fvd the data used to instantiate the vector
+     * @param displayUnit the display unit of the vector
+     * @return a vector of the correct type
+     */
+    public abstract V instantiateVector(FloatVectorData fvd, U displayUnit);
+
+    /**
+     * Instantiate a new scalar for the class of this vector. This can be used instead of the FloatScalar.instiantiate() methods
+     * in case a vector of this class is known. The method is faster than FloatScalar.instantiate, and it will also work if the
+     * vector and/or scalar are user-defined.
+     * @param valueSI the SI value of the scalar
+     * @param displayUnit the unit in which the value will be displayed
+     * @return a scalar of the correct type, belonging to the vector type
+     */
+    public abstract S instantiateScalarSI(float valueSI, U displayUnit);
+
+    @Override
+    protected final FloatVectorData getData()
+    {
+        return this.data;
+    }
+
+    @Override
+    protected void setData(final FloatVectorData data)
+    {
+        this.data = data;
+    }
+
+    /**
+     * Create a float[] array filled with the values in the standard SI unit.
+     * @return array of values in the standard SI unit
+     */
+    public final float[] getValuesSI()
+    {
+        return getData().getDenseVectorSI();
+    }
+
+    /**
+     * Create a float[] array filled with the values in the original unit.
+     * @return the values in the original unit
+     */
+    public final float[] getValuesInUnit()
+    {
+        return getValuesInUnit(getDisplayUnit());
+    }
+
+    /**
+     * Create a float[] array filled with the values converted into a specified unit.
+     * @param targetUnit the unit into which the values are converted for use
+     * @return the values converted into the specified unit
+     */
+    public final float[] getValuesInUnit(final U targetUnit)
+    {
+        float[] values = getValuesSI();
+        for (int i = values.length; --i >= 0;)
+        {
+            values[i] = (float) ValueUtil.expressAsUnit(values[i], targetUnit);
+        }
+        return values;
+    }
+
+    @Override
+    public final int size()
+    {
+        return getData().size();
+    }
+
+    /**
+     * Check that a provided index is valid.
+     * @param index the value to check
+     * @throws IndexOutOfBoundsException when index is invalid
+     */
+    protected final void checkIndex(final int index) throws IndexOutOfBoundsException
+    {
+        if (index < 0 || index >= size())
+        {
+            throw new IndexOutOfBoundsException(
+                    "index out of range (valid range is 0.." + (size() - 1) + ", got " + index + ")");
+        }
+    }
+
+    /**
+     * Retrieve the value stored at a specified position in the standard SI unit.
+     * @param index index of the value to retrieve
+     * @return value at position index in the standard SI unit
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public final float getSI(final int index) throws IndexOutOfBoundsException
+    {
+        checkIndex(index);
+        return getData().getSI(index);
+    }
+
+    @Override
+    public S get(final int index) throws IndexOutOfBoundsException
+    {
+        return instantiateScalarSI(getSI(index), getDisplayUnit());
+    }
+
+    /**
+     * Retrieve the value stored at a specified position in the original unit.
+     * @param index index of the value to retrieve
+     * @return value at position index in the original unit
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public final float getInUnit(final int index) throws IndexOutOfBoundsException
+    {
+        return (float) ValueUtil.expressAsUnit(getSI(index), getDisplayUnit());
+    }
+
+    /**
+     * Retrieve the value stored at a specified position converted into a specified unit.
+     * @param index index of the value to retrieve
+     * @param targetUnit the unit for the result
+     * @return value at position index converted into the specified unit
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public final float getInUnit(final int index, final U targetUnit) throws IndexOutOfBoundsException
+    {
+        return (float) ValueUtil.expressAsUnit(getSI(index), targetUnit);
+    }
+
+    /**
+     * Set the value, specified in the standard SI unit, at the specified position.
+     * @param index the index of the value to set
+     * @param valueSI the value, specified in the standard SI unit
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public final void setSI(final int index, final float valueSI) throws IndexOutOfBoundsException
+    {
+        checkIndex(index);
+        checkCopyOnWrite();
+        getData().setSI(index, valueSI);
+    }
+
+    /**
+     * Set the value, specified in the (current) display unit, at the specified position.
+     * @param index the index of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public void setInUnit(final int index, final float valueInUnit) throws IndexOutOfBoundsException
+    {
+        setSI(index, (float) ValueUtil.expressAsSIUnit(valueInUnit, getDisplayUnit()));
+    }
+
+    /**
+     * Set the value, specified in the <code>valueUnit</code>, at the specified position.
+     * @param index the index of the value to set
+     * @param valueInUnit the value, specified in the (current) display unit
+     * @param valueUnit the unit in which the <code>valueInUnit</code> is expressed
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public void setInUnit(final int index, final float valueInUnit, final U valueUnit) throws IndexOutOfBoundsException
+    {
+        setSI(index, (float) ValueUtil.expressAsSIUnit(valueInUnit, valueUnit));
+    }
+
+    /**
+     * Set the scalar value at the specified position.
+     * @param index the index of the value to set
+     * @param value the value to set
+     * @throws IndexOutOfBoundsException when index out of range (index &lt; 0 or index &gt;= size())
+     */
+    public void set(final int index, final S value) throws IndexOutOfBoundsException
+    {
+        setSI(index, value.si);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public S[] getScalars()
+    {
+        S[] array = (S[]) Array.newInstance(getScalarClass(), size());
+        for (int i = 0; i < size(); i++)
+        {
+            array[i] = get(i);
+        }
+        return array;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public V toSparse()
+    {
+        V result;
+        if (getStorageType().equals(StorageType.SPARSE))
+        {
+            result = (V) this;
+            result.setDisplayUnit(getDisplayUnit());
+        }
+        else
+        {
+            result = instantiateVector(getData().toSparse(), getDisplayUnit());
+        }
+        result.setDisplayUnit(getDisplayUnit());
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public V toDense()
+    {
+        V result;
+        if (getStorageType().equals(StorageType.DENSE))
+        {
+            result = (V) this;
+            result.setDisplayUnit(getDisplayUnit());
+        }
+        else
+        {
+            result = instantiateVector(getData().toDense(), getDisplayUnit());
+        }
+        return result;
+    }
+
+    /**
+     * Execute a function on a cell by cell basis. Note: May be expensive when used on sparse data.
+     * @param floatFunction the function to apply
+     * @return this updated vector
+     */
+    @SuppressWarnings("unchecked")
+    public final V assign(final FloatFunction floatFunction)
+    {
+        checkCopyOnWrite();
+        this.data.assign(floatFunction);
+        return (V) this;
+    }
+
+    @Override
+    public final V abs()
+    {
+        return assign(FloatMathFunctions.ABS);
+    }
+
+    @Override
+    public final V ceil()
+    {
+        return assign(FloatMathFunctions.CEIL);
+    }
+
+    @Override
+    public final V floor()
+    {
+        return assign(FloatMathFunctions.FLOOR);
+    }
+
+    @Override
+    public final V neg()
+    {
+        return assign(FloatMathFunctions.NEG);
+    }
+
+    @Override
+    public final V rint()
+    {
+        return assign(FloatMathFunctions.RINT);
+    }
+
+    @Override
+    public String toString()
+    {
+        return toString(getDisplayUnit(), false, true);
+    }
+
+    @Override
+    public String toString(final U displayUnit)
+    {
+        return toString(displayUnit, false, true);
+    }
+
+    @Override
+    public String toString(final boolean verbose, final boolean withUnit)
+    {
+        return toString(getDisplayUnit(), verbose, withUnit);
+    }
+
+    @Override
+    public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
+    {
+        StringBuffer buf = new StringBuffer();
+        if (verbose)
+        {
+            String ar = this instanceof Absolute ? "Abs " : "Rel ";
+            String ds = getData().isDense() ? "Dense  " : getData().isSparse() ? "Sparse " : "?????? ";
+            if (isMutable())
+            {
+                buf.append("Mutable   " + ar + ds);
+            }
+            else
+            {
+                buf.append("Immutable " + ar + ds);
+            }
+        }
+        buf.append("[");
+        for (int i = 0; i < size(); i++)
+        {
+            try
+            {
+                float f = (float) ValueUtil.expressAsUnit(getSI(i), displayUnit);
+                buf.append(" " + Format.format(f));
+            }
+            catch (IndexOutOfBoundsException ve)
+            {
+                buf.append(" " + "********************".substring(0, Format.DEFAULTSIZE));
+            }
+        }
+        buf.append("]");
+        if (withUnit)
+        {
+            buf.append(" " + displayUnit.getLocalizedDisplayAbbreviation());
+        }
+        return buf.toString();
+    }
+
+    /**
+     * Centralized size equality check.
+     * @param other other FloatVector
+     * @throws NullPointerException when other vector is null
+     * @throws ValueRuntimeException when vectors have unequal size
+     */
+    protected final void checkSize(final FloatVector<?, ?, ?> other) throws ValueRuntimeException
+    {
+        Throw.whenNull(other, "Other vector is null");
+        Throw.when(size() != other.size(), ValueRuntimeException.class, "The vectors have different sizes: %d != %d", size(),
+                other.size());
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:designforextension")
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = getDisplayUnit().getStandardUnit().hashCode();
+        result = prime * result + ((this.data == null) ? 0 : this.data.hashCode());
+        return result;
+    }
+
+    @Override
+    @SuppressWarnings({"checkstyle:designforextension", "checkstyle:needbraces"})
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FloatVector<?, ?, ?> other = (FloatVector<?, ?, ?>) obj;
+        if (!getDisplayUnit().getStandardUnit().equals(other.getDisplayUnit().getStandardUnit()))
+            return false;
+        if (this.data == null)
+        {
+            if (other.data != null)
+                return false;
+        }
+        else if (!this.data.equals(other.data))
+            return false;
+        return true;
+    }
+
+    /* ============================================================================================ */
+    /* =============================== ITERATOR METHODS AND CLASS ================================= */
+    /* ============================================================================================ */
+
+    @Override
+    public Iterator<S> iterator()
+    {
+        return new Itr();
+    }
+
+    /**
+     * The iterator class is loosely based in AbstractList.Itr. It does not throw a ConcurrentModificationException, because the
+     * size of the vector does not change. Normal (non-mutable) vectors cannot change their size, nor their content. The only
+     * thing for the MutableVector that can change is its content, not its length.
+     */
+    protected class Itr implements Iterator<S>, Serializable
+    {
+        /** ... */
+        private static final long serialVersionUID = 20191018L;
+
+        /** index of next element to return. */
+        private int cursor = 0;
+
+        @Override
+        public boolean hasNext()
+        {
+            return this.cursor != size();
+        }
+
+        @Override
+        public S next()
+        {
+            if (this.cursor >= size())
+            {
+                throw new NoSuchElementException();
+            }
+            try
+            {
+                int i = this.cursor;
+                S next = get(i);
+                this.cursor = i + 1;
+                return next;
+            }
+            catch (IndexOutOfBoundsException exception)
+            {
+                throw new RuntimeException(exception);
+            }
+        }
+
+        @Override
+        public void remove()
+        {
+            throw new RuntimeException("Remove function cannot be applied on fixed-size DJUNITS Vector");
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Itr [cursor=" + this.cursor + "]";
+        }
+
+    }
+
+}

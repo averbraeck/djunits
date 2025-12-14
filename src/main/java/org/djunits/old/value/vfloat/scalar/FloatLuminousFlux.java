@@ -1,0 +1,317 @@
+package org.djunits.old.value.vfloat.scalar;
+
+import java.util.Locale;
+
+import org.djunits.old.unit.AreaUnit;
+import org.djunits.old.unit.DimensionlessUnit;
+import org.djunits.old.unit.IlluminanceUnit;
+import org.djunits.old.unit.LuminousFluxUnit;
+import org.djunits.old.unit.LuminousIntensityUnit;
+import org.djunits.old.unit.SolidAngleUnit;
+import org.djunits.old.value.vfloat.scalar.base.FloatScalarRel;
+import org.djutils.base.NumberParser;
+import org.djutils.exceptions.Throw;
+
+import jakarta.annotation.Generated;
+
+/**
+ * Easy access methods for the FloatLuminousFlux FloatScalar, which is relative by definition.
+ * <p>
+ * Copyright (c) 2013-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
+ * </p>
+ * @author Alexander Verbraeck
+ * @author Peter Knoppers
+ */
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
+public class FloatLuminousFlux extends FloatScalarRel<LuminousFluxUnit, FloatLuminousFlux>
+{
+    /** */
+    private static final long serialVersionUID = 20150901L;
+
+    /** Constant with value zero. */
+    public static final FloatLuminousFlux ZERO = new FloatLuminousFlux(0.0f, LuminousFluxUnit.SI);
+
+    /** Constant with value one. */
+    public static final FloatLuminousFlux ONE = new FloatLuminousFlux(1.0f, LuminousFluxUnit.SI);
+
+    /** Constant with value NaN. */
+    @SuppressWarnings("checkstyle:constantname")
+    public static final FloatLuminousFlux NaN = new FloatLuminousFlux(Float.NaN, LuminousFluxUnit.SI);
+
+    /** Constant with value POSITIVE_INFINITY. */
+    public static final FloatLuminousFlux POSITIVE_INFINITY =
+            new FloatLuminousFlux(Float.POSITIVE_INFINITY, LuminousFluxUnit.SI);
+
+    /** Constant with value NEGATIVE_INFINITY. */
+    public static final FloatLuminousFlux NEGATIVE_INFINITY =
+            new FloatLuminousFlux(Float.NEGATIVE_INFINITY, LuminousFluxUnit.SI);
+
+    /** Constant with value MAX_VALUE. */
+    public static final FloatLuminousFlux POS_MAXVALUE = new FloatLuminousFlux(Float.MAX_VALUE, LuminousFluxUnit.SI);
+
+    /** Constant with value -MAX_VALUE. */
+    public static final FloatLuminousFlux NEG_MAXVALUE = new FloatLuminousFlux(-Float.MAX_VALUE, LuminousFluxUnit.SI);
+
+    /**
+     * Construct FloatLuminousFlux scalar with a unit.
+     * @param value the float value, expressed in the given unit
+     * @param unit unit for the float value
+     */
+    public FloatLuminousFlux(final float value, final LuminousFluxUnit unit)
+    {
+        super(value, unit);
+    }
+
+    /**
+     * Construct FloatLuminousFlux scalar.
+     * @param value Scalar from which to construct this instance
+     */
+    public FloatLuminousFlux(final FloatLuminousFlux value)
+    {
+        super(value);
+    }
+
+    /**
+     * Construct FloatLuminousFlux scalar with a unit using a double value.
+     * @param value the double value, expressed in the given unit
+     * @param unit unit for the resulting float value
+     */
+    public FloatLuminousFlux(final double value, final LuminousFluxUnit unit)
+    {
+        super((float) value, unit);
+    }
+
+    @Override
+    public final FloatLuminousFlux instantiateRel(final float value, final LuminousFluxUnit unit)
+    {
+        return new FloatLuminousFlux(value, unit);
+    }
+
+    /**
+     * Construct FloatLuminousFlux scalar based on an SI value.
+     * @param value the float value in SI units
+     * @return the new scalar with the SI value
+     */
+    public static final FloatLuminousFlux ofSI(final float value)
+    {
+        return new FloatLuminousFlux(value, LuminousFluxUnit.SI);
+    }
+
+    /**
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a FloatLuminousFlux at the given ratio between 0 and 1
+     */
+    public static FloatLuminousFlux interpolate(final FloatLuminousFlux zero, final FloatLuminousFlux one, final float ratio)
+    {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
+        return new FloatLuminousFlux(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
+                zero.getDisplayUnit());
+    }
+
+    /**
+     * Return the maximum value of two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
+     */
+    public static FloatLuminousFlux max(final FloatLuminousFlux r1, final FloatLuminousFlux r2)
+    {
+        return r1.gt(r2) ? r1 : r2;
+    }
+
+    /**
+     * Return the maximum value of more than two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
+     */
+    public static FloatLuminousFlux max(final FloatLuminousFlux r1, final FloatLuminousFlux r2, final FloatLuminousFlux... rn)
+    {
+        FloatLuminousFlux maxr = r1.gt(r2) ? r1 : r2;
+        for (FloatLuminousFlux r : rn)
+        {
+            if (r.gt(maxr))
+            {
+                maxr = r;
+            }
+        }
+        return maxr;
+    }
+
+    /**
+     * Return the minimum value of two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
+     */
+    public static FloatLuminousFlux min(final FloatLuminousFlux r1, final FloatLuminousFlux r2)
+    {
+        return r1.lt(r2) ? r1 : r2;
+    }
+
+    /**
+     * Return the minimum value of more than two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
+     */
+    public static FloatLuminousFlux min(final FloatLuminousFlux r1, final FloatLuminousFlux r2, final FloatLuminousFlux... rn)
+    {
+        FloatLuminousFlux minr = r1.lt(r2) ? r1 : r2;
+        for (FloatLuminousFlux r : rn)
+        {
+            if (r.lt(minr))
+            {
+                minr = r;
+            }
+        }
+        return minr;
+    }
+
+    /**
+     * Returns a FloatLuminousFlux representation of a textual representation of a value with a unit. The String representation
+     * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
+     * are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a FloatLuminousFlux
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the text cannot be parsed
+     * @throws NullPointerException when the text argument is null
+     */
+    public static FloatLuminousFlux valueOf(final String text)
+    {
+        Throw.whenNull(text, "Error parsing FloatLuminousFlux: text to parse is null");
+        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing FloatLuminousFlux: empty text to parse");
+        try
+        {
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            float f = numberParser.parseFloat(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
+            LuminousFluxUnit unit = LuminousFluxUnit.BASE.getUnitByAbbreviation(unitString);
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity LuminousFlux", unitString);
+            return new FloatLuminousFlux(f, unit);
+        }
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException("Error parsing FloatLuminousFlux from " + text + " using Locale "
+                    + Locale.getDefault(Locale.Category.FORMAT), exception);
+        }
+    }
+
+    /**
+     * Returns a FloatLuminousFlux based on a value and the textual representation of the unit, which can be localized.
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
+     * @throws NullPointerException when the unitString argument is null
+     */
+    public static FloatLuminousFlux of(final float value, final String unitString)
+    {
+        Throw.whenNull(unitString, "Error parsing FloatLuminousFlux: unitString is null");
+        Throw.when(unitString.length() == 0, IllegalArgumentException.class,
+                "Error parsing FloatLuminousFlux: empty unitString");
+        LuminousFluxUnit unit = LuminousFluxUnit.BASE.getUnitByAbbreviation(unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing FloatLuminousFlux with unit %s", unitString);
+        return new FloatLuminousFlux(value, unit);
+    }
+
+    /**
+     * Calculate the division of FloatLuminousFlux and FloatLuminousFlux, which results in a FloatDimensionless scalar.
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatLuminousFlux
+     */
+    public final FloatDimensionless divide(final FloatLuminousFlux v)
+    {
+        return new FloatDimensionless(this.si / v.si, DimensionlessUnit.SI);
+    }
+
+    /**
+     * Calculate the division of FloatLuminousFlux and FloatArea, which results in a FloatIlluminance scalar.
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatArea
+     */
+    public final FloatIlluminance divide(final FloatArea v)
+    {
+        return new FloatIlluminance(this.si / v.si, IlluminanceUnit.SI);
+    }
+
+    /**
+     * Calculate the division of FloatLuminousFlux and FloatIlluminance, which results in a FloatArea scalar.
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatIlluminance
+     */
+    public final FloatArea divide(final FloatIlluminance v)
+    {
+        return new FloatArea(this.si / v.si, AreaUnit.SI);
+    }
+
+    /**
+     * Calculate the division of FloatLuminousFlux and FloatLuminousIntensity, which results in a FloatSolidAngle scalar.
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatLuminousIntensity
+     */
+    public final FloatSolidAngle divide(final FloatLuminousIntensity v)
+    {
+        return new FloatSolidAngle(this.si / v.si, SolidAngleUnit.SI);
+    }
+
+    /**
+     * Calculate the division of FloatLuminousFlux and FloatSolidAngle, which results in a FloatLuminousIntensity scalar.
+     * @param v scalar
+     * @return scalar as a division of FloatLuminousFlux and FloatSolidAngle
+     */
+    public final FloatLuminousIntensity divide(final FloatSolidAngle v)
+    {
+        return new FloatLuminousIntensity(this.si / v.si, LuminousIntensityUnit.SI);
+    }
+
+    @Override
+    public FloatSIScalar reciprocal()
+    {
+        return FloatSIScalar.divide(FloatDimensionless.ONE, this);
+    }
+
+    /**
+     * Multiply two scalars that result in a scalar of type FloatLuminousFlux.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the multiplication of both scalars as an instance of FloatLuminousFlux
+     */
+    public static FloatLuminousFlux multiply(final FloatScalarRel<?, ?> scalar1, final FloatScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(!scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                .plus(scalar2.getDisplayUnit().getQuantity().getSiDimensions()).equals(LuminousFluxUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Multiplying %s by %s does not result in instance of type FloatLuminousFlux",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new FloatLuminousFlux(scalar1.si * scalar2.si, LuminousFluxUnit.SI);
+    }
+
+    /**
+     * Divide two scalars that result in a scalar of type FloatLuminousFlux.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the division of scalar1 by scalar2 as an instance of FloatLuminousFlux
+     */
+    public static FloatLuminousFlux divide(final FloatScalarRel<?, ?> scalar1, final FloatScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(
+                !scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                        .minus(scalar2.getDisplayUnit().getQuantity().getSiDimensions())
+                        .equals(LuminousFluxUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Dividing %s by %s does not result in an instance of type FloatLuminousFlux",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new FloatLuminousFlux(scalar1.si / scalar2.si, LuminousFluxUnit.SI);
+    }
+
+}

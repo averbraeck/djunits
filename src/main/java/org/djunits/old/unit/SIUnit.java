@@ -1,0 +1,86 @@
+package org.djunits.old.unit;
+
+import org.djunits.old.unit.si.SIDimensions;
+import org.djunits.old.unit.util.UnitException;
+import org.djutils.logger.CategoryLogger;
+
+/**
+ * SIUnit describes a unit with arbitrary SI dimensions for which no predefined unit exists.
+ * <p>
+ * Copyright (c) 2019-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
+ * </p>
+ * @author Alexander Verbraeck
+ */
+public class SIUnit extends Unit<SIUnit>
+{
+    /** */
+    private static final long serialVersionUID = 20190829L;
+
+    /** the SI Unit for dimensionless. */
+    public static final SIUnit DIMLESS = SIUnit.of(SIDimensions.DIMLESS);
+
+    static
+    {
+        // make sure all predefined unit types get registered before we start using SIScalars.
+        try
+        {
+            Class.forName("org.djunits.unit.util.UNITS");
+        }
+        catch (ClassNotFoundException exception)
+        {
+            CategoryLogger.always().error("Could not find class org.djunits.unit.util.UNITS for initializing SIUnit");
+        }
+    }
+
+    /**
+     * Instantiate an SI unit 'of' a String.
+     * @param siString the SI string, e.g., "kgm/s2"
+     * @return the SIUnit based on the SI dimensionality
+     * @throws UnitException when the SI string is not according to the rules
+     */
+    public static SIUnit of(final String siString) throws UnitException
+    {
+        return Unit.lookupOrCreateUnitWithSIDimensions(SIDimensions.of(siString));
+    }
+
+    /**
+     * Instantiate an SI unit 'of' a SIDimensions.
+     * @param siDimensions the SI dimensions
+     * @return the SIUnit based on the SI dimensionality
+     */
+    public static SIUnit of(final SIDimensions siDimensions)
+    {
+        return Unit.lookupOrCreateUnitWithSIDimensions(siDimensions);
+    }
+
+    @Override
+    public String toString()
+    {
+        return getQuantity().getSiDimensions().toString(true, false);
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:designforextension")
+    public int hashCode()
+    {
+        return getQuantity().getSiDimensions().hashCode();
+    }
+
+    @Override
+    @SuppressWarnings({"checkstyle:designforextension", "checkstyle:needbraces"})
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SIUnit other = (SIUnit) obj;
+        if (!getQuantity().getSiDimensions().equals(other.getQuantity().getSiDimensions()))
+            return false;
+        return true;
+    }
+
+}

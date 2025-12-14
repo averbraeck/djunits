@@ -1,0 +1,270 @@
+package org.djunits.old.value.vdouble.scalar;
+
+import java.util.Locale;
+
+import org.djunits.old.unit.DimensionlessUnit;
+import org.djunits.old.unit.LuminousFluxUnit;
+import org.djunits.old.unit.SolidAngleUnit;
+import org.djunits.old.value.vdouble.scalar.base.DoubleScalarRel;
+import org.djutils.base.NumberParser;
+import org.djutils.exceptions.Throw;
+
+import jakarta.annotation.Generated;
+
+/**
+ * Easy access methods for the SolidAngle DoubleScalar, which is relative by definition.
+ * <p>
+ * Copyright (c) 2013-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
+ * </p>
+ * @author Alexander Verbraeck
+ * @author Peter Knoppers
+ */
+@Generated(value = "org.djunits.generator.GenerateDJUNIT", date = "2025-09-06T15:16:28.380798Z")
+public class SolidAngle extends DoubleScalarRel<SolidAngleUnit, SolidAngle>
+{
+    /** */
+    private static final long serialVersionUID = 20150905L;
+
+    /** Constant with value zero. */
+    public static final SolidAngle ZERO = new SolidAngle(0.0, SolidAngleUnit.SI);
+
+    /** Constant with value one. */
+    public static final SolidAngle ONE = new SolidAngle(1.0, SolidAngleUnit.SI);
+
+    /** Constant with value NaN. */
+    @SuppressWarnings("checkstyle:constantname")
+    public static final SolidAngle NaN = new SolidAngle(Double.NaN, SolidAngleUnit.SI);
+
+    /** Constant with value POSITIVE_INFINITY. */
+    public static final SolidAngle POSITIVE_INFINITY = new SolidAngle(Double.POSITIVE_INFINITY, SolidAngleUnit.SI);
+
+    /** Constant with value NEGATIVE_INFINITY. */
+    public static final SolidAngle NEGATIVE_INFINITY = new SolidAngle(Double.NEGATIVE_INFINITY, SolidAngleUnit.SI);
+
+    /** Constant with value MAX_VALUE. */
+    public static final SolidAngle POS_MAXVALUE = new SolidAngle(Double.MAX_VALUE, SolidAngleUnit.SI);
+
+    /** Constant with value -MAX_VALUE. */
+    public static final SolidAngle NEG_MAXVALUE = new SolidAngle(-Double.MAX_VALUE, SolidAngleUnit.SI);
+
+    /**
+     * Construct SolidAngle scalar with a unit.
+     * @param value the double value, expressed in the given unit
+     * @param unit unit for the double value
+     */
+    public SolidAngle(final double value, final SolidAngleUnit unit)
+    {
+        super(value, unit);
+    }
+
+    /**
+     * Construct SolidAngle scalar.
+     * @param value Scalar from which to construct this instance
+     */
+    public SolidAngle(final SolidAngle value)
+    {
+        super(value);
+    }
+
+    @Override
+    public final SolidAngle instantiateRel(final double value, final SolidAngleUnit unit)
+    {
+        return new SolidAngle(value, unit);
+    }
+
+    /**
+     * Construct SolidAngle scalar based on an SI value.
+     * @param value the double value in SI units
+     * @return the new scalar with the SI value
+     */
+    public static final SolidAngle ofSI(final double value)
+    {
+        return new SolidAngle(value, SolidAngleUnit.SI);
+    }
+
+    /**
+     * Interpolate between two values. Note that the first value does not have to be smaller than the second.
+     * @param zero the value at a ratio of zero
+     * @param one the value at a ratio of one
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a SolidAngle at the given ratio between 0 and 1
+     */
+    public static SolidAngle interpolate(final SolidAngle zero, final SolidAngle one, final double ratio)
+    {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
+        return new SolidAngle(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio,
+                zero.getDisplayUnit());
+    }
+
+    /**
+     * Return the maximum value of two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the maximum value of two relative scalars
+     */
+    public static SolidAngle max(final SolidAngle r1, final SolidAngle r2)
+    {
+        return r1.gt(r2) ? r1 : r2;
+    }
+
+    /**
+     * Return the maximum value of more than two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the maximum value of more than two relative scalars
+     */
+    public static SolidAngle max(final SolidAngle r1, final SolidAngle r2, final SolidAngle... rn)
+    {
+        SolidAngle maxr = r1.gt(r2) ? r1 : r2;
+        for (SolidAngle r : rn)
+        {
+            if (r.gt(maxr))
+            {
+                maxr = r;
+            }
+        }
+        return maxr;
+    }
+
+    /**
+     * Return the minimum value of two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @return the minimum value of two relative scalars
+     */
+    public static SolidAngle min(final SolidAngle r1, final SolidAngle r2)
+    {
+        return r1.lt(r2) ? r1 : r2;
+    }
+
+    /**
+     * Return the minimum value of more than two relative scalars.
+     * @param r1 the first scalar
+     * @param r2 the second scalar
+     * @param rn the other scalars
+     * @return the minimum value of more than two relative scalars
+     */
+    public static SolidAngle min(final SolidAngle r1, final SolidAngle r2, final SolidAngle... rn)
+    {
+        SolidAngle minr = r1.lt(r2) ? r1 : r2;
+        for (SolidAngle r : rn)
+        {
+            if (r.lt(minr))
+            {
+                minr = r;
+            }
+        }
+        return minr;
+    }
+
+    /**
+     * Returns a SolidAngle representation of a textual representation of a value with a unit. The String representation that
+     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a SolidAngle
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the text cannot be parsed
+     * @throws NullPointerException when the text argument is null
+     */
+    public static SolidAngle valueOf(final String text)
+    {
+        Throw.whenNull(text, "Error parsing SolidAngle: text to parse is null");
+        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing SolidAngle: empty text to parse");
+        try
+        {
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            double d = numberParser.parseDouble(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
+            SolidAngleUnit unit = SolidAngleUnit.BASE.getUnitByAbbreviation(unitString);
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity SolidAngle", unitString);
+            return new SolidAngle(d, unit);
+        }
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException(
+                    "Error parsing SolidAngle from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
+                    exception);
+        }
+    }
+
+    /**
+     * Returns a SolidAngle based on a value and the textual representation of the unit, which can be localized.
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
+     * @throws NullPointerException when the unitString argument is null
+     */
+    public static SolidAngle of(final double value, final String unitString)
+    {
+        Throw.whenNull(unitString, "Error parsing SolidAngle: unitString is null");
+        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SolidAngle: empty unitString");
+        SolidAngleUnit unit = SolidAngleUnit.BASE.getUnitByAbbreviation(unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing SolidAngle with unit %s", unitString);
+        return new SolidAngle(value, unit);
+    }
+
+    /**
+     * Calculate the division of SolidAngle and SolidAngle, which results in a Dimensionless scalar.
+     * @param v scalar
+     * @return scalar as a division of SolidAngle and SolidAngle
+     */
+    public final Dimensionless divide(final SolidAngle v)
+    {
+        return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of SolidAngle and LuminousIntensity, which results in a LuminousFlux scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of SolidAngle and LuminousIntensity
+     */
+    public final LuminousFlux times(final LuminousIntensity v)
+    {
+        return new LuminousFlux(this.si * v.si, LuminousFluxUnit.SI);
+    }
+
+    @Override
+    public SIScalar reciprocal()
+    {
+        return SIScalar.divide(Dimensionless.ONE, this);
+    }
+
+    /**
+     * Multiply two scalars that result in a scalar of type SolidAngle.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the multiplication of both scalars as an instance of SolidAngle
+     */
+    public static SolidAngle multiply(final DoubleScalarRel<?, ?> scalar1, final DoubleScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(!scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                .plus(scalar2.getDisplayUnit().getQuantity().getSiDimensions()).equals(SolidAngleUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Multiplying %s by %s does not result in instance of type SolidAngle",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new SolidAngle(scalar1.si * scalar2.si, SolidAngleUnit.SI);
+    }
+
+    /**
+     * Divide two scalars that result in a scalar of type SolidAngle.
+     * @param scalar1 the first scalar
+     * @param scalar2 the second scalar
+     * @return the division of scalar1 by scalar2 as an instance of SolidAngle
+     */
+    public static SolidAngle divide(final DoubleScalarRel<?, ?> scalar1, final DoubleScalarRel<?, ?> scalar2)
+    {
+        Throw.whenNull(scalar1, "scalar1 cannot be null");
+        Throw.whenNull(scalar2, "scalar2 cannot be null");
+        Throw.when(!scalar1.getDisplayUnit().getQuantity().getSiDimensions()
+                .minus(scalar2.getDisplayUnit().getQuantity().getSiDimensions()).equals(SolidAngleUnit.BASE.getSiDimensions()),
+                IllegalArgumentException.class, "Dividing %s by %s does not result in an instance of type SolidAngle",
+                scalar1.toDisplayString(), scalar2.toDisplayString());
+        return new SolidAngle(scalar1.si / scalar2.si, SolidAngleUnit.SI);
+    }
+
+}
