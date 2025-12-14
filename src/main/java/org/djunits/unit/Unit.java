@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantities;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.OffsetLinearScale;

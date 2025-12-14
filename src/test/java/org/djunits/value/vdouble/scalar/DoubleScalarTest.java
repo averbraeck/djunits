@@ -8,8 +8,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantities;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.AngleUnit;
 import org.djunits.unit.LengthUnit;

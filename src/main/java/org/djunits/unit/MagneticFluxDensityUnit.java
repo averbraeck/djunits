@@ -1,6 +1,6 @@
 package org.djunits.unit;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;

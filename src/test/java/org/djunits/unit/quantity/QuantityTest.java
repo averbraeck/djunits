@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantities;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;

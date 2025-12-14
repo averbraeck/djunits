@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantities;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.Unit;
 import org.djunits.unit.util.UNITS;

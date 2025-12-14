@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Map;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.AreaUnit;
 import org.djunits.unit.SIUnit;
 import org.djunits.unit.Unit;

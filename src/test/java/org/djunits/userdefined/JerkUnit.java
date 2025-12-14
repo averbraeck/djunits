@@ -1,6 +1,6 @@
 package org.djunits.userdefined;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.si.SIPrefixes;

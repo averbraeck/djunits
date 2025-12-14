@@ -14,8 +14,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantities;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.AbsoluteTemperatureUnit;
 import org.djunits.unit.LengthUnit;
 import org.djunits.unit.SIUnit;

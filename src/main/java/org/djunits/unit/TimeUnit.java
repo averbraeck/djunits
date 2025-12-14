@@ -2,7 +2,7 @@ package org.djunits.unit;
 
 import java.util.GregorianCalendar;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.unitsystem.UnitSystem;

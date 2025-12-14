@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.djunits.quantity.Quantities;
-import org.djunits.quantity.Quantity;
+import org.djunits.oldquantity.Quantities;
+import org.djunits.oldquantity.Quantity;
 import org.djunits.unit.DimensionlessUnit;
 import org.djunits.unit.ElectricalResistanceUnit;
 import org.djunits.unit.SIUnit;
