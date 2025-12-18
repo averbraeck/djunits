@@ -41,6 +41,9 @@ public enum SIPrefixes
     /** The SI prefixes and their values for the "KILO" settings. */
     public static final Map<String, SIPrefix> KILO_PREFIXES;
 
+    /** The SI prefixes and their values for the "PER_KILO" settings. */
+    public static final Map<String, SIPrefix> PER_KILO_PREFIXES;
+
     /** The map that translates an SI prefix power to the SI Prefix. */
     public static final Map<Integer, SIPrefix> FACTORS;
 
@@ -155,6 +158,35 @@ public enum SIPrefixes
         kiloPrefixes.put("R", new SIPrefix("R", "ronna", 1.0E24));
         kiloPrefixes.put("Q", new SIPrefix("Q", "quetta", 1.0E27));
         KILO_PREFIXES = Collections.unmodifiableMap(kiloPrefixes);
+        
+        Map<String, SIPrefix> perKiloPrefixes = new LinkedHashMap<>();
+        perKiloPrefixes.put("/q", new SIPrefix("/q", "per quecto", 1.0E33));
+        perKiloPrefixes.put("/r", new SIPrefix("/r", "per ronto", 1.0E30));
+        perKiloPrefixes.put("/y", new SIPrefix("/y", "per yocto", 1.0E27));
+        perKiloPrefixes.put("/z", new SIPrefix("/z", "per zepto", 1.0E24));
+        perKiloPrefixes.put("/a", new SIPrefix("/a", "per atto", 1.0E21));
+        perKiloPrefixes.put("/f", new SIPrefix("/f", "per femto", 1.0E18));
+        perKiloPrefixes.put("/p", new SIPrefix("/p", "per pico", 1.0E15));
+        perKiloPrefixes.put("/n", new SIPrefix("/n", "per nano", 1.0E12));
+        perKiloPrefixes.put("/mu", new SIPrefix("/mu", "per micro", 1.0E9, "/\u03BC"));
+        perKiloPrefixes.put("/m", new SIPrefix("/m", "per milli", 1.0E6));
+        perKiloPrefixes.put("/c", new SIPrefix("/c", "per centi", 1.0E5));
+        perKiloPrefixes.put("/d", new SIPrefix("/d", "per deci", 1.0E4));
+        perKiloPrefixes.put("/", new SIPrefix("/", "/", 1.0E3));
+        perKiloPrefixes.put("/da", new SIPrefix("/da", "per deca", 1.0E2));
+        perKiloPrefixes.put("/h", new SIPrefix("/h", "per hecto", 1.0E1));
+        
+        perKiloPrefixes.put("/k", new SIPrefix("/k", "per kilo", 1.0E0));
+        perKiloPrefixes.put("/M", new SIPrefix("/M", "per mega", 1.0E-3));
+        perKiloPrefixes.put("/G", new SIPrefix("/G", "per giga", 1.0E-6));
+        perKiloPrefixes.put("/T", new SIPrefix("/T", "per tera", 1.0E-9));
+        perKiloPrefixes.put("/P", new SIPrefix("/P", "per peta", 1.0E-12));
+        perKiloPrefixes.put("/E", new SIPrefix("/E", "per exa", 1.0E-15));
+        perKiloPrefixes.put("/Z", new SIPrefix("/Z", "per zetta", 1.0E-18));
+        perKiloPrefixes.put("/Y", new SIPrefix("/Y", "per yotta", 1.0E-21));
+        perKiloPrefixes.put("/R", new SIPrefix("/R", "per ronna", 1.0E-24));
+        perKiloPrefixes.put("/Q", new SIPrefix("/Q", "per quetta", 1.0E-27));
+        PER_KILO_PREFIXES = Collections.unmodifiableMap(perKiloPrefixes);
     }
 
     /**
