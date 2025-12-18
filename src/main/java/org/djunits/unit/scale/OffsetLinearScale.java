@@ -62,13 +62,13 @@ public class OffsetLinearScale extends LinearScale
     @Override
     public final double toBaseValue(final double value)
     {
-        return (value + this.offsetToBaseUnit) * getConversionFactorToBaseUnit();
+        return (value + this.offsetToBaseUnit) * getScaleFactorToBaseUnit();
     }
 
     @Override
     public final double fromBaseValue(final double value)
     {
-        return value / getConversionFactorToBaseUnit() - this.offsetToBaseUnit;
+        return value / getScaleFactorToBaseUnit() - this.offsetToBaseUnit;
     }
 
     /**
@@ -117,7 +117,7 @@ public class OffsetLinearScale extends LinearScale
     public String toString()
     {
         return "OffsetLinearScale [offsetToBaseUnit=" + this.offsetToBaseUnit + ", conversionFactorToBaseUnit="
-                + this.getConversionFactorToBaseUnit() + "]";
+                + this.getScaleFactorToBaseUnit() + "]";
     }
 
 }

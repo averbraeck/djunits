@@ -34,5 +34,5 @@ public interface Scale extends Serializable
      * @return whether the scale is a 'standard' scale
      */
     boolean isBaseScale();
-
+    
 }

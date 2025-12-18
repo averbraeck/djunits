@@ -22,45 +22,45 @@ public class LinearScale implements Scale
     private static final long serialVersionUID = 500L;
 
     /** multiply by this number to convert to the base (e.g., SI) unit. */
-    private final double conversionFactorToBaseUnit;
+    private final double scaleFactorToBaseUnit;
 
     /**
      * Construct a Scale for linear transformations.
-     * @param conversionFactorToBaseUnit the conversion factor by which this number has to be multiplied to convert it to the
+     * @param scaleFactorToBaseUnit the conversion factor by which this number has to be multiplied to convert it to the
      *            base (e.g., SI) unit.
      */
-    public LinearScale(final double conversionFactorToBaseUnit)
+    public LinearScale(final double scaleFactorToBaseUnit)
     {
-        Throw.when(conversionFactorToBaseUnit == 0.0, UnitRuntimeException.class,
-                "conversion factor for linear scale cannnot be 0");
-        this.conversionFactorToBaseUnit = conversionFactorToBaseUnit;
+        Throw.when(scaleFactorToBaseUnit == 0.0, UnitRuntimeException.class,
+                "scale factor for linear scale cannnot be 0");
+        this.scaleFactorToBaseUnit = scaleFactorToBaseUnit;
     }
 
     @Override
     public double toBaseValue(final double value)
     {
-        return value * this.conversionFactorToBaseUnit;
+        return value * this.scaleFactorToBaseUnit;
     }
 
     @Override
     public double fromBaseValue(final double value)
     {
-        return value / this.conversionFactorToBaseUnit;
+        return value / this.scaleFactorToBaseUnit;
     }
 
     /**
      * Retrieve the factor for conversion to the standard unit.
      * @return the factor for conversion to the standard unit
      */
-    public final double getConversionFactorToBaseUnit()
+    public final double getScaleFactorToBaseUnit()
     {
-        return this.conversionFactorToBaseUnit;
+        return this.scaleFactorToBaseUnit;
     }
 
     @Override
     public boolean isBaseScale()
     {
-        return this.conversionFactorToBaseUnit == 1.0;
+        return this.scaleFactorToBaseUnit == 1.0;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class LinearScale implements Scale
         final int prime = 31;
         int result = 1;
         long temp;
-        temp = Double.doubleToLongBits(this.conversionFactorToBaseUnit);
+        temp = Double.doubleToLongBits(this.scaleFactorToBaseUnit);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
@@ -85,8 +85,8 @@ public class LinearScale implements Scale
         if (getClass() != obj.getClass())
             return false;
         LinearScale other = (LinearScale) obj;
-        if (Double.doubleToLongBits(this.conversionFactorToBaseUnit) != Double
-                .doubleToLongBits(other.conversionFactorToBaseUnit))
+        if (Double.doubleToLongBits(this.scaleFactorToBaseUnit) != Double
+                .doubleToLongBits(other.scaleFactorToBaseUnit))
             return false;
         return true;
     }
@@ -94,7 +94,7 @@ public class LinearScale implements Scale
     @Override
     public String toString()
     {
-        return "LinearScale [conversionFactorToStandardUnit=" + this.conversionFactorToBaseUnit + "]";
+        return "LinearScale [scaleFactorToBaseUnit=" + this.scaleFactorToBaseUnit + "]";
     }
 
 }
