@@ -26,7 +26,7 @@ public class ScaleTest
     public void testScale() throws UnitException
     {
         IdentityScale sscale = IdentityScale.SCALE;
-        assertEquals(1.0, sscale.getConversionFactorToBaseUnit(), 0.0001);
+        assertEquals(1.0, sscale.getScaleFactorToBaseUnit(), 0.0001);
         assertEquals(1.0, sscale.toBaseValue(1.0), 0.0001);
         assertEquals(1.0, sscale.fromBaseValue(1.0), 0.0001);
         assertEquals(2.5, sscale.toBaseValue(2.5), 0.0001);
@@ -40,7 +40,7 @@ public class ScaleTest
         assertFalse(s1.equals(null));
 
         LinearScale kiloscale = new LinearScale(1000.0); // kilo
-        assertEquals(1000.0, kiloscale.getConversionFactorToBaseUnit(), 0.0001);
+        assertEquals(1000.0, kiloscale.getScaleFactorToBaseUnit(), 0.0001);
         assertEquals(1000.0, kiloscale.toBaseValue(1.0), 0.0001);
         assertEquals(1.0E-3, kiloscale.fromBaseValue(1.0), 0.0001);
         assertEquals(2500.0, kiloscale.toBaseValue(2.5), 0.0001);
@@ -59,7 +59,7 @@ public class ScaleTest
         assertFalse(l1.equals(null));
 
         OffsetLinearScale cscale = new OffsetLinearScale(1.0, 273.15); // C-K
-        assertEquals(1.0, cscale.getConversionFactorToBaseUnit(), 0.0001);
+        assertEquals(1.0, cscale.getScaleFactorToBaseUnit(), 0.0001);
         assertEquals(273.15, cscale.getOffsetToBaseUnit(), 0.0001);
         assertEquals(273.15, cscale.toBaseValue(0.0), 0.0001);
         assertEquals(0.0, cscale.toBaseValue(-273.15), 0.0001);
