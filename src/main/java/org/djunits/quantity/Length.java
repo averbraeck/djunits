@@ -1,6 +1,7 @@
 package org.djunits.quantity;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
@@ -8,6 +9,8 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.system.UnitSystem;
+import org.djutils.base.NumberParser;
+import org.djutils.exceptions.Throw;
 
 /**
  * Length.java.<br>
@@ -18,7 +21,7 @@ import org.djunits.unit.system.UnitSystem;
  * @author Alexander Verbraeck
  */
 
-public class Length extends Quantity<Length, Length.Unit>
+public class Length extends Quantity.Relative<Length, Length.Unit>
 {
     /** Constant with value zero. */
     public static final Length ZERO = Length.ofSi(0.0);
@@ -50,7 +53,7 @@ public class Length extends Quantity<Length, Length.Unit>
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public Length(final double value, final Unit unit)
+    public Length(final double value, final Length.Unit unit)
     {
         super(value, unit);
     }
@@ -66,18 +69,13 @@ public class Length extends Quantity<Length, Length.Unit>
     }
 
     /**
-     * Construct Length scalar.
+     * Construct Length quantity.
      * @param value Scalar from which to construct this instance
      */
     public Length(final Length value)
     {
         super(value.si(), Length.Unit.SI);
-    }
-
-    @Override
-    public SIDimensions siDimensions()
-    {
-        return Unit.SI_DIMENSIONS;
+        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**
@@ -87,8 +85,221 @@ public class Length extends Quantity<Length, Length.Unit>
      */
     public static Length ofSi(final double si)
     {
-        return new Length(si, Units.m);
+        return new Length(si, Length.Unit.SI);
     }
+
+    @Override
+    public Length instantiate(final double si)
+    {
+        return ofSi(si);
+    }
+
+    @Override
+    public SIDimensions siDimensions()
+    {
+        return Length.Unit.SI_DIMENSIONS;
+    }
+
+    /**
+     * Returns a Length representation of a textual representation of a value with a unit. The String representation that can be
+     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
+     * but not required, between the value and the unit.
+     * @param text the textual representation to parse into a Length
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the text cannot be parsed
+     * @throws NullPointerException when the text argument is null
+     */
+    public static Length valueOf(final String text)
+    {
+        Throw.whenNull(text, "Error parsing Length: text to parse is null");
+        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing Length: empty text to parse");
+        try
+        {
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            double d = numberParser.parseDouble(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
+            Length.Unit unit = Units.resolve(Length.Unit.class, unitString);
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Length", unitString);
+            return new Length(d, unit);
+        }
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException(
+                    "Error parsing Length from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
+                    exception);
+        }
+    }
+
+    /**
+     * Returns a Length based on a value and the textual representation of the unit, which can be localized.
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
+     * @throws NullPointerException when the unitString argument is null
+     */
+    public static Length of(final double value, final String unitString)
+    {
+        Throw.whenNull(unitString, "Error parsing Length: unitString is null");
+        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Length: empty unitString");
+        Length.Unit unit = Units.resolve(Length.Unit.class, unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Length with unit %s", unitString);
+        return new Length(value, unit);
+    }
+
+//    /**
+//     * Calculate the division of Length and Length, which results in a Dimensionless quantity.
+//     * @param v quantity
+//     * @return quantity as a division of Length and Length
+//     */
+//    public final Dimensionless divide(final Length v)
+//    {
+//        return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the multiplication of Length and LinearDensity, which results in a Dimensionless quantity.
+//     * @param v quantity
+//     * @return quantity as a multiplication of Length and LinearDensity
+//     */
+//    public final Dimensionless times(final LinearDensity v)
+//    {
+//        return new Dimensionless(this.si * v.si, DimensionlessUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the multiplication of Length and Length, which results in a Area quantity.
+//     * @param v quantity
+//     * @return quantity as a multiplication of Length and Length
+//     */
+//    public final Area times(final Length v)
+//    {
+//        return new Area(this.si * v.si, AreaUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the division of Length and LinearDensity, which results in a Area quantity.
+//     * @param v quantity
+//     * @return quantity as a division of Length and LinearDensity
+//     */
+//    public final Area divide(final LinearDensity v)
+//    {
+//        return new Area(this.si / v.si, AreaUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the division of Length and Area, which results in a LinearDensity quantity.
+//     * @param v quantity
+//     * @return quantity as a division of Length and Area
+//     */
+//    public final LinearDensity divide(final Area v)
+//    {
+//        return new LinearDensity(this.si / v.si, LinearDensityUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the multiplication of Length and Area, which results in a Volume quantity.
+//     * @param v quantity
+//     * @return quantity as a multiplication of Length and Area
+//     */
+//    public final Volume times(final Area v)
+//    {
+//        return new Volume(this.si * v.si, VolumeUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the multiplication of Length and Force, which results in a Energy quantity.
+//     * @param v quantity
+//     * @return quantity as a multiplication of Length and Force
+//     */
+//    public final Energy times(final Force v)
+//    {
+//        return new Energy(this.si * v.si, EnergyUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the multiplication of Length and Frequency, which results in a Speed quantity.
+//     * @param v quantity
+//     * @return quantity as a multiplication of Length and Frequency
+//     */
+//    public final Speed times(final Frequency v)
+//    {
+//        return new Speed(this.si * v.si, SpeedUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the division of Length and Duration, which results in a Speed quantity.
+//     * @param v quantity
+//     * @return quantity as a division of Length and Duration
+//     */
+//    public final Speed divide(final Duration v)
+//    {
+//        return new Speed(this.si / v.si, SpeedUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the division of Length and Speed, which results in a Duration quantity.
+//     * @param v quantity
+//     * @return quantity as a division of Length and Speed
+//     */
+//    public final Duration divide(final Speed v)
+//    {
+//        return new Duration(this.si / v.si, DurationUnit.SI);
+//    }
+//
+//    /**
+//     * Calculate the multiplication of Length and FlowMass, which results in a Momentum quantity.
+//     * @param v quantity
+//     * @return quantity as a multiplication of Length and FlowMass
+//     */
+//    public final Momentum times(final FlowMass v)
+//    {
+//        return new Momentum(this.si * v.si, MomentumUnit.SI);
+//    }
+//
+//    @Override
+//    public LinearDensity reciprocal()
+//    {
+//        return LinearDensity.ofSI(1.0 / this.si);
+//    }
+//
+//    /**
+//     * Multiply two quantitys that result in a quantity of type Length.
+//     * @param quantity1 the first quantity
+//     * @param quantity2 the second quantity
+//     * @return the multiplication of both quantitys as an instance of Length
+//     */
+//    public static Length multiply(final DoubleScalarRel<?, ?> quantity1, final DoubleScalarRel<?, ?> quantity2)
+//    {
+//        Throw.whenNull(quantity1, "quantity1 cannot be null");
+//        Throw.whenNull(quantity2, "quantity2 cannot be null");
+//        Throw.when(!quantity1.getDisplayUnit().getQuantity().getSiDimensions()
+//                .plus(quantity2.getDisplayUnit().getQuantity().getSiDimensions()).equals(LengthUnit.BASE.getSiDimensions()),
+//                IllegalArgumentException.class, "Multiplying %s by %s does not result in instance of type Length",
+//                quantity1.toDisplayString(), quantity2.toDisplayString());
+//        return new Length(quantity1.si * quantity2.si, Length.Unit.SI);
+//    }
+//
+//    /**
+//     * Divide two quantitys that result in a quantity of type Length.
+//     * @param quantity1 the first quantity
+//     * @param quantity2 the second quantity
+//     * @return the division of quantity1 by quantity2 as an instance of Length
+//     */
+//    public static Length divide(final DoubleScalarRel<?, ?> quantity1, final DoubleScalarRel<?, ?> quantity2)
+//    {
+//        Throw.whenNull(quantity1, "quantity1 cannot be null");
+//        Throw.whenNull(quantity2, "quantity2 cannot be null");
+//        Throw.when(!quantity1.getDisplayUnit().getQuantity().getSiDimensions()
+//                .minus(quantity2.getDisplayUnit().getQuantity().getSiDimensions()).equals(LengthUnit.BASE.getSiDimensions()),
+//                IllegalArgumentException.class, "Dividing %s by %s does not result in an instance of type Length",
+//                quantity1.toDisplayString(), quantity2.toDisplayString());
+//        return new Length(quantity1.si / quantity2.si, Length.Unit.SI);
+//    }
+
+    /******************************************************************************************************/
+    /********************************************** UNIT CLASS ********************************************/
+    /******************************************************************************************************/
 
     /**
      * Length.Unit encodes the length unit.<br>
@@ -139,7 +350,7 @@ public class Length extends Quantity<Length, Length.Unit>
         }
 
         @Override
-        public Unit baseUnit()
+        public Unit getBaseUnit()
         {
             return Units.m;
         }
