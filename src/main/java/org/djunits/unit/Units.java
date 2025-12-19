@@ -11,7 +11,12 @@ import org.djunits.unit.system.UnitSystem;
 import org.djutils.exceptions.Throw;
 
 /**
- * Units.java.<br>
+ * Units is a static class that gives access to strongly typed units, such as <code>Length.km</code>. The Units class is
+ * responsible for maintaining a registry of all units based on their textual abbreviations. It allows for a unit to register
+ * itself, and for code to retrieve a unit based on a textual abbreviation. The Units class also takes care of localization of
+ * the unit representations. If the Locale is not US, it will look for a resource bundle of the active Locale to see if
+ * localized textual abbreviations are registered, and it will use these when resolving the unit. When no localized matches can
+ * be found, it will test the (default) US Locale abbreviations as well.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is

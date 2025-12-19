@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.djunits.old.unit.si.SIDimensions;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.system.UnitSystem;
