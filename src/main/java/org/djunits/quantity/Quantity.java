@@ -106,7 +106,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @return a quantity with the given SI-value and base display unit
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public abstract Q ofSi(double si);
+    public abstract Q instantiate(double si);
 
     /**********************************************************************************/
     /********************************* NUMBER METHODS *********************************/
@@ -482,7 +482,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
          */
         public R plus(final R increment)
         {
-            R result = ofSi(si() + increment.si());
+            R result = instantiate(si() + increment.si());
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
@@ -494,7 +494,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
          */
         R minus(final R decrement)
         {
-            R result = ofSi(si() - decrement.si());
+            R result = instantiate(si() - decrement.si());
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
@@ -505,7 +505,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
          */
         public R abs()
         {
-            R result = ofSi(Math.abs(si()));
+            R result = instantiate(Math.abs(si()));
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
@@ -516,7 +516,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
          */
         public R neg()
         {
-            R result = ofSi(-si());
+            R result = instantiate(-si());
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
@@ -528,7 +528,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
          */
         public R times(final double constant)
         {
-            R result = ofSi(si() * constant);
+            R result = instantiate(si() * constant);
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
@@ -540,9 +540,15 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
          */
         public R divide(final double constant)
         {
-            R result = ofSi(si() / constant);
+            R result = instantiate(si() / constant);
             result.setDisplayUnit(getDisplayUnit());
             return result;
+        }
+
+        @Override
+        public boolean isRelative()
+        {
+            return true;
         }
 
     }
@@ -577,6 +583,12 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
         public Absolute(final double value, final U displayUnit)
         {
             super(value, displayUnit);
+        }
+
+        @Override
+        public boolean isRelative()
+        {
+            return false;
         }
 
     }
