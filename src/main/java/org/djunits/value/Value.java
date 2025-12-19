@@ -21,7 +21,7 @@ import org.djunits.unit.AbstractUnit;
  * @param <T> the value type for this unit
  * @param <U> the unit type
  */
-public interface Value<T extends Value<T, U>, U extends AbstractUnit<U>> extends Serializable, Cloneable
+public interface Value<T extends Value<T, U>, U extends AbstractUnit<U>> extends Serializable
 {
     /**
      * Retrieve the unit of this Value.
@@ -38,13 +38,16 @@ public interface Value<T extends Value<T, U>, U extends AbstractUnit<U>> extends
 
     /**
      * Indicate whether this is an Absolute Value.
-     * @return boolean
+     * @return whether this is an Absolute Value
      */
-    boolean isAbsolute();
+    default boolean isAbsolute()
+    {
+        return !isRelative();
+    }
 
     /**
      * Indicate whether this is a Relative Value.
-     * @return boolean
+     * @return whether this is a Relative Value
      */
     boolean isRelative();
 
