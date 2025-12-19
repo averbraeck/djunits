@@ -27,8 +27,8 @@ public final class Test
         System.out.println(length);
 
         Length l2 = new Length(5.0, Units.km);
-        System.out.println(l2);
-        System.out.println("SI = " + l2.si() + " [" + l2.getDisplayUnit().baseUnit().getId() + "]");
+        System.out.println(l2.toDisplayString());
+        System.out.println("SI = " + l2.si() + " [" + l2.getDisplayUnit().getBaseUnit().getId() + "]");
         
         Length l3 = new Length(10.0, "Qm");
         System.out.println(l3);
@@ -36,7 +36,8 @@ public final class Test
         
         Length l4 = new Length(Math.PI, "mum");
         System.out.println(l4);
-        System.out.println(l4.si());
+        System.out.println(l4.plus(length));
+        System.out.println(length.plus(l4));
     }
 
 }
