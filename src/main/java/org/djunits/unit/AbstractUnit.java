@@ -203,7 +203,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>>
      * Return the base unit for this unit.
      * @return the base unit for this unit
      */
-    public abstract U baseUnit();
+    public abstract U getBaseUnit();
 
     /**
      * Return a derived unit for this unit, where the textual abbreviation is the same as the display abbreviation.
