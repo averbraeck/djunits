@@ -6,6 +6,7 @@ import org.djunits.unit.Units;
 import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.value.Value;
+import org.djutils.exceptions.Throw;
 
 /**
  * Quantity is an abstract class that stores the basic information about a quantity. A physical quantity can be expressed as a
@@ -441,6 +442,103 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
     public String toDisplayString(final U displayUnit)
     {
         return format(getInUnit()) + " " + displayUnit.getDisplayAbbreviation();
+    }
+
+    /**********************************************************************************/
+    /********************* STATIC OPERATIONS ON MULTIPLE QUANTITIES *******************/
+    /**********************************************************************************/
+
+    /**
+     * Interpolate between two quantities. Note that the first quantities does not have to be smaller than the second.
+     * @param zero the quantity at a ratio of zero
+     * @param one the quantity at a ratio of one
+     * @param ratio the ratio between 0 and 1, inclusive
+     * @return a Quantity at the given ratio between 0 and 1
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q interpolate(final Q zero, final Q one,
+            final double ratio)
+    {
+        Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
+                "ratio for interpolation should be between 0 and 1, but is %f", ratio);
+        Q result = zero.instantiate(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio);
+        result.setDisplayUnit(zero.getDisplayUnit());
+        return result;
+    }
+
+    /**
+     * Return the maximum value of two quantities.
+     * @param quantity1 the first quantity
+     * @param quantity2 the second quantity
+     * @return the maximum value of two quantities
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q max(final Q quantity1, final Q quantity2)
+    {
+        return quantity1.gt(quantity2) ? quantity1 : quantity2;
+    }
+
+    /**
+     * Return the maximum value of more than two quantities.
+     * @param quantity1 the first quantity
+     * @param quantity2 the second quantity
+     * @param quantities the other quantities
+     * @return the maximum value of more than two quantities
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    @SafeVarargs
+    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q max(final Q quantity1, final Q quantity2,
+            final Q... quantities)
+    {
+        Q maxr = quantity1.gt(quantity2) ? quantity1 : quantity2;
+        for (Q r : quantities)
+        {
+            if (r.gt(maxr))
+            {
+                maxr = r;
+            }
+        }
+        return maxr;
+    }
+
+    /**
+     * Return the minimum value of two quantities.
+     * @param quantity1 the first quantity
+     * @param quantity2 the second quantity
+     * @return the minimum value of two quantities
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q min(final Q quantity1, final Q quantity2)
+    {
+        return quantity1.lt(quantity2) ? quantity1 : quantity2;
+    }
+
+    /**
+     * Return the minimum value of more than two quantities.
+     * @param quantity1 the first quantity
+     * @param quantity2 the second quantity
+     * @param quantities the other quantities
+     * @return the minimum value of more than two quantities
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    @SafeVarargs
+    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q min(final Q quantity1, final Q quantity2,
+            final Q... quantities)
+    {
+        Q minr = quantity1.lt(quantity2) ? quantity1 : quantity2;
+        for (Q r : quantities)
+        {
+            if (r.lt(minr))
+            {
+                minr = r;
+            }
+        }
+        return minr;
     }
 
     /******************************************************************************************************/
