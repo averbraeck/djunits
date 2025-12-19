@@ -2,11 +2,11 @@ package org.djunits.quantity;
 
 import java.util.List;
 
-import org.djunits.old.unit.si.SIDimensions;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.system.UnitSystem;
 
 /**
@@ -20,6 +20,28 @@ import org.djunits.unit.system.UnitSystem;
 
 public class Length extends Quantity<Length, Length.Unit>
 {
+    /** Constant with value zero. */
+    public static final Length ZERO = Length.ofSi(0.0);
+
+    /** Constant with value one. */
+    public static final Length ONE = Length.ofSi(1.0);
+
+    /** Constant with value NaN. */
+    @SuppressWarnings("checkstyle:constantname")
+    public static final Length NaN = Length.ofSi(Double.NaN);
+
+    /** Constant with value POSITIVE_INFINITY. */
+    public static final Length POSITIVE_INFINITY = Length.ofSi(Double.POSITIVE_INFINITY);
+
+    /** Constant with value NEGATIVE_INFINITY. */
+    public static final Length NEGATIVE_INFINITY = Length.ofSi(Double.NEGATIVE_INFINITY);
+
+    /** Constant with value MAX_VALUE. */
+    public static final Length POS_MAXVALUE = Length.ofSi(Double.MAX_VALUE);
+
+    /** Constant with value -MAX_VALUE. */
+    public static final Length NEG_MAXVALUE = Length.ofSi(-Double.MAX_VALUE);
+    
     /** */
     private static final long serialVersionUID = 500L;
 
@@ -41,6 +63,15 @@ public class Length extends Quantity<Length, Length.Unit>
     public Length(final double value, final String abbreviation)
     {
         this(value, Units.resolve(Length.Unit.class, abbreviation));
+    }
+
+    /**
+     * Construct Length scalar.
+     * @param value Scalar from which to construct this instance
+     */
+    public Length(final Length value)
+    {
+        super(value.si(), Length.Unit.SI);
     }
 
     @Override
@@ -72,6 +103,9 @@ public class Length extends Quantity<Length, Length.Unit>
         /** The dimensions of the length: rad, sr, kg, m, s, A, K, mol, cd. */
         public static final SIDimensions SI_DIMENSIONS = new SIDimensions(new byte[] {0, 0, 0, 1, 0, 0, 0, 0, 0});
 
+        /** The SI or BASE unit. */
+        public static final Length.Unit SI = Units.meter;
+        
         /**
          * Create a new length unit.
          * @param id the id or main abbreviation of the unit

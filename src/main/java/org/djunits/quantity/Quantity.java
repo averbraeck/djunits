@@ -1,7 +1,7 @@
 package org.djunits.quantity;
 
-import org.djunits.old.unit.si.SIDimensions;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.si.SIDimensions;
 
 /**
  * Quantity is an abstract class that stores the basic information about a quantity. A physical quantity can be expressed as a
