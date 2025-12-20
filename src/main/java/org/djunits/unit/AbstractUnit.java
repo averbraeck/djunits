@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
-import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.system.UnitSystem;
@@ -28,7 +27,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <U> the unit type
  */
-public abstract class AbstractUnit<U extends AbstractUnit<U>>
+public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInterface<U>
 {
     /** The textual abbreviations of the unit, where the first one is the id. */
     private final List<String> textualAbbreviations = new ArrayList<>();
@@ -174,38 +173,6 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>>
     }
 
     /**
-     * Return the SI dimensions of this unit.
-     * @return the SI dimensions of this unit
-     */
-    public abstract SIDimensions siDimensions();
-
-    /**
-     * Convert a value expressed in this unit to its base (SI) value.
-     * @param value the value expressed in this unit
-     * @return the value converted to its SI value
-     */
-    public double toBaseValue(final double value)
-    {
-        return this.scale.toBaseValue(value);
-    }
-
-    /**
-     * Convert an SI value to a value expressed in this unit.
-     * @param si the SI value
-     * @return the value converted to this unit
-     */
-    public double fromBaseValue(final double si)
-    {
-        return this.scale.fromBaseValue(si);
-    }
-
-    /**
-     * Return the base unit for this unit.
-     * @return the base unit for this unit
-     */
-    public abstract U getBaseUnit();
-
-    /**
      * Return a derived unit for this unit, where the textual abbreviation is the same as the display abbreviation.
      * @param id the id or main abbreviation of the unit
      * @param name the full name of the unit
@@ -232,64 +199,37 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>>
     public abstract U deriveUnit(List<String> textualAbbreviations, String displayAbbreviation, String name, Scale scale,
             UnitSystem unitSystem);
 
-    /**
-     * Return the id, which is the main abbreviation, of the unit.
-     * @return the id (main abbreviation) of the unit
-     */
+    @Override
     public String getId()
     {
         return this.textualAbbreviations.get(0);
     }
 
-    /**
-     * Retrieve a safe copy of the textual abbreviations.
-     * @return the textual abbreviations
-     */
+    @Override
     public List<String> getTextualAbbreviations()
     {
         return new ArrayList<>(this.textualAbbreviations);
     }
 
-    /**
-     * Retrieve the default display abbreviation.
-     * @return the default display abbreviation
-     */
+    @Override
     public String getDisplayAbbreviation()
     {
         return this.displayAbbreviation;
     }
 
-    /**
-     * Retrieve the default textual abbreviation.
-     * @return the default textual abbreviation
-     */
-    public String getDefaultTextualAbbreviation()
-    {
-        return this.textualAbbreviations.get(0);
-    }
-
-    /**
-     * Return the name, which is the main written explanation, of the unit.
-     * @return the name (main explanation) of the unit
-     */
+    @Override
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * Retrieve the scale of this unit.
-     * @return the scale of this unit
-     */
+    @Override
     public Scale getScale()
     {
         return this.scale;
     }
 
-    /**
-     * Retrieve the unit system of this unit.
-     * @return unitSystem the unit system of this unit
-     */
+    @Override
     public UnitSystem getUnitSystem()
     {
         return this.unitSystem;
