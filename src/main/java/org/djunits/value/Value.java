@@ -2,7 +2,7 @@ package org.djunits.value;
 
 import java.io.Serializable;
 
-import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 
 /**
  * Value is the generic interface for all Scalar, Vector and Matrix classes that forces implementation of a few unit- and
@@ -21,7 +21,7 @@ import org.djunits.unit.AbstractUnit;
  * @param <T> the value type for this unit
  * @param <U> the unit type
  */
-public interface Value<T extends Value<T, U>, U extends AbstractUnit<U>> extends Serializable
+public interface Value<T extends Value<T, U>, U extends UnitInterface<U>> extends Serializable
 {
     /**
      * Retrieve the unit of this Value.
