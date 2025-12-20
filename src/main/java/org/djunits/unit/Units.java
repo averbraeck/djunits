@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.djunits.quantity.AbsorbedDose;
+import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Length;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.system.UnitSystem;
@@ -23,7 +25,8 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-@SuppressWarnings({"checkstyle:leftcurly", "checkstyle:rightcurly", "checkstyle:constantname", "checkstyle:whitespacearound"})
+@SuppressWarnings({"checkstyle:leftcurly", "checkstyle:rightcurly", "checkstyle:constantname", "checkstyle:whitespacearound",
+        "checkstyle:javadocvariable"})
 public final class Units
 {
     /** Current map locale. */
@@ -33,12 +36,40 @@ public final class Units
     private static Map<String, String> localeTranslateMap = new LinkedHashMap<>();
 
     /** Map with all units per unit type. */
-    private static final Map<Class<?>, Map<String, AbstractUnit<?>>> unitMap = new LinkedHashMap<>();
+    private static final Map<Class<?>, Map<String, UnitInterface<?>>> unitMap = new LinkedHashMap<>();
 
     // @formatter:off
 
     /** */ private Units() {}
-    
+
+    /* **************************************************************************************** */
+    /* ************************************* ABSORBED DOSE ************************************ */
+    /* **************************************************************************************** */
+
+    /** Gray. */
+    public static final AbsorbedDose.Unit gray = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+
+    /** mGy. */
+    public static final AbsorbedDose.Unit milligray = 
+            new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+
+    /** &#181;Gy. */
+    public static final AbsorbedDose.Unit microgray = 
+            new AbsorbedDose.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+
+    /** erg/g. */
+    public static final AbsorbedDose.Unit erg_per_gram = 
+            new AbsorbedDose.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+
+    /** rad. */
+    public static final AbsorbedDose.Unit rad = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+
+    /* **************************************************************************************** */
+    /* ************************************* DIMENSIONLESS ************************************ */
+    /* **************************************************************************************** */
+
+    /** */ public static final Dimensionless.Unit one = new Dimensionless.Unit("", "", 1.0, UnitSystem.OTHER); 
+
     /* **************************************************************************************** */
     /* **************************************** LENGTH **************************************** */
     /* **************************************************************************************** */
@@ -105,10 +136,10 @@ public final class Units
      * Register a unit so it can be found based on its textual abbreviations.
      * @param unit the unit to register
      */
-    public static void register(final AbstractUnit<?> unit)
+    public static void register(final UnitInterface<?> unit)
     {
         Throw.whenNull(unit, "unit");
-        var subMap = unitMap.computeIfAbsent(unit.getClass(), k -> new LinkedHashMap<String, AbstractUnit<?>>());
+        var subMap = unitMap.computeIfAbsent(unit.getClass(), k -> new LinkedHashMap<String, UnitInterface<?>>());
         for (var key : unit.getTextualAbbreviations())
         {
             subMap.put(key, unit);
@@ -123,7 +154,7 @@ public final class Units
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      * @param <U> the unit type
      */
-    public static <U extends AbstractUnit<U>> U resolve(final Class<U> unitClass, final String abbreviation)
+    public static <U extends UnitInterface<U>> U resolve(final Class<U> unitClass, final String abbreviation)
             throws UnitRuntimeException
     {
         Throw.whenNull(abbreviation, "abbreviation");
