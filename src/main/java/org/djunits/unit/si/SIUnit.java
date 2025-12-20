@@ -1,20 +1,25 @@
 package org.djunits.unit.si;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.djunits.unit.UnitException;
+import org.djunits.unit.UnitInterface;
+import org.djunits.unit.scale.IdentityScale;
+import org.djunits.unit.scale.Scale;
+import org.djunits.unit.system.UnitSystem;
 import org.djutils.exceptions.Throw;
 
 /**
- * SIDimensions stores the dimensionality of a unit using the SI standards. Angle (rad) and solid angle (sr) have been added to
- * be able to specify often used units regarding rotation.
+ * SIUnit stores the dimensionality of a unit using the SI standards. Angle (rad) and solid angle (sr) have been added to be
+ * able to specify often used units regarding rotation.
  * <p>
  * Copyright (c) 2019-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
  * </p>
  * @author Alexander Verbraeck
  */
-public class SIDimensions
+public class SIUnit implements UnitInterface<SIUnit>
 {
     /** The (currently) 9 dimensions we take into account: rad, sr, kg, m, s, A, K, mol, cd. */
     public static final int NUMBER_DIMENSIONS = 9;
@@ -22,14 +27,14 @@ public class SIDimensions
     /** The default denominator which consists of all "1"s. */
     private static final byte[] UNIT_DENOMINATOR = new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-    /** The abbreviations of the SI units we use in SIDimensions. */
+    /** The abbreviations of the SI units we use in SIUnit. */
     private static final String[] SI_ABBREVIATIONS = new String[] {"rad", "sr", "kg", "m", "s", "A", "K", "mol", "cd"};
 
     /** For parsing, the mol has to be parsed before the m, otherwise the "m" from "mol" is eaten; same for "s" and "sr". */
     private static final int[] PARSE_ORDER = new int[] {0, 1, 2, 7, 3, 4, 5, 6, 8};
 
-    /** the dimensionless SIDimensions. */
-    public static final SIDimensions DIMLESS = new SIDimensions(0, 0, 0, 0, 0, 0, 0, 0, 0);
+    /** the dimensionless SIUnit. */
+    public static final SIUnit DIMLESS = new SIUnit(0, 0, 0, 0, 0, 0, 0, 0, 0);
 
     /**
      * The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2: mass (kg), 3: length
@@ -45,24 +50,24 @@ public class SIDimensions
     private final boolean fractional;
 
     /**
-     * Create an immutable SIDimensions instance based on a safe copy of a given dimensions specification. As an example, speed
-     * is indicated as length = 1; time = -1 with the other dimensions equal to zero.
+     * Create an immutable SIUnit instance based on a safe copy of a given dimensions specification. As an example, speed is
+     * indicated as length = 1; time = -1 with the other dimensions equal to zero.
      * @param dimensions The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2:
      *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
      */
-    public SIDimensions(final byte[] dimensions)
+    public SIUnit(final byte[] dimensions)
     {
         Throw.whenNull(dimensions, "dimensions cannot be null");
-        Throw.when(dimensions.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "SIDimensions wrong dimensionality");
+        Throw.when(dimensions.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "SIUnit wrong dimensionality");
         this.dimensions = dimensions.clone(); // safe copy
         this.denominator = UNIT_DENOMINATOR;
         this.fractional = false;
     }
 
     /**
-     * Create an immutable fractional SIDimensions instance based on a safe copy of a given specification, separated in a
-     * numerator and a denominator.
+     * Create an immutable fractional SIUnit instance based on a safe copy of a given specification, separated in a numerator
+     * and a denominator.
      * @param numerator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2: mass
      *            (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
@@ -70,7 +75,7 @@ public class SIDimensions
      *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
      */
-    protected SIDimensions(final byte[] numerator, final byte[] denominator)
+    protected SIUnit(final byte[] numerator, final byte[] denominator)
     {
         // TODO all operators on fractional dimensions
         Throw.whenNull(numerator, "numerator cannot be null");
@@ -83,7 +88,7 @@ public class SIDimensions
     }
 
     /**
-     * Create an immutable SIDimensions instance based on a safe copy of a given dimensions specification.
+     * Create an immutable SIUnit instance based on a safe copy of a given dimensions specification.
      * @param angle dimension of the angle (rad)
      * @param solidAngle dimension of the solidAngle (sr)
      * @param mass dimension of the mass (kg)
@@ -95,8 +100,8 @@ public class SIDimensions
      * @param luminousIntensity dimension of the luminous intensity (cd)
      */
     @SuppressWarnings("checkstyle:parameternumber")
-    public SIDimensions(final int angle, final int solidAngle, final int mass, final int length, final int time,
-            final int current, final int temperature, final int amountOfSubstance, final int luminousIntensity)
+    public SIUnit(final int angle, final int solidAngle, final int mass, final int length, final int time, final int current,
+            final int temperature, final int amountOfSubstance, final int luminousIntensity)
     {
         this.dimensions = new byte[NUMBER_DIMENSIONS];
         this.dimensions[0] = (byte) angle;
@@ -113,17 +118,17 @@ public class SIDimensions
     }
 
     /**
-     * Parse a string representing SI dimensions to an SIDimensions object. Example: SIDimensions.of("kgm/s2") and
-     * SIDimensions.of("kgms-2") will both be translated to a dimensions object with vector {0,0,1,1,-2,0,0,0,0}. It is allowed
-     * to use 0 or 1 for the dimensions. Having the same unit in the numerator and the denominator is not seen as a problem: the
-     * values are subtracted from each other, so m/m will have a length dimensionality of 0. Dimensions between -9 and 9 are
-     * allowed. Spaces, periods and ^ are taken out, but other characters are not allowed and will lead to a UnitException. The
-     * order of allowed units is arbitrary, so "kg/ms2" is accepted as well as "kg/s^2.m".
+     * Parse a string representing SI dimensions to an SIUnit object. Example: SIUnit.of("kgm/s2") and SIUnit.of("kgms-2") will
+     * both be translated to a dimensions object with vector {0,0,1,1,-2,0,0,0,0}. It is allowed to use 0 or 1 for the
+     * dimensions. Having the same unit in the numerator and the denominator is not seen as a problem: the values are subtracted
+     * from each other, so m/m will have a length dimensionality of 0. Dimensions between -9 and 9 are allowed. Spaces, periods
+     * and ^ are taken out, but other characters are not allowed and will lead to a UnitException. The order of allowed units is
+     * arbitrary, so "kg/ms2" is accepted as well as "kg/s^2.m".
      * @param siString the string to parse
      * @return the corresponding SI dimensions
      * @throws UnitException when the string could not be parsed into dimensions
      */
-    public static SIDimensions of(final String siString) throws UnitException
+    public static SIUnit of(final String siString) throws UnitException
     {
         Throw.whenNull(siString, "siString cannot be null");
         String dimString = siString.replaceAll("[ .^]", "");
@@ -141,16 +146,16 @@ public class SIDimensions
             {
                 numerator[i] -= denominator[i];
             }
-            return new SIDimensions(numerator);
+            return new SIUnit(numerator);
         }
-        return new SIDimensions(parse(dimString));
+        return new SIUnit(parse(dimString));
     }
 
     /**
-     * Translate a string representing SI dimensions to an SIDimensions object. Example: SIDimensions.of("kgm2") is translated
-     * to a vector {0,0,1,2,0,0,0,0,0}. It is allowed to use 0 or 1 for the dimensions. Dimensions between -9 and 9 are allowed.
-     * The parsing is quite lenient: periods and carets (^) are taken out, and the order can be arbitrary, so "kgms-2" is
-     * accepted as well as "m.s^-2.kg". Note that the empty string parses to the dimensionless unit.
+     * Translate a string representing SI dimensions to an SIUnit object. Example: SIUnit.of("kgm2") is translated to a vector
+     * {0,0,1,2,0,0,0,0,0}. It is allowed to use 0 or 1 for the dimensions. Dimensions between -9 and 9 are allowed. The parsing
+     * is quite lenient: periods and carets (^) are taken out, and the order can be arbitrary, so "kgms-2" is accepted as well
+     * as "m.s^-2.kg". Note that the empty string parses to the dimensionless unit.
      * @param siString concatenation of SI units with positive or negative dimensions. No divisions sign is allowed.
      * @return a vector of length <code>NUMBER_DIMENSIONS</code> with the dimensions for the SI units
      * @throws UnitException when the String cannot be parsed, e.g. due to units not being recognized
@@ -250,35 +255,35 @@ public class SIDimensions
     }
 
     /**
-     * Add a set of SI dimensions to this SIDimensions. Note: as dimensions are considered to be immutable, a new dimension is
+     * Add a set of SI dimensions to this SIUnit. Note: as dimensions are considered to be immutable, a new dimension is
      * returned. The original dimension (<code>this</code>) remains unaltered.
      * @param other the dimensions to add (usually as a result of multiplication of scalars)
      * @return the new dimensions with the dimensions of this object plus the dimensions in the parameter
      */
-    public SIDimensions plus(final SIDimensions other)
+    public SIUnit plus(final SIUnit other)
     {
         byte[] result = new byte[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
             result[i] = (byte) (this.dimensions[i] + other.dimensions[i]);
         }
-        return new SIDimensions(result);
+        return new SIUnit(result);
     }
 
     /**
-     * Subtract a set of SI dimensions from this SIDimensions. Note: as dimensions are considered to be immutable, a new
-     * dimension is returned. The original dimension (<code>this</code>) remains unaltered.
+     * Subtract a set of SI dimensions from this SIUnit. Note: as dimensions are considered to be immutable, a new dimension is
+     * returned. The original dimension (<code>this</code>) remains unaltered.
      * @param other the dimensions to subtract (usually as a result of division of scalars)
      * @return the new dimensions with the dimensions of this object minus the dimensions in the parameter
      */
-    public SIDimensions minus(final SIDimensions other)
+    public SIUnit minus(final SIUnit other)
     {
         byte[] result = new byte[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
             result[i] = (byte) (this.dimensions[i] - other.dimensions[i]);
         }
-        return new SIDimensions(result);
+        return new SIUnit(result);
     }
 
     /**
@@ -286,48 +291,47 @@ public class SIDimensions
      * dimension is returned. The original dimension (<code>this</code>) remains unaltered.
      * @return the new dimensions that are the inverse of the dimensions in this object
      */
-    public SIDimensions invert()
+    public SIUnit invert()
     {
         byte[] result = new byte[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
             result[i] = (byte) (-this.dimensions[i]);
         }
-        return new SIDimensions(result);
+        return new SIUnit(result);
     }
 
     /**
-     * Add two SIDimensions and return the new SIDimensions. Usually, dimensions are added as a result of multiplication of
-     * scalars.
+     * Add two SIUnit and return the new SIUnit. Usually, dimensions are added as a result of multiplication of scalars.
      * @param dim1 the first set of dimensions
      * @param dim2 the second set of dimensions
      * @return the new dimensions with the sum of the dimensions in the parameters
      */
-    public static SIDimensions add(final SIDimensions dim1, final SIDimensions dim2)
+    public static SIUnit add(final SIUnit dim1, final SIUnit dim2)
     {
         byte[] dim = new byte[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
             dim[i] = (byte) (dim1.dimensions[i] + dim2.dimensions[i]);
         }
-        return new SIDimensions(dim);
+        return new SIUnit(dim);
     }
 
     /**
-     * Subtract an SIDimensions (dim2) from another SIDimensions (dim1) and return the new SIDimensions. Usually, dimensions are
-     * added as a result of division of scalars.
+     * Subtract an SIUnit (dim2) from another SIUnit (dim1) and return the new SIUnit. Usually, dimensions are added as a result
+     * of division of scalars.
      * @param dim1 the first set of dimensions
      * @param dim2 the second set of dimensions that will be subtracted from dim1
      * @return the new dimensions with the difference of the dimensions in the parameters
      */
-    public static SIDimensions subtract(final SIDimensions dim1, final SIDimensions dim2)
+    public static SIUnit subtract(final SIUnit dim1, final SIUnit dim2)
     {
         byte[] dim = new byte[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
             dim[i] = (byte) (dim1.dimensions[i] - dim2.dimensions[i]);
         }
-        return new SIDimensions(dim);
+        return new SIUnit(dim);
     }
 
     /**
@@ -339,41 +343,13 @@ public class SIDimensions
         return this.fractional;
     }
 
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Arrays.hashCode(this.denominator);
-        result = prime * result + Arrays.hashCode(this.dimensions);
-        return result;
-    }
-
-    @Override
-    @SuppressWarnings("checkstyle:needbraces")
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        SIDimensions other = (SIDimensions) obj;
-        if (!Arrays.equals(this.denominator, other.denominator))
-            return false;
-        if (!Arrays.equals(this.dimensions, other.dimensions))
-            return false;
-        return true;
-    }
-
     /**
-     * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIDimensions.
+     * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIUnit.
      * @param divided if true, return m/s2 for acceleration; if false return ms-2
      * @param separator add this string between successive units, e.g. kg.m.s-2 instead of kgms-2
      * @param powerPrefix the prefix for the power, e.g., "^" or "&lt;sup&gt;"
      * @param powerPostfix the postfix for the power, e.g., "&lt;/sup&gt;"
-     * @return a formatted string for this SIDimensions
+     * @return a formatted string for this SIUnit
      */
     public String toString(final boolean divided, final String separator, final String powerPrefix, final String powerPostfix)
     {
@@ -446,10 +422,10 @@ public class SIDimensions
     }
 
     /**
-     * Return a string such as "kgm/s2" or "kg.m/s2" or "kg.m.s-2" from this SIDimensions.
+     * Return a string such as "kgm/s2" or "kg.m/s2" or "kg.m.s-2" from this SIUnit.
      * @param divided if true, return m/s2 for acceleration; if false return ms-2
      * @param separator if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
-     * @return a formatted string describing this SIDimensions
+     * @return a formatted string describing this SIUnit
      */
     public String toString(final boolean divided, final boolean separator)
     {
@@ -457,11 +433,11 @@ public class SIDimensions
     }
 
     /**
-     * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIDimensions.
+     * Return a string such as "kgm/s2" or "kg.m/s^2" or "kg.m.s^-2" from this SIUnit.
      * @param divided if true, return m/s2 for acceleration; if false return ms-2
      * @param separator if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
      * @param power if true, add a ^ sign before the power, e.g., "kg.m^2/s^3" instead of "kg.m2/s3"
-     * @return a formatted string describing this SIDimensions
+     * @return a formatted string describing this SIUnit
      */
     public String toString(final boolean divided, final boolean separator, final boolean power)
     {
@@ -469,10 +445,10 @@ public class SIDimensions
     }
 
     /**
-     * Return a string such as "kgm/s<sup>2</sup>" or or "kg.m.s<sup>-2</sup>" from this SIDimensions.
+     * Return a string such as "kgm/s<sup>2</sup>" or or "kg.m.s<sup>-2</sup>" from this SIUnit.
      * @param divided if true, return "m/s<sup>2</sup>" for acceleration; if false return "ms<sup>-2</sup>"
      * @param separator if true, add a period between successive units, e.g. kg.m.s<sup>-2</sup>
-     * @return a formatted string describing this SIDimensions
+     * @return a formatted string describing this SIUnit
      */
     public String toHTMLString(final boolean divided, final boolean separator)
     {
@@ -508,6 +484,89 @@ public class SIDimensions
         {
             return Arrays.toString(this.dimensions);
         }
+    }
+
+    @Override
+    public String getId()
+    {
+        return toString(true, false);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getName()
+    {
+        return toString(true, false);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Scale getScale()
+    {
+        return IdentityScale.SCALE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public UnitSystem getUnitSystem()
+    {
+        return UnitSystem.SI_BASE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SIUnit siUnit()
+    {
+        return this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SIUnit getBaseUnit()
+    {
+        return this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<String> getTextualAbbreviations()
+    {
+        return List.of(toString(true, false));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getDisplayAbbreviation()
+    {
+        return toString(true, false);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(this.denominator);
+        result = prime * result + Arrays.hashCode(this.dimensions);
+        return result;
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:needbraces")
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SIUnit other = (SIUnit) obj;
+        if (!Arrays.equals(this.denominator, other.denominator))
+            return false;
+        if (!Arrays.equals(this.dimensions, other.dimensions))
+            return false;
+        return true;
     }
 
 }
