@@ -1,10 +1,12 @@
 package org.djunits.quantity;
 
+import java.util.Objects;
+
 import org.djunits.formatter.Format;
-import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
-import org.djunits.unit.si.SIDimensions;
 import org.djunits.unit.si.SIPrefixes;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.value.Value;
 import org.djutils.exceptions.Throw;
 
@@ -22,7 +24,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<U>> extends Number
+public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface<U>> extends Number
         implements Value<Q, U>, Comparable<Q>
 {
     /** */
@@ -87,10 +89,13 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
     /**********************************************************************************/
 
     /**
-     * Return the SI dimensions of this quantity.
-     * @return the SI dimensions of this quantity
+     * Return the SI unit of this quantity.
+     * @return the SI unit of this quantity
      */
-    public abstract SIDimensions siDimensions();
+    public SIUnit siUnit()
+    {
+        return getDisplayUnit().siUnit();
+    }
 
     /**
      * Return the SI value of the quantity.
@@ -255,6 +260,27 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
     public final int compareTo(final Q o)
     {
         return Double.compare(this.si(), o.si());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(this.displayUnit, this.si);
+    }
+
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Quantity<?, ?> other = (Quantity<?, ?>) obj;
+        return Objects.equals(this.displayUnit, other.displayUnit)
+                && Double.doubleToLongBits(this.si) == Double.doubleToLongBits(other.si);
     }
 
     /**********************************************************************************/
@@ -457,7 +483,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q interpolate(final Q zero, final Q one,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q interpolate(final Q zero, final Q one,
             final double ratio)
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
@@ -475,7 +501,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q max(final Q quantity1, final Q quantity2)
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q max(final Q quantity1, final Q quantity2)
     {
         return quantity1.gt(quantity2) ? quantity1 : quantity2;
     }
@@ -490,7 +516,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <U> the unit type
      */
     @SafeVarargs
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q max(final Q quantity1, final Q quantity2,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q max(final Q quantity1, final Q quantity2,
             final Q... quantities)
     {
         Q maxr = quantity1.gt(quantity2) ? quantity1 : quantity2;
@@ -512,7 +538,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q min(final Q quantity1, final Q quantity2)
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q min(final Q quantity1, final Q quantity2)
     {
         return quantity1.lt(quantity2) ? quantity1 : quantity2;
     }
@@ -527,7 +553,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <U> the unit type
      */
     @SafeVarargs
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U>> Q min(final Q quantity1, final Q quantity2,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q min(final Q quantity1, final Q quantity2,
             final Q... quantities)
     {
         Q minr = quantity1.lt(quantity2) ? quantity1 : quantity2;
@@ -558,7 +584,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <R> The relative quantity type
      * @param <U> The unit type
      */
-    public abstract static class Relative<R extends Relative<R, U>, U extends AbstractUnit<U>> extends Quantity<R, U>
+    public abstract static class Relative<R extends Relative<R, U>, U extends UnitInterface<U>> extends Quantity<R, U>
     {
         /** */
         private static final long serialVersionUID = 500L;
@@ -643,6 +669,16 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
             return result;
         }
 
+        /**
+         * Return the reciprocal of this quantity (1/q).
+         * @return the reciprocal of this quantity, with the correct SI units 
+         */
+        public Quantity<?, ?> reciprocal()
+        {
+            SIQuantity result = new SIQuantity(1.0 / si(), this.siUnit().invert());
+            return result;
+        }
+
         @Override
         public boolean isRelative()
         {
@@ -668,7 +704,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends AbstractUnit<
      * @param <Q> The absolute quantity type
      * @param <U> The unit type
      */
-    public abstract static class Absolute<Q extends Absolute<Q, U>, U extends AbstractUnit<U>> extends Quantity<Q, U>
+    public abstract static class Absolute<Q extends Absolute<Q, U>, U extends UnitInterface<U>> extends Quantity<Q, U>
     {
         /** */
         private static final long serialVersionUID = 500L;
