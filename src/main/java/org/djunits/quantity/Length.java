@@ -7,13 +7,13 @@ import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
-import org.djunits.unit.si.SIDimensions;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * Length.java.<br>
+ * Length quantity.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -95,9 +95,9 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     }
 
     @Override
-    public SIDimensions siDimensions()
+    public SIUnit siUnit()
     {
-        return Length.Unit.SI_DIMENSIONS;
+        return Length.Unit.SI_UNIT;
     }
 
     /**
@@ -147,155 +147,121 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
         return new Length(value, unit);
     }
 
-//    /**
-//     * Calculate the division of Length and Length, which results in a Dimensionless quantity.
-//     * @param v quantity
-//     * @return quantity as a division of Length and Length
-//     */
-//    public final Dimensionless divide(final Length v)
-//    {
-//        return new Dimensionless(this.si / v.si, DimensionlessUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the multiplication of Length and LinearDensity, which results in a Dimensionless quantity.
-//     * @param v quantity
-//     * @return quantity as a multiplication of Length and LinearDensity
-//     */
-//    public final Dimensionless times(final LinearDensity v)
-//    {
-//        return new Dimensionless(this.si * v.si, DimensionlessUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the multiplication of Length and Length, which results in a Area quantity.
-//     * @param v quantity
-//     * @return quantity as a multiplication of Length and Length
-//     */
-//    public final Area times(final Length v)
-//    {
-//        return new Area(this.si * v.si, AreaUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the division of Length and LinearDensity, which results in a Area quantity.
-//     * @param v quantity
-//     * @return quantity as a division of Length and LinearDensity
-//     */
-//    public final Area divide(final LinearDensity v)
-//    {
-//        return new Area(this.si / v.si, AreaUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the division of Length and Area, which results in a LinearDensity quantity.
-//     * @param v quantity
-//     * @return quantity as a division of Length and Area
-//     */
-//    public final LinearDensity divide(final Area v)
-//    {
-//        return new LinearDensity(this.si / v.si, LinearDensityUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the multiplication of Length and Area, which results in a Volume quantity.
-//     * @param v quantity
-//     * @return quantity as a multiplication of Length and Area
-//     */
-//    public final Volume times(final Area v)
-//    {
-//        return new Volume(this.si * v.si, VolumeUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the multiplication of Length and Force, which results in a Energy quantity.
-//     * @param v quantity
-//     * @return quantity as a multiplication of Length and Force
-//     */
-//    public final Energy times(final Force v)
-//    {
-//        return new Energy(this.si * v.si, EnergyUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the multiplication of Length and Frequency, which results in a Speed quantity.
-//     * @param v quantity
-//     * @return quantity as a multiplication of Length and Frequency
-//     */
-//    public final Speed times(final Frequency v)
-//    {
-//        return new Speed(this.si * v.si, SpeedUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the division of Length and Duration, which results in a Speed quantity.
-//     * @param v quantity
-//     * @return quantity as a division of Length and Duration
-//     */
-//    public final Speed divide(final Duration v)
-//    {
-//        return new Speed(this.si / v.si, SpeedUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the division of Length and Speed, which results in a Duration quantity.
-//     * @param v quantity
-//     * @return quantity as a division of Length and Speed
-//     */
-//    public final Duration divide(final Speed v)
-//    {
-//        return new Duration(this.si / v.si, DurationUnit.SI);
-//    }
-//
-//    /**
-//     * Calculate the multiplication of Length and FlowMass, which results in a Momentum quantity.
-//     * @param v quantity
-//     * @return quantity as a multiplication of Length and FlowMass
-//     */
-//    public final Momentum times(final FlowMass v)
-//    {
-//        return new Momentum(this.si * v.si, MomentumUnit.SI);
-//    }
-//
-//    @Override
-//    public LinearDensity reciprocal()
-//    {
-//        return LinearDensity.ofSI(1.0 / this.si);
-//    }
-//
-//    /**
-//     * Multiply two quantitys that result in a quantity of type Length.
-//     * @param quantity1 the first quantity
-//     * @param quantity2 the second quantity
-//     * @return the multiplication of both quantitys as an instance of Length
-//     */
-//    public static Length multiply(final DoubleScalarRel<?, ?> quantity1, final DoubleScalarRel<?, ?> quantity2)
-//    {
-//        Throw.whenNull(quantity1, "quantity1 cannot be null");
-//        Throw.whenNull(quantity2, "quantity2 cannot be null");
-//        Throw.when(!quantity1.getDisplayUnit().getQuantity().getSiDimensions()
-//                .plus(quantity2.getDisplayUnit().getQuantity().getSiDimensions()).equals(LengthUnit.BASE.getSiDimensions()),
-//                IllegalArgumentException.class, "Multiplying %s by %s does not result in instance of type Length",
-//                quantity1.toDisplayString(), quantity2.toDisplayString());
-//        return new Length(quantity1.si * quantity2.si, Length.Unit.SI);
-//    }
-//
-//    /**
-//     * Divide two quantitys that result in a quantity of type Length.
-//     * @param quantity1 the first quantity
-//     * @param quantity2 the second quantity
-//     * @return the division of quantity1 by quantity2 as an instance of Length
-//     */
-//    public static Length divide(final DoubleScalarRel<?, ?> quantity1, final DoubleScalarRel<?, ?> quantity2)
-//    {
-//        Throw.whenNull(quantity1, "quantity1 cannot be null");
-//        Throw.whenNull(quantity2, "quantity2 cannot be null");
-//        Throw.when(!quantity1.getDisplayUnit().getQuantity().getSiDimensions()
-//                .minus(quantity2.getDisplayUnit().getQuantity().getSiDimensions()).equals(LengthUnit.BASE.getSiDimensions()),
-//                IllegalArgumentException.class, "Dividing %s by %s does not result in an instance of type Length",
-//                quantity1.toDisplayString(), quantity2.toDisplayString());
-//        return new Length(quantity1.si / quantity2.si, Length.Unit.SI);
-//    }
+    /**
+     * Calculate the division of Length and Length, which results in a Dimensionless quantity.
+     * @param v quantity
+     * @return quantity as a division of Length and Length
+     */
+    public final Dimensionless divide(final Length v)
+    {
+        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Length and LinearDensity, which results in a Dimensionless quantity.
+     * @param v quantity
+     * @return quantity as a multiplication of Length and LinearDensity
+     */
+    public final Dimensionless times(final LinearDensity v)
+    {
+        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Length and Length, which results in a Area quantity.
+     * @param v quantity
+     * @return quantity as a multiplication of Length and Length
+     */
+    public final Area times(final Length v)
+    {
+        return new Area(this.si() * v.si(), Area.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Length and LinearDensity, which results in a Area quantity.
+     * @param v quantity
+     * @return quantity as a division of Length and LinearDensity
+     */
+    public final Area divide(final LinearDensity v)
+    {
+        return new Area(this.si() / v.si(), Area.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Length and Area, which results in a LinearDensity quantity.
+     * @param v quantity
+     * @return quantity as a division of Length and Area
+     */
+    public final LinearDensity divide(final Area v)
+    {
+        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Length and Area, which results in a Volume quantity.
+     * @param v quantity
+     * @return quantity as a multiplication of Length and Area
+     */
+    public final Volume times(final Area v)
+    {
+        return new Volume(this.si() * v.si(), Volume.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Length and Force, which results in a Energy quantity.
+     * @param v quantity
+     * @return quantity as a multiplication of Length and Force
+     */
+    public final Energy times(final Force v)
+    {
+        return new Energy(this.si() * v.si(), Energy.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Length and Frequency, which results in a Speed quantity.
+     * @param v quantity
+     * @return quantity as a multiplication of Length and Frequency
+     */
+    public final Speed times(final Frequency v)
+    {
+        return new Speed(this.si() * v.si(), Speed.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Length and Duration, which results in a Speed quantity.
+     * @param v quantity
+     * @return quantity as a division of Length and Duration
+     */
+    public final Speed divide(final Duration v)
+    {
+        return new Speed(this.si() / v.si(), Speed.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Length and Speed, which results in a Duration quantity.
+     * @param v quantity
+     * @return quantity as a division of Length and Speed
+     */
+    public final Duration divide(final Speed v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Length and FlowMass, which results in a Momentum quantity.
+     * @param v quantity
+     * @return quantity as a multiplication of Length and FlowMass
+     */
+    public final Momentum times(final FlowMass v)
+    {
+        return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
+    }
+
+    @Override
+    public LinearDensity reciprocal()
+    {
+        return LinearDensity.ofSI(1.0 / this.si());
+    }
 
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
@@ -312,7 +278,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     public static class Unit extends AbstractUnit<Length.Unit>
     {
         /** The dimensions of the length: rad, sr, kg, m, s, A, K, mol, cd. */
-        public static final SIDimensions SI_DIMENSIONS = new SIDimensions(new byte[] {0, 0, 0, 1, 0, 0, 0, 0, 0});
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 1, 0, 0, 0, 0, 0});
 
         /** The SI or BASE unit. */
         public static final Length.Unit SI = Units.meter;
@@ -344,9 +310,9 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
         }
 
         @Override
-        public SIDimensions siDimensions()
+        public SIUnit siUnit()
         {
-            return SI_DIMENSIONS;
+            return SI_UNIT;
         }
 
         @Override
