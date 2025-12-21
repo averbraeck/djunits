@@ -6,8 +6,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.djunits.quantity.AbsorbedDose;
+import org.djunits.quantity.Acceleration;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Length;
+import org.djunits.quantity.Speed;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.system.UnitSystem;
 import org.djutils.exceptions.Throw;
@@ -26,7 +29,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  */
 @SuppressWarnings({"checkstyle:leftcurly", "checkstyle:rightcurly", "checkstyle:constantname", "checkstyle:whitespacearound",
-        "checkstyle:javadocvariable"})
+        "checkstyle:javadocvariable", "checkstyle:linelength"})
 public final class Units
 {
     /** Current map locale. */
@@ -37,6 +40,21 @@ public final class Units
 
     /** Map with all units per unit type. */
     private static final Map<Class<?>, Map<String, UnitInterface<?>>> unitMap = new LinkedHashMap<>();
+
+    /** Constant for the foot. */
+    private static final double const_ft = 0.3048;
+
+    /** Constant for the yard. */
+    private static final double const_yd = 3.0 * const_ft;
+
+    /** Constant for the inch. */
+    private static final double const_in = const_ft / 12.0;
+
+    /** Constant for the mile. */
+    private static final double const_mi = 5280.0 * const_ft;
+
+    /** Constant for the nautical mile. */
+    private static final double const_NM = 1852.0;
 
     // @formatter:off
 
@@ -65,10 +83,54 @@ public final class Units
     public static final AbsorbedDose.Unit rad = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
 
     /* **************************************************************************************** */
+    /* ************************************* ACCELERATION ************************************* */
+    /* **************************************************************************************** */
+
+    /** m/s2. */
+    public static final Acceleration.Unit meter_per_second2 = new Acceleration.Unit(List.of("m/s2", "m/s^2", "m/sec2", "m/sec^2"), 
+            "m/s2", "meter per second squared", IdentityScale.SCALE, UnitSystem.SI_BASE);
+
+    /** km/h2. */
+    public static final Acceleration.Unit km_per_hour2 = new Acceleration.Unit(List.of("km/h2", "km/h^2", "km/hour2", "km/hour^2"), 
+            "km/h2", "kilometer per hour squared", new LinearScale(1000.0, 3600.0 * 3600.0), UnitSystem.SI_ACCEPTED);
+
+    /** ft/s2. */
+    public static final Acceleration.Unit foot_per_second2 = new Acceleration.Unit(List.of("ft/s2", "ft/s^2", "foot/sec2", "foot/sec^2"), 
+            "ft/s2", "foot per second squared", new LinearScale(const_ft), UnitSystem.IMPERIAL);
+
+    /** in/s2. */
+    public static final Acceleration.Unit inch_per_second2 = new Acceleration.Unit(List.of("in/s2", "in/s^2", "inch/sec2", "inch/sec^2"), 
+            "in/s2", "inch per second squared", new LinearScale(const_in), UnitSystem.IMPERIAL);
+
+    /** mi/h2. */
+    public static final Acceleration.Unit mile_per_hour2 = new Acceleration.Unit(List.of("mi/h2", "mi/h^2", "mile/hour2", "mile/hour^2"), 
+            "mi/h2", "mile per hour squared", new LinearScale(const_mi, 3600.0 * 3600.0), UnitSystem.IMPERIAL);
+
+    /** mi/s2. */
+    public static final Acceleration.Unit mile_per_second2 = new Acceleration.Unit(List.of("mi/s2", "mi/s^2", "mile/sec2", "mile/sec^2"), 
+            "mi/s2", "mile per second squared", new LinearScale(const_mi), UnitSystem.IMPERIAL);
+
+    /** kt/s = Nautical Mile / h / s. */
+    public static final Acceleration.Unit knot_per_second = new Acceleration.Unit(List.of("kt/s", "kt/sec", "knot/s", "knot/sec"), 
+            "kt/s", "knot per second", new LinearScale(const_NM, 3600.0), UnitSystem.OTHER);
+
+    /** mi/h/s. */
+    public static final Acceleration.Unit mile_per_hour_per_second = 
+            new Acceleration.Unit(List.of("mi/h/s", "mi/hr/sec", "mile/hour/sec"), 
+            "mi/h/s", "mile per hour per second", new LinearScale(const_mi, 3600.0), UnitSystem.IMPERIAL);
+
+    /** The standard gravity. */
+    public static final Acceleration.Unit standard_gravity = new Acceleration.Unit("g", "standard gravity", 9.80665, UnitSystem.OTHER);
+
+    /** Gal or cm/s. */
+    public static final Acceleration.Unit gal = new Acceleration.Unit("Gal", "gal", 0.01, UnitSystem.CGS);
+
+    /* **************************************************************************************** */
     /* ************************************* DIMENSIONLESS ************************************ */
     /* **************************************************************************************** */
 
-    /** */ public static final Dimensionless.Unit one = new Dimensionless.Unit("", "", 1.0, UnitSystem.OTHER); 
+    /** The dimensionless unit has a blank unit symbol. */ 
+    public static final Dimensionless.Unit one = new Dimensionless.Unit("", "", 1.0, UnitSystem.OTHER); 
 
     /* **************************************************************************************** */
     /* **************************************** LENGTH **************************************** */
@@ -85,25 +147,27 @@ public final class Units
     /** */ public static final Length.Unit mum = resolve(Length.Unit.class, "mum");
     /** */ public static final Length.Unit nm = resolve(Length.Unit.class, "nm");
     /** */ public static final Length.Unit pm = resolve(Length.Unit.class, "pm");
+    /** */ public static final Length.Unit am = resolve(Length.Unit.class, "am");
+    /** */ public static final Length.Unit fm = resolve(Length.Unit.class, "fm");
     
     /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
     public static final Length.Unit foot = new Length.Unit(List.of("ft", "foot", "'"), "ft", "foot", 
-            new LinearScale(0.3048), UnitSystem.IMPERIAL); 
+            new LinearScale(const_ft), UnitSystem.IMPERIAL); 
 
     /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
     public static final Length.Unit inch = new Length.Unit(List.of("in", "inch", "\""), "in", "inch", 
-            new LinearScale(0.3048 / 12.0), UnitSystem.IMPERIAL); 
+            new LinearScale(const_in), UnitSystem.IMPERIAL); 
 
     /** yard (international) = 0.9144 m = 3 ft = 36 in. */
     public static final Length.Unit yard = new Length.Unit(List.of("yd", "yard"), "yd", "yard", 
-            new LinearScale(0.3048 * 3.0), UnitSystem.IMPERIAL); 
+            new LinearScale(const_yd), UnitSystem.IMPERIAL); 
 
     /** mile (international) = 5280 ft = 1760 yd. */
     public static final Length.Unit mile = new Length.Unit(List.of("mi", "mile"), "mi", "mile", 
-            new LinearScale(0.3048 * 5280.0), UnitSystem.IMPERIAL); 
+            new LinearScale(const_mi), UnitSystem.IMPERIAL); 
 
     /** nautical mile (international) = 1852 m. */
-    public static final Length.Unit NM = new Length.Unit("NM", "Nautical Mile", 1852.0, UnitSystem.OTHER);
+    public static final Length.Unit NM = new Length.Unit("NM", "Nautical Mile", const_NM, UnitSystem.OTHER);
 
     /** Astronomical Unit = 149,597,870,700 m. */
     public static final Length.Unit AU =
@@ -120,17 +184,69 @@ public final class Units
     /** Angstrom = 10^-10 m. */
     public static final Length.Unit Angstrom = 
             new Length.Unit(List.of("A", "\u212B"), "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
+
+    /* **************************************************************************************** */
+    /* ***************************************** SPEED **************************************** */
+    /* **************************************************************************************** */
+
+    /** m/s. */
+    public static final Speed.Unit meter_per_second = 
+            new Speed.Unit(List.of("m/s", "m/sec"), "m/s", "meter per second", IdentityScale.SCALE, UnitSystem.SI_BASE);
+
+    /** m/h. */
+    public static final Speed.Unit meter_per_hour = new Speed.Unit(List.of("m/h", "m/hr", "m/hour"), 
+            "m/h", "meter per hour", new LinearScale(1.0, 3600.0), UnitSystem.SI_ACCEPTED);
+
+    /** km/s. */
+    public static final Speed.Unit km_per_second = new Speed.Unit(List.of("km/s", "km/sec"), 
+            "km/s", "kilometer per second", new LinearScale(1000.0), UnitSystem.SI_ACCEPTED);
+
+    /** km/h. */
+    public static final Speed.Unit km_per_hour = new Speed.Unit(List.of("km/h", "km/hr", "km/hour"), 
+            "km/h", "kilometer per hour", new LinearScale(1000.0, 3600.0), UnitSystem.SI_ACCEPTED);
+
+    /** in/s. */
+    public static final Speed.Unit inch_per_second = new Speed.Unit(List.of("in/s", "in/sec", "inch/s", "inch/sec"), 
+            "in/s", "inch per second", new LinearScale(const_in), UnitSystem.IMPERIAL);
+
+    /** in/min. */
+    public static final Speed.Unit inch_per_minute = new Speed.Unit(List.of("in/min", "inch/min"), 
+            "in/min", "inch per minute", new LinearScale(const_in, 60.0), UnitSystem.IMPERIAL);
+
+    /** in/h. */
+    public static final Speed.Unit inch_per_hour = new Speed.Unit(List.of("in/h", "in/hr", "in/hour", "inch/hour"), 
+            "in/h", "inch per hour", new LinearScale(const_in, 3600.0), UnitSystem.IMPERIAL);
+
+    /** ft/s. */
+    public static final Speed.Unit foot_per_second = new Speed.Unit(List.of("ft/s", "ft/sec", "foot/s", "foot/sec"), 
+            "ft/s", "foot per second", new LinearScale(const_ft), UnitSystem.IMPERIAL);
+
+    /** ft/min. */
+    public static final Speed.Unit foot_per_minute = new Speed.Unit(List.of("ft/min", "foot/min"), 
+            "ft/min", "foot per minute", new LinearScale(const_ft, 60.0), UnitSystem.IMPERIAL);
+
+    /** ft/h. */
+    public static final Speed.Unit foot_per_hour = new Speed.Unit(List.of("ft/h", "ft/hr", "ft/hour", "foot/hour"), 
+            "ft/h", "foot per hour", new LinearScale(const_ft, 3600.0), UnitSystem.IMPERIAL);
+    
+    /** mi/s. */
+    public static final Speed.Unit mile_per_second = new Speed.Unit(List.of("mi/s", "mi/sec", "mile/s", "mile/sec"), 
+            "mi/s", "mile per second", new LinearScale(const_mi), UnitSystem.IMPERIAL);
+
+    /** mi/min. */
+    public static final Speed.Unit mile_per_minute = new Speed.Unit(List.of("mi/min", "mile/min"), 
+            "mi/min", "mile per minute", new LinearScale(const_mi, 60.0), UnitSystem.IMPERIAL);
+
+    /** mi/h. */
+    public static final Speed.Unit mile_per_hour = new Speed.Unit(List.of("mi/h", "mi/hr", "mi/hour", "mile/hour"), 
+            "mi/h", "mile per hour", new LinearScale(const_mi, 3600.0), UnitSystem.IMPERIAL);
+
+    /** knot = Nautical Mile per hour. */
+    public static final Speed.Unit knot = new Speed.Unit("kt", "knot", const_NM / 3600.0, UnitSystem.OTHER);
+
     
     
     // @formatter:on
-
-    /**
-     * Generate the units that exist with all SI prefixes, such as the m, kg, W, Wh, V, etc.
-     */
-    static
-    {
-        m.generateSiPrefixes(false, false);
-    }
 
     /**
      * Register a unit so it can be found based on its textual abbreviations.
