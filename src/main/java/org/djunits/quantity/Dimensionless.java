@@ -20,7 +20,6 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionless.Unit>
 {
     /** Constant with value zero. */
@@ -97,7 +96,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
     @Override
     public SIUnit siUnit()
     {
-        return Dimensionless.Unit.SI_DIMENSIONS;
+        return Dimensionless.Unit.SI_UNIT;
     }
 
     /**
@@ -172,7 +171,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
     public static class Unit extends AbstractUnit<Dimensionless.Unit>
     {
         /** The dimensions of the dimensionless quantity: 1 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_DIMENSIONS = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
 
         /** The SI or BASE unit. */
         public static final Dimensionless.Unit SI = Units.one;
@@ -206,7 +205,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
         @Override
         public SIUnit siUnit()
         {
-            return SI_DIMENSIONS;
+            return SI_UNIT;
         }
 
         @Override

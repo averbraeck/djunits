@@ -20,7 +20,6 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class Length extends Quantity.Relative<Length, Length.Unit>
 {
     /** Constant with value zero. */
