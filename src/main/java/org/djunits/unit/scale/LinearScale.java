@@ -25,15 +25,27 @@ public class LinearScale implements Scale
     private final double scaleFactorToBaseUnit;
 
     /**
-     * Construct a Scale for linear transformations.
-     * @param scaleFactorToBaseUnit the conversion factor by which this number has to be multiplied to convert it to the
-     *            base (e.g., SI) unit.
+     * Construct a Scale for linear transformations. To transform, e.g., a minute to a second, a scale factor of 60 is used.
+     * @param scaleFactorToBaseUnit the conversion factor by which this number has to be multiplied to convert it to the base
+     *            (e.g., SI) unit.
      */
     public LinearScale(final double scaleFactorToBaseUnit)
     {
-        Throw.when(scaleFactorToBaseUnit == 0.0, UnitRuntimeException.class,
-                "scale factor for linear scale cannnot be 0");
+        Throw.when(scaleFactorToBaseUnit == 0.0, UnitRuntimeException.class, "scale factor for linear scale cannnot be 0");
         this.scaleFactorToBaseUnit = scaleFactorToBaseUnit;
+    }
+
+    /**
+     * Construct a Scale for linear transformations, with a numerator and denominator. To transform, e.g., m/s to km/h, a
+     * numerator of 1000 (a km is 1000 m) and a denominator of 3600 (an hour is 3600 seconds) is used.
+     * @param numerator the factor by which this number has to be multiplied to convert it to the base (e.g., SI) unit.
+     * @param denominator the factor by which this number has to be divided to convert it to the base (e.g., SI) unit.
+     */
+    public LinearScale(final double numerator, final double denominator)
+    {
+        Throw.when(numerator == 0.0, UnitRuntimeException.class, "numerator in scale factor for linear scale cannnot be 0");
+        Throw.when(denominator == 0.0, UnitRuntimeException.class, "denominator in scale factor for linear scale cannnot be 0");
+        this.scaleFactorToBaseUnit = numerator / denominator;
     }
 
     @Override
@@ -85,8 +97,7 @@ public class LinearScale implements Scale
         if (getClass() != obj.getClass())
             return false;
         LinearScale other = (LinearScale) obj;
-        if (Double.doubleToLongBits(this.scaleFactorToBaseUnit) != Double
-                .doubleToLongBits(other.scaleFactorToBaseUnit))
+        if (Double.doubleToLongBits(this.scaleFactorToBaseUnit) != Double.doubleToLongBits(other.scaleFactorToBaseUnit))
             return false;
         return true;
     }
