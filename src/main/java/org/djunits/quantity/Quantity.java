@@ -1,5 +1,6 @@
 package org.djunits.quantity;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import org.djunits.formatter.Format;
@@ -8,6 +9,7 @@ import org.djunits.unit.Units;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.value.Value;
+import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -108,11 +110,24 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
 
     /**
      * Instantiate a quantity with an SI or base value.
-     * @param si the value expressed in the display unit
-     * @return a quantity with the given SI-value and base display unit
+     * @param siValue the value expressed in the base (SI) unit
+     * @return a quantity with the given SI-value and base (SI) unit
      */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public abstract Q instantiate(double si);
+    public abstract Q instantiate(double siValue);
+
+    /**
+     * Instantiate a quantity with a value and a unit.
+     * @param value the double value, experessed in the unit
+     * @param unit the unit
+     * @return a quantity with the given value and display unit
+     */
+    public Q instantiate(final double value, final U unit)
+    {
+        double siValue = unit.toBaseValue(value);
+        Q quantity = instantiate(siValue);
+        quantity.setDisplayUnit(unit);
+        return quantity;
+    }
 
     /**********************************************************************************/
     /********************************* NUMBER METHODS *********************************/
@@ -281,6 +296,69 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         Quantity<?, ?> other = (Quantity<?, ?>) obj;
         return Objects.equals(this.displayUnit, other.displayUnit)
                 && Double.doubleToLongBits(this.si) == Double.doubleToLongBits(other.si);
+    }
+
+    /**********************************************************************************/
+    /********************************** PARSING METHODS *******************************/
+    /**********************************************************************************/
+
+    /**
+     * Returns a quantity for the textual representation of a value with a unit. The String representation that can be parsed is
+     * the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed, but not
+     * required, between the value and the unit.
+     * @param text the textual representation to parse into the quantity
+     * @param example an example instance to deliver
+     * @return the quantity representation of the value with its unit
+     * @throws IllegalArgumentException when the text cannot be parsed
+     * @throws NullPointerException when the text argument is null
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q valueOf(final String text, final Q example)
+    {
+        String quantityClass = example.getClass().getSimpleName();
+        Throw.whenNull(text, "Error parsing AbsorbedDose: text to parse is null");
+        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing %s: empty text to parse", quantityClass);
+        try
+        {
+            NumberParser numberParser = new NumberParser().lenient().trailing();
+            double d = numberParser.parseDouble(text);
+            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
+            @SuppressWarnings("unchecked")
+            U unit = (U) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity %s", unitString,
+                    quantityClass);
+            return example.instantiate(d, unit);
+        }
+        catch (Exception exception)
+        {
+            throw new IllegalArgumentException("Error parsing " + quantityClass + " from " + text + " using Locale "
+                    + Locale.getDefault(Locale.Category.FORMAT), exception);
+        }
+    }
+
+    /**
+     * Returns a quantity based on a value and the textual representation of the unit, which can be localized.
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @param example an example instance to deliver
+     * @return the quantity representation of the value in its unit
+     * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
+     * @throws NullPointerException when the unitString argument is null
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q of(final double value, final String unitString,
+            final Q example)
+    {
+        String quantityClass = example.getClass().getSimpleName();
+        Throw.whenNull(unitString, "Error parsing %s: unitString is null", quantityClass);
+        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing %s: empty unitString",
+                quantityClass);
+        @SuppressWarnings("unchecked")
+        U unit = (U) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
+        return example.instantiate(value, unit);
     }
 
     /**********************************************************************************/
@@ -671,7 +749,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
 
         /**
          * Return the reciprocal of this quantity (1/q).
-         * @return the reciprocal of this quantity, with the correct SI units 
+         * @return the reciprocal of this quantity, with the correct SI units
          */
         public Quantity<?, ?> reciprocal()
         {

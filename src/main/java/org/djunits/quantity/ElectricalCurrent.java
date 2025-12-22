@@ -18,29 +18,29 @@ import org.djunits.unit.system.UnitSystem;
  * @author Alexander Verbraeck
  */
 
-public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.Unit>
+public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, ElectricalCurrent.Unit>
 {
     /** Constant with value zero. */
-    public static final AbsorbedDose ZERO = AbsorbedDose.ofSi(0.0);
+    public static final ElectricalCurrent ZERO = ElectricalCurrent.ofSi(0.0);
 
     /** Constant with value one. */
-    public static final AbsorbedDose ONE = AbsorbedDose.ofSi(1.0);
+    public static final ElectricalCurrent ONE = ElectricalCurrent.ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final AbsorbedDose NaN = AbsorbedDose.ofSi(Double.NaN);
+    public static final ElectricalCurrent NaN = ElectricalCurrent.ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final AbsorbedDose POSITIVE_INFINITY = AbsorbedDose.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricalCurrent POSITIVE_INFINITY = ElectricalCurrent.ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final AbsorbedDose NEGATIVE_INFINITY = AbsorbedDose.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricalCurrent NEGATIVE_INFINITY = ElectricalCurrent.ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final AbsorbedDose POS_MAXVALUE = AbsorbedDose.ofSi(Double.MAX_VALUE);
+    public static final ElectricalCurrent POS_MAXVALUE = ElectricalCurrent.ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final AbsorbedDose NEG_MAXVALUE = AbsorbedDose.ofSi(-Double.MAX_VALUE);
+    public static final ElectricalCurrent NEG_MAXVALUE = ElectricalCurrent.ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 500L;
@@ -50,7 +50,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public AbsorbedDose(final double value, final AbsorbedDose.Unit unit)
+    public ElectricalCurrent(final double value, final ElectricalCurrent.Unit unit)
     {
         super(value, unit);
     }
@@ -60,18 +60,18 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public AbsorbedDose(final double value, final String abbreviation)
+    public ElectricalCurrent(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(AbsorbedDose.Unit.class, abbreviation));
+        this(value, Units.resolve(ElectricalCurrent.Unit.class, abbreviation));
     }
 
     /**
      * Construct AbsorbedDose quantity.
      * @param value Scalar from which to construct this instance
      */
-    public AbsorbedDose(final AbsorbedDose value)
+    public ElectricalCurrent(final ElectricalCurrent value)
     {
-        super(value.si(), AbsorbedDose.Unit.SI);
+        super(value.si(), ElectricalCurrent.Unit.SI);
         setDisplayUnit(value.getDisplayUnit());
     }
 
@@ -80,13 +80,13 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * @param si the si value
      * @return the AbsorbedDose instance based on an SI value
      */
-    public static AbsorbedDose ofSi(final double si)
+    public static ElectricalCurrent ofSi(final double si)
     {
-        return new AbsorbedDose(si, AbsorbedDose.Unit.SI);
+        return new ElectricalCurrent(si, ElectricalCurrent.Unit.SI);
     }
 
     @Override
-    public AbsorbedDose instantiate(final double si)
+    public ElectricalCurrent instantiate(final double si)
     {
         return ofSi(si);
     }
@@ -94,7 +94,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
     @Override
     public SIUnit siUnit()
     {
-        return AbsorbedDose.Unit.SI_UNIT;
+        return ElectricalCurrent.Unit.SI_UNIT;
     }
 
     /**
@@ -106,7 +106,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static AbsorbedDose valueOf(final String text)
+    public static ElectricalCurrent valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
     }
@@ -119,7 +119,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static AbsorbedDose of(final double value, final String unitString)
+    public static ElectricalCurrent of(final double value, final String unitString)
     {
         return Quantity.of(value, unitString, ZERO);
     }
@@ -129,7 +129,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * @param v quantity
      * @return quantity as a division of AbsorbedDose and AbsorbedDose
      */
-    public final Dimensionless divide(final AbsorbedDose v)
+    public final Dimensionless divide(final ElectricalCurrent v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
@@ -146,31 +146,31 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AbsorbedDose.Unit>
+    public static class Unit extends AbstractUnit<ElectricalCurrent.Unit>
     {
         /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
 
         /** Gray. */
-        public static final AbsorbedDose.Unit GRAY = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricalCurrent.Unit GRAY = new ElectricalCurrent.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final AbsorbedDose.Unit SI = GRAY;
+        public static final ElectricalCurrent.Unit SI = GRAY;
 
         /** mGy. */
-        public static final AbsorbedDose.Unit MILLIGRAY =
-                new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        public static final ElectricalCurrent.Unit MILLIGRAY =
+                new ElectricalCurrent.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
 
         /** &#181;Gy. */
-        public static final AbsorbedDose.Unit MICROGRAY =
-                new AbsorbedDose.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        public static final ElectricalCurrent.Unit MICROGRAY =
+                new ElectricalCurrent.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
 
         /** erg/g. */
-        public static final AbsorbedDose.Unit ERG_PER_GRAM =
-                new AbsorbedDose.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        public static final ElectricalCurrent.Unit ERG_PER_GRAM =
+                new ElectricalCurrent.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
 
         /** rad. */
-        public static final AbsorbedDose.Unit RAD = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final ElectricalCurrent.Unit RAD = new ElectricalCurrent.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
 
         /**
          * Create a new AbsorbedDose unit.
@@ -214,7 +214,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
                 final Scale scale, final UnitSystem unitSystem)
         {
-            return new AbsorbedDose.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            return new ElectricalCurrent.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
         }
 
     }

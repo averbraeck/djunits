@@ -1,16 +1,14 @@
 package org.djunits.quantity;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * Dimensionless quantity.<br>
@@ -43,7 +41,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
 
     /** Constant with value -MAX_VALUE. */
     public static final Dimensionless NEG_MAXVALUE = Dimensionless.ofSi(-Double.MAX_VALUE);
-    
+
     /** */
     private static final long serialVersionUID = 500L;
 
@@ -73,7 +71,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      */
     public Dimensionless(final Dimensionless value)
     {
-        super(value.si(), Dimensionless.Unit.SI);
+        super(value.si(), Dimensionless.Unit.BASE);
         setDisplayUnit(value.getDisplayUnit());
     }
 
@@ -84,7 +82,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      */
     public static Dimensionless ofSi(final double si)
     {
-        return new Dimensionless(si, Dimensionless.Unit.SI);
+        return new Dimensionless(si, Dimensionless.Unit.BASE);
     }
 
     @Override
@@ -100,9 +98,9 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
     }
 
     /**
-     * Returns a Dimensionless representation of a textual representation of a value with a unit. The String representation that can be
-     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
-     * but not required, between the value and the unit.
+     * Returns a Dimensionless representation of a textual representation of a value with a unit. The String representation that
+     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * allowed, but not required, between the value and the unit.
      * @param text the textual representation to parse into a Dimensionless
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -110,23 +108,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      */
     public static Dimensionless valueOf(final String text)
     {
-        Throw.whenNull(text, "Error parsing Dimensionless: text to parse is null");
-        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing Dimensionless: empty text to parse");
-        try
-        {
-            NumberParser numberParser = new NumberParser().lenient().trailing();
-            double d = numberParser.parseDouble(text);
-            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            Dimensionless.Unit unit = Units.resolve(Dimensionless.Unit.class, unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Dimensionless", unitString);
-            return new Dimensionless(d, unit);
-        }
-        catch (Exception exception)
-        {
-            throw new IllegalArgumentException(
-                    "Error parsing Dimensionless from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
-                    exception);
-        }
+        return Quantity.valueOf(text, ZERO);
     }
 
     /**
@@ -139,11 +121,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      */
     public static Dimensionless of(final double value, final String unitString)
     {
-        Throw.whenNull(unitString, "Error parsing Dimensionless: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Dimensionless: empty unitString");
-        Dimensionless.Unit unit = Units.resolve(Dimensionless.Unit.class, unitString);
-        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Dimensionless with unit %s", unitString);
-        return new Dimensionless(value, unit);
+        return Quantity.of(value, unitString, ZERO);
     }
 
     /**
@@ -153,7 +131,88 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      */
     public final Dimensionless divide(final Dimensionless v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.SI);
+        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of Dimensionless and another quantity, which results in a new instance of the other
+     * quantity. A copy of the parameter v is made, since the display unit of a quantity is mutable.
+     * @param v quantity
+     * @return quantity as a multiplication of Dimensionless and the given quantity
+     * @param <VQ> the variable's quantity type
+     * @param <VU> the variable's unit type
+     */
+    public final <VQ extends Quantity<VQ, VU>, VU extends UnitInterface<VU>> VQ times(final VQ v)
+    {
+        VQ result = v.instantiate(v.si());
+        result.setDisplayUnit(v.getDisplayUnit());
+        return result;
+    }
+
+    /**
+     * Calculate the division of Dimensionless and Length, which results in a LinearDensity scalar.
+     * @param v scalar
+     * @return scalar as a division of Dimensionless and Length
+     */
+    public final LinearDensity divide(final Length v)
+    {
+        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Dimensionless and LinearDensity, which results in a Length scalar.
+     * @param v scalar
+     * @return scalar as a division of Dimensionless and LinearDensity
+     */
+    public final Length divide(final LinearDensity v)
+    {
+        return new Length(this.si() / v.si(), Length.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Dimensionless and Duration, which results in a Frequency scalar.
+     * @param v scalar
+     * @return scalar as a division of Dimensionless and Duration
+     */
+    public final Frequency divide(final Duration v)
+    {
+        return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Dimensionless and Frequency, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of Dimensionless and Frequency
+     */
+    public final Duration divide(final Frequency v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Dimensionless and ElectricalConductance, which results in a ElectricalResistance scalar.
+     * @param v scalar
+     * @return scalar as a division of Dimensionless and ElectricalConductance
+     */
+    public final ElectricalResistance divide(final ElectricalConductance v)
+    {
+        return new ElectricalResistance(this.si() / v.si(), ElectricalResistance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Dimensionless and ElectricalResistance, which results in a ElectricalConductance scalar.
+     * @param v scalar
+     * @return scalar as a division of Dimensionless and ElectricalResistance
+     */
+    public final ElectricalConductance divide(final ElectricalResistance v)
+    {
+        return new ElectricalConductance(this.si() / v.si(), ElectricalConductance.Unit.SI);
+    }
+
+    @Override
+    public Dimensionless reciprocal()
+    {
+        return Dimensionless.ofSi(1.0 / this.si());
     }
 
     /******************************************************************************************************/
@@ -161,7 +220,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
     /******************************************************************************************************/
 
     /**
-     * Dimensionless.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Dimensionless.Unit encodes a unit without dimensions, e.g., to encode a constant.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -174,8 +233,8 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
 
         /** The SI or BASE unit. */
-        public static final Dimensionless.Unit SI = Units.one;
-        
+        public static final Dimensionless.Unit BASE = new Dimensionless.Unit(" ", " ", 1.0, UnitSystem.OTHER);
+
         /**
          * Create a new Dimensionless unit.
          * @param id the id or main abbreviation of the unit
@@ -211,7 +270,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
         @Override
         public Unit getBaseUnit()
         {
-            return Units.one;
+            return BASE;
         }
 
         @Override

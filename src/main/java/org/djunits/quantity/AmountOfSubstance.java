@@ -1,92 +1,95 @@
 package org.djunits.quantity;
 
 import java.util.List;
+import java.util.Locale;
 
+import org.djunits.old.value.vdouble.scalar.CatalyticActivity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
+import org.djutils.base.NumberParser;
+import org.djutils.exceptions.Throw;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * The amount of substance (in mole)<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
-public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.Unit>
+public class AmountOfSubstance extends Quantity.Relative<AmountOfSubstance, AmountOfSubstance.Unit>
 {
     /** Constant with value zero. */
-    public static final AbsorbedDose ZERO = AbsorbedDose.ofSi(0.0);
+    public static final AmountOfSubstance ZERO = AmountOfSubstance.ofSi(0.0);
 
     /** Constant with value one. */
-    public static final AbsorbedDose ONE = AbsorbedDose.ofSi(1.0);
+    public static final AmountOfSubstance ONE = AmountOfSubstance.ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final AbsorbedDose NaN = AbsorbedDose.ofSi(Double.NaN);
+    public static final AmountOfSubstance NaN = AmountOfSubstance.ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final AbsorbedDose POSITIVE_INFINITY = AbsorbedDose.ofSi(Double.POSITIVE_INFINITY);
+    public static final AmountOfSubstance POSITIVE_INFINITY = AmountOfSubstance.ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final AbsorbedDose NEGATIVE_INFINITY = AbsorbedDose.ofSi(Double.NEGATIVE_INFINITY);
+    public static final AmountOfSubstance NEGATIVE_INFINITY = AmountOfSubstance.ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final AbsorbedDose POS_MAXVALUE = AbsorbedDose.ofSi(Double.MAX_VALUE);
+    public static final AmountOfSubstance POS_MAXVALUE = AmountOfSubstance.ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final AbsorbedDose NEG_MAXVALUE = AbsorbedDose.ofSi(-Double.MAX_VALUE);
+    public static final AmountOfSubstance NEG_MAXVALUE = AmountOfSubstance.ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a AmountOfSubstance quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public AbsorbedDose(final double value, final AbsorbedDose.Unit unit)
+    public AmountOfSubstance(final double value, final AmountOfSubstance.Unit unit)
     {
         super(value, unit);
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a AmountOfSubstance quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public AbsorbedDose(final double value, final String abbreviation)
+    public AmountOfSubstance(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(AbsorbedDose.Unit.class, abbreviation));
+        this(value, Units.resolve(AmountOfSubstance.Unit.class, abbreviation));
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct AmountOfSubstance quantity.
      * @param value Scalar from which to construct this instance
      */
-    public AbsorbedDose(final AbsorbedDose value)
+    public AmountOfSubstance(final AmountOfSubstance value)
     {
-        super(value.si(), AbsorbedDose.Unit.SI);
+        super(value.si(), AmountOfSubstance.Unit.SI);
         setDisplayUnit(value.getDisplayUnit());
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a AmountOfSubstance instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the AmountOfSubstance instance based on an SI value
      */
-    public static AbsorbedDose ofSi(final double si)
+    public static AmountOfSubstance ofSi(final double si)
     {
-        return new AbsorbedDose(si, AbsorbedDose.Unit.SI);
+        return new AmountOfSubstance(si, AmountOfSubstance.Unit.SI);
     }
 
     @Override
-    public AbsorbedDose instantiate(final double si)
+    public AmountOfSubstance instantiate(final double si)
     {
         return ofSi(si);
     }
@@ -94,44 +97,64 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
     @Override
     public SIUnit siUnit()
     {
-        return AbsorbedDose.Unit.SI_UNIT;
+        return AmountOfSubstance.Unit.SI_UNIT;
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a AmountOfSubstance representation of a textual representation of a value with a unit. The String representation
+     * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
+     * are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a AmountOfSubstance
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static AbsorbedDose valueOf(final String text)
+    public static AmountOfSubstance valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a AmountOfSubstance based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static AbsorbedDose of(final double value, final String unitString)
+    public static AmountOfSubstance of(final double value, final String unitString)
     {
         return Quantity.of(value, unitString, ZERO);
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
-     * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * Calculate the division of AmountOfSubstance and AmountOfSubstance, which results in a Dimensionless scalar.
+     * @param v scalar
+     * @return scalar as a division of AmountOfSubstance and AmountOfSubstance
      */
-    public final Dimensionless divide(final AbsorbedDose v)
+    public final Dimensionless divide(final AmountOfSubstance v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the division of AmountOfSubstance and CatalyticActivity, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of AmountOfSubstance and CatalyticActivity
+     */
+    public final Duration divide(final CatalyticActivity v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of AmountOfSubstance and Duration, which results in a CatalyticActivity scalar.
+     * @param v scalar
+     * @return scalar as a division of AmountOfSubstance and Duration
+     */
+    public final CatalyticActivity divide(final Duration v)
+    {
+        return new CatalyticActivity(this.si() / v.si(), CatalyticActivity.Unit.SI);
     }
 
     /******************************************************************************************************/
@@ -139,41 +162,35 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * AmountOfSubstance.Unit encodes the units of amount of substance (base unit is mol).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AbsorbedDose.Unit>
+    public static class Unit extends AbstractUnit<AmountOfSubstance.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of AmountOfSubstance: mol [rad, sr, kg, m, s, A, K, mol, cd]. */
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 1, 0});
 
-        /** Gray. */
-        public static final AbsorbedDose.Unit GRAY = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Mole. */
+        public static final AmountOfSubstance.Unit MOLE = new AmountOfSubstance.Unit("mol", "mole", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final AbsorbedDose.Unit SI = GRAY;
+        public static final AmountOfSubstance.Unit SI = MOLE.generateSiPrefixes(false, false);
 
-        /** mGy. */
-        public static final AbsorbedDose.Unit MILLIGRAY =
-                new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        /** mmol. */
+        public static final AmountOfSubstance.Unit MILLIMOLE = Units.resolve(AmountOfSubstance.Unit.class, "mmol");
 
-        /** &#181;Gy. */
-        public static final AbsorbedDose.Unit MICROGRAY =
-                new AbsorbedDose.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        /** &#181;mol. */
+        public static final AmountOfSubstance.Unit MICROMOLE = Units.resolve(AmountOfSubstance.Unit.class, "mumol");
 
-        /** erg/g. */
-        public static final AbsorbedDose.Unit ERG_PER_GRAM =
-                new AbsorbedDose.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final AbsorbedDose.Unit RAD = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** nmol. */
+        public static final AmountOfSubstance.Unit NANOMOLE = Units.resolve(AmountOfSubstance.Unit.class, "nmol");
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new AmountOfSubstance unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
@@ -207,14 +224,14 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
                 final Scale scale, final UnitSystem unitSystem)
         {
-            return new AbsorbedDose.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            return new AmountOfSubstance.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
         }
 
     }

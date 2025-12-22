@@ -154,7 +154,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      */
     public final Dimensionless divide(final Speed v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.SI);
+        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
     /**
@@ -283,13 +283,14 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
     /******************************************************************************************************/
 
     /**
-     * Speed.Unit encodes the units of acceleration (of ionizing radiation).<br>
+     * Speed.Unit encodes the units of speed.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Speed.Unit>
     {
         /** The dimensions of Speed: m/s [rad, sr, kg, m, s, A, K, mol, cd]. */

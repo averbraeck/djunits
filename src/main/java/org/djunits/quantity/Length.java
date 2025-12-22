@@ -153,7 +153,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      */
     public final Dimensionless divide(final Length v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.SI);
+        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
     /**
@@ -163,7 +163,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      */
     public final Dimensionless times(final LinearDensity v)
     {
-        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.SI);
+        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
     }
 
     /**
@@ -274,6 +274,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Length.Unit>
     {
         /** The dimensions of the length: rad, sr, kg, m, s, A, K, mol, cd. */
