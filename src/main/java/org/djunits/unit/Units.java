@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.djunits.quantity.AbsorbedDose;
-import org.djunits.quantity.Acceleration;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.Volume;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.system.UnitSystem;
@@ -42,95 +41,26 @@ public final class Units
     private static final Map<Class<?>, Map<String, UnitInterface<?>>> unitMap = new LinkedHashMap<>();
 
     /** Constant for the foot. */
-    private static final double const_ft = 0.3048;
+    public static final double const_ft = 0.3048;
 
     /** Constant for the yard. */
-    private static final double const_yd = 3.0 * const_ft;
+    public static final double const_yd = 3.0 * const_ft;
 
     /** Constant for the inch. */
-    private static final double const_in = const_ft / 12.0;
+    public static final double const_in = const_ft / 12.0;
 
     /** Constant for the mile. */
-    private static final double const_mi = 5280.0 * const_ft;
+    public static final double const_mi = 5280.0 * const_ft;
 
     /** Constant for the nautical mile. */
-    private static final double const_NM = 1852.0;
+    public static final double const_NM = 1852.0;
 
     // @formatter:off
 
     /** */ private Units() {}
 
-    /* **************************************************************************************** */
-    /* ************************************* ABSORBED DOSE ************************************ */
-    /* **************************************************************************************** */
-
-    /** Gray. */
-    public static final AbsorbedDose.Unit gray = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
-
-    /** mGy. */
-    public static final AbsorbedDose.Unit milligray = 
-            new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-    /** &#181;Gy. */
-    public static final AbsorbedDose.Unit microgray = 
-            new AbsorbedDose.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-    /** erg/g. */
-    public static final AbsorbedDose.Unit erg_per_gram = 
-            new AbsorbedDose.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-    /** rad. */
-    public static final AbsorbedDose.Unit rad = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
-
-    /* **************************************************************************************** */
-    /* ************************************* ACCELERATION ************************************* */
-    /* **************************************************************************************** */
-
-    /** m/s2. */
-    public static final Acceleration.Unit meter_per_second2 = new Acceleration.Unit(List.of("m/s2", "m/s^2", "m/sec2", "m/sec^2"), 
-            "m/s2", "meter per second squared", IdentityScale.SCALE, UnitSystem.SI_BASE);
-
-    /** km/h2. */
-    public static final Acceleration.Unit km_per_hour2 = new Acceleration.Unit(List.of("km/h2", "km/h^2", "km/hour2", "km/hour^2"), 
-            "km/h2", "kilometer per hour squared", new LinearScale(1000.0, 3600.0 * 3600.0), UnitSystem.SI_ACCEPTED);
-
-    /** ft/s2. */
-    public static final Acceleration.Unit foot_per_second2 = new Acceleration.Unit(List.of("ft/s2", "ft/s^2", "foot/sec2", "foot/sec^2"), 
-            "ft/s2", "foot per second squared", new LinearScale(const_ft), UnitSystem.IMPERIAL);
-
-    /** in/s2. */
-    public static final Acceleration.Unit inch_per_second2 = new Acceleration.Unit(List.of("in/s2", "in/s^2", "inch/sec2", "inch/sec^2"), 
-            "in/s2", "inch per second squared", new LinearScale(const_in), UnitSystem.IMPERIAL);
-
-    /** mi/h2. */
-    public static final Acceleration.Unit mile_per_hour2 = new Acceleration.Unit(List.of("mi/h2", "mi/h^2", "mile/hour2", "mile/hour^2"), 
-            "mi/h2", "mile per hour squared", new LinearScale(const_mi, 3600.0 * 3600.0), UnitSystem.IMPERIAL);
-
-    /** mi/s2. */
-    public static final Acceleration.Unit mile_per_second2 = new Acceleration.Unit(List.of("mi/s2", "mi/s^2", "mile/sec2", "mile/sec^2"), 
-            "mi/s2", "mile per second squared", new LinearScale(const_mi), UnitSystem.IMPERIAL);
-
-    /** kt/s = Nautical Mile / h / s. */
-    public static final Acceleration.Unit knot_per_second = new Acceleration.Unit(List.of("kt/s", "kt/sec", "knot/s", "knot/sec"), 
-            "kt/s", "knot per second", new LinearScale(const_NM, 3600.0), UnitSystem.OTHER);
-
-    /** mi/h/s. */
-    public static final Acceleration.Unit mile_per_hour_per_second = 
-            new Acceleration.Unit(List.of("mi/h/s", "mi/hr/sec", "mile/hour/sec"), 
-            "mi/h/s", "mile per hour per second", new LinearScale(const_mi, 3600.0), UnitSystem.IMPERIAL);
-
-    /** The standard gravity. */
-    public static final Acceleration.Unit standard_gravity = new Acceleration.Unit("g", "standard gravity", 9.80665, UnitSystem.OTHER);
-
-    /** Gal or cm/s. */
-    public static final Acceleration.Unit gal = new Acceleration.Unit("Gal", "gal", 0.01, UnitSystem.CGS);
-
-    /* **************************************************************************************** */
-    /* ************************************* DIMENSIONLESS ************************************ */
-    /* **************************************************************************************** */
-
     /** The dimensionless unit has a blank unit symbol. */ 
-    public static final Dimensionless.Unit one = new Dimensionless.Unit("", "", 1.0, UnitSystem.OTHER); 
+    public static final Dimensionless.Unit one = new Dimensionless.Unit(" ", " ", 1.0, UnitSystem.OTHER); 
 
     /* **************************************************************************************** */
     /* **************************************** LENGTH **************************************** */
@@ -243,6 +173,25 @@ public final class Units
 
     /** knot = Nautical Mile per hour. */
     public static final Speed.Unit knot = new Speed.Unit("kt", "knot", const_NM / 3600.0, UnitSystem.OTHER);
+
+    /* **************************************************************************************** */
+    /* **************************************** VOLUME **************************************** */
+    /* **************************************************************************************** */
+    
+    /** */ public static final Volume.Unit m3 = 
+            new Volume.Unit(List.of("m^3", "m3"), "m^3", "cubic meter", IdentityScale.SCALE, UnitSystem.SI_BASE);
+    /** */ public static final Volume.Unit cubic_meter = m3.generateSiPrefixes(false, false);
+    /** */ public static final Volume.Unit dam3 = resolve(Volume.Unit.class, "dam^3");
+    /** */ public static final Volume.Unit hm3 = resolve(Volume.Unit.class, "hm^3");
+    /** */ public static final Volume.Unit km3 = resolve(Volume.Unit.class, "km^3");
+    /** */ public static final Volume.Unit dm3 = resolve(Volume.Unit.class, "dm^3");
+    /** */ public static final Volume.Unit cm3 = resolve(Volume.Unit.class, "cm^3");
+    /** */ public static final Volume.Unit mm3 = resolve(Volume.Unit.class, "mm^3");
+    /** */ public static final Volume.Unit mum3 = resolve(Volume.Unit.class, "mum^3");
+    /** */ public static final Volume.Unit nm3 = resolve(Volume.Unit.class, "nm^3");
+    /** */ public static final Volume.Unit pm3 = resolve(Volume.Unit.class, "pm^3");
+    /** */ public static final Volume.Unit am3 = resolve(Volume.Unit.class, "am^3");
+    /** */ public static final Volume.Unit fm3 = resolve(Volume.Unit.class, "fm^3");
 
     
     
