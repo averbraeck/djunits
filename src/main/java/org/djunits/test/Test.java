@@ -1,5 +1,6 @@
 package org.djunits.test;
 
+import org.djunits.quantity.AbsoluteTemperature;
 import org.djunits.quantity.Length;
 import org.djunits.unit.Units;
 
@@ -16,12 +17,12 @@ public final class Test
     /** */
     private Test()
     {
+        // length();
+        temp();
     }
 
-    /**
-     * @param args not used
-     */
-    public static void main(final String[] args)
+    /** */
+    private void length()
     {
         Length length = new Length(5.0, Units.m);
         System.out.println(length);
@@ -38,6 +39,23 @@ public final class Test
         System.out.println(l4);
         System.out.println(l4.plus(length));
         System.out.println(length.plus(l4));
+    }
+    
+    /** */
+    private void temp()
+    {
+        System.out.println("Temperature");
+        var t1 = AbsoluteTemperature.valueOf("10 degC");
+        System.out.println(t1 + "  si=" + t1.si());
+        System.out.println(AbsoluteTemperature.of(10, "K"));
+    }
+    
+    /**
+     * @param args not used
+     */
+    public static void main(final String[] args)
+    {
+        new Test();
     }
 
 }
