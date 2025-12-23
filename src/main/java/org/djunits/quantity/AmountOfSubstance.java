@@ -1,17 +1,13 @@
 package org.djunits.quantity;
 
 import java.util.List;
-import java.util.Locale;
 
-import org.djunits.old.value.vdouble.scalar.CatalyticActivity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * The amount of substance (in mole)<br>

@@ -1,22 +1,13 @@
 package org.djunits.quantity;
 
 import java.util.List;
-import java.util.Locale;
 
-import org.djunits.old.value.vdouble.scalar.FlowVolume;
-import org.djunits.old.value.vdouble.scalar.Force;
-import org.djunits.old.value.vdouble.scalar.Illuminance;
-import org.djunits.old.value.vdouble.scalar.LinearDensity;
-import org.djunits.old.value.vdouble.scalar.LuminousFlux;
-import org.djunits.old.value.vdouble.scalar.Pressure;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * Area as a length x length. <br>
@@ -267,10 +258,10 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
         public static final Area.Unit SQUARE_DM = DM2;
 
         /** Square centimeter. */
-        public static final Area.Unit cm2 = Units.resolve(Area.Unit.class, "cm^2");
+        public static final Area.Unit CM2 = Units.resolve(Area.Unit.class, "cm^2");
 
         /** Square centimeter. */
-        public static final Area.Unit square_cm = cm2;
+        public static final Area.Unit SQUARE_CM = CM2;
 
         /** Square millimeter. */
         public static final Area.Unit MM2 = Units.resolve(Area.Unit.class, "mm^2");

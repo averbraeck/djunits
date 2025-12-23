@@ -10,14 +10,13 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Catalytic Activty relates to the speed of a chemical reaction (using catalysts), and is expressed in mol/s.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, CatalyticActivity.Unit>
 {
     /** Constant with value zero. */
@@ -46,7 +45,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a CatalyticActivity quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +55,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a CatalyticActivity quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +65,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct CatalyticActivity quantity.
      * @param value Scalar from which to construct this instance
      */
     public CatalyticActivity(final CatalyticActivity value)
@@ -76,9 +75,9 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a CatalyticActivity instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the CatalyticActivity instance based on an SI value
      */
     public static CatalyticActivity ofSi(final double si)
     {
@@ -98,10 +97,10 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a CatalyticActivity representation of a textual representation of a value with a unit. The String representation
+     * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
+     * are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a CatalyticActivity
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +111,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a CatalyticActivity based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,13 +124,43 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of CatalyticActivity and CatalyticActivity, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of CatalyticActivity and CatalyticActivity
      */
     public final Dimensionless divide(final CatalyticActivity v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of CatalyticActivity and Duration, which results in a AmountOfSubstance scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of CatalyticActivity and Duration
+     */
+    public final AmountOfSubstance times(final Duration v)
+    {
+        return new AmountOfSubstance(this.si() * v.si(), AmountOfSubstance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of CatalyticActivity and AmountOfSubstance, which results in a Frequency scalar.
+     * @param v scalar
+     * @return scalar as a division of CatalyticActivity and AmountOfSubstance
+     */
+    public final Frequency divide(final AmountOfSubstance v)
+    {
+        return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of CatalyticActivity and Frequency, which results in a AmountOfSubstance scalar.
+     * @param v scalar
+     * @return scalar as a division of CatalyticActivity and Frequency
+     */
+    public final AmountOfSubstance divide(final Frequency v)
+    {
+        return new AmountOfSubstance(this.si() / v.si(), AmountOfSubstance.Unit.SI);
     }
 
     /******************************************************************************************************/
@@ -139,7 +168,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * CatalyticActivity.Unit encodes the units of the speed of a chamical reaction, and is expressed in mol/s.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,32 +177,27 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
      */
     public static class Unit extends AbstractUnit<CatalyticActivity.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of catalytic activity: mol/s [rad, sr, kg, m, s, A, K, mol, cd]. */
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, -1, 0, 0, 1, 0});
 
-        /** Gray. */
-        public static final CatalyticActivity.Unit GRAY = new CatalyticActivity.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** katal. */
+        public static final CatalyticActivity.Unit KATAL =
+                new CatalyticActivity.Unit("kat", "katal", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final CatalyticActivity.Unit SI = GRAY;
+        public static final CatalyticActivity.Unit SI = KATAL.generateSiPrefixes(false, false);
 
-        /** mGy. */
-        public static final CatalyticActivity.Unit MILLIGRAY =
-                new CatalyticActivity.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        /** mkat. */
+        public static final CatalyticActivity.Unit MILLIKATAL = Units.resolve(CatalyticActivity.Unit.class, "mkat");
 
-        /** &#181;Gy. */
-        public static final CatalyticActivity.Unit MICROGRAY =
-                new CatalyticActivity.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        /** &#181;kat. */
+        public static final CatalyticActivity.Unit MICROKATAL = Units.resolve(CatalyticActivity.Unit.class, "mukat");
 
-        /** erg/g. */
-        public static final CatalyticActivity.Unit ERG_PER_GRAM =
-                new CatalyticActivity.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final CatalyticActivity.Unit RAD = new CatalyticActivity.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** nkat. */
+        public static final CatalyticActivity.Unit NANOKATAL = Units.resolve(CatalyticActivity.Unit.class, "nkat");
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new CatalyticActivity unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
@@ -207,7 +231,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override

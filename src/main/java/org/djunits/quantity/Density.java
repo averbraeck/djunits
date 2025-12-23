@@ -4,20 +4,20 @@ import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Density quantity based on mass per volume.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class Density extends Quantity.Relative<Density, Density.Unit>
 {
     /** Constant with value zero. */
@@ -46,7 +46,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a Density quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +56,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a Density quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +66,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct Density quantity.
      * @param value Scalar from which to construct this instance
      */
     public Density(final Density value)
@@ -76,9 +76,9 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a Density instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the Density instance based on an SI value
      */
     public static Density ofSi(final double si)
     {
@@ -98,10 +98,10 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * Returns a Density representation of a textual representation of a value with a unit. The String representation that can
+     * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a Density
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +112,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a Density based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,13 +125,33 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of Density and Density, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of Density and Density
      */
     public final Dimensionless divide(final Density v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of Density and Volume, which results in a Mass scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Density and Volume
+     */
+    public final Mass times(final Volume v)
+    {
+        return new Mass(this.si() * v.si(), Mass.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Density and FlowVolume, which results in a FlowMass scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Density and FlowVolume
+     */
+    public final FlowMass times(final FlowVolume v)
+    {
+        return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
     }
 
     /******************************************************************************************************/
@@ -139,7 +159,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Density.Unit encodes the units of density based on mass per volume.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,32 +168,22 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
      */
     public static class Unit extends AbstractUnit<Density.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the absorbed dose: kg/m3 [rad, sr, kg, m, s, A, K, mol, cd]. */
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 1, -3, 0, 0, 0, 0, 0});
 
-        /** Gray. */
-        public static final Density.Unit GRAY = new Density.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** kg/m^3. */
+        public static final Density.Unit KG_PER_METER_3 = new Density.Unit(List.of("kg/m3", "kg/m^3"), "kg/m3",
+                "kilogram per cubic meter", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Density.Unit SI = GRAY;
+        public static final Density.Unit SI = KG_PER_METER_3;
 
-        /** mGy. */
-        public static final Density.Unit MILLIGRAY =
-                new Density.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final Density.Unit MICROGRAY =
-                new Density.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final Density.Unit ERG_PER_GRAM =
-                new Density.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final Density.Unit RAD = new Density.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** g/cm^3. */
+        public static final Density.Unit GRAM_PER_CENTIMETER_3 = KG_PER_METER_3.deriveUnit(List.of("g/cm3", "g/cm^3"), "g/cm3",
+                "gram per cubic centimeter", new LinearScale(1.0E3), UnitSystem.SI_DERIVED);
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new Density unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
@@ -207,7 +217,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override

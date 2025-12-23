@@ -1,12 +1,7 @@
 package org.djunits.quantity;
 
 import java.util.List;
-import java.util.Locale;
 
-import org.djunits.old.value.vdouble.scalar.Force;
-import org.djunits.old.value.vdouble.scalar.Mass;
-import org.djunits.old.value.vdouble.scalar.Momentum;
-import org.djunits.old.value.vdouble.scalar.Power;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.IdentityScale;
@@ -14,8 +9,6 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * Standard acceleration unit based on distance and time.<br>

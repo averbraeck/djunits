@@ -165,6 +165,18 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
 
+    /**
+     * Add this (relative) angle to an (absolute) direction.
+     * @param v the angle value
+     * @return this direction, increased by the Angle value
+     */
+    public Direction plus(final Direction v)
+    {
+        Direction result = Direction.ofSi(si() + v.si());
+        result.setDisplayUnit(v.getDisplayUnit());
+        return result;
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/

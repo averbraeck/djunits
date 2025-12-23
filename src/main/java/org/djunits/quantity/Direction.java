@@ -5,20 +5,23 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
+import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Direction encodes an absolute angle, such as EAST (0 degrees) or North (90 degrees). A counter-clockwise rotation is used.
+ * Several conversion factors have been taken from
+ * <a href="http://en.wikipedia.org/wiki/Conversion_of_units">http://en.wikipedia.org/wiki/Conversion_of_units</a>. <br>
  * <br>
+ * Note that the EAST and NORTH Directions are <b>counter</b>clockwise. * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
-public class Direction extends Quantity.Relative<Direction, Direction.Unit>
+public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
 {
     /** Constant with value zero. */
     public static final Direction ZERO = Direction.ofSi(0.0);
@@ -46,7 +49,7 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a Direction quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +59,7 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a Direction quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,23 +69,23 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct Direction quantity.
      * @param value Scalar from which to construct this instance
      */
     public Direction(final Direction value)
     {
-        super(value.si(), Direction.Unit.SI);
+        super(value.si(), Direction.Unit.DEFAULT);
         setDisplayUnit(value.getDisplayUnit());
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a Direction instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the Direction instance based on an SI value
      */
     public static Direction ofSi(final double si)
     {
-        return new Direction(si, Direction.Unit.SI);
+        return new Direction(si, Direction.Unit.DEFAULT);
     }
 
     @Override
@@ -98,10 +101,10 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * Returns a Direction representation of a textual representation of a value with a unit. The String representation that can
+     * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a Direction
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +115,7 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a Direction based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,13 +128,37 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of Direction and Direction, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of Direction and Direction
      */
-    public final Dimensionless divide(final Direction v)
+    public Dimensionless divide(final Direction v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Add a (relative) angle to this (absolute) direction.
+     * @param v the angle value
+     * @return this direction, increased by the Angle value
+     */
+    public Direction plus(final Angle v)
+    {
+        Direction result = ofSi(si() + v.si());
+        result.setDisplayUnit(getDisplayUnit());
+        return result;
+    }
+
+    /**
+     * Subtract a (relative) angle from this (absolute) direction.
+     * @param v the angle value
+     * @return this direction, recreased by the Angle value
+     */
+    public Direction minus(final Angle v)
+    {
+        Direction result = ofSi(si() - v.si());
+        result.setDisplayUnit(getDisplayUnit());
+        return result;
     }
 
     /******************************************************************************************************/
@@ -139,7 +166,7 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Direction.Unit encodes the units for (absolute) directions.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,32 +175,30 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
      */
     public static class Unit extends AbstractUnit<Direction.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of direction: rad [rad, sr, kg, m, s, A, K, mol, cd]. */
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {1, 0, 0, 0, 0, 0, 0, 0, 0});
 
-        /** Gray. */
-        public static final Direction.Unit GRAY = new Direction.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** The unit for direction with East as the origin and radians as the displacement. */
+        public static final Direction.Unit EAST_RADIAN = new Direction.Unit(List.of("rad(E)"), "rad(E)", "radians (East)",
+                new OffsetLinearScale(1.0, 0.0), UnitSystem.OTHER);
 
-        /** The SI or BASE unit. */
-        public static final Direction.Unit SI = GRAY;
+        /** The default unit for direction is East_Radian. */
+        public static final Direction.Unit DEFAULT = EAST_RADIAN;
 
-        /** mGy. */
-        public static final Direction.Unit MILLIGRAY =
-                new Direction.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        /** The unit for direction with East as the origin and degrees as the displacement. */
+        public static final Direction.Unit EAST_DEGREE = new Direction.Unit(List.of("deg(E)"), "\u00b0(E)", "degrees (East)",
+                new OffsetLinearScale(Math.PI / 180.0, 0.0), UnitSystem.OTHER);
 
-        /** &#181;Gy. */
-        public static final Direction.Unit MICROGRAY =
-                new Direction.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        /** The unit for direction with North as the origin and radians as the displacement. */
+        public static final Direction.Unit NORTH_RADIAN = new Direction.Unit(List.of("rad(N)"), "rad(N)", "radians (North)",
+                new OffsetLinearScale(1.0, Math.PI / 2.0), UnitSystem.OTHER);
 
-        /** erg/g. */
-        public static final Direction.Unit ERG_PER_GRAM =
-                new Direction.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final Direction.Unit RAD = new Direction.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** The unit for direction with North as the origin and degrees as the displacement. */
+        public static final Direction.Unit NORTH_DEGREE = new Direction.Unit(List.of("deg(N)"), "\u00b0(N)", "degrees (North)",
+                new OffsetLinearScale(Math.PI / 180.0, 90.0), UnitSystem.OTHER);
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new Direction unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
@@ -207,7 +232,7 @@ public class Direction extends Quantity.Relative<Direction, Direction.Unit>
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return DEFAULT;
         }
 
         @Override

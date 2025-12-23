@@ -101,8 +101,8 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
     }
 
     /**
-     * Returns a Duration representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * Returns a Duration representation of a textual representation of a value with a unit. The String representation that can
+     * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
      * @param text the textual representation to parse into a Duration
      * @return the Scalar representation of the value in its unit
@@ -278,7 +278,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
     /******************************************************************************************************/
 
     /**
-     * Duration.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Duration.Unit encodes the units of relative time.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -291,8 +291,36 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
         /** The dimensions of duration: s [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 1, 0, 0, 0, 0});
 
+        /** second. */
+        public static final Duration.Unit SECOND = new Duration.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
+
         /** The SI or BASE unit. */
-        public static final Duration.Unit SI = Units.s;
+        public static final Duration.Unit SI = SECOND.generateSiPrefixes(false, false);
+
+        /** picosecond. */
+        public static final Duration.Unit PICOSECOND = Units.resolve(Duration.Unit.class, "ps");
+
+        /** nanosecond. */
+        public static final Duration.Unit NANOSECOND = Units.resolve(Duration.Unit.class, "ns");
+
+        /** microsecond. */
+        public static final Duration.Unit MICROSECOND = Units.resolve(Duration.Unit.class, "mus");
+
+        /** millisecond. */
+        public static final Duration.Unit MILLISECOND = Units.resolve(Duration.Unit.class, "ms");
+
+        /** minute. */
+        public static final Duration.Unit MINUTE =
+                SECOND.deriveUnit("min", "minute", new LinearScale(60.0), UnitSystem.SI_ACCEPTED);
+
+        /** hour. */
+        public static final Duration.Unit HOUR = MINUTE.deriveUnit("h", "hour", new LinearScale(60.0), UnitSystem.SI_ACCEPTED);
+
+        /** day. */
+        public static final Duration.Unit DAY = HOUR.deriveUnit("day", "day", new LinearScale(24.0), UnitSystem.OTHER);
+
+        /** week. */
+        public static final Duration.Unit WEEK = DAY.deriveUnit("wk", "week", new LinearScale(7.0), UnitSystem.OTHER);
 
         /**
          * Create a new Duration unit.
