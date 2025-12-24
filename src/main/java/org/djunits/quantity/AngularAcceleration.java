@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
@@ -192,32 +193,32 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
         /** degree per second squared. */
         public static final AngularAcceleration.Unit DEGREE_PER_SECOND_SQUARED =
                 RADIAN_PER_SECOND_SQUARED.deriveUnit(List.of("deg/s2", "dg/s2", "dg/sec2", "deg/sec2"), "\u00b0/s2",
-                        "degree per second squared", new LinearScale(Math.PI / 180.0), UnitSystem.SI_ACCEPTED);
+                        "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second squared. */
         public static final AngularAcceleration.Unit ARCMINUTE_PER_SECOND_SQUARED =
                 DEGREE_PER_SECOND_SQUARED.deriveUnit(List.of("'/s2", "'/sec2", "arcmin/s2", "arcmin/sec2"), "'/s2",
-                        "arcminute per second squared", new LinearScale(1.0 / 60.0), UnitSystem.OTHER);
+                        "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second squared. */
         public static final AngularAcceleration.Unit ARCSECOND_PER_SECOND_SQUARED =
                 DEGREE_PER_SECOND_SQUARED.deriveUnit(List.of("\"/s2", "\"/sec2", "arcsec/s2", "arcsec/sec2"), "\"/s2",
-                        "arcsecond per second squared", new LinearScale(1.0 / 3600.0), UnitSystem.OTHER);
+                        "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second squared. */
         public static final AngularAcceleration.Unit GRAD_PER_SECOND_SQUARED =
                 RADIAN_PER_SECOND_SQUARED.deriveUnit(List.of("grad/s2", "grad/sec2"), "grad/s2", "gradian per second squared",
-                        new LinearScale(2.0 * Math.PI / 400.0), UnitSystem.OTHER);
+                        2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second squared. */
         public static final AngularAcceleration.Unit CENTESIMAL_ARCMINUTE_PER_SECOND_SQUARED =
                 GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c'/s2", "c'/sec2", "cdm/s2", "cdm/sec2"), "c'/s2",
-                        "centesimal arcminute per second squared", new LinearScale(1.0 / 100.0), UnitSystem.OTHER);
+                        "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second squared. */
         public static final AngularAcceleration.Unit CENTESIMAL_ARCSECOND_PER_SECOND_SQUARED =
                 GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c\"/s2", "c\"/sec2", "cds/s2", "cds/sec2"), "c\"/s2",
-                        "centesimal arcsecond per second squared", new LinearScale(1.0 / 10000.0), UnitSystem.OTHER);
+                        "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new AngularAcceleration unit.
@@ -259,9 +260,14 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new AngularAcceleration.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new AngularAcceleration.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

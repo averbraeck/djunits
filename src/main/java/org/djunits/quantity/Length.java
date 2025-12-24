@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -43,7 +44,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
     /** Constant with value -MAX_VALUE. */
     public static final Length NEG_MAXVALUE = Length.ofSi(-Double.MAX_VALUE);
-    
+
     /** */
     private static final long serialVersionUID = 500L;
 
@@ -259,7 +260,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     @Override
     public LinearDensity reciprocal()
     {
-        return LinearDensity.ofSI(1.0 / this.si());
+        return LinearDensity.ofSi(1.0 / this.si());
     }
 
     /******************************************************************************************************/
@@ -282,7 +283,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** The SI or BASE unit. */
         public static final Length.Unit SI = Units.meter;
-        
+
         /**
          * Create a new length unit.
          * @param id the id or main abbreviation of the unit
@@ -323,9 +324,14 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new Length.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new Length.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

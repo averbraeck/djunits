@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -310,17 +311,16 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
         public static final Duration.Unit MILLISECOND = Units.resolve(Duration.Unit.class, "ms");
 
         /** minute. */
-        public static final Duration.Unit MINUTE =
-                SECOND.deriveUnit("min", "minute", new LinearScale(60.0), UnitSystem.SI_ACCEPTED);
+        public static final Duration.Unit MINUTE = SECOND.deriveUnit("min", "minute", 60.0, UnitSystem.SI_ACCEPTED);
 
         /** hour. */
-        public static final Duration.Unit HOUR = MINUTE.deriveUnit("h", "hour", new LinearScale(60.0), UnitSystem.SI_ACCEPTED);
+        public static final Duration.Unit HOUR = MINUTE.deriveUnit("h", "hour", 60.0, UnitSystem.SI_ACCEPTED);
 
         /** day. */
-        public static final Duration.Unit DAY = HOUR.deriveUnit("day", "day", new LinearScale(24.0), UnitSystem.OTHER);
+        public static final Duration.Unit DAY = HOUR.deriveUnit("day", "day", 24.0, UnitSystem.OTHER);
 
         /** week. */
-        public static final Duration.Unit WEEK = DAY.deriveUnit("wk", "week", new LinearScale(7.0), UnitSystem.OTHER);
+        public static final Duration.Unit WEEK = DAY.deriveUnit("wk", "week", 7.0, UnitSystem.OTHER);
 
         /**
          * Create a new Duration unit.
@@ -362,9 +362,14 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new Duration.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new Duration.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

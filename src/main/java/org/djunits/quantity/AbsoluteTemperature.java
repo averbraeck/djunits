@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
@@ -147,20 +148,22 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
         public static final AbsoluteTemperature.Unit SI = KELVIN.generateSiPrefixes(false, false);
 
         /** Degree Celsius. */
-        public static final AbsoluteTemperature.Unit DEGREE_CELSIUS = KELVIN.deriveUnit(List.of("dgC", "degC", "C"), "\u00B0C",
-                "degree Celsius", new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
+        public static final AbsoluteTemperature.Unit DEGREE_CELSIUS = new AbsoluteTemperature.Unit(List.of("dgC", "degC", "C"),
+                "\u00B0C", "degree Celsius", new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
 
         /** Degree Fahrenheit. */
-        public static final AbsoluteTemperature.Unit DEGREE_FAHRENHEIT = KELVIN.deriveUnit(List.of("dgF", "degF", "F"),
-                "\u00B0F", "degree Fahrenheit", new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
+        public static final AbsoluteTemperature.Unit DEGREE_FAHRENHEIT =
+                new AbsoluteTemperature.Unit(List.of("dgF", "degF", "F"), "\u00B0F", "degree Fahrenheit",
+                        new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
 
         /** Degree Rankine. */
-        public static final AbsoluteTemperature.Unit DEGREE_RANKINE = KELVIN.deriveUnit(List.of("dgR", "degR", "R"), "\u00B0R",
-                "degree Rankine", new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
+        public static final AbsoluteTemperature.Unit DEGREE_RANKINE = new AbsoluteTemperature.Unit(List.of("dgR", "degR", "R"),
+                "\u00B0R", "degree Rankine", new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
 
         /** Degree Reaumur. */
-        public static final AbsoluteTemperature.Unit DEGREE_REAUMUR = KELVIN.deriveUnit(List.of("dgRe", "degRe", "Re"),
-                "\u00B0R\u00E9", "degree Reaumur", new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
+        public static final AbsoluteTemperature.Unit DEGREE_REAUMUR =
+                new AbsoluteTemperature.Unit(List.of("dgRe", "degRe", "Re"), "\u00B0R\u00E9", "degree Reaumur",
+                        new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
 
         /**
          * Create a new AbsoluteTemperature unit.
@@ -202,9 +205,14 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new AbsoluteTemperature.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new AbsoluteTemperature.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

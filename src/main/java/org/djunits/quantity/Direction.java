@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.OffsetLinearScale;
@@ -237,9 +238,14 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new Direction.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new Direction.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -101,8 +102,8 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
     }
 
     /**
-     * Returns a Frequency representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * Returns a Frequency representation of a textual representation of a value with a unit. The String representation that can
+     * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
      * @param text the textual representation to parse into a Frequency
      * @return the Scalar representation of the value in its unit
@@ -241,8 +242,11 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
         /** The dimensions of frequency: /s [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, -1, 0, 0, 0, 0});
 
+        /** hertz. */
+        public static final Frequency.Unit HERTZ = new Frequency.Unit("Hz", "hertz", 1.0, UnitSystem.SI_DERIVED);
+
         /** The SI or BASE unit. */
-        public static final Frequency.Unit SI = Units.Hz;
+        public static final Frequency.Unit SI = HERTZ;
 
         /**
          * Create a new Frequency unit.
@@ -284,9 +288,14 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new Frequency.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new Frequency.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

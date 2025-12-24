@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -158,16 +159,14 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
         public static final Time.Unit SI = GRAY;
 
         /** mGy. */
-        public static final Time.Unit MILLIGRAY =
-                new Time.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        public static final Time.Unit MILLIGRAY = new Time.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
 
         /** &#181;Gy. */
         public static final Time.Unit MICROGRAY =
                 new Time.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
 
         /** erg/g. */
-        public static final Time.Unit ERG_PER_GRAM =
-                new Time.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        public static final Time.Unit ERG_PER_GRAM = new Time.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
 
         /** rad. */
         public static final Time.Unit RAD = new Time.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
@@ -207,14 +206,19 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new Time.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new Time.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

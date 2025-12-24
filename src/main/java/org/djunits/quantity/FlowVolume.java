@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -158,16 +159,14 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
         public static final FlowVolume.Unit SI = GRAY;
 
         /** mGy. */
-        public static final FlowVolume.Unit MILLIGRAY =
-                new FlowVolume.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        public static final FlowVolume.Unit MILLIGRAY = new FlowVolume.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
 
         /** &#181;Gy. */
         public static final FlowVolume.Unit MICROGRAY =
                 new FlowVolume.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
 
         /** erg/g. */
-        public static final FlowVolume.Unit ERG_PER_GRAM =
-                new FlowVolume.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        public static final FlowVolume.Unit ERG_PER_GRAM = new FlowVolume.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
 
         /** rad. */
         public static final FlowVolume.Unit RAD = new FlowVolume.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
@@ -207,14 +206,19 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new FlowVolume.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new FlowVolume.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

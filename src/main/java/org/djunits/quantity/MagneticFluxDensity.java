@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -152,7 +153,8 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
 
         /** Gray. */
-        public static final MagneticFluxDensity.Unit GRAY = new MagneticFluxDensity.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final MagneticFluxDensity.Unit GRAY =
+                new MagneticFluxDensity.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final MagneticFluxDensity.Unit SI = GRAY;
@@ -162,8 +164,8 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
                 new MagneticFluxDensity.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
 
         /** &#181;Gy. */
-        public static final MagneticFluxDensity.Unit MICROGRAY =
-                new MagneticFluxDensity.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        public static final MagneticFluxDensity.Unit MICROGRAY = new MagneticFluxDensity.Unit(List.of("muGy"), "\u03BCGy",
+                "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
 
         /** erg/g. */
         public static final MagneticFluxDensity.Unit ERG_PER_GRAM =
@@ -207,14 +209,19 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new MagneticFluxDensity.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new MagneticFluxDensity.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

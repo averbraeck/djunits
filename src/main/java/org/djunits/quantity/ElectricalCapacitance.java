@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -10,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * ElectricalCapacitance quantity.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -46,7 +47,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a ElectricalCapacitance quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +57,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a ElectricalCapacitance quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +67,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct ElectricalCapacitance quantity.
      * @param value Scalar from which to construct this instance
      */
     public ElectricalCapacitance(final ElectricalCapacitance value)
@@ -76,9 +77,9 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a ElectricalCapacitance instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the ElectricalCapacitance instance based on an SI value
      */
     public static ElectricalCapacitance ofSi(final double si)
     {
@@ -98,10 +99,10 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a ElectricalCapacitance representation of a textual representation of a value with a unit. The String
+     * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
+     * unit. Spaces are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a ElectricalCapacitance
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +113,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a ElectricalCapacitance based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,9 +126,9 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of ElectricalCapacitance and ElectricalCapacitance, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of ElectricalCapacitance and ElectricalCapacitance
      */
     public final Dimensionless divide(final ElectricalCapacitance v)
     {
@@ -139,7 +140,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * ElectricalCapacitance.Unit encodes the units of capacitance (in farad).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,32 +149,18 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
      */
     public static class Unit extends AbstractUnit<ElectricalCapacitance.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of electrical capacitance: s^4.A^2/kg.m^2 [rad, sr, kg, m, s, A, K, mol, cd]. */
+        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, -1, -2, 4, 2, 0, 0, 0});
 
-        /** Gray. */
-        public static final ElectricalCapacitance.Unit GRAY = new ElectricalCapacitance.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** farad. */
+        public static final ElectricalCapacitance.Unit FARAD =
+                new ElectricalCapacitance.Unit("F", "farad", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalCapacitance.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final ElectricalCapacitance.Unit MILLIGRAY =
-                new ElectricalCapacitance.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final ElectricalCapacitance.Unit MICROGRAY =
-                new ElectricalCapacitance.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final ElectricalCapacitance.Unit ERG_PER_GRAM =
-                new ElectricalCapacitance.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final ElectricalCapacitance.Unit RAD = new ElectricalCapacitance.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final ElectricalCapacitance.Unit SI = FARAD;
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new ElectricalCapacitance unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
@@ -207,14 +194,19 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new ElectricalCapacitance.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new ElectricalCapacitance.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }

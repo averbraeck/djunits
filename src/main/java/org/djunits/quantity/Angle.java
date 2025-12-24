@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.GradeScale;
 import org.djunits.unit.scale.IdentityScale;
@@ -206,28 +207,27 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
                 new Angle.Unit(List.of("%", "percent"), "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
 
         /** degree. */
-        public static final Angle.Unit DEGREE = RADIAN.deriveUnit(List.of("deg", "dg"), "\u00b0", "degree",
-                new LinearScale(Math.PI / 180.0), UnitSystem.SI_ACCEPTED);
+        public static final Angle.Unit DEGREE =
+                RADIAN.deriveUnit(List.of("deg", "dg"), "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute. */
         public static final Angle.Unit ARCMINUTE =
-                DEGREE.deriveUnit(List.of("'", "arcmin"), "'", "arcminute", new LinearScale(1.0 / 60.0), UnitSystem.OTHER);
+                DEGREE.deriveUnit(List.of("'", "arcmin"), "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond. */
         public static final Angle.Unit ARCSECOND =
-                DEGREE.deriveUnit(List.of("\"", "arcsec"), "\"", "arcsecond", new LinearScale(1.0 / 3600.0), UnitSystem.OTHER);
+                DEGREE.deriveUnit(List.of("\"", "arcsec"), "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad. */
-        public static final Angle.Unit GRAD =
-                RADIAN.deriveUnit("grad", "gradian", new LinearScale(2.0 * Math.PI / 400.0), UnitSystem.OTHER);
+        public static final Angle.Unit GRAD = RADIAN.deriveUnit("grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute. */
-        public static final Angle.Unit CENTESIMAL_ARCMINUTE = GRAD.deriveUnit(List.of("c'", "cdm"), "c'",
-                "centesimal arcminute", new LinearScale(1.0 / 100.0), UnitSystem.OTHER);
+        public static final Angle.Unit CENTESIMAL_ARCMINUTE =
+                GRAD.deriveUnit(List.of("c'", "cdm"), "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond. */
-        public static final Angle.Unit CENTESIMAL_ARCSECOND = GRAD.deriveUnit(List.of("c\"", "cds"), "c\"",
-                "centesimal arcsecond", new LinearScale(1.0 / 10000.0), UnitSystem.OTHER);
+        public static final Angle.Unit CENTESIMAL_ARCSECOND =
+                GRAD.deriveUnit(List.of("c\"", "cds"), "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new Angle unit.
@@ -269,9 +269,14 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
 
         @Override
         public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+                final double scaleFactor, final UnitSystem unitSystem)
         {
-            return new Angle.Unit(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            if (getScale() instanceof LinearScale ls)
+            {
+                return new Angle.Unit(textualAbbreviations, displayAbbreviation, name,
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+            }
+            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
