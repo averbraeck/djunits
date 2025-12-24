@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
@@ -135,7 +134,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
                 {
                     deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation()),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation(), sip.getPrefixName() + getName(),
-                            new LinearScale(sip.getFactor()), getUnitSystem());
+                            sip.getFactor(), getUnitSystem());
                 }
             }
             else
@@ -144,7 +143,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
                 {
                     deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getName().substring(4), new LinearScale(sip.getFactor()), getUnitSystem());
+                            sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
                 }
             }
         }
@@ -156,7 +155,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
                 {
                     deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation()),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation(), sip.getPrefixName() + getName(),
-                            new LinearScale(sip.getFactor()), getUnitSystem());
+                            sip.getFactor(), getUnitSystem());
                 }
             }
             else
@@ -165,7 +164,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
                 {
                     deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getName().substring(8), new LinearScale(sip.getFactor()), getUnitSystem());
+                            sip.getPrefixName() + getName().substring(8), sip.getFactor(), getUnitSystem());
                 }
             }
         }
@@ -173,30 +172,31 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
     }
 
     /**
-     * Return a derived unit for this unit, where the textual abbreviation is the same as the display abbreviation.
+     * Return a linearly scaled derived unit for this unit, where the textual abbreviation is the same as the display
+     * abbreviation.
      * @param id the id or main abbreviation of the unit
      * @param name the full name of the unit
-     * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+     * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
      * @param unitSystem unit system, e.g. SI or Imperial
      * @return a derived unit for this unit
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public U deriveUnit(final String id, final String name, final Scale scale, final UnitSystem unitSystem)
+    public U deriveUnit(final String id, final String name, final double scaleFactor, final UnitSystem unitSystem)
     {
-        return deriveUnit(List.of(id), id, name, scale, unitSystem);
+        return deriveUnit(List.of(id), id, name, scaleFactor, unitSystem);
     }
 
     /**
-     * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
+     * Return a linearly scaled derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
      * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
      * @param displayAbbreviation the display abbreviation of the unit
      * @param name the full name of the unit
-     * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+     * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
      * @param unitSystem unit system, e.g. SI or Imperial
      * @return a derived unit for this unit
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public abstract U deriveUnit(List<String> textualAbbreviations, String displayAbbreviation, String name, Scale scale,
+    public abstract U deriveUnit(List<String> textualAbbreviations, String displayAbbreviation, String name, double scaleFactor,
             UnitSystem unitSystem);
 
     @Override
