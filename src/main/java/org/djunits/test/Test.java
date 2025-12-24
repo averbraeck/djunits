@@ -63,7 +63,7 @@ public final class Test
         var f1 = d1.reciprocal();
         System.out.println("reciprocal: " + f1);
         var d2 = Duration.valueOf("1 day");
-        // System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit("s") + " seconds");
+        System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit("s") + " seconds");
         System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit(Duration.Unit.SECOND));
     }
 
