@@ -90,6 +90,15 @@ public class OffsetLinearScale implements Scale
         return this.offsetToBaseUnit;
     }
 
+    /**
+     * Retrieve the factor for conversion to the standard unit.
+     * @return the factor for conversion to the standard unit
+     */
+    public final double getScaleFactorToBaseUnit()
+    {
+        return this.scaleFactorToBaseUnit;
+    }
+
     @Override
     public boolean isBaseScale()
     {
