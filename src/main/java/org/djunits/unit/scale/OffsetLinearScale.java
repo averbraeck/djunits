@@ -1,11 +1,17 @@
 package org.djunits.unit.scale;
 
+import java.util.Objects;
+
+import org.djunits.old.unit.util.UnitRuntimeException;
+import org.djutils.exceptions.Throw;
+
 /**
- * Scale with factor and zero point offset.
+ * Scale with factor and zero point offset. We did NOT make the OffsetLinearScale extend the LinearScale to avoid problems with
+ * combining scales in the Unit's deriveUnit method.
  * <p>
  * A Scale for linear transformations with an offset that has to be applied first when converting to the base (SI) unit, before
  * the scaling takes place, e.g. for Temperature. As an example, transform from Degrees Fahrenheit to Kelvin (SI). The
- * conversion is K = (F + 459.67) × 5⁄9, and F = K × 9⁄5 − 459.67.
+ * scale is K = (F + 459.67) × 5⁄9, and F = K × 9⁄5 − 459.67.
  * </p>
  * <p>
  * When we have an original scale with offset o1 and scalefactor f1, the calculation to the base unit is
@@ -39,36 +45,40 @@ package org.djunits.unit.scale;
  * @author Alexander Verbraeck
  * @author Peter Knoppers
  */
-public class OffsetLinearScale extends LinearScale
+public class OffsetLinearScale implements Scale
 {
     /** */
     private static final long serialVersionUID = 500L;
 
-    /** The offset that has to be taken into account for conversions, multiplied by the conversionFactorToBaseUnit. */
+    /** multiply by this number to convert to the base (e.g., SI) unit. */
+    private final double scaleFactorToBaseUnit;
+
+    /** The offset that has to be taken into account for scales, multiplied by the scaleFactorToBaseUnit. */
     private final double offsetToBaseUnit;
 
     /**
      * Construct a Scale for linear transformations with an offset, e.g. for Temperature.
-     * @param conversionFactorToBaseUnit the conversion factor by which this number has to be multiplied to convert it to the
-     *            base (e.g., SI) unit.
+     * @param scaleFactorToBaseUnit the scale factor by which this number has to be multiplied to convert it to the base
+     *            (e.g., SI) unit.
      * @param offsetToBaseUnit when converting to a base unit, the offset is applied first.
      */
-    public OffsetLinearScale(final double conversionFactorToBaseUnit, final double offsetToBaseUnit)
+    public OffsetLinearScale(final double scaleFactorToBaseUnit, final double offsetToBaseUnit)
     {
-        super(conversionFactorToBaseUnit);
+        Throw.when(scaleFactorToBaseUnit == 0.0, UnitRuntimeException.class, "scale factor for linear scale cannnot be 0");
+        this.scaleFactorToBaseUnit = scaleFactorToBaseUnit;
         this.offsetToBaseUnit = offsetToBaseUnit;
     }
 
     @Override
     public final double toBaseValue(final double value)
     {
-        return (value + this.offsetToBaseUnit) * getScaleFactorToBaseUnit();
+        return (value + this.offsetToBaseUnit) * this.scaleFactorToBaseUnit;
     }
 
     @Override
     public final double fromBaseValue(final double value)
     {
-        return value / getScaleFactorToBaseUnit() - this.offsetToBaseUnit;
+        return value / this.scaleFactorToBaseUnit - this.offsetToBaseUnit;
     }
 
     /**
@@ -83,18 +93,13 @@ public class OffsetLinearScale extends LinearScale
     @Override
     public boolean isBaseScale()
     {
-        return super.isBaseScale() && this.offsetToBaseUnit == 0.0;
+        return this.scaleFactorToBaseUnit == 1.0 && this.offsetToBaseUnit == 0.0;
     }
 
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = super.hashCode();
-        long temp;
-        temp = Double.doubleToLongBits(this.offsetToBaseUnit);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return Objects.hash(this.offsetToBaseUnit, this.scaleFactorToBaseUnit);
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -103,21 +108,20 @@ public class OffsetLinearScale extends LinearScale
     {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
         OffsetLinearScale other = (OffsetLinearScale) obj;
-        if (Double.doubleToLongBits(this.offsetToBaseUnit) != Double.doubleToLongBits(other.offsetToBaseUnit))
-            return false;
-        return true;
+        return Double.doubleToLongBits(this.offsetToBaseUnit) == Double.doubleToLongBits(other.offsetToBaseUnit)
+                && Double.doubleToLongBits(this.scaleFactorToBaseUnit) == Double.doubleToLongBits(other.scaleFactorToBaseUnit);
     }
 
     @Override
     public String toString()
     {
-        return "OffsetLinearScale [offsetToBaseUnit=" + this.offsetToBaseUnit + ", conversionFactorToBaseUnit="
-                + this.getScaleFactorToBaseUnit() + "]";
+        return "OffsetLinearScale [offsetToBaseUnit=" + this.offsetToBaseUnit + ", scaleFactorToBaseUnit="
+                + this.scaleFactorToBaseUnit + "]";
     }
 
 }
