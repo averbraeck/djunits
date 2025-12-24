@@ -3,6 +3,7 @@ package org.djunits.value;
 import java.io.Serializable;
 
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Units;
 
 /**
  * Value is the generic interface for all Scalar, Vector and Matrix classes that forces implementation of a few unit- and
@@ -35,6 +36,18 @@ public interface Value<T extends Value<T, U>, U extends UnitInterface<U>> extend
      * @return the instance for method chaining
      */
     T setDisplayUnit(U newUnit);
+
+    /**
+     * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
+     * @param newUnitString the textual representation of the new display unit of this value
+     * @return the instance for method chaining
+     */
+    default T setDisplayUnit(final String newUnitString)
+    {
+        @SuppressWarnings("unchecked")
+        U newUnit = (U) Units.resolve(getDisplayUnit().getClass(), newUnitString);
+        return setDisplayUnit(newUnit);
+    }
 
     /**
      * Indicate whether this is an Absolute Value.
