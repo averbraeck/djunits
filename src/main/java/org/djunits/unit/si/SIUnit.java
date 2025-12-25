@@ -3,8 +3,8 @@ package org.djunits.unit.si;
 import java.util.Arrays;
 import java.util.List;
 
-import org.djunits.unit.UnitException;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.system.UnitSystem;
@@ -126,9 +126,9 @@ public class SIUnit implements UnitInterface<SIUnit>
      * arbitrary, so "kg/ms2" is accepted as well as "kg/s^2.m".
      * @param siString the string to parse
      * @return the corresponding SI dimensions
-     * @throws UnitException when the string could not be parsed into dimensions
+     * @throws UnitRuntimeException when the string could not be parsed into dimensions
      */
-    public static SIUnit of(final String siString) throws UnitException
+    public static SIUnit of(final String siString) throws UnitRuntimeException
     {
         Throw.whenNull(siString, "siString cannot be null");
         String dimString = siString.replaceAll("[ .^]", "");
@@ -138,7 +138,7 @@ public class SIUnit implements UnitInterface<SIUnit>
             String[] parts = dimString.split("\\/");
             if (parts.length != 2)
             {
-                throw new UnitException("SI String " + dimString + " contains more than one division sign");
+                throw new UnitRuntimeException("SI String " + dimString + " contains more than one division sign");
             }
             byte[] numerator = parse(parts[0]);
             byte[] denominator = parse(parts[1]);
@@ -158,9 +158,9 @@ public class SIUnit implements UnitInterface<SIUnit>
      * as "m.s^-2.kg". Note that the empty string parses to the dimensionless unit.
      * @param siString concatenation of SI units with positive or negative dimensions. No divisions sign is allowed.
      * @return a vector of length <code>NUMBER_DIMENSIONS</code> with the dimensions for the SI units
-     * @throws UnitException when the String cannot be parsed, e.g. due to units not being recognized
+     * @throws UnitRuntimeException when the String cannot be parsed, e.g. due to units not being recognized
      */
-    private static byte[] parse(final String siString) throws UnitException
+    private static byte[] parse(final String siString) throws UnitRuntimeException
     {
         Throw.whenNull(siString, "siString cannot be null");
         byte[] result = new byte[NUMBER_DIMENSIONS];
@@ -181,7 +181,7 @@ public class SIUnit implements UnitInterface<SIUnit>
                 {
                     if (result[i] != 0)
                     {
-                        throw new UnitException("SI string " + siString + " has a double entry for unit " + si);
+                        throw new UnitRuntimeException("SI string " + siString + " has a double entry for unit " + si);
                     }
                     copy = copy.substring(si.length());
                     if (copy.length() == 0)
@@ -193,7 +193,7 @@ public class SIUnit implements UnitInterface<SIUnit>
                     {
                         if (copy.length() == 1)
                         {
-                            throw new UnitException("SI string " + siString + " ends with a minus sign");
+                            throw new UnitRuntimeException("SI string " + siString + " ends with a minus sign");
                         }
                         if (Character.isDigit(copy.charAt(1)))
                         {
@@ -201,7 +201,7 @@ public class SIUnit implements UnitInterface<SIUnit>
                             copy = copy.substring(2);
                             break;
                         }
-                        throw new UnitException(
+                        throw new UnitRuntimeException(
                                 "SI string " + siString + " has a minus sign for unit " + si + " but no dimension");
                     }
                     else if (Character.isDigit(copy.charAt(0)))
@@ -226,7 +226,7 @@ public class SIUnit implements UnitInterface<SIUnit>
         }
         if (copy.length() != 0)
         {
-            throw new UnitException("Trailing information in SI string " + siString);
+            throw new UnitRuntimeException("Trailing information in SI string " + siString);
         }
         return result;
     }

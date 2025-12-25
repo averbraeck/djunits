@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.djunits.unit.UnitException;
+import org.djunits.unit.UnitRuntimeException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -200,8 +201,7 @@ public class SIDimensionsTest
 
         try
         {
-            SIUnit siw4 =
-                    new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new byte[] {1, 1, 2, 2, 1, 3, 1, 1, 1, 1});
+            SIUnit siw4 = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new byte[] {1, 1, 2, 2, 1, 3, 1, 1, 1, 1});
             fail("SIDimensions.of(" + siw4 + ") should have triggered a UnitException");
         }
         catch (SIRuntimeException e)
@@ -220,7 +220,7 @@ public class SIDimensionsTest
             SIUnit.of(si);
             fail("SIDimensions.of(" + si + ") should have triggered a UnitException");
         }
-        catch (UnitException e)
+        catch (UnitRuntimeException e)
         {
             // ignore
         }
