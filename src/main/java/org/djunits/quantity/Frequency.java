@@ -21,7 +21,6 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
 {
     /** Constant with value zero. */
@@ -239,8 +238,8 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
     @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Frequency.Unit>
     {
-        /** The dimensions of frequency: /s [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, -1, 0, 0, 0, 0});
+        /** The dimensions of frequency: /s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("/s");
 
         /** hertz. */
         public static final Frequency.Unit HERTZ = new Frequency.Unit("Hz", "hertz", 1.0, UnitSystem.SI_DERIVED);

@@ -20,7 +20,6 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class ElectricalResistance extends Quantity.Relative<ElectricalResistance, ElectricalResistance.Unit>
 {
     /** Constant with value zero. */
@@ -148,10 +147,10 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Calculate the multiplication of ElectricalResistance and ElectricalCurrent, which results in a ElectricalPotential
+     * Calculate the multiplication of ElectricalResistance and ElectricCurrent, which results in a ElectricPotential
      * scalar.
      * @param v scalar
-     * @return scalar as a multiplication of ElectricalResistance and ElectricalCurrent
+     * @return scalar as a multiplication of ElectricalResistance and ElectricCurrent
      */
     public final ElectricPotential times(final ElectricCurrent v)
     {

@@ -11,14 +11,13 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Magnetic flux is the total magnetic field passing through a given area, measured in webers (Wb).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.Unit>
 {
     /** Constant with value zero. */
@@ -47,7 +46,7 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a MagneticFlux quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -57,7 +56,7 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a MagneticFlux quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -67,7 +66,7 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct MagneticFlux quantity.
      * @param value Scalar from which to construct this instance
      */
     public MagneticFlux(final MagneticFlux value)
@@ -77,9 +76,9 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a MagneticFlux instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the MagneticFlux instance based on an SI value
      */
     public static MagneticFlux ofSi(final double si)
     {
@@ -99,10 +98,10 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
+     * Returns a MagneticFlux representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a MagneticFlux
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -113,7 +112,7 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a MagneticFlux based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -126,9 +125,9 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of MagneticFlux and MagneticFlux, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of MagneticFlux and MagneticFlux
      */
     public final Dimensionless divide(final MagneticFlux v)
     {
@@ -140,7 +139,7 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * MagneticFlux.Unit encodes the units of total magnetic field passing through a given area.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -149,32 +148,17 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
      */
     public static class Unit extends AbstractUnit<MagneticFlux.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the magnetic flux: kgm2/s2⋅A. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2⋅A");
 
-        /** Gray. */
-        public static final MagneticFlux.Unit GRAY = new MagneticFlux.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Weber. */
+        public static final MagneticFlux.Unit WEBER = new MagneticFlux.Unit("Wb", "weber", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final MagneticFlux.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final MagneticFlux.Unit MILLIGRAY =
-                new MagneticFlux.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final MagneticFlux.Unit MICROGRAY =
-                new MagneticFlux.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final MagneticFlux.Unit ERG_PER_GRAM =
-                new MagneticFlux.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final MagneticFlux.Unit RAD = new MagneticFlux.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final MagneticFlux.Unit SI = WEBER;
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new MagneticFlux unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

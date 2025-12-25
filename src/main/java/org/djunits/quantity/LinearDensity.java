@@ -11,14 +11,13 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Linear density is mass per unit length of an object, measured in kilograms per meter (kg/m).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensity.Unit>
 {
     /** Constant with value zero. */
@@ -47,7 +46,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a LinearDensity quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -57,7 +56,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a LinearDensity quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -67,7 +66,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct LinearDensity quantity.
      * @param value Scalar from which to construct this instance
      */
     public LinearDensity(final LinearDensity value)
@@ -77,9 +76,9 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a LinearDensity instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the LinearDensity instance based on an SI value
      */
     public static LinearDensity ofSi(final double si)
     {
@@ -99,10 +98,10 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
+     * Returns a LinearDensity representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a LinearDensity
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -113,7 +112,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a LinearDensity based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -126,9 +125,9 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of LinearDensity and LinearDensity, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of LinearDensity and LinearDensity
      */
     public final Dimensionless divide(final LinearDensity v)
     {
@@ -140,7 +139,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * LinearDensity.Unit encodes unit for mass per unit length.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -149,32 +148,18 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
      */
     public static class Unit extends AbstractUnit<LinearDensity.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of linear density: kg/m. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kg/m");
 
         /** Gray. */
-        public static final LinearDensity.Unit GRAY = new LinearDensity.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final LinearDensity.Unit KILOGRAM_PER_METER =
+                new LinearDensity.Unit("kg/m", "kilogram per meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final LinearDensity.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final LinearDensity.Unit MILLIGRAY =
-                new LinearDensity.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final LinearDensity.Unit MICROGRAY = new LinearDensity.Unit(List.of("muGy"), "\u03BCGy", "microgray",
-                new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final LinearDensity.Unit ERG_PER_GRAM =
-                new LinearDensity.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final LinearDensity.Unit RAD = new LinearDensity.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final LinearDensity.Unit SI = KILOGRAM_PER_METER;
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new LinearDensity unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

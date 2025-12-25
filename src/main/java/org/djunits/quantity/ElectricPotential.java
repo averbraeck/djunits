@@ -11,14 +11,14 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * ElectricPotential is the difference in electric potential energy per unit of electric charge between two points in a static
+ * electric field.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class ElectricPotential extends Quantity.Relative<ElectricPotential, ElectricPotential.Unit>
 {
     /** Constant with value zero. */
@@ -47,7 +47,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a ElectricPotential quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -57,7 +57,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a ElectricPotential quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -67,7 +67,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct ElectricPotential quantity.
      * @param value Scalar from which to construct this instance
      */
     public ElectricPotential(final ElectricPotential value)
@@ -77,9 +77,9 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a ElectricPotential instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the ElectricPotential instance based on an SI value
      */
     public static ElectricPotential ofSi(final double si)
     {
@@ -99,10 +99,10 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a ElectricPotential representation of a textual representation of a value with a unit. The String representation
+     * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
+     * are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a ElectricPotential
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -113,7 +113,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a ElectricPotential based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -126,9 +126,9 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of ElectricPotential and ElectricPotential, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of ElectricPotential and ElectricPotential
      */
     public final Dimensionless divide(final ElectricPotential v)
     {
@@ -140,7 +140,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * ElectricPotential.Unit encodes the units of electric potential (difference)<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -149,33 +149,17 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
      */
     public static class Unit extends AbstractUnit<ElectricPotential.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the electric potential: kgm2/s3A. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A");
 
         /** Gray. */
-        public static final ElectricPotential.Unit GRAY =
-                new ElectricPotential.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricPotential.Unit VOLT = new ElectricPotential.Unit("V", "volt", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricPotential.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final ElectricPotential.Unit MILLIGRAY =
-                new ElectricPotential.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final ElectricPotential.Unit MICROGRAY = new ElectricPotential.Unit(List.of("muGy"), "\u03BCGy",
-                "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final ElectricPotential.Unit ERG_PER_GRAM =
-                new ElectricPotential.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final ElectricPotential.Unit RAD = new ElectricPotential.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
-
+        public static final ElectricPotential.Unit SI = VOLT;
+        
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new ElectricPotential unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

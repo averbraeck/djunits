@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Electrical charge denotes the electrostatic attraction or repulsion in the presence of other matter with charge, and is
+ * Electric charge denotes the electrostatic attraction or repulsion in the presence of other matter with charge, and is
  * expressed in coulomb.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -19,7 +19,6 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCharge.Unit>
 {
     /** Constant with value zero. */
@@ -48,7 +47,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a ElectricalCharge quantity with a unit.
+     * Instantiate a ElectricCharge quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -58,7 +57,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Instantiate a ElectricalCharge quantity with a unit, expressed as a String.
+     * Instantiate a ElectricCharge quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -68,7 +67,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Construct ElectricalCharge quantity.
+     * Construct ElectricCharge quantity.
      * @param value Scalar from which to construct this instance
      */
     public ElectricCharge(final ElectricCharge value)
@@ -78,9 +77,9 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Return a ElectricalCharge instance based on an SI value.
+     * Return a ElectricCharge instance based on an SI value.
      * @param si the si value
-     * @return the ElectricalCharge instance based on an SI value
+     * @return the ElectricCharge instance based on an SI value
      */
     public static ElectricCharge ofSi(final double si)
     {
@@ -100,10 +99,10 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Returns a ElectricalCharge representation of a textual representation of a value with a unit. The String representation
+     * Returns a ElectricCharge representation of a textual representation of a value with a unit. The String representation
      * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
      * are allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a ElectricalCharge
+     * @param text the textual representation to parse into a ElectricCharge
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -114,7 +113,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Returns a ElectricalCharge based on a value and the textual representation of the unit, which can be localized.
+     * Returns a ElectricCharge based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -127,9 +126,9 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Calculate the division of ElectricalCharge and ElectricalCharge, which results in a Dimensionless quantity.
+     * Calculate the division of ElectricCharge and ElectricCharge, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of ElectricalCharge and ElectricalCharge
+     * @return quantity as a division of ElectricCharge and ElectricCharge
      */
     public final Dimensionless divide(final ElectricCharge v)
     {
@@ -137,9 +136,9 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Calculate the division of ElectricalCharge and Duration, which results in a ElectricalCurrent scalar.
+     * Calculate the division of ElectricCharge and Duration, which results in a ElectricCurrent scalar.
      * @param v scalar
-     * @return scalar as a division of ElectricalCharge and Duration
+     * @return scalar as a division of ElectricCharge and Duration
      */
     public final ElectricCurrent divide(final Duration v)
     {
@@ -147,9 +146,9 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Calculate the division of ElectricalCharge and ElectricalCurrent, which results in a Duration scalar.
+     * Calculate the division of ElectricCharge and ElectricCurrent, which results in a Duration scalar.
      * @param v scalar
-     * @return scalar as a division of ElectricalCharge and ElectricalCurrent
+     * @return scalar as a division of ElectricCharge and ElectricCurrent
      */
     public final Duration divide(final ElectricCurrent v)
     {
@@ -157,9 +156,9 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Calculate the division of ElectricalCharge and ElectricalPotential, which results in a ElectricalCapacitance scalar.
+     * Calculate the division of ElectricCharge and ElectricPotential, which results in a ElectricalCapacitance scalar.
      * @param v scalar
-     * @return scalar as a division of ElectricalCharge and ElectricalPotential
+     * @return scalar as a division of ElectricCharge and ElectricPotential
      */
     public final ElectricalCapacitance divide(final ElectricPotential v)
     {
@@ -167,9 +166,9 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     }
 
     /**
-     * Calculate the division of ElectricalCharge and ElectricalCapacitance, which results in a ElectricalPotential scalar.
+     * Calculate the division of ElectricCharge and ElectricalCapacitance, which results in a ElectricPotential scalar.
      * @param v scalar
-     * @return scalar as a division of ElectricalCharge and ElectricalCapacitance
+     * @return scalar as a division of ElectricCharge and ElectricalCapacitance
      */
     public final ElectricPotential divide(final ElectricalCapacitance v)
     {
@@ -181,7 +180,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     /******************************************************************************************************/
 
     /**
-     * ElectricalCharge.Unit is a unit of electric charge and is expressed in Coulomb.<br>
+     * ElectricCharge.Unit is a unit of electric charge and is expressed in Coulomb.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -252,7 +251,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
                 ABCOULOMB.deriveUnit("emu", "electromagnetic unit", 1.0, UnitSystem.CGS_EMU);
 
         /**
-         * Create a new ElectricalCharge unit.
+         * Create a new ElectricCharge unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

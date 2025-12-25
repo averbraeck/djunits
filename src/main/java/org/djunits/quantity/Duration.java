@@ -159,9 +159,9 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
     }
 
     /**
-     * Calculate the multiplication of Duration and ElectricalCurrent, which results in a ElectricalCharge scalar.
+     * Calculate the multiplication of Duration and ElectricCurrent, which results in a ElectricCharge scalar.
      * @param v scalar
-     * @return scalar as a multiplication of Duration and ElectricalCurrent
+     * @return scalar as a multiplication of Duration and ElectricCurrent
      */
     public final ElectricCharge times(final ElectricCurrent v)
     {
@@ -219,9 +219,9 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
     }
 
     /**
-     * Calculate the multiplication of Duration and ElectricalPotential, which results in a MagneticFlux scalar.
+     * Calculate the multiplication of Duration and ElectricPotential, which results in a MagneticFlux scalar.
      * @param v scalar
-     * @return scalar as a multiplication of Duration and ElectricalPotential
+     * @return scalar as a multiplication of Duration and ElectricPotential
      */
     public final MagneticFlux times(final ElectricPotential v)
     {

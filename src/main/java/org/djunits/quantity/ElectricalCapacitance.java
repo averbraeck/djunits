@@ -18,7 +18,6 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitance, ElectricalCapacitance.Unit>
 {
     /** Constant with value zero. */
@@ -136,10 +135,9 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     }
 
     /**
-     * Calculate the multiplication of ElectricalCapacitance and ElectricalPotential, which results in a ElectricalCharge
-     * scalar.
+     * Calculate the multiplication of ElectricalCapacitance and ElectricPotential, which results in a ElectricCharge scalar.
      * @param v scalar
-     * @return scalar as a multiplication of ElectricalCapacitance and ElectricalPotential
+     * @return scalar as a multiplication of ElectricalCapacitance and ElectricPotential
      */
     public final ElectricCharge times(final ElectricPotential v)
     {

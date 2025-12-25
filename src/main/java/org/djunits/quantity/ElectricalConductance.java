@@ -19,7 +19,6 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class ElectricalConductance extends Quantity.Relative<ElectricalConductance, ElectricalConductance.Unit>
 {
     /** Constant with value zero. */
@@ -147,10 +146,10 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Calculate the multiplication of ElectricalConductance and ElectricalPotential, which results in a ElectricalCurrent
+     * Calculate the multiplication of ElectricalConductance and ElectricPotential, which results in a ElectricCurrent
      * scalar.
      * @param v scalar
-     * @return scalar as a multiplication of ElectricalConductance and ElectricalPotential
+     * @return scalar as a multiplication of ElectricalConductance and ElectricPotential
      */
     public final ElectricCurrent times(final ElectricPotential v)
     {

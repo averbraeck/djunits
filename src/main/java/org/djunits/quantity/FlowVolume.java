@@ -11,14 +11,13 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Flow volume is the rate of volume passing through a surface per unit time, measured in cubic meters per second (m3/s).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
 {
     /** Constant with value zero. */
@@ -47,7 +46,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a FlowVolume quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -57,7 +56,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a FlowVolume quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -67,7 +66,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct FlowVolume quantity.
      * @param value Scalar from which to construct this instance
      */
     public FlowVolume(final FlowVolume value)
@@ -77,9 +76,9 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a FlowVolume instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the FlowVolume instance based on an SI value
      */
     public static FlowVolume ofSi(final double si)
     {
@@ -99,10 +98,10 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
+     * Returns a FlowVolume representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a FlowVolume
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -113,7 +112,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a FlowVolume based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -126,9 +125,9 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of FlowVolume and FlowVolume, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of FlowVolume and FlowVolume
      */
     public final Dimensionless divide(final FlowVolume v)
     {
@@ -140,7 +139,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * FlowVolume.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -149,30 +148,18 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
      */
     public static class Unit extends AbstractUnit<FlowVolume.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the flow volume is m3/s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("m3/s");
 
-        /** Gray. */
-        public static final FlowVolume.Unit GRAY = new FlowVolume.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** m3/s. */
+        public static final FlowVolume.Unit CUBIC_METER_PER_SECOND =
+                new FlowVolume.Unit("m3/s", "cubic meter per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final FlowVolume.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final FlowVolume.Unit MILLIGRAY = new FlowVolume.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final FlowVolume.Unit MICROGRAY =
-                new FlowVolume.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final FlowVolume.Unit ERG_PER_GRAM = new FlowVolume.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final FlowVolume.Unit RAD = new FlowVolume.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final FlowVolume.Unit SI = CUBIC_METER_PER_SECOND;
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new FlowVolume unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

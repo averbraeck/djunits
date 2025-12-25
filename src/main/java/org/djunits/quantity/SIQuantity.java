@@ -16,7 +16,6 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-
 public class SIQuantity extends Quantity.Relative<SIQuantity, SIUnit>
 {
     /** */
