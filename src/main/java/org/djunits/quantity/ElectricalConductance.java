@@ -11,7 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Electrical conductance measures the ease with which an electric current passes, and is expressed in siemens. Its reciprocal
+ * quantity is electrical resistance (expressed in ohm).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -47,7 +48,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a ElectricalConductance quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -57,7 +58,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a ElectricalConductance quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -67,7 +68,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct ElectricalConductance quantity.
      * @param value Scalar from which to construct this instance
      */
     public ElectricalConductance(final ElectricalConductance value)
@@ -77,9 +78,9 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a ElectricalConductance instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the ElectricalConductance instance based on an SI value
      */
     public static ElectricalConductance ofSi(final double si)
     {
@@ -99,10 +100,10 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a ElectricalConductance representation of a textual representation of a value with a unit. The String
+     * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
+     * unit. Spaces are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a ElectricalConductance
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -113,7 +114,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a ElectricalConductance based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -126,13 +127,50 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of ElectricalConductance and ElectricalConductance, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of ElectricalConductance and ElectricalConductance
      */
     public final Dimensionless divide(final ElectricalConductance v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalConductance and ElectricalResistance, which results in a Dimensionless scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalConductance and ElectricalResistance
+     */
+    public final Dimensionless times(final ElectricalResistance v)
+    {
+        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalConductance and ElectricalPotential, which results in a ElectricalCurrent
+     * scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalConductance and ElectricalPotential
+     */
+    public final ElectricCurrent times(final ElectricPotential v)
+    {
+        return new ElectricCurrent(this.si() * v.si(), ElectricCurrent.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalConductance and Duration, which results in a ElectricalCapacitance scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalConductance and Duration
+     */
+    public final ElectricalCapacitance times(final Duration v)
+    {
+        return new ElectricalCapacitance(this.si() * v.si(), ElectricalCapacitance.Unit.SI);
+    }
+
+    @Override
+    public ElectricalResistance reciprocal()
+    {
+        return ElectricalResistance.ofSi(1.0 / this.si());
     }
 
     /******************************************************************************************************/
@@ -140,7 +178,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * ElectricalConductance.Unit encodes the units of electrical conductance, and is expressed in Siemens.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -149,34 +187,27 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
      */
     public static class Unit extends AbstractUnit<ElectricalConductance.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of electrical conductance: s3A2/kgm2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("s3A2/kgm2");
 
-        /** Gray. */
-        public static final ElectricalConductance.Unit GRAY =
-                new ElectricalConductance.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Siemens. */
+        public static final ElectricalConductance.Unit SIEMENS =
+                new ElectricalConductance.Unit("S", "siemens", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalConductance.Unit SI = GRAY;
+        public static final ElectricalConductance.Unit SI = SIEMENS.generateSiPrefixes(false, false);
 
-        /** mGy. */
-        public static final ElectricalConductance.Unit MILLIGRAY =
-                new ElectricalConductance.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        /** mS. */
+        public static final ElectricalConductance.Unit MILLISIEMENS = Units.resolve(ElectricalConductance.Unit.class, "mS");
 
-        /** &#181;Gy. */
-        public static final ElectricalConductance.Unit MICROGRAY = new ElectricalConductance.Unit(List.of("muGy"), "\u03BCGy",
-                "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        /** muS. */
+        public static final ElectricalConductance.Unit MICROSIEMENS = Units.resolve(ElectricalConductance.Unit.class, "muS");
 
-        /** erg/g. */
-        public static final ElectricalConductance.Unit ERG_PER_GRAM =
-                new ElectricalConductance.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final ElectricalConductance.Unit RAD =
-                new ElectricalConductance.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** nS. */
+        public static final ElectricalConductance.Unit NANOSIEMENS = Units.resolve(ElectricalConductance.Unit.class, "nS");
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new ElectricalConductance unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

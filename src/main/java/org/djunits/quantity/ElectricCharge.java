@@ -11,7 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Electrical charge denotes the electrostatic attraction or repulsion in the presence of other matter with charge, and is
+ * expressed in coulomb.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -19,75 +20,75 @@ import org.djunits.unit.system.UnitSystem;
  * @author Alexander Verbraeck
  */
 
-public class ElectricalCharge extends Quantity.Relative<ElectricalCharge, ElectricalCharge.Unit>
+public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCharge.Unit>
 {
     /** Constant with value zero. */
-    public static final ElectricalCharge ZERO = ElectricalCharge.ofSi(0.0);
+    public static final ElectricCharge ZERO = ElectricCharge.ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ElectricalCharge ONE = ElectricalCharge.ofSi(1.0);
+    public static final ElectricCharge ONE = ElectricCharge.ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ElectricalCharge NaN = ElectricalCharge.ofSi(Double.NaN);
+    public static final ElectricCharge NaN = ElectricCharge.ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ElectricalCharge POSITIVE_INFINITY = ElectricalCharge.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricCharge POSITIVE_INFINITY = ElectricCharge.ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ElectricalCharge NEGATIVE_INFINITY = ElectricalCharge.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricCharge NEGATIVE_INFINITY = ElectricCharge.ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ElectricalCharge POS_MAXVALUE = ElectricalCharge.ofSi(Double.MAX_VALUE);
+    public static final ElectricCharge POS_MAXVALUE = ElectricCharge.ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ElectricalCharge NEG_MAXVALUE = ElectricalCharge.ofSi(-Double.MAX_VALUE);
+    public static final ElectricCharge NEG_MAXVALUE = ElectricCharge.ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a ElectricalCharge quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public ElectricalCharge(final double value, final ElectricalCharge.Unit unit)
+    public ElectricCharge(final double value, final ElectricCharge.Unit unit)
     {
         super(value, unit);
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a ElectricalCharge quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public ElectricalCharge(final double value, final String abbreviation)
+    public ElectricCharge(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(ElectricalCharge.Unit.class, abbreviation));
+        this(value, Units.resolve(ElectricCharge.Unit.class, abbreviation));
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct ElectricalCharge quantity.
      * @param value Scalar from which to construct this instance
      */
-    public ElectricalCharge(final ElectricalCharge value)
+    public ElectricCharge(final ElectricCharge value)
     {
-        super(value.si(), ElectricalCharge.Unit.SI);
+        super(value.si(), ElectricCharge.Unit.SI);
         setDisplayUnit(value.getDisplayUnit());
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a ElectricalCharge instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the ElectricalCharge instance based on an SI value
      */
-    public static ElectricalCharge ofSi(final double si)
+    public static ElectricCharge ofSi(final double si)
     {
-        return new ElectricalCharge(si, ElectricalCharge.Unit.SI);
+        return new ElectricCharge(si, ElectricCharge.Unit.SI);
     }
 
     @Override
-    public ElectricalCharge instantiate(final double si)
+    public ElectricCharge instantiate(final double si)
     {
         return ofSi(si);
     }
@@ -95,44 +96,84 @@ public class ElectricalCharge extends Quantity.Relative<ElectricalCharge, Electr
     @Override
     public SIUnit siUnit()
     {
-        return ElectricalCharge.Unit.SI_UNIT;
+        return ElectricCharge.Unit.SI_UNIT;
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a ElectricalCharge representation of a textual representation of a value with a unit. The String representation
+     * that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces
+     * are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a ElectricalCharge
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static ElectricalCharge valueOf(final String text)
+    public static ElectricCharge valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a ElectricalCharge based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static ElectricalCharge of(final double value, final String unitString)
+    public static ElectricCharge of(final double value, final String unitString)
     {
         return Quantity.of(value, unitString, ZERO);
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of ElectricalCharge and ElectricalCharge, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of ElectricalCharge and ElectricalCharge
      */
-    public final Dimensionless divide(final ElectricalCharge v)
+    public final Dimensionless divide(final ElectricCharge v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the division of ElectricalCharge and Duration, which results in a ElectricalCurrent scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and Duration
+     */
+    public final ElectricCurrent divide(final Duration v)
+    {
+        return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCharge and ElectricalCurrent, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalCurrent
+     */
+    public final Duration divide(final ElectricCurrent v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCharge and ElectricalPotential, which results in a ElectricalCapacitance scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalPotential
+     */
+    public final ElectricalCapacitance divide(final ElectricPotential v)
+    {
+        return new ElectricalCapacitance(this.si() / v.si(), ElectricalCapacitance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCharge and ElectricalCapacitance, which results in a ElectricalPotential scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCharge and ElectricalCapacitance
+     */
+    public final ElectricPotential divide(final ElectricalCapacitance v)
+    {
+        return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
     }
 
     /******************************************************************************************************/
@@ -140,41 +181,78 @@ public class ElectricalCharge extends Quantity.Relative<ElectricalCharge, Electr
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * ElectricalCharge.Unit is a unit of electric charge and is expressed in Coulomb.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalCharge.Unit>
+    public static class Unit extends AbstractUnit<ElectricCharge.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of electric charge, the Coulumb, is A.s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("As");
 
         /** Gray. */
-        public static final ElectricalCharge.Unit GRAY = new ElectricalCharge.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit COULOMB =
+                new ElectricCharge.Unit("C", "coulomb", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalCharge.Unit SI = GRAY;
+        public static final ElectricCharge.Unit SI = COULOMB.generateSiPrefixes(false, false);
 
-        /** mGy. */
-        public static final ElectricalCharge.Unit MILLIGRAY =
-                new ElectricalCharge.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        /** milliCoulomb = mA.s. */
+        public static final ElectricCharge.Unit MILLICOULOMB = Units.resolve(ElectricCharge.Unit.class, "mC");
 
-        /** &#181;Gy. */
-        public static final ElectricalCharge.Unit MICROGRAY = new ElectricalCharge.Unit(List.of("muGy"), "\u03BCGy",
-                "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        /** microCoulomb = muA.s. */
+        public static final ElectricCharge.Unit MICROCOULOMB = Units.resolve(ElectricCharge.Unit.class, "muC");
 
-        /** erg/g. */
-        public static final ElectricalCharge.Unit ERG_PER_GRAM =
-                new ElectricalCharge.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        /** ampere hour. */
+        public static final ElectricCharge.Unit AMPERE_HOUR =
+                COULOMB.deriveUnit("Ah", "ampere hour", 3600.0, UnitSystem.SI_DERIVED);
 
-        /** rad. */
-        public static final ElectricalCharge.Unit RAD = new ElectricalCharge.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** milliampere hour. */
+        public static final ElectricCharge.Unit MILLIAMPERE_HOUR =
+                AMPERE_HOUR.deriveUnit("mAh", "milliampere hour", 1E-3, UnitSystem.SI_DERIVED);
+
+        /** milliampere second. */
+        public static final ElectricCharge.Unit MILLIAMPERE_SECOND =
+                AMPERE_HOUR.deriveUnit("mAs", "milliampere second", 1.0 / 3600.0, UnitSystem.SI_DERIVED);
+
+        /** kiloampere hour. */
+        public static final ElectricCharge.Unit KILOAMPERE_HOUR =
+                AMPERE_HOUR.deriveUnit("kAh", "kiloampere hour", 1E3, UnitSystem.SI_DERIVED);
+
+        /** megaampere hour. */
+        public static final ElectricCharge.Unit MEGAAMPERE_HOUR =
+                AMPERE_HOUR.deriveUnit("MAh", "megaampere hour", 1E6, UnitSystem.SI_DERIVED);
+
+        /** Faraday. */
+        public static final ElectricCharge.Unit FARADAY = COULOMB.deriveUnit("F", "faraday", 96485.3383, UnitSystem.OTHER);
+
+        /** atomic unit of charge. This value is exact since the 2019 redefinition of the SI base units. */
+        public static final ElectricCharge.Unit ATOMIC_UNIT =
+                COULOMB.deriveUnit("e", "elementary unit of charge", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
+
+        /** statcoulomb (CGS ESU). */
+        public static final ElectricCharge.Unit STATCOULOMB =
+                COULOMB.deriveUnit("statC", "statcoulomb", 3.335641E-10, UnitSystem.CGS_ESU);
+
+        /** franklin (CGS ESU). */
+        public static final ElectricCharge.Unit FRANKLIN = STATCOULOMB.deriveUnit("Fr", "franklin", 1.0, UnitSystem.CGS_ESU);
+
+        /** esu (CGS ESU). */
+        public static final ElectricCharge.Unit ESU =
+                STATCOULOMB.deriveUnit("esu", "electrostatic unit", 1.0, UnitSystem.CGS_ESU);
+
+        /** abcoulomb (CGS EMU). */
+        public static final ElectricCharge.Unit ABCOULOMB = COULOMB.deriveUnit("abC", "abcoulomb", 10.0, UnitSystem.CGS_EMU);
+
+        /** emu (CGS EMU). */
+        public static final ElectricCharge.Unit EMU =
+                ABCOULOMB.deriveUnit("emu", "electromagnetic unit", 1.0, UnitSystem.CGS_EMU);
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new ElectricalCharge unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
@@ -217,7 +295,7 @@ public class ElectricalCharge extends Quantity.Relative<ElectricalCharge, Electr
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new ElectricalCharge.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new ElectricCharge.Unit(textualAbbreviations, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

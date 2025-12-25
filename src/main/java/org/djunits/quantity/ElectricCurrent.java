@@ -19,29 +19,29 @@ import org.djunits.unit.system.UnitSystem;
  * @author Alexander Verbraeck
  */
 
-public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, ElectricalCurrent.Unit>
+public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, ElectricCurrent.Unit>
 {
     /** Constant with value zero. */
-    public static final ElectricalCurrent ZERO = ElectricalCurrent.ofSi(0.0);
+    public static final ElectricCurrent ZERO = ElectricCurrent.ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ElectricalCurrent ONE = ElectricalCurrent.ofSi(1.0);
+    public static final ElectricCurrent ONE = ElectricCurrent.ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ElectricalCurrent NaN = ElectricalCurrent.ofSi(Double.NaN);
+    public static final ElectricCurrent NaN = ElectricCurrent.ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ElectricalCurrent POSITIVE_INFINITY = ElectricalCurrent.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricCurrent POSITIVE_INFINITY = ElectricCurrent.ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ElectricalCurrent NEGATIVE_INFINITY = ElectricalCurrent.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricCurrent NEGATIVE_INFINITY = ElectricCurrent.ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ElectricalCurrent POS_MAXVALUE = ElectricalCurrent.ofSi(Double.MAX_VALUE);
+    public static final ElectricCurrent POS_MAXVALUE = ElectricCurrent.ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ElectricalCurrent NEG_MAXVALUE = ElectricalCurrent.ofSi(-Double.MAX_VALUE);
+    public static final ElectricCurrent NEG_MAXVALUE = ElectricCurrent.ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 500L;
@@ -51,7 +51,7 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public ElectricalCurrent(final double value, final ElectricalCurrent.Unit unit)
+    public ElectricCurrent(final double value, final ElectricCurrent.Unit unit)
     {
         super(value, unit);
     }
@@ -61,18 +61,18 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public ElectricalCurrent(final double value, final String abbreviation)
+    public ElectricCurrent(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(ElectricalCurrent.Unit.class, abbreviation));
+        this(value, Units.resolve(ElectricCurrent.Unit.class, abbreviation));
     }
 
     /**
      * Construct AbsorbedDose quantity.
      * @param value Scalar from which to construct this instance
      */
-    public ElectricalCurrent(final ElectricalCurrent value)
+    public ElectricCurrent(final ElectricCurrent value)
     {
-        super(value.si(), ElectricalCurrent.Unit.SI);
+        super(value.si(), ElectricCurrent.Unit.SI);
         setDisplayUnit(value.getDisplayUnit());
     }
 
@@ -81,13 +81,13 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * @param si the si value
      * @return the AbsorbedDose instance based on an SI value
      */
-    public static ElectricalCurrent ofSi(final double si)
+    public static ElectricCurrent ofSi(final double si)
     {
-        return new ElectricalCurrent(si, ElectricalCurrent.Unit.SI);
+        return new ElectricCurrent(si, ElectricCurrent.Unit.SI);
     }
 
     @Override
-    public ElectricalCurrent instantiate(final double si)
+    public ElectricCurrent instantiate(final double si)
     {
         return ofSi(si);
     }
@@ -95,7 +95,7 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
     @Override
     public SIUnit siUnit()
     {
-        return ElectricalCurrent.Unit.SI_UNIT;
+        return ElectricCurrent.Unit.SI_UNIT;
     }
 
     /**
@@ -107,7 +107,7 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static ElectricalCurrent valueOf(final String text)
+    public static ElectricCurrent valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
     }
@@ -120,7 +120,7 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static ElectricalCurrent of(final double value, final String unitString)
+    public static ElectricCurrent of(final double value, final String unitString)
     {
         return Quantity.of(value, unitString, ZERO);
     }
@@ -130,7 +130,7 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * @param v quantity
      * @return quantity as a division of AbsorbedDose and AbsorbedDose
      */
-    public final Dimensionless divide(final ElectricalCurrent v)
+    public final Dimensionless divide(final ElectricCurrent v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
@@ -147,31 +147,31 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalCurrent.Unit>
+    public static class Unit extends AbstractUnit<ElectricCurrent.Unit>
     {
         /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
 
         /** Gray. */
-        public static final ElectricalCurrent.Unit GRAY = new ElectricalCurrent.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricCurrent.Unit GRAY = new ElectricCurrent.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalCurrent.Unit SI = GRAY;
+        public static final ElectricCurrent.Unit SI = GRAY;
 
         /** mGy. */
-        public static final ElectricalCurrent.Unit MILLIGRAY =
-                new ElectricalCurrent.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        public static final ElectricCurrent.Unit MILLIGRAY =
+                new ElectricCurrent.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
 
         /** &#181;Gy. */
-        public static final ElectricalCurrent.Unit MICROGRAY = new ElectricalCurrent.Unit(List.of("muGy"), "\u03BCGy",
+        public static final ElectricCurrent.Unit MICROGRAY = new ElectricCurrent.Unit(List.of("muGy"), "\u03BCGy",
                 "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
 
         /** erg/g. */
-        public static final ElectricalCurrent.Unit ERG_PER_GRAM =
-                new ElectricalCurrent.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        public static final ElectricCurrent.Unit ERG_PER_GRAM =
+                new ElectricCurrent.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
 
         /** rad. */
-        public static final ElectricalCurrent.Unit RAD = new ElectricalCurrent.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final ElectricCurrent.Unit RAD = new ElectricCurrent.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
 
         /**
          * Create a new AbsorbedDose unit.
@@ -217,7 +217,7 @@ public class ElectricalCurrent extends Quantity.Relative<ElectricalCurrent, Elec
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new ElectricalCurrent.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new ElectricCurrent.Unit(textualAbbreviations, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

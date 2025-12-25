@@ -5,13 +5,15 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Electrical resistence measures the opposition to the flow of an electric current, and is expressed in ohm. Its reciprocal
+ * quantity is electrical conductance (expressed in siemens).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -47,7 +49,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a ElectricalResistance quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -57,7 +59,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a ElectricalResistance quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -67,7 +69,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct ElectricalResistance quantity.
      * @param value Scalar from which to construct this instance
      */
     public ElectricalResistance(final ElectricalResistance value)
@@ -77,9 +79,9 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a ElectricalResistance instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the ElectricalResistance instance based on an SI value
      */
     public static ElectricalResistance ofSi(final double si)
     {
@@ -99,10 +101,10 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * Returns a ElectricalResistance representation of a textual representation of a value with a unit. The String
+     * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
+     * unit. Spaces are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a ElectricalResistance
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -113,7 +115,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a ElectricalResistance based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -126,13 +128,50 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of ElectricalResistance and ElectricalResistance, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of ElectricalResistance and ElectricalResistance
      */
     public final Dimensionless divide(final ElectricalResistance v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalResistance and ElectricalConductance, which results in a Dimensionless scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalResistance and ElectricalConductance
+     */
+    public final Dimensionless times(final ElectricalConductance v)
+    {
+        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalResistance and ElectricalCurrent, which results in a ElectricalPotential
+     * scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalResistance and ElectricalCurrent
+     */
+    public final ElectricPotential times(final ElectricCurrent v)
+    {
+        return new ElectricPotential(this.si() * v.si(), ElectricPotential.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalResistance and Duration, which results in a ElectricalInductance scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalResistance and Duration
+     */
+    public final ElectricalInductance times(final Duration v)
+    {
+        return new ElectricalInductance(this.si() * v.si(), ElectricalInductance.Unit.SI);
+    }
+
+    @Override
+    public ElectricalConductance reciprocal()
+    {
+        return ElectricalConductance.ofSi(1.0 / this.si());
     }
 
     /******************************************************************************************************/
@@ -140,7 +179,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * ElectricalResistance.Unit encodes the opposition to the flow of electric current.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -149,33 +188,41 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      */
     public static class Unit extends AbstractUnit<ElectricalResistance.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the electrical resistance: kgm2/s3A2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A2");
 
-        /** Gray. */
-        public static final ElectricalResistance.Unit GRAY =
-                new ElectricalResistance.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Ohm. */
+        public static final ElectricalResistance.Unit OHM =
+                new ElectricalResistance.Unit(List.of("ohm"), "\u03A9", "ohm", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalResistance.Unit SI = GRAY;
+        public static final ElectricalResistance.Unit SI = OHM.generateSiPrefixes(false, false);
 
-        /** mGy. */
-        public static final ElectricalResistance.Unit MILLIGRAY =
-                new ElectricalResistance.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        /** micro-ohm. */
+        public static final ElectricalResistance.Unit MICROOHM = Units.resolve(ElectricalResistance.Unit.class, "muohm");
 
-        /** &#181;Gy. */
-        public static final ElectricalResistance.Unit MICROGRAY = new ElectricalResistance.Unit(List.of("muGy"), "\u03BCGy",
-                "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+        /** milli-ohm. */
+        public static final ElectricalResistance.Unit MILLIOHM = Units.resolve(ElectricalResistance.Unit.class, "mohm");
 
-        /** erg/g. */
-        public static final ElectricalResistance.Unit ERG_PER_GRAM =
-                new ElectricalResistance.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        /** kilo-ohm. */
+        public static final ElectricalResistance.Unit KILOOHM = Units.resolve(ElectricalResistance.Unit.class, "kohm");
 
-        /** rad. */
-        public static final ElectricalResistance.Unit RAD = new ElectricalResistance.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        /** mega-ohm. */
+        public static final ElectricalResistance.Unit MEGAOHM = Units.resolve(ElectricalResistance.Unit.class, "Mohm");
+
+        /** giga-ohm. */
+        public static final ElectricalResistance.Unit GIGAOHM = Units.resolve(ElectricalResistance.Unit.class, "Gohm");
+
+        /** ab-ohm. */
+        public static final ElectricalResistance.Unit ABOHM =
+                OHM.deriveUnit(List.of("abohm"), "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU);
+
+        /** stat-ohm. */
+        public static final ElectricalResistance.Unit STATOHM =
+                OHM.deriveUnit(List.of("stohm"), "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU);
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new ElectricalResistance unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * ElectricalCapacitance quantity.<br>
+ * ElectricalCapacitance denotes the ability of an object to store electric charge, and is expressed in farad.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -135,6 +135,37 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of ElectricalCapacitance and ElectricalPotential, which results in a ElectricalCharge
+     * scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCapacitance and ElectricalPotential
+     */
+    public final ElectricCharge times(final ElectricPotential v)
+    {
+        return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCapacitance and Duration, which results in a ElectricalConductance scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCapacitance and Duration
+     */
+    public final ElectricalConductance divide(final Duration v)
+    {
+        return new ElectricalConductance(this.si() / v.si(), ElectricalConductance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCapacitance and ElectricalConductance, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCapacitance and ElectricalConductance
+     */
+    public final Duration divide(final ElectricalConductance v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -149,15 +180,27 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
      */
     public static class Unit extends AbstractUnit<ElectricalCapacitance.Unit>
     {
-        /** The dimensions of electrical capacitance: s^4.A^2/kg.m^2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, -1, -2, 4, 2, 0, 0, 0});
+        /** The dimensions of electrical capacitance: s^4.A^2/kg.m^2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("s4A2/kgm2");
 
         /** farad. */
         public static final ElectricalCapacitance.Unit FARAD =
                 new ElectricalCapacitance.Unit("F", "farad", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalCapacitance.Unit SI = FARAD;
+        public static final ElectricalCapacitance.Unit SI = FARAD.generateSiPrefixes(false, false);
+
+        /** mF. */
+        public static final ElectricalCapacitance.Unit MILLIFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "mF");
+
+        /** uF. */
+        public static final ElectricalCapacitance.Unit MICROFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "muF");
+
+        /** nF. */
+        public static final ElectricalCapacitance.Unit NANOFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "nF");
+
+        /** pF. */
+        public static final ElectricalCapacitance.Unit PICOFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "pF");
 
         /**
          * Create a new ElectricalCapacitance unit.

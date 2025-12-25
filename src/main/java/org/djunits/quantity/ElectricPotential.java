@@ -19,29 +19,29 @@ import org.djunits.unit.system.UnitSystem;
  * @author Alexander Verbraeck
  */
 
-public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, ElectricalPotential.Unit>
+public class ElectricPotential extends Quantity.Relative<ElectricPotential, ElectricPotential.Unit>
 {
     /** Constant with value zero. */
-    public static final ElectricalPotential ZERO = ElectricalPotential.ofSi(0.0);
+    public static final ElectricPotential ZERO = ElectricPotential.ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ElectricalPotential ONE = ElectricalPotential.ofSi(1.0);
+    public static final ElectricPotential ONE = ElectricPotential.ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ElectricalPotential NaN = ElectricalPotential.ofSi(Double.NaN);
+    public static final ElectricPotential NaN = ElectricPotential.ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ElectricalPotential POSITIVE_INFINITY = ElectricalPotential.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricPotential POSITIVE_INFINITY = ElectricPotential.ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ElectricalPotential NEGATIVE_INFINITY = ElectricalPotential.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricPotential NEGATIVE_INFINITY = ElectricPotential.ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ElectricalPotential POS_MAXVALUE = ElectricalPotential.ofSi(Double.MAX_VALUE);
+    public static final ElectricPotential POS_MAXVALUE = ElectricPotential.ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ElectricalPotential NEG_MAXVALUE = ElectricalPotential.ofSi(-Double.MAX_VALUE);
+    public static final ElectricPotential NEG_MAXVALUE = ElectricPotential.ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 500L;
@@ -51,7 +51,7 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public ElectricalPotential(final double value, final ElectricalPotential.Unit unit)
+    public ElectricPotential(final double value, final ElectricPotential.Unit unit)
     {
         super(value, unit);
     }
@@ -61,18 +61,18 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public ElectricalPotential(final double value, final String abbreviation)
+    public ElectricPotential(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(ElectricalPotential.Unit.class, abbreviation));
+        this(value, Units.resolve(ElectricPotential.Unit.class, abbreviation));
     }
 
     /**
      * Construct AbsorbedDose quantity.
      * @param value Scalar from which to construct this instance
      */
-    public ElectricalPotential(final ElectricalPotential value)
+    public ElectricPotential(final ElectricPotential value)
     {
-        super(value.si(), ElectricalPotential.Unit.SI);
+        super(value.si(), ElectricPotential.Unit.SI);
         setDisplayUnit(value.getDisplayUnit());
     }
 
@@ -81,13 +81,13 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * @param si the si value
      * @return the AbsorbedDose instance based on an SI value
      */
-    public static ElectricalPotential ofSi(final double si)
+    public static ElectricPotential ofSi(final double si)
     {
-        return new ElectricalPotential(si, ElectricalPotential.Unit.SI);
+        return new ElectricPotential(si, ElectricPotential.Unit.SI);
     }
 
     @Override
-    public ElectricalPotential instantiate(final double si)
+    public ElectricPotential instantiate(final double si)
     {
         return ofSi(si);
     }
@@ -95,7 +95,7 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
     @Override
     public SIUnit siUnit()
     {
-        return ElectricalPotential.Unit.SI_UNIT;
+        return ElectricPotential.Unit.SI_UNIT;
     }
 
     /**
@@ -107,7 +107,7 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static ElectricalPotential valueOf(final String text)
+    public static ElectricPotential valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
     }
@@ -120,7 +120,7 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static ElectricalPotential of(final double value, final String unitString)
+    public static ElectricPotential of(final double value, final String unitString)
     {
         return Quantity.of(value, unitString, ZERO);
     }
@@ -130,7 +130,7 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * @param v quantity
      * @return quantity as a division of AbsorbedDose and AbsorbedDose
      */
-    public final Dimensionless divide(final ElectricalPotential v)
+    public final Dimensionless divide(final ElectricPotential v)
     {
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
@@ -147,32 +147,32 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalPotential.Unit>
+    public static class Unit extends AbstractUnit<ElectricPotential.Unit>
     {
         /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
 
         /** Gray. */
-        public static final ElectricalPotential.Unit GRAY =
-                new ElectricalPotential.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricPotential.Unit GRAY =
+                new ElectricPotential.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalPotential.Unit SI = GRAY;
+        public static final ElectricPotential.Unit SI = GRAY;
 
         /** mGy. */
-        public static final ElectricalPotential.Unit MILLIGRAY =
-                new ElectricalPotential.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+        public static final ElectricPotential.Unit MILLIGRAY =
+                new ElectricPotential.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
 
         /** &#181;Gy. */
-        public static final ElectricalPotential.Unit MICROGRAY = new ElectricalPotential.Unit(List.of("muGy"), "\u03BCGy",
+        public static final ElectricPotential.Unit MICROGRAY = new ElectricPotential.Unit(List.of("muGy"), "\u03BCGy",
                 "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
 
         /** erg/g. */
-        public static final ElectricalPotential.Unit ERG_PER_GRAM =
-                new ElectricalPotential.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        public static final ElectricPotential.Unit ERG_PER_GRAM =
+                new ElectricPotential.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
 
         /** rad. */
-        public static final ElectricalPotential.Unit RAD = new ElectricalPotential.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final ElectricPotential.Unit RAD = new ElectricPotential.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
 
         /**
          * Create a new AbsorbedDose unit.
@@ -218,7 +218,7 @@ public class ElectricalPotential extends Quantity.Relative<ElectricalPotential, 
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new ElectricalPotential.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new ElectricPotential.Unit(textualAbbreviations, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
