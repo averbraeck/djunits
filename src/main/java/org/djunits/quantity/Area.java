@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Area as a length x length. <br>
+ * Area is a measure of a two-dimensional surface, expressed in square meters (m2). <br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -232,7 +232,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("m2");
 
         /** Square meter. */
-        public static final Area.Unit M2 = new Area.Unit("m^2", "square meter", 1.0, UnitSystem.SI_BASE);
+        public static final Area.Unit M2 = new Area.Unit("m2", "square meter", 1.0, UnitSystem.SI_BASE);
 
         /** Square meter. */
         public static final Area.Unit SQUARE_METER = M2;
@@ -241,49 +241,49 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
         public static final Area.Unit SI = M2.generateSiPrefixes(false, false);
 
         /** Square decameter. */
-        public static final Area.Unit DAM2 = Units.resolve(Area.Unit.class, "dam^2");
+        public static final Area.Unit DAM2 = Units.resolve(Area.Unit.class, "dam2");
 
         /** Square hectometer. */
-        public static final Area.Unit HM2 = Units.resolve(Area.Unit.class, "hm^2");
+        public static final Area.Unit HM2 = Units.resolve(Area.Unit.class, "hm2");
 
         /** Square kilometer. */
-        public static final Area.Unit KM2 = Units.resolve(Area.Unit.class, "km^2");
+        public static final Area.Unit KM2 = Units.resolve(Area.Unit.class, "km2");
 
         /** Square kilometer. */
         public static final Area.Unit SQUARE_KM = KM2;
 
         /** Square decimeter. */
-        public static final Area.Unit DM2 = Units.resolve(Area.Unit.class, "dm^2");
+        public static final Area.Unit DM2 = Units.resolve(Area.Unit.class, "dm2");
 
         /** Square decimeter. */
         public static final Area.Unit SQUARE_DM = DM2;
 
         /** Square centimeter. */
-        public static final Area.Unit CM2 = Units.resolve(Area.Unit.class, "cm^2");
+        public static final Area.Unit CM2 = Units.resolve(Area.Unit.class, "cm2");
 
         /** Square centimeter. */
         public static final Area.Unit SQUARE_CM = CM2;
 
         /** Square millimeter. */
-        public static final Area.Unit MM2 = Units.resolve(Area.Unit.class, "mm^2");
+        public static final Area.Unit MM2 = Units.resolve(Area.Unit.class, "mm2");
 
         /** Square millimeter. */
         public static final Area.Unit SQUARE_MM = MM2;
 
         /** Square micrometer. */
-        public static final Area.Unit MUM2 = Units.resolve(Area.Unit.class, "mum^2");
+        public static final Area.Unit MUM2 = Units.resolve(Area.Unit.class, "mum2");
 
         /** Square nanometer. */
-        public static final Area.Unit NM2 = Units.resolve(Area.Unit.class, "nm^2");
+        public static final Area.Unit NM2 = Units.resolve(Area.Unit.class, "nm2");
 
         /** Square picometer. */
-        public static final Area.Unit PM2 = Units.resolve(Area.Unit.class, "pm^2");
+        public static final Area.Unit PM2 = Units.resolve(Area.Unit.class, "pm2");
 
         /** Square attometer. */
-        public static final Area.Unit AM2 = Units.resolve(Area.Unit.class, "am^2");
+        public static final Area.Unit AM2 = Units.resolve(Area.Unit.class, "am2");
 
         /** Square femtometer. */
-        public static final Area.Unit FM2 = Units.resolve(Area.Unit.class, "fm^2");
+        public static final Area.Unit FM2 = Units.resolve(Area.Unit.class, "fm2");
 
         /** centiare. */
         public static final Area.Unit CENTIARE = new Area.Unit("ca", "centiare", 1.0, UnitSystem.OTHER);
@@ -294,25 +294,25 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
         /** hectare. */
         public static final Area.Unit HECTARE = new Area.Unit("ha", "hectare", 100.0 * 100.0, UnitSystem.OTHER);
 
-        /** mile^2. */
+        /** mile2. */
         public static final Area.Unit SQUARE_MILE =
-                new Area.Unit("mi^2", "square mile", Units.const_mi * Units.const_mi, UnitSystem.IMPERIAL);
+                new Area.Unit("mi2", "square mile", Units.const_mi * Units.const_mi, UnitSystem.IMPERIAL);
 
-        /** Nautical mile^2. */
+        /** Nautical mile2. */
         public static final Area.Unit SQUARE_NM =
-                new Area.Unit("NM^2", "square nautical mile", Units.const_NM * Units.const_NM, UnitSystem.OTHER);
+                new Area.Unit("NM2", "square nautical mile", Units.const_NM * Units.const_NM, UnitSystem.OTHER);
 
-        /** ft^2. */
+        /** ft2. */
         public static final Area.Unit SQUARE_FOOT =
-                new Area.Unit("ft^2", "square foot", Units.const_ft * Units.const_ft, UnitSystem.IMPERIAL);
+                new Area.Unit("ft2", "square foot", Units.const_ft * Units.const_ft, UnitSystem.IMPERIAL);
 
-        /** in^2. */
+        /** in2. */
         public static final Area.Unit SQUARE_INCH =
-                new Area.Unit("in^2", "square inch", Units.const_in * Units.const_in, UnitSystem.IMPERIAL);
+                new Area.Unit("in2", "square inch", Units.const_in * Units.const_in, UnitSystem.IMPERIAL);
 
-        /** yd^2. */
+        /** yd2. */
         public static final Area.Unit SQUARE_YARD =
-                new Area.Unit("yd^2", "square yard", Units.const_yd * Units.const_yd, UnitSystem.IMPERIAL);
+                new Area.Unit("yd2", "square yard", Units.const_yd * Units.const_yd, UnitSystem.IMPERIAL);
 
         /** acre (international) defined as 1/640 square mile or 4840 square yards. */
         public static final Area.Unit ACRE =

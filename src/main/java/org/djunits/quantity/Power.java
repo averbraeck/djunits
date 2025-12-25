@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Power is the rate of energy transfer or work done per unit time, measured in watts (W).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -46,7 +46,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a Power quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +56,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a Power quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +66,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct Power quantity.
      * @param value Scalar from which to construct this instance
      */
     public Power(final Power value)
@@ -76,9 +76,9 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a Power instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the Power instance based on an SI value
      */
     public static Power ofSi(final double si)
     {
@@ -98,10 +98,10 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
+     * Returns a Power representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a Power
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +112,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a Power based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,9 +125,9 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of Power and Power, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of Power and Power
      */
     public final Dimensionless divide(final Power v)
     {
@@ -139,7 +139,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Power.Unit encodes the units for the rate of energy transfer or work done per unit time.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,30 +148,17 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
      */
     public static class Unit extends AbstractUnit<Power.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of power: kgm2/s3. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3");
 
-        /** Gray. */
-        public static final Power.Unit GRAY = new Power.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Watt. */
+        public static final Power.Unit WATT = new Power.Unit("W", "watt", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Power.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final Power.Unit MILLIGRAY = new Power.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final Power.Unit MICROGRAY =
-                new Power.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final Power.Unit ERG_PER_GRAM = new Power.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final Power.Unit RAD = new Power.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final Power.Unit SI = WATT.generateSiPrefixes(false, false);
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new Power unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

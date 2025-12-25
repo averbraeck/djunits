@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Torque is a measure of rotational force about an axis, measured in newton meters (Nm).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -46,7 +46,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a Torque quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +56,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a Torque quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +66,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct Torque quantity.
      * @param value Scalar from which to construct this instance
      */
     public Torque(final Torque value)
@@ -76,9 +76,9 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a Torque instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the Torque instance based on an SI value
      */
     public static Torque ofSi(final double si)
     {
@@ -98,10 +98,10 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
+     * Returns a Torque representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a Torque
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +112,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a Torque based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,9 +125,9 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of Torque and Torque, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of Torque and Torque
      */
     public final Dimensionless divide(final Torque v)
     {
@@ -139,7 +139,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Torque.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,30 +148,17 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
      */
     public static class Unit extends AbstractUnit<Torque.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the absorbed dose: kgm2/s2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2");
 
-        /** Gray. */
-        public static final Torque.Unit GRAY = new Torque.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Newton meter. */
+        public static final Torque.Unit NEWTON_METER = new Torque.Unit("Nm", "newton meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Torque.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final Torque.Unit MILLIGRAY = new Torque.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final Torque.Unit MICROGRAY =
-                new Torque.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final Torque.Unit ERG_PER_GRAM = new Torque.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final Torque.Unit RAD = new Torque.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final Torque.Unit SI = NEWTON_METER;
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new Torque unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

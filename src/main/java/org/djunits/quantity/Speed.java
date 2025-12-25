@@ -14,8 +14,7 @@ import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * According to <a href="http://en.wikipedia.org/wiki/Velocity">Wikipedia</a>: Speed describes only how fast an object is
- * moving, whereas velocity gives both how fast and in what direction the object is moving.<br>
+ * Speed is the rate of change of position over time.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -283,7 +282,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
     /******************************************************************************************************/
 
     /**
-     * Speed.Unit encodes the units of speed.<br>
+     * Speed.Unit encodes the units of the rate of change of a position over time.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -293,8 +292,8 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
     @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Speed.Unit>
     {
-        /** The dimensions of Speed: m/s [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 1, -1, 0, 0, 0, 0});
+        /** The dimensions of Speed: m/s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("m/s");
 
         /** The SI or BASE unit. */
         public static final Speed.Unit SI = Units.meter_per_second;

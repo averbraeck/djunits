@@ -14,7 +14,8 @@ import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * Duration quantity to encode a <i>relative</i> amount of time. The Time quantity encodes an absolute time instant.<br>
+ * Duration is the interval of time between two events, measured in seconds (s). This quantity encodes a <i>relative</i> amount
+ * of time. The Time quantity encodes an absolute time instant.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is

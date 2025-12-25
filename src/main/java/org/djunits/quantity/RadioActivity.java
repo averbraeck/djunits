@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * AbsorbedDose (of ionizing radiation) quantity.<br>
+ * Radioactivity is the rate of nuclear decay events, measured in becquerels (Bq).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -46,7 +46,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit.
+     * Instantiate a RadioActivity quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +56,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     }
 
     /**
-     * Instantiate a AbsorbedDose quantity with a unit, expressed as a String.
+     * Instantiate a RadioActivity quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +66,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     }
 
     /**
-     * Construct AbsorbedDose quantity.
+     * Construct RadioActivity quantity.
      * @param value Scalar from which to construct this instance
      */
     public RadioActivity(final RadioActivity value)
@@ -76,9 +76,9 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     }
 
     /**
-     * Return a AbsorbedDose instance based on an SI value.
+     * Return a RadioActivity instance based on an SI value.
      * @param si the si value
-     * @return the AbsorbedDose instance based on an SI value
+     * @return the RadioActivity instance based on an SI value
      */
     public static RadioActivity ofSi(final double si)
     {
@@ -98,10 +98,10 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     }
 
     /**
-     * Returns a AbsorbedDose representation of a textual representation of a value with a unit. The String representation that
+     * Returns a RadioActivity representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a AbsorbedDose
+     * @param text the textual representation to parse into a RadioActivity
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +112,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     }
 
     /**
-     * Returns a AbsorbedDose based on a value and the textual representation of the unit, which can be localized.
+     * Returns a RadioActivity based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,9 +125,9 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     }
 
     /**
-     * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
+     * Calculate the division of RadioActivity and RadioActivity, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of AbsorbedDose and AbsorbedDose
+     * @return quantity as a division of RadioActivity and RadioActivity
      */
     public final Dimensionless divide(final RadioActivity v)
     {
@@ -139,7 +139,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     /******************************************************************************************************/
 
     /**
-     * AbsorbedDose.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * RadioActivity.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -148,32 +148,18 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
      */
     public static class Unit extends AbstractUnit<RadioActivity.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of radioactivity: /s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("/s");
 
-        /** Gray. */
-        public static final RadioActivity.Unit GRAY = new RadioActivity.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        /** Becquerel. */
+        public static final RadioActivity.Unit BECQUEREL =
+                new RadioActivity.Unit("Bq", "becquerel", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final RadioActivity.Unit SI = GRAY;
-
-        /** mGy. */
-        public static final RadioActivity.Unit MILLIGRAY =
-                new RadioActivity.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
-
-        /** &#181;Gy. */
-        public static final RadioActivity.Unit MICROGRAY = new RadioActivity.Unit(List.of("muGy"), "\u03BCGy", "microgray",
-                new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
-
-        /** erg/g. */
-        public static final RadioActivity.Unit ERG_PER_GRAM =
-                new RadioActivity.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
-
-        /** rad. */
-        public static final RadioActivity.Unit RAD = new RadioActivity.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final RadioActivity.Unit SI = BECQUEREL;
 
         /**
-         * Create a new AbsorbedDose unit.
+         * Create a new RadioActivity unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit

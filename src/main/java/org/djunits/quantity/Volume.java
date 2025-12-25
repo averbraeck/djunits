@@ -14,7 +14,7 @@ import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * Volume as a length x length x length. <br>
+ * Volume is the amount of three-dimensional space occupied by matter, measured in cubic meters (m3). <br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -242,11 +242,14 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
     @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Volume.Unit>
     {
-        /** The dimensions of Volume: m3 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 3, 0, 0, 0, 0, 0});
+        /** The dimensions of Volume: m3. */
+        public static final SIUnit SI_UNIT = SIUnit.of("m3");
+
+        /** Cubic meter. */
+        public static final Volume.Unit CUBIC_METER = new Volume.Unit("m3", "cubic meter", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Volume.Unit SI = Units.m3;
+        public static final Volume.Unit SI = CUBIC_METER;
 
         /**
          * Create a new Volume unit.
