@@ -3,6 +3,7 @@ package org.djunits.value;
 import java.io.Serializable;
 
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 
 /**
@@ -41,6 +42,7 @@ public interface Value<T extends Value<T, U>, U extends UnitInterface<U>> extend
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnitString the textual representation of the new display unit of this value
      * @return the instance for method chaining
+     * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      */
     default T setDisplayUnit(final String newUnitString)
     {
