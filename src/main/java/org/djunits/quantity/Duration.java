@@ -163,9 +163,9 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricalCurrent
      */
-    public final ElectricalCharge times(final ElectricalCurrent v)
+    public final ElectricCharge times(final ElectricCurrent v)
     {
-        return new ElectricalCharge(this.si() * v.si(), ElectricalCharge.Unit.SI);
+        return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
     }
 
     /**
@@ -223,7 +223,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricalPotential
      */
-    public final MagneticFlux times(final ElectricalPotential v)
+    public final MagneticFlux times(final ElectricPotential v)
     {
         return new MagneticFlux(this.si() * v.si(), MagneticFlux.Unit.SI);
     }
@@ -289,8 +289,8 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
     @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Duration.Unit>
     {
-        /** The dimensions of duration: s [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 1, 0, 0, 0, 0});
+        /** The dimensions of duration: s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("s");
 
         /** second. */
         public static final Duration.Unit SECOND = new Duration.Unit("s", "second", 1.0, UnitSystem.SI_BASE);

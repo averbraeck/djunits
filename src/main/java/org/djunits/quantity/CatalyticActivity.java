@@ -179,7 +179,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     public static class Unit extends AbstractUnit<CatalyticActivity.Unit>
     {
         /** The dimensions of catalytic activity: mol/s [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, -1, 0, 0, 1, 0});
+        public static final SIUnit SI_UNIT = SIUnit.of("mol/s");
 
         /** katal. */
         public static final CatalyticActivity.Unit KATAL =

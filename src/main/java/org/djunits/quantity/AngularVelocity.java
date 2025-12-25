@@ -149,8 +149,8 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
      */
     public static class Unit extends AbstractUnit<AngularVelocity.Unit>
     {
-        /** The dimensions of AngularVelocity: rad/s [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {1, 0, 0, 0, -1, 0, 0, 0, 0});
+        /** The dimensions of AngularVelocity: rad/s. */
+        public static final SIUnit SI_UNIT = SIUnit.of("rad/s");
 
         /** radian per second. */
         public static final AngularVelocity.Unit RADIAN_PER_SECOND = new AngularVelocity.Unit(List.of("rad/s", "rad/sec"),

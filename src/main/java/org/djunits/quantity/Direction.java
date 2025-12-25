@@ -176,8 +176,8 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
      */
     public static class Unit extends AbstractUnit<Direction.Unit>
     {
-        /** The dimensions of direction: rad [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {1, 0, 0, 0, 0, 0, 0, 0, 0});
+        /** The dimensions of direction: rad. */
+        public static final SIUnit SI_UNIT = SIUnit.of("rad");
 
         /** The unit for direction with East as the origin and radians as the displacement. */
         public static final Direction.Unit EAST_RADIAN = new Direction.Unit(List.of("rad(E)"), "rad(E)", "radians (East)",

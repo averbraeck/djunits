@@ -192,8 +192,8 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
      */
     public static class Unit extends AbstractUnit<Angle.Unit>
     {
-        /** The dimensions of Angle: rad [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {1, 0, 0, 0, 0, 0, 0, 0, 0});
+        /** The dimensions of Angle: rad. */
+        public static final SIUnit SI_UNIT = SIUnit.of("rad");
 
         /** radian. */
         public static final Angle.Unit RADIAN =

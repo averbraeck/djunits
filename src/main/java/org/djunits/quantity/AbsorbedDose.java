@@ -148,8 +148,8 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      */
     public static class Unit extends AbstractUnit<AbsorbedDose.Unit>
     {
-        /** The dimensions of the absorbed dose: m2/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, -2, 0, 0, 0, 0});
+        /** The dimensions of the absorbed dose: m2/s2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("m2/s2");
 
         /** Gray. */
         public static final AbsorbedDose.Unit GRAY = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);

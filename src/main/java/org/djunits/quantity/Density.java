@@ -169,8 +169,8 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
      */
     public static class Unit extends AbstractUnit<Density.Unit>
     {
-        /** The dimensions of the absorbed dose: kg/m3 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 1, -3, 0, 0, 0, 0, 0});
+        /** The dimensions of the absorbed dose: kg/m3. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kg/m3");
 
         /** kg/m^3. */
         public static final Density.Unit KG_PER_METER_3 = new Density.Unit(List.of("kg/m3", "kg/m^3"), "kg/m3",

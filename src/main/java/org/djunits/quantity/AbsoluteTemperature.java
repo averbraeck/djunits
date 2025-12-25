@@ -137,8 +137,8 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
      */
     public static class Unit extends AbstractUnit<AbsoluteTemperature.Unit>
     {
-        /** The dimensions of AbsoluteTemperature: K [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 1, 0, 0});
+        /** The dimensions of AbsoluteTemperature: K. */
+        public static final SIUnit SI_UNIT = SIUnit.of("K");
 
         /** The default unit for temperature is Kelvin. */
         public static final AbsoluteTemperature.Unit KELVIN =

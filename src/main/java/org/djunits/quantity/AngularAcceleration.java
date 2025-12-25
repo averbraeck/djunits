@@ -179,8 +179,8 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
      */
     public static class Unit extends AbstractUnit<AngularAcceleration.Unit>
     {
-        /** The dimensions of AngularAcceleration: rad/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {1, 0, 0, 0, -2, 0, 0, 0, 0});
+        /** The dimensions of AngularAcceleration: rad/s2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("rad/s2");
 
         /** radian per second squared. */
         public static final AngularAcceleration.Unit RADIAN_PER_SECOND_SQUARED =

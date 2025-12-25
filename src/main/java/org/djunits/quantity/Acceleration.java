@@ -199,8 +199,8 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
      */
     public static class Unit extends AbstractUnit<Acceleration.Unit>
     {
-        /** The dimensions of Acceleration: m/s2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 1, -2, 0, 0, 0, 0});
+        /** The dimensions of Acceleration: m/s2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("m/s2");
 
         /** m/s2. */
         public static final Acceleration.Unit METER_PER_SECOND2 =

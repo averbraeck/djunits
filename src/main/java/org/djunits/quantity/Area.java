@@ -228,8 +228,8 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      */
     public static class Unit extends AbstractUnit<Area.Unit>
     {
-        /** The dimensions of Area: m2 [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 2, 0, 0, 0, 0, 0});
+        /** The dimensions of Area: m2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("m2");
 
         /** Square meter. */
         public static final Area.Unit M2 = new Area.Unit("m^2", "square meter", 1.0, UnitSystem.SI_BASE);

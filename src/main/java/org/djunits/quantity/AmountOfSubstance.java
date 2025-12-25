@@ -168,8 +168,8 @@ public class AmountOfSubstance extends Quantity.Relative<AmountOfSubstance, Amou
      */
     public static class Unit extends AbstractUnit<AmountOfSubstance.Unit>
     {
-        /** The dimensions of AmountOfSubstance: mol [rad, sr, kg, m, s, A, K, mol, cd]. */
-        public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 1, 0});
+        /** The dimensions of AmountOfSubstance: mol. */
+        public static final SIUnit SI_UNIT = SIUnit.of("mol");
 
         /** Mole. */
         public static final AmountOfSubstance.Unit MOLE = new AmountOfSubstance.Unit("mol", "mole", 1.0, UnitSystem.SI_BASE);
