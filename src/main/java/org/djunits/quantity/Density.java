@@ -5,7 +5,6 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -173,15 +172,15 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("kg/m3");
 
         /** kg/m^3. */
-        public static final Density.Unit KG_PER_METER_3 = new Density.Unit(List.of("kg/m3", "kg/m^3"), "kg/m3",
-                "kilogram per cubic meter", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+        public static final Density.Unit KG_PER_METER_3 =
+                new Density.Unit("kg/m3", "kilogram per cubic meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final Density.Unit SI = KG_PER_METER_3;
 
         /** g/cm^3. */
-        public static final Density.Unit GRAM_PER_CENTIMETER_3 = KG_PER_METER_3.deriveUnit(List.of("g/cm3", "g/cm^3"), "g/cm3",
-                "gram per cubic centimeter", 1.0E3, UnitSystem.SI_DERIVED);
+        public static final Density.Unit GRAM_PER_CENTIMETER_3 =
+                KG_PER_METER_3.deriveUnit("g/cm3", "gram per cubic centimeter", 1.0E3, UnitSystem.SI_DERIVED);
 
         /**
          * Create a new Density unit.

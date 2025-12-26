@@ -5,7 +5,6 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -203,47 +202,39 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
         public static final SIUnit SI_UNIT = SIUnit.of("m/s2");
 
         /** m/s2. */
-        public static final Acceleration.Unit METER_PER_SECOND2 =
-                new Acceleration.Unit(List.of("m/s2", "m/s^2", "m/sec2", "m/sec^2"), "m/s2", "meter per second squared",
-                        IdentityScale.SCALE, UnitSystem.SI_BASE);
+        public static final Acceleration.Unit METER_PER_SECOND_2 =
+                new Acceleration.Unit("m/s2", "meter per second squared", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Acceleration.Unit SI = METER_PER_SECOND2;
+        public static final Acceleration.Unit SI = METER_PER_SECOND_2;
 
         /** km/h2. */
-        public static final Acceleration.Unit KM_PER_HOUR2 =
-                new Acceleration.Unit(List.of("km/h2", "km/h^2", "km/hour2", "km/hour^2"), "km/h2",
-                        "kilometer per hour squared", new LinearScale(1000.0, 3600.0 * 3600.0), UnitSystem.SI_ACCEPTED);
+        public static final Acceleration.Unit KM_PER_HOUR_2 = new Acceleration.Unit("km/h2", "kilometer per hour squared",
+                1000.0 / (3600.0 * 3600.0), UnitSystem.SI_ACCEPTED);
 
         /** ft/s2. */
-        public static final Acceleration.Unit FOOT_PER_SECOND2 =
-                new Acceleration.Unit(List.of("ft/s2", "ft/s^2", "foot/sec2", "foot/sec^2"), "ft/s2", "foot per second squared",
-                        new LinearScale(Units.CONST_FT), UnitSystem.IMPERIAL);
+        public static final Acceleration.Unit FOOT_PER_SECOND_2 =
+                new Acceleration.Unit("ft/s2", "foot per second squared", Units.CONST_FT, UnitSystem.IMPERIAL);
 
         /** in/s2. */
-        public static final Acceleration.Unit INCH_PER_SECOND2 =
-                new Acceleration.Unit(List.of("in/s2", "in/s^2", "inch/sec2", "inch/sec^2"), "in/s2", "inch per second squared",
-                        new LinearScale(Units.CONST_IN), UnitSystem.IMPERIAL);
+        public static final Acceleration.Unit INCH_PER_SECOND_2 =
+                new Acceleration.Unit("in/s2", "inch per second squared", Units.CONST_IN, UnitSystem.IMPERIAL);
 
         /** mi/h2. */
-        public static final Acceleration.Unit MILE_PER_HOUR2 =
-                new Acceleration.Unit(List.of("mi/h2", "mi/h^2", "mile/hour2", "mile/hour^2"), "mi/h2", "mile per hour squared",
-                        new LinearScale(Units.CONST_MI, 3600.0 * 3600.0), UnitSystem.IMPERIAL);
+        public static final Acceleration.Unit MILE_PER_HOUR_2 = new Acceleration.Unit("mi/h2", "mile per hour squared",
+                Units.CONST_MI / (3600.0 * 3600.0), UnitSystem.IMPERIAL);
 
         /** mi/s2. */
-        public static final Acceleration.Unit MILE_PER_SECOND2 =
-                new Acceleration.Unit(List.of("mi/s2", "mi/s^2", "mile/sec2", "mile/sec^2"), "mi/s2", "mile per second squared",
-                        new LinearScale(Units.CONST_MI), UnitSystem.IMPERIAL);
+        public static final Acceleration.Unit MILE_PER_SECOND_2 =
+                new Acceleration.Unit("mi/s2", "mile per second squared", Units.CONST_MI, UnitSystem.IMPERIAL);
 
         /** kt/s = Nautical Mile / h / s. */
         public static final Acceleration.Unit KNOT_PER_SECOND =
-                new Acceleration.Unit(List.of("kt/s", "kt/sec", "knot/s", "knot/sec"), "kt/s", "knot per second",
-                        new LinearScale(Units.CONST_NM, 3600.0), UnitSystem.OTHER);
+                new Acceleration.Unit("kt/s", "knot per second", Units.CONST_NM / 3600.0, UnitSystem.OTHER);
 
         /** mi/h/s. */
         public static final Acceleration.Unit MILE_PER_HOUR_PER_SECOND =
-                new Acceleration.Unit(List.of("mi/h/s", "mi/hr/sec", "mile/hour/sec"), "mi/h/s", "mile per hour per second",
-                        new LinearScale(Units.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
+                new Acceleration.Unit("mi/h/s", "mile per hour per second", Units.CONST_MI / 3600.0, UnitSystem.IMPERIAL);
 
         /** The standard gravity. */
         public static final Acceleration.Unit STANDARD_GRAVITY =

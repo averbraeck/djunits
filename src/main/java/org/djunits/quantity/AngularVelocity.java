@@ -5,7 +5,6 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -153,39 +152,35 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s");
 
         /** radian per second. */
-        public static final AngularVelocity.Unit RADIAN_PER_SECOND = new AngularVelocity.Unit(List.of("rad/s", "rad/sec"),
-                "rad/s", "radians per second", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+        public static final AngularVelocity.Unit RADIAN_PER_SECOND =
+                new AngularVelocity.Unit("rad/s", "radians per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final AngularVelocity.Unit SI = RADIAN_PER_SECOND;
 
         /** degree per second. */
-        public static final AngularVelocity.Unit DEGREE_PER_SECOND =
-                RADIAN_PER_SECOND.deriveUnit(List.of("deg/s", "dg/s", "dg/sec", "deg/sec"), "\u00b0/s", "degree per second",
-                        Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularVelocity.Unit DEGREE_PER_SECOND = RADIAN_PER_SECOND.deriveUnit(List.of("deg/s"), "\u00b0/s",
+                "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second. */
-        public static final AngularVelocity.Unit ARCMINUTE_PER_SECOND = DEGREE_PER_SECOND.deriveUnit(
-                List.of("'/s", "'/sec", "arcmin/s", "arcmin/sec"), "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit ARCMINUTE_PER_SECOND = DEGREE_PER_SECOND.deriveUnit(List.of("'/s", "arcmin/s"),
+                "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second. */
-        public static final AngularVelocity.Unit ARCSECOND_PER_SECOND =
-                DEGREE_PER_SECOND.deriveUnit(List.of("\"/s", "\"/sec", "arcsec/s", "arcsec/sec"), "\"/s",
-                        "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit ARCSECOND_PER_SECOND = DEGREE_PER_SECOND
+                .deriveUnit(List.of("\"/s", "arcsec/s"), "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second. */
-        public static final AngularVelocity.Unit GRAD_PER_SECOND = RADIAN_PER_SECOND.deriveUnit(List.of("grad/s", "grad/sec"),
-                "grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit GRAD_PER_SECOND =
+                RADIAN_PER_SECOND.deriveUnit("grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second. */
-        public static final AngularVelocity.Unit CENTESIMAL_ARCMINUTE_PER_SECOND =
-                GRAD_PER_SECOND.deriveUnit(List.of("c'/s", "c'/sec", "cdm/s", "cdm/sec"), "c'/s",
-                        "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit CENTESIMAL_ARCMINUTE_PER_SECOND = GRAD_PER_SECOND
+                .deriveUnit(List.of("c'/s", "cdm/s"), "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second. */
-        public static final AngularVelocity.Unit CENTESIMAL_ARCSECOND_PER_SECOND =
-                GRAD_PER_SECOND.deriveUnit(List.of("c\"/s", "c\"/sec", "cds/s", "cds/sec"), "c\"/s",
-                        "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit CENTESIMAL_ARCSECOND_PER_SECOND = GRAD_PER_SECOND.deriveUnit(
+                List.of("c\"/s", "cds/s"), "c\"/s", "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new AngularVelocity unit.

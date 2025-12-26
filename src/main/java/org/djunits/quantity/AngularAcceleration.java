@@ -5,7 +5,6 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -185,40 +184,35 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
 
         /** radian per second squared. */
         public static final AngularAcceleration.Unit RADIAN_PER_SECOND_SQUARED =
-                new AngularAcceleration.Unit(List.of("rad/s2", "rad/sec2"), "rad/s2", "radians per second squared",
-                        IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+                new AngularAcceleration.Unit("rad/s2", "radians per second squared", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final AngularAcceleration.Unit SI = RADIAN_PER_SECOND_SQUARED;
 
         /** degree per second squared. */
-        public static final AngularAcceleration.Unit DEGREE_PER_SECOND_SQUARED =
-                RADIAN_PER_SECOND_SQUARED.deriveUnit(List.of("deg/s2", "dg/s2", "dg/sec2", "deg/sec2"), "\u00b0/s2",
-                        "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularAcceleration.Unit DEGREE_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit(
+                List.of("deg/s2"), "\u00b0/s2", "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second squared. */
-        public static final AngularAcceleration.Unit ARCMINUTE_PER_SECOND_SQUARED =
-                DEGREE_PER_SECOND_SQUARED.deriveUnit(List.of("'/s2", "'/sec2", "arcmin/s2", "arcmin/sec2"), "'/s2",
-                        "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit ARCMINUTE_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED
+                .deriveUnit(List.of("'/s2", "arcmin/s2"), "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second squared. */
-        public static final AngularAcceleration.Unit ARCSECOND_PER_SECOND_SQUARED =
-                DEGREE_PER_SECOND_SQUARED.deriveUnit(List.of("\"/s2", "\"/sec2", "arcsec/s2", "arcsec/sec2"), "\"/s2",
-                        "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit ARCSECOND_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED.deriveUnit(
+                List.of("\"/s2", "arcsec/s2"), "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second squared. */
-        public static final AngularAcceleration.Unit GRAD_PER_SECOND_SQUARED =
-                RADIAN_PER_SECOND_SQUARED.deriveUnit(List.of("grad/s2", "grad/sec2"), "grad/s2", "gradian per second squared",
-                        2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit GRAD_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit("grad/s2",
+                "gradian per second squared", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second squared. */
         public static final AngularAcceleration.Unit CENTESIMAL_ARCMINUTE_PER_SECOND_SQUARED =
-                GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c'/s2", "c'/sec2", "cdm/s2", "cdm/sec2"), "c'/s2",
+                GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c'/s2", "cdm/s2"), "c'/s2",
                         "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second squared. */
         public static final AngularAcceleration.Unit CENTESIMAL_ARCSECOND_PER_SECOND_SQUARED =
-                GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c\"/s2", "c\"/sec2", "cds/s2", "cds/sec2"), "c\"/s2",
+                GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c\"/s2", "cds/s2"), "c\"/s2",
                         "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**

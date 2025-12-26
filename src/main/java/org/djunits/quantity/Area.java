@@ -232,52 +232,37 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("m2");
 
         /** Square meter. */
-        public static final Area.Unit M2 = new Area.Unit("m2", "square meter", 1.0, UnitSystem.SI_BASE);
-
-        /** Square meter. */
-        public static final Area.Unit SQUARE_METER = M2;
+        public static final Area.Unit SQUARE_METER = new Area.Unit("m2", "square meter", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Area.Unit SI = M2.generateSiPrefixes(false, false);
+        public static final Area.Unit SI = SQUARE_METER.generateSiPrefixes(false, false);
 
         /** Square decameter. */
-        public static final Area.Unit DAM2 = Units.resolve(Area.Unit.class, "dam2");
+        public static final Area.Unit SQUARE_DECAMETER = Units.resolve(Area.Unit.class, "dam2");
 
         /** Square hectometer. */
-        public static final Area.Unit HM2 = Units.resolve(Area.Unit.class, "hm2");
+        public static final Area.Unit SQUARE_HECTOMETER = Units.resolve(Area.Unit.class, "hm2");
 
         /** Square kilometer. */
-        public static final Area.Unit KM2 = Units.resolve(Area.Unit.class, "km2");
-
-        /** Square kilometer. */
-        public static final Area.Unit SQUARE_KM = KM2;
+        public static final Area.Unit SQUARE_KILOMETER = Units.resolve(Area.Unit.class, "km2");
 
         /** Square decimeter. */
-        public static final Area.Unit DM2 = Units.resolve(Area.Unit.class, "dm2");
-
-        /** Square decimeter. */
-        public static final Area.Unit SQUARE_DM = DM2;
+        public static final Area.Unit SQUARE_DECIMETER = Units.resolve(Area.Unit.class, "dm2");
 
         /** Square centimeter. */
-        public static final Area.Unit CM2 = Units.resolve(Area.Unit.class, "cm2");
-
-        /** Square centimeter. */
-        public static final Area.Unit SQUARE_CM = CM2;
+        public static final Area.Unit SQUARE_CENTIMETER = Units.resolve(Area.Unit.class, "cm2");
 
         /** Square millimeter. */
-        public static final Area.Unit MM2 = Units.resolve(Area.Unit.class, "mm2");
-
-        /** Square millimeter. */
-        public static final Area.Unit SQUARE_MM = MM2;
+        public static final Area.Unit SQUARE_MILLIMETER = Units.resolve(Area.Unit.class, "mm2");
 
         /** Square micrometer. */
-        public static final Area.Unit MUM2 = Units.resolve(Area.Unit.class, "mum2");
+        public static final Area.Unit SQUARE_MICROMETER = Units.resolve(Area.Unit.class, "mum2");
 
         /** Square nanometer. */
-        public static final Area.Unit NM2 = Units.resolve(Area.Unit.class, "nm2");
+        public static final Area.Unit SQUARE_NANOMETER = Units.resolve(Area.Unit.class, "nm2");
 
         /** Square picometer. */
-        public static final Area.Unit PM2 = Units.resolve(Area.Unit.class, "pm2");
+        public static final Area.Unit SQUARE_PICOMETER = Units.resolve(Area.Unit.class, "pm2");
 
         /** Square attometer. */
         public static final Area.Unit AM2 = Units.resolve(Area.Unit.class, "am2");
