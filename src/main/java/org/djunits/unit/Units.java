@@ -95,6 +95,12 @@ public final class Units
     /** Constant for pound (lb). */
     public static final double CONST_LB = 0.45359237;
     
+    /** Constant for short ton. */
+    public static final double CONST_TON_SHORT = 2000.0 * CONST_LB;
+    
+    /** Constant for long ton. */
+    public static final double CONST_TON_LONG = 2240.0 * CONST_LB;
+    
     /** Constant for the imperial gallon. */
     public static final double CONST_GALLON_IMP = 4.54609E-3;
 
