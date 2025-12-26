@@ -4,6 +4,7 @@ import org.djunits.old.quantity.Quantity;
 import org.djunits.old.unit.scale.IdentityScale;
 import org.djunits.old.unit.si.SIPrefixes;
 import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.unit.Units;
 
 /**
  * Standard acceleration unit based on distance and time.
@@ -59,7 +60,8 @@ public class AccelerationUnit extends Unit<AccelerationUnit>
                     "mi/h/s", "mi/hr/s", "mi/hour/s", "mi/h/sec", "mi/hr/sec", "mi/hour/sec");
 
     /** The standard gravity. */
-    public static final AccelerationUnit STANDARD_GRAVITY = SI.deriveLinear(9.80665, "g", "standard gravity", UnitSystem.OTHER);
+    public static final AccelerationUnit STANDARD_GRAVITY =
+            SI.deriveLinear(Units.CONST_GRAVITY, "g", "standard gravity", UnitSystem.OTHER);
 
     /** cm/s. */
     public static final AccelerationUnit GAL = SI.deriveLinear(factorLD("cm", "s"), "Gal", "gal", UnitSystem.CGS);
