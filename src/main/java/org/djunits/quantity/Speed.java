@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -295,8 +296,63 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
         /** The dimensions of Speed: m/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("m/s");
 
+        /** Meter per second. */
+        public static final Speed.Unit METER_PER_SECOND =
+                new Speed.Unit(List.of("m/s", "m/sec"), "m/s", "meter per second", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+
         /** The SI or BASE unit. */
-        public static final Speed.Unit SI = Units.meter_per_second;
+        public static final Speed.Unit SI = METER_PER_SECOND;
+
+        /** m/h. */
+        public static final Speed.Unit METER_PER_HOUR = new Speed.Unit(List.of("m/h", "m/hr", "m/hour"), "m/h",
+                "meter per hour", new LinearScale(1.0, 3600.0), UnitSystem.SI_ACCEPTED);
+
+        /** km/s. */
+        public static final Speed.Unit KILOMETER_PER_SECOND = new Speed.Unit(List.of("km/s", "km/sec"), "km/s",
+                "kilometer per second", new LinearScale(1000.0), UnitSystem.SI_ACCEPTED);
+
+        /** km/h. */
+        public static final Speed.Unit KILOMETER_PER_HOUR = new Speed.Unit(List.of("km/h", "km/hr", "km/hour"), "km/h",
+                "kilometer per hour", new LinearScale(1000.0, 3600.0), UnitSystem.SI_ACCEPTED);
+
+        /** in/s. */
+        public static final Speed.Unit INCH_PER_SECOND = new Speed.Unit(List.of("in/s", "in/sec", "inch/s", "inch/sec"), "in/s",
+                "inch per second", new LinearScale(Units.CONST_IN), UnitSystem.IMPERIAL);
+
+        /** in/min. */
+        public static final Speed.Unit INCH_PER_MINUTE = new Speed.Unit(List.of("in/min", "inch/min"), "in/min",
+                "inch per minute", new LinearScale(Units.CONST_IN, 60.0), UnitSystem.IMPERIAL);
+
+        /** in/h. */
+        public static final Speed.Unit INCH_PER_HOUR = new Speed.Unit(List.of("in/h", "in/hr", "in/hour", "inch/hour"), "in/h",
+                "inch per hour", new LinearScale(Units.CONST_IN, 3600.0), UnitSystem.IMPERIAL);
+
+        /** ft/s. */
+        public static final Speed.Unit FOOT_PER_SECOND = new Speed.Unit(List.of("ft/s", "ft/sec", "foot/s", "foot/sec"), "ft/s",
+                "foot per second", new LinearScale(Units.CONST_FT), UnitSystem.IMPERIAL);
+
+        /** ft/min. */
+        public static final Speed.Unit FOOT_PER_MINUTE = new Speed.Unit(List.of("ft/min", "foot/min"), "ft/min",
+                "foot per minute", new LinearScale(Units.CONST_FT, 60.0), UnitSystem.IMPERIAL);
+
+        /** ft/h. */
+        public static final Speed.Unit FOOT_PER_HOUR = new Speed.Unit(List.of("ft/h", "ft/hr", "ft/hour", "foot/hour"), "ft/h",
+                "foot per hour", new LinearScale(Units.CONST_FT, 3600.0), UnitSystem.IMPERIAL);
+
+        /** mi/s. */
+        public static final Speed.Unit MILE_PER_SECOND = new Speed.Unit(List.of("mi/s", "mi/sec", "mile/s", "mile/sec"), "mi/s",
+                "mile per second", new LinearScale(Units.CONST_MI), UnitSystem.IMPERIAL);
+
+        /** mi/min. */
+        public static final Speed.Unit MILE_PER_MINUTE = new Speed.Unit(List.of("mi/min", "mile/min"), "mi/min",
+                "mile per minute", new LinearScale(Units.CONST_MI, 60.0), UnitSystem.IMPERIAL);
+
+        /** mi/h. */
+        public static final Speed.Unit MILE_PER_HOUR = new Speed.Unit(List.of("mi/h", "mi/hr", "mi/hour", "mile/hour"), "mi/h",
+                "mile per hour", new LinearScale(Units.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
+
+        /** knot = Nautical Mile per hour. */
+        public static final Speed.Unit KNOT = new Speed.Unit("kt", "knot", Units.CONST_NM / 3600.0, UnitSystem.OTHER);
 
         /**
          * Create a new Speed unit.

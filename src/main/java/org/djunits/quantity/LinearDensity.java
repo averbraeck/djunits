@@ -151,7 +151,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
         /** The dimensions of linear density: kg/m. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/m");
 
-        /** Gray. */
+        /** Kilogram per meter. */
         public static final LinearDensity.Unit KILOGRAM_PER_METER =
                 new LinearDensity.Unit("kg/m", "kilogram per meter", 1.0, UnitSystem.SI_DERIVED);
 

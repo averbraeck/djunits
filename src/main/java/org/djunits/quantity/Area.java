@@ -296,27 +296,27 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
 
         /** mile2. */
         public static final Area.Unit SQUARE_MILE =
-                new Area.Unit("mi2", "square mile", Units.const_mi * Units.const_mi, UnitSystem.IMPERIAL);
+                new Area.Unit("mi2", "square mile", Units.CONST_MI * Units.CONST_MI, UnitSystem.IMPERIAL);
 
         /** Nautical mile2. */
         public static final Area.Unit SQUARE_NM =
-                new Area.Unit("NM2", "square nautical mile", Units.const_NM * Units.const_NM, UnitSystem.OTHER);
+                new Area.Unit("NM2", "square nautical mile", Units.CONST_NM * Units.CONST_NM, UnitSystem.OTHER);
 
         /** ft2. */
         public static final Area.Unit SQUARE_FOOT =
-                new Area.Unit("ft2", "square foot", Units.const_ft * Units.const_ft, UnitSystem.IMPERIAL);
+                new Area.Unit("ft2", "square foot", Units.CONST_FT * Units.CONST_FT, UnitSystem.IMPERIAL);
 
         /** in2. */
         public static final Area.Unit SQUARE_INCH =
-                new Area.Unit("in2", "square inch", Units.const_in * Units.const_in, UnitSystem.IMPERIAL);
+                new Area.Unit("in2", "square inch", Units.CONST_IN * Units.CONST_IN, UnitSystem.IMPERIAL);
 
         /** yd2. */
         public static final Area.Unit SQUARE_YARD =
-                new Area.Unit("yd2", "square yard", Units.const_yd * Units.const_yd, UnitSystem.IMPERIAL);
+                new Area.Unit("yd2", "square yard", Units.CONST_YD * Units.CONST_YD, UnitSystem.IMPERIAL);
 
         /** acre (international) defined as 1/640 square mile or 4840 square yards. */
         public static final Area.Unit ACRE =
-                new Area.Unit("ac", "acre", Units.const_mi * Units.const_mi / 640.0, UnitSystem.IMPERIAL);
+                new Area.Unit("ac", "acre", Units.CONST_MI * Units.CONST_MI / 640.0, UnitSystem.IMPERIAL);
 
         /**
          * Create a new Area unit.

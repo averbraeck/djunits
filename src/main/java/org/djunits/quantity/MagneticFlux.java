@@ -148,8 +148,8 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
      */
     public static class Unit extends AbstractUnit<MagneticFlux.Unit>
     {
-        /** The dimensions of the magnetic flux: kgm2/s2⋅A. */
-        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2⋅A");
+        /** The dimensions of the magnetic flux: kgm2/s2A. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2A");
 
         /** Weber. */
         public static final MagneticFlux.Unit WEBER = new MagneticFlux.Unit("Wb", "weber", 1.0, UnitSystem.SI_DERIVED);
