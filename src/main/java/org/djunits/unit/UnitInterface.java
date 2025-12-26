@@ -94,4 +94,5 @@ public interface UnitInterface<U extends UnitInterface<U>>
     {
         return getTextualAbbreviations().get(0);
     }
+
 }

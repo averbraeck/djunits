@@ -1,17 +1,53 @@
 package org.djunits.unit;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.djunits.quantity.AbsoluteTemperature;
+import org.djunits.quantity.AbsorbedDose;
+import org.djunits.quantity.Acceleration;
+import org.djunits.quantity.AmountOfSubstance;
+import org.djunits.quantity.Angle;
+import org.djunits.quantity.AngularAcceleration;
+import org.djunits.quantity.AngularVelocity;
+import org.djunits.quantity.CatalyticActivity;
+import org.djunits.quantity.Density;
 import org.djunits.quantity.Dimensionless;
+import org.djunits.quantity.Direction;
+import org.djunits.quantity.Duration;
+import org.djunits.quantity.ElectricCharge;
+import org.djunits.quantity.ElectricCurrent;
+import org.djunits.quantity.ElectricPotential;
+import org.djunits.quantity.ElectricalCapacitance;
+import org.djunits.quantity.ElectricalConductance;
+import org.djunits.quantity.ElectricalInductance;
+import org.djunits.quantity.ElectricalResistance;
+import org.djunits.quantity.Energy;
+import org.djunits.quantity.EquivalentDose;
+import org.djunits.quantity.FlowMass;
+import org.djunits.quantity.FlowVolume;
+import org.djunits.quantity.Force;
+import org.djunits.quantity.Frequency;
+import org.djunits.quantity.Illuminance;
 import org.djunits.quantity.Length;
+import org.djunits.quantity.LinearDensity;
+import org.djunits.quantity.LuminousFlux;
+import org.djunits.quantity.LuminousIntensity;
+import org.djunits.quantity.MagneticFlux;
+import org.djunits.quantity.MagneticFluxDensity;
+import org.djunits.quantity.Mass;
+import org.djunits.quantity.Momentum;
+import org.djunits.quantity.Position;
+import org.djunits.quantity.Power;
+import org.djunits.quantity.Pressure;
+import org.djunits.quantity.RadioActivity;
+import org.djunits.quantity.SolidAngle;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.Temperature;
+import org.djunits.quantity.Time;
+import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
-import org.djunits.unit.scale.IdentityScale;
-import org.djunits.unit.scale.LinearScale;
-import org.djunits.unit.system.UnitSystem;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -27,8 +63,6 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-@SuppressWarnings({"checkstyle:leftcurly", "checkstyle:rightcurly", "checkstyle:constantname", "checkstyle:whitespacearound",
-        "checkstyle:javadocvariable", "checkstyle:linelength"})
 public final class Units
 {
     /** Current map locale. */
@@ -38,164 +72,32 @@ public final class Units
     private static Map<String, String> localeTranslateMap = new LinkedHashMap<>();
 
     /** Map with all units per unit type. */
-    private static final Map<Class<?>, Map<String, UnitInterface<?>>> unitMap = new LinkedHashMap<>();
+    private static final Map<Class<?>, Map<String, UnitInterface<?>>> UNITMAP = new LinkedHashMap<>();
 
     /** Constant for the foot. */
-    public static final double const_ft = 0.3048;
+    public static final double CONST_FT = 0.3048;
 
     /** Constant for the yard. */
-    public static final double const_yd = 3.0 * const_ft;
+    public static final double CONST_YD = 3.0 * CONST_FT;
 
     /** Constant for the inch. */
-    public static final double const_in = const_ft / 12.0;
+    public static final double CONST_IN = CONST_FT / 12.0;
 
     /** Constant for the mile. */
-    public static final double const_mi = 5280.0 * const_ft;
+    public static final double CONST_MI = 5280.0 * CONST_FT;
 
     /** Constant for the nautical mile. */
-    public static final double const_NM = 1852.0;
+    public static final double CONST_NM = 1852.0;
 
-    // @formatter:off
+    /** */
+    private Units()
+    {
+    }
 
-    /** */ private Units() {}
-
-    /** The dimensionless unit has a blank unit symbol. */ 
-    public static final Dimensionless.Unit one = new Dimensionless.Unit(" ", " ", 1.0, UnitSystem.OTHER); 
-
-    /* **************************************************************************************** */
-    /* **************************************** LENGTH **************************************** */
-    /* **************************************************************************************** */
-    
-    /** */ public static final Length.Unit m = new Length.Unit("m", "meter", 1.0, UnitSystem.SI_BASE);
-    /** */ public static final Length.Unit meter = m.generateSiPrefixes(false, false);
-    /** */ public static final Length.Unit dam = resolve(Length.Unit.class, "dam");
-    /** */ public static final Length.Unit hm = resolve(Length.Unit.class, "hm");
-    /** */ public static final Length.Unit km = resolve(Length.Unit.class, "km");
-    /** */ public static final Length.Unit dm = resolve(Length.Unit.class, "dm");
-    /** */ public static final Length.Unit cm = resolve(Length.Unit.class, "cm");
-    /** */ public static final Length.Unit mm = resolve(Length.Unit.class, "mm");
-    /** */ public static final Length.Unit mum = resolve(Length.Unit.class, "mum");
-    /** */ public static final Length.Unit nm = resolve(Length.Unit.class, "nm");
-    /** */ public static final Length.Unit pm = resolve(Length.Unit.class, "pm");
-    /** */ public static final Length.Unit am = resolve(Length.Unit.class, "am");
-    /** */ public static final Length.Unit fm = resolve(Length.Unit.class, "fm");
-    
-    /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
-    public static final Length.Unit foot = new Length.Unit(List.of("ft", "foot", "'"), "ft", "foot", 
-            new LinearScale(const_ft), UnitSystem.IMPERIAL); 
-
-    /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
-    public static final Length.Unit inch = new Length.Unit(List.of("in", "inch", "\""), "in", "inch", 
-            new LinearScale(const_in), UnitSystem.IMPERIAL); 
-
-    /** yard (international) = 0.9144 m = 3 ft = 36 in. */
-    public static final Length.Unit yard = new Length.Unit(List.of("yd", "yard"), "yd", "yard", 
-            new LinearScale(const_yd), UnitSystem.IMPERIAL); 
-
-    /** mile (international) = 5280 ft = 1760 yd. */
-    public static final Length.Unit mile = new Length.Unit(List.of("mi", "mile"), "mi", "mile", 
-            new LinearScale(const_mi), UnitSystem.IMPERIAL); 
-
-    /** nautical mile (international) = 1852 m. */
-    public static final Length.Unit NM = new Length.Unit("NM", "Nautical Mile", const_NM, UnitSystem.OTHER);
-
-    /** Astronomical Unit = 149,597,870,700 m. */
-    public static final Length.Unit AU =
-            new Length.Unit("AU", "Astronomical Unit", 149_597_870_700.0, UnitSystem.OTHER);
-
-    /** Lightyear = 9,460,730,472,580,800 m. */
-    public static final Length.Unit lightyear = 
-            new Length.Unit("ly", "lightyear", 9_460_730_472_580_800.0, UnitSystem.OTHER);
-
-    /** Parsec = 648,000 / PI ly. */
-    public static final Length.Unit Parsec = 
-            new Length.Unit("Pc", "Parsec", 9_460_730_472_580_800.0 * 648_000.0 / Math.PI, UnitSystem.OTHER);
-
-    /** Angstrom = 10^-10 m. */
-    public static final Length.Unit Angstrom = 
-            new Length.Unit(List.of("A", "\u212B"), "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
-
-    /* **************************************************************************************** */
-    /* ***************************************** SPEED **************************************** */
-    /* **************************************************************************************** */
-
-    /** m/s. */
-    public static final Speed.Unit meter_per_second = 
-            new Speed.Unit(List.of("m/s", "m/sec"), "m/s", "meter per second", IdentityScale.SCALE, UnitSystem.SI_BASE);
-
-    /** m/h. */
-    public static final Speed.Unit meter_per_hour = new Speed.Unit(List.of("m/h", "m/hr", "m/hour"), 
-            "m/h", "meter per hour", new LinearScale(1.0, 3600.0), UnitSystem.SI_ACCEPTED);
-
-    /** km/s. */
-    public static final Speed.Unit km_per_second = new Speed.Unit(List.of("km/s", "km/sec"), 
-            "km/s", "kilometer per second", new LinearScale(1000.0), UnitSystem.SI_ACCEPTED);
-
-    /** km/h. */
-    public static final Speed.Unit km_per_hour = new Speed.Unit(List.of("km/h", "km/hr", "km/hour"), 
-            "km/h", "kilometer per hour", new LinearScale(1000.0, 3600.0), UnitSystem.SI_ACCEPTED);
-
-    /** in/s. */
-    public static final Speed.Unit inch_per_second = new Speed.Unit(List.of("in/s", "in/sec", "inch/s", "inch/sec"), 
-            "in/s", "inch per second", new LinearScale(const_in), UnitSystem.IMPERIAL);
-
-    /** in/min. */
-    public static final Speed.Unit inch_per_minute = new Speed.Unit(List.of("in/min", "inch/min"), 
-            "in/min", "inch per minute", new LinearScale(const_in, 60.0), UnitSystem.IMPERIAL);
-
-    /** in/h. */
-    public static final Speed.Unit inch_per_hour = new Speed.Unit(List.of("in/h", "in/hr", "in/hour", "inch/hour"), 
-            "in/h", "inch per hour", new LinearScale(const_in, 3600.0), UnitSystem.IMPERIAL);
-
-    /** ft/s. */
-    public static final Speed.Unit foot_per_second = new Speed.Unit(List.of("ft/s", "ft/sec", "foot/s", "foot/sec"), 
-            "ft/s", "foot per second", new LinearScale(const_ft), UnitSystem.IMPERIAL);
-
-    /** ft/min. */
-    public static final Speed.Unit foot_per_minute = new Speed.Unit(List.of("ft/min", "foot/min"), 
-            "ft/min", "foot per minute", new LinearScale(const_ft, 60.0), UnitSystem.IMPERIAL);
-
-    /** ft/h. */
-    public static final Speed.Unit foot_per_hour = new Speed.Unit(List.of("ft/h", "ft/hr", "ft/hour", "foot/hour"), 
-            "ft/h", "foot per hour", new LinearScale(const_ft, 3600.0), UnitSystem.IMPERIAL);
-    
-    /** mi/s. */
-    public static final Speed.Unit mile_per_second = new Speed.Unit(List.of("mi/s", "mi/sec", "mile/s", "mile/sec"), 
-            "mi/s", "mile per second", new LinearScale(const_mi), UnitSystem.IMPERIAL);
-
-    /** mi/min. */
-    public static final Speed.Unit mile_per_minute = new Speed.Unit(List.of("mi/min", "mile/min"), 
-            "mi/min", "mile per minute", new LinearScale(const_mi, 60.0), UnitSystem.IMPERIAL);
-
-    /** mi/h. */
-    public static final Speed.Unit mile_per_hour = new Speed.Unit(List.of("mi/h", "mi/hr", "mi/hour", "mile/hour"), 
-            "mi/h", "mile per hour", new LinearScale(const_mi, 3600.0), UnitSystem.IMPERIAL);
-
-    /** knot = Nautical Mile per hour. */
-    public static final Speed.Unit knot = new Speed.Unit("kt", "knot", const_NM / 3600.0, UnitSystem.OTHER);
-
-    /* **************************************************************************************** */
-    /* **************************************** VOLUME **************************************** */
-    /* **************************************************************************************** */
-    
-    /** */ public static final Volume.Unit m3 = 
-            new Volume.Unit(List.of("m^3", "m3"), "m^3", "cubic meter", IdentityScale.SCALE, UnitSystem.SI_BASE);
-    /** */ public static final Volume.Unit cubic_meter = m3.generateSiPrefixes(false, false);
-    /** */ public static final Volume.Unit dam3 = resolve(Volume.Unit.class, "dam^3");
-    /** */ public static final Volume.Unit hm3 = resolve(Volume.Unit.class, "hm^3");
-    /** */ public static final Volume.Unit km3 = resolve(Volume.Unit.class, "km^3");
-    /** */ public static final Volume.Unit dm3 = resolve(Volume.Unit.class, "dm^3");
-    /** */ public static final Volume.Unit cm3 = resolve(Volume.Unit.class, "cm^3");
-    /** */ public static final Volume.Unit mm3 = resolve(Volume.Unit.class, "mm^3");
-    /** */ public static final Volume.Unit mum3 = resolve(Volume.Unit.class, "mum^3");
-    /** */ public static final Volume.Unit nm3 = resolve(Volume.Unit.class, "nm^3");
-    /** */ public static final Volume.Unit pm3 = resolve(Volume.Unit.class, "pm^3");
-    /** */ public static final Volume.Unit am3 = resolve(Volume.Unit.class, "am^3");
-    /** */ public static final Volume.Unit fm3 = resolve(Volume.Unit.class, "fm^3");
-
-    
-    
-    // @formatter:on
+    static
+    {
+        registerStandardUnits();
+    }
 
     /**
      * Register a unit so it can be found based on its textual abbreviations.
@@ -204,7 +106,7 @@ public final class Units
     public static void register(final UnitInterface<?> unit)
     {
         Throw.whenNull(unit, "unit");
-        var subMap = unitMap.computeIfAbsent(unit.getClass(), k -> new LinkedHashMap<String, UnitInterface<?>>());
+        var subMap = UNITMAP.computeIfAbsent(unit.getClass(), k -> new LinkedHashMap<String, UnitInterface<?>>());
         for (var key : unit.getTextualAbbreviations())
         {
             subMap.put(key, unit);
@@ -223,13 +125,23 @@ public final class Units
             throws UnitRuntimeException
     {
         Throw.whenNull(abbreviation, "abbreviation");
-        Throw.when(!unitMap.containsKey(unitClass), UnitRuntimeException.class,
+        Throw.when(!UNITMAP.containsKey(unitClass), UnitRuntimeException.class,
                 "Error resolving unit class %s (abbreviation '%s')", abbreviation, unitClass.getSimpleName());
         @SuppressWarnings("unchecked")
-        U result = (U) unitMap.get(unitClass).get(abbreviation);
+        U result = (U) UNITMAP.get(unitClass).get(abbreviation);
         Throw.when(result == null, UnitRuntimeException.class, "Error resolving abbreviation '%s' for unit class %s",
                 abbreviation, unitClass.getSimpleName());
         return result;
+    }
+
+    /**
+     * Return a safe copy of the registered units, e.g. to build pick lists in a user interface. The map will be sorted on class
+     * and unit.
+     * @return a safe copy of the registered units
+     */
+    public static Map<Class<?>, Map<String, UnitInterface<?>>> registeredUnits()
+    {
+        return new LinkedHashMap<Class<?>, Map<String, UnitInterface<?>>>(UNITMAP);
     }
 
     /**
@@ -241,6 +153,57 @@ public final class Units
     public static String unitClassName(final Class<?> cls)
     {
         return cls.getCanonicalName().substring(cls.getPackageName().isEmpty() ? 0 : cls.getPackageName().length() + 1);
+    }
+
+    /**
+     * Register all standard units in the unit map, e.g. to make user interface picklists.
+     */
+    public static void registerStandardUnits()
+    {
+        AbsoluteTemperature.Unit.SI_UNIT.isFractional();
+        AbsorbedDose.Unit.SI_UNIT.isFractional();
+        Acceleration.Unit.SI_UNIT.isFractional();
+        AmountOfSubstance.Unit.SI_UNIT.isFractional();
+        Angle.Unit.SI_UNIT.isFractional();
+        AngularAcceleration.Unit.SI_UNIT.isFractional();
+        AngularVelocity.Unit.SI_UNIT.isFractional();
+        CatalyticActivity.Unit.SI_UNIT.isFractional();
+        Density.Unit.SI_UNIT.isFractional();
+        Dimensionless.Unit.BASE.getBaseUnit().getScale().isBaseScale();
+        Direction.Unit.DEFAULT.getBaseUnit().getScale().isBaseScale();
+        Duration.Unit.SI_UNIT.isFractional();
+        ElectricalCapacitance.Unit.SI_UNIT.isFractional();
+        ElectricalConductance.Unit.SI_UNIT.isFractional();
+        ElectricalInductance.Unit.SI_UNIT.isFractional();
+        ElectricalResistance.Unit.SI_UNIT.isFractional();
+        ElectricCharge.Unit.SI_UNIT.isFractional();
+        ElectricCurrent.Unit.SI_UNIT.isFractional();
+        ElectricPotential.Unit.SI_UNIT.isFractional();
+        Energy.Unit.SI_UNIT.isFractional();
+        EquivalentDose.Unit.SI_UNIT.isFractional();
+        FlowMass.Unit.SI_UNIT.isFractional();
+        FlowVolume.Unit.SI_UNIT.isFractional();
+        Force.Unit.SI_UNIT.isFractional();
+        Frequency.Unit.SI_UNIT.isFractional();
+        Illuminance.Unit.SI_UNIT.isFractional();
+        Length.Unit.SI_UNIT.isFractional();
+        LinearDensity.Unit.SI_UNIT.isFractional();
+        LuminousFlux.Unit.SI_UNIT.isFractional();
+        LuminousIntensity.Unit.SI_UNIT.isFractional();
+        MagneticFlux.Unit.SI_UNIT.isFractional();
+        MagneticFluxDensity.Unit.SI_UNIT.isFractional();
+        Mass.Unit.SI_UNIT.isFractional();
+        Momentum.Unit.SI_UNIT.isFractional();
+        Position.Unit.SI_UNIT.isFractional();
+        Power.Unit.SI_UNIT.isFractional();
+        Pressure.Unit.SI_UNIT.isFractional();
+        RadioActivity.Unit.SI_UNIT.isFractional();
+        SolidAngle.Unit.SI_UNIT.isFractional();
+        Speed.Unit.SI_UNIT.isFractional();
+        Temperature.Unit.SI_UNIT.isFractional();
+        Time.Unit.SI_UNIT.isFractional();
+        Torque.Unit.SI_UNIT.isFractional();
+        Volume.Unit.SI_UNIT.isFractional();
     }
 
 }
