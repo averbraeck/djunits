@@ -157,6 +157,15 @@ public class EquivalentDose extends Quantity.Relative<EquivalentDose, Equivalent
         /** The SI or BASE unit. */
         public static final EquivalentDose.Unit SI = SIEVERT.generateSiPrefixes(false, false);
 
+        /** mSv. */
+        public static final EquivalentDose.Unit MILLISIEVERT = Units.resolve(EquivalentDose.Unit.class, "mSv");
+
+        /** &#181;Sv. */
+        public static final EquivalentDose.Unit MICROSIEVERT = Units.resolve(EquivalentDose.Unit.class, "muSv");
+
+        /** rem. (stands for röntgen equivalent man). */
+        public static final EquivalentDose.Unit REM = SIEVERT.deriveUnit("rem", "rem", 0.01, UnitSystem.CGS);
+
         /**
          * Create a new EquivalentDose unit.
          * @param id the id or main abbreviation of the unit

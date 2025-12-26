@@ -135,6 +135,36 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of ElectricPotential and ElectricCurrent, which results in a Power scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricPotential and ElectricCurrent
+     */
+    public final Power times(final ElectricCurrent v)
+    {
+        return new Power(this.si() * v.si(), Power.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricPotential and ElectricCurrent, which results in a ElectricalResistance scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricPotential and ElectricCurrent
+     */
+    public final ElectricalResistance divide(final ElectricCurrent v)
+    {
+        return new ElectricalResistance(this.si() / v.si(), ElectricalResistance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricPotential and ElectricalResistance, which results in a ElectricCurrent scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricPotential and ElectricalResistance
+     */
+    public final ElectricCurrent divide(final ElectricalResistance v)
+    {
+        return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -156,8 +186,30 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
         public static final ElectricPotential.Unit VOLT = new ElectricPotential.Unit("V", "volt", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricPotential.Unit SI = VOLT;
-        
+        public static final ElectricPotential.Unit SI = VOLT.generateSiPrefixes(false, false);
+
+        /** microvolt. */
+        public static final ElectricPotential.Unit MICROVOLT = Units.resolve(ElectricPotential.Unit.class, "muV");
+
+        /** millivolt. */
+        public static final ElectricPotential.Unit MILLIVOLT = Units.resolve(ElectricPotential.Unit.class, "mV");
+
+        /** kilovolt. */
+        public static final ElectricPotential.Unit KILOVOLT = Units.resolve(ElectricPotential.Unit.class, "kV");
+
+        /** megavolt. */
+        public static final ElectricPotential.Unit MEGAVOLT = Units.resolve(ElectricPotential.Unit.class, "MV");
+
+        /** gigavolt. */
+        public static final ElectricPotential.Unit GIGAVOLT = Units.resolve(ElectricPotential.Unit.class, "GV");
+
+        /** statvolt. */
+        public static final ElectricPotential.Unit STATVOLT =
+                VOLT.deriveUnit("stV", "statvolt", 299.792458, UnitSystem.CGS_ESU);
+
+        /** abvolt. */
+        public static final ElectricPotential.Unit ABVOLT = VOLT.deriveUnit("abV", "abvolt", 1.0E-8, UnitSystem.CGS_EMU);
+
         /**
          * Create a new ElectricPotential unit.
          * @param id the id or main abbreviation of the unit

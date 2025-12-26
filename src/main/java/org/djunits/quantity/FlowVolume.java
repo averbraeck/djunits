@@ -134,6 +134,66 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of FlowVolume and Duration, which results in a Volume scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of FlowVolume and Duration
+     */
+    public final Volume times(final Duration v)
+    {
+        return new Volume(this.si() * v.si(), Volume.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowVolume and Frequency, which results in a Volume scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowVolume and Frequency
+     */
+    public final Volume divide(final Frequency v)
+    {
+        return new Volume(this.si() / v.si(), Volume.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowVolume and Volume, which results in a Frequency scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowVolume and Volume
+     */
+    public final Frequency divide(final Volume v)
+    {
+        return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowVolume and Area, which results in a Speed scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowVolume and Area
+     */
+    public final Speed divide(final Area v)
+    {
+        return new Speed(this.si() / v.si(), Speed.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowVolume and Speed, which results in a Area scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowVolume and Speed
+     */
+    public final Area divide(final Speed v)
+    {
+        return new Area(this.si() / v.si(), Area.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of FlowVolume and Density, which results in a FlowMass scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of FlowVolume and Density
+     */
+    public final FlowMass times(final Density v)
+    {
+        return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -157,6 +217,66 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
 
         /** The SI or BASE unit. */
         public static final FlowVolume.Unit SI = CUBIC_METER_PER_SECOND;
+
+        /** m^3/min. */
+        public static final FlowVolume.Unit CUBIC_METER_PER_MINUTE =
+                CUBIC_METER_PER_SECOND.deriveUnit("m3/min", "cubic meter per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
+
+        /** m^3/hour. */
+        public static final FlowVolume.Unit CUBIC_METER_PER_HOUR =
+                CUBIC_METER_PER_SECOND.deriveUnit("m3/h", "cubic meter per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
+
+        /** m^3/day. */
+        public static final FlowVolume.Unit CUBIC_METER_PER_DAY =
+                CUBIC_METER_PER_HOUR.deriveUnit("m3/day", "cubic meter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
+
+        /** L/s. */
+        public static final FlowVolume.Unit LITER_PER_SECOND =
+                CUBIC_METER_PER_SECOND.deriveUnit("L/s", "liter per second", 1E-3, UnitSystem.SI_ACCEPTED);
+
+        /** L/min. */
+        public static final FlowVolume.Unit LITER_PER_MINUTE =
+                LITER_PER_SECOND.deriveUnit("L/min", "liter per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
+
+        /** L/hour. */
+        public static final FlowVolume.Unit LITER_PER_HOUR =
+                LITER_PER_SECOND.deriveUnit("L/h", "liter per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
+
+        /** L/day. */
+        public static final FlowVolume.Unit LITER_PER_DAY =
+                LITER_PER_HOUR.deriveUnit("L/day", "liter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
+
+        /** ft^3/s. */
+        public static final FlowVolume.Unit CUBIC_FEET_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("ft3/s",
+                "cubic foot per second", Units.CONST_FT * Units.CONST_FT * Units.CONST_FT, UnitSystem.IMPERIAL);
+
+        /** ft^3/min. */
+        public static final FlowVolume.Unit CUBIC_FEET_PER_MINUTE =
+                CUBIC_FEET_PER_SECOND.deriveUnit("ft3/min", "cubic foot per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
+
+        /** in^3/s. */
+        public static final FlowVolume.Unit CUBIC_INCH_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("in3/s",
+                "cubic inch per second", Units.CONST_IN * Units.CONST_IN * Units.CONST_IN, UnitSystem.IMPERIAL);
+
+        /** in^3/min. */
+        public static final FlowVolume.Unit CUBIC_INCH_PER_MINUTE =
+                CUBIC_INCH_PER_SECOND.deriveUnit("in3/min", "cubic inch per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
+
+        /** gallon/s (US). */
+        public static final FlowVolume.Unit GALLON_US_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("gal(US)/s",
+                "US gallon per second", Units.CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
+
+        /** gallon/min (US). */
+        public static final FlowVolume.Unit GALLON_US_PER_MINUTE =
+                GALLON_US_PER_SECOND.deriveUnit("gal(US)/min", "US gallon per minute", 1.0 / 60.0, UnitSystem.US_CUSTOMARY);
+
+        /** gallon/hour (US). */
+        public static final FlowVolume.Unit GALLON_US_PER_HOUR =
+                GALLON_US_PER_SECOND.deriveUnit("gal(US)/h", "US gallon per hour", 1.0 / 3600.0, UnitSystem.US_CUSTOMARY);
+
+        /** gallon/day (US). */
+        public static final FlowVolume.Unit GALLON_US_PER_DAY =
+                GALLON_US_PER_HOUR.deriveUnit("gal(US)/day", "US gallon per day", 1.0 / 24.0, UnitSystem.US_CUSTOMARY);
 
         /**
          * Create a new FlowVolume unit.

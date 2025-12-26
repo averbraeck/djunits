@@ -134,6 +134,57 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of ElectricalCurrent and ElectricalPotential, which results in a Power scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCurrent and ElectricalPotential
+     */
+    public final Power times(final ElectricPotential v)
+    {
+        return new Power(this.si() * v.si(), Power.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalCurrent and Duration, which results in a ElectricalCharge scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCurrent and Duration
+     */
+    public final ElectricCharge times(final Duration v)
+    {
+        return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of ElectricalCurrent and ElectricalResistance, which results in a ElectricalPotential
+     * scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of ElectricalCurrent and ElectricalResistance
+     */
+    public final ElectricPotential times(final ElectricalResistance v)
+    {
+        return new ElectricPotential(this.si() * v.si(), ElectricPotential.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCurrent and ElectricalPotential, which results in a ElectricalConductance scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCurrent and ElectricalPotential
+     */
+    public final ElectricalConductance divide(final ElectricPotential v)
+    {
+        return new ElectricalConductance(this.si() / v.si(), ElectricalConductance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of ElectricalCurrent and ElectricalConductance, which results in a ElectricalPotential scalar.
+     * @param v scalar
+     * @return scalar as a division of ElectricalCurrent and ElectricalConductance
+     */
+    public final ElectricPotential divide(final ElectricalConductance v)
+    {
+        return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -156,6 +207,25 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
 
         /** The SI or BASE unit. */
         public static final ElectricCurrent.Unit SI = AMPERE.generateSiPrefixes(false, false);
+
+        /** microampere. */
+        public static final ElectricCurrent.Unit MICROAMPERE = Units.resolve(ElectricCurrent.Unit.class, "muA");
+
+        /** milliampere. */
+        public static final ElectricCurrent.Unit MILLIAMPERE = Units.resolve(ElectricCurrent.Unit.class, "mA");
+
+        /** kiloampere. */
+        public static final ElectricCurrent.Unit KILOAMPERE = Units.resolve(ElectricCurrent.Unit.class, "kA");
+
+        /** megaampere. */
+        public static final ElectricCurrent.Unit MEGAAMPERE = Units.resolve(ElectricCurrent.Unit.class, "MA");
+
+        /** statampere (GCS ESU). */
+        public static final ElectricCurrent.Unit STATAMPERE =
+                AMPERE.deriveUnit("statA", "statampere", 3.335641E-10, UnitSystem.CGS_ESU);
+
+        /** abampere (GCS EMU). */
+        public static final ElectricCurrent.Unit ABAMPERE = AMPERE.deriveUnit("abA", "abampere", 10.0, UnitSystem.CGS_EMU);
 
         /**
          * Create a new ElectricCurrent unit.

@@ -134,6 +134,76 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of FlowMass and Duration, which results in a Mass scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of FlowMass and Duration
+     */
+    public final Mass times(final Duration v)
+    {
+        return new Mass(this.si() * v.si(), Mass.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowMass and Frequency, which results in a Mass scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowMass and Frequency
+     */
+    public final Mass divide(final Frequency v)
+    {
+        return new Mass(this.si() / v.si(), Mass.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowMass and Mass, which results in a Frequency scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowMass and Mass
+     */
+    public final Frequency divide(final Mass v)
+    {
+        return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of FlowMass and Speed, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of FlowMass and Speed
+     */
+    public final Force times(final Speed v)
+    {
+        return new Force(this.si() * v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowMass and FlowVolume, which results in a Density scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowMass and FlowVolume
+     */
+    public final Density divide(final FlowVolume v)
+    {
+        return new Density(this.si() / v.si(), Density.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of FlowMass and Density, which results in a FlowVolume scalar.
+     * @param v scalar
+     * @return scalar as a division of FlowMass and Density
+     */
+    public final FlowVolume divide(final Density v)
+    {
+        return new FlowVolume(this.si() / v.si(), FlowVolume.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of FlowMass and Length, which results in a Momentum scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of FlowMass and Length
+     */
+    public final Momentum times(final Length v)
+    {
+        return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -157,6 +227,10 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
 
         /** The SI or BASE unit. */
         public static final FlowMass.Unit SI = KILOGRAM_PER_SECOND;
+
+        /** lb/s. */
+        public static final FlowMass.Unit POUND_PER_SECOND =
+                KILOGRAM_PER_SECOND.deriveUnit("lb/s", "pound per second", Units.CONST_LB, UnitSystem.IMPERIAL);
 
         /**
          * Create a new FlowMass unit.
