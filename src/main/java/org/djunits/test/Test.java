@@ -1,8 +1,12 @@
 package org.djunits.test;
 
+import java.util.Comparator;
+import java.util.Map;
+
 import org.djunits.quantity.AbsoluteTemperature;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 
 /**
@@ -21,16 +25,17 @@ public final class Test
         length();
         temp();
         duration();
+        printUnits();
     }
 
     /** */
     private void length()
     {
         System.out.println("\nLENGTH");
-        Length length = new Length(5.0, Units.m);
+        Length length = new Length(5.0, "m");
         System.out.println(length);
 
-        Length l2 = new Length(5.0, Units.km);
+        Length l2 = new Length(5.0, Length.Unit.KILOMETER);
         System.out.println(l2.toDisplayString());
         System.out.println("SI = " + l2.si() + " [" + l2.getDisplayUnit().getBaseUnit().getId() + "]");
 
@@ -65,6 +70,32 @@ public final class Test
         var d2 = Duration.valueOf("1 day");
         System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit("s") + " seconds");
         System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit(Duration.Unit.SECOND));
+    }
+
+    /** */
+    private void printUnits()
+    {
+        System.out.println("\n\nUNITS");
+        Units.registerStandardUnits();
+        var unitMap = Units.registeredUnits();
+        unitMap.entrySet().stream().sorted(Comparator.comparing(e -> Units.unitClassName(e.getKey()))).forEach(entry ->
+        {
+            Class<?> clazz = entry.getKey();
+            Map<String, UnitInterface<?>> inner = entry.getValue();
+
+            System.out.printf("%n%s%n", Units.unitClassName(clazz));
+            System.out.printf("%-15s %-10s %-40s = %s%n", "Textual", "Display", "Name", "Convert to base value");
+            System.out.println("-".repeat(97));
+
+            inner.entrySet().stream()
+                    // sort by key; change to Comparator.comparing(e -> e.getValue().getNr()) if you prefer sorting by Nr
+                    .sorted(Comparator.comparing(e -> e.getValue().toBaseValue(1.0))).forEach(e ->
+                    {
+                        UnitInterface<?> v = e.getValue();
+                        System.out.printf("%-15s %-10s %-40s = %-22s %s%n", e.getKey(), v.getDisplayAbbreviation(), v.getName(),
+                                v.toBaseValue(1.0), v.getBaseUnit().getDisplayAbbreviation());
+                    });
+        });
     }
 
     /**
