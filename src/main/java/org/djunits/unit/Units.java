@@ -88,6 +88,30 @@ public final class Units
 
     /** Constant for the nautical mile. */
     public static final double CONST_NM = 1852.0;
+    
+    /** Constant for standard gravity. */
+    public static final double CONST_GRAVITY = 9.80665;
+    
+    /** Constant for pound (lb). */
+    public static final double CONST_LB = 0.45359237;
+    
+    /** Constant for the imperial gallon. */
+    public static final double CONST_GALLON_IMP = 4.54609E-3;
+
+    /** Constant for the imperial quart. */
+    public static final double CONST_QUART_IMP = CONST_GALLON_IMP / 4.0;
+    
+    /** Constant for imperial fluid ounce. */
+    public static final double CONST_OZ_IMP = CONST_GALLON_IMP / 160.0;
+    
+    /** Constant for US gallon. */
+    public static final double CONST_GALLON_US = 231.0 * CONST_IN * CONST_IN * CONST_IN;
+
+    /** Constant for US quart. */
+    public static final double CONST_QUART_US = CONST_GALLON_US / 4.0;
+    
+    /** Constant for US fluid ounce. */
+    public static final double CONST_OZ_US = CONST_GALLON_US / 128.0;
 
     /** */
     private Units()
