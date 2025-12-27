@@ -153,18 +153,18 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.KILO_PREFIXES.values())
                 {
-                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation()),
-                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation(), sip.getPrefixName() + getName(),
-                            sip.getFactor(), getUnitSystem());
+                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
+                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
+                            sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
                 }
             }
             else
             {
                 for (SIPrefix sip : SIPrefixes.PER_KILO_PREFIXES.values())
                 {
-                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
-                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getName().substring(8), sip.getFactor(), getUnitSystem());
+                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(2)),
+                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(2),
+                            sip.getPrefixName() + getName().substring(9), sip.getFactor(), getUnitSystem());
                 }
             }
         }
