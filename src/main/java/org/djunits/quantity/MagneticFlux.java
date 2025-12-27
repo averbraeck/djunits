@@ -134,6 +134,66 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the division of MagneticFlux and ElectricPotential, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and ElectricPotential
+     */
+    public final Duration divide(final ElectricPotential v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of MagneticFlux and Duration, which results in a ElectricPotential scalar.
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and Duration
+     */
+    public final ElectricPotential divide(final Duration v)
+    {
+        return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of MagneticFlux and Area, which results in a MagneticFluxDensity scalar.
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and Area
+     */
+    public final MagneticFluxDensity divide(final Area v)
+    {
+        return new MagneticFluxDensity(this.si() / v.si(), MagneticFluxDensity.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of MagneticFlux and MagneticFluxDensity, which results in a Area scalar.
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and MagneticFluxDensity
+     */
+    public final Area divide(final MagneticFluxDensity v)
+    {
+        return new Area(this.si() / v.si(), Area.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of MagneticFlux and ElectricCurrent, which results in a ElectricalInductance scalar.
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and ElectricCurrent
+     */
+    public final ElectricalInductance divide(final ElectricCurrent v)
+    {
+        return new ElectricalInductance(this.si() / v.si(), ElectricalInductance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of MagneticFlux and ElectricalInductance, which results in a ElectricCurrent scalar.
+     * @param v scalar
+     * @return scalar as a division of MagneticFlux and ElectricalInductance
+     */
+    public final ElectricCurrent divide(final ElectricalInductance v)
+    {
+        return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -155,7 +215,19 @@ public class MagneticFlux extends Quantity.Relative<MagneticFlux, MagneticFlux.U
         public static final MagneticFlux.Unit WEBER = new MagneticFlux.Unit("Wb", "weber", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final MagneticFlux.Unit SI = WEBER;
+        public static final MagneticFlux.Unit SI = WEBER.generateSiPrefixes(false, false);
+
+        /** mWb. */
+        public static final MagneticFlux.Unit MILLIWEBER = Units.resolve(MagneticFlux.Unit.class, "mWb");
+
+        /** muWb. */
+        public static final MagneticFlux.Unit MICROWEBER = Units.resolve(MagneticFlux.Unit.class, "muWb");
+
+        /** nWb. */
+        public static final MagneticFlux.Unit NANOWEBER = Units.resolve(MagneticFlux.Unit.class, "nWb");
+
+        /** Maxwell. */
+        public static final MagneticFlux.Unit MAXWELL = WEBER.deriveUnit("Mx", "Maxwell", 1.0E-8, UnitSystem.CGS);
 
         /**
          * Create a new MagneticFlux unit.

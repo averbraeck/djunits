@@ -134,6 +134,46 @@ public class LuminousFlux extends Quantity.Relative<LuminousFlux, LuminousFlux.U
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the division of LuminousFlux and Area, which results in a Illuminance scalar.
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and Area
+     */
+    public final Illuminance divide(final Area v)
+    {
+        return new Illuminance(this.si() / v.si(), Illuminance.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of LuminousFlux and Illuminance, which results in a Area scalar.
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and Illuminance
+     */
+    public final Area divide(final Illuminance v)
+    {
+        return new Area(this.si() / v.si(), Area.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of LuminousFlux and LuminousIntensity, which results in a SolidAngle scalar.
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and LuminousIntensity
+     */
+    public final SolidAngle divide(final LuminousIntensity v)
+    {
+        return new SolidAngle(this.si() / v.si(), SolidAngle.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of LuminousFlux and SolidAngle, which results in a LuminousIntensity scalar.
+     * @param v scalar
+     * @return scalar as a division of LuminousFlux and SolidAngle
+     */
+    public final LuminousIntensity divide(final SolidAngle v)
+    {
+        return new LuminousIntensity(this.si() / v.si(), LuminousIntensity.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/

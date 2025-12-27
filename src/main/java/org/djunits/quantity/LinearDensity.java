@@ -134,6 +134,52 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of LinearDensity and Length, which results in a Dimensionless scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of LinearDensity and Length
+     */
+    public final Dimensionless times(final Length v)
+    {
+        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
+     * Calculate the multiplication of LinearDensity and Area, which results in a Length scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of LinearDensity and Area
+     */
+    public final Length times(final Area v)
+    {
+        return new Length(this.si() * v.si(), Length.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of LinearDensity and Energy, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of LinearDensity and Energy
+     */
+    public final Force times(final Energy v)
+    {
+        return new Force(this.si() * v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of LinearDensity and Speed, which results in a Frequency scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of LinearDensity and Speed
+     */
+    public final Frequency times(final Speed v)
+    {
+        return new Frequency(this.si() * v.si(), Frequency.Unit.SI);
+    }
+
+    @Override
+    public Length reciprocal()
+    {
+        return Length.ofSi(1.0 / this.si());
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/

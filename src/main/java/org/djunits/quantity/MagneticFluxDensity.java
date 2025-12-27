@@ -134,6 +134,16 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of MagneticFluxDensity and Area, which results in a MagneticFlux scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of MagneticFluxDensity and Area
+     */
+    public final MagneticFlux times(final Area v)
+    {
+        return new MagneticFlux(this.si() * v.si(), MagneticFlux.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -156,7 +166,19 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
                 new MagneticFluxDensity.Unit("T", "tesla", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final MagneticFluxDensity.Unit SI = TESLA;
+        public static final MagneticFluxDensity.Unit SI = TESLA.generateSiPrefixes(false, false);
+
+        /** mT. */
+        public static final MagneticFluxDensity.Unit MILLITESLA = Units.resolve(MagneticFluxDensity.Unit.class, "mT");
+
+        /** muT. */
+        public static final MagneticFluxDensity.Unit MICROTESLA = Units.resolve(MagneticFluxDensity.Unit.class, "muT");
+
+        /** nT. */
+        public static final MagneticFluxDensity.Unit NANOTESLA = Units.resolve(MagneticFluxDensity.Unit.class, "nT");
+
+        /** Gauss. */
+        public static final MagneticFluxDensity.Unit GAUSS = TESLA.deriveUnit("G", "Gauss", 1.0E-4, UnitSystem.CGS);
 
         /**
          * Create a new MagneticFluxDensity unit.

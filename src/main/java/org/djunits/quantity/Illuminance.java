@@ -134,6 +134,16 @@ public class Illuminance extends Quantity.Relative<Illuminance, Illuminance.Unit
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of Illuminance and Area, which results in a LuminousFlux scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Illuminance and Area
+     */
+    public final LuminousFlux times(final Area v)
+    {
+        return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -155,7 +165,22 @@ public class Illuminance extends Quantity.Relative<Illuminance, Illuminance.Unit
         public static final Illuminance.Unit LUX = new Illuminance.Unit("lx", "lux", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Illuminance.Unit SI = LUX;
+        public static final Illuminance.Unit SI = LUX.generateSiPrefixes(false, false);
+
+        /** mlux. */
+        public static final Illuminance.Unit MILLILUX = Units.resolve(Illuminance.Unit.class, "mlx");
+
+        /** mulux. */
+        public static final Illuminance.Unit MICROLUX = Units.resolve(Illuminance.Unit.class, "mulx");
+
+        /** klux. */
+        public static final Illuminance.Unit KILOLUX = LUX.deriveUnit("klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED);
+
+        /** phot. */
+        public static final Illuminance.Unit PHOT = KILOLUX.deriveUnit("ph", "phot", 10.0, UnitSystem.SI_DERIVED);
+
+        /** nox. */
+        public static final Illuminance.Unit NOX = MILLILUX.deriveUnit("nx", "nox", 1.0, UnitSystem.SI_DERIVED);
 
         /**
          * Create a new Illuminance unit.

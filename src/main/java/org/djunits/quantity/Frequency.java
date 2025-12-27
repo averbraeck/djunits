@@ -245,7 +245,47 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
         public static final Frequency.Unit HERTZ = new Frequency.Unit("Hz", "hertz", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Frequency.Unit SI = HERTZ;
+        public static final Frequency.Unit SI = HERTZ.generateSiPrefixes(false, false);
+
+        /** kiloHertz. */
+        public static final Frequency.Unit KILOHERTZ = Units.resolve(Frequency.Unit.class, "kHz");
+
+        /** megaHertz. */
+        public static final Frequency.Unit MEGAHERTZ = Units.resolve(Frequency.Unit.class, "MHz");
+
+        /** gigaHertz. */
+        public static final Frequency.Unit GIGAHERTZ = Units.resolve(Frequency.Unit.class, "GHz");
+
+        /** teraHertz. */
+        public static final Frequency.Unit TERAHERTZ = Units.resolve(Frequency.Unit.class, "THz");
+
+        /** Revolutions per minute = 1/60 Hz. */
+        public static final Frequency.Unit RPM =
+                HERTZ.deriveUnit("rpm", "revolutions per minute", 1.0 / 60.0, UnitSystem.OTHER);
+
+        /** 1/s and all derived units. */
+        public static final Frequency.Unit PER_SECOND =
+                new Frequency.Unit("/s", "per second", 1.0, UnitSystem.SI_DERIVED).generateSiPrefixes(false, true);
+
+        /** 1/microsecond. */
+        public static final Frequency.Unit PER_MICROSECOND = Units.resolve(Frequency.Unit.class, "/mus");
+
+        /** 1/millisecond. */
+        public static final Frequency.Unit PER_MILLISECOND = Units.resolve(Frequency.Unit.class, "/ms");
+
+        /** 1/min. */
+        public static final Frequency.Unit PER_MINUTE =
+                PER_SECOND.deriveUnit("/min", "per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
+
+        /** 1/hour. */
+        public static final Frequency.Unit PER_HOUR =
+                PER_SECOND.deriveUnit("/h", "per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
+
+        /** 1/day. */
+        public static final Frequency.Unit PER_DAY = PER_HOUR.deriveUnit("/day", "per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
+
+        /** 1/week. */
+        public static final Frequency.Unit PER_WEEK = PER_DAY.deriveUnit("/wk", "per week", 1.0 / 7.0, UnitSystem.OTHER);
 
         /**
          * Create a new Frequency unit.

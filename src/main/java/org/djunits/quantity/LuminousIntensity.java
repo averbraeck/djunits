@@ -134,6 +134,16 @@ public class LuminousIntensity extends Quantity.Relative<LuminousIntensity, Lumi
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of LuminousIntensity and SolidAngle, which results in a LuminousFlux scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of LuminousIntensity and SolidAngle
+     */
+    public final LuminousFlux times(final SolidAngle v)
+    {
+        return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
