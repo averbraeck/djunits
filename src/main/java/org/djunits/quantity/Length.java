@@ -361,9 +361,9 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
         public static final Length.Unit LIGHTYEAR =
                 new Length.Unit("ly", "lightyear", 9_460_730_472_580_800.0, UnitSystem.OTHER);
 
-        /** Parsec = 648,000 / PI ly. */
+        /** Parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
         public static final Length.Unit PARSEC =
-                new Length.Unit("Pc", "Parsec", 9_460_730_472_580_800.0 * 648_000.0 / Math.PI, UnitSystem.OTHER);
+                new Length.Unit("Pc", "Parsec", 149_597_870_700.0 * 648_000.0 / Math.PI, UnitSystem.OTHER);
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit ANGSTROM =

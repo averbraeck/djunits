@@ -253,8 +253,8 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
                 SI.deriveUnit("lbf", "pound-force", Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** ton-force. */
-        public static final Force.Unit SHORT_TON_FORCE =
-                SI.deriveUnit("tnf", "ton-force", Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
+        public static final Force.Unit SHORT_TON_FORCE = SI.deriveUnit("tnf", "ton-force",
+                Mass.Unit.CONST_TON_SHORT * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** sthene. */
         public static final Force.Unit STHENE = SI.deriveUnit("sn", "sthene", 1000.0, UnitSystem.MTS);
