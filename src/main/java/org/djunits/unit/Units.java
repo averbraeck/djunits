@@ -74,54 +74,6 @@ public final class Units
     /** Map with all units per unit type. */
     private static final Map<Class<?>, Map<String, UnitInterface<?>>> UNITMAP = new LinkedHashMap<>();
 
-    /** Constant for the foot. */
-    public static final double CONST_FT = 0.3048;
-
-    /** Constant for the yard. */
-    public static final double CONST_YD = 3.0 * CONST_FT;
-
-    /** Constant for the inch. */
-    public static final double CONST_IN = CONST_FT / 12.0;
-
-    /** Constant for the mile. */
-    public static final double CONST_MI = 5280.0 * CONST_FT;
-
-    /** Constant for the nautical mile. */
-    public static final double CONST_NM = 1852.0;
-    
-    /** Constant for standard gravity. */
-    public static final double CONST_GRAVITY = 9.80665;
-    
-    /** Constant for pound (lb). */
-    public static final double CONST_LB = 0.45359237;
-    
-    /** Constant for ounce. */
-    public static final double CONST_OUNCE = CONST_LB / 16.0;
-    
-    /** Constant for short ton. */
-    public static final double CONST_TON_SHORT = 2000.0 * CONST_LB;
-    
-    /** Constant for long ton. */
-    public static final double CONST_TON_LONG = 2240.0 * CONST_LB;
-    
-    /** Constant for the imperial gallon. */
-    public static final double CONST_GALLON_IMP = 4.54609E-3;
-
-    /** Constant for the imperial quart. */
-    public static final double CONST_QUART_IMP = CONST_GALLON_IMP / 4.0;
-    
-    /** Constant for imperial fluid ounce. */
-    public static final double CONST_OZ_IMP = CONST_GALLON_IMP / 160.0;
-    
-    /** Constant for US gallon. */
-    public static final double CONST_GALLON_US = 231.0 * CONST_IN * CONST_IN * CONST_IN;
-
-    /** Constant for US quart. */
-    public static final double CONST_QUART_US = CONST_GALLON_US / 4.0;
-    
-    /** Constant for US fluid ounce. */
-    public static final double CONST_OZ_US = CONST_GALLON_US / 128.0;
-
     /** */
     private Units()
     {
