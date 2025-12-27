@@ -98,9 +98,9 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
     }
 
     /**
-     * Returns a Force representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
+     * Returns a Force representation of a textual representation of a value with a unit. The String representation that can be
+     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
+     * but not required, between the value and the unit.
      * @param text the textual representation to parse into a Force
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -134,6 +134,86 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of Force and Length, which results in a Energy scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Force and Length
+     */
+    public final Energy times(final Length v)
+    {
+        return new Energy(this.si() * v.si(), Energy.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Force and LinearDensity, which results in a Energy scalar.
+     * @param v scalar
+     * @return scalar as a division of Force and LinearDensity
+     */
+    public final Energy divide(final LinearDensity v)
+    {
+        return new Energy(this.si() / v.si(), Energy.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Force and Energy, which results in a LinearDensity scalar.
+     * @param v scalar
+     * @return scalar as a division of Force and Energy
+     */
+    public final LinearDensity divide(final Energy v)
+    {
+        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Force and Speed, which results in a Power scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Force and Speed
+     */
+    public final Power times(final Speed v)
+    {
+        return new Power(this.si() * v.si(), Power.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Force and Mass, which results in a Acceleration scalar.
+     * @param v scalar
+     * @return scalar as a division of Force and Mass
+     */
+    public final Acceleration divide(final Mass v)
+    {
+        return new Acceleration(this.si() / v.si(), Acceleration.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Force and Acceleration, which results in a Mass scalar.
+     * @param v scalar
+     * @return scalar as a division of Force and Acceleration
+     */
+    public final Mass divide(final Acceleration v)
+    {
+        return new Mass(this.si() / v.si(), Mass.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Force and Area, which results in a Pressure scalar.
+     * @param v scalar
+     * @return scalar as a division of Force and Area
+     */
+    public final Pressure divide(final Area v)
+    {
+        return new Pressure(this.si() / v.si(), Pressure.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Force and Pressure, which results in a Area scalar.
+     * @param v scalar
+     * @return scalar as a division of Force and Pressure
+     */
+    public final Area divide(final Pressure v)
+    {
+        return new Area(this.si() / v.si(), Area.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -156,6 +236,28 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
 
         /** The SI or BASE unit. */
         public static final Force.Unit SI = NEWTON.generateSiPrefixes(false, false);
+
+        /** Dyne. */
+        public static final Force.Unit DYNE = NEWTON.deriveUnit("dyn", "dyne", 1E-5, UnitSystem.CGS);
+
+        /** kilogram-force. */
+        public static final Force.Unit KILOGRAM_FORCE =
+                SI.deriveUnit("kgf", "kilogram-force", Acceleration.Unit.CONST_GRAVITY, UnitSystem.OTHER);
+
+        /** ounce-force. */
+        public static final Force.Unit OUNCE_FORCE = SI.deriveUnit("ozf", "ounce-force",
+                Mass.Unit.CONST_OUNCE * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
+
+        /** pound-force. */
+        public static final Force.Unit POUND_FORCE =
+                SI.deriveUnit("lbf", "pound-force", Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
+
+        /** ton-force. */
+        public static final Force.Unit SHORT_TON_FORCE =
+                SI.deriveUnit("tnf", "ton-force", Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
+
+        /** sthene. */
+        public static final Force.Unit STHENE = SI.deriveUnit("sn", "sthene", 1000.0, UnitSystem.MTS);
 
         /**
          * Create a new Force unit.

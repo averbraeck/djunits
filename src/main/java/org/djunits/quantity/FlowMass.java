@@ -230,7 +230,7 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
 
         /** lb/s. */
         public static final FlowMass.Unit POUND_PER_SECOND =
-                KILOGRAM_PER_SECOND.deriveUnit("lb/s", "pound per second", Units.CONST_LB, UnitSystem.IMPERIAL);
+                KILOGRAM_PER_SECOND.deriveUnit("lb/s", "pound per second", Mass.Unit.CONST_LB, UnitSystem.IMPERIAL);
 
         /**
          * Create a new FlowMass unit.

@@ -277,6 +277,21 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      */
     public static class Unit extends AbstractUnit<Length.Unit>
     {
+        /** Constant for the foot. */
+        public static final double CONST_FT = 0.3048;
+
+        /** Constant for the yard. */
+        public static final double CONST_YD = 3.0 * CONST_FT;
+
+        /** Constant for the inch. */
+        public static final double CONST_IN = CONST_FT / 12.0;
+
+        /** Constant for the mile. */
+        public static final double CONST_MI = 5280.0 * CONST_FT;
+
+        /** Constant for the nautical mile. */
+        public static final double CONST_NM = 1852.0;
+
         /** The dimensions of the length: m. */
         public static final SIUnit SI_UNIT = SIUnit.of("m");
 
@@ -321,23 +336,22 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
         public static final Length.Unit FOOT =
-                new Length.Unit(List.of("ft", "foot", "'"), "ft", "foot", new LinearScale(Units.CONST_FT), UnitSystem.IMPERIAL);
+                new Length.Unit(List.of("ft", "foot", "'"), "ft", "foot", new LinearScale(CONST_FT), UnitSystem.IMPERIAL);
 
         /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
-        public static final Length.Unit INCH = new Length.Unit(List.of("in", "inch", "\""), "in", "inch",
-                new LinearScale(Units.CONST_IN), UnitSystem.IMPERIAL);
+        public static final Length.Unit INCH =
+                new Length.Unit(List.of("in", "inch", "\""), "in", "inch", new LinearScale(CONST_IN), UnitSystem.IMPERIAL);
 
         /** yard (international) = 0.9144 m = 3 ft = 36 in. */
         public static final Length.Unit YARD =
-                new Length.Unit(List.of("yd", "yard"), "yd", "yard", new LinearScale(Units.CONST_YD), UnitSystem.IMPERIAL);
+                new Length.Unit(List.of("yd", "yard"), "yd", "yard", new LinearScale(CONST_YD), UnitSystem.IMPERIAL);
 
         /** mile (international) = 5280 ft = 1760 yd. */
         public static final Length.Unit MILE =
-                new Length.Unit(List.of("mi", "mile"), "mi", "mile", new LinearScale(Units.CONST_MI), UnitSystem.IMPERIAL);
+                new Length.Unit(List.of("mi", "mile"), "mi", "mile", new LinearScale(CONST_MI), UnitSystem.IMPERIAL);
 
         /** nautical mile (international) = 1852 m. */
-        public static final Length.Unit NAUTICAL_MILE =
-                new Length.Unit("NM", "Nautical Mile", Units.CONST_NM, UnitSystem.OTHER);
+        public static final Length.Unit NAUTICAL_MILE = new Length.Unit("NM", "Nautical Mile", CONST_NM, UnitSystem.OTHER);
 
         /** Astronomical Unit = 149,597,870,700 m. */
         public static final Length.Unit ASTRONOMICAL_UNIT =

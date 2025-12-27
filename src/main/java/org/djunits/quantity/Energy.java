@@ -280,11 +280,11 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
 
         /** foot-pound force. */
         public static final Energy.Unit FOOT_POUND_FORCE = JOULE.deriveUnit("ft.lbf", "foot pound-force",
-                Units.CONST_FT * Units.CONST_LB * Units.CONST_GRAVITY, UnitSystem.IMPERIAL);
+                Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** inch-pound force. */
         public static final Energy.Unit INCH_POUND_FORCE = JOULE.deriveUnit("in.lbf", "inch pound-force",
-                Units.CONST_IN * Units.CONST_LB * Units.CONST_GRAVITY, UnitSystem.IMPERIAL);
+                Length.Unit.CONST_IN * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** British thermal unit (ISO). */
         public static final Energy.Unit BTU_ISO =

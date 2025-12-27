@@ -247,16 +247,16 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
                 LITER_PER_HOUR.deriveUnit("L/day", "liter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
 
         /** ft^3/s. */
-        public static final FlowVolume.Unit CUBIC_FEET_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("ft3/s",
-                "cubic foot per second", Units.CONST_FT * Units.CONST_FT * Units.CONST_FT, UnitSystem.IMPERIAL);
+        public static final FlowVolume.Unit CUBIC_FOOT_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("ft3/s",
+                "cubic foot per second", Volume.Unit.CONST_CUBIC_FOOT, UnitSystem.IMPERIAL);
 
         /** ft^3/min. */
-        public static final FlowVolume.Unit CUBIC_FEET_PER_MINUTE =
-                CUBIC_FEET_PER_SECOND.deriveUnit("ft3/min", "cubic foot per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
+        public static final FlowVolume.Unit CUBIC_FOOT_PER_MINUTE =
+                CUBIC_FOOT_PER_SECOND.deriveUnit("ft3/min", "cubic foot per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
 
         /** in^3/s. */
         public static final FlowVolume.Unit CUBIC_INCH_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("in3/s",
-                "cubic inch per second", Units.CONST_IN * Units.CONST_IN * Units.CONST_IN, UnitSystem.IMPERIAL);
+                "cubic inch per second", Volume.Unit.CONST_CUBIC_INCH, UnitSystem.IMPERIAL);
 
         /** in^3/min. */
         public static final FlowVolume.Unit CUBIC_INCH_PER_MINUTE =
@@ -264,7 +264,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
 
         /** gallon/s (US). */
         public static final FlowVolume.Unit GALLON_US_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("gal(US)/s",
-                "US gallon per second", Units.CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
+                "US gallon per second", Volume.Unit.CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
 
         /** gallon/min (US). */
         public static final FlowVolume.Unit GALLON_US_PER_MINUTE =

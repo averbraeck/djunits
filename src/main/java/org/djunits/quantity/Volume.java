@@ -242,6 +242,30 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
     @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Volume.Unit>
     {
+        /** Constant for the cubic inch. */
+        public static final double CONST_CUBIC_INCH = Length.Unit.CONST_IN * Length.Unit.CONST_IN * Length.Unit.CONST_IN;
+
+        /** Constant for the cubic foot. */
+        public static final double CONST_CUBIC_FOOT = Length.Unit.CONST_FT * Length.Unit.CONST_FT * Length.Unit.CONST_FT;
+
+        /** Constant for the imperial gallon. */
+        public static final double CONST_GALLON_IMP = 4.54609E-3;
+
+        /** Constant for the imperial quart. */
+        public static final double CONST_QUART_IMP = CONST_GALLON_IMP / 4.0;
+
+        /** Constant for imperial fluid ounce. */
+        public static final double CONST_OZ_IMP = CONST_GALLON_IMP / 160.0;
+
+        /** Constant for US gallon. */
+        public static final double CONST_GALLON_US = 231.0 * CONST_CUBIC_INCH;
+
+        /** Constant for US quart. */
+        public static final double CONST_QUART_US = CONST_GALLON_US / 4.0;
+
+        /** Constant for US fluid ounce. */
+        public static final double CONST_OZ_US = CONST_GALLON_US / 128.0;
+
         /** The dimensions of Volume: m3. */
         public static final SIUnit SI_UNIT = SIUnit.of("m3");
 

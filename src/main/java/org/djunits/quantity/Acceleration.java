@@ -198,6 +198,9 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
      */
     public static class Unit extends AbstractUnit<Acceleration.Unit>
     {
+        /** Constant for standard gravity. */
+        public static final double CONST_GRAVITY = 9.80665;
+
         /** The dimensions of Acceleration: m/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m/s2");
 
@@ -214,31 +217,31 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
 
         /** ft/s2. */
         public static final Acceleration.Unit FOOT_PER_SECOND_2 =
-                new Acceleration.Unit("ft/s2", "foot per second squared", Units.CONST_FT, UnitSystem.IMPERIAL);
+                new Acceleration.Unit("ft/s2", "foot per second squared", Length.Unit.CONST_FT, UnitSystem.IMPERIAL);
 
         /** in/s2. */
         public static final Acceleration.Unit INCH_PER_SECOND_2 =
-                new Acceleration.Unit("in/s2", "inch per second squared", Units.CONST_IN, UnitSystem.IMPERIAL);
+                new Acceleration.Unit("in/s2", "inch per second squared", Length.Unit.CONST_IN, UnitSystem.IMPERIAL);
 
         /** mi/h2. */
         public static final Acceleration.Unit MILE_PER_HOUR_2 = new Acceleration.Unit("mi/h2", "mile per hour squared",
-                Units.CONST_MI / (3600.0 * 3600.0), UnitSystem.IMPERIAL);
+                Length.Unit.CONST_MI / (3600.0 * 3600.0), UnitSystem.IMPERIAL);
 
         /** mi/s2. */
         public static final Acceleration.Unit MILE_PER_SECOND_2 =
-                new Acceleration.Unit("mi/s2", "mile per second squared", Units.CONST_MI, UnitSystem.IMPERIAL);
+                new Acceleration.Unit("mi/s2", "mile per second squared", Length.Unit.CONST_MI, UnitSystem.IMPERIAL);
 
         /** kt/s = Nautical Mile / h / s. */
         public static final Acceleration.Unit KNOT_PER_SECOND =
-                new Acceleration.Unit("kt/s", "knot per second", Units.CONST_NM / 3600.0, UnitSystem.OTHER);
+                new Acceleration.Unit("kt/s", "knot per second", Length.Unit.CONST_NM / 3600.0, UnitSystem.OTHER);
 
         /** mi/h/s. */
         public static final Acceleration.Unit MILE_PER_HOUR_PER_SECOND =
-                new Acceleration.Unit("mi/h/s", "mile per hour per second", Units.CONST_MI / 3600.0, UnitSystem.IMPERIAL);
+                new Acceleration.Unit("mi/h/s", "mile per hour per second", Length.Unit.CONST_MI / 3600.0, UnitSystem.IMPERIAL);
 
         /** The standard gravity. */
         public static final Acceleration.Unit STANDARD_GRAVITY =
-                new Acceleration.Unit("g", "standard gravity", 9.80665, UnitSystem.OTHER);
+                new Acceleration.Unit("g", "standard gravity", CONST_GRAVITY, UnitSystem.OTHER);
 
         /** Gal or cm/s. */
         public static final Acceleration.Unit GAL = new Acceleration.Unit("Gal", "gal", 0.01, UnitSystem.CGS);

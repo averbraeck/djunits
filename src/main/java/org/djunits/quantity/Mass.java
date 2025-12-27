@@ -148,6 +148,18 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
      */
     public static class Unit extends AbstractUnit<Mass.Unit>
     {
+        /** Constant for pound (lb). */
+        public static final double CONST_LB = 0.45359237;
+        
+        /** Constant for ounce. */
+        public static final double CONST_OUNCE = CONST_LB / 16.0;
+        
+        /** Constant for short ton. */
+        public static final double CONST_TON_SHORT = 2000.0 * CONST_LB;
+        
+        /** Constant for long ton. */
+        public static final double CONST_TON_LONG = 2240.0 * CONST_LB;
+
         /** The dimensions of mass: kg. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg");
 

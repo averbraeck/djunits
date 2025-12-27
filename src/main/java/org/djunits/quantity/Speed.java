@@ -317,42 +317,42 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
 
         /** in/s. */
         public static final Speed.Unit INCH_PER_SECOND = new Speed.Unit(List.of("in/s", "in/sec", "inch/s", "inch/sec"), "in/s",
-                "inch per second", new LinearScale(Units.CONST_IN), UnitSystem.IMPERIAL);
+                "inch per second", new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
 
         /** in/min. */
         public static final Speed.Unit INCH_PER_MINUTE = new Speed.Unit(List.of("in/min", "inch/min"), "in/min",
-                "inch per minute", new LinearScale(Units.CONST_IN, 60.0), UnitSystem.IMPERIAL);
+                "inch per minute", new LinearScale(Length.Unit.CONST_IN, 60.0), UnitSystem.IMPERIAL);
 
         /** in/h. */
         public static final Speed.Unit INCH_PER_HOUR = new Speed.Unit(List.of("in/h", "in/hr", "in/hour", "inch/hour"), "in/h",
-                "inch per hour", new LinearScale(Units.CONST_IN, 3600.0), UnitSystem.IMPERIAL);
+                "inch per hour", new LinearScale(Length.Unit.CONST_IN, 3600.0), UnitSystem.IMPERIAL);
 
         /** ft/s. */
         public static final Speed.Unit FOOT_PER_SECOND = new Speed.Unit(List.of("ft/s", "ft/sec", "foot/s", "foot/sec"), "ft/s",
-                "foot per second", new LinearScale(Units.CONST_FT), UnitSystem.IMPERIAL);
+                "foot per second", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
 
         /** ft/min. */
         public static final Speed.Unit FOOT_PER_MINUTE = new Speed.Unit(List.of("ft/min", "foot/min"), "ft/min",
-                "foot per minute", new LinearScale(Units.CONST_FT, 60.0), UnitSystem.IMPERIAL);
+                "foot per minute", new LinearScale(Length.Unit.CONST_FT, 60.0), UnitSystem.IMPERIAL);
 
         /** ft/h. */
         public static final Speed.Unit FOOT_PER_HOUR = new Speed.Unit(List.of("ft/h", "ft/hr", "ft/hour", "foot/hour"), "ft/h",
-                "foot per hour", new LinearScale(Units.CONST_FT, 3600.0), UnitSystem.IMPERIAL);
+                "foot per hour", new LinearScale(Length.Unit.CONST_FT, 3600.0), UnitSystem.IMPERIAL);
 
         /** mi/s. */
         public static final Speed.Unit MILE_PER_SECOND = new Speed.Unit(List.of("mi/s", "mi/sec", "mile/s", "mile/sec"), "mi/s",
-                "mile per second", new LinearScale(Units.CONST_MI), UnitSystem.IMPERIAL);
+                "mile per second", new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
 
         /** mi/min. */
         public static final Speed.Unit MILE_PER_MINUTE = new Speed.Unit(List.of("mi/min", "mile/min"), "mi/min",
-                "mile per minute", new LinearScale(Units.CONST_MI, 60.0), UnitSystem.IMPERIAL);
+                "mile per minute", new LinearScale(Length.Unit.CONST_MI, 60.0), UnitSystem.IMPERIAL);
 
         /** mi/h. */
         public static final Speed.Unit MILE_PER_HOUR = new Speed.Unit(List.of("mi/h", "mi/hr", "mi/hour", "mile/hour"), "mi/h",
-                "mile per hour", new LinearScale(Units.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
+                "mile per hour", new LinearScale(Length.Unit.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
 
         /** knot = Nautical Mile per hour. */
-        public static final Speed.Unit KNOT = new Speed.Unit("kt", "knot", Units.CONST_NM / 3600.0, UnitSystem.OTHER);
+        public static final Speed.Unit KNOT = new Speed.Unit("kt", "knot", Length.Unit.CONST_NM / 3600.0, UnitSystem.OTHER);
 
         /**
          * Create a new Speed unit.
