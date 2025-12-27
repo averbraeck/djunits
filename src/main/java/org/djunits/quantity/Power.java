@@ -98,9 +98,9 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     }
 
     /**
-     * Returns a Power representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
+     * Returns a Power representation of a textual representation of a value with a unit. The String representation that can be
+     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
+     * but not required, between the value and the unit.
      * @param text the textual representation to parse into a Power
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -134,6 +134,96 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of Power and Duration, which results in a Energy scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Power and Duration
+     */
+    public final Energy times(final Duration v)
+    {
+        return new Energy(this.si() * v.si(), Energy.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and Frequency, which results in a Energy scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and Frequency
+     */
+    public final Energy divide(final Frequency v)
+    {
+        return new Energy(this.si() / v.si(), Energy.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and Energy, which results in a Frequency scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and Energy
+     */
+    public final Frequency divide(final Energy v)
+    {
+        return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and Speed, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and Speed
+     */
+    public final Force divide(final Speed v)
+    {
+        return new Force(this.si() / v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and Force, which results in a Speed scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and Force
+     */
+    public final Speed divide(final Force v)
+    {
+        return new Speed(this.si() / v.si(), Speed.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and ElectricPotential, which results in a ElectricCurrent scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and ElectricPotential
+     */
+    public final ElectricCurrent divide(final ElectricPotential v)
+    {
+        return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and ElectricCurrent, which results in a ElectricPotential scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and ElectricCurrent
+     */
+    public final ElectricPotential divide(final ElectricCurrent v)
+    {
+        return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and Acceleration, which results in a Momentum scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and Acceleration
+     */
+    public final Momentum divide(final Acceleration v)
+    {
+        return new Momentum(this.si() / v.si(), Momentum.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Power and Momentum, which results in a Acceleration scalar.
+     * @param v scalar
+     * @return scalar as a division of Power and Momentum
+     */
+    public final Acceleration divide(final Momentum v)
+    {
+        return new Acceleration(this.si() / v.si(), Acceleration.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -156,6 +246,50 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
 
         /** The SI or BASE unit. */
         public static final Power.Unit SI = WATT.generateSiPrefixes(false, false);
+
+        /** microwatt. */
+        public static final Power.Unit MICROWATT = Units.resolve(Power.Unit.class, "muW");
+
+        /** milliwatt. */
+        public static final Power.Unit MILLIWATT = Units.resolve(Power.Unit.class, "mW");
+
+        /** kiloawatt. */
+        public static final Power.Unit KILOWATT = Units.resolve(Power.Unit.class, "kW");
+
+        /** megawatt. */
+        public static final Power.Unit MEGAWATT = Units.resolve(Power.Unit.class, "MW");
+
+        /** gigawatt. */
+        public static final Power.Unit GIGAWATT = Units.resolve(Power.Unit.class, "GW");
+
+        /** terawatt. */
+        public static final Power.Unit TERAWATT = Units.resolve(Power.Unit.class, "TW");
+
+        /** petawatt. */
+        public static final Power.Unit PETAWATT = Units.resolve(Power.Unit.class, "PW");
+
+        /** foot-pound-force per hour. */
+        public static final Power.Unit FOOT_POUND_FORCE_PER_HOUR = SI.deriveUnit("ft.lbf/h", "foot pound-force per hour",
+                Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / 3600.0, UnitSystem.IMPERIAL);
+
+        /** foot-pound-force per minute. */
+        public static final Power.Unit FOOT_POUND_FORCE_PER_MINUTE = SI.deriveUnit("ft.lbf/min", "foot pound-force per minute",
+                Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / 60.0, UnitSystem.IMPERIAL);
+
+        /** foot-pound-force per second. */
+        public static final Power.Unit FOOT_POUND_FORCE_PER_SECOND = SI.deriveUnit("ft.lbf/s", "foot pound-force per second",
+                Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
+
+        /** horsepower (metric). */
+        public static final Power.Unit HORSEPOWER_METRIC =
+                WATT.deriveUnit("hp(M)", "horsepower (metric)", 735.49875, UnitSystem.OTHER);
+
+        /** sthene-meter per second. */
+        public static final Power.Unit STHENE_METER_PER_SECOND =
+                SI.deriveUnit("sn.m/s", "sthene-meter per second", 1000.0, UnitSystem.MTS);
+
+        /** erg per second. */
+        public static final Power.Unit ERG_PER_SECOND = SI.deriveUnit("erg/s", "erg per second", 1.0E-7, UnitSystem.CGS);
 
         /**
          * Create a new Power unit.

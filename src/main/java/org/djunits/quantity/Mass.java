@@ -98,9 +98,9 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
     }
 
     /**
-     * Returns a Mass representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
+     * Returns a Mass representation of a textual representation of a value with a unit. The String representation that can be
+     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
+     * but not required, between the value and the unit.
      * @param text the textual representation to parse into a Mass
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -134,6 +134,76 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the division of Mass and FlowMass, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of Mass and FlowMass
+     */
+    public final Duration divide(final FlowMass v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Mass and Duration, which results in a FlowMass scalar.
+     * @param v scalar
+     * @return scalar as a division of Mass and Duration
+     */
+    public final FlowMass divide(final Duration v)
+    {
+        return new FlowMass(this.si() / v.si(), FlowMass.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Mass and Acceleration, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Mass and Acceleration
+     */
+    public final Force times(final Acceleration v)
+    {
+        return new Force(this.si() * v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Mass and Frequency, which results in a FlowMass scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Mass and Frequency
+     */
+    public final FlowMass times(final Frequency v)
+    {
+        return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Mass and Density, which results in a Volume scalar.
+     * @param v scalar
+     * @return scalar as a division of Mass and Density
+     */
+    public final Volume divide(final Density v)
+    {
+        return new Volume(this.si() / v.si(), Volume.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Mass and Volume, which results in a Density scalar.
+     * @param v scalar
+     * @return scalar as a division of Mass and Volume
+     */
+    public final Density divide(final Volume v)
+    {
+        return new Density(this.si() / v.si(), Density.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Mass and Speed, which results in a Momentum scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Mass and Speed
+     */
+    public final Momentum times(final Speed v)
+    {
+        return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -150,13 +220,13 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
     {
         /** Constant for pound (lb). */
         public static final double CONST_LB = 0.45359237;
-        
+
         /** Constant for ounce. */
         public static final double CONST_OUNCE = CONST_LB / 16.0;
-        
+
         /** Constant for short ton. */
         public static final double CONST_TON_SHORT = 2000.0 * CONST_LB;
-        
+
         /** Constant for long ton. */
         public static final double CONST_TON_LONG = 2240.0 * CONST_LB;
 
@@ -168,6 +238,62 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
 
         /** The SI or BASE unit. */
         public static final Mass.Unit SI = KILOGRAM.generateSiPrefixes(true, false);
+
+        /** gram. */
+        public static final Mass.Unit GRAM = Units.resolve(Mass.Unit.class, "g");
+
+        /** microgram. */
+        public static final Mass.Unit MICROGRAM = Units.resolve(Mass.Unit.class, "mug");
+
+        /** milligram. */
+        public static final Mass.Unit MILLIGRAM = Units.resolve(Mass.Unit.class, "mg");
+
+        /** pound. */
+        public static final Mass.Unit POUND = KILOGRAM.deriveUnit("lb", "pound", CONST_LB, UnitSystem.IMPERIAL);
+
+        /** pound. */
+        public static final Mass.Unit OUNCE = KILOGRAM.deriveUnit("oz", "ounce", CONST_OUNCE, UnitSystem.IMPERIAL);
+
+        /** long ton = 2240 lb. */
+        public static final Mass.Unit TON_LONG =
+                KILOGRAM.deriveUnit("long tn", "long ton", CONST_TON_LONG, UnitSystem.IMPERIAL);
+
+        /** short ton = 2000 lb. */
+        public static final Mass.Unit TON_SHORT =
+                KILOGRAM.deriveUnit("sh tn", "short ton", CONST_TON_SHORT, UnitSystem.US_CUSTOMARY);
+
+        /** metric ton = 1000 kg. */
+        public static final Mass.Unit TON_METRIC = KILOGRAM.deriveUnit("t", "metric tonne", 1000.0, UnitSystem.SI_ACCEPTED);
+
+        /** metric ton = 1000 kg. */
+        public static final Mass.Unit TONNE = KILOGRAM.deriveUnit("t(mts)", "tonne", 1000.0, UnitSystem.MTS);
+
+        /** dalton. */
+        public static final Mass.Unit DALTON = KILOGRAM.deriveUnit("Da", "Dalton", 1.6605388628E-27, UnitSystem.SI_ACCEPTED);
+
+        /** electronvolt = 1.782661907E-36 kg. See http://physics.nist.gov/cuu/Constants/Table/allascii.txt. */
+        public static final Mass.Unit ELECTRONVOLT =
+                KILOGRAM.deriveUnit("eV", "electronvolt", 1.782661907E-36, UnitSystem.OTHER);
+
+        /** microelectronvolt. */
+        public static final Mass.Unit MICROELECTRONVOLT =
+                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E-3, UnitSystem.OTHER);
+
+        /** millielectronvolt. */
+        public static final Mass.Unit MILLIELECTRONVOLT =
+                ELECTRONVOLT.deriveUnit(List.of("mueV"), "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
+
+        /** kiloelectronvolt. */
+        public static final Mass.Unit KILOELECTRONVOLT =
+                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E3, UnitSystem.OTHER);
+
+        /** megaelectronvolt. */
+        public static final Mass.Unit MEGAELECTRONVOLT =
+                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E6, UnitSystem.OTHER);
+
+        /** gigaelectronvolt. */
+        public static final Mass.Unit GIGAELECTRONVOLT =
+                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E9, UnitSystem.OTHER);
 
         /**
          * Create a new Mass unit.

@@ -98,8 +98,8 @@ public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
     }
 
     /**
-     * Returns a Pressure representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * Returns a Pressure representation of a textual representation of a value with a unit. The String representation that can
+     * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
      * @param text the textual representation to parse into a Pressure
      * @return the Scalar representation of the value in its unit
@@ -134,6 +134,26 @@ public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of Pressure and Area, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Pressure and Area
+     */
+    public final Force times(final Area v)
+    {
+        return new Force(this.si() * v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Pressure and Volume, which results in a Energy scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Pressure and Volume
+     */
+    public final Energy times(final Volume v)
+    {
+        return new Energy(this.si() * v.si(), Energy.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -148,14 +168,73 @@ public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
      */
     public static class Unit extends AbstractUnit<Pressure.Unit>
     {
-        /** The dimensions of pressure: kgm/s2. */
-        public static final SIUnit SI_UNIT = SIUnit.of("kgm/s2");
+        /** The dimensions of pressure: kg/m.s2. */
+        public static final SIUnit SI_UNIT = SIUnit.of("kg/ms2");
 
         /** Pascal. */
         public static final Pressure.Unit PASCAL = new Pressure.Unit("Pa", "pascal", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final Pressure.Unit SI = PASCAL.generateSiPrefixes(false, false);
+
+        /** hectoPascal. */
+        public static final Pressure.Unit HECTOPASCAL = Units.resolve(Pressure.Unit.class, "hPa");
+
+        /** kiloPascal. */
+        public static final Pressure.Unit KILOPASCAL = Units.resolve(Pressure.Unit.class, "kPa");
+
+        /** standard atmosphere. */
+        public static final Pressure.Unit ATMOSPHERE_STANDARD =
+                PASCAL.deriveUnit("atm", "atmosphere (standard)", 101325.0, UnitSystem.OTHER);
+
+        /** torr. */
+        public static final Pressure.Unit TORR = ATMOSPHERE_STANDARD.deriveUnit("torr", "Torr", 1.0 / 760.0, UnitSystem.OTHER);
+
+        /** technical atmosphere = kgf/cm2. */
+        public static final Pressure.Unit ATMOSPHERE_TECHNICAL =
+                PASCAL.deriveUnit("at", "atmosphere (technical)", Acceleration.Unit.CONST_GRAVITY / 1.0E-4, UnitSystem.OTHER);
+
+        /** barye = dyne/cm2. */
+        public static final Pressure.Unit BARYE = PASCAL.deriveUnit("Ba", "barye", 1.0E-5 / 1.0E-4, UnitSystem.CGS);
+
+        /** bar. */
+        public static final Pressure.Unit BAR = PASCAL.deriveUnit("bar", "bar", 1.0E5, UnitSystem.OTHER);
+
+        /** millibar. */
+        public static final Pressure.Unit MILLIBAR = BAR.deriveUnit("mbar", "millibar", 1.0E-3, UnitSystem.OTHER);
+
+        /** cm Hg. */
+        public static final Pressure.Unit CENTIMETER_MERCURY =
+                PASCAL.deriveUnit("cmHg", "centimeter mercury", 1333.224, UnitSystem.OTHER);
+
+        /** mm Hg. */
+        public static final Pressure.Unit MILLIMETER_MERCURY =
+                PASCAL.deriveUnit("mmHg", "millimeter mercury", 133.3224, UnitSystem.OTHER);
+
+        /** foot Hg. */
+        public static final Pressure.Unit FOOT_MERCURY =
+                PASCAL.deriveUnit("ftHg", "foot mercury", 40.63666E3, UnitSystem.IMPERIAL);
+
+        /** inch Hg. */
+        public static final Pressure.Unit INCH_MERCURY =
+                PASCAL.deriveUnit("inHg", "inch mercury", 3.386389E3, UnitSystem.IMPERIAL);
+
+        /** kilogram-force per square millimeter. */
+        public static final Pressure.Unit KGF_PER_SQUARE_MM = PASCAL.deriveUnit("kgf/mm2",
+                "kilogram-force per square millimeter", Acceleration.Unit.CONST_GRAVITY / 1.0E-6, UnitSystem.OTHER);
+
+        /** pound-force per square foot. */
+        public static final Pressure.Unit POUND_PER_SQUARE_FOOT = PASCAL.deriveUnit("lbf/ft2", "pound-force per square foot",
+                Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / (Length.Unit.CONST_FT * Length.Unit.CONST_FT),
+                UnitSystem.IMPERIAL);
+
+        /** pound-force per square inch. */
+        public static final Pressure.Unit POUND_PER_SQUARE_INCH = PASCAL.deriveUnit("lbf/in2", "pound-force per square inch",
+                Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / (Length.Unit.CONST_IN * Length.Unit.CONST_IN),
+                UnitSystem.IMPERIAL);
+
+        /** pieze. */
+        public static final Pressure.Unit PIEZE = PASCAL.deriveUnit("pz", "pi\u00E8ze", 1000.0, UnitSystem.MTS);
 
         /**
          * Create a new Pressure unit.

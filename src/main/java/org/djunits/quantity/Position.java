@@ -98,8 +98,8 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
     }
 
     /**
-     * Returns a Position representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
+     * Returns a Position representation of a textual representation of a value with a unit. The String representation that can
+     * be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
      * allowed, but not required, between the value and the unit.
      * @param text the textual representation to parse into a Position
      * @return the Scalar representation of the value in its unit
@@ -155,7 +155,76 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
         public static final Position.Unit METER = new Position.Unit("m", "meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Position.Unit SI = METER;
+        public static final Position.Unit SI = METER.generateSiPrefixes(false, false);
+
+        /** decameter. */
+        public static final Position.Unit DECAMETER = Units.resolve(Position.Unit.class, "dam");
+
+        /** hectometer. */
+        public static final Position.Unit HECTOMETER = Units.resolve(Position.Unit.class, "hm");
+
+        /** kilometer. */
+        public static final Position.Unit KILOMETER = Units.resolve(Position.Unit.class, "km");
+
+        /** decimeter. */
+        public static final Position.Unit DECIMETER = Units.resolve(Position.Unit.class, "dm");
+
+        /** centimeter. */
+        public static final Position.Unit CENTIMETER = Units.resolve(Position.Unit.class, "cm");
+
+        /** millimeter. */
+        public static final Position.Unit MILLIMETER = Units.resolve(Position.Unit.class, "mm");
+
+        /** micrometer. */
+        public static final Position.Unit MICROMETER = Units.resolve(Position.Unit.class, "mum");
+
+        /** nanometer. */
+        public static final Position.Unit NANOMETER = Units.resolve(Position.Unit.class, "nm");
+
+        /** picometer. */
+        public static final Position.Unit PICOMETER = Units.resolve(Position.Unit.class, "pm");
+
+        /** attometer. */
+        public static final Position.Unit ATTOMETER = Units.resolve(Position.Unit.class, "am");
+
+        /** femtometer. */
+        public static final Position.Unit FEMTOMETER = Units.resolve(Position.Unit.class, "fm");
+
+        /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
+        public static final Position.Unit FOOT = new Position.Unit(List.of("ft", "foot", "'"), "ft", "foot",
+                new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
+
+        /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
+        public static final Position.Unit INCH = new Position.Unit(List.of("in", "inch", "\""), "in", "inch",
+                new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
+
+        /** yard (international) = 0.9144 m = 3 ft = 36 in. */
+        public static final Position.Unit YARD = new Position.Unit(List.of("yd", "yard"), "yd", "yard",
+                new LinearScale(Length.Unit.CONST_YD), UnitSystem.IMPERIAL);
+
+        /** mile (international) = 5280 ft = 1760 yd. */
+        public static final Position.Unit MILE = new Position.Unit(List.of("mi", "mile"), "mi", "mile",
+                new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
+
+        /** nautical mile (international) = 1852 m. */
+        public static final Position.Unit NAUTICAL_MILE =
+                new Position.Unit("NM", "Nautical Mile", Length.Unit.CONST_NM, UnitSystem.OTHER);
+
+        /** Astronomical Unit = 149,597,870,700 m. */
+        public static final Position.Unit ASTRONOMICAL_UNIT =
+                new Position.Unit("AU", "Astronomical Unit", 149_597_870_700.0, UnitSystem.OTHER);
+
+        /** Lightyear = 9,460,730,472,580,800 m. */
+        public static final Position.Unit LIGHTYEAR =
+                new Position.Unit("ly", "lightyear", 9_460_730_472_580_800.0, UnitSystem.OTHER);
+
+        /** Parsec = AU * 648,000 / PI. */
+        public static final Position.Unit PARSEC =
+                new Position.Unit("Pc", "Parsec", 149_597_870_700.0 * 648_000.0 / Math.PI, UnitSystem.OTHER);
+
+        /** Angstrom = 10^-10 m. */
+        public static final Position.Unit ANGSTROM =
+                new Position.Unit(List.of("A"), "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
 
         /**
          * Create a new Position unit.

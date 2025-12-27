@@ -134,6 +134,66 @@ public class Momentum extends Quantity.Relative<Momentum, Momentum.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the division of Momentum and Speed, which results in a Mass scalar.
+     * @param v scalar
+     * @return scalar as a division of Momentum and Speed
+     */
+    public final Mass divide(final Speed v)
+    {
+        return new Mass(this.si() / v.si(), Mass.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Momentum and Mass, which results in a Speed scalar.
+     * @param v scalar
+     * @return scalar as a division of Momentum and Mass
+     */
+    public final Speed divide(final Mass v)
+    {
+        return new Speed(this.si() / v.si(), Speed.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Momentum and Length, which results in a FlowMass scalar.
+     * @param v scalar
+     * @return scalar as a division of Momentum and Length
+     */
+    public final FlowMass divide(final Length v)
+    {
+        return new FlowMass(this.si() / v.si(), FlowMass.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Momentum and FlowMass, which results in a Length scalar.
+     * @param v scalar
+     * @return scalar as a division of Momentum and FlowMass
+     */
+    public final Length divide(final FlowMass v)
+    {
+        return new Length(this.si() / v.si(), Length.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Momentum and Speed, which results in a Energy scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Momentum and Speed
+     */
+    public final Energy times(final Speed v)
+    {
+        return new Energy(this.si() * v.si(), Energy.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Momentum and Acceleration, which results in a Power scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Momentum and Acceleration
+     */
+    public final Power times(final Acceleration v)
+    {
+        return new Power(this.si() * v.si(), Power.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -151,7 +211,7 @@ public class Momentum extends Quantity.Relative<Momentum, Momentum.Unit>
         /** The dimensions of momentum: kgm/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm/s");
 
-        /** Gray. */
+        /** kgm/s. */
         public static final Momentum.Unit KILOGRAM_METER_PER_SECOND =
                 new Momentum.Unit("kgm/s", "kilogram meter per second", 1.0, UnitSystem.SI_DERIVED);
 
