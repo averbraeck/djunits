@@ -215,7 +215,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
 
         /** milliampere second. */
         public static final ElectricCharge.Unit MILLIAMPERE_SECOND =
-                AMPERE_HOUR.deriveUnit("mAs", "milliampere second", 1.0 / 3600.0, UnitSystem.SI_DERIVED);
+                MILLIAMPERE_HOUR.deriveUnit("mAs", "milliampere second", 1.0 / 3600.0, UnitSystem.SI_DERIVED);
 
         /** kiloampere hour. */
         public static final ElectricCharge.Unit KILOAMPERE_HOUR =
