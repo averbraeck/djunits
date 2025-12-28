@@ -43,6 +43,7 @@ import org.djunits.quantity.Frequency;
 import org.djunits.quantity.Illuminance;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.LinearDensity;
+import org.djunits.quantity.LinearObjectDensity;
 import org.djunits.quantity.LuminousFlux;
 import org.djunits.quantity.LuminousIntensity;
 import org.djunits.quantity.MagneticFlux;
@@ -89,7 +90,6 @@ import org.djunits.unit.si.SIUnit;
  */
 public final class CheckOperations
 {
-
     /** Set of quantity classes to scan for {@code times} and {@code divide} methods. */
     private static final Class<?>[] QUANTITY_CLASSES = new Class<?>[] {AbsoluteTemperature.class, AbsorbedDose.class,
             Acceleration.class, AmountOfSubstance.class, Angle.class, AngularAcceleration.class, AngularVelocity.class,
@@ -97,15 +97,22 @@ public final class CheckOperations
             ElectricCharge.class, ElectricCurrent.class, ElectricPotential.class, ElectricalCapacitance.class,
             ElectricalConductance.class, ElectricalInductance.class, ElectricalResistance.class, Energy.class,
             EquivalentDose.class, FlowMass.class, FlowVolume.class, Force.class, Frequency.class, Illuminance.class,
-            Length.class, LinearDensity.class, LuminousFlux.class, LuminousIntensity.class, MagneticFlux.class,
-            MagneticFluxDensity.class, Mass.class, Momentum.class, Position.class, Power.class, Pressure.class,
-            RadioActivity.class, SolidAngle.class, Speed.class, Temperature.class, Time.class, Torque.class, Volume.class};
+            Length.class, LinearDensity.class, LinearObjectDensity.class, LuminousFlux.class, LuminousIntensity.class,
+            MagneticFlux.class, MagneticFluxDensity.class, Mass.class, Momentum.class, Position.class, Power.class,
+            Pressure.class, RadioActivity.class, SolidAngle.class, Speed.class, Temperature.class, Time.class, Torque.class,
+            Volume.class};
 
     /** Immutable set of quantity classes for quick membership tests. */
     private static final Set<Class<?>> CLASS_SET = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(QUANTITY_CLASSES)));
 
     /** Numerical tolerance used when comparing SI dimension exponent arrays. */
     private static final double EPS = 1e-12;
+
+    /** */
+    private CheckOperations()
+    {
+        // static class.
+    }
 
     /** Immutable record for one discovered calculation and its dimensional check outcome. */
     private static final class Calc
