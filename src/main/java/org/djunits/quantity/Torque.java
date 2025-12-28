@@ -98,9 +98,9 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Returns a Torque representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
+     * Returns a Torque representation of a textual representation of a value with a unit. The String representation that can be
+     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
+     * but not required, between the value and the unit.
      * @param text the textual representation to parse into a Torque
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -134,12 +134,92 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the division of Torque and Force, which results in a Length scalar.
+     * @param v scalar
+     * @return scalar as a division of Torque and Force
+     */
+    public final Length divide(final Force v)
+    {
+        return new Length(this.si() / v.si(), Length.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Torque and Length, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a division of Torque and Length
+     */
+    public final Force divide(final Length v)
+    {
+        return new Force(this.si() / v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Torque and LinearDensity, which results in a Force scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Torque and LinearDensity
+     */
+    public final Force times(final LinearDensity v)
+    {
+        return new Force(this.si() * v.si(), Force.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Torque and Duration, which results in a Power scalar.
+     * @param v scalar
+     * @return scalar as a division of Torque and Duration
+     */
+    public final Power divide(final Duration v)
+    {
+        return new Power(this.si() / v.si(), Power.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Torque and Power, which results in a Duration scalar.
+     * @param v scalar
+     * @return scalar as a division of Torque and Power
+     */
+    public final Duration divide(final Power v)
+    {
+        return new Duration(this.si() / v.si(), Duration.Unit.SI);
+    }
+
+    /**
+     * Calculate the multiplication of Torque and Frequency, which results in a Power scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Torque and Frequency
+     */
+    public final Power times(final Frequency v)
+    {
+        return new Power(this.si() * v.si(), Power.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Torque and Volume, which results in a Pressure scalar.
+     * @param v scalar
+     * @return scalar as a division of Torque and Volume
+     */
+    public final Pressure divide(final Volume v)
+    {
+        return new Pressure(this.si() / v.si(), Pressure.Unit.SI);
+    }
+
+    /**
+     * Calculate the division of Torque and Pressure, which results in a Volume scalar.
+     * @param v scalar
+     * @return scalar as a division of Torque and Pressure
+     */
+    public final Volume divide(final Pressure v)
+    {
+        return new Volume(this.si() / v.si(), Volume.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
 
     /**
-     * Torque.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Torque.Unit encodes the units of rotational force about an axis, measured in newton meters (Nm).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -156,6 +236,18 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
 
         /** The SI or BASE unit. */
         public static final Torque.Unit SI = NEWTON_METER;
+
+        /** meter kilogram-force. */
+        public static final Torque.Unit METER_KILOGRAM_FORCE =
+                SI.deriveUnit("m.kgf", "meter kilogram-force", Acceleration.Unit.CONST_GRAVITY, UnitSystem.OTHER);
+
+        /** Pound foot. */
+        public static final Torque.Unit POUND_FOOT = SI.deriveUnit("lbf.ft", "pound-foot",
+                Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
+
+        /** Pound inch. */
+        public static final Torque.Unit POUND_INCH = SI.deriveUnit("lbf.in", "pound-inch",
+                Length.Unit.CONST_IN * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /**
          * Create a new Torque unit.

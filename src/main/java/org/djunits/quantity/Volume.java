@@ -243,25 +243,22 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
     public static class Unit extends AbstractUnit<Volume.Unit>
     {
         /** Constant for the cubic inch. */
-        public static final double CONST_CUBIC_INCH = Length.Unit.CONST_IN * Length.Unit.CONST_IN * Length.Unit.CONST_IN;
+        public static final double CONST_CUBIC_INCH = cubed(Length.Unit.CONST_IN);
 
         /** Constant for the cubic foot. */
-        public static final double CONST_CUBIC_FOOT = Length.Unit.CONST_FT * Length.Unit.CONST_FT * Length.Unit.CONST_FT;
+        public static final double CONST_CUBIC_FOOT = cubed(Length.Unit.CONST_FT);
+
+        /** Constant for the cubic yard. */
+        public static final double CONST_CUBIC_YARD = cubed(Length.Unit.CONST_YD);
 
         /** Constant for the imperial gallon. */
         public static final double CONST_GALLON_IMP = 4.54609E-3;
-
-        /** Constant for the imperial quart. */
-        public static final double CONST_QUART_IMP = CONST_GALLON_IMP / 4.0;
 
         /** Constant for imperial fluid ounce. */
         public static final double CONST_OZ_IMP = CONST_GALLON_IMP / 160.0;
 
         /** Constant for US gallon. */
         public static final double CONST_GALLON_US = 231.0 * CONST_CUBIC_INCH;
-
-        /** Constant for US quart. */
-        public static final double CONST_QUART_US = CONST_GALLON_US / 4.0;
 
         /** Constant for US fluid ounce. */
         public static final double CONST_OZ_US = CONST_GALLON_US / 128.0;
@@ -274,6 +271,89 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
 
         /** The SI or BASE unit. */
         public static final Volume.Unit SI = CUBIC_METER;
+
+        /** mm^3. */
+        public static final Volume.Unit CUBIC_MILLIMETER =
+                CUBIC_METER.deriveUnit("mm3", "cubic millimeter", 1.0E-9, UnitSystem.SI_BASE);
+
+        /** cm^3. */
+        public static final Volume.Unit CUBIC_CENTIMETER =
+                CUBIC_METER.deriveUnit("cm3", "cubic centimeter", 1.0E-6, UnitSystem.SI_BASE);
+
+        /** dm^3. */
+        public static final Volume.Unit CUBIC_DECIMETER =
+                CUBIC_METER.deriveUnit("dm3", "cubic decimeter", 1.0E-3, UnitSystem.SI_BASE);
+
+        /** dam^3. */
+        public static final Volume.Unit CUBIC_DECAMETER =
+                CUBIC_METER.deriveUnit("dam3", "cubic decameter", 1.0E3, UnitSystem.SI_BASE);
+
+        /** hm^3. */
+        public static final Volume.Unit CUBIC_HECTOMETER =
+                CUBIC_METER.deriveUnit("hm3", "cubic hectometer", 1.0E6, UnitSystem.SI_BASE);
+
+        /** km^3. */
+        public static final Volume.Unit CUBIC_KILOMETER =
+                CUBIC_METER.deriveUnit("km3", "cubic kilometer", 1.0E9, UnitSystem.SI_BASE);
+
+        /** in^3. */
+        public static final Volume.Unit CUBIC_INCH =
+                CUBIC_METER.deriveUnit("in3", "cubic inch", CONST_CUBIC_INCH, UnitSystem.IMPERIAL);
+
+        /** ft^3. */
+        public static final Volume.Unit CUBIC_FOOT =
+                CUBIC_METER.deriveUnit("ft3", "cubic foot", CONST_CUBIC_FOOT, UnitSystem.IMPERIAL);
+
+        /** yd^3. */
+        public static final Volume.Unit CUBIC_YARD =
+                CUBIC_METER.deriveUnit("yd3", "cubic yard", CONST_CUBIC_YARD, UnitSystem.IMPERIAL);
+
+        /** mile^3. */
+        public static final Volume.Unit CUBIC_MILE =
+                CUBIC_METER.deriveUnit("mi3", "cubic mile", cubed(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
+
+        /** Nautical mile^3. */
+        public static final Volume.Unit CUBIC_NAUTICAL_MILE =
+                CUBIC_METER.deriveUnit("NM3", "cubic Nautical Mile", cubed(Length.Unit.CONST_NM), UnitSystem.OTHER);
+
+        /** liter. */
+        public static final Volume.Unit LITER = CUBIC_DECIMETER.deriveUnit("L", "liter", 1.0, UnitSystem.SI_ACCEPTED);
+
+        /** gallon (US), fluids. */
+        public static final Volume.Unit GALLON_US =
+                CUBIC_METER.deriveUnit("gal(US)", "gallon (US)", CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
+
+        /** gallon (imperial). */
+        public static final Volume.Unit GALLON_IMP =
+                LITER.deriveUnit("gal(imp)", "gallon (imp)", CONST_GALLON_IMP, UnitSystem.IMPERIAL);
+
+        /** quart (fluid US) = 1/4 US gallon. */
+        public static final Volume.Unit QUART_US = GALLON_US.deriveUnit("qt(US)", "quart (US)", 0.25, UnitSystem.US_CUSTOMARY);
+
+        /** quart (imperial) = 1/4 imp gallon. */
+        public static final Volume.Unit QUART_IMP = GALLON_IMP.deriveUnit("qt(imp)", "quart (imp)", 0.25, UnitSystem.IMPERIAL);
+
+        /** pint (fluid US) = 1/2 US quart. */
+        public static final Volume.Unit PINT_US = QUART_US.deriveUnit("pt(US)", "pint (US)", 0.5, UnitSystem.US_CUSTOMARY);
+
+        /** pint (imperial) = 1/2 imp quart. */
+        public static final Volume.Unit PINT_IMP = QUART_IMP.deriveUnit("pt(imp)", "pint (imp)", 0.5, UnitSystem.IMPERIAL);
+
+        /** ounce (fluid US) = 1/16 US pint. */
+        public static final Volume.Unit FLUID_OUNCE_US =
+                CUBIC_METER.deriveUnit("fl.oz(US)", "fluid ounce (US)", CONST_OZ_US, UnitSystem.US_CUSTOMARY);
+
+        /** ounce (fluid imperial) = 1/20 imp pint. */
+        public static final Volume.Unit FLUID_OUNCE_IMP =
+                CUBIC_METER.deriveUnit("fl.oz(imp)", "fluid ounce (imp)", CONST_OZ_IMP, UnitSystem.IMPERIAL);
+
+        /** Cubic lightyear. */
+        public static final Volume.Unit CUBIC_LIGHTYEAR =
+                CUBIC_METER.deriveUnit("ly3", "cubic lightyear", cubed(Length.Unit.CONST_LY), UnitSystem.OTHER);
+
+        /** Cubic Parsec. */
+        public static final Volume.Unit CUBIC_PARSEC =
+                CUBIC_METER.deriveUnit("Pc3", "cubic Parsec", cubed(Length.Unit.CONST_PC), UnitSystem.OTHER);
 
         /**
          * Create a new Volume unit.
@@ -325,5 +405,14 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        /**
+         * Return the cubed value of the argument.
+         * @param x the value to cube
+         * @return x^3
+         */
+        private static double cubed(final double x)
+        {
+            return x * x * x;
+        }
     }
 }

@@ -6,6 +6,7 @@ import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
+import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
@@ -158,6 +159,22 @@ public class Temperature extends Quantity.Relative<Temperature, Temperature.Unit
 
         /** The SI or BASE unit. */
         public static final Temperature.Unit SI = KELVIN.generateSiPrefixes(false, false);
+
+        /** Degree Celsius. */
+        public static final Temperature.Unit DEGREE_CELSIUS = new Temperature.Unit(List.of("dgC", "degC", "C"), "\u00B0C",
+                "degree Celsius", new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
+
+        /** Degree Fahrenheit. */
+        public static final Temperature.Unit DEGREE_FAHRENHEIT = new Temperature.Unit(List.of("dgF", "degF", "F"), "\u00B0F",
+                "degree Fahrenheit", new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
+
+        /** Degree Rankine. */
+        public static final Temperature.Unit DEGREE_RANKINE = new Temperature.Unit(List.of("dgR", "degR", "R"), "\u00B0R",
+                "degree Rankine", new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
+
+        /** Degree Reaumur. */
+        public static final Temperature.Unit DEGREE_REAUMUR = new Temperature.Unit(List.of("dgRe", "degRe", "Re"),
+                "\u00B0R\u00E9", "degree Reaumur", new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
 
         /**
          * Create a new Temperature unit.

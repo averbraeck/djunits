@@ -134,6 +134,16 @@ public class SolidAngle extends Quantity.Relative<SolidAngle, SolidAngle.Unit>
         return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
     }
 
+    /**
+     * Calculate the multiplication of SolidAngle and LuminousIntensity, which results in a LuminousFlux scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of SolidAngle and LuminousIntensity
+     */
+    public final LuminousFlux times(final LuminousIntensity v)
+    {
+        return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
@@ -156,6 +166,10 @@ public class SolidAngle extends Quantity.Relative<SolidAngle, SolidAngle.Unit>
 
         /** The SI or BASE unit. */
         public static final SolidAngle.Unit SI = STERADIAN;
+
+        /** square degree. */
+        public static final SolidAngle.Unit SQUARE_DEGREE =
+                STERADIAN.deriveUnit("sq.deg", "square degree", (Math.PI / 180.0) * (Math.PI / 180.0), UnitSystem.SI_DERIVED);
 
         /**
          * Create a new SolidAngle unit.

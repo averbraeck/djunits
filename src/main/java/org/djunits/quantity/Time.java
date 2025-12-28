@@ -1,11 +1,13 @@
 package org.djunits.quantity;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
+import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
@@ -71,7 +73,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
      */
     public Time(final Time value)
     {
-        super(value.si(), Time.Unit.SI);
+        super(value.si(), Time.Unit.BASE);
         setDisplayUnit(value.getDisplayUnit());
     }
 
@@ -82,7 +84,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
      */
     public static Time ofSi(final double si)
     {
-        return new Time(si, Time.Unit.SI);
+        return new Time(si, Time.Unit.BASE);
     }
 
     @Override
@@ -98,9 +100,9 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
     }
 
     /**
-     * Returns a Time representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
+     * Returns a Time representation of a textual representation of a value with a unit. The String representation that can be
+     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
+     * but not required, between the value and the unit.
      * @param text the textual representation to parse into a Time
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
@@ -139,7 +141,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
     /******************************************************************************************************/
 
     /**
-     * Time.Unit encodes the absolute unit of time..<br>
+     * Time.Unit encodes the absolute unit of time.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -152,10 +154,92 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("s");
 
         /** second. */
-        public static final Time.Unit SECOND = new Time.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
+        public static final Time.Unit BASE_SECOND = new Time.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Time.Unit SI = SECOND;
+        public static final Time.Unit BASE = BASE_SECOND;
+
+        /** The base unit for time with an arbitrary "zero" point with a calculation in microseconds. */
+        public static final Time.Unit BASE_MICROSECOND =
+                BASE_SECOND.deriveUnit(List.of("mus"), "\u03BCs", "microsecond", 1.0E-6, UnitSystem.SI_BASE);
+
+        /** The base unit for time with an arbitrary "zero" point with a calculation in milliseconds. */
+        public static final Time.Unit BASE_MILLISECOND =
+                BASE_SECOND.deriveUnit("ms", "millisecond", 1.0E-3, UnitSystem.SI_BASE);
+
+        /** The base unit for time with an arbitrary "zero" point with a calculation in minutes. */
+        public static final Time.Unit BASE_MINUTE = BASE_SECOND.deriveUnit("min", "minute", 60.0, UnitSystem.SI_DERIVED);
+
+        /** The base unit for time with an arbitrary "zero" point with a calculation in hours. */
+        public static final Time.Unit BASE_HOUR = BASE_SECOND.deriveUnit("h", "hour", 3600.0, UnitSystem.SI_DERIVED);
+
+        /** The base unit for time with an arbitrary "zero" point with a calculation in days. */
+        public static final Time.Unit BASE_DAY = BASE_SECOND.deriveUnit("day", "day", 24.0 * 3600.0, UnitSystem.SI_DERIVED);
+
+        /** The base unit for time with an arbitrary "zero" point with a calculation in weeks. */
+        public static final Time.Unit BASE_WEEK =
+                BASE_SECOND.deriveUnit("wk", "week", 7.0 * 24.0 * 3600.0, UnitSystem.SI_DERIVED);
+
+        /**
+         * The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in seconds. The base should be taken
+         * in such a way that a resolution of a millisecond is still 'visible' on a date in, say, 2020. When 1-1-1970 is used as
+         * the origin, 1-1-2021 has a value of 1,577,836,800,000 milliseconds = 1.6E12 ms. If we want to be precise on the ms
+         * level, we need 12 significant digits. A float has around 7 significant digits (23 bit mantissa), whereas a double has
+         * around 16 significant digits (52 bit mantissa). This means that a float time with an offset of 1-1-1970 is at best
+         * precise to a minute level. A double time is precise to microseconds. Therefore, avoid using float times that use the
+         * EPOCH.
+         */
+        public static final Time.Unit EPOCH_SECOND =
+                BASE_SECOND.deriveUnit("s(Y1970)", "seconds since 1/1/70", 1.0, UnitSystem.OTHER);
+
+        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in microseconds. */
+        public static final Time.Unit EPOCH_MICROSECOND = BASE_SECOND.deriveUnit(List.of("mus(Y1970)"), "\u03BCs(Y1970)",
+                "microseconds since 1/1/70", 1.0E-6, UnitSystem.SI_BASE);
+
+        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in milliseconds. */
+        public static final Time.Unit EPOCH_MILLISECOND =
+                BASE_SECOND.deriveUnit("ms(Y1970)", "milliseconds since 1/1/70", 1.0E-3, UnitSystem.OTHER);
+
+        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in minutes. */
+        public static final Time.Unit EPOCH_MINUTE =
+                BASE_SECOND.deriveUnit("min(Y1970)", "minutes since 1/1/70", 60.0, UnitSystem.OTHER);
+
+        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in hours. */
+        public static final Time.Unit EPOCH_HOUR =
+                BASE_SECOND.deriveUnit("h(Y1970)", "hours since 1/1/70", 3600.0, UnitSystem.OTHER);
+
+        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in days. */
+        public static final Time.Unit EPOCH_DAY =
+                BASE_SECOND.deriveUnit("day(Y1970)", "days since 1/1/70", 24.0 * 3600.0, UnitSystem.OTHER);
+
+        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in weeks. */
+        public static final Time.Unit EPOCH_WEEK =
+                BASE_SECOND.deriveUnit("wk(Y1970)", "weeks since 1/1/70", 7.0 * 24.0 * 3600.0, UnitSystem.OTHER);
+
+        /**
+         * The Epoch with 0001-01-01 AD at 00:00 as the origin with a calculation in seconds. When 1-1-0001 is used as the
+         * origin, 1-1-2021 has a value of around 6.4E13 ms. If we want to be precise on the ms level, we need 13 significant
+         * digits. A float has around 7 significant digits (23 bit mantissa), whereas a double has around 16 significant digits
+         * (52 bit mantissa). This means that a float time with an offset of 1-1-0001 is at best precise to an hour level. A
+         * double time is precise to microseconds. Therefore, avoid using float times that use the EPOCH_YEAR1_SECOND.
+         */
+        public static final Time.Unit EPOCH_YEAR1_SECOND =
+                new Time.Unit(List.of("s(Y1)"), "s(Y1)", "seconds since 1-1-0001 00:00",
+                        new OffsetLinearScale(1.0, new GregorianCalendar(1, 0, 1, 0, 0, 0).getTimeInMillis() / 1000.0),
+                        UnitSystem.OTHER);
+
+        /**
+         * The Epoch with J2000.0 as the origin, which is The Gregorian date January 1, 2000 at 12:00 GMT (noon) with a
+         * calculation in seconds. When 1-1-2000 is used as the origin, 1-1-2021 has a value of around 6.3E11 ms. If we want to
+         * be precise on the ms level, we need 11 significant digits. A float has around 7 significant digits (23 bit mantissa),
+         * whereas a double has around 16 significant digits (52 bit mantissa). This means that a float time with an offset of
+         * 1-1-2000 is at best precise to a minute level. A double time is precise to fractions of microseconds. Therefore,
+         * avoid using float times that use the EPOCH_J2000_SECOND.
+         */
+        public static final Time.Unit EPOCH_J2000_SECOND =
+                new Time.Unit(List.of("s(Y2000)"), "s(Y2000)", "seconds since 1-1-2000 12:00 GMT",
+                        new OffsetLinearScale(1.0, new GregorianCalendar(2000, 0, 1, 12, 0, 0).getTimeInMillis() / 1000.0),
+                        UnitSystem.OTHER);
 
         /**
          * Create a new Time unit.
@@ -192,7 +276,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
         @Override
         public Unit getBaseUnit()
         {
-            return SI;
+            return BASE;
         }
 
         @Override
