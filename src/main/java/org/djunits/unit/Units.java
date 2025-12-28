@@ -33,6 +33,7 @@ import org.djunits.quantity.Frequency;
 import org.djunits.quantity.Illuminance;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.LinearDensity;
+import org.djunits.quantity.LinearObjectDensity;
 import org.djunits.quantity.LuminousFlux;
 import org.djunits.quantity.LuminousIntensity;
 import org.djunits.quantity.MagneticFlux;
@@ -175,6 +176,7 @@ public final class Units
         Illuminance.Unit.SI_UNIT.isFractional();
         Length.Unit.SI_UNIT.isFractional();
         LinearDensity.Unit.SI_UNIT.isFractional();
+        LinearObjectDensity.Unit.SI_UNIT.isFractional();
         LuminousFlux.Unit.SI_UNIT.isFractional();
         LuminousIntensity.Unit.SI_UNIT.isFractional();
         MagneticFlux.Unit.SI_UNIT.isFractional();
