@@ -178,7 +178,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
 
         /** microCurie. */
         public static final RadioActivity.Unit MICROCURIE =
-                CURIE.deriveUnit(List.of("mCi"), "\u03BCCi", "millicurie", 1.0E-3, UnitSystem.OTHER);
+                CURIE.deriveUnit(List.of("muCi"), "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER);
 
         /** nanoCurie. */
         public static final RadioActivity.Unit NANOCURIE = CURIE.deriveUnit("nCi", "nanocurie", 1.0E-9, UnitSystem.OTHER);
