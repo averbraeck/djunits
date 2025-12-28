@@ -209,11 +209,11 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
     }
 
     /**
-     * Calculate the multiplication of Speed and LinearDensity, which results in a Frequency scalar.
+     * Calculate the multiplication of Speed and LinearObjectDensity, which results in a Frequency scalar.
      * @param v scalar
-     * @return scalar as a multiplication of Speed and LinearDensity
+     * @return scalar as a multiplication of Speed and LinearObjectDensity
      */
-    public final Frequency times(final LinearDensity v)
+    public final Frequency times(final LinearObjectDensity v)
     {
         return new Frequency(this.si() * v.si(), Frequency.Unit.SI);
     }

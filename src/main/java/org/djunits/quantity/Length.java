@@ -158,11 +158,11 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     }
 
     /**
-     * Calculate the multiplication of Length and LinearDensity, which results in a Dimensionless quantity.
+     * Calculate the multiplication of Length and LinearObjectDensity, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a multiplication of Length and LinearDensity
+     * @return quantity as a multiplication of Length and LinearObjectDensity
      */
-    public final Dimensionless times(final LinearDensity v)
+    public final Dimensionless times(final LinearObjectDensity v)
     {
         return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
     }
@@ -178,23 +178,23 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     }
 
     /**
-     * Calculate the division of Length and LinearDensity, which results in a Area quantity.
+     * Calculate the division of Length and LinearObjectDensity, which results in a Area quantity.
      * @param v quantity
-     * @return quantity as a division of Length and LinearDensity
+     * @return quantity as a division of Length and LinearObjectDensity
      */
-    public final Area divide(final LinearDensity v)
+    public final Area divide(final LinearObjectDensity v)
     {
         return new Area(this.si() / v.si(), Area.Unit.SI);
     }
 
     /**
-     * Calculate the division of Length and Area, which results in a LinearDensity quantity.
+     * Calculate the division of Length and Area, which results in a LinearObjectDensity quantity.
      * @param v quantity
      * @return quantity as a division of Length and Area
      */
-    public final LinearDensity divide(final Area v)
+    public final LinearObjectDensity divide(final Area v)
     {
-        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+        return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
 
     /**
@@ -258,9 +258,9 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     }
 
     @Override
-    public LinearDensity reciprocal()
+    public LinearObjectDensity reciprocal()
     {
-        return LinearDensity.ofSi(1.0 / this.si());
+        return LinearObjectDensity.ofSi(1.0 / this.si());
     }
 
     /******************************************************************************************************/
@@ -291,13 +291,13 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** Constant for the nautical mile. */
         public static final double CONST_NM = 1852.0;
-        
+
         /** Constant for the Astronomical Unit = 149,597,870,700 m. */
         public static final double CONST_AU = 149_597_870_700.0;
 
         /** Constant for the lightyear = 9,460,730,472,580,800 m. */
         public static final double CONST_LY = 9_460_730_472_580_800.0;
-        
+
         /** Constant for the parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
         public static final double CONST_PC = 149_597_870_700.0 * 648_000.0 / Math.PI;
 
@@ -367,12 +367,10 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
                 new Length.Unit("AU", "Astronomical Unit", CONST_AU, UnitSystem.OTHER);
 
         /** Lightyear = 9,460,730,472,580,800 m. */
-        public static final Length.Unit LIGHTYEAR =
-                new Length.Unit("ly", "lightyear", CONST_LY, UnitSystem.OTHER);
+        public static final Length.Unit LIGHTYEAR = new Length.Unit("ly", "lightyear", CONST_LY, UnitSystem.OTHER);
 
         /** Parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
-        public static final Length.Unit PARSEC =
-                new Length.Unit("Pc", "Parsec", CONST_PC, UnitSystem.OTHER);
+        public static final Length.Unit PARSEC = new Length.Unit("Pc", "Parsec", CONST_PC, UnitSystem.OTHER);
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit ANGSTROM =

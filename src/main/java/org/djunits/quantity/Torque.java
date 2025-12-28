@@ -155,11 +155,11 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     }
 
     /**
-     * Calculate the multiplication of Torque and LinearDensity, which results in a Force scalar.
+     * Calculate the multiplication of Torque and LinearObjectDensity, which results in a Force scalar.
      * @param v scalar
-     * @return scalar as a multiplication of Torque and LinearDensity
+     * @return scalar as a multiplication of Torque and LinearObjectDensity
      */
-    public final Force times(final LinearDensity v)
+    public final Force times(final LinearObjectDensity v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }

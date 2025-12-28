@@ -145,23 +145,23 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
     }
 
     /**
-     * Calculate the division of Force and LinearDensity, which results in a Energy scalar.
+     * Calculate the division of Force and LinearObjectDensity, which results in a Energy scalar.
      * @param v scalar
-     * @return scalar as a division of Force and LinearDensity
+     * @return scalar as a division of Force and LinearObjectDensity
      */
-    public final Energy divide(final LinearDensity v)
+    public final Energy divide(final LinearObjectDensity v)
     {
         return new Energy(this.si() / v.si(), Energy.Unit.SI);
     }
 
     /**
-     * Calculate the division of Force and Energy, which results in a LinearDensity scalar.
+     * Calculate the division of Force and Energy, which results in a LinearObjectDensity scalar.
      * @param v scalar
      * @return scalar as a division of Force and Energy
      */
-    public final LinearDensity divide(final Energy v)
+    public final LinearObjectDensity divide(final Energy v)
     {
-        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+        return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
 
     /**

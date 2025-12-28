@@ -198,11 +198,11 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
     }
 
     /**
-     * Calculate the multiplication of Volume and LinearDensity, which results in a Area scalar.
+     * Calculate the multiplication of Volume and LinearObjectDensity, which results in a Area scalar.
      * @param v scalar
-     * @return scalar as a multiplication of Volume and LinearDensity
+     * @return scalar as a multiplication of Volume and LinearObjectDensity
      */
-    public final Area times(final LinearDensity v)
+    public final Area times(final LinearObjectDensity v)
     {
         return new Area(this.si() * v.si(), Area.Unit.SI);
     }

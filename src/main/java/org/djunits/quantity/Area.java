@@ -145,23 +145,23 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
     }
 
     /**
-     * Calculate the division of Area and LinearDensity, which results in a Volume scalar.
+     * Calculate the division of Area and LinearObjectDensity, which results in a Volume scalar.
      * @param v scalar
-     * @return scalar as a division of Area and LinearDensity
+     * @return scalar as a division of Area and LinearObjectDensity
      */
-    public final Volume divide(final LinearDensity v)
+    public final Volume divide(final LinearObjectDensity v)
     {
         return new Volume(this.si() / v.si(), Volume.Unit.SI);
     }
 
     /**
-     * Calculate the division of Area and Volume, which results in a LinearDensity scalar.
+     * Calculate the division of Area and Volume, which results in a LinearObjectDensity scalar.
      * @param v scalar
      * @return scalar as a division of Area and Volume
      */
-    public final LinearDensity divide(final Volume v)
+    public final LinearObjectDensity divide(final Volume v)
     {
-        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+        return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
 
     /**
@@ -175,11 +175,11 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
     }
 
     /**
-     * Calculate the multiplication of Area and LinearDensity, which results in a Length scalar.
+     * Calculate the multiplication of Area and LinearObjectDensity, which results in a Length scalar.
      * @param v scalar
-     * @return scalar as a multiplication of Area and LinearDensity
+     * @return scalar as a multiplication of Area and LinearObjectDensity
      */
-    public final Length times(final LinearDensity v)
+    public final Length times(final LinearObjectDensity v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }

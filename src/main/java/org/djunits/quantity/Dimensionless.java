@@ -151,21 +151,21 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
     }
 
     /**
-     * Calculate the division of Dimensionless and Length, which results in a LinearDensity scalar.
+     * Calculate the division of Dimensionless and Length, which results in a LinearObjectDensity scalar.
      * @param v scalar
      * @return scalar as a division of Dimensionless and Length
      */
-    public final LinearDensity divide(final Length v)
+    public final LinearObjectDensity divide(final Length v)
     {
-        return new LinearDensity(this.si() / v.si(), LinearDensity.Unit.SI);
+        return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
 
     /**
-     * Calculate the division of Dimensionless and LinearDensity, which results in a Length scalar.
+     * Calculate the division of Dimensionless and LinearObjectDensity, which results in a Length scalar.
      * @param v scalar
-     * @return scalar as a division of Dimensionless and LinearDensity
+     * @return scalar as a division of Dimensionless and LinearObjectDensity
      */
-    public final Length divide(final LinearDensity v)
+    public final Length divide(final LinearObjectDensity v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
