@@ -12,6 +12,7 @@ import org.djunits.quantity.Angle;
 import org.djunits.quantity.AngularAcceleration;
 import org.djunits.quantity.AngularVelocity;
 import org.djunits.quantity.Area;
+import org.djunits.quantity.ArealObjectDensity;
 import org.djunits.quantity.CatalyticActivity;
 import org.djunits.quantity.Density;
 import org.djunits.quantity.Dimensionless;
@@ -50,6 +51,7 @@ import org.djunits.quantity.Temperature;
 import org.djunits.quantity.Time;
 import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
+import org.djunits.quantity.VolumetricObjectDensity;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -155,6 +157,7 @@ public final class Units
         AngularAcceleration.Unit.SI_UNIT.isFractional();
         AngularVelocity.Unit.SI_UNIT.isFractional();
         Area.Unit.SI_UNIT.isFractional();
+        ArealObjectDensity.Unit.SI_UNIT.isFractional();
         CatalyticActivity.Unit.SI_UNIT.isFractional();
         Density.Unit.SI_UNIT.isFractional();
         Dimensionless.Unit.BASE.getBaseUnit().getScale().isBaseScale();
@@ -193,6 +196,7 @@ public final class Units
         Time.Unit.SI_UNIT.isFractional();
         Torque.Unit.SI_UNIT.isFractional();
         Volume.Unit.SI_UNIT.isFractional();
+        VolumetricObjectDensity.Unit.SI_UNIT.isFractional();
     }
 
 }
