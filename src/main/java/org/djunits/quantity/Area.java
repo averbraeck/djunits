@@ -135,6 +135,16 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
     }
 
     /**
+     * Calculate the multiplication of Area and ArealObjectDensity, which results in a Dimensionless scalar.
+     * @param v scalar
+     * @return scalar as a multiplication of Area and ArealObjectDensity
+     */
+    public final Dimensionless multiply(final ArealObjectDensity v)
+    {
+        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+    }
+
+    /**
      * Calculate the multiplication of Area and Length, which results in a Volume scalar.
      * @param v scalar
      * @return scalar as a multiplication of Area and Length
@@ -212,6 +222,12 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
     public final LuminousFlux times(final Illuminance v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
+    }
+
+    @Override
+    public ArealObjectDensity reciprocal()
+    {
+        return ArealObjectDensity.ofSi(1.0 / this.si());
     }
 
     /******************************************************************************************************/

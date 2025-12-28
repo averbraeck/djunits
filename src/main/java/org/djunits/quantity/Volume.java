@@ -227,6 +227,12 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
 
+    @Override
+    public VolumetricObjectDensity reciprocal()
+    {
+        return VolumetricObjectDensity.ofSi(1.0 / this.si());
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
