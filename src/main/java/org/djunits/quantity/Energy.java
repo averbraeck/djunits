@@ -309,7 +309,7 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
 
         /** microwatt-hour. */
         public static final Energy.Unit MICROWATT_HOUR =
-                WATT_HOUR.deriveUnit("muWh", "microwatt-hour", 1E-6, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit(List.of("muWh"), "\u03BCWh", "microwatt-hour", 1E-6, UnitSystem.SI_DERIVED);
 
         /** milliwatt-hour. */
         public static final Energy.Unit MILLIWATT_HOUR =
