@@ -22,6 +22,7 @@ import org.djunits.quantity.Angle;
 import org.djunits.quantity.AngularAcceleration;
 import org.djunits.quantity.AngularVelocity;
 import org.djunits.quantity.Area;
+import org.djunits.quantity.ArealObjectDensity;
 import org.djunits.quantity.CatalyticActivity;
 import org.djunits.quantity.Density;
 import org.djunits.quantity.Dimensionless;
@@ -61,6 +62,7 @@ import org.djunits.quantity.Temperature;
 import org.djunits.quantity.Time;
 import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
+import org.djunits.quantity.VolumetricObjectDensity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 
@@ -93,14 +95,14 @@ public final class CheckOperations
     /** Set of quantity classes to scan for {@code times} and {@code divide} methods. */
     private static final Class<?>[] QUANTITY_CLASSES = new Class<?>[] {AbsoluteTemperature.class, AbsorbedDose.class,
             Acceleration.class, AmountOfSubstance.class, Angle.class, AngularAcceleration.class, AngularVelocity.class,
-            Area.class, CatalyticActivity.class, Density.class, Dimensionless.class, Direction.class, Duration.class,
-            ElectricCharge.class, ElectricCurrent.class, ElectricPotential.class, ElectricalCapacitance.class,
+            Area.class, ArealObjectDensity.class, CatalyticActivity.class, Density.class, Dimensionless.class, Direction.class,
+            Duration.class, ElectricCharge.class, ElectricCurrent.class, ElectricPotential.class, ElectricalCapacitance.class,
             ElectricalConductance.class, ElectricalInductance.class, ElectricalResistance.class, Energy.class,
             EquivalentDose.class, FlowMass.class, FlowVolume.class, Force.class, Frequency.class, Illuminance.class,
             Length.class, LinearDensity.class, LinearObjectDensity.class, LuminousFlux.class, LuminousIntensity.class,
             MagneticFlux.class, MagneticFluxDensity.class, Mass.class, Momentum.class, Position.class, Power.class,
             Pressure.class, RadioActivity.class, SolidAngle.class, Speed.class, Temperature.class, Time.class, Torque.class,
-            Volume.class};
+            Volume.class, VolumetricObjectDensity.class};
 
     /** Immutable set of quantity classes for quick membership tests. */
     private static final Set<Class<?>> CLASS_SET = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(QUANTITY_CLASSES)));
