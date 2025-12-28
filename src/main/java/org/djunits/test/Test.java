@@ -82,7 +82,6 @@ public final class Test
         {
             Class<?> clazz = entry.getKey();
             Map<String, UnitInterface<?>> inner = entry.getValue();
-
             System.out.printf("%n%s%n", Units.unitClassName(clazz));
             System.out.printf("%-15s %-10s %-40s = %s%n", "Textual", "Display", "Name", "Convert to base value");
             System.out.println("-".repeat(97));
