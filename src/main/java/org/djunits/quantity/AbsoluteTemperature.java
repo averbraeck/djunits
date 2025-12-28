@@ -5,7 +5,6 @@ import java.util.List;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.OffsetLinearScale;
 import org.djunits.unit.scale.Scale;
@@ -142,28 +141,26 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
 
         /** The default unit for temperature is Kelvin. */
         public static final AbsoluteTemperature.Unit KELVIN =
-                new AbsoluteTemperature.Unit(List.of("K", "kelvin"), "K", "kelvin", IdentityScale.SCALE, UnitSystem.SI_BASE);
+                new AbsoluteTemperature.Unit("K", "kelvin", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
         public static final AbsoluteTemperature.Unit SI = KELVIN.generateSiPrefixes(false, false);
 
         /** Degree Celsius. */
-        public static final AbsoluteTemperature.Unit DEGREE_CELSIUS = new AbsoluteTemperature.Unit(List.of("dgC", "degC", "C"),
-                "\u00B0C", "degree Celsius", new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
+        public static final AbsoluteTemperature.Unit DEGREE_CELSIUS = new AbsoluteTemperature.Unit(List.of("degC"), "\u00B0C",
+                "degree Celsius", new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
 
         /** Degree Fahrenheit. */
-        public static final AbsoluteTemperature.Unit DEGREE_FAHRENHEIT =
-                new AbsoluteTemperature.Unit(List.of("dgF", "degF", "F"), "\u00B0F", "degree Fahrenheit",
-                        new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
+        public static final AbsoluteTemperature.Unit DEGREE_FAHRENHEIT = new AbsoluteTemperature.Unit(List.of("degF"),
+                "\u00B0F", "degree Fahrenheit", new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
 
         /** Degree Rankine. */
-        public static final AbsoluteTemperature.Unit DEGREE_RANKINE = new AbsoluteTemperature.Unit(List.of("dgR", "degR", "R"),
-                "\u00B0R", "degree Rankine", new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
+        public static final AbsoluteTemperature.Unit DEGREE_RANKINE = new AbsoluteTemperature.Unit(List.of("degR"), "\u00B0R",
+                "degree Rankine", new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
 
         /** Degree Reaumur. */
-        public static final AbsoluteTemperature.Unit DEGREE_REAUMUR =
-                new AbsoluteTemperature.Unit(List.of("dgRe", "degRe", "Re"), "\u00B0R\u00E9", "degree Reaumur",
-                        new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
+        public static final AbsoluteTemperature.Unit DEGREE_REAUMUR = new AbsoluteTemperature.Unit(List.of("degRe"),
+                "\u00B0R\u00E9", "degree Reaumur", new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
 
         /**
          * Create a new AbsoluteTemperature unit.
