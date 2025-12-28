@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Linear object density counts the number of objects per unit length, measured in number per meter (/m).<br>
+ * Linear object density counts the number of objects per unit of length, measured in number per meter (/m).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -185,7 +185,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     /******************************************************************************************************/
 
     /**
-     * LinearObjectDensity.Unit encodes unit for mass per unit length.<br>
+     * LinearObjectDensity.Unit encodes the unit for the number of objects per unit of length.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -194,7 +194,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
      */
     public static class Unit extends AbstractUnit<LinearObjectDensity.Unit>
     {
-        /** The dimensions of the number of objects per unit length: per meter (/m). */
+        /** The dimensions of the number of objects per unit of length: per meter (/m). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m");
 
         /** per meter. */
@@ -203,6 +203,40 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
 
         /** The SI or BASE unit. */
         public static final LinearObjectDensity.Unit SI = PER_METER.generateSiPrefixes(false, true);
+
+        /** per millimeter. */
+        public static final LinearObjectDensity.Unit PER_MILLIMETER = Units.resolve(LinearObjectDensity.Unit.class, "/mm");
+
+        /** per centimeter. */
+        public static final LinearObjectDensity.Unit PER_CENTIMETER = Units.resolve(LinearObjectDensity.Unit.class, "/cm");
+
+        /** per decimeter. */
+        public static final LinearObjectDensity.Unit PER_DECIMETER = Units.resolve(LinearObjectDensity.Unit.class, "/dm");
+
+        /** per decameter. */
+        public static final LinearObjectDensity.Unit PER_DECAMETER = Units.resolve(LinearObjectDensity.Unit.class, "/dam");
+
+        /** per hectometer. */
+        public static final LinearObjectDensity.Unit PER_HECTOMETER = Units.resolve(LinearObjectDensity.Unit.class, "/hm");
+
+        /** per kilometer. */
+        public static final LinearObjectDensity.Unit PER_KILOIMETER = Units.resolve(LinearObjectDensity.Unit.class, "/km");
+
+        /** per inch. */
+        public static final LinearObjectDensity.Unit PER_INCH =
+                new LinearObjectDensity.Unit("/in", "per inch", 1.0 / Length.Unit.CONST_IN, UnitSystem.IMPERIAL);
+
+        /** per foot. */
+        public static final LinearObjectDensity.Unit PER_FOOT =
+                new LinearObjectDensity.Unit("/ft", "per foot", 1.0 / Length.Unit.CONST_FT, UnitSystem.IMPERIAL);
+
+        /** per yard. */
+        public static final LinearObjectDensity.Unit PER_YARD =
+                new LinearObjectDensity.Unit("/yd", "per yard", 1.0 / Length.Unit.CONST_YD, UnitSystem.IMPERIAL);
+
+        /** per mile. */
+        public static final LinearObjectDensity.Unit PER_MILE =
+                new LinearObjectDensity.Unit("/mi", "per mile", 1.0 / Length.Unit.CONST_MI, UnitSystem.IMPERIAL);
 
         /**
          * Create a new LinearObjectDensity unit.
