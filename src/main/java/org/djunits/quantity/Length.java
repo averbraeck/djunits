@@ -291,6 +291,15 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** Constant for the nautical mile. */
         public static final double CONST_NM = 1852.0;
+        
+        /** Constant for the Astronomical Unit = 149,597,870,700 m. */
+        public static final double CONST_AU = 149_597_870_700.0;
+
+        /** Constant for the lightyear = 9,460,730,472,580,800 m. */
+        public static final double CONST_LY = 9_460_730_472_580_800.0;
+        
+        /** Constant for the parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
+        public static final double CONST_PC = 149_597_870_700.0 * 648_000.0 / Math.PI;
 
         /** The dimensions of the length: m. */
         public static final SIUnit SI_UNIT = SIUnit.of("m");
@@ -355,15 +364,15 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** Astronomical Unit = 149,597,870,700 m. */
         public static final Length.Unit ASTRONOMICAL_UNIT =
-                new Length.Unit("AU", "Astronomical Unit", 149_597_870_700.0, UnitSystem.OTHER);
+                new Length.Unit("AU", "Astronomical Unit", CONST_AU, UnitSystem.OTHER);
 
         /** Lightyear = 9,460,730,472,580,800 m. */
         public static final Length.Unit LIGHTYEAR =
-                new Length.Unit("ly", "lightyear", 9_460_730_472_580_800.0, UnitSystem.OTHER);
+                new Length.Unit("ly", "lightyear", CONST_LY, UnitSystem.OTHER);
 
         /** Parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
         public static final Length.Unit PARSEC =
-                new Length.Unit("Pc", "Parsec", 149_597_870_700.0 * 648_000.0 / Math.PI, UnitSystem.OTHER);
+                new Length.Unit("Pc", "Parsec", CONST_PC, UnitSystem.OTHER);
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit ANGSTROM =
