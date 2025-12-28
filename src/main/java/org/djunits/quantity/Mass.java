@@ -277,11 +277,11 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
 
         /** microelectronvolt. */
         public static final Mass.Unit MICROELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E-3, UnitSystem.OTHER);
+                ELECTRONVOLT.deriveUnit(List.of("mueV"), "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
 
         /** millielectronvolt. */
         public static final Mass.Unit MILLIELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit(List.of("mueV"), "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
+                ELECTRONVOLT.deriveUnit("meV", "microelectronvolt", 1E-3, UnitSystem.OTHER);
 
         /** kiloelectronvolt. */
         public static final Mass.Unit KILOELECTRONVOLT =
