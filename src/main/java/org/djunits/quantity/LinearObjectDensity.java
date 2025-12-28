@@ -11,7 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Linear number density counts the number of objects per unit length, measured in number per meter (/m).<br>
+ * Linear object density counts the number of objects per unit length, measured in number per meter (/m).<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -46,7 +46,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     private static final long serialVersionUID = 500L;
 
     /**
-     * Instantiate a LinearNumberDensity quantity with a unit.
+     * Instantiate a LinearObjectDensity quantity with a unit.
      * @param value the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
@@ -56,7 +56,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Instantiate a LinearNumberDensity quantity with a unit, expressed as a String.
+     * Instantiate a LinearObjectDensity quantity with a unit, expressed as a String.
      * @param value the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
@@ -66,7 +66,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Construct LinearNumberDensity quantity.
+     * Construct LinearObjectDensity quantity.
      * @param value Scalar from which to construct this instance
      */
     public LinearObjectDensity(final LinearObjectDensity value)
@@ -76,9 +76,9 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Return a LinearNumberDensity instance based on an SI value.
+     * Return a LinearObjectDensity instance based on an SI value.
      * @param si the si value
-     * @return the LinearNumberDensity instance based on an SI value
+     * @return the LinearObjectDensity instance based on an SI value
      */
     public static LinearObjectDensity ofSi(final double si)
     {
@@ -98,10 +98,10 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Returns a LinearNumberDensity representation of a textual representation of a value with a unit. The String
+     * Returns a LinearObjectDensity representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a LinearNumberDensity
+     * @param text the textual representation to parse into a LinearObjectDensity
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -112,7 +112,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Returns a LinearNumberDensity based on a value and the textual representation of the unit, which can be localized.
+     * Returns a LinearObjectDensity based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -125,9 +125,9 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Calculate the division of LinearNumberDensity and LinearNumberDensity, which results in a Dimensionless quantity.
+     * Calculate the division of LinearObjectDensity and LinearObjectDensity, which results in a Dimensionless quantity.
      * @param v quantity
-     * @return quantity as a division of LinearNumberDensity and LinearNumberDensity
+     * @return quantity as a division of LinearObjectDensity and LinearObjectDensity
      */
     public final Dimensionless divide(final LinearObjectDensity v)
     {
@@ -135,9 +135,9 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Calculate the multiplication of LinearNumberDensity and Length, which results in a Dimensionless scalar.
+     * Calculate the multiplication of LinearObjectDensity and Length, which results in a Dimensionless scalar.
      * @param v scalar
-     * @return scalar as a multiplication of LinearNumberDensity and Length
+     * @return scalar as a multiplication of LinearObjectDensity and Length
      */
     public final Dimensionless times(final Length v)
     {
@@ -145,9 +145,9 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Calculate the multiplication of LinearNumberDensity and Area, which results in a Length scalar.
+     * Calculate the multiplication of LinearObjectDensity and Area, which results in a Length scalar.
      * @param v scalar
-     * @return scalar as a multiplication of LinearNumberDensity and Area
+     * @return scalar as a multiplication of LinearObjectDensity and Area
      */
     public final Length times(final Area v)
     {
@@ -155,9 +155,9 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Calculate the multiplication of LinearNumberDensity and Energy, which results in a Force scalar.
+     * Calculate the multiplication of LinearObjectDensity and Energy, which results in a Force scalar.
      * @param v scalar
-     * @return scalar as a multiplication of LinearNumberDensity and Energy
+     * @return scalar as a multiplication of LinearObjectDensity and Energy
      */
     public final Force times(final Energy v)
     {
@@ -165,9 +165,9 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     }
 
     /**
-     * Calculate the multiplication of LinearNumberDensity and Speed, which results in a Frequency scalar.
+     * Calculate the multiplication of LinearObjectDensity and Speed, which results in a Frequency scalar.
      * @param v scalar
-     * @return scalar as a multiplication of LinearNumberDensity and Speed
+     * @return scalar as a multiplication of LinearObjectDensity and Speed
      */
     public final Frequency times(final Speed v)
     {
@@ -185,7 +185,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
     /******************************************************************************************************/
 
     /**
-     * LinearNumberDensity.Unit encodes unit for mass per unit length.<br>
+     * LinearObjectDensity.Unit encodes unit for mass per unit length.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -205,7 +205,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
         public static final LinearObjectDensity.Unit SI = PER_METER.generateSiPrefixes(false, true);
 
         /**
-         * Create a new LinearNumberDensity unit.
+         * Create a new LinearObjectDensity unit.
          * @param id the id or main abbreviation of the unit
          * @param name the full name of the unit
          * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
