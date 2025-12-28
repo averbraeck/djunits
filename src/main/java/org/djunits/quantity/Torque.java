@@ -242,11 +242,11 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
                 SI.deriveUnit("m.kgf", "meter kilogram-force", Acceleration.Unit.CONST_GRAVITY, UnitSystem.OTHER);
 
         /** Pound foot. */
-        public static final Torque.Unit POUND_FOOT = SI.deriveUnit("lbf.ft", "pound-foot",
+        public static final Torque.Unit POUND_FOOT = SI.deriveUnit("lbf.ft", "pound-force foot",
                 Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** Pound inch. */
-        public static final Torque.Unit POUND_INCH = SI.deriveUnit("lbf.in", "pound-inch",
+        public static final Torque.Unit POUND_INCH = SI.deriveUnit("lbf.in", "pound-force inch",
                 Length.Unit.CONST_IN * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /**

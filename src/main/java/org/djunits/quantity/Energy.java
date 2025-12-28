@@ -304,36 +304,36 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
         /** kilocalorie. */
         public static final Energy.Unit KILOCALORIE = CALORIE.deriveUnit("kcal", "kilocalorie", 1000.0, UnitSystem.OTHER);
 
-        /** watt-hour. */
-        public static final Energy.Unit WATT_HOUR = new Energy.Unit("Wh", "watt-hour", 3600.0, UnitSystem.SI_DERIVED);
+        /** watt hour. */
+        public static final Energy.Unit WATT_HOUR = new Energy.Unit("Wh", "watt hour", 3600.0, UnitSystem.SI_DERIVED);
 
-        /** microwatt-hour. */
+        /** microwatt hour. */
         public static final Energy.Unit MICROWATT_HOUR =
-                WATT_HOUR.deriveUnit(List.of("muWh"), "\u03BCWh", "microwatt-hour", 1E-6, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit(List.of("muWh"), "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
 
-        /** milliwatt-hour. */
+        /** milliwatt hour. */
         public static final Energy.Unit MILLIWATT_HOUR =
-                WATT_HOUR.deriveUnit("mWh", "milliwatt-hour", 1E-3, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
 
-        /** kilowatt-hour. */
+        /** kilowatt hour. */
         public static final Energy.Unit KILOWATT_HOUR =
-                WATT_HOUR.deriveUnit("kWh", "kilowatt-hour", 1E3, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("kWh", "kilowatt hour", 1E3, UnitSystem.SI_DERIVED);
 
-        /** megawatt-hour. */
+        /** megawatt hour. */
         public static final Energy.Unit MEGAWATT_HOUR =
-                WATT_HOUR.deriveUnit("MWh", "megawatt-hour", 1E6, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E6, UnitSystem.SI_DERIVED);
 
-        /** gigawatt-hour. */
+        /** gigawatt hour. */
         public static final Energy.Unit GIGAWATT_HOUR =
-                WATT_HOUR.deriveUnit("MWh", "megawatt-hour", 1E9, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E9, UnitSystem.SI_DERIVED);
 
-        /** terawatt-hour. */
+        /** terawatt hour. */
         public static final Energy.Unit TERAWATT_HOUR =
-                WATT_HOUR.deriveUnit("TWh", "terawatt-hour", 1E12, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("TWh", "terawatt hour", 1E12, UnitSystem.SI_DERIVED);
 
-        /** petawatt-hour. */
+        /** petawatt hour. */
         public static final Energy.Unit PETAWATT_HOUR =
-                WATT_HOUR.deriveUnit("PWh", "petawatt-hour", 1E15, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("PWh", "petawatt hour", 1E15, UnitSystem.SI_DERIVED);
 
         /** electronvolt. */
         public static final Energy.Unit ELECTRONVOLT =
@@ -341,15 +341,15 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
 
         /** kilo-electronvolt. */
         public static final Energy.Unit KILOELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("keV", "kilo-electronvolt", 1E3, UnitSystem.SI_ACCEPTED);
+                ELECTRONVOLT.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.SI_ACCEPTED);
 
         /** mega-electronvolt. */
         public static final Energy.Unit MEGAELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("MeV", "mega-electronvolt", 1E6, UnitSystem.SI_ACCEPTED);
+                ELECTRONVOLT.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.SI_ACCEPTED);
 
         /** giga-electronvolt. */
         public static final Energy.Unit GIGAELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("GeV", "giga-electronvolt", 1E9, UnitSystem.SI_ACCEPTED);
+                ELECTRONVOLT.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.SI_ACCEPTED);
 
         /** sthene-meter (mts). */
         public static final Energy.Unit STHENE_METER = JOULE.deriveUnit("sn.m", "sthene meter", 1000.0, UnitSystem.MTS);

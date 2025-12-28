@@ -178,7 +178,7 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
         public static final MagneticFluxDensity.Unit NANOTESLA = Units.resolve(MagneticFluxDensity.Unit.class, "nT");
 
         /** Gauss. */
-        public static final MagneticFluxDensity.Unit GAUSS = TESLA.deriveUnit("G", "Gauss", 1.0E-4, UnitSystem.CGS);
+        public static final MagneticFluxDensity.Unit GAUSS = TESLA.deriveUnit("G", "gauss", 1.0E-4, UnitSystem.CGS);
 
         /**
          * Create a new MagneticFluxDensity unit.

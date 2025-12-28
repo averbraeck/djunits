@@ -286,7 +286,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
 
         /** sthene-meter per second. */
         public static final Power.Unit STHENE_METER_PER_SECOND =
-                SI.deriveUnit("sn.m/s", "sthene-meter per second", 1000.0, UnitSystem.MTS);
+                SI.deriveUnit("sn.m/s", "sthene meter per second", 1000.0, UnitSystem.MTS);
 
         /** erg per second. */
         public static final Power.Unit ERG_PER_SECOND = SI.deriveUnit("erg/s", "erg per second", 1.0E-7, UnitSystem.CGS);

@@ -279,21 +279,21 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
         public static final Mass.Unit MICROELECTRONVOLT =
                 ELECTRONVOLT.deriveUnit(List.of("mueV"), "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
 
-        /** millielectronvolt. */
+        /** millielectronvolt (note, no dash between milli and electron; the SI style guide forbids spaces or hyphens). */
         public static final Mass.Unit MILLIELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("meV", "microelectronvolt", 1E-3, UnitSystem.OTHER);
+                ELECTRONVOLT.deriveUnit("meV", "millielectronvolt", 1E-3, UnitSystem.OTHER);
 
         /** kiloelectronvolt. */
         public static final Mass.Unit KILOELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E3, UnitSystem.OTHER);
+                ELECTRONVOLT.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.OTHER);
 
         /** megaelectronvolt. */
         public static final Mass.Unit MEGAELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E6, UnitSystem.OTHER);
+                ELECTRONVOLT.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.OTHER);
 
         /** gigaelectronvolt. */
         public static final Mass.Unit GIGAELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("mueV", "microelectronvolt", 1E9, UnitSystem.OTHER);
+                ELECTRONVOLT.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.OTHER);
 
         /**
          * Create a new Mass unit.
