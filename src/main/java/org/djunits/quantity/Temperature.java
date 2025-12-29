@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -161,20 +159,20 @@ public class Temperature extends Quantity.Relative<Temperature, Temperature.Unit
         public static final Temperature.Unit SI = KELVIN.generateSiPrefixes(false, false);
 
         /** Degree Celsius. */
-        public static final Temperature.Unit DEGREE_CELSIUS = new Temperature.Unit(List.of("degC"), "\u00B0C", "degree Celsius",
+        public static final Temperature.Unit DEGREE_CELSIUS = new Temperature.Unit("degC", "\u00B0C", "degree Celsius",
                 new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
 
         /** Degree Fahrenheit. */
-        public static final Temperature.Unit DEGREE_FAHRENHEIT = new Temperature.Unit(List.of("degF"), "\u00B0F",
-                "degree Fahrenheit", new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
+        public static final Temperature.Unit DEGREE_FAHRENHEIT = new Temperature.Unit("degF", "\u00B0F", "degree Fahrenheit",
+                new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
 
         /** Degree Rankine. */
-        public static final Temperature.Unit DEGREE_RANKINE = new Temperature.Unit(List.of("degR"), "\u00B0R", "degree Rankine",
+        public static final Temperature.Unit DEGREE_RANKINE = new Temperature.Unit("degR", "\u00B0R", "degree Rankine",
                 new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
 
         /** Degree Reaumur. */
-        public static final Temperature.Unit DEGREE_REAUMUR = new Temperature.Unit(List.of("degRe"), "\u00B0R\u00E9",
-                "degree Reaumur", new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
+        public static final Temperature.Unit DEGREE_REAUMUR = new Temperature.Unit("degRe", "\u00B0R\u00E9", "degree Reaumur",
+                new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
 
         /**
          * Create a new Temperature unit.
@@ -190,16 +188,16 @@ public class Temperature extends Quantity.Relative<Temperature, Temperature.Unit
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -215,12 +213,12 @@ public class Temperature extends Quantity.Relative<Temperature, Temperature.Unit
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Temperature.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Temperature.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

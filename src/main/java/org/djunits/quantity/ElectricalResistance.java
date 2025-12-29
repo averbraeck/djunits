@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -147,8 +145,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     }
 
     /**
-     * Calculate the multiplication of ElectricalResistance and ElectricCurrent, which results in a ElectricPotential
-     * scalar.
+     * Calculate the multiplication of ElectricalResistance and ElectricCurrent, which results in a ElectricPotential scalar.
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and ElectricCurrent
      */
@@ -192,7 +189,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
 
         /** Ohm. */
         public static final ElectricalResistance.Unit OHM =
-                new ElectricalResistance.Unit(List.of("ohm"), "\u03A9", "ohm", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+                new ElectricalResistance.Unit("ohm", "\u03A9", "ohm", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final ElectricalResistance.Unit SI = OHM.generateSiPrefixes(false, false);
@@ -214,11 +211,11 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
 
         /** ab-ohm. */
         public static final ElectricalResistance.Unit ABOHM =
-                OHM.deriveUnit(List.of("abohm"), "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU);
+                OHM.deriveUnit("abohm", "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU);
 
         /** stat-ohm. */
         public static final ElectricalResistance.Unit STATOHM =
-                OHM.deriveUnit(List.of("stohm"), "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU);
+                OHM.deriveUnit("stohm", "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU);
 
         /**
          * Create a new ElectricalResistance unit.
@@ -234,16 +231,16 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -259,12 +256,12 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new ElectricalResistance.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new ElectricalResistance.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

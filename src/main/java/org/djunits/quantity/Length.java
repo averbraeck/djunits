@@ -1,6 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
@@ -345,19 +344,19 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
         public static final Length.Unit FOOT =
-                new Length.Unit(List.of("ft", "foot", "'"), "ft", "foot", new LinearScale(CONST_FT), UnitSystem.IMPERIAL);
+                new Length.Unit("ft", "ft", "foot", new LinearScale(CONST_FT), UnitSystem.IMPERIAL);
 
         /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
         public static final Length.Unit INCH =
-                new Length.Unit(List.of("in", "inch", "\""), "in", "inch", new LinearScale(CONST_IN), UnitSystem.IMPERIAL);
+                new Length.Unit("in", "in", "inch", new LinearScale(CONST_IN), UnitSystem.IMPERIAL);
 
         /** yard (international) = 0.9144 m = 3 ft = 36 in. */
         public static final Length.Unit YARD =
-                new Length.Unit(List.of("yd", "yard"), "yd", "yard", new LinearScale(CONST_YD), UnitSystem.IMPERIAL);
+                new Length.Unit("yd", "yd", "yard", new LinearScale(CONST_YD), UnitSystem.IMPERIAL);
 
         /** mile (international) = 5280 ft = 1760 yd. */
         public static final Length.Unit MILE =
-                new Length.Unit(List.of("mi", "mile"), "mi", "mile", new LinearScale(CONST_MI), UnitSystem.IMPERIAL);
+                new Length.Unit("mi", "mi", "mile", new LinearScale(CONST_MI), UnitSystem.IMPERIAL);
 
         /** nautical mile (international) = 1852 m. */
         public static final Length.Unit NAUTICAL_MILE = new Length.Unit("NM", "Nautical Mile", CONST_NM, UnitSystem.OTHER);
@@ -374,7 +373,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit ANGSTROM =
-                new Length.Unit(List.of("A"), "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
+                new Length.Unit("A", "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
 
         /**
          * Create a new length unit.
@@ -390,16 +389,16 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -415,12 +414,12 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Length.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Length.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

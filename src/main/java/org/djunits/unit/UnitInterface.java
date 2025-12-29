@@ -1,7 +1,5 @@
 package org.djunits.unit;
 
-import java.util.List;
-
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
@@ -76,25 +74,16 @@ public interface UnitInterface<U extends UnitInterface<U>>
     U getBaseUnit();
 
     /**
-     * Retrieve a safe copy of the textual abbreviations.
-     * @return the textual abbreviations
-     */
-    List<String> getTextualAbbreviations();
-
-    /**
      * Retrieve the default display abbreviation.
      * @return the default display abbreviation
      */
     String getDisplayAbbreviation();
 
     /**
-     * Retrieve the default textual abbreviation.
-     * @return the default textual abbreviation
+     * Retrieve the textual abbreviation, which doubles as the id of the unit.
+     * @return the textual abbreviation
      */
-    default String getDefaultTextualAbbreviation()
-    {
-        return getTextualAbbreviations().get(0);
-    }
+    String getTextualAbbreviation();
 
     /**
      * Set the SI-prefix so it can be localized if necessary.

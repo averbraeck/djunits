@@ -1,7 +1,6 @@
 package org.djunits.quantity;
 
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
@@ -161,7 +160,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
 
         /** The base unit for time with an arbitrary "zero" point with a calculation in microseconds. */
         public static final Time.Unit BASE_MICROSECOND =
-                BASE_SECOND.deriveUnit(List.of("mus"), "\u03BCs", "microsecond", 1.0E-6, UnitSystem.SI_BASE);
+                BASE_SECOND.deriveUnit("mus", "\u03BCs", "microsecond", 1.0E-6, UnitSystem.SI_BASE);
 
         /** The base unit for time with an arbitrary "zero" point with a calculation in milliseconds. */
         public static final Time.Unit BASE_MILLISECOND =
@@ -193,8 +192,8 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
                 BASE_SECOND.deriveUnit("s(Y1970)", "seconds since 1/1/70", 1.0, UnitSystem.OTHER);
 
         /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in microseconds. */
-        public static final Time.Unit EPOCH_MICROSECOND = BASE_SECOND.deriveUnit(List.of("mus(Y1970)"), "\u03BCs(Y1970)",
-                "microseconds since 1/1/70", 1.0E-6, UnitSystem.SI_BASE);
+        public static final Time.Unit EPOCH_MICROSECOND =
+                BASE_SECOND.deriveUnit("mus(Y1970)", "\u03BCs(Y1970)", "microseconds since 1/1/70", 1.0E-6, UnitSystem.SI_BASE);
 
         /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in milliseconds. */
         public static final Time.Unit EPOCH_MILLISECOND =
@@ -223,10 +222,9 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
          * (52 bit mantissa). This means that a float time with an offset of 1-1-0001 is at best precise to an hour level. A
          * double time is precise to microseconds. Therefore, avoid using float times that use the EPOCH_YEAR1_SECOND.
          */
-        public static final Time.Unit EPOCH_YEAR1_SECOND =
-                new Time.Unit(List.of("s(Y1)"), "s(Y1)", "seconds since 1-1-0001 00:00",
-                        new OffsetLinearScale(1.0, new GregorianCalendar(1, 0, 1, 0, 0, 0).getTimeInMillis() / 1000.0),
-                        UnitSystem.OTHER);
+        public static final Time.Unit EPOCH_YEAR1_SECOND = new Time.Unit("s(Y1)", "s(Y1)", "seconds since 1-1-0001 00:00",
+                new OffsetLinearScale(1.0, new GregorianCalendar(1, 0, 1, 0, 0, 0).getTimeInMillis() / 1000.0),
+                UnitSystem.OTHER);
 
         /**
          * The Epoch with J2000.0 as the origin, which is The Gregorian date January 1, 2000 at 12:00 GMT (noon) with a
@@ -237,7 +235,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
          * avoid using float times that use the EPOCH_J2000_SECOND.
          */
         public static final Time.Unit EPOCH_J2000_SECOND =
-                new Time.Unit(List.of("s(Y2000)"), "s(Y2000)", "seconds since 1-1-2000 12:00 GMT",
+                new Time.Unit("s(Y2000)", "s(Y2000)", "seconds since 1-1-2000 12:00 GMT",
                         new OffsetLinearScale(1.0, new GregorianCalendar(2000, 0, 1, 12, 0, 0).getTimeInMillis() / 1000.0),
                         UnitSystem.OTHER);
 
@@ -255,16 +253,16 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -280,12 +278,12 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Time.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Time.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

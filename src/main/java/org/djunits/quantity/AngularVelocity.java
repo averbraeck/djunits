@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -159,28 +157,28 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
         public static final AngularVelocity.Unit SI = RADIAN_PER_SECOND;
 
         /** degree per second. */
-        public static final AngularVelocity.Unit DEGREE_PER_SECOND = RADIAN_PER_SECOND.deriveUnit(List.of("deg/s"), "\u00b0/s",
-                "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularVelocity.Unit DEGREE_PER_SECOND =
+                RADIAN_PER_SECOND.deriveUnit("deg/s", "\u00b0/s", "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second. */
-        public static final AngularVelocity.Unit ARCMINUTE_PER_SECOND = DEGREE_PER_SECOND.deriveUnit(List.of("'/s", "arcmin/s"),
-                "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit ARCMINUTE_PER_SECOND =
+                DEGREE_PER_SECOND.deriveUnit("arcmin/s", "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second. */
-        public static final AngularVelocity.Unit ARCSECOND_PER_SECOND = DEGREE_PER_SECOND
-                .deriveUnit(List.of("\"/s", "arcsec/s"), "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit ARCSECOND_PER_SECOND =
+                DEGREE_PER_SECOND.deriveUnit("arcsec/s", "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second. */
         public static final AngularVelocity.Unit GRAD_PER_SECOND =
                 RADIAN_PER_SECOND.deriveUnit("grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second. */
-        public static final AngularVelocity.Unit CENTESIMAL_ARCMINUTE_PER_SECOND = GRAD_PER_SECOND
-                .deriveUnit(List.of("c'/s", "cdm/s"), "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit CENTESIMAL_ARCMINUTE_PER_SECOND =
+                GRAD_PER_SECOND.deriveUnit("cdm/s", "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second. */
-        public static final AngularVelocity.Unit CENTESIMAL_ARCSECOND_PER_SECOND = GRAD_PER_SECOND.deriveUnit(
-                List.of("c\"/s", "cds/s"), "c\"/s", "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit CENTESIMAL_ARCSECOND_PER_SECOND = GRAD_PER_SECOND.deriveUnit("cds/s", "c\"/s",
+                "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new AngularVelocity unit.
@@ -196,16 +194,16 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -221,12 +219,12 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new AngularVelocity.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new AngularVelocity.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

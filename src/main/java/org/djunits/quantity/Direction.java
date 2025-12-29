@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -180,22 +178,22 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("rad");
 
         /** The unit for direction with East as the origin and radians as the displacement. */
-        public static final Direction.Unit EAST_RADIAN = new Direction.Unit(List.of("rad(E)"), "rad(E)", "radians (East)",
-                new OffsetLinearScale(1.0, 0.0), UnitSystem.OTHER);
+        public static final Direction.Unit EAST_RADIAN =
+                new Direction.Unit("rad(E)", "rad(E)", "radians (East)", new OffsetLinearScale(1.0, 0.0), UnitSystem.OTHER);
 
         /** The default unit for direction is East_Radian. */
         public static final Direction.Unit DEFAULT = EAST_RADIAN;
 
         /** The unit for direction with East as the origin and degrees as the displacement. */
-        public static final Direction.Unit EAST_DEGREE = new Direction.Unit(List.of("deg(E)"), "\u00b0(E)", "degrees (East)",
+        public static final Direction.Unit EAST_DEGREE = new Direction.Unit("deg(E)", "\u00b0(E)", "degrees (East)",
                 new OffsetLinearScale(Math.PI / 180.0, 0.0), UnitSystem.OTHER);
 
         /** The unit for direction with North as the origin and radians as the displacement. */
-        public static final Direction.Unit NORTH_RADIAN = new Direction.Unit(List.of("rad(N)"), "rad(N)", "radians (North)",
+        public static final Direction.Unit NORTH_RADIAN = new Direction.Unit("rad(N)", "rad(N)", "radians (North)",
                 new OffsetLinearScale(1.0, Math.PI / 2.0), UnitSystem.OTHER);
 
         /** The unit for direction with North as the origin and degrees as the displacement. */
-        public static final Direction.Unit NORTH_DEGREE = new Direction.Unit(List.of("deg(N)"), "\u00b0(N)", "degrees (North)",
+        public static final Direction.Unit NORTH_DEGREE = new Direction.Unit("deg(N)", "\u00b0(N)", "degrees (North)",
                 new OffsetLinearScale(Math.PI / 180.0, 90.0), UnitSystem.OTHER);
 
         /**
@@ -212,16 +210,16 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -237,12 +235,12 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Direction.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Direction.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

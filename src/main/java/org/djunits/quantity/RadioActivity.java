@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -178,7 +176,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
 
         /** microCurie. */
         public static final RadioActivity.Unit MICROCURIE =
-                CURIE.deriveUnit(List.of("muCi"), "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER);
+                CURIE.deriveUnit("muCi", "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER);
 
         /** nanoCurie. */
         public static final RadioActivity.Unit NANOCURIE = CURIE.deriveUnit("nCi", "nanocurie", 1.0E-9, UnitSystem.OTHER);
@@ -200,16 +198,16 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -225,12 +223,12 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new RadioActivity.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new RadioActivity.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

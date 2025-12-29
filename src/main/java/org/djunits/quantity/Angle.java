@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -197,37 +195,35 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
 
         /** radian. */
         public static final Angle.Unit RADIAN =
-                new Angle.Unit(List.of("rad", "radian"), "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+                new Angle.Unit("rad", "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final Angle.Unit SI = RADIAN;
 
         /** percent (non-linear, 100% is 45 degrees; 90 degrees is infinite). */
-        public static final Angle.Unit PERCENT =
-                new Angle.Unit(List.of("%", "percent"), "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
+        public static final Angle.Unit PERCENT = new Angle.Unit("%", "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
 
         /** degree. */
         public static final Angle.Unit DEGREE =
-                RADIAN.deriveUnit(List.of("deg", "dg"), "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+                RADIAN.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute. */
-        public static final Angle.Unit ARCMINUTE =
-                DEGREE.deriveUnit(List.of("'", "arcmin"), "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final Angle.Unit ARCMINUTE = DEGREE.deriveUnit("arcmin", "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond. */
         public static final Angle.Unit ARCSECOND =
-                DEGREE.deriveUnit(List.of("\"", "arcsec"), "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
+                DEGREE.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad. */
         public static final Angle.Unit GRAD = RADIAN.deriveUnit("grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute. */
         public static final Angle.Unit CENTESIMAL_ARCMINUTE =
-                GRAD.deriveUnit(List.of("c'", "cdm"), "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER);
+                GRAD.deriveUnit("cdm", "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond. */
         public static final Angle.Unit CENTESIMAL_ARCSECOND =
-                GRAD.deriveUnit(List.of("c\"", "cds"), "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER);
+                GRAD.deriveUnit("cds", "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new Angle unit.
@@ -243,16 +239,16 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -268,12 +264,12 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Angle.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Angle.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

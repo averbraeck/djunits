@@ -1,7 +1,5 @@
 package org.djunits.unit;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.djunits.unit.scale.Scale;
@@ -28,8 +26,8 @@ import org.djutils.exceptions.Throw;
  */
 public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInterface<U>
 {
-    /** The textual abbreviations of the unit, where the first one is the id. */
-    private final List<String> textualAbbreviations = new ArrayList<>();
+    /** The textual abbreviation of the unit, which is also the id. */
+    private final String textualAbbreviation;
 
     /** The symbolic representation of the unit, which is the default for display. */
     private final String displayAbbreviation;
@@ -48,50 +46,42 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
 
     /**
      * Create a new unit, where the textual abbreviation is the same as the display abbreviation.
-     * @param id the id or main abbreviation of the unit
+     * @param textualAbbreviation the textual abbreviation of the unit, which also serves as the id
      * @param name the full name of the unit
      * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
      * @param unitSystem unit system, e.g. SI or Imperial
      */
-    public AbstractUnit(final String id, final String name, final Scale scale, final UnitSystem unitSystem)
+    public AbstractUnit(final String textualAbbreviation, final String name, final Scale scale, final UnitSystem unitSystem)
     {
-        this(List.of(id), id, name, scale, unitSystem);
+        this(textualAbbreviation, textualAbbreviation, name, scale, unitSystem);
     }
 
     /**
      * Create a new unit, with textual abbreviation(s) and a display abbreviation.
-     * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+     * @param textualAbbreviation the textual abbreviation of the unit, which also serves as the id
      * @param displayAbbreviation the display abbreviation of the unit
      * @param name the full name of the unit
      * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
      * @param unitSystem unit system, e.g. SI or Imperial
      */
-    public AbstractUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+    public AbstractUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
             final Scale scale, final UnitSystem unitSystem)
     {
         // Check the validity
         String cName = Units.unitClassName(getClass());
-        Throw.whenNull(textualAbbreviations, "Constructing unit %s: textualAbbreviations cannot be null", cName);
+        Throw.whenNull(textualAbbreviation, "Constructing unit %s: textualAbbreviation cannot be null", cName);
         Throw.whenNull(displayAbbreviation, "Constructing unit %s: displayAbbreviation cannot be null", cName);
-        Throw.when(textualAbbreviations.size() == 0, UnitRuntimeException.class,
-                "Constructing unit %s: textualAbbreviations cannot be empty", cName);
-        for (int i = 0; i < textualAbbreviations.size(); i++)
-        {
-            Throw.whenNull(textualAbbreviations.get(i), "Constructing unit %s: textualAbbreviations[%d] cannot be null", cName,
-                    i);
-            Throw.when(textualAbbreviations.get(i).length() == 0, UnitRuntimeException.class,
-                    "Constructing unit %s: textualAbbreviations[%d].length cannot be 0", cName, i);
-        }
-        String id = textualAbbreviations.get(0);
-        Throw.whenNull(name, "Constructing unit %s.%s: name cannot be null", cName, id);
+        Throw.when(textualAbbreviation.length() == 0, UnitRuntimeException.class,
+                "Constructing unit %s: textualAbbreviation string cannot be empty", cName);
+        Throw.whenNull(name, "Constructing unit %s.%s: name cannot be null", cName, textualAbbreviation);
         Throw.when(name.length() == 0, UnitRuntimeException.class, "Constructing unit %s.%s: name.length cannot be 0", cName,
-                id);
-        Throw.whenNull(scale, "Constructing unit %s.%s: scale cannot be null", cName, id);
-        Throw.whenNull(unitSystem, "Constructing unit %s.%s: unitSystem cannot be null", cName, id);
+                textualAbbreviation);
+        Throw.whenNull(scale, "Constructing unit %s.%s: scale cannot be null", cName, textualAbbreviation);
+        Throw.whenNull(unitSystem, "Constructing unit %s.%s: unitSystem cannot be null", cName, textualAbbreviation);
 
         // Build the unit
         this.displayAbbreviation = displayAbbreviation;
-        this.textualAbbreviations.addAll(textualAbbreviations);
+        this.textualAbbreviation = textualAbbreviation;
         this.name = name;
         this.scale = scale;
         this.unitSystem = unitSystem;
@@ -135,7 +125,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.UNIT_PREFIXES.values())
                 {
-                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation()),
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation(),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation(), sip.getPrefixName() + getName(),
                             sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
@@ -145,7 +135,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.PER_UNIT_PREFIXES.values())
                 {
-                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation().substring(1),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
                             sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
@@ -158,7 +148,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.KILO_PREFIXES.values())
                 {
-                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation().substring(1),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
                             sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
@@ -168,7 +158,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.PER_KILO_PREFIXES.values())
                 {
-                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(2)),
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation().substring(2),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(2),
                             sip.getPrefixName() + getName().substring(9), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
@@ -181,21 +171,22 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
     /**
      * Return a linearly scaled derived unit for this unit, where the textual abbreviation is the same as the display
      * abbreviation.
-     * @param id the id or main abbreviation of the unit
+     * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
      * @param name the full name of the unit
      * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
      * @param unitSystem unit system, e.g. SI or Imperial
      * @return a derived unit for this unit
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public U deriveUnit(final String id, final String name, final double scaleFactor, final UnitSystem unitSystem)
+    public U deriveUnit(final String textualAbbreviation, final String name, final double scaleFactor,
+            final UnitSystem unitSystem)
     {
-        return deriveUnit(List.of(id), id, name, scaleFactor, unitSystem);
+        return deriveUnit(textualAbbreviation, textualAbbreviation, name, scaleFactor, unitSystem);
     }
 
     /**
      * Return a linearly scaled derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-     * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+     * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
      * @param displayAbbreviation the display abbreviation of the unit
      * @param name the full name of the unit
      * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
@@ -203,19 +194,19 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
      * @return a derived unit for this unit
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public abstract U deriveUnit(List<String> textualAbbreviations, String displayAbbreviation, String name, double scaleFactor,
+    public abstract U deriveUnit(String textualAbbreviation, String displayAbbreviation, String name, double scaleFactor,
             UnitSystem unitSystem);
 
     @Override
     public String getId()
     {
-        return this.textualAbbreviations.get(0);
+        return this.textualAbbreviation;
     }
 
     @Override
-    public List<String> getTextualAbbreviations()
+    public String getTextualAbbreviation()
     {
-        return new ArrayList<>(this.textualAbbreviations);
+        return this.textualAbbreviation;
     }
 
     @Override
@@ -249,7 +240,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
         this.siPrefix = siPrefix;
         return (U) this;
     }
-    
+
     @Override
     public U setSiPrefix(final String prefix)
     {
@@ -280,7 +271,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.displayAbbreviation, this.name, this.scale, this.textualAbbreviations, this.unitSystem);
+        return Objects.hash(this.displayAbbreviation, this.name, this.scale, this.textualAbbreviation, this.unitSystem);
     }
 
     @Override
@@ -296,7 +287,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
         AbstractUnit<?> other = (AbstractUnit<?>) obj;
         return Objects.equals(this.displayAbbreviation, other.displayAbbreviation) && Objects.equals(this.name, other.name)
                 && Objects.equals(this.scale, other.scale)
-                && Objects.equals(this.textualAbbreviations, other.textualAbbreviations)
+                && Objects.equals(this.textualAbbreviation, other.textualAbbreviation)
                 && Objects.equals(this.unitSystem, other.unitSystem);
     }
 

@@ -551,7 +551,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
     @SuppressWarnings("checkstyle:hiddenfield")
     public String toTextualString(final U displayUnit)
     {
-        return format(getInUnit()) + " " + displayUnit.getDefaultTextualAbbreviation();
+        return format(getInUnit()) + " " + displayUnit.getTextualAbbreviation();
     }
 
     /**

@@ -1,7 +1,6 @@
 package org.djunits.unit.si;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
@@ -523,9 +522,9 @@ public class SIUnit implements UnitInterface<SIUnit>
     }
 
     @Override
-    public List<String> getTextualAbbreviations()
+    public String getTextualAbbreviation()
     {
-        return List.of(toString(true, false));
+        return toString(true, false);
     }
 
     @Override

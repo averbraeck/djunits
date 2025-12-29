@@ -1,6 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
@@ -298,58 +297,58 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
 
         /** Meter per second. */
         public static final Speed.Unit METER_PER_SECOND =
-                new Speed.Unit(List.of("m/s", "m/sec"), "m/s", "meter per second", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+                new Speed.Unit("m/s", "m/s", "meter per second", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final Speed.Unit SI = METER_PER_SECOND;
 
         /** m/h. */
-        public static final Speed.Unit METER_PER_HOUR = new Speed.Unit(List.of("m/h", "m/hr", "m/hour"), "m/h",
-                "meter per hour", new LinearScale(1.0, 3600.0), UnitSystem.SI_ACCEPTED);
+        public static final Speed.Unit METER_PER_HOUR =
+                new Speed.Unit("m/h", "m/h", "meter per hour", new LinearScale(1.0, 3600.0), UnitSystem.SI_ACCEPTED);
 
         /** km/s. */
-        public static final Speed.Unit KILOMETER_PER_SECOND = new Speed.Unit(List.of("km/s", "km/sec"), "km/s",
-                "kilometer per second", new LinearScale(1000.0), UnitSystem.SI_ACCEPTED);
+        public static final Speed.Unit KILOMETER_PER_SECOND =
+                new Speed.Unit("km/s", "km/s", "kilometer per second", new LinearScale(1000.0), UnitSystem.SI_ACCEPTED);
 
         /** km/h. */
-        public static final Speed.Unit KILOMETER_PER_HOUR = new Speed.Unit(List.of("km/h", "km/hr", "km/hour"), "km/h",
-                "kilometer per hour", new LinearScale(1000.0, 3600.0), UnitSystem.SI_ACCEPTED);
+        public static final Speed.Unit KILOMETER_PER_HOUR =
+                new Speed.Unit("km/h", "km/h", "kilometer per hour", new LinearScale(1000.0, 3600.0), UnitSystem.SI_ACCEPTED);
 
         /** in/s. */
-        public static final Speed.Unit INCH_PER_SECOND = new Speed.Unit(List.of("in/s", "in/sec", "inch/s", "inch/sec"), "in/s",
-                "inch per second", new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
+        public static final Speed.Unit INCH_PER_SECOND =
+                new Speed.Unit("in/s", "in/s", "inch per second", new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
 
         /** in/min. */
-        public static final Speed.Unit INCH_PER_MINUTE = new Speed.Unit(List.of("in/min", "inch/min"), "in/min",
-                "inch per minute", new LinearScale(Length.Unit.CONST_IN, 60.0), UnitSystem.IMPERIAL);
+        public static final Speed.Unit INCH_PER_MINUTE = new Speed.Unit("in/min", "in/min", "inch per minute",
+                new LinearScale(Length.Unit.CONST_IN, 60.0), UnitSystem.IMPERIAL);
 
         /** in/h. */
-        public static final Speed.Unit INCH_PER_HOUR = new Speed.Unit(List.of("in/h", "in/hr", "in/hour", "inch/hour"), "in/h",
-                "inch per hour", new LinearScale(Length.Unit.CONST_IN, 3600.0), UnitSystem.IMPERIAL);
+        public static final Speed.Unit INCH_PER_HOUR = new Speed.Unit("in/h", "in/h", "inch per hour",
+                new LinearScale(Length.Unit.CONST_IN, 3600.0), UnitSystem.IMPERIAL);
 
         /** ft/s. */
-        public static final Speed.Unit FOOT_PER_SECOND = new Speed.Unit(List.of("ft/s", "ft/sec", "foot/s", "foot/sec"), "ft/s",
-                "foot per second", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
+        public static final Speed.Unit FOOT_PER_SECOND =
+                new Speed.Unit("ft/s", "ft/s", "foot per second", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
 
         /** ft/min. */
-        public static final Speed.Unit FOOT_PER_MINUTE = new Speed.Unit(List.of("ft/min", "foot/min"), "ft/min",
-                "foot per minute", new LinearScale(Length.Unit.CONST_FT, 60.0), UnitSystem.IMPERIAL);
+        public static final Speed.Unit FOOT_PER_MINUTE = new Speed.Unit("ft/min", "ft/min", "foot per minute",
+                new LinearScale(Length.Unit.CONST_FT, 60.0), UnitSystem.IMPERIAL);
 
         /** ft/h. */
-        public static final Speed.Unit FOOT_PER_HOUR = new Speed.Unit(List.of("ft/h", "ft/hr", "ft/hour", "foot/hour"), "ft/h",
-                "foot per hour", new LinearScale(Length.Unit.CONST_FT, 3600.0), UnitSystem.IMPERIAL);
+        public static final Speed.Unit FOOT_PER_HOUR = new Speed.Unit("ft/h", "ft/h", "foot per hour",
+                new LinearScale(Length.Unit.CONST_FT, 3600.0), UnitSystem.IMPERIAL);
 
         /** mi/s. */
-        public static final Speed.Unit MILE_PER_SECOND = new Speed.Unit(List.of("mi/s", "mi/sec", "mile/s", "mile/sec"), "mi/s",
-                "mile per second", new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
+        public static final Speed.Unit MILE_PER_SECOND =
+                new Speed.Unit("mi/s", "mi/s", "mile per second", new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
 
         /** mi/min. */
-        public static final Speed.Unit MILE_PER_MINUTE = new Speed.Unit(List.of("mi/min", "mile/min"), "mi/min",
-                "mile per minute", new LinearScale(Length.Unit.CONST_MI, 60.0), UnitSystem.IMPERIAL);
+        public static final Speed.Unit MILE_PER_MINUTE = new Speed.Unit("mi/min", "mi/min", "mile per minute",
+                new LinearScale(Length.Unit.CONST_MI, 60.0), UnitSystem.IMPERIAL);
 
         /** mi/h. */
-        public static final Speed.Unit MILE_PER_HOUR = new Speed.Unit(List.of("mi/h", "mi/hr", "mi/hour", "mile/hour"), "mi/h",
-                "mile per hour", new LinearScale(Length.Unit.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
+        public static final Speed.Unit MILE_PER_HOUR = new Speed.Unit("mi/h", "mi/h", "mile per hour",
+                new LinearScale(Length.Unit.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
 
         /** knot = Nautical Mile per hour. */
         public static final Speed.Unit KNOT = new Speed.Unit("kt", "knot", Length.Unit.CONST_NM / 3600.0, UnitSystem.OTHER);
@@ -368,16 +367,16 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -393,12 +392,12 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Speed.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Speed.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

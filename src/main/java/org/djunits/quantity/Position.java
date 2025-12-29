@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -191,20 +189,20 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
         public static final Position.Unit FEMTOMETER = Units.resolve(Position.Unit.class, "fm");
 
         /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
-        public static final Position.Unit FOOT = new Position.Unit(List.of("ft", "foot", "'"), "ft", "foot",
-                new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
+        public static final Position.Unit FOOT =
+                new Position.Unit("ft", "ft", "foot", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
 
         /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
-        public static final Position.Unit INCH = new Position.Unit(List.of("in", "inch", "\""), "in", "inch",
-                new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
+        public static final Position.Unit INCH =
+                new Position.Unit("in", "in", "inch", new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
 
         /** yard (international) = 0.9144 m = 3 ft = 36 in. */
-        public static final Position.Unit YARD = new Position.Unit(List.of("yd", "yard"), "yd", "yard",
-                new LinearScale(Length.Unit.CONST_YD), UnitSystem.IMPERIAL);
+        public static final Position.Unit YARD =
+                new Position.Unit("yd", "yd", "yard", new LinearScale(Length.Unit.CONST_YD), UnitSystem.IMPERIAL);
 
         /** mile (international) = 5280 ft = 1760 yd. */
-        public static final Position.Unit MILE = new Position.Unit(List.of("mi", "mile"), "mi", "mile",
-                new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
+        public static final Position.Unit MILE =
+                new Position.Unit("mi", "mi", "mile", new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
 
         /** nautical mile (international) = 1852 m. */
         public static final Position.Unit NAUTICAL_MILE =
@@ -224,7 +222,7 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
 
         /** Angstrom = 10^-10 m. */
         public static final Position.Unit ANGSTROM =
-                new Position.Unit(List.of("A"), "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
+                new Position.Unit("A", "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
 
         /**
          * Create a new Position unit.
@@ -240,16 +238,16 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -265,12 +263,12 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new Position.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new Position.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");

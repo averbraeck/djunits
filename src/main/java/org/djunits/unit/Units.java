@@ -125,10 +125,7 @@ public final class Units
         Throw.whenNull(unit, "unit");
         var subMap =
                 UNIT_MAP.computeIfAbsent(quantityName(unit.getClass()), k -> new LinkedHashMap<String, UnitInterface<?>>());
-        for (var key : unit.getTextualAbbreviations())
-        {
-            subMap.put(key, unit);
-        }
+        subMap.put(unit.getTextualAbbreviation(), unit);
     }
 
     /**
@@ -435,7 +432,7 @@ public final class Units
             return abbr;
         }
         var unit = getUnit(quantityName, unitKey);
-        return unit == null ? unitKey : unit.getDefaultTextualAbbreviation();
+        return unit == null ? unitKey : unit.getTextualAbbreviation();
     }
 
     /**

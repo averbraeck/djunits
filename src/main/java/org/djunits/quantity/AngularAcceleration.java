@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.List;
-
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -190,30 +188,28 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
         public static final AngularAcceleration.Unit SI = RADIAN_PER_SECOND_SQUARED;
 
         /** degree per second squared. */
-        public static final AngularAcceleration.Unit DEGREE_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit(
-                List.of("deg/s2"), "\u00b0/s2", "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularAcceleration.Unit DEGREE_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit("deg/s2",
+                "\u00b0/s2", "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second squared. */
         public static final AngularAcceleration.Unit ARCMINUTE_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED
-                .deriveUnit(List.of("'/s2", "arcmin/s2"), "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
+                .deriveUnit("arcmin/s2", "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second squared. */
-        public static final AngularAcceleration.Unit ARCSECOND_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED.deriveUnit(
-                List.of("\"/s2", "arcsec/s2"), "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit ARCSECOND_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED
+                .deriveUnit("arcsec/s2", "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second squared. */
         public static final AngularAcceleration.Unit GRAD_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit("grad/s2",
                 "gradian per second squared", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second squared. */
-        public static final AngularAcceleration.Unit CENTESIMAL_ARCMINUTE_PER_SECOND_SQUARED =
-                GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c'/s2", "cdm/s2"), "c'/s2",
-                        "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit CENTESIMAL_ARCMINUTE_PER_SECOND_SQUARED = GRAD_PER_SECOND_SQUARED
+                .deriveUnit("cdm/s2", "c'/s2", "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second squared. */
-        public static final AngularAcceleration.Unit CENTESIMAL_ARCSECOND_PER_SECOND_SQUARED =
-                GRAD_PER_SECOND_SQUARED.deriveUnit(List.of("c\"/s2", "cds/s2"), "c\"/s2",
-                        "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit CENTESIMAL_ARCSECOND_PER_SECOND_SQUARED = GRAD_PER_SECOND_SQUARED
+                .deriveUnit("cds/s2", "c\"/s2", "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new AngularAcceleration unit.
@@ -229,16 +225,16 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
 
         /**
          * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviations the textual abbreviations of the unit, where the first one in the list is the id
+         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
-            super(textualAbbreviations, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
 
         @Override
@@ -254,12 +250,12 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
         }
 
         @Override
-        public Unit deriveUnit(final List<String> textualAbbreviations, final String displayAbbreviation, final String name,
+        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem)
         {
             if (getScale() instanceof LinearScale ls)
             {
-                return new AngularAcceleration.Unit(textualAbbreviations, displayAbbreviation, name,
+                return new AngularAcceleration.Unit(textualAbbreviation, displayAbbreviation, name,
                         new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
