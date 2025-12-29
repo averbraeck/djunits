@@ -296,20 +296,12 @@ public final class Units
                             unitId, quantity, currentLocale);
                     continue;
                 }
-                String raw = getStringSafe(resourceBundle, key);
-                if (raw == null || raw.isBlank())
+                String token = getStringSafe(resourceBundle, key).strip();
+                if (token == null || token.isBlank())
                 {
                     continue;
                 }
-                for (String token : raw.split("\\|"))
-                {
-                    token = token.strip();
-                    if (token.isEmpty())
-                    {
-                        continue;
-                    }
-                    quantityMap.put(token, unitId);
-                }
+                quantityMap.put(token, unitId);
             }
             System.out.println(localizedUnitTranslateMap);
         }
@@ -337,6 +329,31 @@ public final class Units
     }
 
     /**
+     * Return the unit based on a quantity name and unit key. Give a warning when either of them cannot be found. In that case,
+     * return null.
+     * @param quantityName the simple class name of the quantity
+     * @param unitKey the key of the unit
+     * @return the unit identified by unitKey for the quantity, or null when either cannot be found
+     */
+    private static UnitInterface<?> getUnit(final String quantityName, final String unitKey)
+    {
+        var subMap = UNIT_MAP.get(quantityName);
+        if (subMap == null)
+        {
+            CategoryLogger.always().info("djunits localization. Quantity {} unknown", quantityName);
+            return null;
+        }
+        UnitInterface<?> unit = UNIT_MAP.get(quantityName).get(unitKey);
+        if (unit == null)
+        {
+            CategoryLogger.always().info("djunits localization. Unit {} for quantity {} could not be found", unitKey,
+                    quantityName);
+            return null;
+        }
+        return unit;
+    }
+
+    /**
      * Lookup a display abbreviation for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
      * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display abbreviation.
      * @param locale the locale
@@ -351,24 +368,12 @@ public final class Units
         {
             abbr = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + ABBR_SUFFIX, false);
         }
-        if (abbr == null)
+        if (abbr != null)
         {
-            var subMap = UNIT_MAP.get(quantityName);
-            if (subMap == null)
-            {
-                CategoryLogger.always().info("djunits localization. Quantity {} unknown", quantityName);
-                return unitKey;
-            }
-            UnitInterface<?> unit = UNIT_MAP.get(quantityName).get(unitKey);
-            if (unit == null)
-            {
-                CategoryLogger.always().info("djunits localization. Unit {} for quantity {} could not be found", unitKey,
-                        quantityName);
-                return unitKey;
-            }
-            abbr = unit.getDisplayAbbreviation();
+            return abbr;
         }
-        return abbr;
+        var unit = getUnit(quantityName, unitKey);
+        return unit == null ? unitKey : unit.getDisplayAbbreviation();
     }
 
     /**
@@ -384,8 +389,8 @@ public final class Units
     }
 
     /**
-     * Lookup a display Name for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
-     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display name.
+     * Lookup a display Name for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the US-based
+     * unit cannot be found on the basis of the unit key, return the unit key itself as the display name.
      * @param locale the locale
      * @param quantityName the simple class name of the quantity
      * @param unitKey the key of the unit
@@ -394,29 +399,17 @@ public final class Units
     public static String localizedUnitDisplayName(final Locale locale, final String quantityName, final String unitKey)
     {
         String name = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + NAME_SUFFIX, false);
-        if (name == null)
+        if (name != null)
         {
-            var subMap = UNIT_MAP.get(quantityName);
-            if (subMap == null)
-            {
-                CategoryLogger.always().info("djunits localization. Quantity {} unknown", quantityName);
-                return unitKey;
-            }
-            UnitInterface<?> unit = UNIT_MAP.get(quantityName).get(unitKey);
-            if (unit == null)
-            {
-                CategoryLogger.always().info("djunits localization. Unit {} for quantity {} could not be found", unitKey,
-                        quantityName);
-                return unitKey;
-            }
-            name = unit.getName();
+            return name;
         }
-        return name;
+        var unit = getUnit(quantityName, unitKey);
+        return unit == null ? unitKey : unit.getName();
     }
 
     /**
-     * Lookup a display name for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
-     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display name.
+     * Lookup a display name for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the US-based
+     * unit cannot be found on the basis of the unit key, return the unit key itself as the display name.
      * @param unitClass the class of the unit to lookup
      * @param unitKey the key of the unit
      * @return the localized display name of the unit
@@ -424,6 +417,37 @@ public final class Units
     public static String localizedUnitDisplayName(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
     {
         return localizedUnitDisplayName(Locale.getDefault(), quantityName(unitClass), unitKey);
+    }
+
+    /**
+     * Lookup a textual abbreviation for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
+     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the textual abbreviation.
+     * @param locale the locale
+     * @param quantityName the simple class name of the quantity
+     * @param unitKey the key of the unit
+     * @return the localized textual abbreviation of the unit
+     */
+    public static String localizedUnitTextualAbbr(final Locale locale, final String quantityName, final String unitKey)
+    {
+        String abbr = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + ABBR_SUFFIX, false);
+        if (abbr != null)
+        {
+            return abbr;
+        }
+        var unit = getUnit(quantityName, unitKey);
+        return unit == null ? unitKey : unit.getDefaultTextualAbbreviation();
+    }
+
+    /**
+     * Lookup a textual abbreviation (key) for a given unit key. If it cannot be found, use the stored US unit as a fallback. If
+     * the US-based unit cannot be found on the basis of the unit key, return the unit key itself as the textual abbreviation.
+     * @param unitClass the class of the unit to lookup
+     * @param unitKey the key of the unit
+     * @return the localized textual abbreviation of the unit
+     */
+    public static String localizedUnitTextualAbbr(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
+    {
+        return localizedUnitTextualAbbr(Locale.getDefault(), quantityName(unitClass), unitKey);
     }
 
     /**
