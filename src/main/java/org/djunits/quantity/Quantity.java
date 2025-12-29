@@ -86,6 +86,34 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         return targetUnit.getScale().fromBaseValue(si());
     }
 
+    /**
+     * Return the "pretty" name of the quantity.
+     * @return the "pretty" name of the quantity
+     */
+    public String getName()
+    {
+        String name = Units.localizedQuantityName(Locale.getDefault(), getClass().getSimpleName());
+        final StringBuilder sb = new StringBuilder(name.length() + 8);
+        sb.append(name.charAt(0)); // keep first character exactly as-is
+        for (int i = 1; i < name.length(); i++)
+        {
+            final char c = name.charAt(i);
+            if (Character.isUpperCase(c))
+            {
+                if (sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ')
+                {
+                    sb.append(' ');
+                }
+                sb.append(Character.toLowerCase(c));
+            }
+            else
+            {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
     /**********************************************************************************/
     /******************************** SI-RELATED METHODS ******************************/
     /**********************************************************************************/
