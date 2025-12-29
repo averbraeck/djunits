@@ -159,11 +159,12 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
 
         /** mGy. */
         public static final AbsorbedDose.Unit MILLIGRAY =
-                new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED);
+                new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED).setSiPrefix("m");
 
         /** &#181;Gy. */
         public static final AbsorbedDose.Unit MICROGRAY =
-                new AbsorbedDose.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED);
+                new AbsorbedDose.Unit(List.of("muGy"), "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED)
+                        .setSiPrefix("mu");
 
         /** erg/g. */
         public static final AbsorbedDose.Unit ERG_PER_GRAM =
