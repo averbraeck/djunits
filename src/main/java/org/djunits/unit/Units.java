@@ -145,8 +145,15 @@ public final class Units
         String quantityName = quantityName(unitClass);
         Throw.when(!UNIT_MAP.containsKey(quantityName), UnitRuntimeException.class,
                 "Error resolving unit class %s (abbreviation '%s')", abbreviation, unitClass.getSimpleName());
+        readTranslateMap();
+        String unitKey = abbreviation;
+        if (localizedUnitTranslateMap.containsKey(quantityName)
+                && localizedUnitTranslateMap.get(quantityName).containsKey(abbreviation))
+        {
+            unitKey = localizedUnitTranslateMap.get(quantityName).get(abbreviation);
+        }
         @SuppressWarnings("unchecked")
-        U result = (U) UNIT_MAP.get(quantityName).get(abbreviation);
+        U result = (U) UNIT_MAP.get(quantityName).get(unitKey);
         Throw.when(result == null, UnitRuntimeException.class, "Error resolving abbreviation '%s' for unit class %s",
                 abbreviation, unitClass.getSimpleName());
         return result;
