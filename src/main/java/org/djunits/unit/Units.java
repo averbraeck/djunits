@@ -1,13 +1,15 @@
 package org.djunits.unit;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
+import java.util.MissingResourceException;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 import org.djunits.quantity.AbsoluteTemperature;
 import org.djunits.quantity.AbsorbedDose;
@@ -58,6 +60,7 @@ import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
 import org.djunits.quantity.VolumetricObjectDensity;
 import org.djutils.exceptions.Throw;
+import org.djutils.logger.CategoryLogger;
 
 /**
  * Units is a static class that can register and resolve string representations of units, possibly using a locale. The Units
@@ -74,14 +77,32 @@ import org.djutils.exceptions.Throw;
  */
 public final class Units
 {
+    /** Map with all units per quantity type. */
+    private static final Map<String, Map<String, UnitInterface<?>>> UNIT_MAP = new LinkedHashMap<>();
+
     /** Current map locale. */
     private static Locale currentLocale = Locale.US;
 
-    /** Localized map to translate localized id to US id. */
-    private static Map<Class<?>, Map<String, UnitInterface<?>>> localeTranslateMap = new LinkedHashMap<>();
+    /** Current resource bundle. */
+    private static ResourceBundle resourceBundle = null;
 
-    /** Map with all units per unit type. */
-    private static final Map<Class<?>, Map<String, UnitInterface<?>>> UNITMAP = new LinkedHashMap<>();
+    /** Localized map to translate textual unit abbreviation to US id. */
+    private static Map<String, Map<String, String>> localizedUnitTranslateMap = new LinkedHashMap<>();
+
+    /** Prefix for quantity keys in the resource bundle. */
+    private static final String QUANTITY_PREFIX = "quantity.";
+
+    /** Prefix for unit keys in the resource bundle. */
+    private static final String UNIT_PREFIX = "unit.";
+
+    /** Suffix used for textual abbreviations (pipe separated). */
+    private static final String ABBR_SUFFIX = ".abbr";
+
+    /** Suffix used for name. */
+    private static final String NAME_SUFFIX = ".name";
+
+    /** Suffix used for display abbreviations or symbols. */
+    private static final String DISPLAY_SUFFIX = ".display";
 
     /** */
     private Units()
@@ -102,7 +123,8 @@ public final class Units
     public static void register(final UnitInterface<?> unit)
     {
         Throw.whenNull(unit, "unit");
-        var subMap = UNITMAP.computeIfAbsent(unit.getClass(), k -> new LinkedHashMap<String, UnitInterface<?>>());
+        var subMap =
+                UNIT_MAP.computeIfAbsent(quantityName(unit.getClass()), k -> new LinkedHashMap<String, UnitInterface<?>>());
         for (var key : unit.getTextualAbbreviations())
         {
             subMap.put(key, unit);
@@ -123,10 +145,11 @@ public final class Units
     {
         Throw.whenNull(unitClass, "unitClass");
         Throw.whenNull(abbreviation, "abbreviation");
-        Throw.when(!UNITMAP.containsKey(unitClass), UnitRuntimeException.class,
+        String quantityName = quantityName(unitClass);
+        Throw.when(!UNIT_MAP.containsKey(quantityName), UnitRuntimeException.class,
                 "Error resolving unit class %s (abbreviation '%s')", abbreviation, unitClass.getSimpleName());
         @SuppressWarnings("unchecked")
-        U result = (U) UNITMAP.get(unitClass).get(abbreviation);
+        U result = (U) UNIT_MAP.get(quantityName).get(abbreviation);
         Throw.when(result == null, UnitRuntimeException.class, "Error resolving abbreviation '%s' for unit class %s",
                 abbreviation, unitClass.getSimpleName());
         return result;
@@ -136,35 +159,24 @@ public final class Units
      * Return a safe copy of the registered units, e.g. to build pick lists in a user interface.
      * @return a safe copy of the registered units
      */
-    public static Map<Class<?>, Map<String, UnitInterface<?>>> registeredUnits()
+    public static Map<String, Map<String, UnitInterface<?>>> registeredUnits()
     {
-        return new LinkedHashMap<Class<?>, Map<String, UnitInterface<?>>>(UNITMAP);
+        return new LinkedHashMap<String, Map<String, UnitInterface<?>>>(UNIT_MAP);
     }
 
-    /** */
-    public static synchronized void readTranslateMap()
+    /**
+     * Return the quantity name based on a unit class.
+     * @param unitClass the unit class
+     * @return the quantity name based on the unit class
+     */
+    private static String quantityName(final Class<?> unitClass)
     {
-        if (Locale.getDefault().equals(currentLocale))
+        String name = unitClassName(unitClass);
+        if (name.endsWith(".Unit"))
         {
-            return;
+            name = name.substring(0, name.length() - 5);
         }
-        if (Locale.getDefault().equals(Locale.US))
-        {
-            localeTranslateMap.clear();
-            currentLocale = Locale.US;
-            return;
-        }
-        var p = new Properties();
-        try (InputStream in = new ByteArrayInputStream(translate.getBytes(StandardCharsets.UTF_8)))
-        {
-            p.load(in);
-        }
-        catch (IOException e)
-        {
-        }
-        System.out.println(p.get("Length.el"));
-        // TODO: read properties into localeTranslateMap and set currentLocale
-        currentLocale = Locale.getDefault();
+        return name;
     }
 
     /**
@@ -178,8 +190,281 @@ public final class Units
         return cls.getCanonicalName().substring(cls.getPackageName().isEmpty() ? 0 : cls.getPackageName().length() + 1);
     }
 
+    /** The base of the resource bundle name, will expand to unit.properties, unit_nl.properties, etc. */
+    private static final String BUNDLE_BASE = "unit";
+
+    /** UTF-8 loader for .properties ResourceBundles. */
+    public static final class Utf8Control extends ResourceBundle.Control
+    {
+        @Override
+        public ResourceBundle newBundle(final String baseName, final Locale locale, final String format,
+                final ClassLoader loader, final boolean reload)
+                throws IllegalAccessException, InstantiationException, IOException
+        {
+            String bundleName = toBundleName(baseName, locale);
+            String resourceName = toResourceName("locale/" + bundleName, "properties");
+            URL url = loader.getResource(resourceName);
+            if (url == null)
+            {
+                resourceName = toResourceName("resources/locale/" + bundleName, "properties");
+                url = loader.getResource(resourceName);
+            }
+            if (url == null)
+            {
+                return null;
+            }
+            try (var is = loader.getResourceAsStream(resourceName))
+            {
+                if (is == null)
+                {
+                    return null;
+                }
+                try (var reader = new InputStreamReader(is, StandardCharsets.UTF_8))
+                {
+                    return new PropertyResourceBundle(reader);
+                }
+            }
+        }
+    }
+
     /**
-     * Register all standard units in the unit map, e.g. to make user interface picklists.
+     * Return a resource bundle for the Locale.
+     * @param locale the locale to search for
+     * @return The resource budle belonging to the given locale
+     */
+    public static ResourceBundle bundle(final Locale locale)
+    {
+        return ResourceBundle.getBundle(BUNDLE_BASE, locale, new Utf8Control());
+    }
+
+    /**
+     * Reads a string value from the bundle returning {@code null} if the key is missing.
+     * @param bundle the resource bundle.
+     * @param key the key to read.
+     * @return the string value or {@code null}.
+     */
+    private static String getStringSafe(final ResourceBundle bundle, final String key)
+    {
+        try
+        {
+            return bundle.getString(key);
+        }
+        catch (MissingResourceException e)
+        {
+            return null;
+        }
+    }
+
+    /**
+     * Read the data from the resource bundle.
+     */
+    public static synchronized void readTranslateMap()
+    {
+        if (Locale.getDefault().equals(currentLocale))
+        {
+            return;
+        }
+        localizedUnitTranslateMap.clear();
+        if (Locale.getDefault().equals(Locale.US))
+        {
+            currentLocale = Locale.US;
+            return;
+        }
+        currentLocale = Locale.getDefault();
+        resourceBundle = bundle(currentLocale);
+        if (resourceBundle != null)
+        {
+            for (String key : resourceBundle.keySet())
+            {
+                if (!key.startsWith(UNIT_PREFIX) || !key.endsWith(ABBR_SUFFIX))
+                {
+                    continue;
+                }
+                String quantity = key.substring(UNIT_PREFIX.length(), key.indexOf('.', UNIT_PREFIX.length()));
+                if (!UNIT_MAP.containsKey(quantity))
+                {
+                    CategoryLogger.always().info("djunits localization. Quantity {} from locale file {} unknown", quantity,
+                            currentLocale);
+                    continue;
+                }
+                var quantityMap = localizedUnitTranslateMap.computeIfAbsent(quantity, k -> new LinkedHashMap<String, String>());
+                String unitId = key.substring(key.indexOf('.', UNIT_PREFIX.length()));
+                unitId = unitId.substring(1, unitId.length() - ABBR_SUFFIX.length());
+                if (!UNIT_MAP.get(quantity).containsKey(unitId))
+                {
+                    CategoryLogger.always().info("djunits localization. Unit {} for quantity {} from locale file {} unknown",
+                            unitId, quantity, currentLocale);
+                    continue;
+                }
+                String raw = getStringSafe(resourceBundle, key);
+                if (raw == null || raw.isBlank())
+                {
+                    continue;
+                }
+                for (String token : raw.split("\\|"))
+                {
+                    token = token.strip();
+                    if (token.isEmpty())
+                    {
+                        continue;
+                    }
+                    quantityMap.put(token, unitId);
+                }
+            }
+            System.out.println(localizedUnitTranslateMap);
+        }
+    }
+
+    /**
+     * Lookup a quantity name for a given locale.
+     * @param locale the locale
+     * @param quantityName the simple class name of the quantity
+     * @return the localized name of the quantity
+     */
+    public static String localizedQuantityName(final Locale locale, final String quantityName)
+    {
+        return getLocalizedOrFallback(locale, QUANTITY_PREFIX + quantityName + NAME_SUFFIX, quantityName);
+    }
+
+    /**
+     * Get the localized unit name for a unit class.
+     * @param unitClass the class of the unit to lookup
+     * @return the localized name of the quantity belonging to that unit
+     */
+    public static String localizedQuantityName(final Class<? extends UnitInterface<?>> unitClass)
+    {
+        return localizedQuantityName(Locale.getDefault(), quantityName(unitClass));
+    }
+
+    /**
+     * Lookup a display abbreviation for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
+     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display abbreviation.
+     * @param locale the locale
+     * @param quantityName the simple class name of the quantity
+     * @param unitKey the key of the unit
+     * @return the localized display abbreviation of the unit
+     */
+    public static String localizedUnitDisplayAbbr(final Locale locale, final String quantityName, final String unitKey)
+    {
+        String abbr = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + DISPLAY_SUFFIX, false);
+        if (abbr == null)
+        {
+            abbr = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + ABBR_SUFFIX, false);
+        }
+        if (abbr == null)
+        {
+            var subMap = UNIT_MAP.get(quantityName);
+            if (subMap == null)
+            {
+                CategoryLogger.always().info("djunits localization. Quantity {} unknown", quantityName);
+                return unitKey;
+            }
+            UnitInterface<?> unit = UNIT_MAP.get(quantityName).get(unitKey);
+            if (unit == null)
+            {
+                CategoryLogger.always().info("djunits localization. Unit {} for quantity {} could not be found", unitKey,
+                        quantityName);
+                return unitKey;
+            }
+            abbr = unit.getDisplayAbbreviation();
+        }
+        return abbr;
+    }
+
+    /**
+     * Lookup a display abbreviation for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
+     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display abbreviation.
+     * @param unitClass the class of the unit to lookup
+     * @param unitKey the key of the unit
+     * @return the localized display abbreviation of the unit
+     */
+    public static String localizedUnitDisplayAbbr(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
+    {
+        return localizedUnitDisplayAbbr(Locale.getDefault(), quantityName(unitClass), unitKey);
+    }
+
+    /**
+     * Lookup a display Name for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
+     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display name.
+     * @param locale the locale
+     * @param quantityName the simple class name of the quantity
+     * @param unitKey the key of the unit
+     * @return the localized display name of the unit
+     */
+    public static String localizedUnitDisplayName(final Locale locale, final String quantityName, final String unitKey)
+    {
+        String name = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + NAME_SUFFIX, false);
+        if (name == null)
+        {
+            var subMap = UNIT_MAP.get(quantityName);
+            if (subMap == null)
+            {
+                CategoryLogger.always().info("djunits localization. Quantity {} unknown", quantityName);
+                return unitKey;
+            }
+            UnitInterface<?> unit = UNIT_MAP.get(quantityName).get(unitKey);
+            if (unit == null)
+            {
+                CategoryLogger.always().info("djunits localization. Unit {} for quantity {} could not be found", unitKey,
+                        quantityName);
+                return unitKey;
+            }
+            name = unit.getName();
+        }
+        return name;
+    }
+
+    /**
+     * Lookup a display name for a given unit key. If it cannot be found, use the stored US unit as a fallback. If the
+     * US-based unit cannot be found on the basis of the unit key, return the unit key itself as the display name.
+     * @param unitClass the class of the unit to lookup
+     * @param unitKey the key of the unit
+     * @return the localized display name of the unit
+     */
+    public static String localizedUnitDisplayName(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
+    {
+        return localizedUnitDisplayName(Locale.getDefault(), quantityName(unitClass), unitKey);
+    }
+
+    /**
+     * Return the value of a key for the given locale.
+     * @param locale the locale to use
+     * @param key the key to search for
+     * @param fallback a fallback string
+     * @return the value of the key for the given locale
+     */
+    private static String getLocalizedOrFallback(final Locale locale, final String key, final String fallback)
+    {
+        String v = getLocalized(locale, key, false);
+        return (v != null) ? v : fallback;
+    }
+
+    /**
+     * Return the value of a key for the given locale.
+     * @param locale the locale to use
+     * @param key the key to search for
+     * @param required whether the key should be present in the bundle
+     * @return the value of the key for the given locale
+     */
+    private static String getLocalized(final Locale locale, final String key, final boolean required)
+    {
+        ResourceBundle b = bundle(locale);
+        try
+        {
+            return b.getString(key);
+        }
+        catch (MissingResourceException e)
+        {
+            if (required)
+            {
+                throw e;
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Force all standard units to register themselves in the unit map, e.g. to make user interface picklists.
      */
     public static void registerStandardUnits()
     {
