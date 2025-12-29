@@ -24,12 +24,6 @@ public interface UnitInterface<U extends UnitInterface<U>>
     String getId();
 
     /**
-     * Return the name, which is the main written explanation, of the unit.
-     * @return the name (main explanation) of the unit
-     */
-    String getName();
-
-    /**
      * Retrieve the scale of this unit.
      * @return the scale of this unit
      */
@@ -74,17 +68,40 @@ public interface UnitInterface<U extends UnitInterface<U>>
     U getBaseUnit();
 
     /**
-     * Retrieve the default display abbreviation.
-     * @return the default display abbreviation
+     * Retrieve the display abbreviation, and apply localization when possible.
+     * @return the (localized) display abbreviation
      */
     String getDisplayAbbreviation();
 
     /**
-     * Retrieve the textual abbreviation, which doubles as the id of the unit.
-     * @return the textual abbreviation
+     * Retrieve the textual abbreviation, which doubles as the id of the unit. Apply localization when possible.
+     * @return the (localized) textual abbreviation
      */
     String getTextualAbbreviation();
 
+    /**
+     * Return the name, which is the main written explanation, of the unit. Apply localization when possible.
+     * @return the (localized) name of the unit
+     */
+    String getName();
+
+    /**
+     * Retrieve the stored display abbreviation, without localization.
+     * @return the stored (non-localized) display abbreviation
+     */
+    String getStoredDisplayAbbreviation();
+
+    /**
+     * Retrieve the stored textual abbreviation, which doubles as the id of the unit. Do not apply localization.
+     * @return the stored (non-localized) textual abbreviation
+     */
+    String getStoredTextualAbbreviation();
+
+    /**
+     * Return the name, which is the main written explanation, of the unit. Do not apply localization.
+     * @return the stored (non-localized) name of the unit
+     */
+    String getStoredName();
     /**
      * Set the SI-prefix so it can be localized if necessary.
      * @param siPrefix the SI-prefix to set

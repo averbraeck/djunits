@@ -108,16 +108,18 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
         Throw.when(kilo && perUnit && !getId().startsWith("/k"), UnitRuntimeException.class,
                 "SI prefixes generated for per-kilo class for unit %s, but abbreviation %s does not start with '/k'", cName,
                 getId());
-        Throw.when(kilo && !perUnit && !getName().startsWith("kilo"), UnitRuntimeException.class,
-                "SI prefixes generated for kilo class for unit %s, but name %s does not start with 'kilo'", cName, getName());
-        Throw.when(kilo && perUnit && !getName().startsWith("per kilo"), UnitRuntimeException.class,
+        Throw.when(kilo && !perUnit && !getStoredName().startsWith("kilo"), UnitRuntimeException.class,
+                "SI prefixes generated for kilo class for unit %s, but name %s does not start with 'kilo'", cName,
+                getStoredName());
+        Throw.when(kilo && perUnit && !getStoredName().startsWith("per kilo"), UnitRuntimeException.class,
                 "SI prefixes generated for kilo class for unit %s, but name %s does not start with 'per kilo'", cName,
-                getName());
+                getStoredName());
         Throw.when(perUnit && !getId().startsWith("/"), UnitRuntimeException.class,
                 "SI prefixes generated for 'per' class for unit %s, but abbreviation %s does not start with '/'", cName,
                 getId());
-        Throw.when(perUnit && !getName().startsWith("per "), UnitRuntimeException.class,
-                "SI prefixes generated for 'per' class for unit %s, but name %s does not start with 'per '", cName, getName());
+        Throw.when(perUnit && !getStoredName().startsWith("per "), UnitRuntimeException.class,
+                "SI prefixes generated for 'per' class for unit %s, but name %s does not start with 'per '", cName,
+                getStoredName());
 
         if (!kilo)
         {
@@ -125,9 +127,9 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.UNIT_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation(),
-                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation(), sip.getPrefixName() + getName(),
-                            sip.getFactor(), getUnitSystem());
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation(),
+                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation(),
+                            sip.getPrefixName() + getStoredName(), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
                 }
             }
@@ -135,9 +137,9 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.PER_UNIT_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation().substring(1),
-                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
+                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
+                            sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
                 }
             }
@@ -148,9 +150,9 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.KILO_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation().substring(1),
-                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
+                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
+                            sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
                 }
             }
@@ -158,9 +160,9 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.PER_KILO_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getTextualAbbreviation().substring(2),
-                            sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(2),
-                            sip.getPrefixName() + getName().substring(9), sip.getFactor(), getUnitSystem());
+                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(2),
+                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(2),
+                            sip.getPrefixName() + getStoredName().substring(9), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
                 }
             }
@@ -204,21 +206,39 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
     }
 
     @Override
-    public String getTextualAbbreviation()
+    public String getStoredTextualAbbreviation()
     {
         return this.textualAbbreviation;
     }
 
     @Override
-    public String getDisplayAbbreviation()
+    public String getTextualAbbreviation()
+    {
+        return Units.localizedUnitTextualAbbr(getClass(), getId());
+    }
+
+    @Override
+    public String getStoredDisplayAbbreviation()
     {
         return this.displayAbbreviation;
     }
 
     @Override
-    public String getName()
+    public String getDisplayAbbreviation()
+    {
+        return Units.localizedUnitDisplayAbbr(getClass(), getId());
+    }
+
+    @Override
+    public String getStoredName()
     {
         return this.name;
+    }
+
+    @Override
+    public String getName()
+    {
+        return Units.localizedUnitName(getClass(), getId());
     }
 
     @Override

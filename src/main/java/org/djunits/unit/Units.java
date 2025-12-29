@@ -125,7 +125,7 @@ public final class Units
         Throw.whenNull(unit, "unit");
         var subMap =
                 UNIT_MAP.computeIfAbsent(quantityName(unit.getClass()), k -> new LinkedHashMap<String, UnitInterface<?>>());
-        subMap.put(unit.getTextualAbbreviation(), unit);
+        subMap.put(unit.getStoredTextualAbbreviation(), unit);
     }
 
     /**
@@ -370,7 +370,7 @@ public final class Units
             return abbr;
         }
         var unit = getUnit(quantityName, unitKey);
-        return unit == null ? unitKey : unit.getDisplayAbbreviation();
+        return unit == null ? unitKey : unit.getStoredDisplayAbbreviation();
     }
 
     /**
@@ -380,7 +380,7 @@ public final class Units
      * @param unitKey the key of the unit
      * @return the localized display abbreviation of the unit
      */
-    public static String localizedUnitDisplayAbbr(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
+    public static String localizedUnitDisplayAbbr(final Class<?> unitClass, final String unitKey)
     {
         return localizedUnitDisplayAbbr(Locale.getDefault(), quantityName(unitClass), unitKey);
     }
@@ -393,7 +393,7 @@ public final class Units
      * @param unitKey the key of the unit
      * @return the localized display name of the unit
      */
-    public static String localizedUnitDisplayName(final Locale locale, final String quantityName, final String unitKey)
+    public static String localizedUnitName(final Locale locale, final String quantityName, final String unitKey)
     {
         String name = getLocalized(locale, UNIT_PREFIX + quantityName + "." + unitKey + NAME_SUFFIX, false);
         if (name != null)
@@ -401,7 +401,7 @@ public final class Units
             return name;
         }
         var unit = getUnit(quantityName, unitKey);
-        return unit == null ? unitKey : unit.getName();
+        return unit == null ? unitKey : unit.getStoredName();
     }
 
     /**
@@ -411,9 +411,9 @@ public final class Units
      * @param unitKey the key of the unit
      * @return the localized display name of the unit
      */
-    public static String localizedUnitDisplayName(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
+    public static String localizedUnitName(final Class<?> unitClass, final String unitKey)
     {
-        return localizedUnitDisplayName(Locale.getDefault(), quantityName(unitClass), unitKey);
+        return localizedUnitName(Locale.getDefault(), quantityName(unitClass), unitKey);
     }
 
     /**
@@ -432,7 +432,7 @@ public final class Units
             return abbr;
         }
         var unit = getUnit(quantityName, unitKey);
-        return unit == null ? unitKey : unit.getTextualAbbreviation();
+        return unit == null ? unitKey : unit.getStoredTextualAbbreviation();
     }
 
     /**
@@ -442,7 +442,7 @@ public final class Units
      * @param unitKey the key of the unit
      * @return the localized textual abbreviation of the unit
      */
-    public static String localizedUnitTextualAbbr(final Class<? extends UnitInterface<?>> unitClass, final String unitKey)
+    public static String localizedUnitTextualAbbr(final Class<?> unitClass, final String unitKey)
     {
         return localizedUnitTextualAbbr(Locale.getDefault(), quantityName(unitClass), unitKey);
     }

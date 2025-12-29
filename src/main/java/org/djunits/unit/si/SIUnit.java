@@ -492,12 +492,6 @@ public class SIUnit implements UnitInterface<SIUnit>
     }
 
     @Override
-    public String getName()
-    {
-        return toString(true, false);
-    }
-
-    @Override
     public Scale getScale()
     {
         return IdentityScale.SCALE;
@@ -529,6 +523,30 @@ public class SIUnit implements UnitInterface<SIUnit>
 
     @Override
     public String getDisplayAbbreviation()
+    {
+        return toString(true, false);
+    }
+
+    @Override
+    public String getName()
+    {
+        return toString(true, false);
+    }
+
+    @Override
+    public String getStoredTextualAbbreviation()
+    {
+        return toString(true, false);
+    }
+
+    @Override
+    public String getStoredDisplayAbbreviation()
+    {
+        return toString(true, false);
+    }
+
+    @Override
+    public String getStoredName()
     {
         return toString(true, false);
     }
