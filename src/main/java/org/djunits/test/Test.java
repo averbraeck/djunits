@@ -9,6 +9,7 @@ import org.djunits.quantity.AbsorbedDose;
 import org.djunits.quantity.Acceleration;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 
@@ -105,18 +106,23 @@ public final class Test
     {
         System.out.println("\nLOCALIZATION");
         System.out.println(AbsorbedDose.ONE.getName());
-        
+        var speed = Speed.of(50.0, "km/h");
+        System.out.println("50 km/h = " + speed);
         System.out.println(Units.localizedQuantityName(Acceleration.Unit.class));
         Locale nl = Locale.forLanguageTag("nl");
         System.out.println(Units.localizedQuantityName(nl, "AbsorbedDose"));
         System.out.println(Units.localizedQuantityName(nl, "AbsoluteTemperature"));
-        System.out.println("loc = US. getName() : " + AbsorbedDose.ONE.getName());
+        System.out.println("loc = std getName() : " + AbsorbedDose.ONE.getName());
         Locale.setDefault(nl);
         System.out.println("loc = nl. getName() : " + AbsorbedDose.ONE.getName());
         Units.readTranslateMap();
         System.out.println(Units.localizedQuantityName(Acceleration.Unit.class));
         System.out.println(Units.localizedUnitDisplayAbbr(Acceleration.Unit.class, "mi/h2"));
-        System.out.println(Units.localizedUnitDisplayName(Acceleration.Unit.class, "mi/h2"));
+        System.out.println(Units.localizedUnitName(Acceleration.Unit.class, "mi/h2"));
+        System.out.println("parse 3 dag " + Duration.valueOf("3 dag"));
+        System.out.println("parse 3 day " + Duration.valueOf("3 day") + " [fallback]");
+        System.out.println("3 dagen in uren: " + Duration.valueOf("3 dag").setDisplayUnit("u"));
+        System.out.println("50 km/h = " + speed);
     }
 
     /**
@@ -124,6 +130,7 @@ public final class Test
      */
     public static void main(final String[] args)
     {
+        Locale.setDefault(Locale.forLanguageTag("de"));
         new Test();
     }
 
