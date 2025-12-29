@@ -1,9 +1,12 @@
 package org.djunits.test;
 
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.Map;
 
 import org.djunits.quantity.AbsoluteTemperature;
+import org.djunits.quantity.AbsorbedDose;
+import org.djunits.quantity.Acceleration;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.unit.UnitInterface;
@@ -26,6 +29,7 @@ public final class Test
         temp();
         duration();
         printUnits();
+        localization();
     }
 
     /** */
@@ -78,11 +82,10 @@ public final class Test
         System.out.println("\n\nUNITS");
         Units.registerStandardUnits();
         var unitMap = Units.registeredUnits();
-        unitMap.entrySet().stream().sorted(Comparator.comparing(e -> Units.unitClassName(e.getKey()))).forEach(entry ->
+        unitMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey())).forEach(entry ->
         {
-            Class<?> clazz = entry.getKey();
             Map<String, UnitInterface<?>> inner = entry.getValue();
-            System.out.printf("%n%s%n", Units.unitClassName(clazz));
+            System.out.printf("%n%s%n", entry.getKey());
             System.out.printf("%-15s %-10s %-40s = %s%n", "Textual", "Display", "Name", "Convert to base value");
             System.out.println("-".repeat(97));
 
@@ -95,6 +98,25 @@ public final class Test
                                 v.toBaseValue(1.0), v.getBaseUnit().getDisplayAbbreviation());
                     });
         });
+    }
+
+    /** */
+    private void localization()
+    {
+        System.out.println("\nLOCALIZATION");
+        System.out.println(AbsorbedDose.ONE.getName());
+        
+        System.out.println(Units.localizedQuantityName(Acceleration.Unit.class));
+        Locale nl = Locale.forLanguageTag("nl");
+        System.out.println(Units.localizedQuantityName(nl, "AbsorbedDose"));
+        System.out.println(Units.localizedQuantityName(nl, "AbsoluteTemperature"));
+        System.out.println("loc = US. getName() : " + AbsorbedDose.ONE.getName());
+        Locale.setDefault(nl);
+        System.out.println("loc = nl. getName() : " + AbsorbedDose.ONE.getName());
+        Units.readTranslateMap();
+        System.out.println(Units.localizedQuantityName(Acceleration.Unit.class));
+        System.out.println(Units.localizedUnitDisplayAbbr(Acceleration.Unit.class, "mi/h2"));
+        System.out.println(Units.localizedUnitDisplayName(Acceleration.Unit.class, "mi/h2"));
     }
 
     /**
