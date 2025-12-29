@@ -779,10 +779,10 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
-     * @param <Q> The absolute quantity type
+     * @param <A> The absolute quantity type
      * @param <U> The unit type
      */
-    public abstract static class Absolute<Q extends Absolute<Q, U>, U extends UnitInterface<U>> extends Quantity<Q, U>
+    public abstract static class Absolute<A extends Absolute<A, U>, U extends UnitInterface<U>> extends Quantity<A, U>
     {
         /** */
         private static final long serialVersionUID = 500L;

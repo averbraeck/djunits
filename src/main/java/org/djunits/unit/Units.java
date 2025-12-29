@@ -1,8 +1,13 @@
 package org.djunits.unit;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 
 import org.djunits.quantity.AbsoluteTemperature;
 import org.djunits.quantity.AbsorbedDose;
@@ -55,12 +60,12 @@ import org.djunits.quantity.VolumetricObjectDensity;
 import org.djutils.exceptions.Throw;
 
 /**
- * Units is a static class that gives access to strongly typed units, such as <code>Length.km</code>. The Units class is
- * responsible for maintaining a registry of all units based on their textual abbreviations. It allows for a unit to register
- * itself, and for code to retrieve a unit based on a textual abbreviation. The Units class also takes care of localization of
- * the unit representations. If the Locale is not US, it will look for a resource bundle of the active Locale to see if
- * localized textual abbreviations are registered, and it will use these when resolving the unit. When no localized matches can
- * be found, it will test the (default) US Locale abbreviations as well.<br>
+ * Units is a static class that can register and resolve string representations of units, possibly using a locale. The Units
+ * class is responsible for maintaining a registry of all units based on their textual abbreviations. It allows for a unit to
+ * register itself, and for code to retrieve a unit based on a textual abbreviation. The Units class also takes care of
+ * localization of the unit representations. If the Locale is not US, it will look for a resource bundle of the active Locale to
+ * see if localized textual abbreviations are registered, and it will use these when resolving the unit. When no localized
+ * matches can be found, it will test the (default) US Locale abbreviations as well.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -72,8 +77,8 @@ public final class Units
     /** Current map locale. */
     private static Locale currentLocale = Locale.US;
 
-    /** Localized map to translate international id to US id. */
-    private static Map<String, String> localeTranslateMap = new LinkedHashMap<>();
+    /** Localized map to translate localized id to US id. */
+    private static Map<Class<?>, Map<String, UnitInterface<?>>> localeTranslateMap = new LinkedHashMap<>();
 
     /** Map with all units per unit type. */
     private static final Map<Class<?>, Map<String, UnitInterface<?>>> UNITMAP = new LinkedHashMap<>();
@@ -81,6 +86,7 @@ public final class Units
     /** */
     private Units()
     {
+        // static class.
     }
 
     static
@@ -91,6 +97,7 @@ public final class Units
     /**
      * Register a unit so it can be found based on its textual abbreviations.
      * @param unit the unit to register
+     * @throws NullPointerException when unit is null
      */
     public static void register(final UnitInterface<?> unit)
     {
@@ -107,12 +114,14 @@ public final class Units
      * @param unitClass the unit class for which the abbreviation has to be looked up
      * @param abbreviation the abbreviation to look up in the unit registry
      * @return the unit belonging to the abbreviation (if it exists)
+     * @throws NullPointerException when unitClass or abbreviation is null
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      * @param <U> the unit type
      */
     public static <U extends UnitInterface<U>> U resolve(final Class<U> unitClass, final String abbreviation)
             throws UnitRuntimeException
     {
+        Throw.whenNull(unitClass, "unitClass");
         Throw.whenNull(abbreviation, "abbreviation");
         Throw.when(!UNITMAP.containsKey(unitClass), UnitRuntimeException.class,
                 "Error resolving unit class %s (abbreviation '%s')", abbreviation, unitClass.getSimpleName());
@@ -124,13 +133,38 @@ public final class Units
     }
 
     /**
-     * Return a safe copy of the registered units, e.g. to build pick lists in a user interface. The map will be sorted on class
-     * and unit.
+     * Return a safe copy of the registered units, e.g. to build pick lists in a user interface.
      * @return a safe copy of the registered units
      */
     public static Map<Class<?>, Map<String, UnitInterface<?>>> registeredUnits()
     {
         return new LinkedHashMap<Class<?>, Map<String, UnitInterface<?>>>(UNITMAP);
+    }
+
+    /** */
+    public static synchronized void readTranslateMap()
+    {
+        if (Locale.getDefault().equals(currentLocale))
+        {
+            return;
+        }
+        if (Locale.getDefault().equals(Locale.US))
+        {
+            localeTranslateMap.clear();
+            currentLocale = Locale.US;
+            return;
+        }
+        var p = new Properties();
+        try (InputStream in = new ByteArrayInputStream(translate.getBytes(StandardCharsets.UTF_8)))
+        {
+            p.load(in);
+        }
+        catch (IOException e)
+        {
+        }
+        System.out.println(p.get("Length.el"));
+        // TODO: read properties into localeTranslateMap and set currentLocale
+        currentLocale = Locale.getDefault();
     }
 
     /**

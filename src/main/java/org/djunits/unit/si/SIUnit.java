@@ -492,53 +492,76 @@ public class SIUnit implements UnitInterface<SIUnit>
         return toString(true, false);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getName()
     {
         return toString(true, false);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Scale getScale()
     {
         return IdentityScale.SCALE;
     }
 
-    /** {@inheritDoc} */
     @Override
     public UnitSystem getUnitSystem()
     {
         return UnitSystem.SI_BASE;
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIUnit siUnit()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public SIUnit getBaseUnit()
     {
         return this;
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<String> getTextualAbbreviations()
     {
         return List.of(toString(true, false));
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getDisplayAbbreviation()
     {
         return toString(true, false);
+    }
+
+    @Override
+    public SIUnit setSiPrefix(final SIPrefix siPrefix)
+    {
+        return this;
+    }
+
+    @Override
+    public SIUnit setSiPrefix(final String prefix)
+    {
+        return this;
+    }
+
+    @Override
+    public SIUnit setSiPrefixKilo(final String prefix)
+    {
+        return this;
+    }
+
+    @Override
+    public SIUnit setSiPrefixPer(final String prefix)
+    {
+        return this;
+    }
+
+    @Override
+    public SIPrefix getSiPrefix()
+    {
+        return null;
     }
 
     @Override

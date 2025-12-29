@@ -194,7 +194,7 @@ public enum SIPrefixes
      * @param prefixKey the prefix key, e.g., "G" for "giga"
      * @return the SIPrefix information, or null if the <code>prefixKey</code> does not exist
      */
-    public static SIPrefix getUnit(final String prefixKey)
+    public static SIPrefix getSiPrefix(final String prefixKey)
     {
         return UNIT_PREFIXES.get(prefixKey);
     }
@@ -204,7 +204,7 @@ public enum SIPrefixes
      * @param prefixKey the prefix key, e.g., "/n" for "per nano"
      * @return the SIPrefix information, or null if the <code>prefixKey</code> does not exist
      */
-    public static SIPrefix getPerUnit(final String prefixKey)
+    public static SIPrefix getSiPrefixPer(final String prefixKey)
     {
         return PER_UNIT_PREFIXES.get(prefixKey);
     }
@@ -215,7 +215,7 @@ public enum SIPrefixes
      * @param prefixKey the prefix key, e.g., "G" for "giga"
      * @return the SIPrefix information, with an offset of 1000. So "k" will return 1, and "" will return 1.0E-3.
      */
-    public static SIPrefix getKiloUnit(final String prefixKey)
+    public static SIPrefix getSiPrefixKilo(final String prefixKey)
     {
         return KILO_PREFIXES.get(prefixKey);
     }

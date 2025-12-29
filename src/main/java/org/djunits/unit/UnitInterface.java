@@ -3,6 +3,7 @@ package org.djunits.unit;
 import java.util.List;
 
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -94,5 +95,39 @@ public interface UnitInterface<U extends UnitInterface<U>>
     {
         return getTextualAbbreviations().get(0);
     }
+
+    /**
+     * Set the SI-prefix so it can be localized if necessary.
+     * @param siPrefix the SI-prefix to set
+     * @return the unit for method chaining
+     */
+    U setSiPrefix(SIPrefix siPrefix);
+
+    /**
+     * Set the SI-prefix so it can be localized if necessary. This method does NOT handle kilo-prefixes.
+     * @param prefix the string-representation of the SI-prefix to set
+     * @return the unit for method chaining
+     */
+    U setSiPrefix(String prefix);
+
+    /**
+     * Set the SI-prefix so it can be localized if necessary. This method handles kilo-prefixes.
+     * @param prefix the string-representation of the SI-prefix to set
+     * @return the unit for method chaining
+     */
+    U setSiPrefixKilo(String prefix);
+
+    /**
+     * Set the SI-prefix so it can be localized if necessary. This method handles per-unit prefixes.
+     * @param prefix the string-representation of the SI-prefix to set
+     * @return the unit for method chaining
+     */
+    U setSiPrefixPer(String prefix);
+
+    /**
+     * Return the SI-prefix so it can be localized if necessary.
+     * @return the SI-prefix of this unit, or null when the unit has no SI-prefix
+     */
+    SIPrefix getSiPrefix();
 
 }

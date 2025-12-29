@@ -43,6 +43,9 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
     /** The unit system, e.g. SI or Imperial. */
     private final UnitSystem unitSystem;
 
+    /** The SI-prefix, if any, to allow localization of the SI-prefix. */
+    private SIPrefix siPrefix = null;
+
     /**
      * Create a new unit, where the textual abbreviation is the same as the display abbreviation.
      * @param id the id or main abbreviation of the unit
@@ -132,18 +135,20 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.UNIT_PREFIXES.values())
                 {
-                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation()),
+                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation()),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation(), sip.getPrefixName() + getName(),
                             sip.getFactor(), getUnitSystem());
+                    unit.setSiPrefix(sip);
                 }
             }
             else
             {
                 for (SIPrefix sip : SIPrefixes.PER_UNIT_PREFIXES.values())
                 {
-                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
+                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
                             sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
+                    unit.setSiPrefix(sip);
                 }
             }
         }
@@ -153,18 +158,20 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             {
                 for (SIPrefix sip : SIPrefixes.KILO_PREFIXES.values())
                 {
-                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
+                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(1)),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(1),
                             sip.getPrefixName() + getName().substring(4), sip.getFactor(), getUnitSystem());
+                    unit.setSiPrefix(sip);
                 }
             }
             else
             {
                 for (SIPrefix sip : SIPrefixes.PER_KILO_PREFIXES.values())
                 {
-                    deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(2)),
+                    U unit = deriveUnit(List.of(sip.getDefaultTextualPrefix() + getDefaultTextualAbbreviation().substring(2)),
                             sip.getDefaultDisplayPrefix() + getDisplayAbbreviation().substring(2),
                             sip.getPrefixName() + getName().substring(9), sip.getFactor(), getUnitSystem());
+                    unit.setSiPrefix(sip);
                 }
             }
         }
@@ -233,6 +240,41 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
     public UnitSystem getUnitSystem()
     {
         return this.unitSystem;
+    }
+
+    @SuppressWarnings({"unchecked", "hiddenfield"})
+    @Override
+    public U setSiPrefix(final SIPrefix siPrefix)
+    {
+        this.siPrefix = siPrefix;
+        return (U) this;
+    }
+    
+    @Override
+    public U setSiPrefix(final String prefix)
+    {
+        SIPrefix sip = SIPrefixes.getSiPrefix(prefix);
+        return setSiPrefix(sip);
+    }
+
+    @Override
+    public U setSiPrefixKilo(final String prefix)
+    {
+        SIPrefix sip = SIPrefixes.getSiPrefixKilo(prefix);
+        return setSiPrefix(sip);
+    }
+
+    @Override
+    public U setSiPrefixPer(final String prefix)
+    {
+        SIPrefix sip = SIPrefixes.getSiPrefixPer(prefix);
+        return setSiPrefix(sip);
+    }
+
+    @Override
+    public SIPrefix getSiPrefix()
+    {
+        return this.siPrefix;
     }
 
     @Override
