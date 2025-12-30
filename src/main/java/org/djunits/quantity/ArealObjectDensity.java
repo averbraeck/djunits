@@ -41,7 +41,7 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
     public static final ArealObjectDensity NEG_MAXVALUE = ArealObjectDensity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ArealObjectDensity quantity with a unit.

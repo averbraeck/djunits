@@ -41,7 +41,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
     public static final LinearDensity NEG_MAXVALUE = LinearDensity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a LinearDensity quantity with a unit.

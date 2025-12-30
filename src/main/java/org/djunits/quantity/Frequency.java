@@ -45,7 +45,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
     public static final Frequency NEG_MAXVALUE = Frequency.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Frequency quantity with a unit.

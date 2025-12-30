@@ -41,7 +41,7 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
     public static final MagneticFluxDensity NEG_MAXVALUE = MagneticFluxDensity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a MagneticFluxDensity quantity with a unit.

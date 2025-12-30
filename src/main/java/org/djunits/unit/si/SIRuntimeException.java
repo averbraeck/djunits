@@ -11,7 +11,7 @@ package org.djunits.unit.si;
 public class SIRuntimeException extends RuntimeException
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Construct a new SIRuntimeException with all fields set to default values.

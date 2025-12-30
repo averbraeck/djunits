@@ -41,7 +41,7 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
     public static final AngularVelocity NEG_MAXVALUE = AngularVelocity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a AngularVelocity quantity with a unit.

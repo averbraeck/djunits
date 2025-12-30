@@ -45,7 +45,7 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
     public static final Volume NEG_MAXVALUE = Volume.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Volume quantity with a unit.

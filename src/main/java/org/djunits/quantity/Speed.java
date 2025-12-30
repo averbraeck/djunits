@@ -46,7 +46,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
     public static final Speed NEG_MAXVALUE = Speed.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Speed quantity with a unit.

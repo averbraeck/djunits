@@ -11,7 +11,7 @@ package org.djunits.unit;
 public class UnitException extends Exception
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Construct a new UnitException with all default values.

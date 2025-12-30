@@ -41,7 +41,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
     public static final Torque NEG_MAXVALUE = Torque.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Torque quantity with a unit.

@@ -37,7 +37,7 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
     public static final AbsoluteTemperature POS_MAXVALUE = AbsoluteTemperature.ofSi(Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a AbsoluteTemperature quantity with a unit.

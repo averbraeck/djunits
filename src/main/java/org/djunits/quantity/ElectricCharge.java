@@ -42,7 +42,7 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
     public static final ElectricCharge NEG_MAXVALUE = ElectricCharge.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ElectricCharge quantity with a unit.

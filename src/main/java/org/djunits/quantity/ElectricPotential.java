@@ -42,7 +42,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
     public static final ElectricPotential NEG_MAXVALUE = ElectricPotential.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ElectricPotential quantity with a unit.

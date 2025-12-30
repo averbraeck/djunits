@@ -41,7 +41,7 @@ public class AmountOfSubstance extends Quantity.Relative<AmountOfSubstance, Amou
     public static final AmountOfSubstance NEG_MAXVALUE = AmountOfSubstance.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a AmountOfSubstance quantity with a unit.

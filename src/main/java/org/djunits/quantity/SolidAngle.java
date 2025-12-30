@@ -41,7 +41,7 @@ public class SolidAngle extends Quantity.Relative<SolidAngle, SolidAngle.Unit>
     public static final SolidAngle NEG_MAXVALUE = SolidAngle.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a SolidAngle quantity with a unit.

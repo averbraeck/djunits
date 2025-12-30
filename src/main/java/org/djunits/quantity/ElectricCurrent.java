@@ -41,7 +41,7 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
     public static final ElectricCurrent NEG_MAXVALUE = ElectricCurrent.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ElectricCurrent quantity with a unit.

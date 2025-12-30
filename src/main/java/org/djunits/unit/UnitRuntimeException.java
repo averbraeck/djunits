@@ -11,7 +11,7 @@ package org.djunits.unit;
 public class UnitRuntimeException extends RuntimeException
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Construct a new UnitRuntimeException with all default values.

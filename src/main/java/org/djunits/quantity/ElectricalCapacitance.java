@@ -41,7 +41,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
     public static final ElectricalCapacitance NEG_MAXVALUE = ElectricalCapacitance.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ElectricalCapacitance quantity with a unit.

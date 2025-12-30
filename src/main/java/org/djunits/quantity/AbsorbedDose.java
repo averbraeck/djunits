@@ -41,7 +41,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
     public static final AbsorbedDose NEG_MAXVALUE = AbsorbedDose.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a AbsorbedDose quantity with a unit.

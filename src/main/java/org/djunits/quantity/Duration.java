@@ -47,7 +47,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
     public static final Duration NEG_MAXVALUE = Duration.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Duration quantity with a unit.

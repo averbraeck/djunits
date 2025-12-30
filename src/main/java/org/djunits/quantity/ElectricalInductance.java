@@ -41,7 +41,7 @@ public class ElectricalInductance extends Quantity.Relative<ElectricalInductance
     public static final ElectricalInductance NEG_MAXVALUE = ElectricalInductance.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ElectricalInductance quantity with a unit.

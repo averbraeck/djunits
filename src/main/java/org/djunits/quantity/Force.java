@@ -41,7 +41,7 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
     public static final Force NEG_MAXVALUE = Force.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Force quantity with a unit.

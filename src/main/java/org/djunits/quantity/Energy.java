@@ -41,7 +41,7 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
     public static final Energy NEG_MAXVALUE = Energy.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Energy quantity with a unit.

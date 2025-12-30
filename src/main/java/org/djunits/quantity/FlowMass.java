@@ -41,7 +41,7 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
     public static final FlowMass NEG_MAXVALUE = FlowMass.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a FlowMass quantity with a unit.

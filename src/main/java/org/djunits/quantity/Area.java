@@ -41,7 +41,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
     public static final Area NEG_MAXVALUE = Area.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Area quantity with a unit.

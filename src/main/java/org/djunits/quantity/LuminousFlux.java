@@ -41,7 +41,7 @@ public class LuminousFlux extends Quantity.Relative<LuminousFlux, LuminousFlux.U
     public static final LuminousFlux NEG_MAXVALUE = LuminousFlux.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a LuminousFlux quantity with a unit.

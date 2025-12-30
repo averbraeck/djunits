@@ -30,7 +30,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         implements Value<U>, Comparable<Q>
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /** The si value. */
     private final double si;
@@ -691,7 +691,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
     public abstract static class Relative<R extends Relative<R, U>, U extends UnitInterface<U, R>> extends Quantity<R, U>
     {
         /** */
-        private static final long serialVersionUID = 500L;
+        private static final long serialVersionUID = 600L;
 
         /**
          * Instantiate a relative quantity with a value and a display unit.
@@ -811,7 +811,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
     public abstract static class Absolute<A extends Absolute<A, U>, U extends UnitInterface<U, A>> extends Quantity<A, U>
     {
         /** */
-        private static final long serialVersionUID = 500L;
+        private static final long serialVersionUID = 600L;
 
         /**
          * Instantiate a relative quantity with a value and a display unit.

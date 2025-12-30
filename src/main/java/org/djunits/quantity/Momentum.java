@@ -41,7 +41,7 @@ public class Momentum extends Quantity.Relative<Momentum, Momentum.Unit>
     public static final Momentum NEG_MAXVALUE = Momentum.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Momentum quantity with a unit.

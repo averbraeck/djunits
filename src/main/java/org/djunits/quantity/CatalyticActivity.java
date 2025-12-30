@@ -42,7 +42,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
     public static final CatalyticActivity NEG_MAXVALUE = CatalyticActivity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a CatalyticActivity quantity with a unit.

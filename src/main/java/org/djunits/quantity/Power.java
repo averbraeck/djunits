@@ -41,7 +41,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
     public static final Power NEG_MAXVALUE = Power.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Power quantity with a unit.

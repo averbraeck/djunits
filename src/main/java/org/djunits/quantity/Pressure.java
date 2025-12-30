@@ -41,7 +41,7 @@ public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
     public static final Pressure NEG_MAXVALUE = Pressure.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Pressure quantity with a unit.

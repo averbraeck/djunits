@@ -41,7 +41,7 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
     public static final Acceleration NEG_MAXVALUE = Acceleration.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Acceleration quantity with a unit.

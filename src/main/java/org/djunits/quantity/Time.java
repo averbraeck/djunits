@@ -44,7 +44,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
     public static final Time NEG_MAXVALUE = Time.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Time quantity with a unit.

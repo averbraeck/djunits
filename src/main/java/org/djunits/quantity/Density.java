@@ -41,7 +41,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
     public static final Density NEG_MAXVALUE = Density.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Density quantity with a unit.

@@ -41,7 +41,7 @@ public class Illuminance extends Quantity.Relative<Illuminance, Illuminance.Unit
     public static final Illuminance NEG_MAXVALUE = Illuminance.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Illuminance quantity with a unit.

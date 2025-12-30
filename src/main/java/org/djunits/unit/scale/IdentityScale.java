@@ -12,7 +12,7 @@ package org.djunits.unit.scale;
 public final class IdentityScale extends LinearScale
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /** A ready-to-use instance of the standard scale (they are all the same...). */
     public static final IdentityScale SCALE = new IdentityScale();

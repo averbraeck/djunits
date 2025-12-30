@@ -45,7 +45,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
     public static final Length NEG_MAXVALUE = Length.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Length quantity with a unit.

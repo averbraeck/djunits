@@ -41,7 +41,7 @@ public class VolumetricObjectDensity extends Quantity.Relative<VolumetricObjectD
     public static final VolumetricObjectDensity NEG_MAXVALUE = VolumetricObjectDensity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a VolumetricObjectDensity quantity with a unit.

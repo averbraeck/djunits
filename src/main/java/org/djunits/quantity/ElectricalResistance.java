@@ -43,7 +43,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
     public static final ElectricalResistance NEG_MAXVALUE = ElectricalResistance.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a ElectricalResistance quantity with a unit.

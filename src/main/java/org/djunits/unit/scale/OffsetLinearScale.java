@@ -48,7 +48,7 @@ import org.djutils.exceptions.Throw;
 public class OffsetLinearScale implements Scale
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /** multiply by this number to convert to the base (e.g., SI) unit. */
     private final double scaleFactorToBaseUnit;

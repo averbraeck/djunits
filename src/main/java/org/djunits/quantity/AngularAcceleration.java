@@ -42,7 +42,7 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
     public static final AngularAcceleration NEG_MAXVALUE = AngularAcceleration.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a AngularAcceleration quantity with a unit.

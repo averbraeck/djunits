@@ -41,7 +41,7 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
     public static final Mass NEG_MAXVALUE = Mass.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Mass quantity with a unit.

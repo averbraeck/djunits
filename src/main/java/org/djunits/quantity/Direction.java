@@ -45,7 +45,7 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
     public static final Direction NEG_MAXVALUE = Direction.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Direction quantity with a unit.

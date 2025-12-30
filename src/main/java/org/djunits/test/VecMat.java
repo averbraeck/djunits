@@ -143,7 +143,7 @@ public class VecMat
             U extends UnitInterface<U, Q>> implements Value<U>
     {
         /** */
-        private static final long serialVersionUID = 500L;
+        private static final long serialVersionUID = 600L;
 
     }
 

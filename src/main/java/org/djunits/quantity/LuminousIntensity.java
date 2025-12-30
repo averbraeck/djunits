@@ -41,7 +41,7 @@ public class LuminousIntensity extends Quantity.Relative<LuminousIntensity, Lumi
     public static final LuminousIntensity NEG_MAXVALUE = LuminousIntensity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a LuminousIntensity quantity with a unit.

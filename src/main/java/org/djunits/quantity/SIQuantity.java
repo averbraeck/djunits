@@ -19,7 +19,7 @@ import org.djutils.exceptions.Throw;
 public class SIQuantity extends Quantity.Relative<SIQuantity, SIUnit>
 {
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a SI quantity with a unit.

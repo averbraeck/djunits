@@ -43,7 +43,7 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
     public static final Angle NEG_MAXVALUE = Angle.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Angle quantity with a unit.

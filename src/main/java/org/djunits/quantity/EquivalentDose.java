@@ -41,7 +41,7 @@ public class EquivalentDose extends Quantity.Relative<EquivalentDose, Equivalent
     public static final EquivalentDose NEG_MAXVALUE = EquivalentDose.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a EquivalentDose quantity with a unit.

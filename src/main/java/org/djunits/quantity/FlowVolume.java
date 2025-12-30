@@ -41,7 +41,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
     public static final FlowVolume NEG_MAXVALUE = FlowVolume.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a FlowVolume quantity with a unit.

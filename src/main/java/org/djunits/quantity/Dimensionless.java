@@ -42,7 +42,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
     public static final Dimensionless NEG_MAXVALUE = Dimensionless.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a Dimensionless quantity with a unit.

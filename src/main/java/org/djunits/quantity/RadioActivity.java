@@ -41,7 +41,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
     public static final RadioActivity NEG_MAXVALUE = RadioActivity.ofSi(-Double.MAX_VALUE);
 
     /** */
-    private static final long serialVersionUID = 500L;
+    private static final long serialVersionUID = 600L;
 
     /**
      * Instantiate a RadioActivity quantity with a unit.
