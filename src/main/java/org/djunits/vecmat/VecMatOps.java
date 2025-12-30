@@ -14,7 +14,7 @@ import org.djunits.unit.UnitInterface;
  * @param <U> the unit type
  * @param <VM> the vectoror matrix type
  */
-public interface VecMathOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, VM extends VecMathOps<Q, U, VM>>
+public interface VecMatOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, VM extends VecMatOps<Q, U, VM>>
 {
     /**
      * Return the mean value of the elements of the vector or matrix.

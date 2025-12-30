@@ -10,7 +10,7 @@ import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
 import org.djunits.vecmat.Normed;
-import org.djunits.vecmat.VecMathOps;
+import org.djunits.vecmat.VecMatOps;
 import org.djunits.vecmat.VectorTransposable;
 
 /**
@@ -26,7 +26,7 @@ import org.djunits.vecmat.VectorTransposable;
  * @param <V> the vector type
  */
 public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector3D<Q, U, V>>
-        implements Value<U, V>, Additive<V>, Scalable<V>, Normed<Q, U>, VecMathOps<Q, U, V>
+        implements Value<U, V>, Additive<V>, Scalable<V>, Normed<Q, U>, VecMatOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
