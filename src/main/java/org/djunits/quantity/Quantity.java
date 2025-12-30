@@ -8,6 +8,8 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.value.Additive;
+import org.djunits.value.Scalable;
 import org.djunits.value.Value;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -687,6 +689,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <U> The unit type
      */
     public abstract static class Relative<R extends Relative<R, U>, U extends UnitInterface<U, R>> extends Quantity<R, U>
+            implements Additive<R>, Scalable<R>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -701,11 +704,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
             super(value, displayUnit);
         }
 
-        /**
-         * Add a Relative value to this Relative value. A new value is returned due to immutability.
-         * @param increment the value to add
-         * @return the sum of this value and the operand as a new object
-         */
+        @Override
         public R plus(final R increment)
         {
             R result = instantiate(si() + increment.si());
@@ -713,22 +712,15 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
             return result;
         }
 
-        /**
-         * Subtract a Relative value from this Relative value. A new value is returned due to immutability.
-         * @param decrement the value to subtract
-         * @return the difference of this value and the operand
-         */
-        R minus(final R decrement)
+        @Override
+        public R minus(final R decrement)
         {
             R result = instantiate(si() - decrement.si());
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
 
-        /**
-         * Return a new Scalar/Vector/Matrix with absolute value(s).
-         * @return a new quantity with absolute value(s)
-         */
+        @Override
         public R abs()
         {
             R result = instantiate(Math.abs(si()));
@@ -736,37 +728,18 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
             return result;
         }
 
-        /**
-         * Return a new Scalar/Vector/Matrix with negated value(s).
-         * @return a new R with negated value(s)
-         */
-        public R neg()
+        @Override
+        public R negate()
         {
             R result = instantiate(-si());
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
 
-        /**
-         * Multiply the quantity's value with a constant.
-         * @param constant the multiplier
-         * @return a new quantity with its value multiplied by a constant
-         */
-        public R times(final double constant)
+        @Override
+        public R scale(final double factor)
         {
-            R result = instantiate(si() * constant);
-            result.setDisplayUnit(getDisplayUnit());
-            return result;
-        }
-
-        /**
-         * Divide the quantity's value by a constant.
-         * @param constant the divisor
-         * @return a new quantity with its value divided by a constant
-         */
-        public R divide(final double constant)
-        {
-            R result = instantiate(si() / constant);
+            R result = instantiate(si() * factor);
             result.setDisplayUnit(getDisplayUnit());
             return result;
         }
