@@ -9,6 +9,7 @@ import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
 import org.djunits.vecmat.Normed;
+import org.djunits.vecmat.VecMathOps;
 import org.djunits.vecmat.VectorTransposable;
 
 /**
@@ -24,7 +25,7 @@ import org.djunits.vecmat.VectorTransposable;
  * @param <V> the vector type
  */
 public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2D<Q, U, V>>
-        implements Value<U>, Additive<V>, Scalable<V>, Normed<Q, U>
+        implements Value<U>, Additive<V>, Scalable<V>, Normed<Q, U>, VecMathOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -180,6 +181,58 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
         var norm = this.displayUnit.ofSi(Math.abs(this.xSi) > Math.abs(this.ySi) ? Math.abs(this.xSi) : Math.abs(this.ySi));
         norm.setDisplayUnit(getDisplayUnit());
         return norm;
+    }
+
+    @Override
+    public Q mean()
+    {
+        var mean = this.displayUnit.ofSi((this.xSi + this.ySi) / 2.0);
+        mean.setDisplayUnit(getDisplayUnit());
+        return mean;
+    }
+
+    @Override
+    public Q min()
+    {
+        return this.xSi < this.ySi ? x() : y();
+    }
+
+    @Override
+    public Q max()
+    {
+        return this.xSi > this.ySi ? x() : y();
+    }
+
+    @Override
+    public Q mode()
+    {
+        return this.xSi > this.ySi ? x() : y();
+    }
+
+    @Override
+    public Q median()
+    {
+        return mean();
+    }
+
+    @Override
+    public Q sum()
+    {
+        var sum = this.displayUnit.ofSi(this.xSi + this.ySi);
+        sum.setDisplayUnit(getDisplayUnit());
+        return sum;
+    }
+
+    @Override
+    public V plus(final Q increment)
+    {
+        return null;
+    }
+
+    @Override
+    public V minus(final Q decrement)
+    {
+        return null;
     }
 
     @Override
