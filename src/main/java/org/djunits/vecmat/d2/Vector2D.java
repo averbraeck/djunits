@@ -8,6 +8,7 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
+import org.djunits.vecmat.Normed;
 import org.djunits.vecmat.VectorTransposable;
 
 /**
@@ -23,7 +24,7 @@ import org.djunits.vecmat.VectorTransposable;
  * @param <V> the vector type
  */
 public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2D<Q, U, V>>
-        implements Value<U>, Additive<V>, Scalable<V>
+        implements Value<U>, Additive<V>, Scalable<V>, Normed<Q, U>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -49,44 +50,6 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
         this.xSi = xSi;
         this.ySi = ySi;
         this.displayUnit = displayUnit;
-    }
-
-    /**
-     * Create a Vector2D without needing generics.
-     * @param x the x-value expressed in the display unit
-     * @param y the y-value expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param columnVector true if this vector is a column vector
-     * @return a new Vector2D with a unit
-     * @param <Q> the quantity type
-     * @param <U> the unit type
-     * @param <V> the vector type
-     */
-    @SuppressWarnings("unchecked")
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>, V extends Vector2D<Q, U, V>> V of(final double x,
-            final double y, final U displayUnit, final boolean columnVector)
-    {
-        if (columnVector)
-        {
-            return (V) new Vector2D.Col<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
-        }
-        return (V) new Vector2D.Row<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
-    }
-
-    /**
-     * Create a column Vector2D without needing generics.
-     * @param x the x-value expressed in the display unit
-     * @param y the y-value expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @return a new column Vector2D with a unit
-     * @param <Q> the quantity type
-     * @param <U> the unit type
-     * @param <V> the vector type
-     */
-    public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>,
-            V extends Vector2D<Q, U, V>> Vector2D<Q, U, V> of(final double x, final double y, final U displayUnit)
-    {
-        return Vector2D.of(x, y, displayUnit, true);
     }
 
     /**
@@ -188,6 +151,38 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
     }
 
     @Override
+    public Q normL1()
+    {
+        var norm = this.displayUnit.ofSi((Math.abs(this.xSi) + Math.abs(this.ySi)) / 2.0);
+        norm.setDisplayUnit(getDisplayUnit());
+        return norm;
+    }
+
+    @Override
+    public Q normL2()
+    {
+        var norm = this.displayUnit.ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi));
+        norm.setDisplayUnit(getDisplayUnit());
+        return norm;
+    }
+
+    @Override
+    public Q normLp(final int p)
+    {
+        var norm = this.displayUnit.ofSi(Math.pow(Math.pow(this.xSi, p) + Math.pow(this.ySi, p), 1.0 / p));
+        norm.setDisplayUnit(getDisplayUnit());
+        return norm;
+    }
+
+    @Override
+    public Q normLinf()
+    {
+        var norm = this.displayUnit.ofSi(Math.abs(this.xSi) > Math.abs(this.ySi) ? Math.abs(this.xSi) : Math.abs(this.ySi));
+        norm.setDisplayUnit(getDisplayUnit());
+        return norm;
+    }
+
+    @Override
     public boolean isRelative()
     {
         return x().isRelative();
@@ -226,10 +221,10 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
         var s = new StringBuilder();
         s.append("[");
         s.append(withUnit.fromBaseValue(this.xSi));
-        s.append(",");
+        s.append(", ");
         s.append(withUnit.fromBaseValue(this.ySi));
-        s.append(withUnit.getDisplayAbbreviation());
         s.append("] ");
+        s.append(withUnit.getDisplayAbbreviation());
         return s.toString();
     }
 
@@ -262,9 +257,24 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          * @param ySi the y-value expressed in SI or BASE units
          * @param displayUnit the display unit to use
          */
-        protected Col(final double xSi, final double ySi, final U displayUnit)
+        public Col(final double xSi, final double ySi, final U displayUnit)
         {
             super(xSi, ySi, displayUnit, true);
+        }
+
+        /**
+         * Create a Vector2D column vector without needing generics.
+         * @param x the x-value expressed in the display unit
+         * @param y the y-value expressed in the display unit
+         * @param displayUnit the display unit to use
+         * @return a new Vector2D with a unit
+         * @param <Q> the quantity type
+         * @param <U> the unit type
+         */
+        public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> Vector2D.Col<Q, U> of(final double x,
+                final double y, final U displayUnit)
+        {
+            return new Vector2D.Col<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
         }
 
         @Override
@@ -310,9 +320,24 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          * @param ySi the y-value expressed in SI or BASE units
          * @param displayUnit the display unit to use
          */
-        protected Row(final double xSi, final double ySi, final U displayUnit)
+        public Row(final double xSi, final double ySi, final U displayUnit)
         {
             super(xSi, ySi, displayUnit, true);
+        }
+
+        /**
+         * Create a Vector2D row vector without needing generics.
+         * @param x the x-value expressed in the display unit
+         * @param y the y-value expressed in the display unit
+         * @param displayUnit the display unit to use
+         * @return a new Vector2D with a unit
+         * @param <Q> the quantity type
+         * @param <U> the unit type
+         */
+        public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> Vector2D.Row<Q, U> of(final double x,
+                final double y, final U displayUnit)
+        {
+            return new Vector2D.Row<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
         }
 
         @Override
