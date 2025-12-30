@@ -29,7 +29,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Number
-        implements Value<U>, Comparable<Q>
+        implements Value<U, Q>, Comparable<Q>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -61,10 +61,12 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         return this.displayUnit;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void setDisplayUnit(final U newUnit)
+    public Q setDisplayUnit(final U newUnit)
     {
         this.displayUnit = newUnit;
+        return (Q) this;
     }
 
     /**
@@ -151,10 +153,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     public Q instantiate(final double value, final U unit)
     {
-        double siValue = unit.toBaseValue(value);
-        Q quantity = instantiate(siValue);
-        quantity.setDisplayUnit(unit);
-        return quantity;
+        return instantiate(unit.toBaseValue(value)).setDisplayUnit(unit);
     }
 
     /**********************************************************************************/
@@ -592,9 +591,8 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
-        Q result = zero.instantiate(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio);
-        result.setDisplayUnit(zero.getDisplayUnit());
-        return result;
+        return zero.instantiate(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio)
+                .setDisplayUnit(zero.getDisplayUnit());
     }
 
     /**
@@ -707,41 +705,31 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         @Override
         public R plus(final R increment)
         {
-            R result = instantiate(si() + increment.si());
-            result.setDisplayUnit(getDisplayUnit());
-            return result;
+            return instantiate(si() + increment.si()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
         public R minus(final R decrement)
         {
-            R result = instantiate(si() - decrement.si());
-            result.setDisplayUnit(getDisplayUnit());
-            return result;
+            return instantiate(si() - decrement.si()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
         public R abs()
         {
-            R result = instantiate(Math.abs(si()));
-            result.setDisplayUnit(getDisplayUnit());
-            return result;
+            return instantiate(Math.abs(si())).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
         public R negate()
         {
-            R result = instantiate(-si());
-            result.setDisplayUnit(getDisplayUnit());
-            return result;
+            return instantiate(-si()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
         public R scale(final double factor)
         {
-            R result = instantiate(si() * factor);
-            result.setDisplayUnit(getDisplayUnit());
-            return result;
+            return instantiate(si() * factor).setDisplayUnit(getDisplayUnit());
         }
 
         /**
@@ -750,8 +738,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
          */
         public Quantity<?, ?> reciprocal()
         {
-            SIQuantity result = new SIQuantity(1.0 / si(), this.siUnit().invert());
-            return result;
+            return new SIQuantity(1.0 / si(), this.siUnit().invert());
         }
 
         @Override
