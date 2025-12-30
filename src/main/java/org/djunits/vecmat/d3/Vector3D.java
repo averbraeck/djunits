@@ -304,7 +304,7 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
     }
 
     /**
-     * Vector2D.Col implements a column vector with two real-valued entries. The vector is immutable, except for the display
+     * Vector3D.Col implements a column vector with two real-valued entries. The vector is immutable, except for the display
      * unit, which can be changed. <br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
@@ -321,7 +321,7 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
         private static final long serialVersionUID = 600L;
 
         /**
-         * Create a new 2D column vector with a unit.
+         * Create a new 3D column vector with a unit.
          * @param xSi the x-value expressed in SI or BASE units
          * @param ySi the y-value expressed in SI or BASE units
          * @param zSi the z-value expressed in SI or BASE units
@@ -333,12 +333,12 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
         }
 
         /**
-         * Create a Vector2D column vector without needing generics.
+         * Create a Vector3D column vector without needing generics.
          * @param x the x-value expressed in the display unit
          * @param y the y-value expressed in the display unit
          * @param z the z-value expressed in the display unit
          * @param displayUnit the display unit to use
-         * @return a new Vector2D with a unit
+         * @return a new Vector3D with a unit
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
@@ -370,7 +370,7 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
     }
 
     /**
-     * Vector2D.Row implements a row vector with two real-valued entries. The vector is immutable, except for the display unit,
+     * Vector3D.Row implements a row vector with two real-valued entries. The vector is immutable, except for the display unit,
      * which can be changed. <br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
@@ -387,7 +387,7 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
         private static final long serialVersionUID = 600L;
 
         /**
-         * Create a new 2D row vector with a unit.
+         * Create a new 3D row vector with a unit.
          * @param xSi the x-value expressed in SI or BASE units
          * @param ySi the y-value expressed in SI or BASE units
          * @param zSi the z-value expressed in SI or BASE units
@@ -399,12 +399,12 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
         }
 
         /**
-         * Create a Vector2D row vector without needing generics.
+         * Create a Vector3D row vector without needing generics.
          * @param x the x-value expressed in the display unit
          * @param y the y-value expressed in the display unit
          * @param z the z-value expressed in the display unit
          * @param displayUnit the display unit to use
-         * @return a new Vector2D with a unit
+         * @return a new Vector3D with a unit
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
