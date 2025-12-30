@@ -12,6 +12,7 @@ import org.djunits.value.Value;
 import org.djunits.vecmat.Normed;
 import org.djunits.vecmat.VecMatOps;
 import org.djunits.vecmat.VectorTransposable;
+import org.djutils.exceptions.Throw;
 
 /**
  * Vector3D implements a vector with three real-valued entries. The vector is immutable, except for the display unit, which can
@@ -52,6 +53,7 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     protected Vector3D(final double xSi, final double ySi, final double zSi, final U displayUnit)
     {
+        Throw.whenNull(displayUnit, "displayUnit");
         this.xSi = xSi;
         this.ySi = ySi;
         this.zSi = zSi;

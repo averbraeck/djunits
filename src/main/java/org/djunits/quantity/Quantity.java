@@ -47,6 +47,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     public Quantity(final double value, final U displayUnit)
     {
+        Throw.whenNull(displayUnit, "displayUnit");
         this.si = displayUnit.toBaseValue(value);
         this.displayUnit = displayUnit;
     }

@@ -11,6 +11,7 @@ import org.djunits.value.Value;
 import org.djunits.vecmat.Normed;
 import org.djunits.vecmat.VecMatOps;
 import org.djunits.vecmat.VectorTransposable;
+import org.djutils.exceptions.Throw;
 
 /**
  * Vector2D implements a vector with two real-valued entries. The vector is immutable, except for the display unit, which can be
@@ -47,6 +48,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     protected Vector2D(final double xSi, final double ySi, final U displayUnit)
     {
+        Throw.whenNull(displayUnit, "displayUnit");
         this.xSi = xSi;
         this.ySi = ySi;
         this.displayUnit = displayUnit;
