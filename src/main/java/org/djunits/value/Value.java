@@ -20,10 +20,9 @@ import org.djunits.unit.Units;
  * </p>
  * @author Alexander Verbraeck
  * @author Peter Knoppers
- * @param <T> the value type for this unit
  * @param <U> the unit type
  */
-public interface Value<T extends Value<T, U>, U extends UnitInterface<U, ?>> extends Serializable
+public interface Value<U extends UnitInterface<U, ?>> extends Serializable
 {
     /**
      * Retrieve the unit of this Value.
@@ -34,21 +33,19 @@ public interface Value<T extends Value<T, U>, U extends UnitInterface<U, ?>> ext
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnit the new display unit of this value
-     * @return the instance for method chaining
      */
-    T setDisplayUnit(U newUnit);
+    void setDisplayUnit(U newUnit);
 
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnitString the textual representation of the new display unit of this value
-     * @return the instance for method chaining
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      */
-    default T setDisplayUnit(final String newUnitString)
+    default void setDisplayUnit(final String newUnitString)
     {
         @SuppressWarnings("unchecked")
         U newUnit = (U) Units.resolve(getDisplayUnit().getClass(), newUnitString);
-        return setDisplayUnit(newUnit);
+        setDisplayUnit(newUnit);
     }
 
     /**

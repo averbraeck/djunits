@@ -21,63 +21,12 @@ import org.djunits.value.Value;
 public class VecMat
 {
     /**
-     * @param <V> the vector type
      * @param <Q> the quantity type
-     * @param <U> the unit type
      */
-    public abstract static class Vector2D<V extends Vector2D<V, Q, U>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
-            implements Value<V, U>
+    public abstract static class Vector2D<Q extends Quantity<Q, ?>>
     {
-        /** */
-        private static final long serialVersionUID = 500L;
-
-        @Override
-        public U getDisplayUnit()
-        {
-            return null;
-        }
-
-        @Override
-        public V setDisplayUnit(final U newUnit)
-        {
-            return null;
-        }
-
-        @Override
-        public boolean isRelative()
-        {
-            return false;
-        }
-
-        @Override
-        public String toString(final U displayUnit)
-        {
-            return null;
-        }
-
-        @Override
-        public String toString(final boolean verbose, final boolean withUnit)
-        {
-            return null;
-        }
-
-        @Override
-        public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
-        {
-            return null;
-        }
 
     }
-
-    /** */
-    public static class Length2D extends Vector2D<Length2D, Length, Length.Unit>
-    {
-        /** */
-        private static final long serialVersionUID = 500L;
-
-    }
-
-    // Too many generics...
 
     /**
      * @param <C> the collection type
@@ -85,7 +34,7 @@ public class VecMat
      * @param <U> the unit type
      */
     public abstract static class QuantityCollection<C extends QuantityCollection<C, Q, U>, Q extends Quantity<Q, U>,
-            U extends UnitInterface<U, Q>> implements Value<C, U>
+            U extends UnitInterface<U, Q>> implements Value<U>
     {
         /** */
         private static final long serialVersionUID = 500L;
@@ -97,11 +46,10 @@ public class VecMat
     /**
      * @param <Q> the quantity (without its unit)
      */
-    @SuppressWarnings("rawtypes")
-    public static class QuantityList<Q extends Quantity>
+    public static class QuantityList<Q extends Quantity<Q, ?>>
     {
         /** */
-        private UnitInterface<?, ?> displayUnit;
+        private UnitInterface<?, Q> displayUnit;
 
         /** */
         private QuantityData data;
@@ -110,7 +58,7 @@ public class VecMat
          * @param data the data
          * @param displayUnit the display unit
          */
-        public QuantityList(final QuantityData data, final AbstractUnit<?, ?> displayUnit)
+        public QuantityList(final QuantityData data, final AbstractUnit<?, Q> displayUnit)
         {
             this.displayUnit = displayUnit;
         }
@@ -213,7 +161,7 @@ public class VecMat
     public static void main(final String[] args)
     {
         var data = new DoubleData(new double[] {1, 2, 3});
-        var lengthList = new QuantityList<Length>(data, Mass.Unit.KILOGRAM);
+        var lengthList = new QuantityList<Length>(data, Length.Unit.MILLIMETER);
 
         var mass1List = new QuantityList2(Mass.class, data, "kg");
         var mass2List = new QuantityList2(Mass.class, data, Mass.Unit.KILOGRAM);

@@ -73,8 +73,9 @@ public final class Test
         var f1 = d1.reciprocal();
         System.out.println("reciprocal: " + f1);
         var d2 = Duration.valueOf("1 day");
-        System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit("s") + " seconds");
-        System.out.println("1 day: " + d2 + " = " + d2.setDisplayUnit(Duration.Unit.SECOND));
+        var d2s = d2;
+        d2s.setDisplayUnit("s");
+        System.out.println("1 day: " + d2 + " = " + d2s + " seconds");
     }
 
     /** */
@@ -121,7 +122,9 @@ public final class Test
         System.out.println(Units.localizedUnitName(Acceleration.Unit.class, "mi/h2"));
         System.out.println("parse 3 dag " + Duration.valueOf("3 dag"));
         System.out.println("parse 3 day " + Duration.valueOf("3 day") + " [fallback]");
-        System.out.println("3 dagen in uren: " + Duration.valueOf("3 dag").setDisplayUnit("u"));
+        var d3du = Duration.valueOf("3 dag");
+        d3du.setDisplayUnit("u");
+        System.out.println("3 dagen in uren: " + d3du);
         System.out.println("50 km/h = " + speed);
     }
 

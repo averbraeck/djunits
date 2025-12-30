@@ -27,7 +27,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Number
-        implements Value<Q, U>, Comparable<Q>
+        implements Value<U>, Comparable<Q>
 {
     /** */
     private static final long serialVersionUID = 500L;
@@ -59,12 +59,10 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         return this.displayUnit;
     }
 
-    @SuppressWarnings({"unchecked", "checkstyle:hiddenfield"})
     @Override
-    public Q setDisplayUnit(final U displayUnit)
+    public void setDisplayUnit(final U newUnit)
     {
-        this.displayUnit = displayUnit;
-        return (Q) this;
+        this.displayUnit = newUnit;
     }
 
     /**
