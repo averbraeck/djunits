@@ -1,11 +1,14 @@
-package org.djunits.vecmat2d;
+package org.djunits.vecmat.d2;
 
 import java.util.Objects;
 
 import org.djunits.quantity.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitInterface;
+import org.djunits.value.Additive;
+import org.djunits.value.Scalable;
 import org.djunits.value.Value;
+import org.djunits.vecmat.VectorTransposable;
 
 /**
  * Vector2D implements a vector with two real-valued entries. The vector is immutable, except for the display unit, which can be
@@ -20,7 +23,7 @@ import org.djunits.value.Value;
  * @param <V> the vector type
  */
 public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2D<Q, U, V>>
-        implements Value<U>
+        implements Value<U>, Additive<V>, Scalable<V>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -92,7 +95,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param ySiNew the y value to use
      * @return a new column or row vector with adapted x and y values
      */
-    protected abstract Vector2D<Q, U, V> instantiate(double xSiNew, double ySiNew);
+    protected abstract V instantiate(double xSiNew, double ySiNew);
 
     /**
      * Return the display unit of this vector.
@@ -154,20 +157,34 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
         return value;
     }
 
-    /**
-     * Return a transposed version of this vector.
-     * @return a transposed version of this vector
-     */
-    public abstract Vector2D<Q, U, ?> transpose();
-
-    /**
-     * Return a scaled version of this vector.
-     * @param factor the factor by which to scale the vector
-     * @return a scaled version of this vector
-     */
-    public Vector2D<Q, U, V> scale(final double factor)
+    @Override
+    public V scale(final double factor)
     {
         return instantiate(this.xSi * factor, this.ySi * factor);
+    }
+
+    @Override
+    public V plus(final V other)
+    {
+        return instantiate(this.xSi + other.xSi(), this.ySi + other.ySi());
+    }
+
+    @Override
+    public V minus(final V other)
+    {
+        return instantiate(this.xSi - other.xSi(), this.ySi - other.ySi());
+    }
+
+    @Override
+    public V negate()
+    {
+        return instantiate(-this.xSi, -this.ySi);
+    }
+
+    @Override
+    public V abs()
+    {
+        return instantiate(Math.abs(this.xSi), Math.abs(this.ySi));
     }
 
     @Override
@@ -234,6 +251,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <U> the unit type
      */
     public static class Col<Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> extends Vector2D<Q, U, Col<Q, U>>
+            implements VectorTransposable<Row<Q, U>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -281,6 +299,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <U> the unit type
      */
     public static class Row<Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> extends Vector2D<Q, U, Row<Q, U>>
+            implements VectorTransposable<Col<Q, U>>
     {
         /** */
         private static final long serialVersionUID = 600L;

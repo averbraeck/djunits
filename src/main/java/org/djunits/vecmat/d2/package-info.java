@@ -7,4 +7,4 @@
  * @author Alexander Verbraeck
  */
 
-package org.djunits.vecmat2d;
+package org.djunits.vecmat.d2;
