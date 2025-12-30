@@ -190,7 +190,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<LinearObjectDensity.Unit>
+    public static class Unit extends AbstractUnit<LinearObjectDensity.Unit, LinearObjectDensity>
     {
         /** The dimensions of the number of objects per unit of length: per meter (/m). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m");
@@ -256,8 +256,8 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -272,6 +272,12 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public LinearObjectDensity ofSi(final double si)
+        {
+            return LinearObjectDensity.ofSi(si);
         }
 
         @Override

@@ -175,7 +175,7 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AngularAcceleration.Unit>
+    public static class Unit extends AbstractUnit<AngularAcceleration.Unit, AngularAcceleration>
     {
         /** The dimensions of AngularAcceleration: rad/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s2");
@@ -247,6 +247,13 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public AngularAcceleration ofSi(final double si)
+        {
+            return AngularAcceleration.ofSi(si);
         }
 
         @Override

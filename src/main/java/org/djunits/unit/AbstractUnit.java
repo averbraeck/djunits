@@ -2,6 +2,7 @@ package org.djunits.unit;
 
 import java.util.Objects;
 
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
@@ -23,8 +24,9 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <U> the unit type
+ * @param <Q> the quantity type belonging to this unit
  */
-public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInterface<U>
+public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quantity<Q, U>> implements UnitInterface<U, Q>
 {
     /** The textual abbreviation of the unit, which is also the id. */
     private final String textualAbbreviation;
@@ -304,7 +306,7 @@ public abstract class AbstractUnit<U extends AbstractUnit<U>> implements UnitInt
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractUnit<?> other = (AbstractUnit<?>) obj;
+        AbstractUnit<?, ?> other = (AbstractUnit<?, ?>) obj;
         return Objects.equals(this.displayAbbreviation, other.displayAbbreviation) && Objects.equals(this.name, other.name)
                 && Objects.equals(this.scale, other.scale)
                 && Objects.equals(this.textualAbbreviation, other.textualAbbreviation)

@@ -23,7 +23,7 @@ import org.djunits.unit.Units;
  * @param <T> the value type for this unit
  * @param <U> the unit type
  */
-public interface Value<T extends Value<T, U>, U extends UnitInterface<U>> extends Serializable
+public interface Value<T extends Value<T, U>, U extends UnitInterface<U, ?>> extends Serializable
 {
     /**
      * Retrieve the unit of this Value.

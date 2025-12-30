@@ -2,6 +2,7 @@ package org.djunits.unit.si;
 
 import java.util.Arrays;
 
+import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.scale.IdentityScale;
@@ -18,7 +19,7 @@ import org.djutils.exceptions.Throw;
  * </p>
  * @author Alexander Verbraeck
  */
-public class SIUnit implements UnitInterface<SIUnit>
+public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
 {
     /** The (currently) 9 dimensions we take into account: rad, sr, kg, m, s, A, K, mol, cd. */
     public static final int NUMBER_DIMENSIONS = 9;
@@ -340,6 +341,12 @@ public class SIUnit implements UnitInterface<SIUnit>
     public boolean isFractional()
     {
         return this.fractional;
+    }
+
+    @Override
+    public SIQuantity ofSi(final double si)
+    {
+        return new SIQuantity(si, this);
     }
 
     /**

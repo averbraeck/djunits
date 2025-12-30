@@ -182,7 +182,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalResistance.Unit>
+    public static class Unit extends AbstractUnit<ElectricalResistance.Unit, ElectricalResistance>
     {
         /** The dimensions of the electrical resistance: kgm2/s3A2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A2");
@@ -253,6 +253,12 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ElectricalResistance ofSi(final double si)
+        {
+            return ElectricalResistance.ofSi(si);
         }
 
         @Override

@@ -164,7 +164,7 @@ public class AmountOfSubstance extends Quantity.Relative<AmountOfSubstance, Amou
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AmountOfSubstance.Unit>
+    public static class Unit extends AbstractUnit<AmountOfSubstance.Unit, AmountOfSubstance>
     {
         /** The dimensions of AmountOfSubstance: mol. */
         public static final SIUnit SI_UNIT = SIUnit.of("mol");
@@ -220,6 +220,12 @@ public class AmountOfSubstance extends Quantity.Relative<AmountOfSubstance, Amou
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public AmountOfSubstance ofSi(final double si)
+        {
+            return AmountOfSubstance.ofSi(si);
         }
 
         @Override

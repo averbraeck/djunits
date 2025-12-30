@@ -144,7 +144,7 @@ public class ElectricalInductance extends Quantity.Relative<ElectricalInductance
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalInductance.Unit>
+    public static class Unit extends AbstractUnit<ElectricalInductance.Unit, ElectricalInductance>
     {
         /** The dimensions of electromagnetic induction: kgm2/s2A2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2A2");
@@ -176,8 +176,8 @@ public class ElectricalInductance extends Quantity.Relative<ElectricalInductance
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -192,6 +192,12 @@ public class ElectricalInductance extends Quantity.Relative<ElectricalInductance
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ElectricalInductance ofSi(final double si)
+        {
+            return ElectricalInductance.ofSi(si);
         }
 
         @Override

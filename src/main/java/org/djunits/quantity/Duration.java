@@ -287,7 +287,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Duration.Unit>
+    public static class Unit extends AbstractUnit<Duration.Unit, Duration>
     {
         /** The dimensions of duration: s. */
         public static final SIUnit SI_UNIT = SIUnit.of("s");
@@ -358,6 +358,12 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Duration ofSi(final double si)
+        {
+            return Duration.ofSi(si);
         }
 
         @Override

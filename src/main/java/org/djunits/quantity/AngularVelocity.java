@@ -144,7 +144,7 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AngularVelocity.Unit>
+    public static class Unit extends AbstractUnit<AngularVelocity.Unit, AngularVelocity>
     {
         /** The dimensions of AngularVelocity: rad/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s");
@@ -216,6 +216,13 @@ public class AngularVelocity extends Quantity.Relative<AngularVelocity, AngularV
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public AngularVelocity ofSi(final double si)
+        {
+            return AngularVelocity.ofSi(si);
         }
 
         @Override

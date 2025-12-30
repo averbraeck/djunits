@@ -214,7 +214,7 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Mass.Unit>
+    public static class Unit extends AbstractUnit<Mass.Unit, Mass>
     {
         /** Constant for pound (lb). */
         public static final double CONST_LB = 0.45359237;
@@ -313,8 +313,8 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -329,6 +329,12 @@ public class Mass extends Quantity.Relative<Mass, Mass.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Mass ofSi(final double si)
+        {
+            return Mass.ofSi(si);
         }
 
         @Override

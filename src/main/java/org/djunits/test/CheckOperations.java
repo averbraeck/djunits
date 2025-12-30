@@ -345,9 +345,9 @@ public final class CheckOperations
             Quantity<?, ?> result = (Quantity<?, ?>) resultObj;
 
             // Dimensional analysis via shared APIs (no reflection helpers).
-            UnitInterface<?> lhsUnit = lhs.getDisplayUnit();
-            UnitInterface<?> rhsUnit = rhs.getDisplayUnit();
-            UnitInterface<?> resUnit = result.getDisplayUnit();
+            UnitInterface<?, ?> lhsUnit = lhs.getDisplayUnit();
+            UnitInterface<?, ?> rhsUnit = rhs.getDisplayUnit();
+            UnitInterface<?, ?> resUnit = result.getDisplayUnit();
 
             SIUnit lhsSI = lhsUnit.siUnit();
             SIUnit rhsSI = rhsUnit.siUnit();

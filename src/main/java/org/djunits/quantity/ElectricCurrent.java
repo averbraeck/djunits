@@ -195,7 +195,7 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricCurrent.Unit>
+    public static class Unit extends AbstractUnit<ElectricCurrent.Unit, ElectricCurrent>
     {
         /** The dimensions of electric current: A. */
         public static final SIUnit SI_UNIT = SIUnit.of("A");
@@ -245,8 +245,8 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -261,6 +261,12 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ElectricCurrent ofSi(final double si)
+        {
+            return ElectricCurrent.ofSi(si);
         }
 
         @Override

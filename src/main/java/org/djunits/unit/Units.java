@@ -78,7 +78,7 @@ import org.djutils.logger.CategoryLogger;
 public final class Units
 {
     /** Map with all units per quantity type. */
-    private static final Map<String, Map<String, UnitInterface<?>>> UNIT_MAP = new LinkedHashMap<>();
+    private static final Map<String, Map<String, UnitInterface<?, ?>>> UNIT_MAP = new LinkedHashMap<>();
 
     /** Current map locale. */
     private static Locale currentLocale = Locale.US;
@@ -120,11 +120,11 @@ public final class Units
      * @param unit the unit to register
      * @throws NullPointerException when unit is null
      */
-    public static void register(final UnitInterface<?> unit)
+    public static void register(final UnitInterface<?, ?> unit)
     {
         Throw.whenNull(unit, "unit");
         var subMap =
-                UNIT_MAP.computeIfAbsent(quantityName(unit.getClass()), k -> new LinkedHashMap<String, UnitInterface<?>>());
+                UNIT_MAP.computeIfAbsent(quantityName(unit.getClass()), k -> new LinkedHashMap<String, UnitInterface<?, ?>>());
         subMap.put(unit.getStoredTextualAbbreviation(), unit);
     }
 
@@ -137,7 +137,7 @@ public final class Units
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      * @param <U> the unit type
      */
-    public static <U extends UnitInterface<U>> U resolve(final Class<U> unitClass, final String abbreviation)
+    public static <U extends UnitInterface<U, ?>> U resolve(final Class<U> unitClass, final String abbreviation)
             throws UnitRuntimeException
     {
         Throw.whenNull(unitClass, "unitClass");
@@ -163,9 +163,9 @@ public final class Units
      * Return a safe copy of the registered units, e.g. to build pick lists in a user interface.
      * @return a safe copy of the registered units
      */
-    public static Map<String, Map<String, UnitInterface<?>>> registeredUnits()
+    public static Map<String, Map<String, UnitInterface<?, ?>>> registeredUnits()
     {
-        return new LinkedHashMap<String, Map<String, UnitInterface<?>>>(UNIT_MAP);
+        return new LinkedHashMap<String, Map<String, UnitInterface<?, ?>>>(UNIT_MAP);
     }
 
     /**
@@ -307,7 +307,6 @@ public final class Units
                 }
                 quantityMap.put(token, unitId);
             }
-            System.out.println(localizedUnitTranslateMap);
         }
     }
 
@@ -327,7 +326,7 @@ public final class Units
      * @param unitClass the class of the unit to lookup
      * @return the localized name of the quantity belonging to that unit
      */
-    public static String localizedQuantityName(final Class<? extends UnitInterface<?>> unitClass)
+    public static String localizedQuantityName(final Class<? extends UnitInterface<?, ?>> unitClass)
     {
         return localizedQuantityName(Locale.getDefault(), quantityName(unitClass));
     }
@@ -339,7 +338,7 @@ public final class Units
      * @param unitKey the key of the unit
      * @return the unit identified by unitKey for the quantity, or null when either cannot be found
      */
-    private static UnitInterface<?> getUnit(final String quantityName, final String unitKey)
+    private static UnitInterface<?, ?> getUnit(final String quantityName, final String unitKey)
     {
         var subMap = UNIT_MAP.get(quantityName);
         if (subMap == null)
@@ -347,7 +346,7 @@ public final class Units
             CategoryLogger.always().info("djunits localization. Quantity {} unknown", quantityName);
             return null;
         }
-        UnitInterface<?> unit = UNIT_MAP.get(quantityName).get(unitKey);
+        UnitInterface<?, ?> unit = UNIT_MAP.get(quantityName).get(unitKey);
         if (unit == null)
         {
             CategoryLogger.always().info("djunits localization. Unit {} for quantity {} could not be found", unitKey,

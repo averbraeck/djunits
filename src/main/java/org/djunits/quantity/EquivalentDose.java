@@ -144,7 +144,7 @@ public class EquivalentDose extends Quantity.Relative<EquivalentDose, Equivalent
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<EquivalentDose.Unit>
+    public static class Unit extends AbstractUnit<EquivalentDose.Unit, EquivalentDose>
     {
         /** The dimensions of the equivalent dose: m2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2/s2");
@@ -184,8 +184,8 @@ public class EquivalentDose extends Quantity.Relative<EquivalentDose, Equivalent
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -200,6 +200,12 @@ public class EquivalentDose extends Quantity.Relative<EquivalentDose, Equivalent
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public EquivalentDose ofSi(final double si)
+        {
+            return EquivalentDose.ofSi(si);
         }
 
         @Override

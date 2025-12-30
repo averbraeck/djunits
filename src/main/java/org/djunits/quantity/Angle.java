@@ -188,7 +188,7 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Angle.Unit>
+    public static class Unit extends AbstractUnit<Angle.Unit, Angle>
     {
         /** The dimensions of Angle: rad. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad");
@@ -261,6 +261,13 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public Angle ofSi(final double si)
+        {
+            return Angle.ofSi(si);
         }
 
         @Override

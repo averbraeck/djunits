@@ -144,7 +144,7 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AbsorbedDose.Unit>
+    public static class Unit extends AbstractUnit<AbsorbedDose.Unit, AbsorbedDose>
     {
         /** The dimensions of the absorbed dose: m2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2/s2");
@@ -207,6 +207,12 @@ public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.U
         public Unit getBaseUnit()
         {
             return GRAY;
+        }
+
+        @Override
+        public AbsorbedDose ofSi(final double si)
+        {
+            return AbsorbedDose.ofSi(si);
         }
 
         @Override

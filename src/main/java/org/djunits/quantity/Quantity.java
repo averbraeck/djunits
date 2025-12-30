@@ -26,7 +26,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface<U>> extends Number
+public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Number
         implements Value<Q, U>, Comparable<Q>
 {
     /** */
@@ -342,7 +342,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q valueOf(final String text, final Q example)
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q valueOf(final String text, final Q example)
     {
         String quantityClass = example.getClass().getSimpleName();
         Throw.whenNull(text, "Error parsing AbsorbedDose: text to parse is null");
@@ -376,7 +376,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q of(final double value, final String unitString,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q of(final double value, final String unitString,
             final Q example)
     {
         String quantityClass = example.getClass().getSimpleName();
@@ -589,7 +589,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q interpolate(final Q zero, final Q one,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q interpolate(final Q zero, final Q one,
             final double ratio)
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
@@ -607,7 +607,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q max(final Q quantity1, final Q quantity2)
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q max(final Q quantity1, final Q quantity2)
     {
         return quantity1.gt(quantity2) ? quantity1 : quantity2;
     }
@@ -622,7 +622,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <U> the unit type
      */
     @SafeVarargs
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q max(final Q quantity1, final Q quantity2,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q max(final Q quantity1, final Q quantity2,
             final Q... quantities)
     {
         Q maxr = quantity1.gt(quantity2) ? quantity1 : quantity2;
@@ -644,7 +644,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q min(final Q quantity1, final Q quantity2)
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q min(final Q quantity1, final Q quantity2)
     {
         return quantity1.lt(quantity2) ? quantity1 : quantity2;
     }
@@ -659,7 +659,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <U> the unit type
      */
     @SafeVarargs
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U>> Q min(final Q quantity1, final Q quantity2,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q min(final Q quantity1, final Q quantity2,
             final Q... quantities)
     {
         Q minr = quantity1.lt(quantity2) ? quantity1 : quantity2;
@@ -690,7 +690,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <R> The relative quantity type
      * @param <U> The unit type
      */
-    public abstract static class Relative<R extends Relative<R, U>, U extends UnitInterface<U>> extends Quantity<R, U>
+    public abstract static class Relative<R extends Relative<R, U>, U extends UnitInterface<U, R>> extends Quantity<R, U>
     {
         /** */
         private static final long serialVersionUID = 500L;
@@ -810,7 +810,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <A> The absolute quantity type
      * @param <U> The unit type
      */
-    public abstract static class Absolute<A extends Absolute<A, U>, U extends UnitInterface<U>> extends Quantity<A, U>
+    public abstract static class Absolute<A extends Absolute<A, U>, U extends UnitInterface<U, A>> extends Quantity<A, U>
     {
         /** */
         private static final long serialVersionUID = 500L;

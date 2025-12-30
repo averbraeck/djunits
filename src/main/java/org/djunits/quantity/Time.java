@@ -147,7 +147,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Time.Unit>
+    public static class Unit extends AbstractUnit<Time.Unit, Time>
     {
         /** The dimensions of time: s. */
         public static final SIUnit SI_UNIT = SIUnit.of("s");
@@ -275,6 +275,12 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
         public Unit getBaseUnit()
         {
             return BASE;
+        }
+
+        @Override
+        public Time ofSi(final double si)
+        {
+            return Time.ofSi(si);
         }
 
         @Override

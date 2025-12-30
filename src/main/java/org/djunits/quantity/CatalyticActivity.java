@@ -175,7 +175,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<CatalyticActivity.Unit>
+    public static class Unit extends AbstractUnit<CatalyticActivity.Unit, CatalyticActivity>
     {
         /** The dimensions of catalytic activity: mol/s [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = SIUnit.of("mol/s");
@@ -232,6 +232,13 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public CatalyticActivity ofSi(final double si)
+        {
+            return CatalyticActivity.ofSi(si);
         }
 
         @Override

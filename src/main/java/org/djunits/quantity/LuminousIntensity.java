@@ -154,7 +154,7 @@ public class LuminousIntensity extends Quantity.Relative<LuminousIntensity, Lumi
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<LuminousIntensity.Unit>
+    public static class Unit extends AbstractUnit<LuminousIntensity.Unit, LuminousIntensity>
     {
         /** The dimensions of the luminous flux emitted per unit solid angle: cd. */
         public static final SIUnit SI_UNIT = SIUnit.of("cd");
@@ -202,6 +202,12 @@ public class LuminousIntensity extends Quantity.Relative<LuminousIntensity, Lumi
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public LuminousIntensity ofSi(final double si)
+        {
+            return LuminousIntensity.ofSi(si);
         }
 
         @Override

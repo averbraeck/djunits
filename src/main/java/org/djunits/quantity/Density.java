@@ -164,7 +164,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Density.Unit>
+    public static class Unit extends AbstractUnit<Density.Unit, Density>
     {
         /** The dimensions of the absorbed dose: kg/m3. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/m3");
@@ -216,6 +216,12 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Density ofSi(final double si)
+        {
+            return Density.ofSi(si);
         }
 
         @Override

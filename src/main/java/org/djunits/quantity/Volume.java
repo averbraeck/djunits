@@ -245,7 +245,7 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Volume.Unit>
+    public static class Unit extends AbstractUnit<Volume.Unit, Volume>
     {
         /** Constant for the cubic inch. */
         public static final double CONST_CUBIC_INCH = cubed(Length.Unit.CONST_IN);
@@ -380,8 +380,8 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -396,6 +396,12 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Volume ofSi(final double si)
+        {
+            return Volume.ofSi(si);
         }
 
         @Override

@@ -85,7 +85,7 @@ public final class Test
         var unitMap = Units.registeredUnits();
         unitMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey())).forEach(entry ->
         {
-            Map<String, UnitInterface<?>> inner = entry.getValue();
+            Map<String, UnitInterface<?, ?>> inner = entry.getValue();
             System.out.printf("%n%s%n", entry.getKey());
             System.out.printf("%-15s %-10s %-40s = %s%n", "Textual", "Display", "Name", "Convert to base value");
             System.out.println("-".repeat(97));
@@ -94,7 +94,7 @@ public final class Test
                     // sort by key; change to Comparator.comparing(e -> e.getValue().getNr()) if you prefer sorting by Nr
                     .sorted(Comparator.comparing(e -> e.getValue().toBaseValue(1.0))).forEach(e ->
                     {
-                        UnitInterface<?> v = e.getValue();
+                        UnitInterface<?, ?> v = e.getValue();
                         System.out.printf("%-15s %-10s %-40s = %-22s %s%n", e.getKey(), v.getDisplayAbbreviation(), v.getName(),
                                 v.toBaseValue(1.0), v.getBaseUnit().getDisplayAbbreviation());
                     });

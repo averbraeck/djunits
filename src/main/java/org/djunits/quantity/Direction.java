@@ -172,7 +172,7 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Direction.Unit>
+    public static class Unit extends AbstractUnit<Direction.Unit, Direction>
     {
         /** The dimensions of direction: rad. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad");
@@ -232,6 +232,12 @@ public class Direction extends Quantity.Absolute<Direction, Direction.Unit>
         public Unit getBaseUnit()
         {
             return DEFAULT;
+        }
+
+        @Override
+        public Direction ofSi(final double si)
+        {
+            return Direction.ofSi(si);
         }
 
         @Override

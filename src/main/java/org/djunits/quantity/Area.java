@@ -240,7 +240,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Area.Unit>
+    public static class Unit extends AbstractUnit<Area.Unit, Area>
     {
         /** The dimensions of Area: m2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2");
@@ -364,6 +364,12 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Area ofSi(final double si)
+        {
+            return Area.ofSi(si);
         }
 
         @Override

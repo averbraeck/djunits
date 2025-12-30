@@ -290,7 +290,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Speed.Unit>
+    public static class Unit extends AbstractUnit<Speed.Unit, Speed>
     {
         /** The dimensions of Speed: m/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("m/s");
@@ -389,6 +389,12 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Speed ofSi(final double si)
+        {
+            return Speed.ofSi(si);
         }
 
         @Override

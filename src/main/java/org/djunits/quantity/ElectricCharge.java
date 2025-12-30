@@ -185,14 +185,13 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricCharge.Unit>
+    public static class Unit extends AbstractUnit<ElectricCharge.Unit, ElectricCharge>
     {
         /** The dimensions of electric charge, the Coulumb, is A.s. */
         public static final SIUnit SI_UNIT = SIUnit.of("As");
 
         /** Gray. */
-        public static final ElectricCharge.Unit COULOMB =
-                new ElectricCharge.Unit("C", "coulomb", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit COULOMB = new ElectricCharge.Unit("C", "coulomb", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final ElectricCharge.Unit SI = COULOMB.generateSiPrefixes(false, false);
@@ -268,8 +267,8 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }
@@ -284,6 +283,12 @@ public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCh
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ElectricCharge ofSi(final double si)
+        {
+            return ElectricCharge.ofSi(si);
         }
 
         @Override

@@ -274,7 +274,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Length.Unit>
+    public static class Unit extends AbstractUnit<Length.Unit, Length>
     {
         /** Constant for the foot. */
         public static final double CONST_FT = 0.3048;
@@ -411,6 +411,12 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Length ofSi(final double si)
+        {
+            return Length.ofSi(si);
         }
 
         @Override

@@ -182,7 +182,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalConductance.Unit>
+    public static class Unit extends AbstractUnit<ElectricalConductance.Unit, ElectricalConductance>
     {
         /** The dimensions of electrical conductance: s3A2/kgm2. */
         public static final SIUnit SI_UNIT = SIUnit.of("s3A2/kgm2");
@@ -239,6 +239,12 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ElectricalConductance ofSi(final double si)
+        {
+            return ElectricalConductance.ofSi(si);
         }
 
         @Override

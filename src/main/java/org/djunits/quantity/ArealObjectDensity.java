@@ -210,7 +210,7 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ArealObjectDensity.Unit>
+    public static class Unit extends AbstractUnit<ArealObjectDensity.Unit, ArealObjectDensity>
     {
         /** The dimensions of the number of objects per unit of area: per square meter (/m2). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m2");
@@ -258,6 +258,12 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ArealObjectDensity ofSi(final double si)
+        {
+            return ArealObjectDensity.ofSi(si);
         }
 
         @Override

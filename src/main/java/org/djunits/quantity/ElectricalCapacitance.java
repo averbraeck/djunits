@@ -174,7 +174,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<ElectricalCapacitance.Unit>
+    public static class Unit extends AbstractUnit<ElectricalCapacitance.Unit, ElectricalCapacitance>
     {
         /** The dimensions of electrical capacitance: s^4.A^2/kg.m^2. */
         public static final SIUnit SI_UNIT = SIUnit.of("s4A2/kgm2");
@@ -234,6 +234,12 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public ElectricalCapacitance ofSi(final double si)
+        {
+            return ElectricalCapacitance.ofSi(si);
         }
 
         @Override

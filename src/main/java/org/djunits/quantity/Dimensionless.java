@@ -141,7 +141,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      * @param <VQ> the variable's quantity type
      * @param <VU> the variable's unit type
      */
-    public final <VQ extends Quantity<VQ, VU>, VU extends UnitInterface<VU>> VQ times(final VQ v)
+    public final <VQ extends Quantity<VQ, VU>, VU extends UnitInterface<VU, VQ>> VQ times(final VQ v)
     {
         VQ result = v.instantiate(v.si());
         result.setDisplayUnit(v.getDisplayUnit());
@@ -226,7 +226,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Dimensionless.Unit>
+    public static class Unit extends AbstractUnit<Dimensionless.Unit, Dimensionless>
     {
         /** The dimensions of the dimensionless quantity: 1 [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
@@ -270,6 +270,12 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Dimensionles
         public Unit getBaseUnit()
         {
             return BASE;
+        }
+
+        @Override
+        public Dimensionless ofSi(final double si)
+        {
+            return Dimensionless.ofSi(si);
         }
 
         @Override

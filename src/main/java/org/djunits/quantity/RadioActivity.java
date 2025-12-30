@@ -144,7 +144,7 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<RadioActivity.Unit>
+    public static class Unit extends AbstractUnit<RadioActivity.Unit, RadioActivity>
     {
         /** The dimensions of radioactivity: /s. */
         public static final SIUnit SI_UNIT = SIUnit.of("/s");
@@ -220,6 +220,12 @@ public class RadioActivity extends Quantity.Relative<RadioActivity, RadioActivit
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public RadioActivity ofSi(final double si)
+        {
+            return RadioActivity.ofSi(si);
         }
 
         @Override

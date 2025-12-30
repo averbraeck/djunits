@@ -132,7 +132,7 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<AbsoluteTemperature.Unit>
+    public static class Unit extends AbstractUnit<AbsoluteTemperature.Unit, AbsoluteTemperature>
     {
         /** The dimensions of AbsoluteTemperature: K. */
         public static final SIUnit SI_UNIT = SIUnit.of("K");
@@ -196,6 +196,12 @@ public class AbsoluteTemperature extends Quantity.Absolute<AbsoluteTemperature, 
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public AbsoluteTemperature ofSi(final double si)
+        {
+            return AbsoluteTemperature.ofSi(si);
         }
 
         @Override

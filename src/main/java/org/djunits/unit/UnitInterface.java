@@ -1,5 +1,6 @@
 package org.djunits.unit;
 
+import org.djunits.quantity.Quantity;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
@@ -13,9 +14,9 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <U> the unit type
+ * @param <Q> the quantity type
  */
-
-public interface UnitInterface<U extends UnitInterface<U>>
+public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity<Q, U>>
 {
     /**
      * Return the id, which is the main abbreviation, of the unit.
@@ -102,6 +103,7 @@ public interface UnitInterface<U extends UnitInterface<U>>
      * @return the stored (non-localized) name of the unit
      */
     String getStoredName();
+
     /**
      * Set the SI-prefix so it can be localized if necessary.
      * @param siPrefix the SI-prefix to set
@@ -136,4 +138,24 @@ public interface UnitInterface<U extends UnitInterface<U>>
      */
     SIPrefix getSiPrefix();
 
+    /**
+     * Return an SI-quantity for this unit with a value.
+     * @param si the value in SI or BASE units
+     * @return an SI-quantity for this unit with the given si-value
+     */
+    Q ofSi(double si);
+
+    /**
+     * Return a quantity for this unit where the value is expressed in the current unit. When the unit is, e.g., kilometer, and
+     * the value is 10.0, the quantity returned will be 10 km, internally stored as 10,000 m with a displayUnit in km.
+     * @param value the value in the current unit
+     * @return a quantity with the value in the current unit
+     */
+    @SuppressWarnings("unchecked")
+    default Q quantityInUnit(final double value)
+    {
+        Q quantity = ofSi(getScale().toBaseValue(value));
+        quantity.setDisplayUnit((U) this);
+        return quantity;
+    }
 }

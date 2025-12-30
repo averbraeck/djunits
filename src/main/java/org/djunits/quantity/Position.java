@@ -144,7 +144,7 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Position.Unit>
+    public static class Unit extends AbstractUnit<Position.Unit, Position>
     {
         /** The dimensions of position: m. */
         public static final SIUnit SI_UNIT = SIUnit.of("m");
@@ -260,6 +260,12 @@ public class Position extends Quantity.Absolute<Position, Position.Unit>
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Position ofSi(final double si)
+        {
+            return Position.ofSi(si);
         }
 
         @Override

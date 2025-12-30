@@ -147,7 +147,7 @@ public class Temperature extends Quantity.Relative<Temperature, Temperature.Unit
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class Unit extends AbstractUnit<Temperature.Unit>
+    public static class Unit extends AbstractUnit<Temperature.Unit, Temperature>
     {
         /** The dimensions of temperature: K. */
         public static final SIUnit SI_UNIT = SIUnit.of("K");
@@ -210,6 +210,12 @@ public class Temperature extends Quantity.Relative<Temperature, Temperature.Unit
         public Unit getBaseUnit()
         {
             return SI;
+        }
+
+        @Override
+        public Temperature ofSi(final double si)
+        {
+            return Temperature.ofSi(si);
         }
 
         @Override
