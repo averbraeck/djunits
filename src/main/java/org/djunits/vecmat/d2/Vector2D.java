@@ -25,7 +25,7 @@ import org.djunits.vecmat.VectorTransposable;
  * @param <V> the vector type
  */
 public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2D<Q, U, V>>
-        implements Value<U>, Additive<V>, Scalable<V>, Normed<Q, U>, VecMathOps<Q, U, V>
+        implements Value<U, V>, Additive<V>, Scalable<V>, Normed<Q, U>, VecMathOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -44,9 +44,8 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param xSi the x-value expressed in SI or BASE units
      * @param ySi the y-value expressed in SI or BASE units
      * @param displayUnit the display unit to use
-     * @param columnVector true if this vector is a column vector
      */
-    protected Vector2D(final double xSi, final double ySi, final U displayUnit, final boolean columnVector)
+    protected Vector2D(final double xSi, final double ySi, final U displayUnit)
     {
         this.xSi = xSi;
         this.ySi = ySi;
@@ -73,12 +72,14 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
 
     /**
      * Set a new display unit of this vector.
-     * @param displayUnit the new display unit of this vector
+     * @param newUnit the new display unit of this vector
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public void setDisplayUnit(final U displayUnit)
+    public V setDisplayUnit(final U newUnit)
     {
-        this.displayUnit = displayUnit;
+        this.displayUnit = newUnit;
+        return (V) this;
     }
 
     /**
@@ -105,9 +106,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     public Q x()
     {
-        Q value = this.displayUnit.ofSi(this.xSi);
-        value.setDisplayUnit(this.displayUnit);
-        return value;
+        return this.displayUnit.ofSi(this.xSi).setDisplayUnit(this.displayUnit);
     }
 
     /**
@@ -116,9 +115,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     public Q y()
     {
-        Q value = this.displayUnit.ofSi(this.ySi);
-        value.setDisplayUnit(this.displayUnit);
-        return value;
+        return this.displayUnit.ofSi(this.ySi).setDisplayUnit(this.displayUnit);
     }
 
     @Override
@@ -154,41 +151,33 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
     @Override
     public Q normL1()
     {
-        var norm = this.displayUnit.ofSi((Math.abs(this.xSi) + Math.abs(this.ySi)) / 2.0);
-        norm.setDisplayUnit(getDisplayUnit());
-        return norm;
+        return this.displayUnit.ofSi((Math.abs(this.xSi) + Math.abs(this.ySi)) / 2.0).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q normL2()
     {
-        var norm = this.displayUnit.ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi));
-        norm.setDisplayUnit(getDisplayUnit());
-        return norm;
+        return this.displayUnit.ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q normLp(final int p)
     {
-        var norm = this.displayUnit.ofSi(Math.pow(Math.pow(this.xSi, p) + Math.pow(this.ySi, p), 1.0 / p));
-        norm.setDisplayUnit(getDisplayUnit());
-        return norm;
+        return this.displayUnit.ofSi(Math.pow(Math.pow(this.xSi, p) + Math.pow(this.ySi, p), 1.0 / p))
+                .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q normLinf()
     {
-        var norm = this.displayUnit.ofSi(Math.abs(this.xSi) > Math.abs(this.ySi) ? Math.abs(this.xSi) : Math.abs(this.ySi));
-        norm.setDisplayUnit(getDisplayUnit());
-        return norm;
+        return this.displayUnit.ofSi(Math.abs(this.xSi) > Math.abs(this.ySi) ? Math.abs(this.xSi) : Math.abs(this.ySi))
+                .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q mean()
     {
-        var mean = this.displayUnit.ofSi((this.xSi + this.ySi) / 2.0);
-        mean.setDisplayUnit(getDisplayUnit());
-        return mean;
+        return this.displayUnit.ofSi((this.xSi + this.ySi) / 2.0).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -206,7 +195,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
     @Override
     public Q mode()
     {
-        return this.xSi > this.ySi ? x() : y();
+        return max();
     }
 
     @Override
@@ -218,21 +207,19 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
     @Override
     public Q sum()
     {
-        var sum = this.displayUnit.ofSi(this.xSi + this.ySi);
-        sum.setDisplayUnit(getDisplayUnit());
-        return sum;
+        return this.displayUnit.ofSi(this.xSi + this.ySi).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public V plus(final Q increment)
     {
-        return null;
+        return instantiate(this.xSi + increment.si(), this.ySi + increment.si());
     }
 
     @Override
     public V minus(final Q decrement)
     {
-        return null;
+        return instantiate(this.xSi - decrement.si(), this.ySi - decrement.si());
     }
 
     @Override
@@ -312,7 +299,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          */
         public Col(final double xSi, final double ySi, final U displayUnit)
         {
-            super(xSi, ySi, displayUnit, true);
+            super(xSi, ySi, displayUnit);
         }
 
         /**
@@ -375,7 +362,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          */
         public Row(final double xSi, final double ySi, final U displayUnit)
         {
-            super(xSi, ySi, displayUnit, true);
+            super(xSi, ySi, displayUnit);
         }
 
         /**
