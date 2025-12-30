@@ -21,8 +21,9 @@ import org.djunits.unit.Units;
  * @author Alexander Verbraeck
  * @author Peter Knoppers
  * @param <U> the unit type
+ * @param <SELF> the 'own' type for fluent design
  */
-public interface Value<U extends UnitInterface<U, ?>> extends Serializable
+public interface Value<U extends UnitInterface<U, ?>, SELF extends Value<U, SELF>> extends Serializable
 {
     /**
      * Retrieve the unit of this Value.
@@ -33,19 +34,21 @@ public interface Value<U extends UnitInterface<U, ?>> extends Serializable
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnit the new display unit of this value
+     * @return 'this' for fluent design
      */
-    void setDisplayUnit(U newUnit);
+    SELF setDisplayUnit(U newUnit);
 
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnitString the textual representation of the new display unit of this value
+     * @return 'this' for fluent design
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      */
-    default void setDisplayUnit(final String newUnitString)
+    default SELF setDisplayUnit(final String newUnitString)
     {
         @SuppressWarnings("unchecked")
         U newUnit = (U) Units.resolve(getDisplayUnit().getClass(), newUnitString);
-        setDisplayUnit(newUnit);
+        return setDisplayUnit(newUnit);
     }
 
     /**
