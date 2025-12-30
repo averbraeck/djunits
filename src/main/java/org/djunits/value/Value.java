@@ -64,34 +64,17 @@ public interface Value<U extends UnitInterface<U, ?>> extends Serializable
     boolean isRelative();
 
     /**
-     * Concise description of this value.
-     * @return a String with the value, non-verbose, with the unit attached.
+     * Return a concise description of this value.
+     * @return a String with the value contents, without the type, with the unit attached.
      */
     @Override
     String toString();
 
     /**
-     * Somewhat verbose description of this value with the values expressed in the specified unit.
+     * Return a concise description of this value with the values expressed in the specified unit.
      * @param displayUnit the unit into which the values are converted for display
-     * @return printable string with the value contents expressed in the specified unit
+     * @return a String with the value contents expressed in the specified unit
      */
     String toString(U displayUnit);
-
-    /**
-     * Somewhat verbose description of this value with optional type and unit information.
-     * @param verbose if true; include type info; if false; exclude type info
-     * @param withUnit if true; include the unit; of false; exclude the unit
-     * @return printable string with the value contents
-     */
-    String toString(boolean verbose, boolean withUnit);
-
-    /**
-     * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit the unit into which the values are converted for display
-     * @param verbose if true; include type info; if false; exclude type info
-     * @param withUnit if true; include the unit; of false; exclude the unit
-     * @return printable string with the value contents
-     */
-    String toString(U displayUnit, boolean verbose, boolean withUnit);
 
 }

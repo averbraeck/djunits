@@ -116,18 +116,6 @@ public class VecMat
         }
 
         @Override
-        public String toString(final boolean verbose, final boolean withUnit)
-        {
-            return toString();
-        }
-
-        @Override
-        public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
-        {
-            return toString();
-        }
-
-        @Override
         public String toString()
         {
             return "[" + this.x + ", " + this.y + "] " + this.unit.toString();

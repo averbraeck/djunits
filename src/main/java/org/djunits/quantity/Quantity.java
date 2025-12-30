@@ -458,7 +458,6 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param withUnit if true; include the unit; of false; exclude the unit
      * @return printable string with the value contents
      */
-    @Override
     public String toString(final boolean verbose, final boolean withUnit)
     {
         return toString(getDisplayUnit(), verbose, withUnit);
@@ -471,7 +470,6 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param withUnit if true; include the unit; of false; exclude the unit
      * @return printable string with the value contents
      */
-    @Override
     @SuppressWarnings("checkstyle:hiddenfield")
     public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
     {
