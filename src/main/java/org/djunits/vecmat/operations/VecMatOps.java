@@ -1,4 +1,4 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.operations;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;

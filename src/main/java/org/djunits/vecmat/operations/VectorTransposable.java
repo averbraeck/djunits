@@ -1,4 +1,4 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.operations;
 
 /**
  * VectorTransposable enforces the contract on a vector to transpose the vector (swap rows and columns).<br>

@@ -1,4 +1,4 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.operations;
 
 /**
  * Hadamard operations are element-wise operations on vectors, matrices or collections of quantities.<br>

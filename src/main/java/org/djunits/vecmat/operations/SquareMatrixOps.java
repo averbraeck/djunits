@@ -1,7 +1,8 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.operations;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.vecmat.NonInvertibleMatrixException;
 
 /**
  * SquareMatrixOps defines a number of operations that can be applied to square matrixes, such as transpose, invert, and
@@ -99,4 +100,5 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @return whether the matrix is skew symmetric
      */
     boolean isSkewSymmetric(Q tolerance);
+
 }

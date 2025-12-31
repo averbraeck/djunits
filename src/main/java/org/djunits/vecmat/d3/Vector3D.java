@@ -9,9 +9,9 @@ import org.djunits.util.Math2;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
-import org.djunits.vecmat.Normed;
-import org.djunits.vecmat.VecMatOps;
-import org.djunits.vecmat.VectorTransposable;
+import org.djunits.vecmat.operations.Normed;
+import org.djunits.vecmat.operations.VecMatOps;
+import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
 /**

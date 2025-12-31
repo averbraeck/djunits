@@ -13,6 +13,8 @@ import org.djunits.util.MatrixMath;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
+import org.djunits.vecmat.operations.SquareMatrixOps;
+import org.djunits.vecmat.operations.VecMatOps;
 import org.djutils.exceptions.Throw;
 
 /**
