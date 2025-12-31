@@ -1,7 +1,9 @@
 package org.djunits.test;
 
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Mass;
+import org.djunits.vecmat.d2.Matrix2D;
 import org.djunits.vecmat.d2.Vector2D;
 
 /**
@@ -33,5 +35,22 @@ public class VecMat
         System.out.format("norm L2 of %s is %s%n", v4, v4.normL2());
         System.out.format("norm Lp=2 of %s is %s%n", v4, v4.normLp(2));
         System.out.format("norm Linf of %s is %s%n", v4, v4.normLinf());
+
+        System.out.println("\n\nMatrices");
+        var mat = Matrix2D.of(new double[][] {{1.0, 2.0}, {5.0, 4.0}}, Duration.Unit.SECOND);
+        System.out.println("matrix:\n" + mat);
+        System.out.println("\nmatrix + matrix:\n" + mat.plus(mat));
+        System.out.println("\nmatrix + 1 day:\n" + mat.plus(Duration.of(1.0, "day")));
+        System.out.println("\ndeterminant: " + mat.determinant());
+        try
+        {
+            System.out.println("\ninverse:\n" + mat.inverse());
+        }
+        catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
+        System.out.println("\ntrace: " + mat.trace());
+        System.out.println("\nadjugate:\n" + mat.adjugate());
     }
 }
