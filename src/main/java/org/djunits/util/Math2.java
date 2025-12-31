@@ -19,15 +19,17 @@ public final class Math2
     }
 
     /**
-     * Return the maximum value of 2 or more values.
-     * @param d1 value 1
-     * @param d2 value 2
-     * @param dn zero or more further values
+     * Return the maximum value within an array of values.
+     * @param dn zero or more values
      * @return the maximum value of the arguments
      */
-    public static double max(final double d1, final double d2, final double... dn)
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double max(final double... dn)
     {
-        double max = Math.max(d1, d2);
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double max = dn[0];
         for (double d : dn)
         {
             max = Math.max(max, d);
@@ -36,15 +38,17 @@ public final class Math2
     }
 
     /**
-     * Return the minimum value of 2 or more values.
-     * @param d1 value 1
-     * @param d2 value 2
-     * @param dn zero or more further values
+     * Return the minimum value within an array of values.
+     * @param dn zero or more values
      * @return the minimum value of the arguments
      */
-    public static double min(final double d1, final double d2, final double... dn)
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double min(final double... dn)
     {
-        double min = Math.min(d1, d2);
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double min = dn[0];
         for (double d : dn)
         {
             min = Math.min(min, d);
@@ -53,37 +57,92 @@ public final class Math2
     }
 
     /**
-     * Return the absolute maximum value of 2 or more values.
-     * @param d1 value 1
-     * @param d2 value 2
-     * @param dn zero or more further values
-     * @return the absolute maximum value of the arguments
+     * Return the maximum absolute value within an array of values.
+     * @param dn zero or more values
+     * @return the maximum absolute value of the arguments
      */
-    public static double absmax(final double d1, final double d2, final double... dn)
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double maxAbs(final double... dn)
     {
-        double max = Math.max(Math.abs(d1), Math.abs(d2));
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double max = Math.abs(dn[0]);
         for (double d : dn)
         {
             max = Math.max(max, Math.abs(d));
         }
         return max;
     }
-
+    
     /**
-     * Return the absolute minimum value of 2 or more values.
-     * @param d1 value 1
-     * @param d2 value 2
-     * @param dn zero or more further values
-     * @return the absolute minimum value of the arguments
+     * Return the mimimum absolute value within an array of values.
+     * @param dn zero or more values
+     * @return the minimum absolute value of the arguments
      */
-    public static double absmin(final double d1, final double d2, final double... dn)
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double minAbs(final double... dn)
     {
-        double min = Math.min(Math.abs(d1), Math.abs(d2));
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double min = Math.abs(dn[0]);
         for (double d : dn)
         {
             min = Math.min(min, Math.abs(d));
         }
         return min;
+    }
+
+    /**
+     * Return the sum of the values of an array of values.
+     * @param dn zero or more values
+     * @return the sum of the values of the arguments
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double sum(final double... dn)
+    {
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double sum = 0.0;
+        for (double d : dn)
+            sum += d;
+        return sum;
+    }
+
+    /**
+     * Return the sum of the absolute values of an array of values.
+     * @param dn zero or more values
+     * @return the sum of the absolute values of the arguments
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double sumAbs(final double... dn)
+    {
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double sum = 0.0;
+        for (double d : dn)
+            sum += Math.abs(d);
+        return sum;
+    }
+
+    /**
+     * Return the sum of the squares of the values of an array of values.
+     * @param dn zero or more values
+     * @return the sum of the squares of the values of the arguments
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double sumSqr(final double... dn)
+    {
+        if (dn == null || dn.length == 0)
+            return Double.NaN;
+        
+        double sqrsum = 0.0;
+        for (double d : dn)
+            sqrsum += d * d;
+        return sqrsum;
     }
 
     /**
