@@ -1,16 +1,15 @@
 package org.djunits.quantity;
 
-import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
-import org.djunits.unit.AbstractUnit;
-import org.djunits.unit.UnitRuntimeException;
-import org.djunits.unit.Unitless;
+import org.djunits.quantity.def.AbsoluteQuantity;
+import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.LinearScale;
-import org.djunits.unit.scale.OffsetLinearScale;
-import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.unit.system.UnitSystem;
+import org.djutils.exceptions.Throw;
 
 /**
  * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero.<br>
@@ -20,83 +19,64 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Time extends Quantity.Relative<Time, Time.Unit>
+public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.TimeReference>
 {
-    /** Constant with value zero. */
-    public static final Time ZERO = Time.ofSi(0.0);
-
-    /** Constant with value one. */
-    public static final Time ONE = Time.ofSi(1.0);
-
-    /** Constant with value NaN. */
-    @SuppressWarnings("checkstyle:constantname")
-    public static final Time NaN = Time.ofSi(Double.NaN);
-
-    /** Constant with value POSITIVE_INFINITY. */
-    public static final Time POSITIVE_INFINITY = Time.ofSi(Double.POSITIVE_INFINITY);
-
-    /** Constant with value NEGATIVE_INFINITY. */
-    public static final Time NEGATIVE_INFINITY = Time.ofSi(Double.NEGATIVE_INFINITY);
-
-    /** Constant with value MAX_VALUE. */
-    public static final Time POS_MAXVALUE = Time.ofSi(Double.MAX_VALUE);
-
-    /** Constant with value -MAX_VALUE. */
-    public static final Time NEG_MAXVALUE = Time.ofSi(-Double.MAX_VALUE);
-
     /** */
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Time quantity with a unit.
-     * @param value the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Time quantity with a unit and a reference point.
+     * @param value the duration value, expressed in a duration unit
+     * @param unit the duration unit in which the value is expressed, relative to the reference point
+     * @param reference the reference point of this time
      */
-    public Time(final double value, final Time.Unit unit)
+    public Time(final double value, final Duration.Unit unit, final TimeReference reference)
     {
-        super(value, unit);
+        super(new Duration(value, unit), reference);
     }
 
     /**
-     * Instantiate a Time quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * Instantiate a Time quantity with a unit, expressed as a String, and a reference point.
+     * @param value the duration value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
+     * @param reference the reference point of this time
      */
-    public Time(final double value, final String abbreviation)
+    public Time(final double value, final String abbreviation, final TimeReference reference)
     {
-        this(value, Units.resolve(Time.Unit.class, abbreviation));
+        this(value, Units.resolve(Duration.Unit.class, abbreviation), reference);
     }
 
     /**
-     * Construct Time quantity.
-     * @param value Scalar from which to construct this instance
+     * Instantiate a Time instance based on an duration and a reference point.
+     * @param duration the duration, relative to the reference point
+     * @param reference the reference point of this time
      */
-    public Time(final Time value)
+    public Time(final Duration duration, final TimeReference reference)
     {
-        super(value.si(), Time.Unit.BASE);
-        setDisplayUnit(value.getDisplayUnit());
+        super(duration, reference);
     }
 
     /**
-     * Return a Time instance based on an SI value.
-     * @param si the si value
+     * Return a Time instance based on an SI value and a reference point.
+     * @param si the duration si value, relative to the reference point
+     * @param reference the reference point of this time
      * @return the Time instance based on an SI value
      */
-    public static Time ofSi(final double si)
+    public static Time ofSi(final double si, final TimeReference reference)
     {
-        return new Time(si, Time.Unit.BASE);
+        return new Time(si, Duration.Unit.SI, reference);
     }
 
     @Override
-    public Time instantiate(final double si)
+    public Time instantiate(final Duration duration, final TimeReference reference)
     {
-        return ofSi(si);
+        return new Time(duration, reference);
     }
 
     @Override
     public SIUnit siUnit()
     {
-        return Time.Unit.SI_UNIT;
+        return Duration.Unit.SI_UNIT;
     }
 
     /**
@@ -104,197 +84,142 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
      * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
      * but not required, between the value and the unit.
      * @param text the textual representation to parse into a Time
+     * @param reference the reference point of this time
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static Time valueOf(final String text)
+    public static Time valueOf(final String text, final TimeReference reference)
     {
-        return Quantity.valueOf(text, ZERO);
+        return new Time(Quantity.valueOf(text, Duration.ZERO), reference);
     }
 
     /**
      * Returns a Time based on a value and the textual representation of the unit, which can be localized.
      * @param value the value to use
      * @param unitString the textual representation of the unit
+     * @param reference the reference point of this time
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Time of(final double value, final String unitString)
+    public static Time of(final double value, final String unitString, final TimeReference reference)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return new Time(Quantity.of(value, unitString, Duration.ZERO), reference);
+    }
+
+    @Override
+    public Duration subtract(final Time other)
+    {
+        Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
+                "cannot subtract two absolute quantities with a different reference: %s <> %s", getReference().getId(),
+                other.getReference().getId());
+        return Duration.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Time add(final Duration other)
+    {
+        return new Time(Duration.ofSi(si() + other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+    }
+
+    @Override
+    public Time subtract(final Duration other)
+    {
+        return new Time(Duration.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit()), getReference());
     }
 
     /**
-     * Calculate the division of Time and Time, which results in a Dimensionless quantity.
-     * @param v quantity
-     * @return quantity as a division of Time and Time
+     * The reference class to define a reference point for the time.
      */
-    public final Dimensionless divide(final Time v)
+    public static final class TimeReference implements Reference
     {
-        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
-    }
+        /** the list of possible reference points to use. */
+        private static Map<String, TimeReference> referenceList = new LinkedHashMap<>();
 
-    /******************************************************************************************************/
-    /********************************************** UNIT CLASS ********************************************/
-    /******************************************************************************************************/
+        /** Gregorian. */
+        public static final TimeReference GREGORIAN = new TimeReference("GREGORIAN", "Gregorian time origin (1-1-0000)");
 
-    /**
-     * Time.Unit encodes the absolute unit of time.<br>
-     * <br>
-     * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
-     * @author Alexander Verbraeck
-     */
-    public static class Unit extends AbstractUnit<Time.Unit, Time>
-    {
-        /** The dimensions of time: s. */
-        public static final SIUnit SI_UNIT = SIUnit.of("s");
+        /** Unix. */
+        public static final TimeReference UNIX = new TimeReference("UNIX", "UNIX epoch, 1-1-1970, 00:00 GMT");
 
-        /** second. */
-        public static final Time.Unit BASE_SECOND = new Time.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
+        /** GPS. */
+        public static final TimeReference GPS = new TimeReference("GPS", "GPS epoch, 6-1-1980");
 
-        /** The SI or BASE unit. */
-        public static final Time.Unit BASE = BASE_SECOND;
+        /** The id. */
+        private String id;
 
-        /** The base unit for time with an arbitrary "zero" point with a calculation in microseconds. */
-        public static final Time.Unit BASE_MICROSECOND =
-                BASE_SECOND.deriveUnit("mus", "\u03BCs", "microsecond", 1.0E-6, UnitSystem.SI_BASE);
-
-        /** The base unit for time with an arbitrary "zero" point with a calculation in milliseconds. */
-        public static final Time.Unit BASE_MILLISECOND =
-                BASE_SECOND.deriveUnit("ms", "millisecond", 1.0E-3, UnitSystem.SI_BASE);
-
-        /** The base unit for time with an arbitrary "zero" point with a calculation in minutes. */
-        public static final Time.Unit BASE_MINUTE = BASE_SECOND.deriveUnit("min", "minute", 60.0, UnitSystem.SI_DERIVED);
-
-        /** The base unit for time with an arbitrary "zero" point with a calculation in hours. */
-        public static final Time.Unit BASE_HOUR = BASE_SECOND.deriveUnit("h", "hour", 3600.0, UnitSystem.SI_DERIVED);
-
-        /** The base unit for time with an arbitrary "zero" point with a calculation in days. */
-        public static final Time.Unit BASE_DAY = BASE_SECOND.deriveUnit("day", "day", 24.0 * 3600.0, UnitSystem.SI_DERIVED);
-
-        /** The base unit for time with an arbitrary "zero" point with a calculation in weeks. */
-        public static final Time.Unit BASE_WEEK =
-                BASE_SECOND.deriveUnit("wk", "week", 7.0 * 24.0 * 3600.0, UnitSystem.SI_DERIVED);
+        /** The explanation. */
+        private String name;
 
         /**
-         * The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in seconds. The base should be taken
-         * in such a way that a resolution of a millisecond is still 'visible' on a date in, say, 2020. When 1-1-1970 is used as
-         * the origin, 1-1-2021 has a value of 1,577,836,800,000 milliseconds = 1.6E12 ms. If we want to be precise on the ms
-         * level, we need 12 significant digits. A float has around 7 significant digits (23 bit mantissa), whereas a double has
-         * around 16 significant digits (52 bit mantissa). This means that a float time with an offset of 1-1-1970 is at best
-         * precise to a minute level. A double time is precise to microseconds. Therefore, avoid using float times that use the
-         * EPOCH.
+         * Define a new reference point for the time.
+         * @param id the id
+         * @param name the name or explanation
          */
-        public static final Time.Unit EPOCH_SECOND =
-                BASE_SECOND.deriveUnit("s(Y1970)", "seconds since 1/1/70", 1.0, UnitSystem.OTHER);
-
-        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in microseconds. */
-        public static final Time.Unit EPOCH_MICROSECOND =
-                BASE_SECOND.deriveUnit("mus(Y1970)", "\u03BCs(Y1970)", "microseconds since 1/1/70", 1.0E-6, UnitSystem.SI_BASE);
-
-        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in milliseconds. */
-        public static final Time.Unit EPOCH_MILLISECOND =
-                BASE_SECOND.deriveUnit("ms(Y1970)", "milliseconds since 1/1/70", 1.0E-3, UnitSystem.OTHER);
-
-        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in minutes. */
-        public static final Time.Unit EPOCH_MINUTE =
-                BASE_SECOND.deriveUnit("min(Y1970)", "minutes since 1/1/70", 60.0, UnitSystem.OTHER);
-
-        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in hours. */
-        public static final Time.Unit EPOCH_HOUR =
-                BASE_SECOND.deriveUnit("h(Y1970)", "hours since 1/1/70", 3600.0, UnitSystem.OTHER);
-
-        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in days. */
-        public static final Time.Unit EPOCH_DAY =
-                BASE_SECOND.deriveUnit("day(Y1970)", "days since 1/1/70", 24.0 * 3600.0, UnitSystem.OTHER);
-
-        /** The POSIX and Gregorian Epoch: January 1, 1970 at 00:00 UTC with a calculation in weeks. */
-        public static final Time.Unit EPOCH_WEEK =
-                BASE_SECOND.deriveUnit("wk(Y1970)", "weeks since 1/1/70", 7.0 * 24.0 * 3600.0, UnitSystem.OTHER);
-
-        /**
-         * The Epoch with 0001-01-01 AD at 00:00 as the origin with a calculation in seconds. When 1-1-0001 is used as the
-         * origin, 1-1-2021 has a value of around 6.4E13 ms. If we want to be precise on the ms level, we need 13 significant
-         * digits. A float has around 7 significant digits (23 bit mantissa), whereas a double has around 16 significant digits
-         * (52 bit mantissa). This means that a float time with an offset of 1-1-0001 is at best precise to an hour level. A
-         * double time is precise to microseconds. Therefore, avoid using float times that use the EPOCH_YEAR1_SECOND.
-         */
-        public static final Time.Unit EPOCH_YEAR1_SECOND = new Time.Unit("s(Y1)", "s(Y1)", "seconds since 1-1-0001 00:00",
-                new OffsetLinearScale(1.0, new GregorianCalendar(1, 0, 1, 0, 0, 0).getTimeInMillis() / 1000.0),
-                UnitSystem.OTHER);
-
-        /**
-         * The Epoch with J2000.0 as the origin, which is The Gregorian date January 1, 2000 at 12:00 GMT (noon) with a
-         * calculation in seconds. When 1-1-2000 is used as the origin, 1-1-2021 has a value of around 6.3E11 ms. If we want to
-         * be precise on the ms level, we need 11 significant digits. A float has around 7 significant digits (23 bit mantissa),
-         * whereas a double has around 16 significant digits (52 bit mantissa). This means that a float time with an offset of
-         * 1-1-2000 is at best precise to a minute level. A double time is precise to fractions of microseconds. Therefore,
-         * avoid using float times that use the EPOCH_J2000_SECOND.
-         */
-        public static final Time.Unit EPOCH_J2000_SECOND =
-                new Time.Unit("s(Y2000)", "s(Y2000)", "seconds since 1-1-2000 12:00 GMT",
-                        new OffsetLinearScale(1.0, new GregorianCalendar(2000, 0, 1, 12, 0, 0).getTimeInMillis() / 1000.0),
-                        UnitSystem.OTHER);
-
-        /**
-         * Create a new Time unit.
-         * @param id the id or main abbreviation of the unit
-         * @param name the full name of the unit
-         * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
-         * @param unitSystem the unit system such as SI or IMPERIAL
-         */
-        public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
+        private TimeReference(final String id, final String name)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            this.id = id;
+            this.name = name;
+            referenceList.put(id, this);
         }
 
         /**
-         * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
-         * @param displayAbbreviation the display abbreviation of the unit
-         * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
-         * @param unitSystem unit system, e.g. SI or Imperial
+         * Define a new reference point for the time.
+         * @param id the id
+         * @param name the name or explanation
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+        public static void add(final String id, final String name)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            new TimeReference(id, name);
+        }
+
+        /**
+         * Get a reference point for the time, based on its id. Return null when the id could not be found.
+         * @param id the id
+         * @return the TimeReference object
+         */
+        public static TimeReference get(final String id)
+        {
+            return referenceList.get(id);
         }
 
         @Override
-        public SIUnit siUnit()
+        public String getId()
         {
-            return SI_UNIT;
+            return this.id;
         }
 
         @Override
-        public Unit getBaseUnit()
+        public String getName()
         {
-            return BASE;
+            return this.name;
         }
 
         @Override
-        public Time ofSi(final double si)
+        public int hashCode()
         {
-            return Time.ofSi(si);
+            return Objects.hash(this.id, this.name);
+        }
+
+        @SuppressWarnings("checkstyle:needbraces")
+        @Override
+        public boolean equals(final Object obj)
+        {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            TimeReference other = (TimeReference) obj;
+            return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public String toString()
         {
-            if (getScale() instanceof LinearScale ls)
-            {
-                return new Time.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
-            }
-            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
+            return this.id;
         }
-
     }
 }
