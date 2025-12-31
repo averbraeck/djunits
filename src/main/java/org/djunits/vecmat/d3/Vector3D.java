@@ -199,7 +199,7 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
     @Override
     public Q normLinf()
     {
-        return this.displayUnit.ofSi(Math2.absmax(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math2.maxAbs(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
