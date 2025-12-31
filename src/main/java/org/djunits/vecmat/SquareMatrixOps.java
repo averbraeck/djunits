@@ -75,11 +75,23 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
     M adjugate();
 
     /**
+     * Return whether the matrix is symmetric. Use a default tolerance of 1.0E-12 times the largest absolute si quantity.
+     * @return whether the matrix is symmetric
+     */
+    boolean isSymmetric();
+
+    /**
      * Return whether the matrix is symmetric, up to a tolerance.
      * @param tolerance the tolerance, expressed as a quantity
      * @return whether the matrix is symmetric
      */
     boolean isSymmetric(Q tolerance);
+
+    /**
+     * Return whether the matrix is skew symmetric. Use a default tolerance of 1.0E-12 times the largest absolute si quantity.
+     * @return whether the matrix is skew symmetric
+     */
+    boolean isSkewSymmetric();
 
     /**
      * Return whether the matrix is skew symmetric, up to a tolerance.
