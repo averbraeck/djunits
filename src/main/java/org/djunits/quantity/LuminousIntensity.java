@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class LuminousIntensity extends Quantity.Relative<LuminousIntensity, LuminousIntensity.Unit>
+public class LuminousIntensity extends Quantity<LuminousIntensity, LuminousIntensity.Unit>
 {
     /** Constant with value zero. */
     public static final LuminousIntensity ZERO = LuminousIntensity.ofSi(0.0);

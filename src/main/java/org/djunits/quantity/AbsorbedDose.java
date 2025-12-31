@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class AbsorbedDose extends Quantity.Relative<AbsorbedDose, AbsorbedDose.Unit>
+public class AbsorbedDose extends Quantity<AbsorbedDose, AbsorbedDose.Unit>
 {
     /** Constant with value zero. */
     public static final AbsorbedDose ZERO = AbsorbedDose.ofSi(0.0);

@@ -22,7 +22,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
+public class Frequency extends Quantity<Frequency, Frequency.Unit>
 {
     /** Constant with value zero. */
     public static final Frequency ZERO = Frequency.ofSi(0.0);

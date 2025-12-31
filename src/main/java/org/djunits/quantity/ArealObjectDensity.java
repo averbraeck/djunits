@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, ArealObjectDensity.Unit>
+public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObjectDensity.Unit>
 {
     /** Constant with value zero. */
     public static final ArealObjectDensity ZERO = ArealObjectDensity.ofSi(0.0);

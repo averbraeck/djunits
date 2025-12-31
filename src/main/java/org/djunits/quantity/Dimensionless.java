@@ -1,7 +1,6 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
@@ -14,7 +13,7 @@ import org.djunits.unit.si.SIUnit;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Dimensionless extends Quantity.Relative<Dimensionless, Unitless>
+public class Dimensionless extends Quantity<Dimensionless, Unitless>
 {
     /** Constant with value zero. */
     public static final Dimensionless ZERO = Dimensionless.ofSi(0.0);
@@ -128,21 +127,6 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Unitless>
     public final Dimensionless divide(final Dimensionless v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
-    }
-
-    /**
-     * Calculate the multiplication of Dimensionless and another quantity, which results in a new instance of the other
-     * quantity. A copy of the parameter v is made, since the display unit of a quantity is mutable.
-     * @param v quantity
-     * @return quantity as a multiplication of Dimensionless and the given quantity
-     * @param <VQ> the variable's quantity type
-     * @param <VU> the variable's unit type
-     */
-    public final <VQ extends Quantity<VQ, VU>, VU extends UnitInterface<VU, VQ>> VQ multiply(final VQ v)
-    {
-        VQ result = v.instantiate(v.si());
-        result.setDisplayUnit(v.getDisplayUnit());
-        return result;
     }
 
     /**

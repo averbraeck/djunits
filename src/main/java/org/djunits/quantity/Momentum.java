@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Momentum extends Quantity.Relative<Momentum, Momentum.Unit>
+public class Momentum extends Quantity<Momentum, Momentum.Unit>
 {
     /** Constant with value zero. */
     public static final Momentum ZERO = Momentum.ofSi(0.0);

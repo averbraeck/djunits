@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensity.Unit>
+public class LinearDensity extends Quantity<LinearDensity, LinearDensity.Unit>
 {
     /** Constant with value zero. */
     public static final LinearDensity ZERO = LinearDensity.ofSi(0.0);

@@ -19,7 +19,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class ElectricCharge extends Quantity.Relative<ElectricCharge, ElectricCharge.Unit>
+public class ElectricCharge extends Quantity<ElectricCharge, ElectricCharge.Unit>
 {
     /** Constant with value zero. */
     public static final ElectricCharge ZERO = ElectricCharge.ofSi(0.0);

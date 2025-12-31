@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitance, ElectricalCapacitance.Unit>
+public class ElectricalCapacitance extends Quantity<ElectricalCapacitance, ElectricalCapacitance.Unit>
 {
     /** Constant with value zero. */
     public static final ElectricalCapacitance ZERO = ElectricalCapacitance.ofSi(0.0);

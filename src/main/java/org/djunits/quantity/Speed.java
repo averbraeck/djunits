@@ -23,7 +23,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Speed extends Quantity.Relative<Speed, Speed.Unit>
+public class Speed extends Quantity<Speed, Speed.Unit>
 {
     /** Constant with value zero. */
     public static final Speed ZERO = Speed.ofSi(0.0);

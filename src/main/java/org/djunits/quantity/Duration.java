@@ -24,7 +24,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  */
 
-public class Duration extends Quantity.Relative<Duration, Duration.Unit>
+public class Duration extends Quantity<Duration, Duration.Unit>
 {
     /** Constant with value zero. */
     public static final Duration ZERO = Duration.ofSi(0.0);

@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
+public class Pressure extends Quantity<Pressure, Pressure.Unit>
 {
     /** Constant with value zero. */
     public static final Pressure ZERO = Pressure.ofSi(0.0);

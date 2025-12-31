@@ -19,7 +19,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class ElectricalConductance extends Quantity.Relative<ElectricalConductance, ElectricalConductance.Unit>
+public class ElectricalConductance extends Quantity<ElectricalConductance, ElectricalConductance.Unit>
 {
     /** Constant with value zero. */
     public static final ElectricalConductance ZERO = ElectricalConductance.ofSi(0.0);

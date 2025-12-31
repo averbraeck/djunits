@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Power extends Quantity.Relative<Power, Power.Unit>
+public class Power extends Quantity<Power, Power.Unit>
 {
     /** Constant with value zero. */
     public static final Power ZERO = Power.ofSi(0.0);

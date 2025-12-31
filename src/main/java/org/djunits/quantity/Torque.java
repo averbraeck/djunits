@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Torque extends Quantity.Relative<Torque, Torque.Unit>
+public class Torque extends Quantity<Torque, Torque.Unit>
 {
     /** Constant with value zero. */
     public static final Torque ZERO = Torque.ofSi(0.0);
