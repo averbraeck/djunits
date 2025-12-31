@@ -11,7 +11,6 @@ import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.djunits.quantity.AbsoluteTemperature;
 import org.djunits.quantity.AbsorbedDose;
 import org.djunits.quantity.Acceleration;
 import org.djunits.quantity.AmountOfSubstance;
@@ -22,7 +21,6 @@ import org.djunits.quantity.Area;
 import org.djunits.quantity.ArealObjectDensity;
 import org.djunits.quantity.CatalyticActivity;
 import org.djunits.quantity.Density;
-import org.djunits.quantity.Direction;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.ElectricCharge;
 import org.djunits.quantity.ElectricCurrent;
@@ -47,14 +45,12 @@ import org.djunits.quantity.MagneticFlux;
 import org.djunits.quantity.MagneticFluxDensity;
 import org.djunits.quantity.Mass;
 import org.djunits.quantity.Momentum;
-import org.djunits.quantity.Position;
 import org.djunits.quantity.Power;
 import org.djunits.quantity.Pressure;
 import org.djunits.quantity.RadioActivity;
 import org.djunits.quantity.SolidAngle;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.Temperature;
-import org.djunits.quantity.Time;
 import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
 import org.djunits.quantity.VolumetricObjectDensity;
@@ -494,7 +490,6 @@ public final class Units
      */
     public static void registerStandardUnits()
     {
-        AbsoluteTemperature.Unit.SI_UNIT.isFractional();
         AbsorbedDose.Unit.SI_UNIT.isFractional();
         Acceleration.Unit.SI_UNIT.isFractional();
         AmountOfSubstance.Unit.SI_UNIT.isFractional();
@@ -506,7 +501,6 @@ public final class Units
         CatalyticActivity.Unit.SI_UNIT.isFractional();
         Density.Unit.SI_UNIT.isFractional();
         Unitless.BASE.getBaseUnit().getScale().isBaseScale();
-        Direction.Unit.DEFAULT.getBaseUnit().getScale().isBaseScale();
         Duration.Unit.SI_UNIT.isFractional();
         ElectricalCapacitance.Unit.SI_UNIT.isFractional();
         ElectricalConductance.Unit.SI_UNIT.isFractional();
@@ -531,14 +525,12 @@ public final class Units
         MagneticFluxDensity.Unit.SI_UNIT.isFractional();
         Mass.Unit.SI_UNIT.isFractional();
         Momentum.Unit.SI_UNIT.isFractional();
-        Position.Unit.SI_UNIT.isFractional();
         Power.Unit.SI_UNIT.isFractional();
         Pressure.Unit.SI_UNIT.isFractional();
         RadioActivity.Unit.SI_UNIT.isFractional();
         SolidAngle.Unit.SI_UNIT.isFractional();
         Speed.Unit.SI_UNIT.isFractional();
         Temperature.Unit.SI_UNIT.isFractional();
-        Time.Unit.SI_UNIT.isFractional();
         Torque.Unit.SI_UNIT.isFractional();
         Volume.Unit.SI_UNIT.isFractional();
         VolumetricObjectDensity.Unit.SI_UNIT.isFractional();
