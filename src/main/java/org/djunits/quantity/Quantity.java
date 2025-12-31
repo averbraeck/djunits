@@ -157,24 +157,6 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         return instantiate(unit.toBaseValue(value)).setDisplayUnit(unit);
     }
 
-    /**
-     * Return the quantity 'as' a known quantity, using a unit to express the result in. Throw a Runtime exception when the
-     * SI units of this quantity and the target quantity do not match.
-     * @param targetUnit the unit to convert the quantity to
-     * @return a quantity typed in the target quantity class
-     * @throws ClassCastException when the units do not match
-     * @param <TQ> target quantity type
-     * @param <TU> target unit type
-     */
-    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> TQ as(final TU targetUnit)
-            throws ClassCastException
-    {
-        Throw.when(!siUnit().equals(targetUnit.siUnit()), ClassCastException.class,
-                "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit, siUnit().getDisplayAbbreviation(),
-                targetUnit.siUnit().getDisplayAbbreviation());
-        return targetUnit.ofSi(si()).setDisplayUnit(targetUnit);
-    }
-
     /**********************************************************************************/
     /********************************* NUMBER METHODS *********************************/
     /**********************************************************************************/
@@ -756,7 +738,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
          * @param quantity the quantity to multiply with
          * @return the multiplication of this quantity and the given quantity
          */
-        public SIQuantity multiply(final Quantity<?, ?> quantity)
+        public SIQuantity multiply(final Quantity.Relative<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(siUnit(), quantity.siUnit());
             return new SIQuantity(si() * quantity.si(), siUnit);
@@ -767,7 +749,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
          * @param quantity the quantity to divide by
          * @return the division of this quantity and the given quantity
          */
-        public SIQuantity divide(final Quantity<?, ?> quantity)
+        public SIQuantity divide(final Quantity.Relative<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.subtract(siUnit(), quantity.siUnit());
             return new SIQuantity(si() / quantity.si(), siUnit);
@@ -777,9 +759,27 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
          * Return the reciprocal of this quantity (1/q).
          * @return the reciprocal of this quantity, with the correct SI units
          */
-        public Quantity<?, ?> reciprocal()
+        public Quantity.Relative<?, ?> reciprocal()
         {
             return new SIQuantity(1.0 / si(), this.siUnit().invert());
+        }
+
+        /**
+         * Return the quantity 'as' a known quantity, using a unit to express the result in. Throw a Runtime exception when the
+         * SI units of this quantity and the target quantity do not match.
+         * @param targetUnit the unit to convert the quantity to
+         * @return a quantity typed in the target quantity class
+         * @throws ClassCastException when the units do not match
+         * @param <TQ> target quantity type
+         * @param <TU> target unit type
+         */
+        public <TQ extends Quantity.Relative<TQ, TU>, TU extends UnitInterface<TU, TQ>> TQ as(final TU targetUnit)
+                throws ClassCastException
+        {
+            Throw.when(!siUnit().equals(targetUnit.siUnit()), ClassCastException.class,
+                    "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit, siUnit().getDisplayAbbreviation(),
+                    targetUnit.siUnit().getDisplayAbbreviation());
+            return targetUnit.ofSi(si()).setDisplayUnit(targetUnit);
         }
 
         @Override
