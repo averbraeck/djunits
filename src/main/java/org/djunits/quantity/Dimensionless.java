@@ -1,5 +1,6 @@
 package org.djunits.quantity;
 
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;

@@ -1,9 +1,10 @@
-package org.djunits.quantity;
+package org.djunits.quantity.def;
 
 import java.util.Locale;
 import java.util.Objects;
 
 import org.djunits.formatter.Format;
+import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIPrefixes;

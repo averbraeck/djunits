@@ -1,6 +1,6 @@
 package org.djunits.vecmat;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 
 /**

@@ -2,7 +2,7 @@ package org.djunits.unit;
 
 import java.util.Objects;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;

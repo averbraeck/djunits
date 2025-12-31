@@ -2,7 +2,7 @@ package org.djunits.vecmat.d3;
 
 import java.util.Objects;
 
-import org.djunits.quantity.Quantity;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitInterface;
 import org.djunits.util.Math2;

@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import java.util.Locale;
 
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
