@@ -158,7 +158,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Torque and LinearObjectDensity
      */
-    public final Force times(final LinearObjectDensity v)
+    public final Force multiply(final LinearObjectDensity v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -188,7 +188,7 @@ public class Torque extends Quantity.Relative<Torque, Torque.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Torque and Frequency
      */
-    public final Power times(final Frequency v)
+    public final Power multiply(final Frequency v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

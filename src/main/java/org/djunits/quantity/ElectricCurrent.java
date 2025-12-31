@@ -138,7 +138,7 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCurrent and ElectricalPotential
      */
-    public final Power times(final ElectricPotential v)
+    public final Power multiply(final ElectricPotential v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -148,7 +148,7 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCurrent and Duration
      */
-    public final ElectricCharge times(final Duration v)
+    public final ElectricCharge multiply(final Duration v)
     {
         return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
     }
@@ -159,7 +159,7 @@ public class ElectricCurrent extends Quantity.Relative<ElectricCurrent, Electric
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCurrent and ElectricalResistance
      */
-    public final ElectricPotential times(final ElectricalResistance v)
+    public final ElectricPotential multiply(final ElectricalResistance v)
     {
         return new ElectricPotential(this.si() * v.si(), ElectricPotential.Unit.SI);
     }

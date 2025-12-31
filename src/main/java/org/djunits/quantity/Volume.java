@@ -162,7 +162,7 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Volume and Density
      */
-    public final Mass times(final Density v)
+    public final Mass multiply(final Density v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -172,7 +172,7 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Volume and Pressure
      */
-    public final Energy times(final Pressure v)
+    public final Energy multiply(final Pressure v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -202,7 +202,7 @@ public class Volume extends Quantity.Relative<Volume, Volume.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Volume and LinearObjectDensity
      */
-    public final Area times(final LinearObjectDensity v)
+    public final Area multiply(final LinearObjectDensity v)
     {
         return new Area(this.si() * v.si(), Area.Unit.SI);
     }

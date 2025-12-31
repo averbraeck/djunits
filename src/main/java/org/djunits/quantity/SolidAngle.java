@@ -138,7 +138,7 @@ public class SolidAngle extends Quantity.Relative<SolidAngle, SolidAngle.Unit>
      * @param v scalar
      * @return scalar as a multiplication of SolidAngle and LuminousIntensity
      */
-    public final LuminousFlux times(final LuminousIntensity v)
+    public final LuminousFlux multiply(final LuminousIntensity v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

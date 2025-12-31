@@ -132,7 +132,7 @@ public class VolumetricObjectDensity extends Quantity.Relative<VolumetricObjectD
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code volume} is {@code null}.
      */
-    public final Dimensionless times(final Volume volume)
+    public final Dimensionless multiply(final Volume volume)
     {
         return new Dimensionless(this.si() * volume.si(), Unitless.BASE);
     }
@@ -146,7 +146,7 @@ public class VolumetricObjectDensity extends Quantity.Relative<VolumetricObjectD
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code area} is {@code null}.
      */
-    public final LinearObjectDensity times(final Area area)
+    public final LinearObjectDensity multiply(final Area area)
     {
         return new LinearObjectDensity(this.si() * area.si(), LinearObjectDensity.Unit.SI);
     }
@@ -160,7 +160,7 @@ public class VolumetricObjectDensity extends Quantity.Relative<VolumetricObjectD
      * @return the resulting areal object density in SI (1/m²).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final ArealObjectDensity times(final Length length)
+    public final ArealObjectDensity multiply(final Length length)
     {
         return new ArealObjectDensity(this.si() * length.si(), ArealObjectDensity.Unit.SI);
     }

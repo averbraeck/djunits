@@ -146,7 +146,7 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code area} is {@code null}.
      */
-    public final Dimensionless times(final Area area)
+    public final Dimensionless multiply(final Area area)
     {
         return new Dimensionless(this.si() * area.si(), Unitless.BASE);
     }
@@ -160,7 +160,7 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final LinearObjectDensity times(final Length length)
+    public final LinearObjectDensity multiply(final Length length)
     {
         return new LinearObjectDensity(this.si() * length.si(), LinearObjectDensity.Unit.SI);
     }

@@ -139,7 +139,7 @@ public class CatalyticActivity extends Quantity.Relative<CatalyticActivity, Cata
      * @param v scalar
      * @return scalar as a multiplication of CatalyticActivity and Duration
      */
-    public final AmountOfSubstance times(final Duration v)
+    public final AmountOfSubstance multiply(final Duration v)
     {
         return new AmountOfSubstance(this.si() * v.si(), AmountOfSubstance.Unit.SI);
     }

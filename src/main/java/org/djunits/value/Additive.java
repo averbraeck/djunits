@@ -22,14 +22,14 @@ public interface Additive<T extends Additive<T>>
      * @param other the element to add to this element
      * @return the sum of the SI-values of this element and the SI-values of the other element
      */
-    T plus(T other);
+    T add(T other);
 
     /**
      * Subtract an element from this element, based on the SI-values.
      * @param other the element to subtract from this element
      * @return a new element with the SI-values of this element minus the SI-values of the other element
      */
-    T minus(T other);
+    T subtract(T other);
 
     /**
      * Negate this element, based on the SI-values. Note that this can lead to unwanted effects for elements with Offset scales.

@@ -704,13 +704,13 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         }
 
         @Override
-        public R plus(final R increment)
+        public R add(final R increment)
         {
             return instantiate(si() + increment.si()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public R minus(final R decrement)
+        public R subtract(final R decrement)
         {
             return instantiate(si() - decrement.si()).setDisplayUnit(getDisplayUnit());
         }
@@ -728,7 +728,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         }
 
         @Override
-        public R scale(final double factor)
+        public R scaleBy(final double factor)
         {
             return instantiate(si() * factor).setDisplayUnit(getDisplayUnit());
         }

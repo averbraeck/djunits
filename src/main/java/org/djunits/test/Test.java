@@ -50,8 +50,8 @@ public final class Test
 
         Length l4 = new Length(Math.PI, "mum");
         System.out.println(l4);
-        System.out.println(l4.plus(length));
-        System.out.println(length.plus(l4));
+        System.out.println(l4.add(length));
+        System.out.println(length.add(l4));
     }
 
     /** */

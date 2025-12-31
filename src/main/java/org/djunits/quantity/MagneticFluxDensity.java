@@ -138,7 +138,7 @@ public class MagneticFluxDensity extends Quantity.Relative<MagneticFluxDensity, 
      * @param v scalar
      * @return scalar as a multiplication of MagneticFluxDensity and Area
      */
-    public final MagneticFlux times(final Area v)
+    public final MagneticFlux multiply(final Area v)
     {
         return new MagneticFlux(this.si() * v.si(), MagneticFlux.Unit.SI);
     }

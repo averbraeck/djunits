@@ -162,7 +162,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * @param v quantity
      * @return quantity as a multiplication of Length and LinearObjectDensity
      */
-    public final Dimensionless times(final LinearObjectDensity v)
+    public final Dimensionless multiply(final LinearObjectDensity v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -172,7 +172,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * @param v quantity
      * @return quantity as a multiplication of Length and Length
      */
-    public final Area times(final Length v)
+    public final Area multiply(final Length v)
     {
         return new Area(this.si() * v.si(), Area.Unit.SI);
     }
@@ -202,7 +202,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * @param v quantity
      * @return quantity as a multiplication of Length and Area
      */
-    public final Volume times(final Area v)
+    public final Volume multiply(final Area v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -212,7 +212,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * @param v quantity
      * @return quantity as a multiplication of Length and Force
      */
-    public final Energy times(final Force v)
+    public final Energy multiply(final Force v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -222,7 +222,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * @param v quantity
      * @return quantity as a multiplication of Length and Frequency
      */
-    public final Speed times(final Frequency v)
+    public final Speed multiply(final Frequency v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -252,7 +252,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      * @param v quantity
      * @return quantity as a multiplication of Length and FlowMass
      */
-    public final Momentum times(final FlowMass v)
+    public final Momentum multiply(final FlowMass v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }

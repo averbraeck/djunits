@@ -158,7 +158,7 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Energy and LinearDensity
      */
-    public final Force times(final LinearObjectDensity v)
+    public final Force multiply(final LinearObjectDensity v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -208,7 +208,7 @@ public class Energy extends Quantity.Relative<Energy, Energy.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Energy and Frequency
      */
-    public final Power times(final Frequency v)
+    public final Power multiply(final Frequency v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

@@ -148,7 +148,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Area and Length
      */
-    public final Volume times(final Length v)
+    public final Volume multiply(final Length v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -188,7 +188,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Area and LinearObjectDensity
      */
-    public final Length times(final LinearObjectDensity v)
+    public final Length multiply(final LinearObjectDensity v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -198,7 +198,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Area and Speed
      */
-    public final FlowVolume times(final Speed v)
+    public final FlowVolume multiply(final Speed v)
     {
         return new FlowVolume(this.si() * v.si(), FlowVolume.Unit.SI);
     }
@@ -208,7 +208,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Area and Pressure
      */
-    public final Force times(final Pressure v)
+    public final Force multiply(final Pressure v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -218,7 +218,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Area and Illuminance
      */
-    public final LuminousFlux times(final Illuminance v)
+    public final LuminousFlux multiply(final Illuminance v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

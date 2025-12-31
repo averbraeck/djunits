@@ -138,7 +138,7 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
      * @param v scalar
      * @return scalar as a multiplication of Acceleration and Mass
      */
-    public final Force times(final Mass v)
+    public final Force multiply(final Mass v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -148,7 +148,7 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
      * @param v scalar
      * @return scalar as a multiplication of Acceleration and Duration
      */
-    public final Speed times(final Duration v)
+    public final Speed multiply(final Duration v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -178,7 +178,7 @@ public class Acceleration extends Quantity.Relative<Acceleration, Acceleration.U
      * @param v scalar
      * @return scalar as a multiplication of Acceleration and Momentum
      */
-    public final Power times(final Momentum v)
+    public final Power multiply(final Momentum v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

@@ -146,19 +146,19 @@ public abstract class Vector3D<Q extends Quantity<Q, U>, U extends UnitInterface
     }
 
     @Override
-    public V scale(final double factor)
+    public V scaleBy(final double factor)
     {
         return instantiate(this.xSi * factor, this.ySi * factor, this.zSi * factor);
     }
 
     @Override
-    public V plus(final V other)
+    public V add(final V other)
     {
         return instantiate(this.xSi + other.xSi(), this.ySi + other.ySi(), this.zSi + other.zSi());
     }
 
     @Override
-    public V minus(final V other)
+    public V subtract(final V other)
     {
         return instantiate(this.xSi - other.xSi(), this.ySi - other.ySi(), this.zSi - other.zSi());
     }

@@ -178,7 +178,7 @@ public class Momentum extends Quantity.Relative<Momentum, Momentum.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Momentum and Speed
      */
-    public final Energy times(final Speed v)
+    public final Energy multiply(final Speed v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -188,7 +188,7 @@ public class Momentum extends Quantity.Relative<Momentum, Momentum.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Momentum and Acceleration
      */
-    public final Power times(final Acceleration v)
+    public final Power multiply(final Acceleration v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

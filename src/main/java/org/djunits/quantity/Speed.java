@@ -163,7 +163,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Area
      */
-    public final FlowVolume times(final Area v)
+    public final FlowVolume multiply(final Area v)
     {
         return new FlowVolume(this.si() * v.si(), FlowVolume.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Force
      */
-    public final Power times(final Force v)
+    public final Power multiply(final Force v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Frequency
      */
-    public final Acceleration times(final Frequency v)
+    public final Acceleration multiply(final Frequency v)
     {
         return new Acceleration(this.si() * v.si(), Acceleration.Unit.SI);
     }
@@ -213,7 +213,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and LinearObjectDensity
      */
-    public final Frequency times(final LinearObjectDensity v)
+    public final Frequency multiply(final LinearObjectDensity v)
     {
         return new Frequency(this.si() * v.si(), Frequency.Unit.SI);
     }
@@ -223,7 +223,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Duration
      */
-    public final Length times(final Duration v)
+    public final Length multiply(final Duration v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -253,7 +253,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and FlowMass
      */
-    public final Force times(final FlowMass v)
+    public final Force multiply(final FlowMass v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -263,7 +263,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Mass
      */
-    public final Momentum times(final Mass v)
+    public final Momentum multiply(final Mass v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }
@@ -273,7 +273,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Momentum
      */
-    public final Energy times(final Momentum v)
+    public final Energy multiply(final Momentum v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }

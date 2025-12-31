@@ -138,7 +138,7 @@ public class Illuminance extends Quantity.Relative<Illuminance, Illuminance.Unit
      * @param v scalar
      * @return scalar as a multiplication of Illuminance and Area
      */
-    public final LuminousFlux times(final Area v)
+    public final LuminousFlux multiply(final Area v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

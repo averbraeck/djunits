@@ -140,7 +140,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and ElectricalConductance
      */
-    public final Dimensionless times(final ElectricalConductance v)
+    public final Dimensionless multiply(final ElectricalConductance v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -150,7 +150,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and ElectricCurrent
      */
-    public final ElectricPotential times(final ElectricCurrent v)
+    public final ElectricPotential multiply(final ElectricCurrent v)
     {
         return new ElectricPotential(this.si() * v.si(), ElectricPotential.Unit.SI);
     }
@@ -160,7 +160,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and Duration
      */
-    public final ElectricalInductance times(final Duration v)
+    public final ElectricalInductance multiply(final Duration v)
     {
         return new ElectricalInductance(this.si() * v.si(), ElectricalInductance.Unit.SI);
     }

@@ -138,7 +138,7 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
      * @param v scalar
      * @return scalar as a multiplication of FlowMass and Duration
      */
-    public final Mass times(final Duration v)
+    public final Mass multiply(final Duration v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -168,7 +168,7 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
      * @param v scalar
      * @return scalar as a multiplication of FlowMass and Speed
      */
-    public final Force times(final Speed v)
+    public final Force multiply(final Speed v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -198,7 +198,7 @@ public class FlowMass extends Quantity.Relative<FlowMass, FlowMass.Unit>
      * @param v scalar
      * @return scalar as a multiplication of FlowMass and Length
      */
-    public final Momentum times(final Length v)
+    public final Momentum multiply(final Length v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }

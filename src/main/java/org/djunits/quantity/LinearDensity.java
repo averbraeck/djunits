@@ -170,7 +170,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
      * @return the resulting mass in SI (kg).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final Mass times(final Length length)
+    public final Mass multiply(final Length length)
     {
         return new Mass(this.si() * length.si(), Mass.Unit.SI);
     }
@@ -184,7 +184,7 @@ public class LinearDensity extends Quantity.Relative<LinearDensity, LinearDensit
      * @return the resulting mass flow in SI (kg/s).
      * @throws NullPointerException if {@code speed} is {@code null}.
      */
-    public final FlowMass times(final Speed speed)
+    public final FlowMass multiply(final Speed speed)
     {
         return new FlowMass(this.si() * speed.si(), FlowMass.Unit.SI);
     }

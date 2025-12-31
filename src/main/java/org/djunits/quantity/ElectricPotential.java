@@ -139,7 +139,7 @@ public class ElectricPotential extends Quantity.Relative<ElectricPotential, Elec
      * @param v scalar
      * @return scalar as a multiplication of ElectricPotential and ElectricCurrent
      */
-    public final Power times(final ElectricCurrent v)
+    public final Power multiply(final ElectricCurrent v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

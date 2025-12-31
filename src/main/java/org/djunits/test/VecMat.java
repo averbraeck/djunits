@@ -51,12 +51,12 @@ public class VecMat
         var v3 = Vector2D.Col.of(20, 30, Length.Unit.FOOT);
         System.out.println("\n" + v2);
         System.out.println(v3);
-        System.out.println(v2.plus(v3));
+        System.out.println(v2.add(v3));
         var v4 = Vector2D.Col.of(10, 20, Mass.Unit.GRAM);
         // This does not compile: System.out.println(v2.plus(v4));
         var v5 = Vector2D.Row.of(10, 20, Mass.Unit.POUND);
         // This does not compile: System.out.println(v4.plus(v5));
-        System.out.println(v4.plus(v5.transpose()));
+        System.out.println(v4.add(v5.transpose()));
         System.out.format("%nnorm L1 of %s is %s%n", v4, v4.normL1());
         System.out.format("norm L2 of %s is %s%n", v4, v4.normL2());
         System.out.format("norm Lp=2 of %s is %s%n", v4, v4.normLp(2));
@@ -65,7 +65,7 @@ public class VecMat
         System.out.println("\n\nMatrices");
         var mat = Matrix2D.of(new double[][] {{1.0, 2.0}, {5.0, 4.0}}, Duration.Unit.SECOND);
         System.out.println("matrix:\n" + mat);
-        System.out.println("\nmatrix + matrix:\n" + mat.plus(mat));
+        System.out.println("\nmatrix + matrix:\n" + mat.add(mat));
         System.out.println("\nmatrix + 1 day:\n" + mat.plus(Duration.of(1.0, "day")));
         System.out.println("\ndeterminant: " + mat.determinant());
         try

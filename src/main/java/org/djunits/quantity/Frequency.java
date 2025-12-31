@@ -162,7 +162,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Duration
      */
-    public final Dimensionless times(final Duration v)
+    public final Dimensionless multiply(final Duration v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -172,7 +172,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Length
      */
-    public final Speed times(final Length v)
+    public final Speed multiply(final Length v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -182,7 +182,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Speed
      */
-    public final Acceleration times(final Speed v)
+    public final Acceleration multiply(final Speed v)
     {
         return new Acceleration(this.si() * v.si(), Acceleration.Unit.SI);
     }
@@ -192,7 +192,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Energy
      */
-    public final Power times(final Energy v)
+    public final Power multiply(final Energy v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -202,7 +202,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Angle
      */
-    public final AngularVelocity times(final Angle v)
+    public final AngularVelocity multiply(final Angle v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }
@@ -212,7 +212,7 @@ public class Frequency extends Quantity.Relative<Frequency, Frequency.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and AngularVelocity
      */
-    public final AngularAcceleration times(final AngularVelocity v)
+    public final AngularAcceleration multiply(final AngularVelocity v)
     {
         return new AngularAcceleration(this.si() * v.si(), AngularAcceleration.Unit.SI);
     }

@@ -138,7 +138,7 @@ public class Power extends Quantity.Relative<Power, Power.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Power and Duration
      */
-    public final Energy times(final Duration v)
+    public final Energy multiply(final Duration v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }

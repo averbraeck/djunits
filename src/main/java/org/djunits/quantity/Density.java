@@ -138,7 +138,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Density and Volume
      */
-    public final Mass times(final Volume v)
+    public final Mass multiply(final Volume v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -148,7 +148,7 @@ public class Density extends Quantity.Relative<Density, Density.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Density and FlowVolume
      */
-    public final FlowMass times(final FlowVolume v)
+    public final FlowMass multiply(final FlowVolume v)
     {
         return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
     }

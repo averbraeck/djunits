@@ -137,7 +137,7 @@ public class Dimensionless extends Quantity.Relative<Dimensionless, Unitless>
      * @param <VQ> the variable's quantity type
      * @param <VU> the variable's unit type
      */
-    public final <VQ extends Quantity<VQ, VU>, VU extends UnitInterface<VU, VQ>> VQ times(final VQ v)
+    public final <VQ extends Quantity<VQ, VU>, VU extends UnitInterface<VU, VQ>> VQ multiply(final VQ v)
     {
         VQ result = v.instantiate(v.si());
         result.setDisplayUnit(v.getDisplayUnit());

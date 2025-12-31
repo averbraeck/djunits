@@ -139,7 +139,7 @@ public class AngularAcceleration extends Quantity.Relative<AngularAcceleration, 
      * @param v scalar
      * @return scalar as a multiplication of AngularAcceleration and Duration
      */
-    public final AngularVelocity times(final Duration v)
+    public final AngularVelocity multiply(final Duration v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }

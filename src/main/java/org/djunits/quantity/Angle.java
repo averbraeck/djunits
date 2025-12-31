@@ -140,7 +140,7 @@ public class Angle extends Quantity.Relative<Angle, Angle.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Angle and Frequency
      */
-    public final AngularVelocity times(final Frequency v)
+    public final AngularVelocity multiply(final Frequency v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }

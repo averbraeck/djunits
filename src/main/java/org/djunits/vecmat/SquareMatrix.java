@@ -126,19 +126,19 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     @Override
-    public M scale(final double factor)
+    public M scaleBy(final double factor)
     {
         return instantiate(ArrayMath.scale(this.aSi, factor));
     }
 
     @Override
-    public M plus(final M other)
+    public M add(final M other)
     {
         return instantiate(ArrayMath.add(this.aSi, other.si()));
     }
 
     @Override
-    public M minus(final M other)
+    public M subtract(final M other)
     {
         return instantiate(ArrayMath.subtract(this.aSi, other.si()));
     }
@@ -146,7 +146,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @Override
     public M negate()
     {
-        return scale(-1.0);
+        return scaleBy(-1.0);
     }
 
     @Override

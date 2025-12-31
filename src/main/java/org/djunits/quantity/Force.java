@@ -138,7 +138,7 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Force and Length
      */
-    public final Energy times(final Length v)
+    public final Energy multiply(final Length v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -168,7 +168,7 @@ public class Force extends Quantity.Relative<Force, Force.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Force and Speed
      */
-    public final Power times(final Speed v)
+    public final Power multiply(final Speed v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

@@ -138,7 +138,7 @@ public class ElectricalCapacitance extends Quantity.Relative<ElectricalCapacitan
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCapacitance and ElectricPotential
      */
-    public final ElectricCharge times(final ElectricPotential v)
+    public final ElectricCharge multiply(final ElectricPotential v)
     {
         return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
     }

@@ -138,7 +138,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
      * @param v scalar
      * @return scalar as a multiplication of FlowVolume and Duration
      */
-    public final Volume times(final Duration v)
+    public final Volume multiply(final Duration v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -188,7 +188,7 @@ public class FlowVolume extends Quantity.Relative<FlowVolume, FlowVolume.Unit>
      * @param v scalar
      * @return scalar as a multiplication of FlowVolume and Density
      */
-    public final FlowMass times(final Density v)
+    public final FlowMass multiply(final Density v)
     {
         return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
     }

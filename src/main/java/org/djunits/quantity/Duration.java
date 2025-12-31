@@ -164,7 +164,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricCurrent
      */
-    public final ElectricCharge times(final ElectricCurrent v)
+    public final ElectricCharge multiply(final ElectricCurrent v)
     {
         return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
     }
@@ -174,7 +174,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and FlowMass
      */
-    public final Mass times(final FlowMass v)
+    public final Mass multiply(final FlowMass v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -184,7 +184,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and FlowVolume
      */
-    public final Volume times(final FlowVolume v)
+    public final Volume multiply(final FlowVolume v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -194,7 +194,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and Acceleration
      */
-    public final Speed times(final Acceleration v)
+    public final Speed multiply(final Acceleration v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -204,7 +204,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and Power
      */
-    public final Energy times(final Power v)
+    public final Energy multiply(final Power v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -214,7 +214,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and Speed
      */
-    public final Length times(final Speed v)
+    public final Length multiply(final Speed v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -224,7 +224,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricPotential
      */
-    public final MagneticFlux times(final ElectricPotential v)
+    public final MagneticFlux multiply(final ElectricPotential v)
     {
         return new MagneticFlux(this.si() * v.si(), MagneticFlux.Unit.SI);
     }
@@ -234,7 +234,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricalResistance
      */
-    public final ElectricalInductance times(final ElectricalResistance v)
+    public final ElectricalInductance multiply(final ElectricalResistance v)
     {
         return new ElectricalInductance(this.si() * v.si(), ElectricalInductance.Unit.SI);
     }
@@ -244,7 +244,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricalConductance
      */
-    public final ElectricalCapacitance times(final ElectricalConductance v)
+    public final ElectricalCapacitance multiply(final ElectricalConductance v)
     {
         return new ElectricalCapacitance(this.si() * v.si(), ElectricalCapacitance.Unit.SI);
     }
@@ -254,7 +254,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and AngularVelocity
      */
-    public final Angle times(final AngularVelocity v)
+    public final Angle multiply(final AngularVelocity v)
     {
         return new Angle(this.si() * v.si(), Angle.Unit.SI);
     }
@@ -264,7 +264,7 @@ public class Duration extends Quantity.Relative<Duration, Duration.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Duration and AngularAcceleration
      */
-    public final AngularVelocity times(final AngularAcceleration v)
+    public final AngularVelocity multiply(final AngularAcceleration v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }

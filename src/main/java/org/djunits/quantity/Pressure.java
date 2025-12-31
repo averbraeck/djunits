@@ -138,7 +138,7 @@ public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Pressure and Area
      */
-    public final Force times(final Area v)
+    public final Force multiply(final Area v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -148,7 +148,7 @@ public class Pressure extends Quantity.Relative<Pressure, Pressure.Unit>
      * @param v scalar
      * @return scalar as a multiplication of Pressure and Volume
      */
-    public final Energy times(final Volume v)
+    public final Energy multiply(final Volume v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
