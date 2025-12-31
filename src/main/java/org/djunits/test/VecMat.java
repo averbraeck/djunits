@@ -3,6 +3,7 @@ package org.djunits.test;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Mass;
+import org.djunits.quantity.Speed;
 import org.djunits.vecmat.d2.Matrix2D;
 import org.djunits.vecmat.d2.Vector2D;
 
@@ -16,14 +17,39 @@ import org.djunits.vecmat.d2.Vector2D;
  */
 public class VecMat
 {
+    /** */
+    private static void as1()
+    {
+        var l1 = Length.of(1.0, "km");
+        var m1 = Mass.of(1.0, "kg");
+        System.out.println(l1 + " * " + m1 + " = " + l1.multiply(m1));
+        System.out.println(l1 + " / " + m1 + " = " + l1.divide(m1));
+        var q = Duration.of(1.0, "h").divide(l1).reciprocal();
+        var speed = q.as(Speed.Unit.METER_PER_SECOND);
+        System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());        
+    }
+
+    /** */
+    private static void as2()
+    {
+        var l1 = Length.of(1.0, "km");
+        var q = Duration.of(1.0, "h").divide(l1);
+        // var speed = q.as(Speed.Unit.METER_PER_SECOND);
+        var speed = q.reciprocal().as(Speed.Unit.METER_PER_SECOND);
+        System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());
+    }
+
     /**
      * @param args not used
      */
     public static void main(final String[] args)
     {
+        as1();
+        as2();
+       
         var v2 = Vector2D.Col.of(10, 20, Length.Unit.METER);
         var v3 = Vector2D.Col.of(20, 30, Length.Unit.FOOT);
-        System.out.println(v2);
+        System.out.println("\n" + v2);
         System.out.println(v3);
         System.out.println(v2.plus(v3));
         var v4 = Vector2D.Col.of(10, 20, Mass.Unit.GRAM);
@@ -31,7 +57,7 @@ public class VecMat
         var v5 = Vector2D.Row.of(10, 20, Mass.Unit.POUND);
         // This does not compile: System.out.println(v4.plus(v5));
         System.out.println(v4.plus(v5.transpose()));
-        System.out.format("norm L1 of %s is %s%n", v4, v4.normL1());
+        System.out.format("%nnorm L1 of %s is %s%n", v4, v4.normL1());
         System.out.format("norm L2 of %s is %s%n", v4, v4.normL2());
         System.out.format("norm Lp=2 of %s is %s%n", v4, v4.normLp(2));
         System.out.format("norm Linf of %s is %s%n", v4, v4.normLinf());
