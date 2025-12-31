@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -130,7 +131,7 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
      */
     public final Dimensionless divide(final ElectricalConductance v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /**
@@ -140,12 +141,11 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
      */
     public final Dimensionless times(final ElectricalResistance v)
     {
-        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
 
     /**
-     * Calculate the multiplication of ElectricalConductance and ElectricPotential, which results in a ElectricCurrent
-     * scalar.
+     * Calculate the multiplication of ElectricalConductance and ElectricPotential, which results in a ElectricCurrent scalar.
      * @param v scalar
      * @return scalar as a multiplication of ElectricalConductance and ElectricPotential
      */
@@ -223,8 +223,8 @@ public class ElectricalConductance extends Quantity.Relative<ElectricalConductan
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }

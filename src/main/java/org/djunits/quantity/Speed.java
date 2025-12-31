@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
@@ -154,7 +155,7 @@ public class Speed extends Quantity.Relative<Speed, Speed.Unit>
      */
     public final Dimensionless divide(final Speed v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /**

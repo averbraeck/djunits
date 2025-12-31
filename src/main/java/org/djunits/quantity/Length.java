@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -153,7 +154,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      */
     public final Dimensionless divide(final Length v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /**
@@ -163,7 +164,7 @@ public class Length extends Quantity.Relative<Length, Length.Unit>
      */
     public final Dimensionless times(final LinearObjectDensity v)
     {
-        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
 
     /**

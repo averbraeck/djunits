@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -133,7 +134,7 @@ public class VolumetricObjectDensity extends Quantity.Relative<VolumetricObjectD
      */
     public final Dimensionless times(final Volume volume)
     {
-        return new Dimensionless(this.si() * volume.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * volume.si(), Unitless.BASE);
     }
 
     /**
@@ -203,7 +204,7 @@ public class VolumetricObjectDensity extends Quantity.Relative<VolumetricObjectD
      */
     public final Dimensionless divide(final VolumetricObjectDensity other)
     {
-        return new Dimensionless(this.si() / other.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / other.si(), Unitless.BASE);
     }
 
     @Override

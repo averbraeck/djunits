@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -129,7 +130,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
      */
     public final Dimensionless divide(final LinearObjectDensity v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /**
@@ -139,7 +140,7 @@ public class LinearObjectDensity extends Quantity.Relative<LinearObjectDensity, 
      */
     public final Dimensionless times(final Length v)
     {
-        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
 
     /**

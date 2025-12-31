@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -129,7 +130,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      */
     public final Dimensionless divide(final Area v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /**
@@ -139,7 +140,7 @@ public class Area extends Quantity.Relative<Area, Area.Unit>
      */
     public final Dimensionless multiply(final ArealObjectDensity v)
     {
-        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
 
     /**

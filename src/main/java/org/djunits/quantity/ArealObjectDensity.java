@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
@@ -133,7 +134,7 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
      */
     public final Dimensionless divide(final ArealObjectDensity other)
     {
-        return new Dimensionless(this.si() / other.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / other.si(), Unitless.BASE);
     }
 
     /**
@@ -147,7 +148,7 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
      */
     public final Dimensionless times(final Area area)
     {
-        return new Dimensionless(this.si() * area.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * area.si(), Unitless.BASE);
     }
 
     /**
@@ -242,8 +243,8 @@ public class ArealObjectDensity extends Quantity.Relative<ArealObjectDensity, Ar
          * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final Scale scale, final UnitSystem unitSystem)
+        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                final UnitSystem unitSystem)
         {
             super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
         }

@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
@@ -131,7 +132,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      */
     public final Dimensionless divide(final ElectricalResistance v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /**
@@ -141,7 +142,7 @@ public class ElectricalResistance extends Quantity.Relative<ElectricalResistance
      */
     public final Dimensionless times(final ElectricalConductance v)
     {
-        return new Dimensionless(this.si() * v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
 
     /**

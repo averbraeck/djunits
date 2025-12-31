@@ -81,8 +81,7 @@ public class SIQuantity extends Quantity.Relative<SIQuantity, SIUnit>
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             SIUnit unit = Units.resolve(SIUnit.class, unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity SI",
-                    unitString);
+            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity SI", unitString);
             return new SIQuantity(d, unit);
         }
         catch (Exception exception)

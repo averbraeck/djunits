@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.OffsetLinearScale;
@@ -132,7 +133,7 @@ public class Time extends Quantity.Relative<Time, Time.Unit>
      */
     public final Dimensionless divide(final Time v)
     {
-        return new Dimensionless(this.si() / v.si(), Dimensionless.Unit.BASE);
+        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
     /******************************************************************************************************/

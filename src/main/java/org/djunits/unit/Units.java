@@ -22,7 +22,6 @@ import org.djunits.quantity.Area;
 import org.djunits.quantity.ArealObjectDensity;
 import org.djunits.quantity.CatalyticActivity;
 import org.djunits.quantity.Density;
-import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Direction;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.ElectricCharge;
@@ -506,7 +505,7 @@ public final class Units
         ArealObjectDensity.Unit.SI_UNIT.isFractional();
         CatalyticActivity.Unit.SI_UNIT.isFractional();
         Density.Unit.SI_UNIT.isFractional();
-        Dimensionless.Unit.BASE.getBaseUnit().getScale().isBaseScale();
+        Unitless.BASE.getBaseUnit().getScale().isBaseScale();
         Direction.Unit.DEFAULT.getBaseUnit().getScale().isBaseScale();
         Duration.Unit.SI_UNIT.isFractional();
         ElectricalCapacitance.Unit.SI_UNIT.isFractional();
