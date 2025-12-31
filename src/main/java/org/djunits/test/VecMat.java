@@ -1,6 +1,7 @@
 package org.djunits.test;
 
 import org.djunits.quantity.Duration;
+import org.djunits.quantity.Frequency;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Mass;
 import org.djunits.quantity.Speed;
@@ -26,7 +27,7 @@ public class VecMat
         System.out.println(l1 + " / " + m1 + " = " + l1.divide(m1));
         var q = Duration.of(1.0, "h").divide(l1).reciprocal();
         var speed = q.as(Speed.Unit.METER_PER_SECOND);
-        System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());        
+        System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());
     }
 
     /** */
@@ -46,7 +47,11 @@ public class VecMat
     {
         as1();
         as2();
-       
+
+        Vector2D.Col<Frequency, Frequency.Unit> f =
+                Vector2D.Col.of(10.0, 5.0, Duration.Unit.MILLISECOND).invertElements().as(Frequency.Unit.KILOHERTZ);
+        System.out.println(f.x() + " type=" + f.x().getClass().getSimpleName());
+
         var v2 = Vector2D.Col.of(10, 20, Length.Unit.METER);
         var v3 = Vector2D.Col.of(20, 30, Length.Unit.FOOT);
         System.out.println("\n" + v2);
