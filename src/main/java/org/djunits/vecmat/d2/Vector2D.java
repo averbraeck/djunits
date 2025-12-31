@@ -364,14 +364,14 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          * exception when the SI units of this vector and the target vector do not match.
          * @param targetUnit the unit to convert the vector to
          * @return a quantity typed in the target vector class
-         * @throws ClassCastException when the units do not match
+         * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          * @param <TU> target unit type
          */
-        public <TQ extends Quantity.Relative<TQ, TU>,
-                TU extends UnitInterface<TU, TQ>> Vector2D.Col<TQ, TU> as(final TU targetUnit) throws ClassCastException
+        public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2D.Col<TQ, TU> as(final TU targetUnit)
+                throws IllegalArgumentException
         {
-            Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), ClassCastException.class,
+            Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
             return new Vector2D.Col<TQ, TU>(xSi(), ySi(), targetUnit);
