@@ -252,9 +252,21 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     @Override
+    public boolean isSymmetric()
+    {
+        return MatrixMath.isSymmetric(this.aSi, order());
+    }
+
+    @Override
     public boolean isSymmetric(final Q tolerance)
     {
         return MatrixMath.isSymmetric(this.aSi, order(), tolerance.si());
+    }
+
+    @Override
+    public boolean isSkewSymmetric()
+    {
+        return MatrixMath.isSkewSymmetric(this.aSi, order());
     }
 
     @Override
