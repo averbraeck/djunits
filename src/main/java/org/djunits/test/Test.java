@@ -4,12 +4,12 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
-import org.djunits.quantity.AbsoluteTemperature;
 import org.djunits.quantity.AbsorbedDose;
 import org.djunits.quantity.Acceleration;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.Temperature;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 
@@ -59,9 +59,9 @@ public final class Test
     {
         System.out.println("\nTEMPERATURE");
         System.out.println("Temperature");
-        var t1 = AbsoluteTemperature.valueOf("10 degC");
+        var t1 = Temperature.valueOf("10 degC");
         System.out.println(t1 + "  si=" + t1.si());
-        System.out.println(AbsoluteTemperature.of(10, "K"));
+        System.out.println(Temperature.of(10, "K"));
     }
 
     /** */

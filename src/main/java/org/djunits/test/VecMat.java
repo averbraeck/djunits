@@ -5,6 +5,8 @@ import org.djunits.quantity.Frequency;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Mass;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.Time;
+import org.djunits.quantity.Time.TimeReference;
 import org.djunits.vecmat.d2.Matrix2D;
 import org.djunits.vecmat.d2.Vector2D;
 
@@ -40,6 +42,20 @@ public class VecMat
         System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());
     }
 
+    /** */
+    private static void time()
+    {
+        var t1 = Time.of(520.0, "wk", TimeReference.UNIX);
+        var t2 = Time.of(520.0, "wk", TimeReference.GPS);
+        System.out.println("t1 = " + t1);
+        System.out.println("t2 = " + t2);
+        System.out.println("t1.eq(t2)  : " + t1.eq(t2));
+        System.out.println(
+                "t1.getQuantity().si().eq(t2.getQuantity().si())  : " + (t1.getQuantity().si() == t2.getQuantity().si()));
+        // RTE: System.out.println(t1.gt(t2));
+        // RTE: System.out.println(t1.compareTo(t2));
+    }
+
     /**
      * @param args not used
      */
@@ -47,6 +63,7 @@ public class VecMat
     {
         as1();
         as2();
+        time();
 
         Vector2D.Col<Frequency, Frequency.Unit> f =
                 Vector2D.Col.of(10.0, 5.0, Duration.Unit.MILLISECOND).invertElements().as(Frequency.Unit.KILOHERTZ);
