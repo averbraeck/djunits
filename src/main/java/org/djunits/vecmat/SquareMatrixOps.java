@@ -61,7 +61,9 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
 
     /**
      * Return the Frobenius norm of the matrix, which is equal to sqrt(trace(A*.A)). It results in a quantity with the same unit
-     * as the original matrix.
+     * as the original matrix. See <a href=
+     * "https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm">https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm</a>
+     * for more information.
      * @return the Frobenius norm of this matrix
      */
     Q normFrobenius();
