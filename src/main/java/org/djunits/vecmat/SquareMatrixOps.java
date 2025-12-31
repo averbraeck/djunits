@@ -76,15 +76,15 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
 
     /**
      * Return whether the matrix is symmetric, up to a tolerance.
-     * @param tolerance the tolerance, expressed in the unit
+     * @param tolerance the tolerance, expressed as a quantity
      * @return whether the matrix is symmetric
      */
-    boolean isSymmetric(U tolerance);
+    boolean isSymmetric(Q tolerance);
 
     /**
      * Return whether the matrix is skew symmetric, up to a tolerance.
-     * @param tolerance the tolerance, expressed in the unit
+     * @param tolerance the tolerance, expressed as a quantity
      * @return whether the matrix is skew symmetric
      */
-    boolean isSkewSymmetric(U tolerance);
+    boolean isSkewSymmetric(Q tolerance);
 }
