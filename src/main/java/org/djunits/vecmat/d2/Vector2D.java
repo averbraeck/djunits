@@ -3,11 +3,13 @@ package org.djunits.vecmat.d2;
 import java.util.Objects;
 
 import org.djunits.quantity.Quantity;
-import org.djunits.unit.AbstractUnit;
+import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
+import org.djunits.vecmat.Hadamard;
 import org.djunits.vecmat.Normed;
 import org.djunits.vecmat.VecMatOps;
 import org.djunits.vecmat.VectorTransposable;
@@ -287,8 +289,8 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static class Col<Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> extends Vector2D<Q, U, Col<Q, U>>
-            implements VectorTransposable<Row<Q, U>>
+    public static class Col<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Vector2D<Q, U, Col<Q, U>>
+            implements VectorTransposable<Row<Q, U>>, Hadamard<Vector2D.Col<?, ?>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -313,7 +315,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> Vector2D.Col<Q, U> of(final double x,
+        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2D.Col<Q, U> of(final double x,
                 final double y, final U displayUnit)
         {
             return new Vector2D.Col<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
@@ -337,6 +339,44 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
             return new Vector2D.Row<Q, U>(xSi(), ySi(), getDisplayUnit());
         }
 
+        @Override
+        public Vector2D.Col<SIQuantity, SIUnit> invertElements()
+        {
+            return new Vector2D.Col<SIQuantity, SIUnit>(1.0 / xSi(), 1.0 / ySi(), getDisplayUnit().siUnit().invert());
+        }
+
+        @Override
+        public Vector2D.Col<SIQuantity, SIUnit> multiplyElements(final Vector2D.Col<?, ?> other)
+        {
+            SIUnit siUnit = SIUnit.add(x().siUnit(), other.x().siUnit());
+            return new Vector2D.Col<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), siUnit);
+        }
+
+        @Override
+        public Vector2D.Col<SIQuantity, SIUnit> divideElements(final Vector2D.Col<?, ?> other)
+        {
+            SIUnit siUnit = SIUnit.subtract(x().siUnit(), other.x().siUnit());
+            return new Vector2D.Col<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), siUnit);
+        }
+
+        /**
+         * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
+         * exception when the SI units of this vector and the target vector do not match.
+         * @param targetUnit the unit to convert the vector to
+         * @return a quantity typed in the target vector class
+         * @throws ClassCastException when the units do not match
+         * @param <TQ> target quantity type
+         * @param <TU> target unit type
+         */
+        public <TQ extends Quantity.Relative<TQ, TU>,
+                TU extends UnitInterface<TU, TQ>> Vector2D.Col<TQ, TU> as(final TU targetUnit) throws ClassCastException
+        {
+            Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), ClassCastException.class,
+                    "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                    getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
+            return new Vector2D.Col<TQ, TU>(xSi(), ySi(), targetUnit);
+        }
+
     }
 
     /**
@@ -350,7 +390,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static class Row<Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> extends Vector2D<Q, U, Row<Q, U>>
+    public static class Row<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Vector2D<Q, U, Row<Q, U>>
             implements VectorTransposable<Col<Q, U>>
     {
         /** */
@@ -376,7 +416,7 @@ public abstract class Vector2D<Q extends Quantity<Q, U>, U extends UnitInterface
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> Vector2D.Row<Q, U> of(final double x,
+        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2D.Row<Q, U> of(final double x,
                 final double y, final U displayUnit)
         {
             return new Vector2D.Row<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
