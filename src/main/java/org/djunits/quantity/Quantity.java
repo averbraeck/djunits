@@ -670,6 +670,60 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         return minr;
     }
 
+    /**
+     * Return the sum of one or more quantities.
+     * @param quantity1 the first quantity
+     * @param quantities the other quantities
+     * @return the sum of the quantities
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    @SafeVarargs
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q sum(final Q quantity1, final Q... quantities)
+    {
+        double sum = quantity1.si();
+        for (Q q : quantities)
+        {
+            sum += q.si();
+        }
+        return quantity1.instantiate(sum).setDisplayUnit(quantity1.getDisplayUnit());
+    }
+
+    /**
+     * Return the product of one or more quantities.
+     * @param quantity1 the first quantity
+     * @param quantities the other quantities
+     * @return the product of the quantities
+     */
+    @SafeVarargs
+    public static SIQuantity product(final Quantity<?, ?> quantity1, final Quantity<?, ?>... quantities)
+    {
+        double product = quantity1.si();
+        SIUnit unit = quantity1.siUnit();
+        for (var q : quantities)
+        {
+            product *= q.si();
+            unit = unit.plus(q.siUnit());
+        }
+        return new SIQuantity(product, unit);
+    }
+
+    /**
+     * Return the mean of one or more quantities.
+     * @param quantity1 the first quantity
+     * @param quantities the other quantities
+     * @return the mean of the quantities
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    @SafeVarargs
+    public static <Q extends Quantity.Relative<Q, U>, U extends UnitInterface<U, Q>> Q mean(final Q quantity1,
+            final Q... quantities)
+    {
+        int n = 1 + quantities.length;
+        return sum(quantity1, quantities).divideBy(n);
+    }
+
     /******************************************************************************************************/
     /******************************************************************************************************/
     /******************************************* RELATIVE QUANTITY ****************************************/
