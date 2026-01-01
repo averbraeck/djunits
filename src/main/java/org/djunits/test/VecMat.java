@@ -88,7 +88,7 @@ public class VecMat
         var mat = Matrix2x2.of(new double[][] {{1.0, 2.0}, {5.0, 4.0}}, Duration.Unit.SECOND);
         System.out.println("matrix:\n" + mat);
         System.out.println("\nmatrix + matrix:\n" + mat.add(mat));
-        System.out.println("\nmatrix + 1 day:\n" + mat.plus(Duration.of(1.0, "day")));
+        System.out.println("\nmatrix + 1 day:\n" + mat.add(Duration.of(1.0, "day")));
         System.out.println("\ndeterminant: " + mat.determinant());
         try
         {

@@ -69,13 +69,13 @@ public interface VecMatOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
      * @param increment the quantity by which to increase the values of the vector or matrix
      * @return a vector or matrix with elements that are incremented by the given quantity
      */
-    VM plus(Q increment);
+    VM add(Q increment);
 
     /**
      * Return the a vector or matrix with entries that contain the value minus the decrement.
      * @param decrement the quantity by which to decrease the values of the vector or matrix
      * @return a vector or matrix with elements that are decremented by the given quantity
      */
-    VM minus(Q decrement);
+    VM subtract(Q decrement);
 
 }

@@ -225,13 +225,13 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
-    public V plus(final Q increment)
+    public V add(final Q increment)
     {
         return instantiate(this.xSi + increment.si(), this.ySi + increment.si());
     }
 
     @Override
-    public V minus(final Q decrement)
+    public V subtract(final Q decrement)
     {
         return instantiate(this.xSi - decrement.si(), this.ySi - decrement.si());
     }

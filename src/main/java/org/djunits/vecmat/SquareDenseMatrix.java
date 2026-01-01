@@ -133,13 +133,13 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     }
 
     @Override
-    public M plus(final Q increment)
+    public M add(final Q increment)
     {
         return instantiate(ArrayMath.add(this.dataSi, increment.si()));
     }
 
     @Override
-    public M minus(final Q decrement)
+    public M subtract(final Q decrement)
     {
         return instantiate(ArrayMath.add(this.dataSi, -decrement.si()));
     }
