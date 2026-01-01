@@ -13,10 +13,10 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class DenseDoubleData implements DataGrid
+public class DenseDoubleData implements DataGrid<DenseDoubleData>
 {
     /** The data stored in row-major format. */
-    private final double[] dataSi;
+    private final double[] data;
 
     /** The number of rows. */
     private final int rows;
@@ -25,46 +25,44 @@ public class DenseDoubleData implements DataGrid
     private final int cols;
 
     /**
-     * Instantiate a data object with SI values, where the data object is offered as one array in row-major format. A safe copy
-     * of the data is stored.
-     * @param dataSi the data in row-major format
+     * Instantiate a data object with one array in row-major format. Note that NO safe copy of the data is stored.
+     * @param data the data in row-major format
      * @param rows the number of rows
      * @param cols the number of columns
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public DenseDoubleData(final double[] dataSi, final int rows, final int cols)
+    public DenseDoubleData(final double[] data, final int rows, final int cols)
     {
-        Throw.whenNull(dataSi, "dataSi");
+        Throw.whenNull(data, "dataSi");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
-        Throw.when(dataSi.length != rows * cols, IllegalArgumentException.class,
-                "Data object length != rows * cols, %d != %d * %d", dataSi.length, rows, cols);
-        this.dataSi = dataSi.clone();
+        Throw.when(data.length != rows * cols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", data.length, rows, cols);
+        this.data = data;
         this.rows = rows;
         this.cols = cols;
     }
 
     /**
-     * Instantiate a data object with SI values, where the data is offered as a double[rows][cols]. A safe copy of the data is
-     * stored.
-     * @param dataSi the data in row-major format
+     * Instantiate a data object with a double[rows][cols]. A safe copy of the data is stored.
+     * @param data the data in row-major format
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public DenseDoubleData(final double[][] dataSi)
+    public DenseDoubleData(final double[][] data)
     {
-        Throw.whenNull(dataSi, "dataSi");
-        Throw.when(dataSi.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
-        this.rows = dataSi.length;
-        this.cols = dataSi[0].length;
+        Throw.whenNull(data, "dataSi");
+        Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        this.rows = data.length;
+        this.cols = data[0].length;
         for (int r = 1; r < this.rows; r++)
-            Throw.when(dataSi[r].length != this.cols, IllegalArgumentException.class,
-                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, dataSi[r], this.cols);
-        this.dataSi = new double[this.rows * this.cols];
+            Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
+        this.data = new double[this.rows * this.cols];
         for (int r = 0; r < this.rows; r++)
             for (int c = 0; c < this.cols; c++)
-                this.dataSi[r * this.cols + c] = dataSi[r][c];
+                this.data[r * this.cols + c] = data[r][c];
     }
 
     @Override
@@ -93,30 +91,44 @@ public class DenseDoubleData implements DataGrid
     }
 
     @Override
-    public double getSi(final int row, final int col)
+    public double get(final int row, final int col)
     {
         checkRowCol(row, col);
-        return this.dataSi[row * this.cols + col];
+        return this.data[row * this.cols + col];
     }
 
     @Override
-    public void setSi(final int row, final int col, final double si)
+    public void set(final int row, final int col, final double value)
     {
         checkRowCol(row, col);
-        this.dataSi[row * this.cols + col] = si;
+        this.data[row * this.cols + col] = value;
     }
 
     @Override
-    public void addSi(final int row, final int col, final double si)
+    public void add(final int row, final int col, final double value)
     {
         checkRowCol(row, col);
-        this.dataSi[row * this.cols + col] += si;
+        this.data[row * this.cols + col] += value;
     }
 
     @Override
-    public double[] getDataSi()
+    public double[] getDataArray()
     {
-        return this.dataSi;
+        return this.data;
+    }
+
+    @Override
+    public DenseDoubleData copy()
+    {
+        return new DenseDoubleData(this.data.clone(), rows(), cols());
+    }
+
+    @Override
+    public DenseDoubleData instantiate(final double[] newData)
+    {
+        Throw.when(newData.length != rows() * cols(), IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", newData.length, rows(), cols());
+        return new DenseDoubleData(newData, rows(), cols());
     }
 
     @Override
@@ -124,7 +136,7 @@ public class DenseDoubleData implements DataGrid
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(this.dataSi);
+        result = prime * result + Arrays.hashCode(this.data);
         result = prime * result + Objects.hash(this.cols, this.rows);
         return result;
     }
@@ -140,7 +152,7 @@ public class DenseDoubleData implements DataGrid
         if (getClass() != obj.getClass())
             return false;
         DenseDoubleData other = (DenseDoubleData) obj;
-        return this.cols == other.cols && Arrays.equals(this.dataSi, other.dataSi) && this.rows == other.rows;
+        return this.cols == other.cols && Arrays.equals(this.data, other.data) && this.rows == other.rows;
     }
 
 }
