@@ -5,7 +5,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.SquareMatrix;
+import org.djunits.vecmat.SquareDenseMatrix;
 
 /**
  * SquareMatrixOps defines a number of operations that can be applied to square matrixes, such as transpose, invert, and
@@ -53,7 +53,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @return the inverse of the square matrix, if the matrix is non-singular
      * @throws NonInvertibleMatrixException when the matrix is singular or cannot be inverted
      */
-    SquareMatrix<SIQuantity, SIUnit, ?> inverse() throws NonInvertibleMatrixException;
+    SquareDenseMatrix<SIQuantity, SIUnit, ?> inverse() throws NonInvertibleMatrixException;
 
     /**
      * Return the trace of the matrix (the sum of the diagonal elements). It results in a quantity with the same unit as the
@@ -76,7 +76,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * where n is the order of the matrix.
      * @return the adjugate (classical adjoint) matrix
      */
-    SquareMatrix<SIQuantity, SIUnit, ?> adjugate();
+    SquareDenseMatrix<SIQuantity, SIUnit, ?> adjugate();
 
     /**
      * Return whether the matrix is symmetric. Use a default tolerance of 1.0E-12 times the largest absolute si quantity.

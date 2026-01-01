@@ -17,6 +17,18 @@ import org.djunits.unit.UnitInterface;
 public interface VecMatOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, VM extends VecMatOps<Q, U, VM>>
 {
     /**
+     * Return the number of rows.
+     * @return the number of rows
+     */
+    int rows();
+    
+    /**
+     * Return the number of columns.
+     * @return the number of columns
+     */
+    int cols();
+    
+    /**
      * Return the mean value of the elements of the vector or matrix.
      * @return the mean value of the elements of the vector or matrix
      */
