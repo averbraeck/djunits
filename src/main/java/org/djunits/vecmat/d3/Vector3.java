@@ -371,6 +371,18 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
+        public int rows()
+        {
+            return 2;
+        }
+
+        @Override
+        public int cols()
+        {
+            return 1;
+        }
+
+        @Override
         protected Vector3.Col<Q, U> instantiate(final double xSi, final double ySi, final double zSi)
         {
             return new Vector3.Col<>(xSi, ySi, zSi, getDisplayUnit());
@@ -485,6 +497,18 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         public boolean isColumnVector()
         {
             return false;
+        }
+
+        @Override
+        public int rows()
+        {
+            return 1;
+        }
+
+        @Override
+        public int cols()
+        {
+            return 3;
         }
 
         @Override

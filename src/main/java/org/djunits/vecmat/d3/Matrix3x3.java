@@ -6,7 +6,7 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.SquareMatrix;
+import org.djunits.vecmat.SquareDenseMatrix;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareMatrix<Q, U, Matrix3x3<Q, U>>
+public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareDenseMatrix<Q, U, Matrix3x3<Q, U>>
 {
     /** */
     private static final long serialVersionUID = 600L;
