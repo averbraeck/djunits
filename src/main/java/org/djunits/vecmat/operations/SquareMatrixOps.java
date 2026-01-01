@@ -1,7 +1,9 @@
 package org.djunits.vecmat.operations;
 
+import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.SquareMatrix;
 
@@ -43,17 +45,15 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
     /**
      * Return the determinant of the square matrix as quantity with unit U^n where n is the order of the matrix.
      * @return the determinant of the square matrix as a quantity
-     * @param <QN> the quantity type of the result
      */
-    <QN extends Quantity<QN, ?>> QN determinant();
+    SIQuantity determinant();
 
     /**
      * Return the inverse of the square matrix, if the matrix is non-singular. The unit of the matrix is U^(-1).
      * @return the inverse of the square matrix, if the matrix is non-singular
      * @throws NonInvertibleMatrixException when the matrix is singular or cannot be inverted
-     * @param <MI> the type of the matrix inversion
      */
-    <MI extends SquareMatrix<?, ?, ?>> MI inverse() throws NonInvertibleMatrixException;
+    SquareMatrix<SIQuantity, SIUnit, ?> inverse() throws NonInvertibleMatrixException;
 
     /**
      * Return the trace of the matrix (the sum of the diagonal elements). It results in a quantity with the same unit as the
@@ -74,10 +74,9 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
     /**
      * Return the adjugate (classical adjoint) matrix for this matrix, often denoted as adj(M). The unit of adj(M) is U^(n-1)
      * where n is the order of the matrix.
-     * @return the adjugate (classical adjoint) matrix 
-     * @param <MA> the type of the matrix adjugate
+     * @return the adjugate (classical adjoint) matrix
      */
-    <MA extends SquareMatrix<?, ?, ?>> MA adjugate();
+    SquareMatrix<SIQuantity, SIUnit, ?> adjugate();
 
     /**
      * Return whether the matrix is symmetric. Use a default tolerance of 1.0E-12 times the largest absolute si quantity.
