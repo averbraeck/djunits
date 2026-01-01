@@ -28,7 +28,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double max = dn[0];
         for (double d : dn)
         {
@@ -47,7 +47,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double min = dn[0];
         for (double d : dn)
         {
@@ -66,7 +66,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double max = Math.abs(dn[0]);
         for (double d : dn)
         {
@@ -74,7 +74,7 @@ public final class Math2
         }
         return max;
     }
-    
+
     /**
      * Return the mimimum absolute value within an array of values.
      * @param dn zero or more values
@@ -85,7 +85,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double min = Math.abs(dn[0]);
         for (double d : dn)
         {
@@ -104,7 +104,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double sum = 0.0;
         for (double d : dn)
             sum += d;
@@ -121,7 +121,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double sum = 0.0;
         for (double d : dn)
             sum += Math.abs(d);
@@ -138,7 +138,7 @@ public final class Math2
     {
         if (dn == null || dn.length == 0)
             return Double.NaN;
-        
+
         double sqrsum = 0.0;
         for (double d : dn)
             sqrsum += d * d;
@@ -195,6 +195,33 @@ public final class Math2
             double avg = lo + (hi - lo) * 0.5;
             return avg;
         }
+    }
+
+    /**
+     * Computes base^exp for integers.
+     * @param base the integer base
+     * @param exp the non-negative exponent
+     * @return base raised to the power exp
+     */
+    public static int pow(final int base, final int exp)
+    {
+        int b = base;
+        int e = exp;
+        if (e < 0)
+        {
+            throw new IllegalArgumentException("Exponent must be non-negative");
+        }
+        int result = 1;
+        while (e > 0)
+        {
+            if ((e & 1) == 1)
+            {
+                result *= b;
+            }
+            b *= b;
+            e >>= 1; // divide exponent by 2
+        }
+        return result;
     }
 
 }

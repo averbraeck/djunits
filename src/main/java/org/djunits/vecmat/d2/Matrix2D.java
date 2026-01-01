@@ -1,7 +1,11 @@
 package org.djunits.vecmat.d2;
 
+import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.si.SIUnit;
+import org.djunits.util.MatrixMath;
+import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.SquareMatrix;
 import org.djutils.exceptions.Throw;
 
@@ -78,6 +82,61 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
     protected Matrix2D<Q, U> instantiate(final double[] aSiNew)
     {
         return new Matrix2D<Q, U>(aSiNew, getDisplayUnit());
+    }
+
+    @Override
+    public Matrix2D<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
+    {
+        double[] invData = MatrixMath.inverse(si(), 2);
+        return new Matrix2D<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().invert());
+    }
+
+    @Override
+    public Matrix2D<SIQuantity, SIUnit> adjugate()
+    {
+        double[] invData = MatrixMath.adjugate(si(), 2);
+        return new Matrix2D<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
+    }
+
+    /**
+     * Multiply this matrix with another matrix using matrix multiplication and return the result.
+     * @param otherMat the matrix to multiply with.
+     * @return the matrix from the multiplication with the correct unit
+     */
+    public Matrix2D<SIQuantity, SIUnit> multiply(final Matrix2D<?, ?> otherMat)
+    {
+        double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 2, 2, 2);
+        return new Matrix2D<SIQuantity, SIUnit>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+    }
+
+    /**
+     * Multiply this matrix with a column vector, resulting in a column vector.
+     * @param otherVec the column vector to multiply with
+     * @return the resulting vector from the multiplication
+     */
+    public Vector2D.Col<SIQuantity, SIUnit> multiply(final Vector2D.Col<?, ?> otherVec)
+    {
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 2, 1);
+        return new Vector2D.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
+                getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+    }
+
+    /**
+     * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
+     * when the SI units of this vector and the target vector do not match.
+     * @param targetUnit the unit to convert the matrix to
+     * @return a quantity typed in the target matrix class
+     * @throws IllegalArgumentException when the units do not match
+     * @param <TQ> target quantity type
+     * @param <TU> target unit type
+     */
+    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix2D<TQ, TU> as(final TU targetUnit)
+            throws IllegalArgumentException
+    {
+        Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
+                "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
+        return new Matrix2D<TQ, TU>(si(), targetUnit);
     }
 
 }

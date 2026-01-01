@@ -17,7 +17,7 @@ import org.djunits.unit.system.UnitSystem;
 public class Unitless extends AbstractUnit<Unitless, Dimensionless>
 {
     /** The dimensions of the dimensionless quantity: 1 [rad, sr, kg, m, s, A, K, mol, cd]. */
-    public static final SIUnit SI_UNIT = new SIUnit(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    public static final SIUnit SI_UNIT = new SIUnit(new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
 
     /** The SI or BASE unit. */
     public static final Unitless BASE = new Unitless(" ", " ", 1.0, UnitSystem.OTHER);

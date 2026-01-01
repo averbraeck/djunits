@@ -29,7 +29,7 @@ public class SIDimensionsTest
     {
         // all kgm/s2
         SIUnit si1 = new SIUnit(0, 0, 1, 1, -2, 0, 0, 0, 0);
-        SIUnit si2 = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0, 0});
+        SIUnit si2 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0});
         SIUnit si3 = SIUnit.of("kgm/s2");
         SIUnit si4 = SIUnit.of("kgms-2");
         assertEquals(si1, si2, si1 + "!= " + si2);
@@ -153,7 +153,7 @@ public class SIDimensionsTest
         assertEquals("kg.m<sup>2</sup>.s<sup>-3</sup>.A<sup>-1</sup>", si12.toHTMLString(false, true));
 
         // fractional
-        SIUnit sif = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1});
+        SIUnit sif = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1});
         assertEquals(sif, si1);
         assertEquals(sif, si2);
         assertEquals(sif, si3);
@@ -164,14 +164,14 @@ public class SIDimensionsTest
         assertFalse(sif.isFractional()); // unit denominator
         assertFalse(si2.isFractional());
 
-        SIUnit sif2 = new SIUnit(new byte[] {0, 0, 1, 1, -2, -1, 0, 0, 0}, new byte[] {1, 1, 2, 2, 1, 3, 1, 1, 1});
+        SIUnit sif2 = new SIUnit(new int[] {0, 0, 1, 1, -2, -1, 0, 0, 0}, new int[] {1, 1, 2, 2, 1, 3, 1, 1, 1});
         assertNotEquals(sif, sif2);
         assertNotEquals(sif.hashCode(), sif2.hashCode());
         assertEquals("[0, 0, 1/2, 1/2, -2, -1/3, 0, 0, 0]", sif2.toString());
 
         try
         {
-            SIUnit siw1 = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0}); // 8 long
+            SIUnit siw1 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0}); // 8 long
             fail("SIDimensions.of(" + siw1 + ") should have triggered a UnitException");
         }
         catch (SIRuntimeException e)
@@ -181,7 +181,7 @@ public class SIDimensionsTest
 
         try
         {
-            SIUnit siw2 = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0, 0, 0}); // 6 long
+            SIUnit siw2 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0, 0}); // 6 long
             fail("SIDimensions.of(" + siw2 + ") should have triggered a UnitException");
         }
         catch (SIRuntimeException e)
@@ -191,7 +191,7 @@ public class SIDimensionsTest
 
         try
         {
-            SIUnit siw3 = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0}, new byte[] {1, 1, 2, 2, 1, 3, 1, 1, 1});
+            SIUnit siw3 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0}, new int[] {1, 1, 2, 2, 1, 3, 1, 1, 1});
             fail("SIDimensions.of(" + siw3 + ") should have triggered a UnitException");
         }
         catch (SIRuntimeException e)
@@ -201,7 +201,7 @@ public class SIDimensionsTest
 
         try
         {
-            SIUnit siw4 = new SIUnit(new byte[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new byte[] {1, 1, 2, 2, 1, 3, 1, 1, 1, 1});
+            SIUnit siw4 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new int[] {1, 1, 2, 2, 1, 3, 1, 1, 1, 1});
             fail("SIDimensions.of(" + siw4 + ") should have triggered a UnitException");
         }
         catch (SIRuntimeException e)
