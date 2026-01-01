@@ -25,15 +25,64 @@ public final class MatrixMath
     // ---------- Helpers ----------
 
     /**
-     * Return the index in a row-major storage of the matrix: [a11, a12, ..., a21, a22, ...].
+     * Return the index in a row-major storage of a square matrix: [a11, a12, ..., a21, a22, ..., ann].
      * @param n the order of the square matrix
      * @param r the row to look up (0-based)
-     * @param c the column to lok up (0-based)
+     * @param c the column to look up (0-based)
      * @return the index in the array for row r, column c
      */
     private static int idx(final int n, final int r, final int c)
     {
         return r * n + c;
+    }
+
+    // ---------- Multiplication ----------
+
+    /**
+     * Multiply A (m x n, row-major) with B (n x p, row-major) to produce C (m x p, row-major). Storage: row-major means A[i,k]
+     * is at aSi[i * n + k], B[k,j] at bSi[k * p + j], and C[i,j] at result[i * p + j].
+     * @param aSi matrix A, length must be m * n, stored as row-major double[]
+     * @param bSi matrix B, length must be n * p, stored as row-major double[]
+     * @param m rows of A (and C)
+     * @param n columns of A == rows of B
+     * @param p columns of B (and C)
+     * @return C = A * B, as row-major double[] (length m * p)
+     * @throws IllegalArgumentException if input lengths are inconsistent
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static double[] multiply(final double[] aSi, final double[] bSi, final int m, final int n, final int p)
+    {
+        if (aSi.length != m * n)
+        {
+            throw new IllegalArgumentException("A length " + aSi.length + " != m*n (" + (m * n) + ")");
+        }
+        if (bSi.length != n * p)
+        {
+            throw new IllegalArgumentException("B length " + bSi.length + " != n*p (" + (n * p) + ")");
+        }
+
+        final double[] result = new double[m * p];
+
+        // Loop order: i (row of C/A), k (shared dim), j (column of C/B)
+        // Rationale:
+        // - A[i,k] is contiguous in k -> hoist aik
+        // - B[k,j] is contiguous in j for fixed k -> inner loop over j is cache-friendly
+        // - C[i,*] row is contiguous -> row-wise accumulation
+        for (int i = 0; i < m; i++)
+        {
+            final int aiBase = i * n; // start of A's row i
+            final int ciBase = i * p; // start of C's row i
+            for (int k = 0; k < n; k++)
+            {
+                final double aik = aSi[aiBase + k]; // A[i,k]
+                final int bkBase = k * p; // start of B's row k
+                for (int j = 0; j < p; j++)
+                {
+                    result[ciBase + j] += aik * bSi[bkBase + j]; // C[i,j] += A[i,k] * B[k,j]
+                }
+            }
+        }
+        return result;
     }
 
     // ---------- Basic invariants ----------
