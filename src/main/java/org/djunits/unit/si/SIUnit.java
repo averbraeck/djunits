@@ -8,6 +8,7 @@ import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.system.UnitSystem;
+import org.djunits.util.Math2;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -25,7 +26,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     public static final int NUMBER_DIMENSIONS = 9;
 
     /** The default denominator which consists of all "1"s. */
-    private static final byte[] UNIT_DENOMINATOR = new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1};
+    private static final int[] UNIT_DENOMINATOR = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1};
 
     /** The abbreviations of the SI units we use in SIUnit. */
     private static final String[] SI_ABBREVIATIONS = new String[] {"rad", "sr", "kg", "m", "s", "A", "K", "mol", "cd"};
@@ -41,10 +42,10 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      * (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8: luminous intensity (cd). As an
      * example, speed is indicated as length = 1; time = -1.
      */
-    private final byte[] dimensions;
+    private final int[] dimensions;
 
     /** In case the dimensions are fractional, the denominator will contain values different from 1. */
-    private final byte[] denominator;
+    private final int[] denominator;
 
     /** Stores whether the dimensions are fractional or not. */
     private final boolean fractional;
@@ -56,7 +57,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
      */
-    public SIUnit(final byte[] dimensions)
+    public SIUnit(final int[] dimensions)
     {
         Throw.whenNull(dimensions, "dimensions cannot be null");
         Throw.when(dimensions.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "SIUnit wrong dimensionality");
@@ -75,7 +76,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
      *            luminous intensity (cd).
      */
-    protected SIUnit(final byte[] numerator, final byte[] denominator)
+    protected SIUnit(final int[] numerator, final int[] denominator)
     {
         // TODO all operators on fractional dimensions
         Throw.whenNull(numerator, "numerator cannot be null");
@@ -103,16 +104,16 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     public SIUnit(final int angle, final int solidAngle, final int mass, final int length, final int time, final int current,
             final int temperature, final int amountOfSubstance, final int luminousIntensity)
     {
-        this.dimensions = new byte[NUMBER_DIMENSIONS];
-        this.dimensions[0] = (byte) angle;
-        this.dimensions[1] = (byte) solidAngle;
-        this.dimensions[2] = (byte) mass;
-        this.dimensions[3] = (byte) length;
-        this.dimensions[4] = (byte) time;
-        this.dimensions[5] = (byte) current;
-        this.dimensions[6] = (byte) temperature;
-        this.dimensions[7] = (byte) amountOfSubstance;
-        this.dimensions[8] = (byte) luminousIntensity;
+        this.dimensions = new int[NUMBER_DIMENSIONS];
+        this.dimensions[0] = angle;
+        this.dimensions[1] = solidAngle;
+        this.dimensions[2] = mass;
+        this.dimensions[3] = length;
+        this.dimensions[4] = time;
+        this.dimensions[5] = current;
+        this.dimensions[6] = temperature;
+        this.dimensions[7] = amountOfSubstance;
+        this.dimensions[8] = luminousIntensity;
         this.denominator = UNIT_DENOMINATOR;
         this.fractional = false;
     }
@@ -140,8 +141,8 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
             {
                 throw new UnitRuntimeException("SI String " + dimString + " contains more than one division sign");
             }
-            byte[] numerator = parse(parts[0]);
-            byte[] denominator = parse(parts[1]);
+            int[] numerator = parse(parts[0]);
+            int[] denominator = parse(parts[1]);
             for (int i = 0; i < NUMBER_DIMENSIONS; i++)
             {
                 numerator[i] -= denominator[i];
@@ -160,10 +161,10 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      * @return a vector of length <code>NUMBER_DIMENSIONS</code> with the dimensions for the SI units
      * @throws UnitRuntimeException when the String cannot be parsed, e.g. due to units not being recognized
      */
-    private static byte[] parse(final String siString) throws UnitRuntimeException
+    private static int[] parse(final String siString) throws UnitRuntimeException
     {
         Throw.whenNull(siString, "siString cannot be null");
-        byte[] result = new byte[NUMBER_DIMENSIONS];
+        int[] result = new int[NUMBER_DIMENSIONS];
         if (siString.equals("1") || siString.length() == 0)
         {
             return result;
@@ -197,7 +198,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
                         }
                         if (Character.isDigit(copy.charAt(1)))
                         {
-                            result[i] = (byte) (-1 * (copy.charAt(1) - '0'));
+                            result[i] = (-1 * (copy.charAt(1) - '0'));
                             copy = copy.substring(2);
                             break;
                         }
@@ -206,7 +207,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
                     }
                     else if (Character.isDigit(copy.charAt(0)))
                     {
-                        result[i] = (byte) (copy.charAt(0) - '0');
+                        result[i] = (copy.charAt(0) - '0');
                         copy = copy.substring(1);
                         break;
                     }
@@ -262,10 +263,10 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      */
     public SIUnit plus(final SIUnit other)
     {
-        byte[] result = new byte[NUMBER_DIMENSIONS];
+        int[] result = new int[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
-            result[i] = (byte) (this.dimensions[i] + other.dimensions[i]);
+            result[i] = this.dimensions[i] + other.dimensions[i];
         }
         return new SIUnit(result);
     }
@@ -278,10 +279,10 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      */
     public SIUnit minus(final SIUnit other)
     {
-        byte[] result = new byte[NUMBER_DIMENSIONS];
+        int[] result = new int[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
-            result[i] = (byte) (this.dimensions[i] - other.dimensions[i]);
+            result[i] = this.dimensions[i] - other.dimensions[i];
         }
         return new SIUnit(result);
     }
@@ -293,10 +294,26 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      */
     public SIUnit invert()
     {
-        byte[] result = new byte[NUMBER_DIMENSIONS];
+        int[] result = new int[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
-            result[i] = (byte) (-this.dimensions[i]);
+            result[i] = -this.dimensions[i];
+        }
+        return new SIUnit(result);
+    }
+
+    /**
+     * Raise a set of SI dimensions to the n-th power. Note: as dimensions are considered to be immutable, a new dimension is
+     * returned. The original dimension (<code>this</code>) remains unaltered.
+     * @param n the power to which to raise this set of dimensions
+     * @return the new dimensions with the dimensions of this object raised to the n-th power
+     */
+    public SIUnit pow(final int n)
+    {
+        int[] result = new int[NUMBER_DIMENSIONS];
+        for (int i = 0; i < NUMBER_DIMENSIONS; i++)
+        {
+            result[i] = Math2.pow(this.dimensions[i], n);
         }
         return new SIUnit(result);
     }
@@ -309,10 +326,10 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      */
     public static SIUnit add(final SIUnit dim1, final SIUnit dim2)
     {
-        byte[] dim = new byte[NUMBER_DIMENSIONS];
+        int[] dim = new int[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
-            dim[i] = (byte) (dim1.dimensions[i] + dim2.dimensions[i]);
+            dim[i] = dim1.dimensions[i] + dim2.dimensions[i];
         }
         return new SIUnit(dim);
     }
@@ -326,10 +343,10 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      */
     public static SIUnit subtract(final SIUnit dim1, final SIUnit dim2)
     {
-        byte[] dim = new byte[NUMBER_DIMENSIONS];
+        int[] dim = new int[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
-            dim[i] = (byte) (dim1.dimensions[i] - dim2.dimensions[i]);
+            dim[i] = dim1.dimensions[i] - dim2.dimensions[i];
         }
         return new SIUnit(dim);
     }
