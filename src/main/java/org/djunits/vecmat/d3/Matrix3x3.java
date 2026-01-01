@@ -137,7 +137,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
-                "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new Matrix3x3<TQ, TU>(si(), targetUnit);
     }
