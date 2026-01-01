@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareMatrix<Q, U, Matrix3D<Q, U>>
+public class Matrix3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareMatrix<Q, U, Matrix3<Q, U>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -30,7 +30,7 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param aSi the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in SI or BASE units
      * @param displayUnit the display unit to use
      */
-    protected Matrix3D(final double[] aSi, final U displayUnit)
+    protected Matrix3(final double[] aSi, final U displayUnit)
     {
         super(aSi, displayUnit, 3);
     }
@@ -44,7 +44,7 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @return a new Matrix3D with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3D<Q, U> of(final double[] valueArray,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3<Q, U> of(final double[] valueArray,
             final U displayUnit)
     {
         Throw.whenNull(valueArray, "valueArray");
@@ -52,7 +52,7 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
         double[] aSi = new double[valueArray.length];
         for (int i = 0; i < valueArray.length; i++)
             aSi[i] = displayUnit.toBaseValue(valueArray[i]);
-        return new Matrix3D<Q, U>(aSi, displayUnit);
+        return new Matrix3<Q, U>(aSi, displayUnit);
     }
 
     /**
@@ -64,7 +64,7 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @return a new Matrix3D with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3D<Q, U> of(final double[][] valueGrid,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3<Q, U> of(final double[][] valueGrid,
             final U displayUnit)
     {
         Throw.whenNull(valueGrid, "valueGrid");
@@ -75,27 +75,27 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
         for (int r = 0; r < valueGrid.length; r++)
             for (int c = 0; c < valueGrid.length; c++)
                 aSi[3 * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
-        return new Matrix3D<Q, U>(aSi, displayUnit);
+        return new Matrix3<Q, U>(aSi, displayUnit);
     }
 
     @Override
-    protected Matrix3D<Q, U> instantiate(final double[] aSiNew)
+    protected Matrix3<Q, U> instantiate(final double[] aSiNew)
     {
-        return new Matrix3D<Q, U>(aSiNew, getDisplayUnit());
+        return new Matrix3<Q, U>(aSiNew, getDisplayUnit());
     }
 
     @Override
-    public Matrix3D<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
+    public Matrix3<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), 3);
-        return new Matrix3D<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().invert());
+        return new Matrix3<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().invert());
     }
 
     @Override
-    public Matrix3D<SIQuantity, SIUnit> adjugate()
+    public Matrix3<SIQuantity, SIUnit> adjugate()
     {
         double[] invData = MatrixMath.adjugate(si(), 3);
-        return new Matrix3D<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
+        return new Matrix3<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
     }
 
     /**
@@ -103,10 +103,10 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param otherMat the matrix to multiply with.
      * @return the matrix from the multiplication with the correct unit
      */
-    public Matrix3D<SIQuantity, SIUnit> multiply(final Matrix3D<?, ?> otherMat)
+    public Matrix3<SIQuantity, SIUnit> multiply(final Matrix3<?, ?> otherMat)
     {
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 3, 3, 3);
-        return new Matrix3D<SIQuantity, SIUnit>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+        return new Matrix3<SIQuantity, SIUnit>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
     /**
@@ -114,10 +114,10 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param otherVec the column vector to multiply with
      * @return the resulting vector from the multiplication
      */
-    public Vector3D.Col<SIQuantity, SIUnit> multiply(final Vector3D.Col<?, ?> otherVec)
+    public Vector3.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> otherVec)
     {
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
-        return new Vector3D.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
+        return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
@@ -130,13 +130,13 @@ public class Matrix3D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      */
-    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix3D<TQ, TU> as(final TU targetUnit)
+    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix3<TQ, TU> as(final TU targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix3D<TQ, TU>(si(), targetUnit);
+        return new Matrix3<TQ, TU>(si(), targetUnit);
     }
 
 }

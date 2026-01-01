@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareMatrix<Q, U, Matrix2D<Q, U>>
+public class Matrix2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareMatrix<Q, U, Matrix2<Q, U>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -30,7 +30,7 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param aSi the matrix values [a11, a12, a21, a22] expressed in SI or BASE units
      * @param displayUnit the display unit to use
      */
-    protected Matrix2D(final double[] aSi, final U displayUnit)
+    protected Matrix2(final double[] aSi, final U displayUnit)
     {
         super(aSi, displayUnit, 2);
     }
@@ -44,7 +44,7 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @return a new Matrix2D with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2D<Q, U> of(final double[] valueArray,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2<Q, U> of(final double[] valueArray,
             final U displayUnit)
     {
         Throw.whenNull(valueArray, "valueArray");
@@ -52,7 +52,7 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
         double[] aSi = new double[valueArray.length];
         for (int i = 0; i < valueArray.length; i++)
             aSi[i] = displayUnit.toBaseValue(valueArray[i]);
-        return new Matrix2D<Q, U>(aSi, displayUnit);
+        return new Matrix2<Q, U>(aSi, displayUnit);
     }
 
     /**
@@ -64,7 +64,7 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @return a new Matrix2D with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2D<Q, U> of(final double[][] valueGrid,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2<Q, U> of(final double[][] valueGrid,
             final U displayUnit)
     {
         Throw.whenNull(valueGrid, "valueGrid");
@@ -75,27 +75,27 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
         for (int r = 0; r < valueGrid.length; r++)
             for (int c = 0; c < valueGrid.length; c++)
                 aSi[2 * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
-        return new Matrix2D<Q, U>(aSi, displayUnit);
+        return new Matrix2<Q, U>(aSi, displayUnit);
     }
 
     @Override
-    protected Matrix2D<Q, U> instantiate(final double[] aSiNew)
+    protected Matrix2<Q, U> instantiate(final double[] aSiNew)
     {
-        return new Matrix2D<Q, U>(aSiNew, getDisplayUnit());
+        return new Matrix2<Q, U>(aSiNew, getDisplayUnit());
     }
 
     @Override
-    public Matrix2D<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
+    public Matrix2<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), 2);
-        return new Matrix2D<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().invert());
+        return new Matrix2<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().invert());
     }
 
     @Override
-    public Matrix2D<SIQuantity, SIUnit> adjugate()
+    public Matrix2<SIQuantity, SIUnit> adjugate()
     {
         double[] invData = MatrixMath.adjugate(si(), 2);
-        return new Matrix2D<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
+        return new Matrix2<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
     }
 
     /**
@@ -103,10 +103,10 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param otherMat the matrix to multiply with.
      * @return the matrix from the multiplication with the correct unit
      */
-    public Matrix2D<SIQuantity, SIUnit> multiply(final Matrix2D<?, ?> otherMat)
+    public Matrix2<SIQuantity, SIUnit> multiply(final Matrix2<?, ?> otherMat)
     {
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 2, 2, 2);
-        return new Matrix2D<SIQuantity, SIUnit>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+        return new Matrix2<SIQuantity, SIUnit>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
     /**
@@ -114,10 +114,10 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param otherVec the column vector to multiply with
      * @return the resulting vector from the multiplication
      */
-    public Vector2D.Col<SIQuantity, SIUnit> multiply(final Vector2D.Col<?, ?> otherVec)
+    public Vector2.Col<SIQuantity, SIUnit> multiply(final Vector2.Col<?, ?> otherVec)
     {
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 2, 1);
-        return new Vector2D.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
+        return new Vector2.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
@@ -130,13 +130,13 @@ public class Matrix2D<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> e
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      */
-    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix2D<TQ, TU> as(final TU targetUnit)
+    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix2<TQ, TU> as(final TU targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix2D<TQ, TU>(si(), targetUnit);
+        return new Matrix2<TQ, TU>(si(), targetUnit);
     }
 
 }
