@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.djunits.formatter.Format;
+import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
@@ -223,34 +224,23 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
         return instantiate(newSi);
     }
 
-    @SuppressWarnings({"checkstyle:needbraces", "unchecked"})
     @Override
-    public <QN extends Quantity<QN, ?>> QN determinant()
+    public SIQuantity determinant()
     {
         SIUnit siu = getDisplayUnit().siUnit();
-        byte[] newDim = new byte[SIUnit.NUMBER_DIMENSIONS];
+        int[] newDim = new int[SIUnit.NUMBER_DIMENSIONS];
         for (int i = 0; i < SIUnit.NUMBER_DIMENSIONS; i++)
+        {
             newDim[i] = (byte) (order() * (int) siu.siDimensions()[i]);
+        }
         SIUnit detSIUnit = new SIUnit(newDim);
-        return (QN) this.displayUnit.ofSi(MatrixMath.determinant(this.aSi, order())).setDisplayUnit((U) detSIUnit);
-    }
-
-    @Override
-    public M inverse() throws NonInvertibleMatrixException
-    {
-        return instantiate(MatrixMath.inverse(this.aSi, order()));
+        return new SIQuantity(MatrixMath.determinant(this.aSi, order()), detSIUnit);
     }
 
     @Override
     public Q trace()
     {
         return this.displayUnit.ofSi(MatrixMath.trace(this.aSi, order()));
-    }
-
-    @Override
-    public M adjugate()
-    {
-        return instantiate(MatrixMath.adjugate(this.aSi, order()));
     }
 
     @Override
