@@ -99,21 +99,21 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
 
     /**
      * Return the (r,c)-value of the matrix in SI or BASE units.
-     * @param r the row, from 1, ..., N
-     * @param c the column, from 1, ..., N
+     * @param row the row, from 1, ..., N
+     * @param col the column, from 1, ..., N
      * @return the (r,c)-value of the matrix in SI or BASE units
      */
-    public abstract double si(int r, int c);
+    public abstract double si(int row, int col);
 
     /**
      * Return the (r,c)-value of the matrix as a quantity with the correct unit.
-     * @param r the row, from 1, ..., N
-     * @param c the column, from 1, ..., N
+     * @param row the row, from 1, ..., N
+     * @param col the column, from 1, ..., N
      * @return the (r,c)-value of the matrix as a quantity with the correct unit
      */
-    public Q value(final int r, final int c)
+    public Q value(final int row, final int col)
     {
-        return this.displayUnit.ofSi(si(r, c)).setDisplayUnit(this.displayUnit);
+        return this.displayUnit.ofSi(si(row, col)).setDisplayUnit(this.displayUnit);
     }
 
     @Override
