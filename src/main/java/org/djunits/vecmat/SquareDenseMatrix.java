@@ -75,7 +75,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     @Override
     public M scaleBy(final double factor)
     {
-        return instantiate(ArrayMath.scale(this.dataSi, factor));
+        return instantiate(ArrayMath.scaleBy(this.dataSi, factor));
     }
 
     @Override

@@ -127,7 +127,7 @@ public final class ArrayMath
      * @throws NullPointerException if {@code a} is null
      * @implNote Uses a simple indexed {@code for}-loop to enable JIT optimizations.
      */
-    public static double[] scale(final double[] a, final double alpha)
+    public static double[] scaleBy(final double[] a, final double alpha)
     {
         Throw.whenNull(a, "a");
         final int n = a.length;
