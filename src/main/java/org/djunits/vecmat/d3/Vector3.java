@@ -408,10 +408,10 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param otherVec the row vector to multiply with
          * @return the resulting matrix from the multiplication
          */
-        public Matrix3<SIQuantity, SIUnit> multiply(final Vector3.Row<?, ?> otherVec)
+        public Matrix3x3<SIQuantity, SIUnit> multiply(final Vector3.Row<?, ?> otherVec)
         {
             double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 1, 3);
-            return new Matrix3<SIQuantity, SIUnit>(resultData,
+            return new Matrix3x3<SIQuantity, SIUnit>(resultData,
                     getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
         }
 
@@ -536,7 +536,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param otherMat the matrix to multiply with
          * @return the resulting column vector from the multiplication
          */
-        public Vector3.Col<SIQuantity, SIUnit> multiply(final Matrix3<?, ?> otherMat)
+        public Vector3.Col<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> otherMat)
         {
             double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 1, 3, 3);
             return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
