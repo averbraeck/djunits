@@ -126,7 +126,7 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
      * when the SI units of this vector and the target vector do not match.
      * @param targetUnit the unit to convert the matrix to
-     * @return a quantity typed in the target matrix class
+     * @return a matrix typed in the target matrix class
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      * @param <TU> target unit type

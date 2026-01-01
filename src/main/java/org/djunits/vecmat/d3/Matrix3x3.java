@@ -98,6 +98,8 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         return new Matrix3x3<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
     }
 
+    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
+
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.
      * @param otherMat the matrix to multiply with.
@@ -126,7 +128,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
      * when the SI units of this vector and the target vector do not match.
      * @param targetUnit the unit to convert the matrix to
-     * @return a quantity typed in the target matrix class
+     * @return a matrix typed in the target matrix class
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      * @param <TU> target unit type
