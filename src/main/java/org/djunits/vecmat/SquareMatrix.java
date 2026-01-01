@@ -37,7 +37,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     private static final long serialVersionUID = 600L;
 
     /** The n x n values in si-units. */
-    private final double[] aSi;
+    private final double[] dataSi;
 
     /** The display unit. */
     private U displayUnit;
@@ -58,7 +58,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
         Throw.when(aSi.length != order * order, IllegalArgumentException.class,
                 "SquareMatrix initialized with %d values instead of %d", aSi.length, order * order);
         this.order = order;
-        this.aSi = aSi.clone(); // safe copy
+        this.dataSi = aSi.clone(); // safe copy
         this.displayUnit = displayUnit;
     }
 
@@ -103,7 +103,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      */
     public double[] si()
     {
-        return this.aSi;
+        return this.dataSi;
     }
 
     /**
@@ -114,7 +114,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      */
     public double si(final int r, final int c)
     {
-        return this.aSi[order() * (r - 1) + c - 1];
+        return this.dataSi[order() * (r - 1) + c - 1];
     }
 
     /**
@@ -131,19 +131,19 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @Override
     public M scaleBy(final double factor)
     {
-        return instantiate(ArrayMath.scale(this.aSi, factor));
+        return instantiate(ArrayMath.scale(this.dataSi, factor));
     }
 
     @Override
     public M add(final M other)
     {
-        return instantiate(ArrayMath.add(this.aSi, other.si()));
+        return instantiate(ArrayMath.add(this.dataSi, other.si()));
     }
 
     @Override
     public M subtract(final M other)
     {
-        return instantiate(ArrayMath.subtract(this.aSi, other.si()));
+        return instantiate(ArrayMath.subtract(this.dataSi, other.si()));
     }
 
     @Override
@@ -155,31 +155,31 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @Override
     public M abs()
     {
-        return instantiate(ArrayMath.abs(this.aSi));
+        return instantiate(ArrayMath.abs(this.dataSi));
     }
 
     @Override
     public Q normFrobenius()
     {
-        return this.displayUnit.ofSi(Math.sqrt(Math2.sumSqr(this.aSi))).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math.sqrt(Math2.sumSqr(this.dataSi))).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q mean()
     {
-        return this.displayUnit.ofSi(sum().si() / this.aSi.length).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(sum().si() / this.dataSi.length).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q min()
     {
-        return this.displayUnit.ofSi(Math2.min(this.aSi)).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math2.min(this.dataSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q max()
     {
-        return this.displayUnit.ofSi(Math2.max(this.aSi)).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math2.max(this.dataSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -191,36 +191,36 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @Override
     public Q median()
     {
-        return this.displayUnit.ofSi(Math2.median(this.aSi)).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math2.median(this.dataSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q sum()
     {
-        return this.displayUnit.ofSi(Math2.sum(this.aSi)).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math2.sum(this.dataSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public M plus(final Q increment)
     {
-        return instantiate(ArrayMath.add(this.aSi, increment.si()));
+        return instantiate(ArrayMath.add(this.dataSi, increment.si()));
     }
 
     @Override
     public M minus(final Q decrement)
     {
-        return instantiate(ArrayMath.add(this.aSi, -decrement.si()));
+        return instantiate(ArrayMath.add(this.dataSi, -decrement.si()));
     }
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
     public M transpose()
     {
-        double[] newSi = new double[this.aSi.length];
+        double[] newSi = new double[this.dataSi.length];
         int n = order();
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                newSi[n * i + j] = this.aSi[n * j + i];
+                newSi[n * i + j] = this.dataSi[n * j + i];
         return instantiate(newSi);
     }
 
@@ -234,37 +234,37 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
             newDim[i] = (byte) (order() * (int) siu.siDimensions()[i]);
         }
         SIUnit detSIUnit = new SIUnit(newDim);
-        return new SIQuantity(MatrixMath.determinant(this.aSi, order()), detSIUnit);
+        return new SIQuantity(MatrixMath.determinant(this.dataSi, order()), detSIUnit);
     }
 
     @Override
     public Q trace()
     {
-        return this.displayUnit.ofSi(MatrixMath.trace(this.aSi, order()));
+        return this.displayUnit.ofSi(MatrixMath.trace(this.dataSi, order()));
     }
 
     @Override
     public boolean isSymmetric()
     {
-        return MatrixMath.isSymmetric(this.aSi, order());
+        return MatrixMath.isSymmetric(this.dataSi, order());
     }
 
     @Override
     public boolean isSymmetric(final Q tolerance)
     {
-        return MatrixMath.isSymmetric(this.aSi, order(), tolerance.si());
+        return MatrixMath.isSymmetric(this.dataSi, order(), tolerance.si());
     }
 
     @Override
     public boolean isSkewSymmetric()
     {
-        return MatrixMath.isSkewSymmetric(this.aSi, order());
+        return MatrixMath.isSkewSymmetric(this.dataSi, order());
     }
 
     @Override
     public boolean isSkewSymmetric(final Q tolerance)
     {
-        return MatrixMath.isSkewSymmetric(this.aSi, order(), tolerance.si());
+        return MatrixMath.isSkewSymmetric(this.dataSi, order(), tolerance.si());
     }
 
     @Override
@@ -278,7 +278,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(this.aSi);
+        result = prime * result + Arrays.hashCode(this.dataSi);
         result = prime * result + Objects.hash(this.order);
         return result;
     }
@@ -294,7 +294,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
         if (getClass() != obj.getClass())
             return false;
         SquareMatrix<?, ?, ?> other = (SquareMatrix<?, ?, ?>) obj;
-        return Arrays.equals(this.aSi, other.aSi) && this.order == other.order;
+        return Arrays.equals(this.dataSi, other.dataSi) && this.order == other.order;
     }
 
     @SuppressWarnings("checkstyle:needbraces")
