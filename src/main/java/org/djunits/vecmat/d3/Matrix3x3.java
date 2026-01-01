@@ -10,8 +10,8 @@ import org.djunits.vecmat.SquareMatrix;
 import org.djutils.exceptions.Throw;
 
 /**
- * Matrix3D implements a matrix with 3x3 real-valued entries. The matrix is immutable, except for the display unit, which can be
- * changed. <br>
+ * Matrix3x3 implements a matrix with 3x3 real-valued entries. The matrix is immutable, except for the display unit, which can
+ * be changed. <br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -26,7 +26,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     private static final long serialVersionUID = 600L;
 
     /**
-     * Create a new Matrix3D with a unit.
+     * Create a new Matrix3x3 with a unit.
      * @param aSi the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in SI or BASE units
      * @param displayUnit the display unit to use
      */
@@ -36,12 +36,12 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Create a new Matrix3D with a unit, based on a 1-dimensional array.
+     * Create a new Matrix3x3 with a unit, based on a 1-dimensional array.
      * @param valueArray the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
-     * @return a new Matrix3D with a unit
+     * @return a new Matrix3x3 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[] valueArray,
@@ -56,12 +56,12 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Create a new Matrix3D with a unit, based on a 2-dimensional grid.
+     * Create a new Matrix3x3 with a unit, based on a 2-dimensional grid.
      * @param valueGrid the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
-     * @return a new Matrix3D with a unit
+     * @return a new Matrix3x3 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[][] valueGrid,
@@ -106,7 +106,8 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public Matrix3x3<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> otherMat)
     {
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 3, 3, 3);
-        return new Matrix3x3<SIQuantity, SIUnit>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+        return new Matrix3x3<SIQuantity, SIUnit>(resultData,
+                getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
     /**
