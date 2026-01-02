@@ -108,12 +108,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * Create a new column VectorN with a unit, based on a DataGrid storage object that contains SI data.
          * @param dataSi the data of the vector, in SI unit.
          * @param displayUnit the display unit to use
-         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
+         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
+         *             is initialized with more than one row
          */
         protected Col(final DataGrid<?> dataSi, final U displayUnit)
         {
-            // TODO check Nx1
             super(dataSi, displayUnit);
+            Throw.when(dataSi.cols() != 1, IllegalArgumentException.class,
+                    "Column vector initialized with more than one column");
         }
 
         @Override
@@ -126,18 +128,6 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public boolean isColumnVector()
         {
             return true;
-        }
-
-        @Override
-        public int rows()
-        {
-            return this.dataSi.rows();
-        }
-
-        @Override
-        public int cols()
-        {
-            return 1;
         }
 
         @Override
@@ -190,30 +180,19 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * Create a new row VectorN with a unit, based on a DataGrid storage object that contains SI data.
          * @param dataSi the data of the vector, in SI unit.
          * @param displayUnit the display unit to use
-         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
+         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
+         *             is initialized with more than one row
          */
         protected Row(final DataGrid<?> dataSi, final U displayUnit)
         {
-            // TODO check 1xN
             super(dataSi, displayUnit);
+            Throw.when(dataSi.rows() != 1, IllegalArgumentException.class, "Row vector initialized with more than one row");
         }
 
         @Override
         public boolean isColumnVector()
         {
             return false;
-        }
-
-        @Override
-        public int rows()
-        {
-            return 1;
-        }
-
-        @Override
-        public int cols()
-        {
-            return this.dataSi.cols();
         }
 
         @Override
