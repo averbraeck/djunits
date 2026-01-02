@@ -227,7 +227,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
     
     // TODO add methods asMatrix2x2, asMatrix3x3, asMatrixNxN
-    // TODO ass methods asVector2.Col, asVector3.Col, asVectorN.Col, asVector2.Row, asVector3.Row, asVectorN.Row
+    // TODO add methods asVector2.Col, asVector3.Col, asVectorN.Col, asVector2.Row, asVector3.Row, asVectorN.Row
 
 
 }
