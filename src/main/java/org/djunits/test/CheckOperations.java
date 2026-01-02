@@ -378,8 +378,8 @@ public final class CheckOperations
      */
     private static boolean dimsEqual(final SIUnit a, final SIUnit b, final double eps)
     {
-        double[] da = a.siDimensions();
-        double[] db = b.siDimensions();
+        int[] da = a.siDimensions();
+        int[] db = b.siDimensions();
         if (da.length != db.length)
         {
             return false;

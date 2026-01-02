@@ -8,7 +8,6 @@ import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.system.UnitSystem;
-import org.djunits.util.Math2;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -24,9 +23,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
 {
     /** The (currently) 9 dimensions we take into account: rad, sr, kg, m, s, A, K, mol, cd. */
     public static final int NUMBER_DIMENSIONS = 9;
-
-    /** The default denominator which consists of all "1"s. */
-    private static final int[] UNIT_DENOMINATOR = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1};
 
     /** The abbreviations of the SI units we use in SIUnit. */
     private static final String[] SI_ABBREVIATIONS = new String[] {"rad", "sr", "kg", "m", "s", "A", "K", "mol", "cd"};
@@ -44,12 +40,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      */
     private final int[] dimensions;
 
-    /** In case the dimensions are fractional, the denominator will contain values different from 1. */
-    private final int[] denominator;
-
-    /** Stores whether the dimensions are fractional or not. */
-    private final boolean fractional;
-
     /**
      * Create an immutable SIUnit instance based on a safe copy of a given dimensions specification. As an example, speed is
      * indicated as length = 1; time = -1 with the other dimensions equal to zero.
@@ -62,30 +52,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
         Throw.whenNull(dimensions, "dimensions cannot be null");
         Throw.when(dimensions.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "SIUnit wrong dimensionality");
         this.dimensions = dimensions.clone(); // safe copy
-        this.denominator = UNIT_DENOMINATOR;
-        this.fractional = false;
-    }
-
-    /**
-     * Create an immutable fractional SIUnit instance based on a safe copy of a given specification, separated in a numerator
-     * and a denominator.
-     * @param numerator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2: mass
-     *            (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
-     *            luminous intensity (cd).
-     * @param denominator The (currently) 9 dimensions of the SI unit we distinguish: 0: angle (rad), 1: solid angle (sr), 2:
-     *            mass (kg), 3: length (m), 4: time (s), 5: current (A), 6: temperature (K), 7: amount of substance (mol), 8:
-     *            luminous intensity (cd).
-     */
-    protected SIUnit(final int[] numerator, final int[] denominator)
-    {
-        // TODO all operators on fractional dimensions
-        Throw.whenNull(numerator, "numerator cannot be null");
-        Throw.whenNull(denominator, "denominator cannot be null");
-        Throw.when(numerator.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "numerator has wrong dimensionality");
-        Throw.when(denominator.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "denominator has wrong dimensionality");
-        this.dimensions = numerator.clone(); // safe copy
-        this.denominator = denominator.clone(); // safe copy
-        this.fractional = !Arrays.equals(denominator, UNIT_DENOMINATOR);
     }
 
     /**
@@ -114,8 +80,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
         this.dimensions[6] = temperature;
         this.dimensions[7] = amountOfSubstance;
         this.dimensions[8] = luminousIntensity;
-        this.denominator = UNIT_DENOMINATOR;
-        this.fractional = false;
     }
 
     /**
@@ -133,7 +97,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     {
         Throw.whenNull(siString, "siString cannot be null");
         String dimString = siString.replaceAll("[ .^]", "");
-        // TODO fractional: ^(-1/2)
         if (dimString.contains("/"))
         {
             String[] parts = dimString.split("\\/");
@@ -245,14 +208,9 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
      * Return the (fractional) SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd.
      * @return the (fractional) SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd
      */
-    public double[] siDimensions()
+    public int[] siDimensions()
     {
-        double[] result = new double[NUMBER_DIMENSIONS];
-        for (int i = 0; i < NUMBER_DIMENSIONS; i++)
-        {
-            result[i] = 1.0 * this.dimensions[i] / this.denominator[i];
-        }
-        return result;
+        return this.dimensions.clone();
     }
 
     /**
@@ -313,7 +271,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
         int[] result = new int[NUMBER_DIMENSIONS];
         for (int i = 0; i < NUMBER_DIMENSIONS; i++)
         {
-            result[i] = Math2.pow(this.dimensions[i], n);
+            result[i] = this.dimensions[i] * n;
         }
         return new SIUnit(result);
     }
@@ -349,15 +307,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
             dim[i] = dim1.dimensions[i] - dim2.dimensions[i];
         }
         return new SIUnit(dim);
-    }
-
-    /**
-     * Indicate whether this SIDImensions contains one or more fractional dimensions.
-     * @return whether this SIDImensions contains one or more fractional dimensions
-     */
-    public boolean isFractional()
-    {
-        return this.fractional;
     }
 
     @Override
@@ -481,32 +430,7 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     @Override
     public String toString()
     {
-        if (this.fractional)
-        {
-            StringBuffer sb = new StringBuffer();
-            sb.append("[");
-            for (int i = 0; i < NUMBER_DIMENSIONS; i++)
-            {
-                if (i > 0)
-                {
-                    sb.append(", ");
-                }
-                if (this.denominator[i] != 1 && this.dimensions[i] != 0)
-                {
-                    sb.append(this.dimensions[i] + "/" + this.denominator[i]);
-                }
-                else
-                {
-                    sb.append(this.dimensions[i]);
-                }
-            }
-            sb.append("]");
-            return sb.toString();
-        }
-        else
-        {
-            return Arrays.toString(this.dimensions);
-        }
+        return Arrays.toString(this.dimensions);
     }
 
     @Override
@@ -610,7 +534,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(this.denominator);
         result = prime * result + Arrays.hashCode(this.dimensions);
         return result;
     }
@@ -626,8 +549,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
         if (getClass() != obj.getClass())
             return false;
         SIUnit other = (SIUnit) obj;
-        if (!Arrays.equals(this.denominator, other.denominator))
-            return false;
         if (!Arrays.equals(this.dimensions, other.dimensions))
             return false;
         return true;
