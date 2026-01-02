@@ -79,9 +79,9 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     @Override
-    protected Matrix3x3<Q, U> instantiate(final double[] aSiNew)
+    public Matrix3x3<Q, U> instantiate(final double[] siNew)
     {
-        return new Matrix3x3<Q, U>(aSiNew, getDisplayUnit());
+        return new Matrix3x3<Q, U>(siNew, getDisplayUnit());
     }
 
     @Override

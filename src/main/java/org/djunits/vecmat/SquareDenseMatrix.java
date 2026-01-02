@@ -2,13 +2,8 @@ package org.djunits.vecmat;
 
 import java.util.Arrays;
 
-import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.unit.si.SIUnit;
-import org.djunits.util.ArrayMath;
-import org.djunits.util.Math2;
-import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.operations.SquareMatrixOps;
 import org.djutils.exceptions.Throw;
 
@@ -47,13 +42,6 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
         this.dataSi = dataSi.clone(); // safe copy
     }
 
-    /**
-     * Return a new matrix with the given SI or BASE values.
-     * @param dataSiNew the values for the new matrix
-     * @return a new matrix with the provided SI or BASE values
-     */
-    protected abstract M instantiate(double[] dataSiNew);
-
     @Override
     public int order()
     {
@@ -70,133 +58,6 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     public double si(final int r, final int c)
     {
         return this.dataSi[order() * (r - 1) + c - 1];
-    }
-
-    @Override
-    public M scaleBy(final double factor)
-    {
-        return instantiate(ArrayMath.scaleBy(this.dataSi, factor));
-    }
-
-    @Override
-    public M add(final M other)
-    {
-        return instantiate(ArrayMath.add(this.dataSi, other.si()));
-    }
-
-    @Override
-    public M subtract(final M other)
-    {
-        return instantiate(ArrayMath.subtract(this.dataSi, other.si()));
-    }
-
-    @Override
-    public M abs()
-    {
-        return instantiate(ArrayMath.abs(this.dataSi));
-    }
-
-    @Override
-    public Q normFrobenius()
-    {
-        return getDisplayUnit().ofSi(Math.sqrt(Math2.sumSqr(this.dataSi))).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q mean()
-    {
-        return getDisplayUnit().ofSi(sum().si() / this.dataSi.length).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q min()
-    {
-        return getDisplayUnit().ofSi(Math2.min(this.dataSi)).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q max()
-    {
-        return getDisplayUnit().ofSi(Math2.max(this.dataSi)).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q median()
-    {
-        return getDisplayUnit().ofSi(Math2.median(this.dataSi)).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q sum()
-    {
-        return getDisplayUnit().ofSi(Math2.sum(this.dataSi)).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public M add(final Q increment)
-    {
-        return instantiate(ArrayMath.add(this.dataSi, increment.si()));
-    }
-
-    @Override
-    public M subtract(final Q decrement)
-    {
-        return instantiate(ArrayMath.add(this.dataSi, -decrement.si()));
-    }
-
-    @SuppressWarnings("checkstyle:needbraces")
-    @Override
-    public M transpose()
-    {
-        double[] newSi = new double[this.dataSi.length];
-        int n = order();
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                newSi[n * i + j] = this.dataSi[n * j + i];
-        return instantiate(newSi);
-    }
-
-    @Override
-    public SIQuantity determinant()
-    {
-        SIUnit siu = getDisplayUnit().siUnit();
-        int[] newDim = new int[SIUnit.NUMBER_DIMENSIONS];
-        for (int i = 0; i < SIUnit.NUMBER_DIMENSIONS; i++)
-        {
-            newDim[i] = (byte) (order() * (int) siu.siDimensions()[i]);
-        }
-        SIUnit detSIUnit = new SIUnit(newDim);
-        return new SIQuantity(MatrixMath.determinant(this.dataSi, order()), detSIUnit);
-    }
-
-    @Override
-    public Q trace()
-    {
-        return getDisplayUnit().ofSi(MatrixMath.trace(this.dataSi, order()));
-    }
-
-    @Override
-    public boolean isSymmetric()
-    {
-        return MatrixMath.isSymmetric(this.dataSi, order());
-    }
-
-    @Override
-    public boolean isSymmetric(final Q tolerance)
-    {
-        return MatrixMath.isSymmetric(this.dataSi, order(), tolerance.si());
-    }
-
-    @Override
-    public boolean isSkewSymmetric()
-    {
-        return MatrixMath.isSkewSymmetric(this.dataSi, order());
-    }
-
-    @Override
-    public boolean isSkewSymmetric(final Q tolerance)
-    {
-        return MatrixMath.isSkewSymmetric(this.dataSi, order(), tolerance.si());
     }
 
     @Override

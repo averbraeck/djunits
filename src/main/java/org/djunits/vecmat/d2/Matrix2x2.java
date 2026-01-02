@@ -79,9 +79,9 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     @Override
-    protected Matrix2x2<Q, U> instantiate(final double[] aSiNew)
+    public Matrix2x2<Q, U> instantiate(final double[] siNew)
     {
-        return new Matrix2x2<Q, U>(aSiNew, getDisplayUnit());
+        return new Matrix2x2<Q, U>(siNew, getDisplayUnit());
     }
 
     @Override
@@ -97,6 +97,8 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         double[] invData = MatrixMath.adjugate(si(), 2);
         return new Matrix2x2<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
     }
+
+    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
 
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.

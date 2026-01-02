@@ -5,10 +5,7 @@ import java.util.Objects;
 import org.djunits.formatter.Format;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.value.Additive;
-import org.djunits.value.Scalable;
-import org.djunits.value.Value;
-import org.djunits.vecmat.operations.VecMatOps;
+import org.djunits.vecmat.operations.VectorMatrixOps;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -24,7 +21,7 @@ import org.djutils.exceptions.Throw;
  * @param <M> the matrix type
  */
 public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends Matrix<Q, U, M>>
-        implements Value<U, M>, Additive<M>, Scalable<M>, VecMatOps<Q, U, M>
+        implements VectorMatrixOps<Q, U, M>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -92,12 +89,6 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     }
 
     /**
-     * Return a row-major array of SI-values. Note that this is NOT a safe copy.
-     * @return the row-major array of SI-values
-     */
-    public abstract double[] si();
-
-    /**
      * Return the (r,c)-value of the matrix in SI or BASE units.
      * @param row the row, from 1, ..., N
      * @param col the column, from 1, ..., N
@@ -114,18 +105,6 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     public Q value(final int row, final int col)
     {
         return this.displayUnit.ofSi(si(row, col)).setDisplayUnit(this.displayUnit);
-    }
-
-    @Override
-    public M negate()
-    {
-        return scaleBy(-1.0);
-    }
-
-    @Override
-    public Q mode()
-    {
-        return max();
     }
 
     @Override

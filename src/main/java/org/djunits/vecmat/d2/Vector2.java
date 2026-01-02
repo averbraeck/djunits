@@ -7,18 +7,15 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.MatrixMath;
-import org.djunits.value.Additive;
-import org.djunits.value.Scalable;
-import org.djunits.value.Value;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.Normed;
-import org.djunits.vecmat.operations.VecMatOps;
+import org.djunits.vecmat.operations.VectorMatrixOps;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
 /**
- * Vector2D implements a vector with two real-valued entries. The vector is immutable, except for the display unit, which can be
- * changed. <br>
+ * Vector2 implements a vector with two real-valued entries. The vector is immutable, except for the display unit, which can be
+ * changed. Many of the method that have been defined already for a generic vector have been re-implemented for efficiency.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -26,10 +23,10 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
- * @param <V> the vector type
+ * @param <V> the vector type (Row or Col)
  */
 public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2<Q, U, V>>
-        implements Value<U, V>, Additive<V>, Scalable<V>, Normed<Q, U>, VecMatOps<Q, U, V>
+        implements Normed<Q, U>, VectorMatrixOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -44,7 +41,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     private U displayUnit;
 
     /**
-     * Create a new Vector2D with a unit.
+     * Create a new Vector2 with a unit.
      * @param xSi the x-value expressed in SI or BASE units
      * @param ySi the y-value expressed in SI or BASE units
      * @param displayUnit the display unit to use
@@ -64,6 +61,14 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @return a new column or row vector with adapted x and y values
      */
     protected abstract V instantiate(double xSiNew, double ySiNew);
+
+    @Override
+    public V instantiate(final double[] siNew)
+    {
+        Throw.when(siNew.length != 2, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
+                siNew.length);
+        return instantiate(siNew[0], siNew[1]);
+    }
 
     /**
      * Return the display unit of this vector.
@@ -109,6 +114,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
      * Return the contents of the vector as an array.
      * @return the contents of the vector as an array
      */
+    @Override
     public double[] si()
     {
         return new double[] {this.xSi, this.ySi};
@@ -273,6 +279,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     public String toString(final U withUnit)
     {
         var s = new StringBuilder();
+        s.append(isColumnVector() ? "Col" : "Row");
         s.append("[");
         s.append(withUnit.fromBaseValue(this.xSi));
         s.append(", ");
@@ -289,7 +296,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     /**
-     * Vector2D.Col implements a column vector with two real-valued entries. The vector is immutable, except for the display
+     * Vector2.Col implements a column vector with two real-valued entries. The vector is immutable, except for the display
      * unit, which can be changed. <br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
@@ -306,7 +313,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         private static final long serialVersionUID = 600L;
 
         /**
-         * Create a new 2D column vector with a unit.
+         * Create a new 2 column vector with a unit.
          * @param xSi the x-value expressed in SI or BASE units
          * @param ySi the y-value expressed in SI or BASE units
          * @param displayUnit the display unit to use
@@ -317,11 +324,11 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         /**
-         * Create a Vector2D column vector without needing generics.
+         * Create a Vector2 column vector without needing generics.
          * @param x the x-value expressed in the display unit
          * @param y the y-value expressed in the display unit
          * @param displayUnit the display unit to use
-         * @return a new Vector2D with a unit
+         * @return a new Vector2 with a unit
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
@@ -414,7 +421,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     /**
-     * Vector2D.Row implements a row vector with two real-valued entries. The vector is immutable, except for the display unit,
+     * Vector2.Row implements a row vector with two real-valued entries. The vector is immutable, except for the display unit,
      * which can be changed. <br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
@@ -431,7 +438,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         private static final long serialVersionUID = 600L;
 
         /**
-         * Create a new 2D row vector with a unit.
+         * Create a new 2 row vector with a unit.
          * @param xSi the x-value expressed in SI or BASE units
          * @param ySi the y-value expressed in SI or BASE units
          * @param displayUnit the display unit to use
@@ -442,11 +449,11 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         /**
-         * Create a Vector2D row vector without needing generics.
+         * Create a Vector2 row vector without needing generics.
          * @param x the x-value expressed in the display unit
          * @param y the y-value expressed in the display unit
          * @param displayUnit the display unit to use
-         * @return a new Vector2D with a unit
+         * @return a new Vector2 with a unit
          * @param <Q> the quantity type
          * @param <U> the unit type
          */

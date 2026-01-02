@@ -4,8 +4,6 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.util.ArrayMath;
-import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.Matrix;
 import org.djunits.vecmat.d2.Matrix2x2;
@@ -49,6 +47,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     @Override
+    public MatrixNxM<Q, U> instantiate(final double[] siNew)
+    {
+        return new MatrixNxM<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit());
+    }
+
+    @Override
     public double[] si()
     {
         return this.dataSi.getDataArray();
@@ -59,72 +63,6 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         // internal storage is 0-based, user access is 1-based
         return this.dataSi.get(row + 1, col + 1);
-    }
-
-    @Override
-    public Q mean()
-    {
-        return getDisplayUnit().ofSi(Math2.sum(si()) / (rows() * cols())).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q min()
-    {
-        return getDisplayUnit().ofSi(Math2.min(si())).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q max()
-    {
-        return getDisplayUnit().ofSi(Math2.max(si())).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q median()
-    {
-        return getDisplayUnit().ofSi(Math2.median(si())).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Q sum()
-    {
-        return getDisplayUnit().ofSi(Math2.sum(si())).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public MatrixNxM<Q, U> abs()
-    {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(ArrayMath.abs(si())), getDisplayUnit());
-    }
-
-    @Override
-    public MatrixNxM<Q, U> add(final Q increment)
-    {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(ArrayMath.add(si(), increment.si())), getDisplayUnit());
-    }
-
-    @Override
-    public MatrixNxM<Q, U> subtract(final Q decrement)
-    {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(ArrayMath.add(si(), -decrement.si())), getDisplayUnit());
-    }
-
-    @Override
-    public MatrixNxM<Q, U> scaleBy(final double factor)
-    {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(ArrayMath.scaleBy(si(), factor)), getDisplayUnit());
-    }
-
-    @Override
-    public MatrixNxM<Q, U> add(final MatrixNxM<Q, U> other)
-    {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(ArrayMath.add(si(), other.si())), getDisplayUnit());
-    }
-
-    @Override
-    public MatrixNxM<Q, U> subtract(final MatrixNxM<Q, U> other)
-    {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(ArrayMath.subtract(si(), other.si())), getDisplayUnit());
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
@@ -205,9 +143,9 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
                 this.dataSi.instantiate(MatrixMath.multiply(si(), colVec.si(), rows(), cols(), 1)),
                 getDisplayUnit().siUnit().plus(colVec.getDisplayUnit().siUnit()));
     }
-    
+
     // TODO add multiplication with VectorN.Col
-    
+
     /**
      * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
      * when the SI units of this vector and the target vector do not match.
@@ -225,9 +163,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new MatrixNxM<TQ, TU>(this.dataSi.instantiate(si()), targetUnit);
     }
-    
+
     // TODO add methods asMatrix2x2, asMatrix3x3, asMatrixNxN
     // TODO add methods asVector2.Col, asVector3.Col, asVectorN.Col, asVector2.Row, asVector3.Row, asVectorN.Row
-
 
 }
