@@ -6,17 +6,18 @@ import java.util.Objects;
 import org.djutils.exceptions.Throw;
 
 /**
- * DenseDoubleData implements a dense data grid for N x M matrices or N x 1 or 1 x N vectors with double values.<br>
+ * DenseFloatData implements a dense data grid for N x M matrices or N x 1 or 1 x N vectors with float values. Calculations are
+ * carried out in double precision, so the instantiate() and si() method work with double[].<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class DenseDoubleData implements DataGrid<DenseDoubleData>
+public class DenseFloatData implements DataGrid<DenseFloatData>
 {
     /** The data stored in row-major format. */
-    private final double[] data;
+    private final float[] data;
 
     /** The number of rows. */
     private final int rows;
@@ -32,7 +33,7 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public DenseDoubleData(final double[] data, final int rows, final int cols)
+    public DenseFloatData(final float[] data, final int rows, final int cols)
     {
         Throw.whenNull(data, "dataSi");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
@@ -45,12 +46,12 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
     }
 
     /**
-     * Instantiate a data object with a double[rows][cols]. A safe copy of the data is stored.
+     * Instantiate a data object with a float[rows][cols]. A safe copy of the data is stored.
      * @param data the data in row-major format
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public DenseDoubleData(final double[][] data)
+    public DenseFloatData(final float[][] data)
     {
         Throw.whenNull(data, "dataSi");
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
@@ -59,7 +60,7 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         for (int r = 1; r < this.rows; r++)
             Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
-        this.data = new double[this.rows * this.cols];
+        this.data = new float[this.rows * this.cols];
         for (int r = 0; r < this.rows; r++)
             for (int c = 0; c < this.cols; c++)
                 this.data[r * this.cols + c] = data[r][c];
@@ -97,24 +98,32 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         return this.data[row * this.cols + col];
     }
 
+    @SuppressWarnings("checkstyle:needbraces")
     @Override
     public double[] getDataArray()
     {
-        return this.data;
+        double[] doubleData = new double[this.data.length];
+        for (int i = 0; i < doubleData.length; i++)
+            doubleData[i] = this.data[i];
+        return doubleData;
     }
 
     @Override
-    public DenseDoubleData copy()
+    public DenseFloatData copy()
     {
-        return new DenseDoubleData(this.data.clone(), rows(), cols());
+        return new DenseFloatData(this.data.clone(), rows(), cols());
     }
 
+    @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public DenseDoubleData instantiate(final double[] newData)
+    public DenseFloatData instantiate(final double[] newData)
     {
         Throw.when(newData.length != rows() * cols(), IllegalArgumentException.class,
                 "Data object length != rows * cols, %d != %d * %d", newData.length, rows(), cols());
-        return new DenseDoubleData(newData, rows(), cols());
+        float[] floatData = new float[newData.length];
+        for (int i = 0; i < floatData.length; i++)
+            floatData[i] = (float) newData[i];
+        return new DenseFloatData(floatData, rows(), cols());
     }
 
     @Override
@@ -137,7 +146,7 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
             return false;
         if (getClass() != obj.getClass())
             return false;
-        DenseDoubleData other = (DenseDoubleData) obj;
+        DenseFloatData other = (DenseFloatData) obj;
         return this.cols == other.cols && Arrays.equals(this.data, other.data) && this.rows == other.rows;
     }
 

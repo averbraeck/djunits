@@ -38,26 +38,6 @@ public interface DataGrid<D extends DataGrid<D>>
     double get(int row, int col);
 
     /**
-     * Set element (r, c) in the grid to a new value. It is provided as a double, but may be stored in a different format. Note
-     * that row and col are 0-based for fast calculations.
-     * @param row the row number (0-based)
-     * @param col the column number (0-based)
-     * @param value the new value of element (row, col)
-     * @throws IndexOutOfBoundsException when row &gt; rows() or col &gt; cols() or row &lt; 0 or col &lt; 0
-     */
-    void set(int row, int col, double value);
-
-    /**
-     * Add the provided value to element (row, col) in the grid. It is provided as a double, but may be stored in a different
-     * format. Note that row and col are 0-based for fast calculations.
-     * @param row the row number (0-based)
-     * @param col the column number (0-based)
-     * @param value the value to add to element (row, col)
-     * @throws IndexOutOfBoundsException when row &gt; rows() or col &gt; cols() or row &lt; 0 or col &lt; 0
-     */
-    void add(int row, int col, double value);
-
-    /**
      * Return the data in row-major format. When the data is available in the correct format, NO safe copy is made.
      * @return the data in row-major format
      */
