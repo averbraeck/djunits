@@ -4,9 +4,11 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.SquareDenseMatrix;
+import org.djunits.vecmat.operations.Hadamard;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -21,6 +23,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareDenseMatrix<Q, U, Matrix2x2<Q, U>>
+        implements Hadamard<Matrix2x2<?, ?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -96,6 +99,27 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         double[] invData = MatrixMath.adjugate(si(), 2);
         return new Matrix2x2<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
+    }
+
+    @Override
+    public Matrix2x2<SIQuantity, SIUnit> invertElements()
+    {
+        SIUnit siUnit = getDisplayUnit().siUnit().invert();
+        return new Matrix2x2<SIQuantity, SIUnit>(ArrayMath.reciprocal(si()), siUnit);
+    }
+
+    @Override
+    public Matrix2x2<SIQuantity, SIUnit> multiplyElements(final Matrix2x2<?, ?> other)
+    {
+        SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
+        return new Matrix2x2<SIQuantity, SIUnit>(ArrayMath.multiply(si(), other.si()), siUnit);
+    }
+
+    @Override
+    public Matrix2x2<SIQuantity, SIUnit> divideElements(final Matrix2x2<?, ?> other)
+    {
+        SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
+        return new Matrix2x2<SIQuantity, SIUnit>(ArrayMath.divide(si(), other.si()), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------

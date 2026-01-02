@@ -4,9 +4,11 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.Matrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
+import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.SquareMatrixOps;
 import org.djunits.vecmat.storage.DataGrid;
 import org.djutils.exceptions.Throw;
@@ -24,7 +26,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Matrix<Q, U, MatrixNxN<Q, U>>
-        implements SquareMatrixOps<Q, U, MatrixNxN<Q, U>>
+        implements SquareMatrixOps<Q, U, MatrixNxN<Q, U>>, Hadamard<MatrixNxN<?, ?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -77,6 +79,27 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         double[] invData = MatrixMath.adjugate(si(), 3);
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(invData), getDisplayUnit().siUnit().pow(order() - 1));
+    }
+
+    @Override
+    public MatrixNxN<SIQuantity, SIUnit> invertElements()
+    {
+        SIUnit siUnit = getDisplayUnit().siUnit().invert();
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.reciprocal(si())), siUnit);
+    }
+
+    @Override
+    public MatrixNxN<SIQuantity, SIUnit> multiplyElements(final MatrixNxN<?, ?> other)
+    {
+        SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.multiply(si(), other.si())), siUnit);
+    }
+
+    @Override
+    public MatrixNxN<SIQuantity, SIUnit> divideElements(final MatrixNxN<?, ?> other)
+    {
+        SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------

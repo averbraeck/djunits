@@ -17,7 +17,7 @@ import org.djunits.value.Value;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
- * @param <VM> the vectoror matrix type
+ * @param <VM> the vector or matrix type
  */
 public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, VM extends VectorMatrixOps<Q, U, VM>>
         extends Value<U, VM>, Scalable<VM>, Additive<VM>

@@ -187,6 +187,80 @@ public final class ArrayMath
         return out;
     }
 
+    /**
+     * Returns a new array equal to the element-wise multiplication {@code a * b}.
+     * @param a the left-hand array; must be non-null
+     * @param b the right-hand array; must be non-null and the same length as {@code a}
+     * @return a newly allocated array where {@code out[i] = a[i] * b[i]} for all indices
+     * @throws NullPointerException if {@code a} or {@code b} is null
+     * @throws IllegalArgumentException if {@code a.length != b.length}
+     * @implNote Uses a simple indexed {@code for}-loop to enable JIT optimizations (bounds-check elimination, loop unrolling,
+     *           potential auto-vectorization).
+     */
+    public static double[] multiply(final double[] a, final double[] b)
+    {
+        Throw.whenNull(a, "a");
+        Throw.whenNull(b, "b");
+        final int n = a.length;
+        if (b.length != n)
+        {
+            throw new IllegalArgumentException("Length mismatch: a.length=" + n + ", b.length=" + b.length);
+        }
+        double[] out = new double[n];
+        for (int i = 0; i < n; i++)
+        {
+            out[i] = a[i] * b[i];
+        }
+        return out;
+    }
+
+    /**
+     * Returns a new array equal to the element-wise division {@code a / b}.
+     * @param a the left-hand array; must be non-null
+     * @param b the right-hand array; must be non-null and the same length as {@code a}
+     * @return a newly allocated array where {@code out[i] = a[i] / b[i]} for all indices
+     * @throws NullPointerException if {@code a} or {@code b} is null
+     * @throws IllegalArgumentException if {@code a.length != b.length}
+     * @implNote Uses a simple indexed {@code for}-loop to enable JIT optimizations (bounds-check elimination, loop unrolling,
+     *           potential auto-vectorization).
+     */
+    public static double[] divide(final double[] a, final double[] b)
+    {
+        Throw.whenNull(a, "a");
+        Throw.whenNull(b, "b");
+        final int n = a.length;
+        if (b.length != n)
+        {
+            throw new IllegalArgumentException("Length mismatch: a.length=" + n + ", b.length=" + b.length);
+        }
+        double[] out = new double[n];
+        for (int i = 0; i < n; i++)
+        {
+            out[i] = a[i] / b[i];
+        }
+        return out;
+    }
+
+    /**
+     * Returns a new array equal to the element-wise reciprocal {@code 1 / a}.
+     * @param a the array; must be non-null
+     * @return a newly allocated array where {@code out[i] = 1 / a[i]} for all indices
+     * @throws NullPointerException if {@code a} is null
+     * @implNote Uses a simple indexed {@code for}-loop to enable JIT optimizations (bounds-check elimination, loop unrolling,
+     *           potential auto-vectorization).
+     */
+    public static double[] reciprocal(final double[] a)
+    {
+        Throw.whenNull(a, "a");
+        final int n = a.length;
+        double[] out = new double[n];
+        for (int i = 0; i < n; i++)
+        {
+            out[i] = 1.0 / a[i];
+        }
+        return out;
+    }
+
     // ---------------------------------------------------------------------
     // Procedural (into) variants — write into caller-provided buffer
     // ---------------------------------------------------------------------
