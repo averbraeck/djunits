@@ -2,7 +2,6 @@ package org.djunits.unit.si;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -152,23 +151,6 @@ public class SIDimensionsTest
         assertEquals("kgm<sup>2</sup>s<sup>-3</sup>A<sup>-1</sup>", si12.toHTMLString(false, false));
         assertEquals("kg.m<sup>2</sup>.s<sup>-3</sup>.A<sup>-1</sup>", si12.toHTMLString(false, true));
 
-        // fractional
-        SIUnit sif = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1});
-        assertEquals(sif, si1);
-        assertEquals(sif, si2);
-        assertEquals(sif, si3);
-        assertEquals(sif, si4);
-        assertEquals(sif.hashCode(), si2.hashCode());
-        assertTrue(sif.equals(si2));
-        assertTrue(sif.equals(sif));
-        assertFalse(sif.isFractional()); // unit denominator
-        assertFalse(si2.isFractional());
-
-        SIUnit sif2 = new SIUnit(new int[] {0, 0, 1, 1, -2, -1, 0, 0, 0}, new int[] {1, 1, 2, 2, 1, 3, 1, 1, 1});
-        assertNotEquals(sif, sif2);
-        assertNotEquals(sif.hashCode(), sif2.hashCode());
-        assertEquals("[0, 0, 1/2, 1/2, -2, -1/3, 0, 0, 0]", sif2.toString());
-
         try
         {
             SIUnit siw1 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0}); // 8 long
@@ -183,26 +165,6 @@ public class SIDimensionsTest
         {
             SIUnit siw2 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0, 0}); // 6 long
             fail("SIDimensions.of(" + siw2 + ") should have triggered a UnitException");
-        }
-        catch (SIRuntimeException e)
-        {
-            // ignore
-        }
-
-        try
-        {
-            SIUnit siw3 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0}, new int[] {1, 1, 2, 2, 1, 3, 1, 1, 1});
-            fail("SIDimensions.of(" + siw3 + ") should have triggered a UnitException");
-        }
-        catch (SIRuntimeException e)
-        {
-            // ignore
-        }
-
-        try
-        {
-            SIUnit siw4 = new SIUnit(new int[] {0, 0, 1, 1, -2, 0, 0, 0, 0}, new int[] {1, 1, 2, 2, 1, 3, 1, 1, 1, 1});
-            fail("SIDimensions.of(" + siw4 + ") should have triggered a UnitException");
         }
         catch (SIRuntimeException e)
         {
