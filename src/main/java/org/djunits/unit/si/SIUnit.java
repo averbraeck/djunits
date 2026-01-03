@@ -50,7 +50,8 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     public SIUnit(final int[] dimensions)
     {
         Throw.whenNull(dimensions, "dimensions cannot be null");
-        Throw.when(dimensions.length != NUMBER_DIMENSIONS, SIRuntimeException.class, "SIUnit wrong dimensionality");
+        Throw.when(dimensions.length != NUMBER_DIMENSIONS, IllegalArgumentException.class,
+                "SIUnit has the wrong dimensionality: %s instead of %s", dimensions.length, NUMBER_DIMENSIONS);
         this.dimensions = dimensions.clone(); // safe copy
     }
 
