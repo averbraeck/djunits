@@ -2,6 +2,8 @@ package org.djunits.unit.system;
 
 import java.util.Objects;
 
+import org.djutils.exceptions.Throw;
+
 /**
  * Systems of Units such as SI, including SI-derived; cgs (centimeter-gram-second).
  * <p>
@@ -58,8 +60,12 @@ public class UnitSystem
      */
     public UnitSystem(final String id, final String name)
     {
-        this.id = id;
-        this.name = name;
+        Throw.whenNull(id, "id");
+        Throw.whenNull(name, "name");
+        Throw.when(id.strip().length() == 0, IllegalArgumentException.class, "id cannot be empty");
+        Throw.when(name.strip().length() == 0, IllegalArgumentException.class, "name cannot be empty");
+        this.id = id.strip();
+        this.name = name.strip();
     }
 
     /**
