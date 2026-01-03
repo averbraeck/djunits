@@ -37,7 +37,7 @@ public class SIPrefix
         Throw.whenNull(defaultTextualPrefix, "SIPrefix.defaultTextualPrefix cannot be null");
         Throw.whenNull(prefixName, "SIPrefix.prefixName cannot be null");
         Throw.whenNull(defaultDisplayPrefix, "SIPrefix.defaultDisplayPrefix cannot be null");
-        Throw.when(factor == 0, SIRuntimeException.class, "SIPrefix.factor cannot be 0");
+        Throw.when(factor == 0, IllegalArgumentException.class, "SIPrefix.factor cannot be 0");
         this.defaultTextualPrefix = defaultTextualPrefix;
         this.prefixName = prefixName;
         this.factor = factor;

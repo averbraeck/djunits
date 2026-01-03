@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.djutils.exceptions.Throw;
+
 /**
  * Useful sets of SI prefixes.
  * <p>
@@ -62,6 +64,8 @@ public enum SIPrefixes
         unitPrefixes.put("m", new SIPrefix("m", "milli", 1.0E-3));
         unitPrefixes.put("c", new SIPrefix("c", "centi", 1.0E-2));
         unitPrefixes.put("d", new SIPrefix("d", "deci", 1.0E-1));
+        
+        unitPrefixes.put("", new SIPrefix("", "", 1.0E0));
 
         unitPrefixes.put("da", new SIPrefix("da", "deca", 1.0E1));
         unitPrefixes.put("h", new SIPrefix("h", "hecto", 1.0E2));
@@ -101,6 +105,8 @@ public enum SIPrefixes
         perUnitPrefixes.put("/m", new SIPrefix("/m", "per milli", 1.0E3));
         perUnitPrefixes.put("/c", new SIPrefix("/c", "per centi", 1.0E2));
         perUnitPrefixes.put("/d", new SIPrefix("/d", "per deci", 1.0E1));
+
+        perUnitPrefixes.put("/", new SIPrefix("/", "per", 1.0E0));
 
         perUnitPrefixes.put("/da", new SIPrefix("/da", "per deca", 1.0E-1));
         perUnitPrefixes.put("/h", new SIPrefix("/h", "per hecto", 1.0E-2));
@@ -148,6 +154,8 @@ public enum SIPrefixes
         kiloPrefixes.put("da", new SIPrefix("da", "deca", 1.0E-2));
         kiloPrefixes.put("h", new SIPrefix("h", "hecto", 1.0E-1));
 
+        kiloPrefixes.put("k", new SIPrefix("k", "kilo", 1.0E0));
+
         kiloPrefixes.put("M", new SIPrefix("M", "mega", 1.0E3));
         kiloPrefixes.put("G", new SIPrefix("G", "giga", 1.0E6));
         kiloPrefixes.put("T", new SIPrefix("T", "tera", 1.0E9));
@@ -158,7 +166,7 @@ public enum SIPrefixes
         kiloPrefixes.put("R", new SIPrefix("R", "ronna", 1.0E24));
         kiloPrefixes.put("Q", new SIPrefix("Q", "quetta", 1.0E27));
         KILO_PREFIXES = Collections.unmodifiableMap(kiloPrefixes);
-        
+
         Map<String, SIPrefix> perKiloPrefixes = new LinkedHashMap<>();
         perKiloPrefixes.put("/q", new SIPrefix("/q", "per quecto", 1.0E33));
         perKiloPrefixes.put("/r", new SIPrefix("/r", "per ronto", 1.0E30));
@@ -175,7 +183,7 @@ public enum SIPrefixes
         perKiloPrefixes.put("/", new SIPrefix("/", "/", 1.0E3));
         perKiloPrefixes.put("/da", new SIPrefix("/da", "per deca", 1.0E2));
         perKiloPrefixes.put("/h", new SIPrefix("/h", "per hecto", 1.0E1));
-        
+
         perKiloPrefixes.put("/k", new SIPrefix("/k", "per kilo", 1.0E0));
         perKiloPrefixes.put("/M", new SIPrefix("/M", "per mega", 1.0E-3));
         perKiloPrefixes.put("/G", new SIPrefix("/G", "per giga", 1.0E-6));
@@ -196,7 +204,11 @@ public enum SIPrefixes
      */
     public static SIPrefix getSiPrefix(final String prefixKey)
     {
-        return UNIT_PREFIXES.get(prefixKey);
+        Throw.whenNull(prefixKey, "prefixKey cannot be null");
+        SIPrefix p = UNIT_PREFIXES.get(prefixKey);
+        Throw.when(p == null, IllegalArgumentException.class, "Unknown SI prefix: %s", prefixKey);
+        return p;
+
     }
 
     /**
@@ -206,7 +218,11 @@ public enum SIPrefixes
      */
     public static SIPrefix getSiPrefixPer(final String prefixKey)
     {
-        return PER_UNIT_PREFIXES.get(prefixKey);
+        Throw.whenNull(prefixKey, "prefixKey cannot be null");
+        SIPrefix p = PER_UNIT_PREFIXES.get(prefixKey);
+        Throw.when(p == null, IllegalArgumentException.class, "Unknown SI prefix for 'per': %s", prefixKey);
+        return p;
+
     }
 
     /**
@@ -217,7 +233,11 @@ public enum SIPrefixes
      */
     public static SIPrefix getSiPrefixKilo(final String prefixKey)
     {
-        return KILO_PREFIXES.get(prefixKey);
+        Throw.whenNull(prefixKey, "prefixKey cannot be null");
+        SIPrefix p = KILO_PREFIXES.get(prefixKey);
+        Throw.when(p == null, IllegalArgumentException.class, "Unknown SI prefix for 'kilo': %s", prefixKey);
+        return p;
+
     }
 
 }
