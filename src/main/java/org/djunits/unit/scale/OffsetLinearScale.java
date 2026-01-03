@@ -2,7 +2,6 @@ package org.djunits.unit.scale;
 
 import java.util.Objects;
 
-import org.djunits.old.unit.util.UnitRuntimeException;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -10,8 +9,8 @@ import org.djutils.exceptions.Throw;
  * combining scales in the Unit's deriveUnit method.
  * <p>
  * A Scale for linear transformations with an offset that has to be applied first when converting to the base (SI) unit, before
- * the scaling takes place, e.g. for Temperature. As an example, transform from Degrees Fahrenheit to Kelvin (SI). The
- * scale is K = (F + 459.67) × 5⁄9, and F = K × 9⁄5 − 459.67.
+ * the scaling takes place, e.g. for Temperature. As an example, transform from Degrees Fahrenheit to Kelvin (SI). The scale is
+ * K = (F + 459.67) × 5⁄9, and F = K × 9⁄5 − 459.67.
  * </p>
  * <p>
  * When we have an original scale with offset o1 and scalefactor f1, the calculation to the base unit is
@@ -58,13 +57,16 @@ public class OffsetLinearScale implements Scale
 
     /**
      * Construct a Scale for linear transformations with an offset, e.g. for Temperature.
-     * @param scaleFactorToBaseUnit the scale factor by which this number has to be multiplied to convert it to the base
-     *            (e.g., SI) unit.
+     * @param scaleFactorToBaseUnit the scale factor by which this number has to be multiplied to convert it to the base (e.g.,
+     *            SI) unit.
      * @param offsetToBaseUnit when converting to a base unit, the offset is applied first.
      */
     public OffsetLinearScale(final double scaleFactorToBaseUnit, final double offsetToBaseUnit)
     {
-        Throw.when(scaleFactorToBaseUnit == 0.0, UnitRuntimeException.class, "scale factor for linear scale cannnot be 0");
+        Throw.when(scaleFactorToBaseUnit <= 0.0 || !Double.isFinite(scaleFactorToBaseUnit), IllegalArgumentException.class,
+                "scale factor for linear scale must be positive and cannnot be NaN or infinity");
+        Throw.when(!Double.isFinite(offsetToBaseUnit), IllegalArgumentException.class,
+                "offset for linear scale cannnot be NaN or infinity");
         this.scaleFactorToBaseUnit = scaleFactorToBaseUnit;
         this.offsetToBaseUnit = offsetToBaseUnit;
     }

@@ -1,6 +1,5 @@
 package org.djunits.unit.scale;
 
-import org.djunits.old.unit.util.UnitRuntimeException;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -31,7 +30,8 @@ public class LinearScale implements Scale
      */
     public LinearScale(final double scaleFactorToBaseUnit)
     {
-        Throw.when(scaleFactorToBaseUnit == 0.0, UnitRuntimeException.class, "scale factor for linear scale cannnot be 0");
+        Throw.when(scaleFactorToBaseUnit <= 0.0 || !Double.isFinite(scaleFactorToBaseUnit), IllegalArgumentException.class,
+                "scale factor for linear scale must be positive and cannnot be NaN or infinity");
         this.scaleFactorToBaseUnit = scaleFactorToBaseUnit;
     }
 
@@ -43,9 +43,7 @@ public class LinearScale implements Scale
      */
     public LinearScale(final double numerator, final double denominator)
     {
-        Throw.when(numerator == 0.0, UnitRuntimeException.class, "numerator in scale factor for linear scale cannnot be 0");
-        Throw.when(denominator == 0.0, UnitRuntimeException.class, "denominator in scale factor for linear scale cannnot be 0");
-        this.scaleFactorToBaseUnit = numerator / denominator;
+        this(numerator / denominator);
     }
 
     @Override

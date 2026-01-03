@@ -1,5 +1,7 @@
 package org.djunits.unit.scale;
 
+import org.djutils.exceptions.Throw;
+
 /**
  * A Scale for transforming a slope as a grade, where 45 degrees is 1, and 90 degrees is infinite, to radians. The formula is:
  * angle = atan(grade). The factor that is given, is the factor by which the value is multiplied to get a grade. When a scale is
@@ -26,6 +28,8 @@ public class GradeScale implements Scale
      */
     public GradeScale(final double conversionFactorToGrade)
     {
+        Throw.when(conversionFactorToGrade == 0.0 || !Double.isFinite(conversionFactorToGrade), IllegalArgumentException.class,
+                "conversion factor for grade scale cannnot be 0, NaN or infinity");
         this.conversionFactorToGrade = conversionFactorToGrade;
     }
 
