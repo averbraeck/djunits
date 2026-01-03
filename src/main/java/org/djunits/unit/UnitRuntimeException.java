@@ -22,19 +22,6 @@ public class UnitRuntimeException extends RuntimeException
     }
 
     /**
-     * Construct a new UnitRuntimeException.
-     * @param message String
-     * @param cause Throwable
-     * @param enableSuppression boolean;am
-     * @param writableStackTrace boolean
-     */
-    public UnitRuntimeException(final String message, final Throwable cause, final boolean enableSuppression,
-            final boolean writableStackTrace)
-    {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    /**
      * Construct a new UnitRuntimeException with some default values.
      * @param message String
      * @param cause Throwable
