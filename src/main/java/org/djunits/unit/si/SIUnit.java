@@ -206,8 +206,9 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     }
 
     /**
-     * Return the (fractional) SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd.
-     * @return the (fractional) SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd
+     * Return a safe copy of the exponents of the SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd. Since it is a
+     * safe copy, calculations can be carried out on the int[] return value.
+     * @return a safe copy of the exponents of the SI dimensions in the order rad, sr, kg, m, s, A, K, mol, cd
      */
     public int[] siDimensions()
     {
