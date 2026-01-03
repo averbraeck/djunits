@@ -164,7 +164,7 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
                 {
                     U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(2),
                             sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(2),
-                            sip.getPrefixName() + getStoredName().substring(9), sip.getFactor(), getUnitSystem());
+                            sip.getPrefixName() + getStoredName().substring(8), sip.getFactor(), getUnitSystem());
                     unit.setSiPrefix(sip);
                 }
             }

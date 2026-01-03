@@ -180,7 +180,7 @@ public enum SIPrefixes
         perKiloPrefixes.put("/m", new SIPrefix("/m", "per milli", 1.0E6));
         perKiloPrefixes.put("/c", new SIPrefix("/c", "per centi", 1.0E5));
         perKiloPrefixes.put("/d", new SIPrefix("/d", "per deci", 1.0E4));
-        perKiloPrefixes.put("/", new SIPrefix("/", "/", 1.0E3));
+        perKiloPrefixes.put("/", new SIPrefix("/", "per ", 1.0E3));
         perKiloPrefixes.put("/da", new SIPrefix("/da", "per deca", 1.0E2));
         perKiloPrefixes.put("/h", new SIPrefix("/h", "per hecto", 1.0E1));
 
