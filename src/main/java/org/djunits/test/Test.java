@@ -6,11 +6,49 @@ import java.util.Map;
 
 import org.djunits.quantity.AbsorbedDose;
 import org.djunits.quantity.Acceleration;
+import org.djunits.quantity.AmountOfSubstance;
+import org.djunits.quantity.Angle;
+import org.djunits.quantity.AngularAcceleration;
+import org.djunits.quantity.AngularVelocity;
+import org.djunits.quantity.Area;
+import org.djunits.quantity.ArealObjectDensity;
+import org.djunits.quantity.CatalyticActivity;
+import org.djunits.quantity.Density;
 import org.djunits.quantity.Duration;
+import org.djunits.quantity.ElectricCharge;
+import org.djunits.quantity.ElectricCurrent;
+import org.djunits.quantity.ElectricPotential;
+import org.djunits.quantity.ElectricalCapacitance;
+import org.djunits.quantity.ElectricalConductance;
+import org.djunits.quantity.ElectricalInductance;
+import org.djunits.quantity.ElectricalResistance;
+import org.djunits.quantity.Energy;
+import org.djunits.quantity.EquivalentDose;
+import org.djunits.quantity.FlowMass;
+import org.djunits.quantity.FlowVolume;
+import org.djunits.quantity.Force;
+import org.djunits.quantity.Frequency;
+import org.djunits.quantity.Illuminance;
 import org.djunits.quantity.Length;
+import org.djunits.quantity.LinearDensity;
+import org.djunits.quantity.LinearObjectDensity;
+import org.djunits.quantity.LuminousFlux;
+import org.djunits.quantity.LuminousIntensity;
+import org.djunits.quantity.MagneticFlux;
+import org.djunits.quantity.MagneticFluxDensity;
+import org.djunits.quantity.Mass;
+import org.djunits.quantity.Momentum;
+import org.djunits.quantity.Power;
+import org.djunits.quantity.Pressure;
+import org.djunits.quantity.RadioActivity;
+import org.djunits.quantity.SolidAngle;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.Temperature;
+import org.djunits.quantity.Torque;
+import org.djunits.quantity.Volume;
+import org.djunits.quantity.VolumetricObjectDensity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 
 /**
@@ -82,7 +120,7 @@ public final class Test
     private void printUnits()
     {
         System.out.println("\n\nUNITS");
-        Units.registerStandardUnits();
+        registerStandardUnits();
         var unitMap = Units.registeredUnits();
         unitMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey())).forEach(entry ->
         {
@@ -116,7 +154,6 @@ public final class Test
         System.out.println("loc = std getName() : " + AbsorbedDose.ONE.getName());
         Locale.setDefault(nl);
         System.out.println("loc = nl. getName() : " + AbsorbedDose.ONE.getName());
-        Units.readTranslateMap();
         System.out.println(Units.localizedQuantityName(Acceleration.Unit.class));
         System.out.println(Units.localizedUnitDisplayAbbr(Acceleration.Unit.class, "mi/h2"));
         System.out.println(Units.localizedUnitName(Acceleration.Unit.class, "mi/h2"));
@@ -137,4 +174,54 @@ public final class Test
         new Test();
     }
 
+    /**
+     * Touch all unit classes.
+     */
+    private void registerStandardUnits()
+    {
+        AbsorbedDose.Unit.SI_UNIT.getId();
+        Acceleration.Unit.SI_UNIT.getId();
+        AmountOfSubstance.Unit.SI_UNIT.getId();
+        Angle.Unit.SI_UNIT.getId();
+        AngularAcceleration.Unit.SI_UNIT.getId();
+        AngularVelocity.Unit.SI_UNIT.getId();
+        Area.Unit.SI_UNIT.getId();
+        ArealObjectDensity.Unit.SI_UNIT.getId();
+        CatalyticActivity.Unit.SI_UNIT.getId();
+        Density.Unit.SI_UNIT.getId();
+        Unitless.SI_UNIT.getId();
+        Duration.Unit.SI_UNIT.getId();
+        ElectricalCapacitance.Unit.SI_UNIT.getId();
+        ElectricalConductance.Unit.SI_UNIT.getId();
+        ElectricalInductance.Unit.SI_UNIT.getId();
+        ElectricalResistance.Unit.SI_UNIT.getId();
+        ElectricCharge.Unit.SI_UNIT.getId();
+        ElectricCurrent.Unit.SI_UNIT.getId();
+        ElectricPotential.Unit.SI_UNIT.getId();
+        Energy.Unit.SI_UNIT.getId();
+        EquivalentDose.Unit.SI_UNIT.getId();
+        FlowMass.Unit.SI_UNIT.getId();
+        FlowVolume.Unit.SI_UNIT.getId();
+        Force.Unit.SI_UNIT.getId();
+        Frequency.Unit.SI_UNIT.getId();
+        Illuminance.Unit.SI_UNIT.getId();
+        Length.Unit.SI_UNIT.getId();
+        LinearDensity.Unit.SI_UNIT.getId();
+        LinearObjectDensity.Unit.SI_UNIT.getId();
+        LuminousFlux.Unit.SI_UNIT.getId();
+        LuminousIntensity.Unit.SI_UNIT.getId();
+        MagneticFlux.Unit.SI_UNIT.getId();
+        MagneticFluxDensity.Unit.SI_UNIT.getId();
+        Mass.Unit.SI_UNIT.getId();
+        Momentum.Unit.SI_UNIT.getId();
+        Power.Unit.SI_UNIT.getId();
+        Pressure.Unit.SI_UNIT.getId();
+        RadioActivity.Unit.SI_UNIT.getId();
+        SolidAngle.Unit.SI_UNIT.getId();
+        Speed.Unit.SI_UNIT.getId();
+        Temperature.Unit.SI_UNIT.getId();
+        Torque.Unit.SI_UNIT.getId();
+        Volume.Unit.SI_UNIT.getId();
+        VolumetricObjectDensity.Unit.SI_UNIT.getId();
+    }
 }
