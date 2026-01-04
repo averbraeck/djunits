@@ -11,49 +11,6 @@ import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.djunits.quantity.AbsorbedDose;
-import org.djunits.quantity.Acceleration;
-import org.djunits.quantity.AmountOfSubstance;
-import org.djunits.quantity.Angle;
-import org.djunits.quantity.AngularAcceleration;
-import org.djunits.quantity.AngularVelocity;
-import org.djunits.quantity.Area;
-import org.djunits.quantity.ArealObjectDensity;
-import org.djunits.quantity.CatalyticActivity;
-import org.djunits.quantity.Density;
-import org.djunits.quantity.Duration;
-import org.djunits.quantity.ElectricCharge;
-import org.djunits.quantity.ElectricCurrent;
-import org.djunits.quantity.ElectricPotential;
-import org.djunits.quantity.ElectricalCapacitance;
-import org.djunits.quantity.ElectricalConductance;
-import org.djunits.quantity.ElectricalInductance;
-import org.djunits.quantity.ElectricalResistance;
-import org.djunits.quantity.Energy;
-import org.djunits.quantity.EquivalentDose;
-import org.djunits.quantity.FlowMass;
-import org.djunits.quantity.FlowVolume;
-import org.djunits.quantity.Force;
-import org.djunits.quantity.Frequency;
-import org.djunits.quantity.Illuminance;
-import org.djunits.quantity.Length;
-import org.djunits.quantity.LinearDensity;
-import org.djunits.quantity.LinearObjectDensity;
-import org.djunits.quantity.LuminousFlux;
-import org.djunits.quantity.LuminousIntensity;
-import org.djunits.quantity.MagneticFlux;
-import org.djunits.quantity.MagneticFluxDensity;
-import org.djunits.quantity.Mass;
-import org.djunits.quantity.Momentum;
-import org.djunits.quantity.Power;
-import org.djunits.quantity.Pressure;
-import org.djunits.quantity.RadioActivity;
-import org.djunits.quantity.SolidAngle;
-import org.djunits.quantity.Speed;
-import org.djunits.quantity.Temperature;
-import org.djunits.quantity.Torque;
-import org.djunits.quantity.Volume;
-import org.djunits.quantity.VolumetricObjectDensity;
 import org.djutils.exceptions.Throw;
 import org.djutils.logger.CategoryLogger;
 
@@ -105,11 +62,6 @@ public final class Units
         // static class.
     }
 
-    static
-    {
-        registerStandardUnits();
-    }
-
     /**
      * Register a unit so it can be found based on its textual abbreviations.
      * @param unit the unit to register
@@ -120,7 +72,7 @@ public final class Units
         Throw.whenNull(unit, "unit");
         var subMap =
                 UNIT_MAP.computeIfAbsent(quantityName(unit.getClass()), k -> new LinkedHashMap<String, UnitInterface<?, ?>>());
-        subMap.put(unit.getStoredTextualAbbreviation(), unit);
+        subMap.putIfAbsent(unit.getStoredTextualAbbreviation(), unit);
     }
 
     /**
@@ -137,9 +89,26 @@ public final class Units
     {
         Throw.whenNull(unitClass, "unitClass");
         Throw.whenNull(abbreviation, "abbreviation");
+        Throw.when(!(UnitInterface.class.isAssignableFrom(unitClass)), IllegalArgumentException.class,
+                "The provided unit class %s does not implement a unit", unitClass.getName());
+
         String quantityName = quantityName(unitClass);
+        if (!UNIT_MAP.containsKey(quantityName))
+        {
+            // force the class to load and initialize its units
+            try
+            {
+                Class.forName(unitClass.getName(), true, // <-- initialize
+                        unitClass.getClassLoader());
+            }
+            catch (ClassNotFoundException e)
+            {
+                throw new UnitRuntimeException("Could not load unit class " + unitClass.getName(), e);
+            }
+        }
+
         Throw.when(!UNIT_MAP.containsKey(quantityName), UnitRuntimeException.class,
-                "Error resolving unit class %s (abbreviation '%s')", abbreviation, unitClass.getSimpleName());
+                "Error resolving unit class %s (abbreviation '%s')", unitClass.getSimpleName(), abbreviation);
         readTranslateMap();
         String unitKey = abbreviation;
         if (localizedUnitTranslateMap.containsKey(quantityName)
@@ -255,9 +224,11 @@ public final class Units
     }
 
     /**
-     * Read the data from the resource bundle.
+     * Read the data from the resource bundle. Load ALL classes, even the ones that are not (yet) part of the UNIT_MAP. Since
+     * the UNIT_MAP is filled by lazy loading (only register units for unit classes when they are used in the code or requested
+     * in the <code>resolve()</code> function, unit classes or units might not yet be present when the resource bundle is read.
      */
-    public static synchronized void readTranslateMap()
+    private static synchronized void readTranslateMap()
     {
         if (Locale.getDefault().equals(currentLocale))
         {
@@ -280,21 +251,9 @@ public final class Units
                     continue;
                 }
                 String quantity = key.substring(UNIT_PREFIX.length(), key.indexOf('.', UNIT_PREFIX.length()));
-                if (!UNIT_MAP.containsKey(quantity))
-                {
-                    CategoryLogger.always().info("djunits localization. Quantity {} from locale file {} unknown", quantity,
-                            currentLocale);
-                    continue;
-                }
                 var quantityMap = localizedUnitTranslateMap.computeIfAbsent(quantity, k -> new LinkedHashMap<String, String>());
                 String unitId = key.substring(key.indexOf('.', UNIT_PREFIX.length()));
                 unitId = unitId.substring(1, unitId.length() - ABBR_SUFFIX.length());
-                if (!UNIT_MAP.get(quantity).containsKey(unitId))
-                {
-                    CategoryLogger.always().info("djunits localization. Unit {} for quantity {} from locale file {} unknown",
-                            unitId, quantity, currentLocale);
-                    continue;
-                }
                 String token = getStringSafe(resourceBundle, key).strip();
                 if (token == null || token.isBlank())
                 {
@@ -483,57 +442,6 @@ public final class Units
             }
             return null;
         }
-    }
-
-    /**
-     * Force all standard units to register themselves in the unit map, e.g. to make user interface picklists.
-     */
-    public static void registerStandardUnits()
-    {
-        AbsorbedDose.Unit.SI_UNIT.getId();
-        Acceleration.Unit.SI_UNIT.getId();
-        AmountOfSubstance.Unit.SI_UNIT.getId();
-        Angle.Unit.SI_UNIT.getId();
-        AngularAcceleration.Unit.SI_UNIT.getId();
-        AngularVelocity.Unit.SI_UNIT.getId();
-        Area.Unit.SI_UNIT.getId();
-        ArealObjectDensity.Unit.SI_UNIT.getId();
-        CatalyticActivity.Unit.SI_UNIT.getId();
-        Density.Unit.SI_UNIT.getId();
-        Unitless.BASE.getBaseUnit().getScale().isBaseScale();
-        Duration.Unit.SI_UNIT.getId();
-        ElectricalCapacitance.Unit.SI_UNIT.getId();
-        ElectricalConductance.Unit.SI_UNIT.getId();
-        ElectricalInductance.Unit.SI_UNIT.getId();
-        ElectricalResistance.Unit.SI_UNIT.getId();
-        ElectricCharge.Unit.SI_UNIT.getId();
-        ElectricCurrent.Unit.SI_UNIT.getId();
-        ElectricPotential.Unit.SI_UNIT.getId();
-        Energy.Unit.SI_UNIT.getId();
-        EquivalentDose.Unit.SI_UNIT.getId();
-        FlowMass.Unit.SI_UNIT.getId();
-        FlowVolume.Unit.SI_UNIT.getId();
-        Force.Unit.SI_UNIT.getId();
-        Frequency.Unit.SI_UNIT.getId();
-        Illuminance.Unit.SI_UNIT.getId();
-        Length.Unit.SI_UNIT.getId();
-        LinearDensity.Unit.SI_UNIT.getId();
-        LinearObjectDensity.Unit.SI_UNIT.getId();
-        LuminousFlux.Unit.SI_UNIT.getId();
-        LuminousIntensity.Unit.SI_UNIT.getId();
-        MagneticFlux.Unit.SI_UNIT.getId();
-        MagneticFluxDensity.Unit.SI_UNIT.getId();
-        Mass.Unit.SI_UNIT.getId();
-        Momentum.Unit.SI_UNIT.getId();
-        Power.Unit.SI_UNIT.getId();
-        Pressure.Unit.SI_UNIT.getId();
-        RadioActivity.Unit.SI_UNIT.getId();
-        SolidAngle.Unit.SI_UNIT.getId();
-        Speed.Unit.SI_UNIT.getId();
-        Temperature.Unit.SI_UNIT.getId();
-        Torque.Unit.SI_UNIT.getId();
-        Volume.Unit.SI_UNIT.getId();
-        VolumetricObjectDensity.Unit.SI_UNIT.getId();
     }
 
 }
