@@ -1,6 +1,5 @@
 package org.djunits.unit;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.djunits.quantity.Frequency;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Power;
 import org.djunits.quantity.Speed;
@@ -29,9 +29,11 @@ public class UnitsTest
     /**
      * Verify US-locale resolution of common unit abbreviations via {@link Units#resolve(Class, String)}. Stores and restores
      * the original default locale.
+     * @param <U> a n anonymous unit type
      */
+    @SuppressWarnings("unchecked")
     @Test
-    public void testResolveUsLocaleParsing()
+    public <U extends UnitInterface<U, ?>> void testResolveUsLocaleParsing()
     {
         Locale original = Locale.getDefault();
         try
@@ -55,10 +57,12 @@ public class UnitsTest
             assertNotNull(cm);
             assertEquals("cm", cm.getStoredTextualAbbreviation());
 
-            // Edge cases: null arguments and unknown abbreviations.
+            // Edge cases: null arguments and unknown abbreviations, non-unit class.
             assertThrows(NullPointerException.class, () -> Units.resolve(null, "m"));
             assertThrows(NullPointerException.class, () -> Units.resolve(Length.Unit.class, null));
             assertThrows(UnitRuntimeException.class, () -> Units.resolve(Length.Unit.class, "unknown-token"));
+            Object o = new String("m");
+            assertThrows(IllegalArgumentException.class, () -> Units.resolve((Class<U>) (o.getClass()), "m"));
         }
         finally
         {
@@ -78,23 +82,23 @@ public class UnitsTest
         {
             // --- French ---
             Locale.setDefault(Locale.FRANCE);
-            assertDoesNotThrow(Units::readTranslateMap); // ensure translate map is refreshed
+            // assertDoesNotThrow(Units::readTranslateMap); // ensure translate map is refreshed
 
-            UnitInterface<?, ?> rpmFr = Units.resolve(org.djunits.quantity.Frequency.Unit.class, "tr/min");
+            UnitInterface<?, ?> rpmFr = Units.resolve(Frequency.Unit.class, "tr/min");
             assertNotNull(rpmFr);
             // The underlying US-stored key is "rpm"; stored abbreviation should be US key.
             assertEquals("rpm", rpmFr.getStoredTextualAbbreviation());
 
             // --- German ---
             Locale.setDefault(Locale.GERMANY);
-            assertDoesNotThrow(Units::readTranslateMap);
+            // assertDoesNotThrow(Units::readTranslateMap);
 
-            UnitInterface<?, ?> hpMetricDe = Units.resolve(Power.Unit.class, "PS");
+            Power.Unit hpMetricDe = Units.resolve(Power.Unit.class, "PS");
             assertNotNull(hpMetricDe);
             // German localized token maps to US unit key "hp(M)"
             assertEquals("hp(M)", hpMetricDe.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> knotDe = Units.resolve(Speed.Unit.class, "kn");
+            Speed.Unit knotDe = Units.resolve(Speed.Unit.class, "kn");
             assertNotNull(knotDe);
             // German localized token maps to US key "kt"
             assertEquals("kt", knotDe.getStoredTextualAbbreviation());

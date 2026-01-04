@@ -1,6 +1,5 @@
 package org.djunits.unit;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -111,8 +110,6 @@ public class LocaleFilesTest
             {
                 // Use this locale for resolve() by setting it as default and refreshing translate map.
                 Locale.setDefault(locale);
-                assertDoesNotThrow(Units::readTranslateMap);
-
                 ResourceBundle bundle = Units.bundle(locale);
                 assertNotNull(bundle, "Bundle should load for locale: " + locale);
 
