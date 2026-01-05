@@ -403,11 +403,11 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      */
     public String format(final double d)
     {
-        if (d < 1E-5 || d > 1E5)
+        if (d == 0.0 || (Math.abs(d) >= 1E-5 && Math.abs(d) <= 1E5) || !Double.isFinite(d))
         {
-            return format(d, "%E");
+            return format(d, "%f");
         }
-        return format(d, "%f");
+        return format(d, "%E");
     }
 
     /**
@@ -483,7 +483,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         {
             buf.append("Rel ");
         }
-        double d = getInUnit();
+        double d = getInUnit(displayUnit);
         buf.append(Format.format(d));
         if (withUnit)
         {
@@ -595,8 +595,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
-        return zero.instantiate(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio)
-                .setDisplayUnit(zero.getDisplayUnit());
+        return zero.instantiate(zero.si() * (1 - ratio) + one.si() * ratio).setDisplayUnit(zero.getDisplayUnit());
     }
 
     /**
