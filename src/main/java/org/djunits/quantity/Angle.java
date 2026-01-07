@@ -166,6 +166,31 @@ public class Angle extends Quantity<Angle, Angle.Unit>
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
 
+    /**
+     * Normalize an angle between 0 and 2 * PI.
+     * @param angle original angle.
+     * @return angle between 0 and 2 * PI.
+     */
+    public static double normalize(final double angle)
+    {
+        double normalized = angle % (2 * Math.PI);
+        if (normalized < 0.0)
+        {
+            normalized += 2 * Math.PI;
+        }
+        return normalized;
+    }
+
+    /**
+     * Normalize an angle between 0 and 2 * PI.
+     * @param angle original angle.
+     * @return a new Angle object with angle between 0 and 2 * PI.
+     */
+    public static Angle normalize(final Angle angle)
+    {
+        return new Angle(normalize(angle.si()), Angle.Unit.RADIAN);
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
