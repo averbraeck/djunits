@@ -78,7 +78,7 @@ public final class Test
         Length length = new Length(5.0, "m");
         System.out.println(length);
 
-        Length l2 = new Length(5.0, Length.Unit.KILOMETER);
+        Length l2 = new Length(5.0, Length.Unit.km);
         System.out.println(l2.toDisplayString());
         System.out.println("SI = " + l2.si() + " [" + l2.getDisplayUnit().getBaseUnit().getId() + "]");
 

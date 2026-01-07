@@ -28,7 +28,7 @@ public class VecMat
         System.out.println(l1 + " * " + m1 + " = " + l1.multiply(m1));
         System.out.println(l1 + " / " + m1 + " = " + l1.divide(m1));
         var q = Duration.of(1.0, "h").divide(l1).reciprocal();
-        var speed = q.as(Speed.Unit.METER_PER_SECOND);
+        var speed = q.as(Speed.Unit.m_s);
         System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());
     }
 
@@ -38,7 +38,7 @@ public class VecMat
         var l1 = Length.of(1.0, "km");
         var q = Duration.of(1.0, "h").divide(l1);
         // var speed = q.as(Speed.Unit.METER_PER_SECOND);
-        var speed = q.reciprocal().as(Speed.Unit.METER_PER_SECOND);
+        var speed = q.reciprocal().as(Speed.Unit.m_s);
         System.out.format("Speed = %s, class = %s%n", speed, speed.getClass().getSimpleName());
     }
 
@@ -66,17 +66,17 @@ public class VecMat
         time();
 
         Vector2.Col<Frequency, Frequency.Unit> f =
-                Vector2.Col.of(10.0, 5.0, Duration.Unit.MILLISECOND).invertElements().as(Frequency.Unit.KILOHERTZ);
+                Vector2.Col.of(10.0, 5.0, Duration.Unit.ms).invertElements().as(Frequency.Unit.kHz);
         System.out.println(f.x() + " type=" + f.x().getClass().getSimpleName());
 
-        var v2 = Vector2.Col.of(10, 20, Length.Unit.METER);
-        var v3 = Vector2.Col.of(20, 30, Length.Unit.FOOT);
+        var v2 = Vector2.Col.of(10, 20, Length.Unit.m);
+        var v3 = Vector2.Col.of(20, 30, Length.Unit.ft);
         System.out.println("\n" + v2);
         System.out.println(v3);
         System.out.println(v2.add(v3));
-        var v4 = Vector2.Col.of(10, 20, Mass.Unit.GRAM);
+        var v4 = Vector2.Col.of(10, 20, Mass.Unit.g);
         // This does not compile: System.out.println(v2.plus(v4));
-        var v5 = Vector2.Row.of(10, 20, Mass.Unit.POUND);
+        var v5 = Vector2.Row.of(10, 20, Mass.Unit.lb);
         // This does not compile: System.out.println(v4.plus(v5));
         System.out.println(v4.add(v5.transpose()));
         System.out.format("%nnorm L1 of %s is %s%n", v4, v4.normL1());
@@ -85,7 +85,7 @@ public class VecMat
         System.out.format("norm Linf of %s is %s%n", v4, v4.normLinf());
 
         System.out.println("\n\nMatrices");
-        var mat = Matrix2x2.of(new double[][] {{1.0, 2.0}, {5.0, 4.0}}, Duration.Unit.SECOND);
+        var mat = Matrix2x2.of(new double[][] {{1.0, 2.0}, {5.0, 4.0}}, Duration.Unit.s);
         System.out.println("matrix:\n" + mat);
         System.out.println("\nmatrix + matrix:\n" + mat.add(mat));
         System.out.println("\nmatrix + 1 day:\n" + mat.add(Duration.of(1.0, "day")));
