@@ -1,121 +1,172 @@
 package org.djunits.quantity;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.AbstractUnit;
-import org.djunits.unit.UnitRuntimeException;
-import org.djunits.unit.Unitless;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.LinearScale;
-import org.djunits.unit.scale.OffsetLinearScale;
-import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.unit.system.UnitSystem;
+import org.djutils.exceptions.Throw;
 
 /**
- * Temperature is a measure of thermal state or average kinetic energy of particles, measured in kelvins (K). Note that the
- * Temperature quantity is relative (it measures a difference between temperatures), whereas the AbsoluteTemperature quantity is
- * absolute.<br>
+ * AbsoluteTemperature is the absolute equivalent of Temperature, and represents a true temperature rather than a temperature
+ * difference.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Temperature extends Quantity<Temperature, Temperature.Unit>
+public class Temperature extends
+        AbsoluteQuantity<Temperature, TemperatureDifference, TemperatureDifference.Unit, Temperature.AbsoluteTemperatureReference>
 {
-    /** Constant with value zero. */
-    public static final Temperature ZERO = Temperature.ofSi(0.0);
-
-    /** Constant with value one. */
-    public static final Temperature ONE = Temperature.ofSi(1.0);
-
-    /** Constant with value NaN. */
-    @SuppressWarnings("checkstyle:constantname")
-    public static final Temperature NaN = Temperature.ofSi(Double.NaN);
-
-    /** Constant with value POSITIVE_INFINITY. */
-    public static final Temperature POSITIVE_INFINITY = Temperature.ofSi(Double.POSITIVE_INFINITY);
-
-    /** Constant with value NEGATIVE_INFINITY. */
-    public static final Temperature NEGATIVE_INFINITY = Temperature.ofSi(Double.NEGATIVE_INFINITY);
-
-    /** Constant with value MAX_VALUE. */
-    public static final Temperature POS_MAXVALUE = Temperature.ofSi(Double.MAX_VALUE);
-
-    /** Constant with value -MAX_VALUE. */
-    public static final Temperature NEG_MAXVALUE = Temperature.ofSi(-Double.MAX_VALUE);
-
     /** */
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Temperature quantity with a unit.
-     * @param value the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a AbsoluteTemperature quantity with a unit and a reference point.
+     * @param value the temperature value, expressed in a temperature unit
+     * @param unit the temperature unit in which the value is expressed, relative to the reference point
+     * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final Temperature.Unit unit)
+    public Temperature(final double value, final TemperatureDifference.Unit unit, final AbsoluteTemperatureReference reference)
     {
-        super(value, unit);
+        super(new TemperatureDifference(value, unit), reference);
     }
 
     /**
-     * Instantiate a Temperature quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * Instantiate a AbsoluteTemperature quantity with a unit and the KELVIN reference point.
+     * @param value the temperature value, expressed in a temperature unit
+     * @param unit the temperature unit in which the value is expressed, relative to the reference point
+     */
+    public Temperature(final double value, final TemperatureDifference.Unit unit)
+    {
+        this(value, unit, AbsoluteTemperatureReference.KELVIN);
+    }
+
+    /**
+     * Instantiate a AbsoluteTemperature quantity with a unit, expressed as a String, and a reference point.
+     * @param value the temperature value, expressed in the unit, relative to the reference point
+     * @param abbreviation the String abbreviation of the unit in which the value is expressed
+     * @param reference the reference point of this absolute temperature
+     */
+    public Temperature(final double value, final String abbreviation, final AbsoluteTemperatureReference reference)
+    {
+        this(value, Units.resolve(TemperatureDifference.Unit.class, abbreviation), reference);
+    }
+
+    /**
+     * Instantiate a AbsoluteTemperature quantity with a unit, expressed as a String, and the KELVIN reference point.
+     * @param value the temperature value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
     public Temperature(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(Temperature.Unit.class, abbreviation));
+        this(value, abbreviation, AbsoluteTemperatureReference.KELVIN);
     }
 
     /**
-     * Construct Temperature quantity.
-     * @param value Scalar from which to construct this instance
+     * Instantiate a AbsoluteTemperature instance based on an temperature and a reference point.
+     * @param temperature the temperature, relative to the reference point
+     * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final Temperature value)
+    public Temperature(final TemperatureDifference temperature, final AbsoluteTemperatureReference reference)
     {
-        super(value.si(), Temperature.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
+        super(temperature, reference);
     }
 
     /**
-     * Return a Temperature instance based on an SI value.
-     * @param si the si value
-     * @return the Temperature instance based on an SI value
+     * Instantiate a AbsoluteTemperature instance based on an temperature and the KELVIN reference point.
+     * @param temperature the temperature, relative to the reference point
+     */
+    public Temperature(final TemperatureDifference temperature)
+    {
+        this(temperature, AbsoluteTemperatureReference.KELVIN);
+    }
+
+    /**
+     * Return a AbsoluteTemperature instance based on an SI value and a reference point.
+     * @param si the temperature si value, relative to the reference point
+     * @param reference the reference point of this absolute temperature
+     * @return the AbsoluteTemperature instance based on an SI value
+     */
+    public static Temperature ofSi(final double si, final AbsoluteTemperatureReference reference)
+    {
+        return new Temperature(si, TemperatureDifference.Unit.SI, reference);
+    }
+
+    /**
+     * Return a AbsoluteTemperature instance based on an SI value and the KELVIN reference point.
+     * @param si the temperature si value, relative to the reference point
+     * @return the AbsoluteTemperature instance based on an SI value
      */
     public static Temperature ofSi(final double si)
     {
-        return new Temperature(si, Temperature.Unit.SI);
+        return new Temperature(si, TemperatureDifference.Unit.SI, AbsoluteTemperatureReference.KELVIN);
     }
 
     @Override
-    public Temperature instantiate(final double si)
+    public Temperature instantiate(final TemperatureDifference temperature, final AbsoluteTemperatureReference reference)
     {
-        return ofSi(si);
+        return new Temperature(temperature, reference);
     }
 
     @Override
     public SIUnit siUnit()
     {
-        return Temperature.Unit.SI_UNIT;
+        return TemperatureDifference.Unit.SI_UNIT;
     }
 
     /**
-     * Returns a Temperature representation of a textual representation of a value with a unit. The String representation that
-     * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are
-     * allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a Temperature
+     * Returns a AbsoluteTemperature representation of a textual representation of a value with a unit. The String
+     * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
+     * unit. Spaces are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a AbsoluteTemperature
+     * @param reference the reference point of this absolute temperature
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the text cannot be parsed
+     * @throws NullPointerException when the text argument is null
+     */
+    public static Temperature valueOf(final String text, final AbsoluteTemperatureReference reference)
+    {
+        return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), reference);
+    }
+
+    /**
+     * Returns a AbsoluteTemperature representation of a textual representation of a value with a unit, and the KELVIN
+     * reference. The String representation that can be parsed is the double value in the unit, followed by a localized or
+     * English abbreviation of the unit. Spaces are allowed, but not required, between the value and the unit.
+     * @param text the textual representation to parse into a AbsoluteTemperature
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
     public static Temperature valueOf(final String text)
     {
-        return Quantity.valueOf(text, ZERO);
+        return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), AbsoluteTemperatureReference.KELVIN);
     }
 
     /**
-     * Returns a Temperature based on a value and the textual representation of the unit, which can be localized.
+     * Returns a AbsoluteTemperature based on a value and the textual representation of the unit, which can be localized.
+     * @param value the value to use
+     * @param unitString the textual representation of the unit
+     * @param reference the reference point of this absolute temperature
+     * @return the Scalar representation of the value in its unit
+     * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
+     * @throws NullPointerException when the unitString argument is null
+     */
+    public static Temperature of(final double value, final String unitString,
+            final AbsoluteTemperatureReference reference)
+    {
+        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), reference);
+    }
+
+    /**
+     * Returns a AbsoluteTemperature based on a value and the textual representation of the unit, which can be localized. Use
+     * the KELVIN reference.
      * @param value the value to use
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -124,127 +175,116 @@ public class Temperature extends Quantity<Temperature, Temperature.Unit>
      */
     public static Temperature of(final double value, final String unitString)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), AbsoluteTemperatureReference.KELVIN);
+    }
+
+    @Override
+    public TemperatureDifference subtract(final Temperature other)
+    {
+        Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
+                "cannot subtract two absolute quantities with a different reference: %s <> %s", getReference().getId(),
+                other.getReference().getId());
+        return TemperatureDifference.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Temperature add(final TemperatureDifference other)
+    {
+        return new Temperature(TemperatureDifference.ofSi(si() + other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+    }
+
+    @Override
+    public Temperature subtract(final TemperatureDifference other)
+    {
+        return new Temperature(TemperatureDifference.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit()), getReference());
     }
 
     /**
-     * Calculate the division of Temperature and Temperature, which results in a Dimensionless quantity.
-     * @param v quantity
-     * @return quantity as a division of Temperature and Temperature
+     * The reference class to define a reference point for the absolute temperature.
      */
-    public final Dimensionless divide(final Temperature v)
+    public static final class AbsoluteTemperatureReference implements Reference
     {
-        return new Dimensionless(this.si() / v.si(), Unitless.BASE);
-    }
-
-    /**
-     * Add an absolute temperature to this temperature (difference), and return an absolute temperature. The unit of the return
-     * value will be the unit of this (relative) temperature.
-     * @param absoluteTemperature the absolute temperature to add
-     * @return the absolute temperature plus this temperature difference
-     */
-    public final AbsoluteTemperature add(final AbsoluteTemperature absoluteTemperature)
-    {
-        var abstemp = AbsoluteTemperature.ofSi(absoluteTemperature.si() + si());
-        abstemp.setDisplayUnit(getDisplayUnit());
-        return abstemp;
-    }
-
-    /******************************************************************************************************/
-    /********************************************** UNIT CLASS ********************************************/
-    /******************************************************************************************************/
-
-    /**
-     * Temperature.Unit encodes the units of (relative) temperature.<br>
-     * <br>
-     * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
-     * @author Alexander Verbraeck
-     */
-    @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Temperature.Unit, Temperature>
-    {
-        /** The dimensions of temperature: K. */
-        public static final SIUnit SI_UNIT = SIUnit.of("K");
+        /** the list of possible reference points to use. */
+        private static Map<String, AbsoluteTemperatureReference> referenceList = new LinkedHashMap<>();
 
         /** Kelvin. */
-        public static final Temperature.Unit K = new Temperature.Unit("K", "kelvin", 1.0, UnitSystem.SI_BASE);
+        public static final AbsoluteTemperatureReference KELVIN =
+                new AbsoluteTemperatureReference("KELVIN", "Kelvin scale temperature");
 
-        /** The SI or BASE unit. */
-        public static final Temperature.Unit SI = K.generateSiPrefixes(false, false);
+        /** The id. */
+        private String id;
 
-        /** Degree Celsius. */
-        public static final Temperature.Unit degC = new Temperature.Unit("degC", "\u00B0C", "degree Celsius",
-                new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
-
-        /** Degree Fahrenheit. */
-        public static final Temperature.Unit degF = new Temperature.Unit("degF", "\u00B0F", "degree Fahrenheit",
-                new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
-
-        /** Degree Rankine. */
-        public static final Temperature.Unit degR = new Temperature.Unit("degR", "\u00B0R", "degree Rankine",
-                new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
-
-        /** Degree Reaumur. */
-        public static final Temperature.Unit degRe = new Temperature.Unit("degRe", "\u00B0R\u00E9", "degree Reaumur",
-                new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
+        /** The explanation. */
+        private String name;
 
         /**
-         * Create a new Temperature unit.
-         * @param id the id or main abbreviation of the unit
-         * @param name the full name of the unit
-         * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
-         * @param unitSystem the unit system such as SI or IMPERIAL
+         * Define a new reference point for the absolute temperature.
+         * @param id the id
+         * @param name the name or explanation
          */
-        public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
+        private AbsoluteTemperatureReference(final String id, final String name)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            this.id = id;
+            this.name = name;
+            referenceList.put(id, this);
         }
 
         /**
-         * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
-         * @param displayAbbreviation the display abbreviation of the unit
-         * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
-         * @param unitSystem unit system, e.g. SI or Imperial
+         * Define a new reference point for the absolute temperature.
+         * @param id the id
+         * @param name the name or explanation
          */
-        public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+        public static void add(final String id, final String name)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            new AbsoluteTemperatureReference(id, name);
+        }
+
+        /**
+         * Get a reference point for the absolute temperature, based on its id. Return null when the id could not be found.
+         * @param id the id
+         * @return the AbsoluteTemperatureReference object
+         */
+        public static AbsoluteTemperatureReference get(final String id)
+        {
+            return referenceList.get(id);
         }
 
         @Override
-        public SIUnit siUnit()
+        public String getId()
         {
-            return SI_UNIT;
+            return this.id;
         }
 
         @Override
-        public Unit getBaseUnit()
+        public String getName()
         {
-            return SI;
+            return this.name;
         }
 
         @Override
-        public Temperature ofSi(final double si)
+        public int hashCode()
         {
-            return Temperature.ofSi(si);
+            return Objects.hash(this.id, this.name);
+        }
+
+        @SuppressWarnings("checkstyle:needbraces")
+        @Override
+        public boolean equals(final Object obj)
+        {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            AbsoluteTemperatureReference other = (AbsoluteTemperatureReference) obj;
+            return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public String toString()
         {
-            if (getScale() instanceof LinearScale ls)
-            {
-                return new Temperature.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
-            }
-            throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
+            return this.id;
         }
-
     }
 }
