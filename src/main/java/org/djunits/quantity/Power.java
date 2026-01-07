@@ -236,60 +236,59 @@ public class Power extends Quantity<Power, Power.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Power.Unit, Power>
     {
         /** The dimensions of power: kgm2/s3. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3");
 
         /** Watt. */
-        public static final Power.Unit WATT = new Power.Unit("W", "watt", 1.0, UnitSystem.SI_DERIVED);
+        public static final Power.Unit W = new Power.Unit("W", "watt", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Power.Unit SI = WATT.generateSiPrefixes(false, false);
+        public static final Power.Unit SI = W.generateSiPrefixes(false, false);
 
         /** microwatt. */
-        public static final Power.Unit MICROWATT = Units.resolve(Power.Unit.class, "muW");
+        public static final Power.Unit muW = Units.resolve(Power.Unit.class, "muW");
 
         /** milliwatt. */
-        public static final Power.Unit MILLIWATT = Units.resolve(Power.Unit.class, "mW");
+        public static final Power.Unit mW = Units.resolve(Power.Unit.class, "mW");
 
         /** kiloawatt. */
-        public static final Power.Unit KILOWATT = Units.resolve(Power.Unit.class, "kW");
+        public static final Power.Unit kW = Units.resolve(Power.Unit.class, "kW");
 
         /** megawatt. */
-        public static final Power.Unit MEGAWATT = Units.resolve(Power.Unit.class, "MW");
+        public static final Power.Unit MW = Units.resolve(Power.Unit.class, "MW");
 
         /** gigawatt. */
-        public static final Power.Unit GIGAWATT = Units.resolve(Power.Unit.class, "GW");
+        public static final Power.Unit GW = Units.resolve(Power.Unit.class, "GW");
 
         /** terawatt. */
-        public static final Power.Unit TERAWATT = Units.resolve(Power.Unit.class, "TW");
+        public static final Power.Unit TW = Units.resolve(Power.Unit.class, "TW");
 
         /** petawatt. */
-        public static final Power.Unit PETAWATT = Units.resolve(Power.Unit.class, "PW");
+        public static final Power.Unit PW = Units.resolve(Power.Unit.class, "PW");
 
         /** foot-pound-force per hour. */
-        public static final Power.Unit FOOT_POUND_FORCE_PER_HOUR = SI.deriveUnit("ft.lbf/h", "foot pound-force per hour",
+        public static final Power.Unit ft_lbf_h = SI.deriveUnit("ft.lbf/h", "foot pound-force per hour",
                 Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / 3600.0, UnitSystem.IMPERIAL);
 
         /** foot-pound-force per minute. */
-        public static final Power.Unit FOOT_POUND_FORCE_PER_MINUTE = SI.deriveUnit("ft.lbf/min", "foot pound-force per minute",
+        public static final Power.Unit ft_lbf_min = SI.deriveUnit("ft.lbf/min", "foot pound-force per minute",
                 Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / 60.0, UnitSystem.IMPERIAL);
 
         /** foot-pound-force per second. */
-        public static final Power.Unit FOOT_POUND_FORCE_PER_SECOND = SI.deriveUnit("ft.lbf/s", "foot pound-force per second",
+        public static final Power.Unit ft_lbf_s = SI.deriveUnit("ft.lbf/s", "foot pound-force per second",
                 Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** horsepower (metric). */
-        public static final Power.Unit HORSEPOWER_METRIC =
-                WATT.deriveUnit("hp(M)", "horsepower (metric)", 735.49875, UnitSystem.OTHER);
+        public static final Power.Unit hp_M = W.deriveUnit("hp(M)", "horsepower (metric)", 735.49875, UnitSystem.OTHER);
 
         /** sthene-meter per second. */
-        public static final Power.Unit STHENE_METER_PER_SECOND =
-                SI.deriveUnit("sn.m/s", "sthene meter per second", 1000.0, UnitSystem.MTS);
+        public static final Power.Unit sn_m_s = SI.deriveUnit("sn.m/s", "sthene meter per second", 1000.0, UnitSystem.MTS);
 
         /** erg per second. */
-        public static final Power.Unit ERG_PER_SECOND = SI.deriveUnit("erg/s", "erg per second", 1.0E-7, UnitSystem.CGS);
+        public static final Power.Unit erg_s = SI.deriveUnit("erg/s", "erg per second", 1.0E-7, UnitSystem.CGS);
 
         /**
          * Create a new Power unit.

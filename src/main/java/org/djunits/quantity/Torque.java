@@ -226,27 +226,28 @@ public class Torque extends Quantity<Torque, Torque.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Torque.Unit, Torque>
     {
         /** The dimensions of the absorbed dose: kgm2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2");
 
         /** Newton meter. */
-        public static final Torque.Unit NEWTON_METER = new Torque.Unit("Nm", "newton meter", 1.0, UnitSystem.SI_DERIVED);
+        public static final Torque.Unit Nm = new Torque.Unit("Nm", "newton meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Torque.Unit SI = NEWTON_METER;
+        public static final Torque.Unit SI = Nm;
 
         /** meter kilogram-force. */
-        public static final Torque.Unit METER_KILOGRAM_FORCE =
+        public static final Torque.Unit m_kgf =
                 SI.deriveUnit("m.kgf", "meter kilogram-force", Acceleration.Unit.CONST_GRAVITY, UnitSystem.OTHER);
 
         /** Pound foot. */
-        public static final Torque.Unit POUND_FOOT = SI.deriveUnit("lbf.ft", "pound-force foot",
+        public static final Torque.Unit lbf_ft = SI.deriveUnit("lbf.ft", "pound-force foot",
                 Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** Pound inch. */
-        public static final Torque.Unit POUND_INCH = SI.deriveUnit("lbf.in", "pound-force inch",
+        public static final Torque.Unit lbf_in = SI.deriveUnit("lbf.in", "pound-force inch",
                 Length.Unit.CONST_IN * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /**

@@ -212,17 +212,18 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ArealObjectDensity.Unit, ArealObjectDensity>
     {
         /** The dimensions of the number of objects per unit of area: per square meter (/m2). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m2");
 
         /** per meter. */
-        public static final ArealObjectDensity.Unit PER_SQUARE_METER =
+        public static final ArealObjectDensity.Unit per_m2 =
                 new ArealObjectDensity.Unit("/m2", "per square meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ArealObjectDensity.Unit SI = PER_SQUARE_METER;
+        public static final ArealObjectDensity.Unit SI = per_m2;
 
         /**
          * Create a new ArealObjectDensity unit.

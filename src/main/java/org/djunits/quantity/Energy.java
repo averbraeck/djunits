@@ -246,116 +246,117 @@ public class Energy extends Quantity<Energy, Energy.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Energy.Unit, Energy>
     {
         /** The dimensions of energy: kgm2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2");
 
         /** Joule. */
-        public static final Energy.Unit JOULE = new Energy.Unit("J", "joule", 1.0, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit J = new Energy.Unit("J", "joule", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Energy.Unit SI = JOULE.generateSiPrefixes(false, false);
+        public static final Energy.Unit SI = J.generateSiPrefixes(false, false);
 
         /** microjoule. */
-        public static final Energy.Unit MICROJOULE = Units.resolve(Energy.Unit.class, "muJ");
+        public static final Energy.Unit muJ = Units.resolve(Energy.Unit.class, "muJ");
 
         /** millijoule. */
-        public static final Energy.Unit MILLIJOULE = Units.resolve(Energy.Unit.class, "mJ");
+        public static final Energy.Unit mJ = Units.resolve(Energy.Unit.class, "mJ");
 
         /** kilojoule. */
-        public static final Energy.Unit KILOJOULE = Units.resolve(Energy.Unit.class, "kJ");
+        public static final Energy.Unit kJ = Units.resolve(Energy.Unit.class, "kJ");
 
         /** megajoule. */
-        public static final Energy.Unit MEGAJOULE = Units.resolve(Energy.Unit.class, "MJ");
+        public static final Energy.Unit MJ = Units.resolve(Energy.Unit.class, "MJ");
 
         /** gigajoule. */
-        public static final Energy.Unit GIGAJOULE = Units.resolve(Energy.Unit.class, "GJ");
+        public static final Energy.Unit GJ = Units.resolve(Energy.Unit.class, "GJ");
 
         /** terajoule. */
-        public static final Energy.Unit TERAJOULE = Units.resolve(Energy.Unit.class, "TJ");
+        public static final Energy.Unit TJ = Units.resolve(Energy.Unit.class, "TJ");
 
         /** petajoule. */
-        public static final Energy.Unit PETAJOULE = Units.resolve(Energy.Unit.class, "PJ");
+        public static final Energy.Unit PJ = Units.resolve(Energy.Unit.class, "PJ");
 
         /** foot-pound force. */
-        public static final Energy.Unit FOOT_POUND_FORCE = JOULE.deriveUnit("ft.lbf", "foot pound-force",
+        public static final Energy.Unit ft_lbf = J.deriveUnit("ft.lbf", "foot pound-force",
                 Length.Unit.CONST_FT * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** inch-pound force. */
-        public static final Energy.Unit INCH_POUND_FORCE = JOULE.deriveUnit("in.lbf", "inch pound-force",
+        public static final Energy.Unit in_lbf = J.deriveUnit("in.lbf", "inch pound-force",
                 Length.Unit.CONST_IN * Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** British thermal unit (ISO). */
         public static final Energy.Unit BTU_ISO =
-                JOULE.deriveUnit("BTU(ISO)", "British thermal unit (ISO)", 1.0545E3, UnitSystem.IMPERIAL);
+                J.deriveUnit("BTU(ISO)", "British thermal unit (ISO)", 1.0545E3, UnitSystem.IMPERIAL);
 
         /** British thermal unit (International Table). */
         public static final Energy.Unit BTU_IT =
-                JOULE.deriveUnit("BTU(IT)", "British thermal unit (Int. Table)", 1.05505585262E3, UnitSystem.IMPERIAL);
+                J.deriveUnit("BTU(IT)", "British thermal unit (Int. Table)", 1.05505585262E3, UnitSystem.IMPERIAL);
 
         /** calorie (International Table). */
-        public static final Energy.Unit CALORIE_IT =
-                JOULE.deriveUnit("cal(IT)", "calorie (Int. Table)", 4.1868, UnitSystem.IMPERIAL);
+        public static final Energy.Unit cal_IT =
+                J.deriveUnit("cal(IT)", "calorie (Int. Table)", 4.1868, UnitSystem.IMPERIAL);
 
         /** calorie. */
-        public static final Energy.Unit CALORIE = JOULE.deriveUnit("cal", "calorie", 4.184, UnitSystem.OTHER);
+        public static final Energy.Unit cal = J.deriveUnit("cal", "calorie", 4.184, UnitSystem.OTHER);
 
         /** kilocalorie. */
-        public static final Energy.Unit KILOCALORIE = CALORIE.deriveUnit("kcal", "kilocalorie", 1000.0, UnitSystem.OTHER);
+        public static final Energy.Unit kcal = cal.deriveUnit("kcal", "kilocalorie", 1000.0, UnitSystem.OTHER);
 
         /** watt hour. */
         public static final Energy.Unit WATT_HOUR = new Energy.Unit("Wh", "watt hour", 3600.0, UnitSystem.SI_DERIVED);
 
         /** microwatt hour. */
-        public static final Energy.Unit MICROWATT_HOUR =
+        public static final Energy.Unit muWh =
                 WATT_HOUR.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
 
         /** milliwatt hour. */
-        public static final Energy.Unit MILLIWATT_HOUR =
+        public static final Energy.Unit mWh =
                 WATT_HOUR.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
 
         /** kilowatt hour. */
-        public static final Energy.Unit KILOWATT_HOUR =
+        public static final Energy.Unit kWh =
                 WATT_HOUR.deriveUnit("kWh", "kilowatt hour", 1E3, UnitSystem.SI_DERIVED);
 
         /** megawatt hour. */
-        public static final Energy.Unit MEGAWATT_HOUR =
+        public static final Energy.Unit MWh =
                 WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E6, UnitSystem.SI_DERIVED);
 
         /** gigawatt hour. */
-        public static final Energy.Unit GIGAWATT_HOUR =
+        public static final Energy.Unit GWh =
                 WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E9, UnitSystem.SI_DERIVED);
 
         /** terawatt hour. */
-        public static final Energy.Unit TERAWATT_HOUR =
+        public static final Energy.Unit TWh =
                 WATT_HOUR.deriveUnit("TWh", "terawatt hour", 1E12, UnitSystem.SI_DERIVED);
 
         /** petawatt hour. */
-        public static final Energy.Unit PETAWATT_HOUR =
+        public static final Energy.Unit PWh =
                 WATT_HOUR.deriveUnit("PWh", "petawatt hour", 1E15, UnitSystem.SI_DERIVED);
 
         /** electronvolt. */
-        public static final Energy.Unit ELECTRONVOLT =
+        public static final Energy.Unit eV =
                 new Energy.Unit("eV", "electronvolt", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
 
         /** kilo-electronvolt. */
-        public static final Energy.Unit KILOELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit keV =
+                eV.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.SI_ACCEPTED);
 
         /** mega-electronvolt. */
-        public static final Energy.Unit MEGAELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit MeV =
+                eV.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.SI_ACCEPTED);
 
         /** giga-electronvolt. */
-        public static final Energy.Unit GIGAELECTRONVOLT =
-                ELECTRONVOLT.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit GeV =
+                eV.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.SI_ACCEPTED);
 
         /** sthene-meter (mts). */
-        public static final Energy.Unit STHENE_METER = JOULE.deriveUnit("sn.m", "sthene meter", 1000.0, UnitSystem.MTS);
+        public static final Energy.Unit sn_m = J.deriveUnit("sn.m", "sthene meter", 1000.0, UnitSystem.MTS);
 
         /** erg (cgs). */
-        public static final Energy.Unit ERG = JOULE.deriveUnit("erg", "erg", 1.0E-7, UnitSystem.CGS);
+        public static final Energy.Unit erg = J.deriveUnit("erg", "erg", 1.0E-7, UnitSystem.CGS);
 
         /**
          * Create a new Energy unit.

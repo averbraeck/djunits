@@ -298,62 +298,62 @@ public class Speed extends Quantity<Speed, Speed.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("m/s");
 
         /** Meter per second. */
-        public static final Speed.Unit METER_PER_SECOND =
+        public static final Speed.Unit m_s =
                 new Speed.Unit("m/s", "m/s", "meter per second", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Speed.Unit SI = METER_PER_SECOND;
+        public static final Speed.Unit SI = m_s;
 
         /** m/h. */
-        public static final Speed.Unit METER_PER_HOUR =
+        public static final Speed.Unit m_h =
                 new Speed.Unit("m/h", "m/h", "meter per hour", new LinearScale(1.0, 3600.0), UnitSystem.SI_ACCEPTED);
 
         /** km/s. */
-        public static final Speed.Unit KILOMETER_PER_SECOND =
+        public static final Speed.Unit km_s =
                 new Speed.Unit("km/s", "km/s", "kilometer per second", new LinearScale(1000.0), UnitSystem.SI_ACCEPTED);
 
         /** km/h. */
-        public static final Speed.Unit KILOMETER_PER_HOUR =
+        public static final Speed.Unit km_h =
                 new Speed.Unit("km/h", "km/h", "kilometer per hour", new LinearScale(1000.0, 3600.0), UnitSystem.SI_ACCEPTED);
 
         /** in/s. */
-        public static final Speed.Unit INCH_PER_SECOND =
+        public static final Speed.Unit in_s =
                 new Speed.Unit("in/s", "in/s", "inch per second", new LinearScale(Length.Unit.CONST_IN), UnitSystem.IMPERIAL);
 
         /** in/min. */
-        public static final Speed.Unit INCH_PER_MINUTE = new Speed.Unit("in/min", "in/min", "inch per minute",
+        public static final Speed.Unit in_min = new Speed.Unit("in/min", "in/min", "inch per minute",
                 new LinearScale(Length.Unit.CONST_IN, 60.0), UnitSystem.IMPERIAL);
 
         /** in/h. */
-        public static final Speed.Unit INCH_PER_HOUR = new Speed.Unit("in/h", "in/h", "inch per hour",
+        public static final Speed.Unit in_h = new Speed.Unit("in/h", "in/h", "inch per hour",
                 new LinearScale(Length.Unit.CONST_IN, 3600.0), UnitSystem.IMPERIAL);
 
         /** ft/s. */
-        public static final Speed.Unit FOOT_PER_SECOND =
+        public static final Speed.Unit ft_s =
                 new Speed.Unit("ft/s", "ft/s", "foot per second", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
 
         /** ft/min. */
-        public static final Speed.Unit FOOT_PER_MINUTE = new Speed.Unit("ft/min", "ft/min", "foot per minute",
+        public static final Speed.Unit ft_min = new Speed.Unit("ft/min", "ft/min", "foot per minute",
                 new LinearScale(Length.Unit.CONST_FT, 60.0), UnitSystem.IMPERIAL);
 
         /** ft/h. */
-        public static final Speed.Unit FOOT_PER_HOUR = new Speed.Unit("ft/h", "ft/h", "foot per hour",
+        public static final Speed.Unit ft_h = new Speed.Unit("ft/h", "ft/h", "foot per hour",
                 new LinearScale(Length.Unit.CONST_FT, 3600.0), UnitSystem.IMPERIAL);
 
         /** mi/s. */
-        public static final Speed.Unit MILE_PER_SECOND =
+        public static final Speed.Unit mi_s =
                 new Speed.Unit("mi/s", "mi/s", "mile per second", new LinearScale(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
 
         /** mi/min. */
-        public static final Speed.Unit MILE_PER_MINUTE = new Speed.Unit("mi/min", "mi/min", "mile per minute",
+        public static final Speed.Unit mi_min = new Speed.Unit("mi/min", "mi/min", "mile per minute",
                 new LinearScale(Length.Unit.CONST_MI, 60.0), UnitSystem.IMPERIAL);
 
         /** mi/h. */
-        public static final Speed.Unit MILE_PER_HOUR = new Speed.Unit("mi/h", "mi/h", "mile per hour",
+        public static final Speed.Unit mi_h = new Speed.Unit("mi/h", "mi/h", "mile per hour",
                 new LinearScale(Length.Unit.CONST_MI, 3600.0), UnitSystem.IMPERIAL);
 
         /** knot = Nautical Mile per hour. */
-        public static final Speed.Unit KNOT = new Speed.Unit("kt", "knot", Length.Unit.CONST_NM / 3600.0, UnitSystem.OTHER);
+        public static final Speed.Unit kt = new Speed.Unit("kt", "knot", Length.Unit.CONST_NM / 3600.0, UnitSystem.OTHER);
 
         /**
          * Create a new Speed unit.

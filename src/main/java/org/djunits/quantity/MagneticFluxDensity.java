@@ -156,29 +156,29 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity, MagneticF
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<MagneticFluxDensity.Unit, MagneticFluxDensity>
     {
         /** The dimensions of the magnetic flux density: kg/s2A. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/s2A");
 
         /** Gray. */
-        public static final MagneticFluxDensity.Unit TESLA =
-                new MagneticFluxDensity.Unit("T", "tesla", 1.0, UnitSystem.SI_DERIVED);
+        public static final MagneticFluxDensity.Unit T = new MagneticFluxDensity.Unit("T", "tesla", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final MagneticFluxDensity.Unit SI = TESLA.generateSiPrefixes(false, false);
+        public static final MagneticFluxDensity.Unit SI = T.generateSiPrefixes(false, false);
 
         /** mT. */
-        public static final MagneticFluxDensity.Unit MILLITESLA = Units.resolve(MagneticFluxDensity.Unit.class, "mT");
+        public static final MagneticFluxDensity.Unit mT = Units.resolve(MagneticFluxDensity.Unit.class, "mT");
 
         /** muT. */
-        public static final MagneticFluxDensity.Unit MICROTESLA = Units.resolve(MagneticFluxDensity.Unit.class, "muT");
+        public static final MagneticFluxDensity.Unit muT = Units.resolve(MagneticFluxDensity.Unit.class, "muT");
 
         /** nT. */
-        public static final MagneticFluxDensity.Unit NANOTESLA = Units.resolve(MagneticFluxDensity.Unit.class, "nT");
+        public static final MagneticFluxDensity.Unit nT = Units.resolve(MagneticFluxDensity.Unit.class, "nT");
 
         /** Gauss. */
-        public static final MagneticFluxDensity.Unit GAUSS = TESLA.deriveUnit("G", "gauss", 1.0E-4, UnitSystem.CGS);
+        public static final MagneticFluxDensity.Unit G = T.deriveUnit("G", "gauss", 1.0E-4, UnitSystem.CGS);
 
         /**
          * Create a new MagneticFluxDensity unit.

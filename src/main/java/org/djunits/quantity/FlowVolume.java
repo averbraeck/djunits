@@ -206,77 +206,76 @@ public class FlowVolume extends Quantity<FlowVolume, FlowVolume.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<FlowVolume.Unit, FlowVolume>
     {
         /** The dimensions of the flow volume is m3/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("m3/s");
 
         /** m3/s. */
-        public static final FlowVolume.Unit CUBIC_METER_PER_SECOND =
+        public static final FlowVolume.Unit m3_s =
                 new FlowVolume.Unit("m3/s", "cubic meter per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final FlowVolume.Unit SI = CUBIC_METER_PER_SECOND;
+        public static final FlowVolume.Unit SI = m3_s;
 
         /** m^3/min. */
-        public static final FlowVolume.Unit CUBIC_METER_PER_MINUTE =
-                CUBIC_METER_PER_SECOND.deriveUnit("m3/min", "cubic meter per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit m3_min =
+                m3_s.deriveUnit("m3/min", "cubic meter per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
 
         /** m^3/hour. */
-        public static final FlowVolume.Unit CUBIC_METER_PER_HOUR =
-                CUBIC_METER_PER_SECOND.deriveUnit("m3/h", "cubic meter per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit m3_h =
+                m3_s.deriveUnit("m3/h", "cubic meter per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
 
         /** m^3/day. */
-        public static final FlowVolume.Unit CUBIC_METER_PER_DAY =
-                CUBIC_METER_PER_HOUR.deriveUnit("m3/day", "cubic meter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit m3_day =
+                m3_h.deriveUnit("m3/day", "cubic meter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
 
         /** L/s. */
-        public static final FlowVolume.Unit LITER_PER_SECOND =
-                CUBIC_METER_PER_SECOND.deriveUnit("L/s", "liter per second", 1E-3, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit L_s = m3_s.deriveUnit("L/s", "liter per second", 1E-3, UnitSystem.SI_ACCEPTED);
 
         /** L/min. */
-        public static final FlowVolume.Unit LITER_PER_MINUTE =
-                LITER_PER_SECOND.deriveUnit("L/min", "liter per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit L_min =
+                L_s.deriveUnit("L/min", "liter per minute", 1.0 / 60.0, UnitSystem.SI_ACCEPTED);
 
         /** L/hour. */
-        public static final FlowVolume.Unit LITER_PER_HOUR =
-                LITER_PER_SECOND.deriveUnit("L/h", "liter per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit L_h = L_s.deriveUnit("L/h", "liter per hour", 1.0 / 3600.0, UnitSystem.SI_ACCEPTED);
 
         /** L/day. */
-        public static final FlowVolume.Unit LITER_PER_DAY =
-                LITER_PER_HOUR.deriveUnit("L/day", "liter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
+        public static final FlowVolume.Unit L_day =
+                L_h.deriveUnit("L/day", "liter per day", 1.0 / 24.0, UnitSystem.SI_ACCEPTED);
 
         /** ft^3/s. */
-        public static final FlowVolume.Unit CUBIC_FOOT_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("ft3/s",
-                "cubic foot per second", Volume.Unit.CONST_CUBIC_FOOT, UnitSystem.IMPERIAL);
+        public static final FlowVolume.Unit ft3_s =
+                m3_s.deriveUnit("ft3/s", "cubic foot per second", Volume.Unit.CONST_CUBIC_FOOT, UnitSystem.IMPERIAL);
 
         /** ft^3/min. */
-        public static final FlowVolume.Unit CUBIC_FOOT_PER_MINUTE =
-                CUBIC_FOOT_PER_SECOND.deriveUnit("ft3/min", "cubic foot per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
+        public static final FlowVolume.Unit ft3_min =
+                ft3_s.deriveUnit("ft3/min", "cubic foot per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
 
         /** in^3/s. */
-        public static final FlowVolume.Unit CUBIC_INCH_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("in3/s",
-                "cubic inch per second", Volume.Unit.CONST_CUBIC_INCH, UnitSystem.IMPERIAL);
+        public static final FlowVolume.Unit in3_s =
+                m3_s.deriveUnit("in3/s", "cubic inch per second", Volume.Unit.CONST_CUBIC_INCH, UnitSystem.IMPERIAL);
 
         /** in^3/min. */
-        public static final FlowVolume.Unit CUBIC_INCH_PER_MINUTE =
-                CUBIC_INCH_PER_SECOND.deriveUnit("in3/min", "cubic inch per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
+        public static final FlowVolume.Unit in3_min =
+                in3_s.deriveUnit("in3/min", "cubic inch per minute", 1.0 / 60.0, UnitSystem.IMPERIAL);
 
         /** gallon/s (US). */
-        public static final FlowVolume.Unit GALLON_US_PER_SECOND = CUBIC_METER_PER_SECOND.deriveUnit("gal(US)/s",
-                "US gallon per second", Volume.Unit.CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
+        public static final FlowVolume.Unit gal_US_s =
+                m3_s.deriveUnit("gal(US)/s", "US gallon per second", Volume.Unit.CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
 
         /** gallon/min (US). */
-        public static final FlowVolume.Unit GALLON_US_PER_MINUTE =
-                GALLON_US_PER_SECOND.deriveUnit("gal(US)/min", "US gallon per minute", 1.0 / 60.0, UnitSystem.US_CUSTOMARY);
+        public static final FlowVolume.Unit gal_US_min =
+                gal_US_s.deriveUnit("gal(US)/min", "US gallon per minute", 1.0 / 60.0, UnitSystem.US_CUSTOMARY);
 
         /** gallon/hour (US). */
-        public static final FlowVolume.Unit GALLON_US_PER_HOUR =
-                GALLON_US_PER_SECOND.deriveUnit("gal(US)/h", "US gallon per hour", 1.0 / 3600.0, UnitSystem.US_CUSTOMARY);
+        public static final FlowVolume.Unit gal_US_h =
+                gal_US_s.deriveUnit("gal(US)/h", "US gallon per hour", 1.0 / 3600.0, UnitSystem.US_CUSTOMARY);
 
         /** gallon/day (US). */
-        public static final FlowVolume.Unit GALLON_US_PER_DAY =
-                GALLON_US_PER_HOUR.deriveUnit("gal(US)/day", "US gallon per day", 1.0 / 24.0, UnitSystem.US_CUSTOMARY);
+        public static final FlowVolume.Unit gal_US_day =
+                gal_US_h.deriveUnit("gal(US)/day", "US gallon per day", 1.0 / 24.0, UnitSystem.US_CUSTOMARY);
 
         /**
          * Create a new FlowVolume unit.

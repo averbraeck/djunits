@@ -202,17 +202,18 @@ public class LinearDensity extends Quantity<LinearDensity, LinearDensity.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<LinearDensity.Unit, LinearDensity>
     {
         /** The dimensions of linear density: kg/m. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/m");
 
         /** Kilogram per meter. */
-        public static final LinearDensity.Unit KILOGRAM_PER_METER =
+        public static final LinearDensity.Unit kg_m =
                 new LinearDensity.Unit("kg/m", "kilogram per meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final LinearDensity.Unit SI = KILOGRAM_PER_METER;
+        public static final LinearDensity.Unit SI = kg_m;
 
         /**
          * Create a new LinearDensity unit.

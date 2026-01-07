@@ -197,35 +197,35 @@ public class ElectricCurrent extends Quantity<ElectricCurrent, ElectricCurrent.U
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricCurrent.Unit, ElectricCurrent>
     {
         /** The dimensions of electric current: A. */
         public static final SIUnit SI_UNIT = SIUnit.of("A");
 
         /** ampere. */
-        public static final ElectricCurrent.Unit AMPERE = new ElectricCurrent.Unit("A", "ampere", 1.0, UnitSystem.SI_BASE);
+        public static final ElectricCurrent.Unit A = new ElectricCurrent.Unit("A", "ampere", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final ElectricCurrent.Unit SI = AMPERE.generateSiPrefixes(false, false);
+        public static final ElectricCurrent.Unit SI = A.generateSiPrefixes(false, false);
 
         /** microampere. */
-        public static final ElectricCurrent.Unit MICROAMPERE = Units.resolve(ElectricCurrent.Unit.class, "muA");
+        public static final ElectricCurrent.Unit muA = Units.resolve(ElectricCurrent.Unit.class, "muA");
 
         /** milliampere. */
-        public static final ElectricCurrent.Unit MILLIAMPERE = Units.resolve(ElectricCurrent.Unit.class, "mA");
+        public static final ElectricCurrent.Unit mA = Units.resolve(ElectricCurrent.Unit.class, "mA");
 
         /** kiloampere. */
-        public static final ElectricCurrent.Unit KILOAMPERE = Units.resolve(ElectricCurrent.Unit.class, "kA");
+        public static final ElectricCurrent.Unit kA = Units.resolve(ElectricCurrent.Unit.class, "kA");
 
         /** megaampere. */
-        public static final ElectricCurrent.Unit MEGAAMPERE = Units.resolve(ElectricCurrent.Unit.class, "MA");
+        public static final ElectricCurrent.Unit MA = Units.resolve(ElectricCurrent.Unit.class, "MA");
 
         /** statampere (GCS ESU). */
-        public static final ElectricCurrent.Unit STATAMPERE =
-                AMPERE.deriveUnit("statA", "statampere", 3.335641E-10, UnitSystem.CGS_ESU);
+        public static final ElectricCurrent.Unit statA = A.deriveUnit("statA", "statampere", 3.335641E-10, UnitSystem.CGS_ESU);
 
         /** abampere (GCS EMU). */
-        public static final ElectricCurrent.Unit ABAMPERE = AMPERE.deriveUnit("abA", "abampere", 10.0, UnitSystem.CGS_EMU);
+        public static final ElectricCurrent.Unit abA = A.deriveUnit("abA", "abampere", 10.0, UnitSystem.CGS_EMU);
 
         /**
          * Create a new ElectricCurrent unit.

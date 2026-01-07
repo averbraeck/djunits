@@ -183,26 +183,27 @@ public class ElectricalConductance extends Quantity<ElectricalConductance, Elect
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricalConductance.Unit, ElectricalConductance>
     {
         /** The dimensions of electrical conductance: s3A2/kgm2. */
         public static final SIUnit SI_UNIT = SIUnit.of("s3A2/kgm2");
 
         /** Siemens. */
-        public static final ElectricalConductance.Unit SIEMENS =
+        public static final ElectricalConductance.Unit S =
                 new ElectricalConductance.Unit("S", "siemens", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalConductance.Unit SI = SIEMENS.generateSiPrefixes(false, false);
+        public static final ElectricalConductance.Unit SI = S.generateSiPrefixes(false, false);
 
         /** mS. */
-        public static final ElectricalConductance.Unit MILLISIEMENS = Units.resolve(ElectricalConductance.Unit.class, "mS");
+        public static final ElectricalConductance.Unit mS = Units.resolve(ElectricalConductance.Unit.class, "mS");
 
         /** muS. */
-        public static final ElectricalConductance.Unit MICROSIEMENS = Units.resolve(ElectricalConductance.Unit.class, "muS");
+        public static final ElectricalConductance.Unit muS = Units.resolve(ElectricalConductance.Unit.class, "muS");
 
         /** nS. */
-        public static final ElectricalConductance.Unit NANOSIEMENS = Units.resolve(ElectricalConductance.Unit.class, "nS");
+        public static final ElectricalConductance.Unit nS = Units.resolve(ElectricalConductance.Unit.class, "nS");
 
         /**
          * Create a new ElectricalConductance unit.

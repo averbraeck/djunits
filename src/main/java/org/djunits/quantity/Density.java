@@ -166,21 +166,22 @@ public class Density extends Quantity<Density, Density.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Density.Unit, Density>
     {
         /** The dimensions of the absorbed dose: kg/m3. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/m3");
 
         /** kg/m^3. */
-        public static final Density.Unit KG_PER_METER_3 =
+        public static final Density.Unit kg_m3 =
                 new Density.Unit("kg/m3", "kilogram per cubic meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Density.Unit SI = KG_PER_METER_3;
+        public static final Density.Unit SI = kg_m3;
 
         /** g/cm^3. */
-        public static final Density.Unit GRAM_PER_CENTIMETER_3 =
-                KG_PER_METER_3.deriveUnit("g/cm3", "gram per cubic centimeter", 1.0E3, UnitSystem.SI_DERIVED);
+        public static final Density.Unit g_cm3 =
+                kg_m3.deriveUnit("g/cm3", "gram per cubic centimeter", 1.0E3, UnitSystem.SI_DERIVED);
 
         /**
          * Create a new Density unit.

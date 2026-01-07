@@ -226,38 +226,39 @@ public class Force extends Quantity<Force, Force.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Force.Unit, Force>
     {
         /** The dimensions of force: kgm/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm/s2");
 
         /** Gray. */
-        public static final Force.Unit NEWTON = new Force.Unit("N", "newton", 1.0, UnitSystem.SI_DERIVED);
+        public static final Force.Unit N = new Force.Unit("N", "newton", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Force.Unit SI = NEWTON.generateSiPrefixes(false, false);
+        public static final Force.Unit SI = N.generateSiPrefixes(false, false);
 
         /** Dyne. */
-        public static final Force.Unit DYNE = NEWTON.deriveUnit("dyn", "dyne", 1E-5, UnitSystem.CGS);
+        public static final Force.Unit dyn = N.deriveUnit("dyn", "dyne", 1E-5, UnitSystem.CGS);
 
         /** kilogram-force. */
-        public static final Force.Unit KILOGRAM_FORCE =
+        public static final Force.Unit kgf =
                 SI.deriveUnit("kgf", "kilogram-force", Acceleration.Unit.CONST_GRAVITY, UnitSystem.OTHER);
 
         /** ounce-force. */
-        public static final Force.Unit OUNCE_FORCE = SI.deriveUnit("ozf", "ounce-force",
+        public static final Force.Unit ozf = SI.deriveUnit("ozf", "ounce-force",
                 Mass.Unit.CONST_OUNCE * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** pound-force. */
-        public static final Force.Unit POUND_FORCE =
+        public static final Force.Unit lbf =
                 SI.deriveUnit("lbf", "pound-force", Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** ton-force. */
-        public static final Force.Unit SHORT_TON_FORCE = SI.deriveUnit("tnf", "ton-force",
+        public static final Force.Unit tnf = SI.deriveUnit("tnf", "ton-force",
                 Mass.Unit.CONST_TON_SHORT * Acceleration.Unit.CONST_GRAVITY, UnitSystem.IMPERIAL);
 
         /** sthene. */
-        public static final Force.Unit STHENE = SI.deriveUnit("sn", "sthene", 1000.0, UnitSystem.MTS);
+        public static final Force.Unit sn = SI.deriveUnit("sn", "sthene", 1000.0, UnitSystem.MTS);
 
         /**
          * Create a new Force unit.

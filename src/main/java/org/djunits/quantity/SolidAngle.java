@@ -156,20 +156,21 @@ public class SolidAngle extends Quantity<SolidAngle, SolidAngle.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<SolidAngle.Unit, SolidAngle>
     {
         /** The dimensions of the solid angle: sr. */
         public static final SIUnit SI_UNIT = SIUnit.of("sr");
 
         /** Steradian. */
-        public static final SolidAngle.Unit STERADIAN = new SolidAngle.Unit("sr", "steradian", 1.0, UnitSystem.SI_DERIVED);
+        public static final SolidAngle.Unit sr = new SolidAngle.Unit("sr", "steradian", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final SolidAngle.Unit SI = STERADIAN;
+        public static final SolidAngle.Unit SI = sr;
 
         /** square degree. */
-        public static final SolidAngle.Unit SQUARE_DEGREE =
-                STERADIAN.deriveUnit("sq.deg", "square degree", (Math.PI / 180.0) * (Math.PI / 180.0), UnitSystem.SI_DERIVED);
+        public static final SolidAngle.Unit sq_deg =
+                sr.deriveUnit("sq.deg", "square degree", (Math.PI / 180.0) * (Math.PI / 180.0), UnitSystem.SI_DERIVED);
 
         /**
          * Create a new SolidAngle unit.

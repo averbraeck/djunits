@@ -146,25 +146,26 @@ public class EquivalentDose extends Quantity<EquivalentDose, EquivalentDose.Unit
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<EquivalentDose.Unit, EquivalentDose>
     {
         /** The dimensions of the equivalent dose: m2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2/s2");
 
         /** Sievert. */
-        public static final EquivalentDose.Unit SIEVERT = new EquivalentDose.Unit("Sv", "sievert", 1.0, UnitSystem.SI_DERIVED);
+        public static final EquivalentDose.Unit Sv = new EquivalentDose.Unit("Sv", "sievert", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final EquivalentDose.Unit SI = SIEVERT.generateSiPrefixes(false, false);
+        public static final EquivalentDose.Unit SI = Sv.generateSiPrefixes(false, false);
 
         /** mSv. */
-        public static final EquivalentDose.Unit MILLISIEVERT = Units.resolve(EquivalentDose.Unit.class, "mSv");
+        public static final EquivalentDose.Unit mSv = Units.resolve(EquivalentDose.Unit.class, "mSv");
 
         /** &#181;Sv. */
-        public static final EquivalentDose.Unit MICROSIEVERT = Units.resolve(EquivalentDose.Unit.class, "muSv");
+        public static final EquivalentDose.Unit muSv = Units.resolve(EquivalentDose.Unit.class, "muSv");
 
         /** rem. (stands for röntgen equivalent man). */
-        public static final EquivalentDose.Unit REM = SIEVERT.deriveUnit("rem", "rem", 0.01, UnitSystem.CGS);
+        public static final EquivalentDose.Unit rem = Sv.deriveUnit("rem", "rem", 0.01, UnitSystem.CGS);
 
         /**
          * Create a new EquivalentDose unit.

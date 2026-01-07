@@ -177,38 +177,38 @@ public class ElectricPotential extends Quantity<ElectricPotential, ElectricPoten
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricPotential.Unit, ElectricPotential>
     {
         /** The dimensions of the electric potential: kgm2/s3A. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A");
 
         /** Gray. */
-        public static final ElectricPotential.Unit VOLT = new ElectricPotential.Unit("V", "volt", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricPotential.Unit V = new ElectricPotential.Unit("V", "volt", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricPotential.Unit SI = VOLT.generateSiPrefixes(false, false);
+        public static final ElectricPotential.Unit SI = V.generateSiPrefixes(false, false);
 
         /** microvolt. */
-        public static final ElectricPotential.Unit MICROVOLT = Units.resolve(ElectricPotential.Unit.class, "muV");
+        public static final ElectricPotential.Unit muV = Units.resolve(ElectricPotential.Unit.class, "muV");
 
         /** millivolt. */
-        public static final ElectricPotential.Unit MILLIVOLT = Units.resolve(ElectricPotential.Unit.class, "mV");
+        public static final ElectricPotential.Unit mV = Units.resolve(ElectricPotential.Unit.class, "mV");
 
         /** kilovolt. */
-        public static final ElectricPotential.Unit KILOVOLT = Units.resolve(ElectricPotential.Unit.class, "kV");
+        public static final ElectricPotential.Unit kV = Units.resolve(ElectricPotential.Unit.class, "kV");
 
         /** megavolt. */
-        public static final ElectricPotential.Unit MEGAVOLT = Units.resolve(ElectricPotential.Unit.class, "MV");
+        public static final ElectricPotential.Unit MV = Units.resolve(ElectricPotential.Unit.class, "MV");
 
         /** gigavolt. */
-        public static final ElectricPotential.Unit GIGAVOLT = Units.resolve(ElectricPotential.Unit.class, "GV");
+        public static final ElectricPotential.Unit GV = Units.resolve(ElectricPotential.Unit.class, "GV");
 
         /** statvolt. */
-        public static final ElectricPotential.Unit STATVOLT =
-                VOLT.deriveUnit("stV", "statvolt", 299.792458, UnitSystem.CGS_ESU);
+        public static final ElectricPotential.Unit statV = V.deriveUnit("statV", "statvolt", 299.792458, UnitSystem.CGS_ESU);
 
         /** abvolt. */
-        public static final ElectricPotential.Unit ABVOLT = VOLT.deriveUnit("abV", "abvolt", 1.0E-8, UnitSystem.CGS_EMU);
+        public static final ElectricPotential.Unit abV = V.deriveUnit("abV", "abvolt", 1.0E-8, UnitSystem.CGS_EMU);
 
         /**
          * Create a new ElectricPotential unit.

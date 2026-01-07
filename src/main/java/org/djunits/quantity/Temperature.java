@@ -162,31 +162,32 @@ public class Temperature extends Quantity<Temperature, Temperature.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Temperature.Unit, Temperature>
     {
         /** The dimensions of temperature: K. */
         public static final SIUnit SI_UNIT = SIUnit.of("K");
 
         /** Kelvin. */
-        public static final Temperature.Unit KELVIN = new Temperature.Unit("K", "kelvin", 1.0, UnitSystem.SI_BASE);
+        public static final Temperature.Unit K = new Temperature.Unit("K", "kelvin", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Temperature.Unit SI = KELVIN.generateSiPrefixes(false, false);
+        public static final Temperature.Unit SI = K.generateSiPrefixes(false, false);
 
         /** Degree Celsius. */
-        public static final Temperature.Unit DEGREE_CELSIUS = new Temperature.Unit("degC", "\u00B0C", "degree Celsius",
+        public static final Temperature.Unit degC = new Temperature.Unit("degC", "\u00B0C", "degree Celsius",
                 new OffsetLinearScale(1.0, 273.15), UnitSystem.SI_DERIVED);
 
         /** Degree Fahrenheit. */
-        public static final Temperature.Unit DEGREE_FAHRENHEIT = new Temperature.Unit("degF", "\u00B0F", "degree Fahrenheit",
+        public static final Temperature.Unit degF = new Temperature.Unit("degF", "\u00B0F", "degree Fahrenheit",
                 new OffsetLinearScale(5.0 / 9.0, 459.67), UnitSystem.OTHER);
 
         /** Degree Rankine. */
-        public static final Temperature.Unit DEGREE_RANKINE = new Temperature.Unit("degR", "\u00B0R", "degree Rankine",
+        public static final Temperature.Unit degR = new Temperature.Unit("degR", "\u00B0R", "degree Rankine",
                 new OffsetLinearScale(5.0 / 9.0, 0.0), UnitSystem.OTHER);
 
         /** Degree Reaumur. */
-        public static final Temperature.Unit DEGREE_REAUMUR = new Temperature.Unit("degRe", "\u00B0R\u00E9", "degree Reaumur",
+        public static final Temperature.Unit degRe = new Temperature.Unit("degRe", "\u00B0R\u00E9", "degree Reaumur",
                 new OffsetLinearScale(4.0 / 5.0, 273.15), UnitSystem.OTHER);
 
         /**

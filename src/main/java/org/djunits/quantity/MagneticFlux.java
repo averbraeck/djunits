@@ -206,28 +206,29 @@ public class MagneticFlux extends Quantity<MagneticFlux, MagneticFlux.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<MagneticFlux.Unit, MagneticFlux>
     {
         /** The dimensions of the magnetic flux: kgm2/s2A. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2A");
 
         /** Weber. */
-        public static final MagneticFlux.Unit WEBER = new MagneticFlux.Unit("Wb", "weber", 1.0, UnitSystem.SI_DERIVED);
+        public static final MagneticFlux.Unit Wb = new MagneticFlux.Unit("Wb", "weber", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final MagneticFlux.Unit SI = WEBER.generateSiPrefixes(false, false);
+        public static final MagneticFlux.Unit SI = Wb.generateSiPrefixes(false, false);
 
         /** mWb. */
-        public static final MagneticFlux.Unit MILLIWEBER = Units.resolve(MagneticFlux.Unit.class, "mWb");
+        public static final MagneticFlux.Unit mWb = Units.resolve(MagneticFlux.Unit.class, "mWb");
 
         /** muWb. */
-        public static final MagneticFlux.Unit MICROWEBER = Units.resolve(MagneticFlux.Unit.class, "muWb");
+        public static final MagneticFlux.Unit muWb = Units.resolve(MagneticFlux.Unit.class, "muWb");
 
         /** nWb. */
-        public static final MagneticFlux.Unit NANOWEBER = Units.resolve(MagneticFlux.Unit.class, "nWb");
+        public static final MagneticFlux.Unit nWb = Units.resolve(MagneticFlux.Unit.class, "nWb");
 
         /** Maxwell. */
-        public static final MagneticFlux.Unit MAXWELL = WEBER.deriveUnit("Mx", "Maxwell", 1.0E-8, UnitSystem.CGS);
+        public static final MagneticFlux.Unit Mx = Wb.deriveUnit("Mx", "Maxwell", 1.0E-8, UnitSystem.CGS);
 
         /**
          * Create a new MagneticFlux unit.

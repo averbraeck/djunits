@@ -188,7 +188,7 @@ public class Angle extends Quantity<Angle, Angle.Unit>
      */
     public static Angle normalize(final Angle angle)
     {
-        return new Angle(normalize(angle.si()), Angle.Unit.RADIAN);
+        return new Angle(normalize(angle.si()), Angle.Unit.rad);
     }
 
     /******************************************************************************************************/
@@ -203,42 +203,43 @@ public class Angle extends Quantity<Angle, Angle.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Angle.Unit, Angle>
     {
         /** The dimensions of Angle: rad. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad");
 
         /** radian. */
-        public static final Angle.Unit RADIAN =
+        public static final Angle.Unit rad =
                 new Angle.Unit("rad", "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Angle.Unit SI = RADIAN;
+        public static final Angle.Unit SI = rad;
 
         /** percent (non-linear, 100% is 45 degrees; 90 degrees is infinite). */
-        public static final Angle.Unit PERCENT = new Angle.Unit("%", "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
+        public static final Angle.Unit percent = new Angle.Unit("%", "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
 
         /** degree. */
-        public static final Angle.Unit DEGREE =
-                RADIAN.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final Angle.Unit deg =
+                rad.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute. */
-        public static final Angle.Unit ARCMINUTE = DEGREE.deriveUnit("arcmin", "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final Angle.Unit arcmin = deg.deriveUnit("arcmin", "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond. */
-        public static final Angle.Unit ARCSECOND =
-                DEGREE.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final Angle.Unit arcsec =
+                deg.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad. */
-        public static final Angle.Unit GRAD = RADIAN.deriveUnit("grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final Angle.Unit grad = rad.deriveUnit("grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute. */
-        public static final Angle.Unit CENTESIMAL_ARCMINUTE =
-                GRAD.deriveUnit("cdm", "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final Angle.Unit cdm =
+                grad.deriveUnit("cdm", "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond. */
-        public static final Angle.Unit CENTESIMAL_ARCSECOND =
-                GRAD.deriveUnit("cds", "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER);
+        public static final Angle.Unit cds =
+                grad.deriveUnit("cds", "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new Angle unit.

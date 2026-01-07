@@ -176,29 +176,30 @@ public class ElectricalCapacitance extends Quantity<ElectricalCapacitance, Elect
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricalCapacitance.Unit, ElectricalCapacitance>
     {
         /** The dimensions of electrical capacitance: s^4.A^2/kg.m^2. */
         public static final SIUnit SI_UNIT = SIUnit.of("s4A2/kgm2");
 
         /** farad. */
-        public static final ElectricalCapacitance.Unit FARAD =
+        public static final ElectricalCapacitance.Unit F =
                 new ElectricalCapacitance.Unit("F", "farad", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalCapacitance.Unit SI = FARAD.generateSiPrefixes(false, false);
+        public static final ElectricalCapacitance.Unit SI = F.generateSiPrefixes(false, false);
 
         /** mF. */
-        public static final ElectricalCapacitance.Unit MILLIFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "mF");
+        public static final ElectricalCapacitance.Unit mF = Units.resolve(ElectricalCapacitance.Unit.class, "mF");
 
         /** uF. */
-        public static final ElectricalCapacitance.Unit MICROFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "muF");
+        public static final ElectricalCapacitance.Unit muF = Units.resolve(ElectricalCapacitance.Unit.class, "muF");
 
         /** nF. */
-        public static final ElectricalCapacitance.Unit NANOFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "nF");
+        public static final ElectricalCapacitance.Unit nF = Units.resolve(ElectricalCapacitance.Unit.class, "nF");
 
         /** pF. */
-        public static final ElectricalCapacitance.Unit PICOFARAD = Units.resolve(ElectricalCapacitance.Unit.class, "pF");
+        public static final ElectricalCapacitance.Unit pF = Units.resolve(ElectricalCapacitance.Unit.class, "pF");
 
         /**
          * Create a new ElectricalCapacitance unit.

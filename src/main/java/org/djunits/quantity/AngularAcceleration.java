@@ -177,41 +177,42 @@ public class AngularAcceleration extends Quantity<AngularAcceleration, AngularAc
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<AngularAcceleration.Unit, AngularAcceleration>
     {
         /** The dimensions of AngularAcceleration: rad/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s2");
 
         /** radian per second squared. */
-        public static final AngularAcceleration.Unit RADIAN_PER_SECOND_SQUARED =
+        public static final AngularAcceleration.Unit rad_s2 =
                 new AngularAcceleration.Unit("rad/s2", "radians per second squared", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final AngularAcceleration.Unit SI = RADIAN_PER_SECOND_SQUARED;
+        public static final AngularAcceleration.Unit SI = rad_s2;
 
         /** degree per second squared. */
-        public static final AngularAcceleration.Unit DEGREE_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit("deg/s2",
-                "\u00b0/s2", "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularAcceleration.Unit deg_s2 =
+                rad_s2.deriveUnit("deg/s2", "\u00b0/s2", "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second squared. */
-        public static final AngularAcceleration.Unit ARCMINUTE_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED
-                .deriveUnit("arcmin/s2", "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit arcmin_s2 =
+                deg_s2.deriveUnit("arcmin/s2", "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second squared. */
-        public static final AngularAcceleration.Unit ARCSECOND_PER_SECOND_SQUARED = DEGREE_PER_SECOND_SQUARED
-                .deriveUnit("arcsec/s2", "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit arcsec_s2 =
+                deg_s2.deriveUnit("arcsec/s2", "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second squared. */
-        public static final AngularAcceleration.Unit GRAD_PER_SECOND_SQUARED = RADIAN_PER_SECOND_SQUARED.deriveUnit("grad/s2",
-                "gradian per second squared", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit grad_s2 =
+                rad_s2.deriveUnit("grad/s2", "gradian per second squared", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second squared. */
-        public static final AngularAcceleration.Unit CENTESIMAL_ARCMINUTE_PER_SECOND_SQUARED = GRAD_PER_SECOND_SQUARED
-                .deriveUnit("cdm/s2", "c'/s2", "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit cdm_s2 =
+                grad_s2.deriveUnit("cdm/s2", "c'/s2", "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second squared. */
-        public static final AngularAcceleration.Unit CENTESIMAL_ARCSECOND_PER_SECOND_SQUARED = GRAD_PER_SECOND_SQUARED
-                .deriveUnit("cds/s2", "c\"/s2", "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit cds_s2 = grad_s2.deriveUnit("cds/s2", "c\"/s2",
+                "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new AngularAcceleration unit.

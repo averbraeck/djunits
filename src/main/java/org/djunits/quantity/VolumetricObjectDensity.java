@@ -226,17 +226,18 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity, V
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<VolumetricObjectDensity.Unit, VolumetricObjectDensity>
     {
         /** The dimensions of the number of objects per unit of volume: per cubic meter (/m3). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m3");
 
         /** per meter. */
-        public static final VolumetricObjectDensity.Unit PER_CUBIC_METER =
+        public static final VolumetricObjectDensity.Unit per_m3 =
                 new VolumetricObjectDensity.Unit("/m3", "per cubic meter", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final VolumetricObjectDensity.Unit SI = PER_CUBIC_METER;
+        public static final VolumetricObjectDensity.Unit SI = per_m3;
 
         /**
          * Create a new VolumetricObjectDensity unit.

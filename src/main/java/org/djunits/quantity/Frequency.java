@@ -236,32 +236,32 @@ public class Frequency extends Quantity<Frequency, Frequency.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Frequency.Unit, Frequency>
     {
         /** The dimensions of frequency: /s. */
         public static final SIUnit SI_UNIT = SIUnit.of("/s");
 
         /** hertz. */
-        public static final Frequency.Unit HERTZ = new Frequency.Unit("Hz", "hertz", 1.0, UnitSystem.SI_DERIVED);
+        public static final Frequency.Unit Hz = new Frequency.Unit("Hz", "hertz", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Frequency.Unit SI = HERTZ.generateSiPrefixes(false, false);
+        public static final Frequency.Unit SI = Hz.generateSiPrefixes(false, false);
 
         /** kiloHertz. */
-        public static final Frequency.Unit KILOHERTZ = Units.resolve(Frequency.Unit.class, "kHz");
+        public static final Frequency.Unit kHz = Units.resolve(Frequency.Unit.class, "kHz");
 
         /** megaHertz. */
-        public static final Frequency.Unit MEGAHERTZ = Units.resolve(Frequency.Unit.class, "MHz");
+        public static final Frequency.Unit MHz = Units.resolve(Frequency.Unit.class, "MHz");
 
         /** gigaHertz. */
-        public static final Frequency.Unit GIGAHERTZ = Units.resolve(Frequency.Unit.class, "GHz");
+        public static final Frequency.Unit GHz = Units.resolve(Frequency.Unit.class, "GHz");
 
         /** teraHertz. */
-        public static final Frequency.Unit TERAHERTZ = Units.resolve(Frequency.Unit.class, "THz");
+        public static final Frequency.Unit THz = Units.resolve(Frequency.Unit.class, "THz");
 
         /** Revolutions per minute = 1/60 Hz. */
-        public static final Frequency.Unit RPM =
-                HERTZ.deriveUnit("rpm", "revolutions per minute", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final Frequency.Unit rpm = Hz.deriveUnit("rpm", "revolutions per minute", 1.0 / 60.0, UnitSystem.OTHER);
 
         /**
          * Create a new Frequency unit.

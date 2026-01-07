@@ -184,40 +184,41 @@ public class ElectricalResistance extends Quantity<ElectricalResistance, Electri
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricalResistance.Unit, ElectricalResistance>
     {
         /** The dimensions of the electrical resistance: kgm2/s3A2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A2");
 
         /** Ohm. */
-        public static final ElectricalResistance.Unit OHM =
+        public static final ElectricalResistance.Unit ohm =
                 new ElectricalResistance.Unit("ohm", "\u03A9", "ohm", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalResistance.Unit SI = OHM.generateSiPrefixes(false, false);
+        public static final ElectricalResistance.Unit SI = ohm.generateSiPrefixes(false, false);
 
         /** micro-ohm. */
-        public static final ElectricalResistance.Unit MICROOHM = Units.resolve(ElectricalResistance.Unit.class, "muohm");
+        public static final ElectricalResistance.Unit muohm = Units.resolve(ElectricalResistance.Unit.class, "muohm");
 
         /** milli-ohm. */
-        public static final ElectricalResistance.Unit MILLIOHM = Units.resolve(ElectricalResistance.Unit.class, "mohm");
+        public static final ElectricalResistance.Unit mohm = Units.resolve(ElectricalResistance.Unit.class, "mohm");
 
         /** kilo-ohm. */
-        public static final ElectricalResistance.Unit KILOOHM = Units.resolve(ElectricalResistance.Unit.class, "kohm");
+        public static final ElectricalResistance.Unit kohm = Units.resolve(ElectricalResistance.Unit.class, "kohm");
 
         /** mega-ohm. */
-        public static final ElectricalResistance.Unit MEGAOHM = Units.resolve(ElectricalResistance.Unit.class, "Mohm");
+        public static final ElectricalResistance.Unit Mohm = Units.resolve(ElectricalResistance.Unit.class, "Mohm");
 
         /** giga-ohm. */
-        public static final ElectricalResistance.Unit GIGAOHM = Units.resolve(ElectricalResistance.Unit.class, "Gohm");
+        public static final ElectricalResistance.Unit Gohm = Units.resolve(ElectricalResistance.Unit.class, "Gohm");
 
         /** ab-ohm. */
-        public static final ElectricalResistance.Unit ABOHM =
-                OHM.deriveUnit("abohm", "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU);
+        public static final ElectricalResistance.Unit abohm =
+                ohm.deriveUnit("abohm", "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU);
 
         /** stat-ohm. */
-        public static final ElectricalResistance.Unit STATOHM =
-                OHM.deriveUnit("stohm", "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU);
+        public static final ElectricalResistance.Unit statohm =
+                ohm.deriveUnit("stohm", "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU);
 
         /**
          * Create a new ElectricalResistance unit.

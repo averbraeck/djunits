@@ -187,67 +187,61 @@ public class ElectricCharge extends Quantity<ElectricCharge, ElectricCharge.Unit
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricCharge.Unit, ElectricCharge>
     {
         /** The dimensions of electric charge, the Coulumb, is A.s. */
         public static final SIUnit SI_UNIT = SIUnit.of("As");
 
         /** Gray. */
-        public static final ElectricCharge.Unit COULOMB = new ElectricCharge.Unit("C", "coulomb", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit C = new ElectricCharge.Unit("C", "coulomb", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricCharge.Unit SI = COULOMB.generateSiPrefixes(false, false);
+        public static final ElectricCharge.Unit SI = C.generateSiPrefixes(false, false);
 
         /** milliCoulomb = mA.s. */
-        public static final ElectricCharge.Unit MILLICOULOMB = Units.resolve(ElectricCharge.Unit.class, "mC");
+        public static final ElectricCharge.Unit mC = Units.resolve(ElectricCharge.Unit.class, "mC");
 
         /** microCoulomb = muA.s. */
-        public static final ElectricCharge.Unit MICROCOULOMB = Units.resolve(ElectricCharge.Unit.class, "muC");
+        public static final ElectricCharge.Unit muC = Units.resolve(ElectricCharge.Unit.class, "muC");
 
         /** ampere hour. */
-        public static final ElectricCharge.Unit AMPERE_HOUR =
-                COULOMB.deriveUnit("Ah", "ampere hour", 3600.0, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit Ah = C.deriveUnit("Ah", "ampere hour", 3600.0, UnitSystem.SI_DERIVED);
 
         /** milliampere hour. */
-        public static final ElectricCharge.Unit MILLIAMPERE_HOUR =
-                AMPERE_HOUR.deriveUnit("mAh", "milliampere hour", 1E-3, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit mAh = Ah.deriveUnit("mAh", "milliampere hour", 1E-3, UnitSystem.SI_DERIVED);
 
         /** milliampere second. */
-        public static final ElectricCharge.Unit MILLIAMPERE_SECOND =
-                MILLIAMPERE_HOUR.deriveUnit("mAs", "milliampere second", 1.0 / 3600.0, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit mAs =
+                mAh.deriveUnit("mAs", "milliampere second", 1.0 / 3600.0, UnitSystem.SI_DERIVED);
 
         /** kiloampere hour. */
-        public static final ElectricCharge.Unit KILOAMPERE_HOUR =
-                AMPERE_HOUR.deriveUnit("kAh", "kiloampere hour", 1E3, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit kAh = Ah.deriveUnit("kAh", "kiloampere hour", 1E3, UnitSystem.SI_DERIVED);
 
         /** megaampere hour. */
-        public static final ElectricCharge.Unit MEGAAMPERE_HOUR =
-                AMPERE_HOUR.deriveUnit("MAh", "megaampere hour", 1E6, UnitSystem.SI_DERIVED);
+        public static final ElectricCharge.Unit MAh = Ah.deriveUnit("MAh", "megaampere hour", 1E6, UnitSystem.SI_DERIVED);
 
         /** Faraday. */
-        public static final ElectricCharge.Unit FARADAY = COULOMB.deriveUnit("F", "faraday", 96485.3383, UnitSystem.OTHER);
+        public static final ElectricCharge.Unit F = C.deriveUnit("F", "faraday", 96485.3383, UnitSystem.OTHER);
 
         /** atomic unit of charge. This value is exact since the 2019 redefinition of the SI base units. */
-        public static final ElectricCharge.Unit ATOMIC_UNIT =
-                COULOMB.deriveUnit("e", "elementary unit of charge", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
+        public static final ElectricCharge.Unit e =
+                C.deriveUnit("e", "elementary unit of charge", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
 
         /** statcoulomb (CGS ESU). */
-        public static final ElectricCharge.Unit STATCOULOMB =
-                COULOMB.deriveUnit("statC", "statcoulomb", 3.335641E-10, UnitSystem.CGS_ESU);
+        public static final ElectricCharge.Unit statC = C.deriveUnit("statC", "statcoulomb", 3.335641E-10, UnitSystem.CGS_ESU);
 
         /** franklin (CGS ESU). */
-        public static final ElectricCharge.Unit FRANKLIN = STATCOULOMB.deriveUnit("Fr", "franklin", 1.0, UnitSystem.CGS_ESU);
+        public static final ElectricCharge.Unit Fr = statC.deriveUnit("Fr", "franklin", 1.0, UnitSystem.CGS_ESU);
 
         /** esu (CGS ESU). */
-        public static final ElectricCharge.Unit ESU =
-                STATCOULOMB.deriveUnit("esu", "electrostatic unit", 1.0, UnitSystem.CGS_ESU);
+        public static final ElectricCharge.Unit esu = statC.deriveUnit("esu", "electrostatic unit", 1.0, UnitSystem.CGS_ESU);
 
         /** abcoulomb (CGS EMU). */
-        public static final ElectricCharge.Unit ABCOULOMB = COULOMB.deriveUnit("abC", "abcoulomb", 10.0, UnitSystem.CGS_EMU);
+        public static final ElectricCharge.Unit abC = C.deriveUnit("abC", "abcoulomb", 10.0, UnitSystem.CGS_EMU);
 
         /** emu (CGS EMU). */
-        public static final ElectricCharge.Unit EMU =
-                ABCOULOMB.deriveUnit("emu", "electromagnetic unit", 1.0, UnitSystem.CGS_EMU);
+        public static final ElectricCharge.Unit emu = abC.deriveUnit("emu", "electromagnetic unit", 1.0, UnitSystem.CGS_EMU);
 
         /**
          * Create a new ElectricCharge unit.

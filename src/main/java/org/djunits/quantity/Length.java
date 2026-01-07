@@ -276,6 +276,7 @@ public class Length extends Quantity<Length, Length.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Length.Unit, Length>
     {
         /** Constant for the foot. */
@@ -306,75 +307,74 @@ public class Length extends Quantity<Length, Length.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("m");
 
         /** meter. */
-        public static final Length.Unit METER = new Length.Unit("m", "meter", 1.0, UnitSystem.SI_BASE);
+        public static final Length.Unit m = new Length.Unit("m", "meter", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Length.Unit SI = METER.generateSiPrefixes(false, false);
+        public static final Length.Unit SI = m.generateSiPrefixes(false, false);
 
         /** decameter. */
-        public static final Length.Unit DECAMETER = Units.resolve(Length.Unit.class, "dam");
+        public static final Length.Unit dam = Units.resolve(Length.Unit.class, "dam");
 
         /** hectometer. */
-        public static final Length.Unit HECTOMETER = Units.resolve(Length.Unit.class, "hm");
+        public static final Length.Unit hm = Units.resolve(Length.Unit.class, "hm");
 
         /** kilometer. */
-        public static final Length.Unit KILOMETER = Units.resolve(Length.Unit.class, "km");
+        public static final Length.Unit km = Units.resolve(Length.Unit.class, "km");
 
         /** decimeter. */
-        public static final Length.Unit DECIMETER = Units.resolve(Length.Unit.class, "dm");
+        public static final Length.Unit dm = Units.resolve(Length.Unit.class, "dm");
 
         /** centimeter. */
-        public static final Length.Unit CENTIMETER = Units.resolve(Length.Unit.class, "cm");
+        public static final Length.Unit cm = Units.resolve(Length.Unit.class, "cm");
 
         /** millimeter. */
-        public static final Length.Unit MILLIMETER = Units.resolve(Length.Unit.class, "mm");
+        public static final Length.Unit mm = Units.resolve(Length.Unit.class, "mm");
 
         /** micrometer. */
-        public static final Length.Unit MICROMETER = Units.resolve(Length.Unit.class, "mum");
+        public static final Length.Unit mum = Units.resolve(Length.Unit.class, "mum");
 
         /** nanometer. */
-        public static final Length.Unit NANOMETER = Units.resolve(Length.Unit.class, "nm");
+        public static final Length.Unit nm = Units.resolve(Length.Unit.class, "nm");
 
         /** picometer. */
-        public static final Length.Unit PICOMETER = Units.resolve(Length.Unit.class, "pm");
+        public static final Length.Unit pm = Units.resolve(Length.Unit.class, "pm");
 
         /** attometer. */
-        public static final Length.Unit ATTOMETER = Units.resolve(Length.Unit.class, "am");
+        public static final Length.Unit am = Units.resolve(Length.Unit.class, "am");
 
         /** femtometer. */
-        public static final Length.Unit FEMTOMETER = Units.resolve(Length.Unit.class, "fm");
+        public static final Length.Unit fm = Units.resolve(Length.Unit.class, "fm");
 
         /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
-        public static final Length.Unit FOOT =
+        public static final Length.Unit ft =
                 new Length.Unit("ft", "ft", "foot", new LinearScale(CONST_FT), UnitSystem.IMPERIAL);
 
         /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
-        public static final Length.Unit INCH =
+        public static final Length.Unit in =
                 new Length.Unit("in", "in", "inch", new LinearScale(CONST_IN), UnitSystem.IMPERIAL);
 
         /** yard (international) = 0.9144 m = 3 ft = 36 in. */
-        public static final Length.Unit YARD =
+        public static final Length.Unit yd =
                 new Length.Unit("yd", "yd", "yard", new LinearScale(CONST_YD), UnitSystem.IMPERIAL);
 
         /** mile (international) = 5280 ft = 1760 yd. */
-        public static final Length.Unit MILE =
+        public static final Length.Unit mi =
                 new Length.Unit("mi", "mi", "mile", new LinearScale(CONST_MI), UnitSystem.IMPERIAL);
 
         /** nautical mile (international) = 1852 m. */
-        public static final Length.Unit NAUTICAL_MILE = new Length.Unit("NM", "Nautical Mile", CONST_NM, UnitSystem.OTHER);
+        public static final Length.Unit NM = new Length.Unit("NM", "Nautical Mile", CONST_NM, UnitSystem.OTHER);
 
         /** Astronomical Unit = 149,597,870,700 m. */
-        public static final Length.Unit ASTRONOMICAL_UNIT =
-                new Length.Unit("AU", "Astronomical Unit", CONST_AU, UnitSystem.OTHER);
+        public static final Length.Unit AU = new Length.Unit("AU", "Astronomical Unit", CONST_AU, UnitSystem.OTHER);
 
         /** Lightyear = 9,460,730,472,580,800 m. */
-        public static final Length.Unit LIGHTYEAR = new Length.Unit("ly", "lightyear", CONST_LY, UnitSystem.OTHER);
+        public static final Length.Unit ly = new Length.Unit("ly", "lightyear", CONST_LY, UnitSystem.OTHER);
 
         /** Parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
-        public static final Length.Unit PARSEC = new Length.Unit("Pc", "Parsec", CONST_PC, UnitSystem.OTHER);
+        public static final Length.Unit Pc = new Length.Unit("Pc", "Parsec", CONST_PC, UnitSystem.OTHER);
 
         /** Angstrom = 10^-10 m. */
-        public static final Length.Unit ANGSTROM =
+        public static final Length.Unit A =
                 new Length.Unit("A", "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
 
         /**

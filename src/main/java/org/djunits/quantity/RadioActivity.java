@@ -146,45 +146,44 @@ public class RadioActivity extends Quantity<RadioActivity, RadioActivity.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<RadioActivity.Unit, RadioActivity>
     {
         /** The dimensions of radioactivity: /s. */
         public static final SIUnit SI_UNIT = SIUnit.of("/s");
 
         /** Becquerel. */
-        public static final RadioActivity.Unit BECQUEREL =
-                new RadioActivity.Unit("Bq", "becquerel", 1.0, UnitSystem.SI_DERIVED);
+        public static final RadioActivity.Unit Bq = new RadioActivity.Unit("Bq", "becquerel", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final RadioActivity.Unit SI = BECQUEREL.generateSiPrefixes(false, false);
+        public static final RadioActivity.Unit SI = Bq.generateSiPrefixes(false, false);
 
         /** kBq. */
-        public static final RadioActivity.Unit KILOBECQUEREL = Units.resolve(RadioActivity.Unit.class, "kBq");
+        public static final RadioActivity.Unit kBq = Units.resolve(RadioActivity.Unit.class, "kBq");
 
         /** MBq. */
-        public static final RadioActivity.Unit MEGABECQUEREL = Units.resolve(RadioActivity.Unit.class, "MBq");
+        public static final RadioActivity.Unit MBq = Units.resolve(RadioActivity.Unit.class, "MBq");
 
         /** GBq. */
-        public static final RadioActivity.Unit GIGABECQUEREL = Units.resolve(RadioActivity.Unit.class, "GBq");
+        public static final RadioActivity.Unit GBq = Units.resolve(RadioActivity.Unit.class, "GBq");
 
         /** TBq. */
-        public static final RadioActivity.Unit TERABECQUEREL = Units.resolve(RadioActivity.Unit.class, "TBq");
+        public static final RadioActivity.Unit TBq = Units.resolve(RadioActivity.Unit.class, "TBq");
 
         /** Curie. */
-        public static final RadioActivity.Unit CURIE = BECQUEREL.deriveUnit("Ci", "curie", 3.7E10, UnitSystem.OTHER);
+        public static final RadioActivity.Unit Ci = Bq.deriveUnit("Ci", "curie", 3.7E10, UnitSystem.OTHER);
 
         /** milliCurie. */
-        public static final RadioActivity.Unit MILLICURIE = CURIE.deriveUnit("mCi", "millicurie", 1.0E-3, UnitSystem.OTHER);
+        public static final RadioActivity.Unit mCi = Ci.deriveUnit("mCi", "millicurie", 1.0E-3, UnitSystem.OTHER);
 
         /** microCurie. */
-        public static final RadioActivity.Unit MICROCURIE =
-                CURIE.deriveUnit("muCi", "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER);
+        public static final RadioActivity.Unit muCi = Ci.deriveUnit("muCi", "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER);
 
         /** nanoCurie. */
-        public static final RadioActivity.Unit NANOCURIE = CURIE.deriveUnit("nCi", "nanocurie", 1.0E-9, UnitSystem.OTHER);
+        public static final RadioActivity.Unit nCi = Ci.deriveUnit("nCi", "nanocurie", 1.0E-9, UnitSystem.OTHER);
 
         /** Rutherford. */
-        public static final RadioActivity.Unit RUTHERFORD = BECQUEREL.deriveUnit("Rd", "rutherford", 1.0E6, UnitSystem.OTHER);
+        public static final RadioActivity.Unit Rd = Bq.deriveUnit("Rd", "rutherford", 1.0E6, UnitSystem.OTHER);
 
         /**
          * Create a new RadioActivity unit.

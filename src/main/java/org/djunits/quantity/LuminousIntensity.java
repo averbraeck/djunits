@@ -156,17 +156,17 @@ public class LuminousIntensity extends Quantity<LuminousIntensity, LuminousInten
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<LuminousIntensity.Unit, LuminousIntensity>
     {
         /** The dimensions of the luminous flux emitted per unit solid angle: cd. */
         public static final SIUnit SI_UNIT = SIUnit.of("cd");
 
         /** Candela. */
-        public static final LuminousIntensity.Unit CANDELA =
-                new LuminousIntensity.Unit("cd", "candela", 1.0, UnitSystem.SI_DERIVED);
+        public static final LuminousIntensity.Unit cd = new LuminousIntensity.Unit("cd", "candela", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final LuminousIntensity.Unit SI = CANDELA.generateSiPrefixes(false, false);
+        public static final LuminousIntensity.Unit SI = cd.generateSiPrefixes(false, false);
 
         /**
          * Create a new LuminousIntensity unit.

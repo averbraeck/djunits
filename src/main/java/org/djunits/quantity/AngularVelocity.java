@@ -146,41 +146,42 @@ public class AngularVelocity extends Quantity<AngularVelocity, AngularVelocity.U
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<AngularVelocity.Unit, AngularVelocity>
     {
         /** The dimensions of AngularVelocity: rad/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s");
 
         /** radian per second. */
-        public static final AngularVelocity.Unit RADIAN_PER_SECOND =
+        public static final AngularVelocity.Unit rad_s =
                 new AngularVelocity.Unit("rad/s", "radians per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final AngularVelocity.Unit SI = RADIAN_PER_SECOND;
+        public static final AngularVelocity.Unit SI = rad_s;
 
         /** degree per second. */
-        public static final AngularVelocity.Unit DEGREE_PER_SECOND =
-                RADIAN_PER_SECOND.deriveUnit("deg/s", "\u00b0/s", "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularVelocity.Unit deg_s =
+                rad_s.deriveUnit("deg/s", "\u00b0/s", "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute per second. */
-        public static final AngularVelocity.Unit ARCMINUTE_PER_SECOND =
-                DEGREE_PER_SECOND.deriveUnit("arcmin/s", "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit arcmin_s =
+                deg_s.deriveUnit("arcmin/s", "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond per second. */
-        public static final AngularVelocity.Unit ARCSECOND_PER_SECOND =
-                DEGREE_PER_SECOND.deriveUnit("arcsec/s", "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit arcsec_s =
+                deg_s.deriveUnit("arcsec/s", "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad per second. */
-        public static final AngularVelocity.Unit GRAD_PER_SECOND =
-                RADIAN_PER_SECOND.deriveUnit("grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit grad_s =
+                rad_s.deriveUnit("grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
 
         /** centesimal arcminute per second. */
-        public static final AngularVelocity.Unit CENTESIMAL_ARCMINUTE_PER_SECOND =
-                GRAD_PER_SECOND.deriveUnit("cdm/s", "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit cdm_s =
+                grad_s.deriveUnit("cdm/s", "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
 
         /** centesimal arcsecond per second. */
-        public static final AngularVelocity.Unit CENTESIMAL_ARCSECOND_PER_SECOND = GRAD_PER_SECOND.deriveUnit("cds/s", "c\"/s",
-                "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
+        public static final AngularVelocity.Unit cds_s =
+                grad_s.deriveUnit("cds/s", "c\"/s", "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
 
         /**
          * Create a new AngularVelocity unit.

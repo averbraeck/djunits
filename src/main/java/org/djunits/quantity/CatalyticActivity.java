@@ -177,26 +177,26 @@ public class CatalyticActivity extends Quantity<CatalyticActivity, CatalyticActi
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<CatalyticActivity.Unit, CatalyticActivity>
     {
         /** The dimensions of catalytic activity: mol/s [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = SIUnit.of("mol/s");
 
         /** katal. */
-        public static final CatalyticActivity.Unit KATAL =
-                new CatalyticActivity.Unit("kat", "katal", 1.0, UnitSystem.SI_DERIVED);
+        public static final CatalyticActivity.Unit kat = new CatalyticActivity.Unit("kat", "katal", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final CatalyticActivity.Unit SI = KATAL.generateSiPrefixes(false, false);
+        public static final CatalyticActivity.Unit SI = kat.generateSiPrefixes(false, false);
 
         /** mkat. */
-        public static final CatalyticActivity.Unit MILLIKATAL = Units.resolve(CatalyticActivity.Unit.class, "mkat");
+        public static final CatalyticActivity.Unit mkat = Units.resolve(CatalyticActivity.Unit.class, "mkat");
 
         /** &#181;kat. */
-        public static final CatalyticActivity.Unit MICROKATAL = Units.resolve(CatalyticActivity.Unit.class, "mukat");
+        public static final CatalyticActivity.Unit mukat = Units.resolve(CatalyticActivity.Unit.class, "mukat");
 
         /** nkat. */
-        public static final CatalyticActivity.Unit NANOKATAL = Units.resolve(CatalyticActivity.Unit.class, "nkat");
+        public static final CatalyticActivity.Unit nkat = Units.resolve(CatalyticActivity.Unit.class, "nkat");
 
         /**
          * Create a new CatalyticActivity unit.

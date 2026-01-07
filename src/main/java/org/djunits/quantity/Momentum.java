@@ -206,17 +206,18 @@ public class Momentum extends Quantity<Momentum, Momentum.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Momentum.Unit, Momentum>
     {
         /** The dimensions of momentum: kgm/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm/s");
 
         /** kgm/s. */
-        public static final Momentum.Unit KILOGRAM_METER_PER_SECOND =
+        public static final Momentum.Unit kgm_s =
                 new Momentum.Unit("kgm/s", "kilogram meter per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Momentum.Unit SI = KILOGRAM_METER_PER_SECOND;
+        public static final Momentum.Unit SI = kgm_s;
 
         /**
          * Create a new Momentum unit.

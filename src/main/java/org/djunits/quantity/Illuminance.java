@@ -156,31 +156,32 @@ public class Illuminance extends Quantity<Illuminance, Illuminance.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Illuminance.Unit, Illuminance>
     {
         /** The dimensions of illuminance: srcd/m2. */
         public static final SIUnit SI_UNIT = SIUnit.of("srcd/m2");
 
         /** Lux. */
-        public static final Illuminance.Unit LUX = new Illuminance.Unit("lx", "lux", 1.0, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit lx = new Illuminance.Unit("lx", "lux", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Illuminance.Unit SI = LUX.generateSiPrefixes(false, false);
+        public static final Illuminance.Unit SI = lx.generateSiPrefixes(false, false);
 
         /** mlux. */
-        public static final Illuminance.Unit MILLILUX = Units.resolve(Illuminance.Unit.class, "mlx");
+        public static final Illuminance.Unit mlx = Units.resolve(Illuminance.Unit.class, "mlx");
 
         /** mulux. */
-        public static final Illuminance.Unit MICROLUX = Units.resolve(Illuminance.Unit.class, "mulx");
+        public static final Illuminance.Unit mulx = Units.resolve(Illuminance.Unit.class, "mulx");
 
         /** klux. */
-        public static final Illuminance.Unit KILOLUX = LUX.deriveUnit("klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit klx = lx.deriveUnit("klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED);
 
         /** phot. */
-        public static final Illuminance.Unit PHOT = KILOLUX.deriveUnit("ph", "phot", 10.0, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit ph = klx.deriveUnit("ph", "phot", 10.0, UnitSystem.SI_DERIVED);
 
         /** nox. */
-        public static final Illuminance.Unit NOX = MILLILUX.deriveUnit("nx", "nox", 1.0, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit nx = mlx.deriveUnit("nx", "nox", 1.0, UnitSystem.SI_DERIVED);
 
         /**
          * Create a new Illuminance unit.

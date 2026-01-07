@@ -166,75 +166,71 @@ public class Pressure extends Quantity<Pressure, Pressure.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Pressure.Unit, Pressure>
     {
         /** The dimensions of pressure: kg/m.s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/ms2");
 
         /** Pascal. */
-        public static final Pressure.Unit PASCAL = new Pressure.Unit("Pa", "pascal", 1.0, UnitSystem.SI_DERIVED);
+        public static final Pressure.Unit Pa = new Pressure.Unit("Pa", "pascal", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final Pressure.Unit SI = PASCAL.generateSiPrefixes(false, false);
+        public static final Pressure.Unit SI = Pa.generateSiPrefixes(false, false);
 
         /** hectoPascal. */
-        public static final Pressure.Unit HECTOPASCAL = Units.resolve(Pressure.Unit.class, "hPa");
+        public static final Pressure.Unit hPa = Units.resolve(Pressure.Unit.class, "hPa");
 
         /** kiloPascal. */
-        public static final Pressure.Unit KILOPASCAL = Units.resolve(Pressure.Unit.class, "kPa");
+        public static final Pressure.Unit kPa = Units.resolve(Pressure.Unit.class, "kPa");
 
         /** standard atmosphere. */
-        public static final Pressure.Unit ATMOSPHERE_STANDARD =
-                PASCAL.deriveUnit("atm", "atmosphere (standard)", 101325.0, UnitSystem.OTHER);
+        public static final Pressure.Unit atm = Pa.deriveUnit("atm", "atmosphere (standard)", 101325.0, UnitSystem.OTHER);
 
         /** torr. */
-        public static final Pressure.Unit TORR = ATMOSPHERE_STANDARD.deriveUnit("torr", "Torr", 1.0 / 760.0, UnitSystem.OTHER);
+        public static final Pressure.Unit torr = atm.deriveUnit("torr", "Torr", 1.0 / 760.0, UnitSystem.OTHER);
 
         /** technical atmosphere = kgf/cm2. */
-        public static final Pressure.Unit ATMOSPHERE_TECHNICAL =
-                PASCAL.deriveUnit("at", "atmosphere (technical)", Acceleration.Unit.CONST_GRAVITY / 1.0E-4, UnitSystem.OTHER);
+        public static final Pressure.Unit at =
+                Pa.deriveUnit("at", "atmosphere (technical)", Acceleration.Unit.CONST_GRAVITY / 1.0E-4, UnitSystem.OTHER);
 
         /** barye = dyne/cm2. */
-        public static final Pressure.Unit BARYE = PASCAL.deriveUnit("Ba", "barye", 1.0E-5 / 1.0E-4, UnitSystem.CGS);
+        public static final Pressure.Unit Ba = Pa.deriveUnit("Ba", "barye", 1.0E-5 / 1.0E-4, UnitSystem.CGS);
 
         /** bar. */
-        public static final Pressure.Unit BAR = PASCAL.deriveUnit("bar", "bar", 1.0E5, UnitSystem.OTHER);
+        public static final Pressure.Unit bar = Pa.deriveUnit("bar", "bar", 1.0E5, UnitSystem.OTHER);
 
         /** millibar. */
-        public static final Pressure.Unit MILLIBAR = BAR.deriveUnit("mbar", "millibar", 1.0E-3, UnitSystem.OTHER);
+        public static final Pressure.Unit mbar = bar.deriveUnit("mbar", "millibar", 1.0E-3, UnitSystem.OTHER);
 
         /** cm Hg. */
-        public static final Pressure.Unit CENTIMETER_MERCURY =
-                PASCAL.deriveUnit("cmHg", "centimeter mercury", 1333.224, UnitSystem.OTHER);
+        public static final Pressure.Unit cmHg = Pa.deriveUnit("cmHg", "centimeter mercury", 1333.224, UnitSystem.OTHER);
 
         /** mm Hg. */
-        public static final Pressure.Unit MILLIMETER_MERCURY =
-                PASCAL.deriveUnit("mmHg", "millimeter mercury", 133.3224, UnitSystem.OTHER);
+        public static final Pressure.Unit mmHg = Pa.deriveUnit("mmHg", "millimeter mercury", 133.3224, UnitSystem.OTHER);
 
         /** foot Hg. */
-        public static final Pressure.Unit FOOT_MERCURY =
-                PASCAL.deriveUnit("ftHg", "foot mercury", 40.63666E3, UnitSystem.IMPERIAL);
+        public static final Pressure.Unit ftHg = Pa.deriveUnit("ftHg", "foot mercury", 40.63666E3, UnitSystem.IMPERIAL);
 
         /** inch Hg. */
-        public static final Pressure.Unit INCH_MERCURY =
-                PASCAL.deriveUnit("inHg", "inch mercury", 3.386389E3, UnitSystem.IMPERIAL);
+        public static final Pressure.Unit inHg = Pa.deriveUnit("inHg", "inch mercury", 3.386389E3, UnitSystem.IMPERIAL);
 
         /** kilogram-force per square millimeter. */
-        public static final Pressure.Unit KGF_PER_SQUARE_MM = PASCAL.deriveUnit("kgf/mm2",
-                "kilogram-force per square millimeter", Acceleration.Unit.CONST_GRAVITY / 1.0E-6, UnitSystem.OTHER);
+        public static final Pressure.Unit kgf_mm2 = Pa.deriveUnit("kgf/mm2", "kilogram-force per square millimeter",
+                Acceleration.Unit.CONST_GRAVITY / 1.0E-6, UnitSystem.OTHER);
 
         /** pound-force per square foot. */
-        public static final Pressure.Unit POUND_PER_SQUARE_FOOT = PASCAL.deriveUnit("lbf/ft2", "pound-force per square foot",
+        public static final Pressure.Unit lbf_ft2 = Pa.deriveUnit("lbf/ft2", "pound-force per square foot",
                 Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / (Length.Unit.CONST_FT * Length.Unit.CONST_FT),
                 UnitSystem.IMPERIAL);
 
         /** pound-force per square inch. */
-        public static final Pressure.Unit POUND_PER_SQUARE_INCH = PASCAL.deriveUnit("lbf/in2", "pound-force per square inch",
+        public static final Pressure.Unit lbf_in2 = Pa.deriveUnit("lbf/in2", "pound-force per square inch",
                 Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / (Length.Unit.CONST_IN * Length.Unit.CONST_IN),
                 UnitSystem.IMPERIAL);
 
         /** pieze. */
-        public static final Pressure.Unit PIEZE = PASCAL.deriveUnit("pz", "pi\u00E8ze", 1000.0, UnitSystem.MTS);
+        public static final Pressure.Unit pz = Pa.deriveUnit("pz", "pi\u00E8ze", 1000.0, UnitSystem.MTS);
 
         /**
          * Create a new Pressure unit.

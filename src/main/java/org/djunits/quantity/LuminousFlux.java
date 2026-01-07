@@ -186,16 +186,17 @@ public class LuminousFlux extends Quantity<LuminousFlux, LuminousFlux.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<LuminousFlux.Unit, LuminousFlux>
     {
         /** The dimensions of luminous flux: cd.sr. */
         public static final SIUnit SI_UNIT = SIUnit.of("cdsr");
 
         /** Lumen. */
-        public static final LuminousFlux.Unit LUMEN = new LuminousFlux.Unit("lm", "lumen", 1.0, UnitSystem.SI_DERIVED);
+        public static final LuminousFlux.Unit lm = new LuminousFlux.Unit("lm", "lumen", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final LuminousFlux.Unit SI = LUMEN;
+        public static final LuminousFlux.Unit SI = lm;
 
         /**
          * Create a new LuminousFlux unit.

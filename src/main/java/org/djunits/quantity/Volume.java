@@ -274,93 +274,84 @@ public class Volume extends Quantity<Volume, Volume.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("m3");
 
         /** Cubic meter. */
-        public static final Volume.Unit CUBIC_METER = new Volume.Unit("m3", "cubic meter", 1.0, UnitSystem.SI_BASE);
+        public static final Volume.Unit m3 = new Volume.Unit("m3", "cubic meter", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Volume.Unit SI = CUBIC_METER;
+        public static final Volume.Unit SI = m3;
 
         /** mm^3. */
-        public static final Volume.Unit CUBIC_MILLIMETER =
-                CUBIC_METER.deriveUnit("mm3", "cubic millimeter", 1.0E-9, UnitSystem.SI_BASE);
+        public static final Volume.Unit mm3 = m3.deriveUnit("mm3", "cubic millimeter", 1.0E-9, UnitSystem.SI_BASE);
 
         /** cm^3. */
-        public static final Volume.Unit CUBIC_CENTIMETER =
-                CUBIC_METER.deriveUnit("cm3", "cubic centimeter", 1.0E-6, UnitSystem.SI_BASE);
+        public static final Volume.Unit cm3 = m3.deriveUnit("cm3", "cubic centimeter", 1.0E-6, UnitSystem.SI_BASE);
 
         /** dm^3. */
-        public static final Volume.Unit CUBIC_DECIMETER =
-                CUBIC_METER.deriveUnit("dm3", "cubic decimeter", 1.0E-3, UnitSystem.SI_BASE);
+        public static final Volume.Unit dm3 = m3.deriveUnit("dm3", "cubic decimeter", 1.0E-3, UnitSystem.SI_BASE);
 
         /** dam^3. */
-        public static final Volume.Unit CUBIC_DECAMETER =
-                CUBIC_METER.deriveUnit("dam3", "cubic decameter", 1.0E3, UnitSystem.SI_BASE);
+        public static final Volume.Unit dam3 = m3.deriveUnit("dam3", "cubic decameter", 1.0E3, UnitSystem.SI_BASE);
 
         /** hm^3. */
-        public static final Volume.Unit CUBIC_HECTOMETER =
-                CUBIC_METER.deriveUnit("hm3", "cubic hectometer", 1.0E6, UnitSystem.SI_BASE);
+        public static final Volume.Unit hm3 = m3.deriveUnit("hm3", "cubic hectometer", 1.0E6, UnitSystem.SI_BASE);
 
         /** km^3. */
-        public static final Volume.Unit CUBIC_KILOMETER =
-                CUBIC_METER.deriveUnit("km3", "cubic kilometer", 1.0E9, UnitSystem.SI_BASE);
+        public static final Volume.Unit km3 = m3.deriveUnit("km3", "cubic kilometer", 1.0E9, UnitSystem.SI_BASE);
 
         /** in^3. */
-        public static final Volume.Unit CUBIC_INCH =
-                CUBIC_METER.deriveUnit("in3", "cubic inch", CONST_CUBIC_INCH, UnitSystem.IMPERIAL);
+        public static final Volume.Unit in3 = m3.deriveUnit("in3", "cubic inch", CONST_CUBIC_INCH, UnitSystem.IMPERIAL);
 
         /** ft^3. */
-        public static final Volume.Unit CUBIC_FOOT =
-                CUBIC_METER.deriveUnit("ft3", "cubic foot", CONST_CUBIC_FOOT, UnitSystem.IMPERIAL);
+        public static final Volume.Unit ft3 = m3.deriveUnit("ft3", "cubic foot", CONST_CUBIC_FOOT, UnitSystem.IMPERIAL);
 
         /** yd^3. */
-        public static final Volume.Unit CUBIC_YARD =
-                CUBIC_METER.deriveUnit("yd3", "cubic yard", CONST_CUBIC_YARD, UnitSystem.IMPERIAL);
+        public static final Volume.Unit yd3 = m3.deriveUnit("yd3", "cubic yard", CONST_CUBIC_YARD, UnitSystem.IMPERIAL);
 
         /** mile^3. */
-        public static final Volume.Unit CUBIC_MILE =
-                CUBIC_METER.deriveUnit("mi3", "cubic mile", cubed(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
+        public static final Volume.Unit mi3 =
+                m3.deriveUnit("mi3", "cubic mile", cubed(Length.Unit.CONST_MI), UnitSystem.IMPERIAL);
 
         /** Nautical mile^3. */
-        public static final Volume.Unit CUBIC_NAUTICAL_MILE =
-                CUBIC_METER.deriveUnit("NM3", "cubic Nautical Mile", cubed(Length.Unit.CONST_NM), UnitSystem.OTHER);
+        public static final Volume.Unit NM3 =
+                m3.deriveUnit("NM3", "cubic Nautical Mile", cubed(Length.Unit.CONST_NM), UnitSystem.OTHER);
 
         /** liter. */
-        public static final Volume.Unit LITER = CUBIC_DECIMETER.deriveUnit("L", "liter", 1.0, UnitSystem.SI_ACCEPTED);
+        public static final Volume.Unit L = dm3.deriveUnit("L", "liter", 1.0, UnitSystem.SI_ACCEPTED);
 
         /** gallon (US), fluids. */
-        public static final Volume.Unit GALLON_US =
-                CUBIC_METER.deriveUnit("gal(US)", "gallon (US)", CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
+        public static final Volume.Unit gal_US =
+                m3.deriveUnit("gal(US)", "gallon (US)", CONST_GALLON_US, UnitSystem.US_CUSTOMARY);
 
         /** gallon (imperial). */
-        public static final Volume.Unit GALLON_IMP =
-                LITER.deriveUnit("gal(imp)", "gallon (imp)", CONST_GALLON_IMP, UnitSystem.IMPERIAL);
+        public static final Volume.Unit gal_imp =
+                m3.deriveUnit("gal(imp)", "gallon (imp)", CONST_GALLON_IMP, UnitSystem.IMPERIAL);
 
         /** quart (fluid US) = 1/4 US gallon. */
-        public static final Volume.Unit QUART_US = GALLON_US.deriveUnit("qt(US)", "quart (US)", 0.25, UnitSystem.US_CUSTOMARY);
+        public static final Volume.Unit qt_US = gal_US.deriveUnit("qt(US)", "quart (US)", 0.25, UnitSystem.US_CUSTOMARY);
 
         /** quart (imperial) = 1/4 imp gallon. */
-        public static final Volume.Unit QUART_IMP = GALLON_IMP.deriveUnit("qt(imp)", "quart (imp)", 0.25, UnitSystem.IMPERIAL);
+        public static final Volume.Unit qt_imp = gal_imp.deriveUnit("qt(imp)", "quart (imp)", 0.25, UnitSystem.IMPERIAL);
 
         /** pint (fluid US) = 1/2 US quart. */
-        public static final Volume.Unit PINT_US = QUART_US.deriveUnit("pt(US)", "pint (US)", 0.5, UnitSystem.US_CUSTOMARY);
+        public static final Volume.Unit pt_US = qt_US.deriveUnit("pt(US)", "pint (US)", 0.5, UnitSystem.US_CUSTOMARY);
 
         /** pint (imperial) = 1/2 imp quart. */
-        public static final Volume.Unit PINT_IMP = QUART_IMP.deriveUnit("pt(imp)", "pint (imp)", 0.5, UnitSystem.IMPERIAL);
+        public static final Volume.Unit pt_imp = qt_imp.deriveUnit("pt(imp)", "pint (imp)", 0.5, UnitSystem.IMPERIAL);
 
         /** ounce (fluid US) = 1/16 US pint. */
-        public static final Volume.Unit FLUID_OUNCE_US =
-                CUBIC_METER.deriveUnit("fl.oz(US)", "fluid ounce (US)", CONST_OZ_US, UnitSystem.US_CUSTOMARY);
+        public static final Volume.Unit fl_oz_US =
+                m3.deriveUnit("fl.oz(US)", "fluid ounce (US)", CONST_OZ_US, UnitSystem.US_CUSTOMARY);
 
         /** ounce (fluid imperial) = 1/20 imp pint. */
-        public static final Volume.Unit FLUID_OUNCE_IMP =
-                CUBIC_METER.deriveUnit("fl.oz(imp)", "fluid ounce (imp)", CONST_OZ_IMP, UnitSystem.IMPERIAL);
+        public static final Volume.Unit fl_oz_imp =
+                m3.deriveUnit("fl.oz(imp)", "fluid ounce (imp)", CONST_OZ_IMP, UnitSystem.IMPERIAL);
 
         /** Cubic lightyear. */
-        public static final Volume.Unit CUBIC_LIGHTYEAR =
-                CUBIC_METER.deriveUnit("ly3", "cubic lightyear", cubed(Length.Unit.CONST_LY), UnitSystem.OTHER);
+        public static final Volume.Unit ly3 =
+                m3.deriveUnit("ly3", "cubic lightyear", cubed(Length.Unit.CONST_LY), UnitSystem.OTHER);
 
         /** Cubic Parsec. */
-        public static final Volume.Unit CUBIC_PARSEC =
-                CUBIC_METER.deriveUnit("Pc3", "cubic Parsec", cubed(Length.Unit.CONST_PC), UnitSystem.OTHER);
+        public static final Volume.Unit Pc3 =
+                m3.deriveUnit("Pc3", "cubic Parsec", cubed(Length.Unit.CONST_PC), UnitSystem.OTHER);
 
         /**
          * Create a new Volume unit.

@@ -295,34 +295,34 @@ public class Duration extends Quantity<Duration, Duration.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("s");
 
         /** second. */
-        public static final Duration.Unit SECOND = new Duration.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
+        public static final Duration.Unit s = new Duration.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Duration.Unit SI = SECOND.generateSiPrefixes(false, false);
+        public static final Duration.Unit SI = s.generateSiPrefixes(false, false);
 
         /** picosecond. */
-        public static final Duration.Unit PICOSECOND = Units.resolve(Duration.Unit.class, "ps");
+        public static final Duration.Unit ps = Units.resolve(Duration.Unit.class, "ps");
 
         /** nanosecond. */
-        public static final Duration.Unit NANOSECOND = Units.resolve(Duration.Unit.class, "ns");
+        public static final Duration.Unit ns = Units.resolve(Duration.Unit.class, "ns");
 
         /** microsecond. */
-        public static final Duration.Unit MICROSECOND = Units.resolve(Duration.Unit.class, "mus");
+        public static final Duration.Unit mus = Units.resolve(Duration.Unit.class, "mus");
 
         /** millisecond. */
-        public static final Duration.Unit MILLISECOND = Units.resolve(Duration.Unit.class, "ms");
+        public static final Duration.Unit ms = Units.resolve(Duration.Unit.class, "ms");
 
         /** minute. */
-        public static final Duration.Unit MINUTE = SECOND.deriveUnit("min", "minute", 60.0, UnitSystem.SI_ACCEPTED);
+        public static final Duration.Unit min = s.deriveUnit("min", "minute", 60.0, UnitSystem.SI_ACCEPTED);
 
         /** hour. */
-        public static final Duration.Unit HOUR = MINUTE.deriveUnit("h", "hour", 60.0, UnitSystem.SI_ACCEPTED);
+        public static final Duration.Unit h = min.deriveUnit("h", "hour", 60.0, UnitSystem.SI_ACCEPTED);
 
         /** day. */
-        public static final Duration.Unit DAY = HOUR.deriveUnit("day", "day", 24.0, UnitSystem.OTHER);
+        public static final Duration.Unit day = h.deriveUnit("day", "day", 24.0, UnitSystem.OTHER);
 
         /** week. */
-        public static final Duration.Unit WEEK = DAY.deriveUnit("wk", "week", 7.0, UnitSystem.OTHER);
+        public static final Duration.Unit wk = day.deriveUnit("wk", "week", 7.0, UnitSystem.OTHER);
 
         /**
          * Create a new Duration unit.

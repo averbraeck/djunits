@@ -216,21 +216,22 @@ public class FlowMass extends Quantity<FlowMass, FlowMass.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<FlowMass.Unit, FlowMass>
     {
         /** The dimensions of flow mass: kg/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/s");
 
         /** kg/s. */
-        public static final FlowMass.Unit KILOGRAM_PER_SECOND =
+        public static final FlowMass.Unit kg_s =
                 new FlowMass.Unit("kg/s", "kilogram per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final FlowMass.Unit SI = KILOGRAM_PER_SECOND;
+        public static final FlowMass.Unit SI = kg_s;
 
         /** lb/s. */
-        public static final FlowMass.Unit POUND_PER_SECOND =
-                KILOGRAM_PER_SECOND.deriveUnit("lb/s", "pound per second", Mass.Unit.CONST_LB, UnitSystem.IMPERIAL);
+        public static final FlowMass.Unit lb_s =
+                kg_s.deriveUnit("lb/s", "pound per second", Mass.Unit.CONST_LB, UnitSystem.IMPERIAL);
 
         /**
          * Create a new FlowMass unit.

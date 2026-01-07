@@ -146,32 +146,32 @@ public class AbsorbedDose extends Quantity<AbsorbedDose, AbsorbedDose.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<AbsorbedDose.Unit, AbsorbedDose>
     {
         /** The dimensions of the absorbed dose: m2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2/s2");
 
         /** Gray. */
-        public static final AbsorbedDose.Unit GRAY = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
+        public static final AbsorbedDose.Unit Gy = new AbsorbedDose.Unit("Gy", "gray", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final AbsorbedDose.Unit SI = GRAY;
+        public static final AbsorbedDose.Unit SI = Gy;
 
         /** mGy. */
-        public static final AbsorbedDose.Unit MILLIGRAY =
+        public static final AbsorbedDose.Unit mGy =
                 new AbsorbedDose.Unit("mGy", "milligray", 1.0E-3, UnitSystem.SI_DERIVED).setSiPrefix("m");
 
         /** &#181;Gy. */
-        public static final AbsorbedDose.Unit MICROGRAY =
+        public static final AbsorbedDose.Unit muGy =
                 new AbsorbedDose.Unit("muGy", "\u03BCGy", "microgray", new LinearScale(1.0E-6), UnitSystem.SI_DERIVED)
                         .setSiPrefix("mu");
 
         /** erg/g. */
-        public static final AbsorbedDose.Unit ERG_PER_GRAM =
-                new AbsorbedDose.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
+        public static final AbsorbedDose.Unit erg_g = new AbsorbedDose.Unit("erg/g", "erg per gram", 1.0E-4, UnitSystem.CGS);
 
         /** rad. */
-        public static final AbsorbedDose.Unit RAD = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
+        public static final AbsorbedDose.Unit rad = new AbsorbedDose.Unit("rad", "rad", 1.0E-2, UnitSystem.CGS);
 
         /**
          * Create a new AbsorbedDose unit.
@@ -208,7 +208,7 @@ public class AbsorbedDose extends Quantity<AbsorbedDose, AbsorbedDose.Unit>
         @Override
         public Unit getBaseUnit()
         {
-            return GRAY;
+            return SI;
         }
 
         @Override

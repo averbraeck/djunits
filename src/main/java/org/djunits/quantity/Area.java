@@ -242,92 +242,83 @@ public class Area extends Quantity<Area, Area.Unit>
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Area.Unit, Area>
     {
         /** The dimensions of Area: m2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2");
 
         /** Square meter. */
-        public static final Area.Unit SQUARE_METER = new Area.Unit("m2", "square meter", 1.0, UnitSystem.SI_BASE);
+        public static final Area.Unit m2 = new Area.Unit("m2", "square meter", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final Area.Unit SI = SQUARE_METER;
+        public static final Area.Unit SI = m2;
 
         /** Square kilometer. */
-        public static final Area.Unit SQUARE_KILOMETER =
-                SQUARE_METER.deriveUnit("km2", "square kilometer", 1.0E6, UnitSystem.SI_BASE);
+        public static final Area.Unit km2 = m2.deriveUnit("km2", "square kilometer", 1.0E6, UnitSystem.SI_BASE);
 
         /** Square hectometer. */
-        public static final Area.Unit SQUARE_HECTOMETER =
-                SQUARE_METER.deriveUnit("hm2", "square hectometer", 1.0E4, UnitSystem.SI_BASE);
+        public static final Area.Unit hm2 = m2.deriveUnit("hm2", "square hectometer", 1.0E4, UnitSystem.SI_BASE);
 
         /** Square decameter. */
-        public static final Area.Unit SQUARE_DECAMETER =
-                SQUARE_METER.deriveUnit("dam2", "square decameter", 1.0E2, UnitSystem.SI_BASE);
+        public static final Area.Unit dam2 = m2.deriveUnit("dam2", "square decameter", 1.0E2, UnitSystem.SI_BASE);
 
         /** Square decimeter. */
-        public static final Area.Unit SQUARE_DECIMETER =
-                SQUARE_METER.deriveUnit("dm2", "square decimeter", 1.0E-2, UnitSystem.SI_BASE);
+        public static final Area.Unit dm2 = m2.deriveUnit("dm2", "square decimeter", 1.0E-2, UnitSystem.SI_BASE);
 
         /** Square centimeter. */
-        public static final Area.Unit SQUARE_CENTIMETER =
-                SQUARE_METER.deriveUnit("cm2", "square centimeter", 1.0E-4, UnitSystem.SI_BASE);
+        public static final Area.Unit cm2 = m2.deriveUnit("cm2", "square centimeter", 1.0E-4, UnitSystem.SI_BASE);
 
         /** Square millimeter. */
-        public static final Area.Unit SQUARE_MILLIMETER =
-                SQUARE_METER.deriveUnit("mm2", "square millimeter", 1.0E-6, UnitSystem.SI_BASE);
+        public static final Area.Unit mm2 = m2.deriveUnit("mm2", "square millimeter", 1.0E-6, UnitSystem.SI_BASE);
 
         /** Square micrometer. */
-        public static final Area.Unit SQUARE_MICROMETER =
-                SQUARE_METER.deriveUnit("mum2", "\u03BCm2", "square micrometer", 1.0E-12, UnitSystem.SI_BASE);
+        public static final Area.Unit mum2 =
+                m2.deriveUnit("mum2", "\u03BCm2", "square micrometer", 1.0E-12, UnitSystem.SI_BASE);
 
         /** Square nanometer. */
-        public static final Area.Unit SQUARE_NANOMETER =
-                SQUARE_METER.deriveUnit("nm2", "square nanometer", 1.0E-18, UnitSystem.SI_BASE);
+        public static final Area.Unit nm2 = m2.deriveUnit("nm2", "square nanometer", 1.0E-18, UnitSystem.SI_BASE);
 
         /** Square picometer. */
-        public static final Area.Unit SQUARE_PICOMETER =
-                SQUARE_METER.deriveUnit("pm2", "square picometer", 1.0E-24, UnitSystem.SI_BASE);
+        public static final Area.Unit pm2 = m2.deriveUnit("pm2", "square picometer", 1.0E-24, UnitSystem.SI_BASE);
 
         /** Square femtometer. */
-        public static final Area.Unit SQUARE_FEMTOMETER =
-                SQUARE_METER.deriveUnit("fm2", "square femtometer", 1.0E-30, UnitSystem.SI_BASE);
+        public static final Area.Unit fm2 = m2.deriveUnit("fm2", "square femtometer", 1.0E-30, UnitSystem.SI_BASE);
 
         /** Square attometer. */
-        public static final Area.Unit SQUARE_ATTOMETER =
-                SQUARE_METER.deriveUnit("am2", "square attometer", 1.0E-36, UnitSystem.SI_BASE);
+        public static final Area.Unit am2 = m2.deriveUnit("am2", "square attometer", 1.0E-36, UnitSystem.SI_BASE);
 
         /** centiare. */
-        public static final Area.Unit CENTIARE = new Area.Unit("ca", "centiare", 1.0, UnitSystem.OTHER);
+        public static final Area.Unit ca = new Area.Unit("ca", "centiare", 1.0, UnitSystem.OTHER);
 
         /** are. */
-        public static final Area.Unit ARE = new Area.Unit("a", "are", 100.0, UnitSystem.OTHER);
+        public static final Area.Unit a = new Area.Unit("a", "are", 100.0, UnitSystem.OTHER);
 
         /** hectare. */
-        public static final Area.Unit HECTARE = new Area.Unit("ha", "hectare", 100.0 * 100.0, UnitSystem.OTHER);
+        public static final Area.Unit ha = new Area.Unit("ha", "hectare", 100.0 * 100.0, UnitSystem.OTHER);
 
         /** mile2. */
-        public static final Area.Unit SQUARE_MILE =
+        public static final Area.Unit mi2 =
                 new Area.Unit("mi2", "square mile", Length.Unit.CONST_MI * Length.Unit.CONST_MI, UnitSystem.IMPERIAL);
 
         /** Nautical mile2. */
-        public static final Area.Unit SQUARE_NM =
+        public static final Area.Unit NM2 =
                 new Area.Unit("NM2", "square nautical mile", Length.Unit.CONST_NM * Length.Unit.CONST_NM, UnitSystem.OTHER);
 
         /** ft2. */
-        public static final Area.Unit SQUARE_FOOT =
+        public static final Area.Unit ft2 =
                 new Area.Unit("ft2", "square foot", Length.Unit.CONST_FT * Length.Unit.CONST_FT, UnitSystem.IMPERIAL);
 
         /** in2. */
-        public static final Area.Unit SQUARE_INCH =
+        public static final Area.Unit in2 =
                 new Area.Unit("in2", "square inch", Length.Unit.CONST_IN * Length.Unit.CONST_IN, UnitSystem.IMPERIAL);
 
         /** yd2. */
-        public static final Area.Unit SQUARE_YARD =
+        public static final Area.Unit yd2 =
                 new Area.Unit("yd2", "square yard", Length.Unit.CONST_YD * Length.Unit.CONST_YD, UnitSystem.IMPERIAL);
 
         /** acre (international) defined as 1/640 square mile or 4840 square yards. */
-        public static final Area.Unit ACRE =
+        public static final Area.Unit ac =
                 new Area.Unit("ac", "acre", Length.Unit.CONST_MI * Length.Unit.CONST_MI / 640.0, UnitSystem.IMPERIAL);
 
         /**

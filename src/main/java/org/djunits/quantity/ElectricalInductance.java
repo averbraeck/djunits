@@ -146,17 +146,18 @@ public class ElectricalInductance extends Quantity<ElectricalInductance, Electri
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<ElectricalInductance.Unit, ElectricalInductance>
     {
         /** The dimensions of electromagnetic induction: kgm2/s2A2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2A2");
 
         /** henry. */
-        public static final ElectricalInductance.Unit HENRY =
+        public static final ElectricalInductance.Unit H =
                 new ElectricalInductance.Unit("H", "henry", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
-        public static final ElectricalInductance.Unit SI = HENRY.generateSiPrefixes(false, false);
+        public static final ElectricalInductance.Unit SI = H.generateSiPrefixes(false, false);
 
         /**
          * Create a new ElectricalInductance unit.

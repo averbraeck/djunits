@@ -166,25 +166,26 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance, AmountOfSubst
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
+    @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<AmountOfSubstance.Unit, AmountOfSubstance>
     {
         /** The dimensions of AmountOfSubstance: mol. */
         public static final SIUnit SI_UNIT = SIUnit.of("mol");
 
         /** Mole. */
-        public static final AmountOfSubstance.Unit MOLE = new AmountOfSubstance.Unit("mol", "mole", 1.0, UnitSystem.SI_BASE);
+        public static final AmountOfSubstance.Unit mol = new AmountOfSubstance.Unit("mol", "mole", 1.0, UnitSystem.SI_BASE);
 
         /** The SI or BASE unit. */
-        public static final AmountOfSubstance.Unit SI = MOLE.generateSiPrefixes(false, false);
+        public static final AmountOfSubstance.Unit SI = mol.generateSiPrefixes(false, false);
 
         /** mmol. */
-        public static final AmountOfSubstance.Unit MILLIMOLE = Units.resolve(AmountOfSubstance.Unit.class, "mmol");
+        public static final AmountOfSubstance.Unit mmol = Units.resolve(AmountOfSubstance.Unit.class, "mmol");
 
         /** &#181;mol. */
-        public static final AmountOfSubstance.Unit MICROMOLE = Units.resolve(AmountOfSubstance.Unit.class, "mumol");
+        public static final AmountOfSubstance.Unit mumol = Units.resolve(AmountOfSubstance.Unit.class, "mumol");
 
         /** nmol. */
-        public static final AmountOfSubstance.Unit NANOMOLE = Units.resolve(AmountOfSubstance.Unit.class, "nmol");
+        public static final AmountOfSubstance.Unit nmol = Units.resolve(AmountOfSubstance.Unit.class, "nmol");
 
         /**
          * Create a new AmountOfSubstance unit.
