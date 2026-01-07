@@ -429,9 +429,9 @@ public final class Units
      */
     private static String getLocalized(final Locale locale, final String key, final boolean required)
     {
-        ResourceBundle b = bundle(locale);
         try
         {
+            ResourceBundle b = bundle(locale);
             return b.getString(key);
         }
         catch (MissingResourceException e)
