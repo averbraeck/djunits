@@ -137,6 +137,19 @@ public class Temperature extends Quantity<Temperature, Temperature.Unit>
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
+    /**
+     * Add an absolute temperature to this temperature (difference), and return an absolute temperature. The unit of the return
+     * value will be the unit of this (relative) temperature.
+     * @param absoluteTemperature the absolute temperature to add
+     * @return the absolute temperature plus this temperature difference
+     */
+    public final AbsoluteTemperature add(final AbsoluteTemperature absoluteTemperature)
+    {
+        var abstemp = AbsoluteTemperature.ofSi(absoluteTemperature.si() + si());
+        abstemp.setDisplayUnit(getDisplayUnit());
+        return abstemp;
+    }
+
     /******************************************************************************************************/
     /********************************************** UNIT CLASS ********************************************/
     /******************************************************************************************************/
