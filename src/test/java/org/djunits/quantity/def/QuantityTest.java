@@ -85,9 +85,9 @@ public class QuantityTest
         assertEquals(Length.Unit.SI_UNIT.siUnit(), m.siUnit());
 
         // Instantiate from SI and set display unit via 'instantiate(value, unit)'
-        Length km = m.instantiate(3.0, Length.Unit.KILOMETER); // 3 km -> si = 3000 meters
+        Length km = m.instantiate(3.0, Length.Unit.km); // 3 km -> si = 3000 meters
         assertEquals(3000.0, km.si(), 1e-9);
-        assertSame(Length.Unit.KILOMETER, km.getDisplayUnit());
+        assertSame(Length.Unit.km, km.getDisplayUnit());
 
         // Re-instantiate SI explicitly
         Length fromSi = m.instantiate(1234.0);
@@ -173,8 +173,8 @@ public class QuantityTest
     @Test
     public void testMultiplyDivideReciprocal()
     {
-        Length a = new Length(2.0, Length.Unit.METER); // si=2 m
-        Length b = new Length(3.0, Length.Unit.METER); // si=3 m
+        Length a = new Length(2.0, Length.Unit.m); // si=2 m
+        Length b = new Length(3.0, Length.Unit.m); // si=3 m
 
         Area prod = a.multiply(b); // si=6 m^2
         assertEquals(6.0, prod.si(), 1e-12);
@@ -196,11 +196,11 @@ public class QuantityTest
     @Test
     public void testAs()
     {
-        Length m = new Length(1500.0, Length.Unit.METER); // si=1500 m
+        Length m = new Length(1500.0, Length.Unit.m); // si=1500 m
         // Convert to kilometers (same SI type)
-        Length kmResult = m.as(Length.Unit.KILOMETER);
+        Length kmResult = m.as(Length.Unit.km);
         assertEquals(1500.0, kmResult.si(), 1e-12);
-        assertSame(Length.Unit.KILOMETER, kmResult.getDisplayUnit());
+        assertSame(Length.Unit.km, kmResult.getDisplayUnit());
 
         // Mismatched SI type: converting Length "as" Unitless must fail
         assertThrows(IllegalArgumentException.class, () -> m.as(Unitless.BASE));
@@ -213,7 +213,7 @@ public class QuantityTest
     @Test
     public void testFormatHelpers()
     {
-        Length m = new Length(1.0, Length.Unit.METER);
+        Length m = new Length(1.0, Length.Unit.m);
 
         // %f path with trimming and ensuring digit after decimal (if any)
         assertEquals("123.456", m.format(123.4560));
@@ -272,20 +272,20 @@ public class QuantityTest
     public void testToStringSIPrefixed()
     {
         // SI value still used (meters); choose value around 10^3 to trigger kilo.
-        Length m = new Length(1200.0, Length.Unit.METER); // si=1200 -> expect something like "1.2 km"
+        Length m = new Length(1200.0, Length.Unit.m); // si=1200 -> expect something like "1.2 km"
         String prefixed = m.toStringSIPrefixed();
         assertTrue(prefixed.contains("km") || prefixed.contains("m")); // allow rounding boundary
 
         // Non-finite SI -> fall back to base-unit toString
-        Length nanLen = new Length(Double.NaN, Length.Unit.METER);
+        Length nanLen = new Length(Double.NaN, Length.Unit.m);
         String prefixedNan = nanLen.toStringSIPrefixed();
-        assertTrue(prefixedNan.endsWith(" " + Length.Unit.METER.getBaseUnit().getId()));
+        assertTrue(prefixedNan.endsWith(" " + Length.Unit.m.getBaseUnit().getId()));
 
         // Extremely large value (bigger than Quetta -> e-notation with plain base unit
-        Length huge = new Length(1e42, Length.Unit.METER);
+        Length huge = new Length(1e42, Length.Unit.m);
         String prefixedHuge = huge.toStringSIPrefixed();
         assertTrue(prefixedHuge.contains("E"));
-        assertTrue(prefixedHuge.endsWith(" " + Length.Unit.METER.getBaseUnit().getId()));
+        assertTrue(prefixedHuge.endsWith(" " + Length.Unit.m.getBaseUnit().getId()));
     }
 
     /**
@@ -294,12 +294,12 @@ public class QuantityTest
     @Test
     public void testToTextualAndDisplayStrings()
     {
-        Length len = new Length(1.2345, Length.Unit.METER);
+        Length len = new Length(1.2345, Length.Unit.m);
         assertTrue(len.toTextualString().contains("m"));
         assertTrue(len.toDisplayString().contains("m"));
 
-        String kmText = len.toTextualString(Length.Unit.KILOMETER);
-        String kmDisp = len.toDisplayString(Length.Unit.KILOMETER);
+        String kmText = len.toTextualString(Length.Unit.km);
+        String kmDisp = len.toDisplayString(Length.Unit.km);
         assertTrue(kmText.contains("km"));
         assertTrue(kmDisp.contains("km"));
     }
@@ -317,16 +317,16 @@ public class QuantityTest
             Locale.setDefault(Locale.US);
 
             // Happy path: "1.5 km"
-            Length example = new Length(0.0, Length.Unit.METER); // example instance only supplies class & display unit
+            Length example = new Length(0.0, Length.Unit.m); // example instance only supplies class & display unit
             // (Length.Unit)
             Length parsed = Quantity.valueOf("1.5 km", example);
             assertEquals(1500.0, parsed.si(), 1e-12);
-            assertSame(Length.Unit.KILOMETER, parsed.getDisplayUnit());
+            assertSame(Length.Unit.km, parsed.getDisplayUnit());
 
             // Happy path using 'of(value, "unit", example)'
             Length x = Quantity.of(2.5, "m", example);
             assertEquals(2.5, x.si(), 1e-12);
-            assertSame(Length.Unit.METER, x.getDisplayUnit());
+            assertSame(Length.Unit.m, x.getDisplayUnit());
 
             // Null example
             assertThrows(NullPointerException.class, () -> Quantity.valueOf("1 m", (Length) null));
@@ -358,19 +358,19 @@ public class QuantityTest
     public void testStaticOperations()
     {
         // Interpolate with different display units; the result should use zero's display unit.
-        Length zero = new Length(0.0, Length.Unit.KILOMETER); // si=0 km
-        Length one = new Length(1000.0, Length.Unit.METER); // si=1000 m (1 km)
+        Length zero = new Length(0.0, Length.Unit.km); // si=0 km
+        Length one = new Length(1000.0, Length.Unit.m); // si=1000 m (1 km)
         Length mid = Quantity.interpolate(zero, one, 0.5);
         assertEquals(0.5, mid.getInUnit(), 1e-12); // expressed in km
-        assertSame(Length.Unit.KILOMETER, mid.getDisplayUnit());
+        assertSame(Length.Unit.km, mid.getDisplayUnit());
 
         // Ratio bounds
         assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(zero, one, -0.1));
         assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(zero, one, 1.1));
 
         // max/min
-        Length a = new Length(2.0, Length.Unit.METER);
-        Length b = new Length(3.0, Length.Unit.METER);
+        Length a = new Length(2.0, Length.Unit.m);
+        Length b = new Length(3.0, Length.Unit.m);
         assertSame(b, Quantity.max(a, b));
         assertSame(a, Quantity.min(a, b));
 
@@ -391,9 +391,9 @@ public class QuantityTest
     @Test
     public void testEqualsAndHashCode()
     {
-        Length l1 = new Length(5.0, Length.Unit.METER);
-        Length l2 = new Length(5.0, Length.Unit.METER);
-        Length l3 = new Length(5.0, Length.Unit.KILOMETER); // different display unit; not equal
+        Length l1 = new Length(5.0, Length.Unit.m);
+        Length l2 = new Length(5.0, Length.Unit.m);
+        Length l3 = new Length(5.0, Length.Unit.km); // different display unit; not equal
 
         assertEquals(l1, l2);
         assertEquals(l1.hashCode(), l2.hashCode());

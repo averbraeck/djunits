@@ -55,17 +55,17 @@ public final class UnitTest
     public void testUnitInterfaceDefaultConversions()
     {
         // Base (meter): identity conversion
-        UnitInterface<?, ?> m = Length.Unit.METER;
+        UnitInterface<?, ?> m = Length.Unit.m;
         assertEquals(25.0, m.toBaseValue(25.0), 0.0);
         assertEquals(25.0, m.fromBaseValue(25.0), 0.0);
 
         // Derived (kilometer): factor 1000
-        UnitInterface<?, ?> km = Length.Unit.KILOMETER;
+        UnitInterface<?, ?> km = Length.Unit.km;
         assertEquals(2500.0, km.toBaseValue(2.5), 1e-12);
         assertEquals(2.5, km.fromBaseValue(2500.0), 1e-12);
 
         // Frequency derived: MHz
-        UnitInterface<?, ?> mhz = Frequency.Unit.MEGAHERTZ;
+        UnitInterface<?, ?> mhz = Frequency.Unit.MHz;
         assertEquals(3.2e6, mhz.toBaseValue(3.2), 1e-6);
         assertEquals(3.2, mhz.fromBaseValue(3.2e6), 1e-12);
     }
@@ -78,13 +78,13 @@ public final class UnitTest
     public void testUnitInterfaceQuantityInUnit()
     {
         // 2.0 km -> si=2000 m, display unit == km
-        Length.Unit km = Length.Unit.KILOMETER;
+        Length.Unit km = Length.Unit.km;
         Length qKm = km.quantityInUnit(2.0);
         assertEquals(2000.0, qKm.si(), 1e-12);
         assertSame(km, qKm.getDisplayUnit());
 
         // 5 MHz -> si=5e6 Hz, display unit == MHz
-        Frequency.Unit mhz = Frequency.Unit.MEGAHERTZ;
+        Frequency.Unit mhz = Frequency.Unit.MHz;
         Frequency qF = mhz.quantityInUnit(5.0);
         assertEquals(5.0e6, qF.si(), 1e-6);
         assertSame(mhz, qF.getDisplayUnit());
@@ -98,7 +98,7 @@ public final class UnitTest
     public void testUnitInterfaceMetadata()
     {
         // Length: meter
-        Length.Unit m = Length.Unit.METER;
+        Length.Unit m = Length.Unit.m;
         assertEquals("m", m.getId());
         assertNotNull(m.getName());
         assertFalse(m.getName().isBlank());
@@ -110,13 +110,13 @@ public final class UnitTest
         assertTrue(m.getScale().isBaseScale());
 
         // Mass: kilogram is SI base (kilo-default)
-        Mass.Unit kg = Mass.Unit.KILOGRAM;
+        Mass.Unit kg = Mass.Unit.kg;
         assertEquals("kg", kg.getId());
         assertEquals(UnitSystem.SI_BASE, kg.getUnitSystem());
         assertTrue(kg.getScale().isBaseScale());
 
         // Frequency: Hertz is SI derived
-        Frequency.Unit hz = Frequency.Unit.HERTZ;
+        Frequency.Unit hz = Frequency.Unit.Hz;
         assertEquals("Hz", hz.getId());
         assertEquals(UnitSystem.SI_DERIVED, hz.getUnitSystem());
         assertTrue(hz.getScale().isBaseScale()); // 1.0 linear factor
@@ -184,7 +184,7 @@ public final class UnitTest
 
         // toString is display abbreviation
         assertEquals("ft", foot1.toString());
-        assertEquals("\u212B", Length.Unit.ANGSTROM.toString());
+        assertEquals("\u212B", Length.Unit.A.toString());
     }
 
     /*-
@@ -201,14 +201,14 @@ public final class UnitTest
     public void testGenerateSiPrefixes()
     {
         // Guard: only possible on base-scale units
-        Length.Unit foot = Length.Unit.FOOT; // not base-scale (0.3048)
+        Length.Unit foot = Length.Unit.ft; // not base-scale (0.3048)
         assertThrows(UnitRuntimeException.class, () -> foot.generateSiPrefixes(false, false));
 
         // Guard: kilo class must start with 'k' / name 'kilo...'
-        assertThrows(UnitRuntimeException.class, () -> Length.Unit.METER.generateSiPrefixes(true, false));
+        assertThrows(UnitRuntimeException.class, () -> Length.Unit.m.generateSiPrefixes(true, false));
 
         // Guard: per-unit class must start with '/' / name 'per ...'
-        assertThrows(UnitRuntimeException.class, () -> Frequency.Unit.HERTZ.generateSiPrefixes(false, true));
+        assertThrows(UnitRuntimeException.class, () -> Frequency.Unit.Hz.generateSiPrefixes(false, true));
     }
 
     /*-
@@ -421,7 +421,7 @@ public final class UnitTest
     public void testDeriveUnitLinearAndGuard()
     {
         // Linear -> Linear, multiplying factors
-        Length.Unit meterTimes2 = Length.Unit.METER.deriveUnit("m2", "m2", "meter2", 2.0, UnitSystem.SI_BASE);
+        Length.Unit meterTimes2 = Length.Unit.m.deriveUnit("m2", "m2", "meter2", 2.0, UnitSystem.SI_BASE);
         assertEquals(2.0, ((LinearScale) meterTimes2.getScale()).getScaleFactorToBaseUnit(), 0.0);
 
         // Non-linear: craft a tiny unit with a fake non-base scale to trigger the guard
@@ -491,7 +491,7 @@ public final class UnitTest
     @DisplayName("Stored vs localized getters are sane and stable")
     public void testStoredVsLocalizedGetters()
     {
-        Length.Unit m = Length.Unit.METER;
+        Length.Unit m = Length.Unit.m;
         assertEquals("m", m.getStoredTextualAbbreviation());
         assertEquals("m", m.getStoredDisplayAbbreviation());
         assertFalse(m.getStoredName().isBlank());
