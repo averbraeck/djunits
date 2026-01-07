@@ -6,6 +6,9 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d3.Matrix3x3;
+import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.storage.DataGrid;
@@ -83,6 +86,8 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
         return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
+    // --------------------------------------- AS() FUNCTIONS ---------------------------------
+
     /**
      * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
      * when the SI units of this vector and the target vector do not match.
@@ -101,6 +106,49 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
         return new QuantityTable<TQ, TU>(this.dataSi.instantiate(si()), targetUnit);
     }
 
-    // TODO add methods asMatrix2x2, asMatrix3x3, asMatrixNxN, asMatrixNxM
+    /**
+     * Return the matrix as a strongly-typed 2x2 matrix.
+     * @return the 2x2 matrix
+     * @throws IllegalStateException when the current matrix is not a 2x2 matrix
+     */
+    public Matrix2x2<Q, U> asMatrix2x2()
+    {
+        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
+                "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
+        return Matrix2x2.of(si(), getDisplayUnit());
+    }
+
+    /**
+     * Return the matrix as a strongly-typed 3x3 matrix.
+     * @return the 3x3 matrix
+     * @throws IllegalStateException when the current matrix is not a 3x3 matrix
+     */
+    public Matrix3x3<Q, U> asMatrix3x3()
+    {
+        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
+                "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
+        return Matrix3x3.of(si(), getDisplayUnit());
+    }
+
+    /**
+     * Return the matrix as a strongly-typed NxN matrix.
+     * @return the NxN matrix
+     * @throws IllegalStateException when the current matrix is not an NxN matrix
+     */
+    public MatrixNxN<Q, U> asMatrixNxN()
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
+                rows(), cols());
+        return MatrixNxN.of(si(), getDisplayUnit());
+    }
+
+    /**
+     * Return the matrix as a strongly-typed NxM matrix.
+     * @return the NxM matrix
+     */
+    public MatrixNxM<Q, U> asMatrixNxM()
+    {
+        return MatrixNxM.of(si(), rows(), cols(), getDisplayUnit());
+    }
 
 }

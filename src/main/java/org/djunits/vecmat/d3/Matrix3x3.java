@@ -45,6 +45,8 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new Matrix3x3 with a unit
+     * @throws IllegalArgumentException when valueArray does not contain 3x3 = 9 values
+     * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[] valueArray,
@@ -52,8 +54,9 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.whenNull(valueArray, "valueArray");
         Throw.whenNull(displayUnit, "displayUnit");
-        double[] aSi = new double[valueArray.length];
-        for (int i = 0; i < valueArray.length; i++)
+        Throw.when(valueArray.length != 9, IllegalArgumentException.class, "Length of vector != 9 but %d", valueArray.length);
+        double[] aSi = new double[9];
+        for (int i = 0; i < 9; i++)
             aSi[i] = displayUnit.toBaseValue(valueArray[i]);
         return new Matrix3x3<Q, U>(aSi, displayUnit);
     }
@@ -72,11 +75,11 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.whenNull(valueGrid, "valueGrid");
         Throw.whenNull(displayUnit, "displayUnit");
-        double[] aSi = new double[4];
+        double[] aSi = new double[9];
         Throw.when(valueGrid.length != 3 || valueGrid[0].length != 3 || valueGrid[1].length != 3 || valueGrid[2].length != 3,
                 IllegalArgumentException.class, "valueGrid is not a 3x3 array");
-        for (int r = 0; r < valueGrid.length; r++)
-            for (int c = 0; c < valueGrid.length; c++)
+        for (int r = 0; r < 3; r++)
+            for (int c = 0; c < 3; c++)
                 aSi[3 * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
         return new Matrix3x3<Q, U>(aSi, displayUnit);
     }

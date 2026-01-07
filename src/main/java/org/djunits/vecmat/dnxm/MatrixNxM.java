@@ -13,6 +13,7 @@ import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.storage.DataGrid;
+import org.djunits.vecmat.storage.DenseDoubleData;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -48,6 +49,65 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         this.dataSi = dataSi;
     }
 
+    /**
+     * Create a new MatrixNxM with a unit, based on a 1-dimensional array.
+     * @param valueArray the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     * @param rows the number of rows in the valueArray
+     * @param cols the number of columns in the valueArray
+     * @return a new MatrixNxM with a unit
+     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in valueArray is not
+     *             equal to rows*cols
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final double[] valueArray,
+            final int rows, final int cols, final U displayUnit)
+    {
+        Throw.whenNull(valueArray, "valueArray");
+        Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(rows <= 0, IllegalArgumentException.class, "rows <= 0");
+        Throw.when(cols <= 0, IllegalArgumentException.class, "cols <= 0");
+        Throw.when(rows * cols != valueArray.length, IllegalArgumentException.class,
+                "valueArray does not contain a the correct number of entries (%d x %d != %d)", rows, cols, valueArray.length);
+        double[] aSi = new double[rows * cols];
+        for (int i = 0; i < valueArray.length; i++)
+            aSi[i] = displayUnit.toBaseValue(valueArray[i]);
+        return new MatrixNxM<Q, U>(new DenseDoubleData(aSi, rows, cols), displayUnit);
+    }
+
+    /**
+     * Create a new MatrixNxM with a unit, based on a 2-dimensional grid.
+     * @param valueGrid the matrix values {{a11, a12, a1M}, ..., {aN1, N32, aNM}} expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     * @return a new MatrixNxM with a unit
+     * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
+     *             equal to the number of columns in another row
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final double[][] valueGrid,
+            final U displayUnit)
+    {
+        Throw.whenNull(valueGrid, "valueGrid");
+        Throw.whenNull(displayUnit, "displayUnit");
+        int rows = valueGrid.length;
+        Throw.when(rows == 0, IllegalArgumentException.class, "valueGrid has 0 rows");
+        int cols = valueGrid[0].length;
+        Throw.when(cols == 0, IllegalArgumentException.class, "row 0 in valueGrid has 0 columns");
+        double[] aSi = new double[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.when(valueGrid[r].length != cols, IllegalArgumentException.class,
+                    "valueGrid is not a NxM array; row %d has a length of %d, not %d", r, valueGrid[r].length, cols);
+            for (int c = 0; c < cols; c++)
+                aSi[cols * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
+        }
+        return new MatrixNxM<Q, U>(new DenseDoubleData(aSi, rows, cols), displayUnit);
+    }
+
     @Override
     public MatrixNxM<Q, U> instantiate(final double[] siNew)
     {
@@ -64,7 +124,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public double si(final int row, final int col)
     {
         // internal storage is 0-based, user access is 1-based
-        return this.dataSi.get(row + 1, col + 1);
+        return this.dataSi.get(row - 1, col - 1);
     }
 
     @Override

@@ -45,6 +45,8 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new Matrix2x2 with a unit
+     * @throws IllegalArgumentException when valueArray does not contain 2x2 = 4 values
+     * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[] valueArray,
@@ -52,6 +54,7 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.whenNull(valueArray, "valueArray");
         Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(valueArray.length != 4, IllegalArgumentException.class, "Length of vector != 4 but %d", valueArray.length);
         double[] aSi = new double[valueArray.length];
         for (int i = 0; i < valueArray.length; i++)
             aSi[i] = displayUnit.toBaseValue(valueArray[i]);
