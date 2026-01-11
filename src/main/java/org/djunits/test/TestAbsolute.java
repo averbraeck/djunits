@@ -6,7 +6,6 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Position;
 import org.djunits.quantity.Temperature;
-import org.djunits.quantity.Temperature.Reference;
 import org.djunits.quantity.Time;
 
 /**
