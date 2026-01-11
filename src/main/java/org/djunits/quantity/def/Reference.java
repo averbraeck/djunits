@@ -21,7 +21,7 @@ public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q,
 {
     /** the list of possible reference points to use. */
     @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected static Map<String, Reference<?, ?>> referenceList = new LinkedHashMap<>();
+    protected static Map<String, Reference<?, ?>> referenceMap = new LinkedHashMap<>();
 
     /** The id. */
     private final String id;
@@ -51,7 +51,7 @@ public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q,
         this.name = name;
         this.offset = offset;
         this.offsetReference = offsetReference;
-        referenceList.put(id, this);
+        referenceMap.put(id, this);
     }
 
     /**
@@ -85,6 +85,15 @@ public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q,
     public String getName()
     {
         return this.name;
+    }
+
+    /**
+     * Return a safe copy of the static reference map.
+     * @return a safe copy of the static reference map
+     */
+    public Map<String, Reference<?, ?>> getReferenceMap()
+    {
+        return new LinkedHashMap<>(referenceMap);
     }
 
     @Override
