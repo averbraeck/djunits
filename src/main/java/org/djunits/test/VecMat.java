@@ -6,7 +6,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.Mass;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.Time;
-import org.djunits.quantity.Time.TimeReference;
+import org.djunits.quantity.Time.Reference;
 import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d2.Vector2;
 
@@ -45,8 +45,8 @@ public class VecMat
     /** */
     private static void time()
     {
-        var t1 = Time.of(520.0, "wk", TimeReference.UNIX);
-        var t2 = Time.of(520.0, "wk", TimeReference.GPS);
+        var t1 = Time.of(520.0, "wk", Reference.UNIX);
+        var t2 = Time.of(520.0, "wk", Reference.GPS);
         System.out.println("t1 = " + t1);
         System.out.println("t2 = " + t2);
         System.out.println("t1.eq(t2)  : " + t1.eq(t2));
