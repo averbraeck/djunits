@@ -42,7 +42,6 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     public QuantityTable(final DataGrid<?> dataSi, final U displayUnit)
     {
         super(displayUnit, dataSi.rows(), dataSi.cols());
-        Throw.whenNull(dataSi, "dataSi");
         this.dataSi = dataSi;
     }
 
