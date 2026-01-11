@@ -1,9 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
@@ -21,7 +17,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  */
 public class Temperature extends
-        AbsoluteQuantity<Temperature, TemperatureDifference, TemperatureDifference.Unit, Temperature.AbsoluteTemperatureReference>
+        AbsoluteQuantity<Temperature, TemperatureDifference, TemperatureDifference.Unit, Temperature.TemperatureReference>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -32,7 +28,7 @@ public class Temperature extends
      * @param unit the temperature unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final TemperatureDifference.Unit unit, final AbsoluteTemperatureReference reference)
+    public Temperature(final double value, final TemperatureDifference.Unit unit, final TemperatureReference reference)
     {
         super(new TemperatureDifference(value, unit), reference);
     }
@@ -44,7 +40,7 @@ public class Temperature extends
      */
     public Temperature(final double value, final TemperatureDifference.Unit unit)
     {
-        this(value, unit, AbsoluteTemperatureReference.KELVIN);
+        this(value, unit, TemperatureReference.KELVIN);
     }
 
     /**
@@ -53,7 +49,7 @@ public class Temperature extends
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final String abbreviation, final AbsoluteTemperatureReference reference)
+    public Temperature(final double value, final String abbreviation, final TemperatureReference reference)
     {
         this(value, Units.resolve(TemperatureDifference.Unit.class, abbreviation), reference);
     }
@@ -65,7 +61,7 @@ public class Temperature extends
      */
     public Temperature(final double value, final String abbreviation)
     {
-        this(value, abbreviation, AbsoluteTemperatureReference.KELVIN);
+        this(value, abbreviation, TemperatureReference.KELVIN);
     }
 
     /**
@@ -73,7 +69,7 @@ public class Temperature extends
      * @param temperature the temperature, relative to the reference point
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final TemperatureDifference temperature, final AbsoluteTemperatureReference reference)
+    public Temperature(final TemperatureDifference temperature, final TemperatureReference reference)
     {
         super(temperature, reference);
     }
@@ -84,7 +80,7 @@ public class Temperature extends
      */
     public Temperature(final TemperatureDifference temperature)
     {
-        this(temperature, AbsoluteTemperatureReference.KELVIN);
+        this(temperature, TemperatureReference.KELVIN);
     }
 
     /**
@@ -93,7 +89,7 @@ public class Temperature extends
      * @param reference the reference point of this absolute temperature
      * @return the AbsoluteTemperature instance based on an SI value
      */
-    public static Temperature ofSi(final double si, final AbsoluteTemperatureReference reference)
+    public static Temperature ofSi(final double si, final TemperatureReference reference)
     {
         return new Temperature(si, TemperatureDifference.Unit.SI, reference);
     }
@@ -105,11 +101,11 @@ public class Temperature extends
      */
     public static Temperature ofSi(final double si)
     {
-        return new Temperature(si, TemperatureDifference.Unit.SI, AbsoluteTemperatureReference.KELVIN);
+        return new Temperature(si, TemperatureDifference.Unit.SI, TemperatureReference.KELVIN);
     }
 
     @Override
-    public Temperature instantiate(final TemperatureDifference temperature, final AbsoluteTemperatureReference reference)
+    public Temperature instantiate(final TemperatureDifference temperature, final TemperatureReference reference)
     {
         return new Temperature(temperature, reference);
     }
@@ -130,7 +126,7 @@ public class Temperature extends
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static Temperature valueOf(final String text, final AbsoluteTemperatureReference reference)
+    public static Temperature valueOf(final String text, final TemperatureReference reference)
     {
         return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), reference);
     }
@@ -146,7 +142,7 @@ public class Temperature extends
      */
     public static Temperature valueOf(final String text)
     {
-        return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), AbsoluteTemperatureReference.KELVIN);
+        return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), TemperatureReference.KELVIN);
     }
 
     /**
@@ -158,8 +154,7 @@ public class Temperature extends
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Temperature of(final double value, final String unitString,
-            final AbsoluteTemperatureReference reference)
+    public static Temperature of(final double value, final String unitString, final TemperatureReference reference)
     {
         return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), reference);
     }
@@ -175,7 +170,7 @@ public class Temperature extends
      */
     public static Temperature of(final double value, final String unitString)
     {
-        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), AbsoluteTemperatureReference.KELVIN);
+        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), TemperatureReference.KELVIN);
     }
 
     @Override
@@ -202,41 +197,53 @@ public class Temperature extends
     /**
      * The reference class to define a reference point for the absolute temperature.
      */
-    public static final class AbsoluteTemperatureReference implements Reference
+    public static final class TemperatureReference extends Reference<TemperatureReference, TemperatureDifference>
     {
-        /** the list of possible reference points to use. */
-        private static Map<String, AbsoluteTemperatureReference> referenceList = new LinkedHashMap<>();
-
         /** Kelvin. */
-        public static final AbsoluteTemperatureReference KELVIN =
-                new AbsoluteTemperatureReference("KELVIN", "Kelvin scale temperature");
+        public static final TemperatureReference KELVIN =
+                new TemperatureReference("KELVIN", "Kelvin scale temperature", TemperatureDifference.ZERO, null);
 
-        /** The id. */
-        private String id;
+        /** Celsius. */
+        public static final TemperatureReference CELSIUS =
+                new TemperatureReference("CELSIUS", "Celsius scale temperature", TemperatureDifference.ofSi(273.15), KELVIN);
 
-        /** The explanation. */
-        private String name;
+        /** Fahrenheit. */
+        public static final TemperatureReference FAHRENHEIT = new TemperatureReference("FAHRENHEIT",
+                "Fahrenheit scale temperature", TemperatureDifference.ofSi(273.15 - 32 / 1.8), KELVIN);
 
         /**
-         * Define a new reference point for the absolute temperature.
+         * Define a new reference point for an absolute temperature.
          * @param id the id
          * @param name the name or explanation
+         * @param offset the offset w.r.t. offsetReference
+         * @param offsetReference the reference to which the offset is relative
          */
-        private AbsoluteTemperatureReference(final String id, final String name)
+        public TemperatureReference(final String id, final String name, final TemperatureDifference offset,
+                final TemperatureReference offsetReference)
         {
-            this.id = id;
-            this.name = name;
-            referenceList.put(id, this);
+            super(id, name, offset, offsetReference);
         }
 
         /**
-         * Define a new reference point for the absolute temperature.
+         * Define a new reference point for the absolute temperature, with an offset to 0 kelvin.
          * @param id the id
          * @param name the name or explanation
+         * @param offset the offset w.r.t. offsetReference
          */
-        public static void add(final String id, final String name)
+        public TemperatureReference(final String id, final String name, final TemperatureDifference offset)
         {
-            new AbsoluteTemperatureReference(id, name);
+            super(id, name, offset, KELVIN);
+        }
+
+        /**
+         * Define a new reference point for the absolute temperature, with an offset to 0 kelvin.
+         * @param id the id
+         * @param name the name or explanation
+         * @param offset the offset of this scale relative to 0 kelvin
+         */
+        public static void add(final String id, final String name, final TemperatureDifference offset)
+        {
+            new TemperatureReference(id, name, offset);
         }
 
         /**
@@ -244,47 +251,9 @@ public class Temperature extends
          * @param id the id
          * @return the AbsoluteTemperatureReference object
          */
-        public static AbsoluteTemperatureReference get(final String id)
+        public static TemperatureReference get(final String id)
         {
-            return referenceList.get(id);
-        }
-
-        @Override
-        public String getId()
-        {
-            return this.id;
-        }
-
-        @Override
-        public String getName()
-        {
-            return this.name;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            return Objects.hash(this.id, this.name);
-        }
-
-        @SuppressWarnings("checkstyle:needbraces")
-        @Override
-        public boolean equals(final Object obj)
-        {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            AbsoluteTemperatureReference other = (AbsoluteTemperatureReference) obj;
-            return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name);
-        }
-
-        @Override
-        public String toString()
-        {
-            return this.id;
+            return (TemperatureReference) referenceMap.get(id);
         }
     }
 }
