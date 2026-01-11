@@ -6,6 +6,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Position;
 import org.djunits.quantity.Temperature;
+import org.djunits.quantity.Temperature.Reference;
 import org.djunits.quantity.Time;
 
 /**
@@ -119,6 +120,26 @@ public final class TestAbsolute
         System.out.println();
     }
 
+    /** */
+    public static void testSubtractAA()
+    {
+        System.out.println("ABS - ABS");
+        System.out.println("=========");
+
+        var t1 = new Temperature(15.0, "degC");
+        var t2 = new Temperature(80.0, "degF");
+        System.out.println(t2 + " - " + t1 + " = " + t2.subtract(t1));
+        System.out.println(t2 + " - " + t1 + " = " + t2.subtract(t1).setDisplayUnit("degC"));
+        var t3 = t2.relativeTo(Temperature.Reference.KELVIN);
+        System.out.println(t3 + " - " + t1 + " = " + t3.subtract(t1).setDisplayUnit("degC"));
+        System.out.println(t3 + " - " + t1 + " = " + t3.subtract(t1).setDisplayUnit("K"));
+        var t4 = t2.relativeTo(Temperature.Reference.KELVIN).setDisplayUnit("K");
+        System.out.println(t4 + " - " + t1 + " = " + t4.subtract(t1).setDisplayUnit("degC"));
+        System.out.println(t4 + " - " + t1 + " = " + t4.subtract(t1).setDisplayUnit("K"));
+        System.out.println(t1 + " - " + t4 + " = " + t1.subtract(t4).setDisplayUnit("K"));
+        System.out.println();
+    }
+
     /**
      * @param args not used
      */
@@ -129,6 +150,7 @@ public final class TestAbsolute
         testTime();
         testTemperature();
         testTemperature2();
+        testSubtractAA();
     }
 
 }
