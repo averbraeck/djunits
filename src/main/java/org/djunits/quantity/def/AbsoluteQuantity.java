@@ -416,7 +416,8 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @param <R> the reference type to use for the absolute quantity
      */
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends AbstractReference<R, Q>> A of(final double value, final String unitString, final A example, final R reference)
+            R extends AbstractReference<R, Q>> A of(final double value, final String unitString, final A example,
+                    final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsoluteQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -466,11 +467,11 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      */
     public String format(final double d)
     {
-        if (d < 1E-5 || d > 1E5)
+        if (d == 0.0 || (Math.abs(d) >= 1E-5 && Math.abs(d) <= 1E5) || !Double.isFinite(d))
         {
-            return format(d, "%E");
+            return format(d, "%f");
         }
-        return format(d, "%f");
+        return format(d, "%E");
     }
 
     /**
@@ -622,7 +623,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
     @SuppressWarnings("checkstyle:hiddenfield")
     public String toDisplayString(final U displayUnit)
     {
-        return format(getInUnit()) + " " + displayUnit.getDisplayAbbreviation();
+        return format(getInUnit(displayUnit)) + " " + displayUnit.getDisplayAbbreviation();
     }
 
     /**********************************************************************************/
