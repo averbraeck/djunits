@@ -375,7 +375,7 @@ public class Length extends Quantity<Length, Length.Unit>
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit A =
-                new Length.Unit("A", "\u212B", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
+                new Length.Unit("A", "\u00C5", "Angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
 
         /**
          * Create a new length unit.
