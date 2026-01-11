@@ -1,9 +1,6 @@
 package org.djunits.quantity;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-
+import org.djunits.quantity.Direction.DirectionReference;
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
@@ -20,7 +17,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Direction.DirectionReference>
+public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, DirectionReference>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -133,43 +130,61 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
     /**
      * The reference class to define a reference point for the direction.
      */
-    public static final class DirectionReference implements Reference
+    public static final class DirectionReference extends Reference<DirectionReference, Angle>
     {
-        /** the list of possible reference points to use. */
-        private static Map<String, DirectionReference> referenceList = new LinkedHashMap<>();
+        /** East is zero. */
+        public static final DirectionReference EAST =
+                new DirectionReference("EAST", "East = 0 degrees (counter-clockwise)", Angle.ZERO, null);
 
         /** North is zero. */
-        public static final DirectionReference NORTH = new DirectionReference("NORTH", "North = 0 degrees (counter-clockwise)");
-
-        /** East is zero. */
-        public static final DirectionReference EAST = new DirectionReference("EAST", "East = 0 degrees (counter-clockwise)");
-
-        /** The id. */
-        private String id;
-
-        /** The explanation. */
-        private String name;
+        public static final DirectionReference NORTH =
+                new DirectionReference("NORTH", "North = 0 degrees (counter-clockwise)", Angle.HALF_PI, EAST);
 
         /**
          * Define a new reference point for the direction.
          * @param id the id
          * @param name the name or explanation
+         * @param offset the offset w.r.t. the offsetReference
+         * @param offsetReference the reference to which the offset is relative
          */
-        private DirectionReference(final String id, final String name)
+        public DirectionReference(final String id, final String name, final Angle offset,
+                final DirectionReference offsetReference)
         {
-            this.id = id;
-            this.name = name;
-            referenceList.put(id, this);
+            super(id, name, offset, offsetReference);
         }
 
         /**
          * Define a new reference point for the direction.
          * @param id the id
          * @param name the name or explanation
+         * @param offset the offset w.r.t. EAST
          */
-        public static void add(final String id, final String name)
+        public DirectionReference(final String id, final String name, final Angle offset)
         {
-            new DirectionReference(id, name);
+            this(id, name, offset, EAST);
+        }
+
+        /**
+         * Define a new reference point for the direction.
+         * @param id the id
+         * @param name the name or explanation
+         * @param offset the offset w.r.t. offsetReference
+         * @param offsetReference the reference to which the offset is relative
+         */
+        public static void add(final String id, final String name, final Angle offset, final DirectionReference offsetReference)
+        {
+            new DirectionReference(id, name, offset, offsetReference);
+        }
+
+        /**
+         * Define a new reference point for the direction.
+         * @param id the id
+         * @param name the name or explanation
+         * @param offset the offset w.r.t. EAST
+         */
+        public static void add(final String id, final String name, final Angle offset)
+        {
+            new DirectionReference(id, name, offset);
         }
 
         /**
@@ -179,45 +194,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
          */
         public static DirectionReference get(final String id)
         {
-            return referenceList.get(id);
-        }
-
-        @Override
-        public String getId()
-        {
-            return this.id;
-        }
-
-        @Override
-        public String getName()
-        {
-            return this.name;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            return Objects.hash(this.id, this.name);
-        }
-
-        @SuppressWarnings("checkstyle:needbraces")
-        @Override
-        public boolean equals(final Object obj)
-        {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            DirectionReference other = (DirectionReference) obj;
-            return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name);
-        }
-
-        @Override
-        public String toString()
-        {
-            return this.id;
+            return (DirectionReference) referenceMap.get(id);
         }
     }
 }

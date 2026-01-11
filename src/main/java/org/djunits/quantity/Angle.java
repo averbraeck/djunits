@@ -22,10 +22,22 @@ import org.djunits.unit.system.UnitSystem;
  */
 public class Angle extends Quantity<Angle, Angle.Unit>
 {
-    /** Constant with value zero. */
+    /** Constant with value zero radians. */
     public static final Angle ZERO = Angle.ofSi(0.0);
 
-    /** Constant with value one. */
+    /** Constant with value pi radians. */
+    public static final Angle PI = Angle.ofSi(Math.PI);
+
+    /** Constant with value pi/2 radians. */
+    public static final Angle HALF_PI = Angle.ofSi(Math.PI / 2.0);
+
+    /** Constant with value 2 pi radians. */
+    public static final Angle TWO_PI = Angle.ofSi(Math.PI * 2.0);
+
+    /** Constant with value tau radians. */
+    public static final Angle TAU = Angle.ofSi(Math.PI * 2.0);
+
+    /** Constant with value one radian. */
     public static final Angle ONE = Angle.ofSi(1.0);
 
     /** Constant with value NaN. */
