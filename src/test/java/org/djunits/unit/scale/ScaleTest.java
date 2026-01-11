@@ -59,35 +59,6 @@ public class ScaleTest
         assertNotEquals(l1.hashCode(), sscale.hashCode());
         assertFalse(l1.equals(null));
 
-        OffsetLinearScale cscale = new OffsetLinearScale(1.0, 273.15); // C-K
-        assertEquals(1.0, cscale.getScaleFactorToBaseUnit(), 0.0001);
-        assertEquals(273.15, cscale.getOffsetToBaseUnit(), 0.0001);
-        assertEquals(273.15, cscale.toBaseValue(0.0), 0.0001);
-        assertEquals(0.0, cscale.toBaseValue(-273.15), 0.0001);
-        assertEquals(-273.15, cscale.fromBaseValue(0.0), 0.0001);
-        assertEquals(0.0, cscale.fromBaseValue(273.15), 0.0001);
-        assertTrue(cscale.toString().contains("OffsetLinearScale"));
-        assertTrue(cscale.toString().contains("273.15"));
-        assertTrue(cscale.toString().contains("1.0"));
-
-        OffsetLinearScale o1 = new OffsetLinearScale(123.0, 456.0);
-        OffsetLinearScale o2 = new OffsetLinearScale(123.0, 456.0);
-        assertEquals(o1, o1);
-        assertEquals(o1, o2);
-        assertEquals(o1.hashCode(), o2.hashCode());
-        assertNotEquals(o1, kiloscale);
-        assertNotEquals(o1, sscale);
-        assertNotEquals(o1, cscale);
-        assertFalse(o1.equals(new OffsetLinearScale(123.0, 1.0)));
-        assertFalse(o1.equals(new OffsetLinearScale(1.0, 456.0)));
-        assertNotEquals(kiloscale, o2);
-        assertNotEquals(sscale, o2);
-        assertNotEquals(cscale, o2);
-        assertNotEquals(o1.hashCode(), kiloscale.hashCode());
-        assertNotEquals(o1.hashCode(), sscale.hashCode());
-        assertNotEquals(o1.hashCode(), cscale.hashCode());
-        assertFalse(o1.equals(null));
-
         GradeScale gscale = new GradeScale(1.0); // fraction -> angle
         assertEquals(1.0, gscale.getConversionFactorToGrade(), 0.0001);
         assertEquals(Math.PI / 4, gscale.toBaseValue(1), 0.0001);
@@ -104,41 +75,13 @@ public class ScaleTest
         assertEquals(g1.hashCode(), g2.hashCode());
         assertNotEquals(g1, kiloscale);
         assertNotEquals(g1, sscale);
-        assertNotEquals(g1, cscale);
         assertNotEquals(g1, gscale);
         assertNotEquals(kiloscale, g2);
         assertNotEquals(sscale, g2);
-        assertNotEquals(cscale, g2);
         assertNotEquals(g1.hashCode(), kiloscale.hashCode());
         assertNotEquals(g1.hashCode(), sscale.hashCode());
-        assertNotEquals(g1.hashCode(), cscale.hashCode());
         assertNotEquals(g1.hashCode(), gscale.hashCode());
         assertFalse(g1.equals(null));
-    }
-
-    /**
-     * Test the OffsetScale for correctness and reciprocity.
-     * @throws UnitException on (unexpected) error
-     */
-    @Test
-    public void testOffsetLinearScale() throws UnitException
-    {
-        OffsetLinearScale fahrenheitScale = new OffsetLinearScale(5.0 / 9.0, 459.67);
-        assertEquals(255.372, fahrenheitScale.toBaseValue(0.0), 0.01); // 0 F = 255.372 K
-        assertEquals(273.15, fahrenheitScale.toBaseValue(32.0), 0.01); // 32 F = 273.15 K
-        assertEquals(0.0, fahrenheitScale.toBaseValue(-459.67), 0.01); // -459.67 F = 0 K
-        assertEquals(0.0, fahrenheitScale.fromBaseValue(255.372), 0.01); // 0 F = 255.372 K
-        assertEquals(32.0, fahrenheitScale.fromBaseValue(273.15), 0.01); // 32 F = 273.15 K
-        assertEquals(-459.67, fahrenheitScale.fromBaseValue(0.0), 0.01); // -459.67 F = 0 K
-
-        OffsetLinearScale std = new OffsetLinearScale(1.0, 0.0);
-        OffsetLinearScale ols = new OffsetLinearScale(2.0, 10.0);
-
-        assertEquals(123.0, std.fromBaseValue(std.toBaseValue(123.0)), 0.00001);
-        assertEquals(123.0, std.toBaseValue(std.fromBaseValue(123.0)), 0.00001);
-
-        assertEquals(123.0, ols.fromBaseValue(ols.toBaseValue(123.0)), 0.00001);
-        assertEquals(123.0, ols.toBaseValue(ols.fromBaseValue(123.0)), 0.00001);
     }
 
     /**
@@ -160,24 +103,6 @@ public class ScaleTest
         // Monotonicity and additivity for linear
         double a = 2.0, b = -3.5;
         assertEquals(kilo.toBaseValue(a + b), kilo.toBaseValue(a) + kilo.toBaseValue(b), 1e-12);
-    }
-
-    /**
-     * Affine identity for OffsetLinearScale: toBase(a + Δ) = toBase(a) + scaleFactor * Δ.
-     */
-    @Test
-    public void testOffsetLinearAffineIdentity()
-    {
-        OffsetLinearScale c = new OffsetLinearScale(1.0, 273.15); // °C to K
-        double a = 20.0; // 20°C
-        double delta = 3.5;
-        double left = c.toBaseValue(a + delta);
-        double right = c.toBaseValue(a) + c.getScaleFactorToBaseUnit() * delta;
-        assertEquals(left, right, 1e-12);
-
-        // Round-trip again with non-trivial scale+offset
-        OffsetLinearScale ols = new OffsetLinearScale(2.0, 10.0);
-        assertEquals(42.0, ols.fromBaseValue(ols.toBaseValue(42.0)), 1e-12);
     }
 
     /**
@@ -246,11 +171,6 @@ public class ScaleTest
         String t2 = lin.toString();
         assertEquals(t1, t2);
 
-        OffsetLinearScale offs = new OffsetLinearScale(2.0, -5.0);
-        String u1 = offs.toString();
-        String u2 = offs.toString();
-        assertEquals(u1, u2);
-
         GradeScale grd = new GradeScale(0.01);
         String g1 = grd.toString();
         String g2 = grd.toString();
@@ -298,12 +218,6 @@ public class ScaleTest
         assertThrows(IllegalArgumentException.class, () -> new LinearScale(1000.0, -3600.0)); // now invalid
         assertThrows(IllegalArgumentException.class, () -> new LinearScale(Double.NaN, 3600.0));
         assertThrows(IllegalArgumentException.class, () -> new LinearScale(1000.0, Double.POSITIVE_INFINITY));
-
-        // OffsetLinearScale: finite scale and offset; scale must be positive and finite; offset must be finite
-        assertThrows(IllegalArgumentException.class, () -> new OffsetLinearScale(0.0, 1.0));
-        assertThrows(IllegalArgumentException.class, () -> new OffsetLinearScale(Double.NaN, 0.0));
-        assertThrows(IllegalArgumentException.class, () -> new OffsetLinearScale(1.0, Double.NEGATIVE_INFINITY));
-        assertThrows(IllegalArgumentException.class, () -> new OffsetLinearScale(1.0, Double.NaN));
 
         // GradeScale: reasonable factor (e.g., > 0 to avoid sign inversions in meaning)
         assertThrows(IllegalArgumentException.class, () -> new GradeScale(0.0));
@@ -376,11 +290,6 @@ public class ScaleTest
         assertFalse(new LinearScale(1000.0).isBaseScale());
         assertTrue(new LinearScale(3600.0, 3600.0).isBaseScale());
         assertFalse(new LinearScale(1000.0, 3600.0).isBaseScale());
-
-        // OffsetLinearScale: base iff scale==1 and offset==0
-        assertTrue(new OffsetLinearScale(1.0, 0.0).isBaseScale());
-        assertFalse(new OffsetLinearScale(1.0, 273.15).isBaseScale());
-        assertFalse(new OffsetLinearScale(2.0, 10.0).isBaseScale());
 
         // GradeScale: not base (mapping grade↔angle), unless you define it otherwise
         assertFalse(new GradeScale(0.01).isBaseScale());
