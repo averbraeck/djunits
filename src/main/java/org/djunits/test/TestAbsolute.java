@@ -26,28 +26,44 @@ public final class TestAbsolute
     /** */
     public static void testPosition()
     {
+        System.out.println("POSITION");
+        System.out.println("========");
+
         var pRef = new Position.Reference("REF", "ref", Length.ZERO, null);
         var p1 = new Position(Length.of(10.0, "m"), pRef);
         System.out.println(p1);
         var pRef100 = new Position.Reference("REF100", "ref100", Length.of(100.0, "m"), pRef);
         var p2 = new Position(Length.of(10.0, "m"), pRef100);
-        System.out.println(p2);
-        System.out.println(p2.relativeTo(pRef));
-        System.out.println();
+        System.out.println(p2 + " = " + p2.relativeTo(pRef));
+        System.out.println(p1.toDisplayString(Length.Unit.A));
     }
 
     /** */
-    public static void testAngle()
+    public static void testDirection()
     {
+        System.out.println("DIRECTION");
+        System.out.println("=========");
+
         var d1 = new Direction(Angle.of(30.0, "deg"), Direction.Reference.NORTH);
-        System.out.println(d1);
-        System.out.println(d1.relativeTo(Direction.Reference.EAST));
+        System.out.println(d1 + " = " + d1.relativeTo(Direction.Reference.EAST));
+
+        var d2 = new Direction(Angle.of(30.0, "deg"), Direction.Reference.EAST);
+        System.out.println(d2 + " = " + d2.relativeTo(Direction.Reference.NORTH));
+
+        var d3 = new Direction(Angle.of(30.0, "deg"), Direction.Reference.NORTH);
+        System.out.println(d3 + " + " + d3.relativeTo(Direction.Reference.NORTH));
+
+        var d4 = new Direction(Angle.of(30.0, "deg"), Direction.Reference.EAST);
+        System.out.println(d4 + " + " + d4.relativeTo(Direction.Reference.EAST));
         System.out.println();
     }
 
     /** */
     public static void testTime()
     {
+        System.out.println("TIME");
+        System.out.println("====");
+
         var ms = System.currentTimeMillis();
         var t1 = new Time(Duration.of(1.0 * ms, "ms"), Time.Reference.UNIX);
         System.out.println(t1);
@@ -65,8 +81,41 @@ public final class TestAbsolute
     /** */
     public static void testTemperature()
     {
+        System.out.println("TEMPERATURE");
+        System.out.println("===========");
+
         var t1 = new Temperature(15.0, "degC", Temperature.Reference.CELSIUS);
-        System.out.println(t1.relativeTo(Temperature.Reference.KELVIN));
+        System.out.println(t1 + " = " + t1.relativeTo(Temperature.Reference.KELVIN));
+        System.out.println(t1 + " = " + t1.relativeTo(Temperature.Reference.KELVIN).getQuantity().as(Temperature.Unit.K));
+        System.out.println();
+
+        var t2 = new Temperature(80.0, "degF", Temperature.Reference.FAHRENHEIT);
+        System.out.println(t2 + " = " + t2.relativeTo(Temperature.Reference.KELVIN));
+        System.out.println();
+
+        var t3 = new Temperature(32.0, "degF", Temperature.Reference.FAHRENHEIT);
+        System.out.println(t3 + " = " + t3.relativeTo(Temperature.Reference.CELSIUS).getQuantity().as(Temperature.Unit.degC));
+        System.out.println();
+    }
+
+    /** */
+    public static void testTemperature2()
+    {
+        System.out.println("TEMPERATURE2");
+        System.out.println("============");
+
+        var t1 = new Temperature(15.0, "degC");
+        System.out.println(t1 + " = " + t1.relativeTo(Temperature.Reference.KELVIN));
+        System.out.println(t1 + " = " + t1.relativeTo(Temperature.Reference.KELVIN).toDisplayString(Temperature.Unit.K));
+        System.out.println();
+
+        var t2 = new Temperature(80.0, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT);
+        System.out.println(t2 + " = " + t2.relativeTo(Temperature.Reference.KELVIN));
+        System.out.println(t2 + " = " + t2.relativeTo(Temperature.Reference.CELSIUS).toDisplayString(Temperature.Unit.degC));
+        System.out.println();
+
+        var t3 = new Temperature(32.0, "degF", Temperature.Reference.FAHRENHEIT);
+        System.out.println(t3 + " = " + t3.relativeTo(Temperature.Reference.CELSIUS).toDisplayString(Temperature.Unit.degC));
         System.out.println();
     }
 
@@ -76,9 +125,10 @@ public final class TestAbsolute
     public static void main(final String[] args)
     {
         testPosition();
-        testAngle();
+        testDirection();
         testTime();
         testTemperature();
+        testTemperature2();
     }
 
 }

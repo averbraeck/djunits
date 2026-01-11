@@ -43,7 +43,7 @@ import org.djunits.quantity.Pressure;
 import org.djunits.quantity.RadioActivity;
 import org.djunits.quantity.SolidAngle;
 import org.djunits.quantity.Speed;
-import org.djunits.quantity.TemperatureDifference;
+import org.djunits.quantity.Temperature;
 import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
 import org.djunits.quantity.VolumetricObjectDensity;
@@ -64,10 +64,10 @@ public final class Test
     /** */
     private Test()
     {
+        printUnits();
         length();
         temp();
         duration();
-        printUnits();
         localization();
     }
 
@@ -97,9 +97,9 @@ public final class Test
     {
         System.out.println("\nTEMPERATURE");
         System.out.println("Temperature");
-        var t1 = TemperatureDifference.valueOf("10 degC");
+        var t1 = Temperature.valueOf("10 degC");
         System.out.println(t1 + "  si=" + t1.si());
-        System.out.println(TemperatureDifference.of(10, "K"));
+        System.out.println(Temperature.of(10, "K"));
     }
 
     /** */
@@ -219,7 +219,7 @@ public final class Test
         RadioActivity.Unit.SI_UNIT.getId();
         SolidAngle.Unit.SI_UNIT.getId();
         Speed.Unit.SI_UNIT.getId();
-        TemperatureDifference.Unit.SI_UNIT.getId();
+        Temperature.Unit.SI_UNIT.getId();
         Torque.Unit.SI_UNIT.getId();
         Volume.Unit.SI_UNIT.getId();
         VolumetricObjectDensity.Unit.SI_UNIT.getId();
