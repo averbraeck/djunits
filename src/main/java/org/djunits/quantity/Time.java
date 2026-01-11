@@ -2,7 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.quantity.def.Reference;
+import org.djunits.quantity.def.AbstractReference;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
@@ -128,7 +128,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
     /**
      * The reference class to define a reference point for the time.
      */
-    public static final class TimeReference extends Reference<TimeReference, Duration>
+    public static final class TimeReference extends AbstractReference<TimeReference, Duration>
     {
         /** Gregorian. */
         public static final TimeReference GREGORIAN = new TimeReference("GREGORIAN", "Gregorian time origin (1-1-0000)");

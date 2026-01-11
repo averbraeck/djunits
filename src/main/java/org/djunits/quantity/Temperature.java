@@ -2,7 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.quantity.def.Reference;
+import org.djunits.quantity.def.AbstractReference;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
@@ -197,7 +197,7 @@ public class Temperature extends
     /**
      * The reference class to define a reference point for the absolute temperature.
      */
-    public static final class TemperatureReference extends Reference<TemperatureReference, TemperatureDifference>
+    public static final class TemperatureReference extends AbstractReference<TemperatureReference, TemperatureDifference>
     {
         /** Kelvin. */
         public static final TemperatureReference KELVIN =

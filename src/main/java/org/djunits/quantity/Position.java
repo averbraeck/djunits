@@ -2,7 +2,7 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.quantity.def.Reference;
+import org.djunits.quantity.def.AbstractReference;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
@@ -129,7 +129,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * The reference class to define a reference point for the position. No references have been defined yet, since there is no
      * "natural" origin for a position that we can include here. User-defined origins van be easily added and used.
      */
-    public static final class PositionReference extends Reference<PositionReference, Length>
+    public static final class PositionReference extends AbstractReference<PositionReference, Length>
     {
         /**
          * Define a new reference point for the position.

@@ -3,7 +3,7 @@ package org.djunits.quantity;
 import org.djunits.quantity.Direction.DirectionReference;
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.quantity.def.Reference;
+import org.djunits.quantity.def.AbstractReference;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
@@ -130,7 +130,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
     /**
      * The reference class to define a reference point for the direction.
      */
-    public static final class DirectionReference extends Reference<DirectionReference, Angle>
+    public static final class DirectionReference extends AbstractReference<DirectionReference, Angle>
     {
         /** East is zero. */
         public static final DirectionReference EAST =

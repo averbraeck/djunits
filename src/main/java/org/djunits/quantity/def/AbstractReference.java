@@ -17,11 +17,11 @@ import org.djutils.exceptions.Throw;
  * @param <R> the reference type itself
  * @param <Q> the relative quantity for the offset
  */
-public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q, ?>> implements Identifiable
+public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q extends Quantity<Q, ?>> implements Identifiable
 {
     /** the list of possible reference points to use. */
     @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected static Map<String, Reference<?, ?>> referenceMap = new LinkedHashMap<>();
+    protected static Map<String, AbstractReference<?, ?>> referenceMap = new LinkedHashMap<>();
 
     /** The id. */
     private final String id;
@@ -42,7 +42,7 @@ public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q,
      * @param offset the offset w.r.t. the offsetReference, should be ZERO when offsetReference is null
      * @param offsetReference the reference to which the offset is relative, can be null
      */
-    public Reference(final String id, final String name, final Q offset, final R offsetReference)
+    public AbstractReference(final String id, final String name, final Q offset, final R offsetReference)
     {
         Throw.whenNull(id, "id");
         Throw.whenNull(name, "name");
@@ -91,7 +91,7 @@ public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q,
      * Return a safe copy of the static reference map.
      * @return a safe copy of the static reference map
      */
-    public Map<String, Reference<?, ?>> getReferenceMap()
+    public Map<String, AbstractReference<?, ?>> getReferenceMap()
     {
         return new LinkedHashMap<>(referenceMap);
     }
@@ -112,7 +112,7 @@ public abstract class Reference<R extends Reference<R, Q>, Q extends Quantity<Q,
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Reference<?, ?> other = (Reference<?, ?>) obj;
+        AbstractReference<?, ?> other = (AbstractReference<?, ?>) obj;
         return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name)
                 && Objects.equals(this.offset, other.offset) && Objects.equals(this.offsetReference, other.offsetReference);
     }
