@@ -25,7 +25,7 @@ import org.djutils.exceptions.Throw;
  * @param <R> the reference type to use for the absolute quantity
  */
 public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>,
-        U extends UnitInterface<U, Q>, R extends Reference> extends Number implements Value<U, A>, Comparable<A>
+        U extends UnitInterface<U, Q>, R extends Reference<R, Q>> extends Number implements Value<U, A>, Comparable<A>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -376,7 +376,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @param <R> the reference type to use for the absolute quantity
      */
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A valueOf(final String text, final A example, final R reference)
+            R extends Reference<R, Q>> A valueOf(final String text, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsoluteQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -416,7 +416,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @param <R> the reference type to use for the absolute quantity
      */
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A of(final double value, final String unitString, final A example, final R reference)
+            R extends Reference<R, Q>> A of(final double value, final String unitString, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsoluteQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -648,7 +648,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A interpolate(final A zero, final A one, final double ratio)
+            R extends Reference<R, Q>> A interpolate(final A zero, final A one, final double ratio)
     {
         Throw.when(!zero.getReference().equals(one.getReference()), IllegalArgumentException.class,
                 "inperpolate operation not applicable to quantities with a different reference: %s <> %s",
@@ -674,7 +674,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      */
     @SafeVarargs
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A max(final A quantity1, final A... quantities)
+            R extends Reference<R, Q>> A max(final A quantity1, final A... quantities)
     {
         A maxA = quantity1;
         for (A absq : quantities)
@@ -703,7 +703,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      */
     @SafeVarargs
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A min(final A quantity1, final A... quantities)
+            R extends Reference<R, Q>> A min(final A quantity1, final A... quantities)
     {
         A minA = quantity1;
         for (A absq : quantities)
@@ -732,7 +732,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      */
     @SafeVarargs
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A sum(final A quantity1, final A... quantities)
+            R extends Reference<R, Q>> A sum(final A quantity1, final A... quantities)
     {
         double sum = quantity1.si();
         for (A absq : quantities)
@@ -759,7 +759,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      */
     @SafeVarargs
     public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-            R extends Reference> A mean(final A quantity1, final A... quantities)
+            R extends Reference<R, Q>> A mean(final A quantity1, final A... quantities)
     {
         // the possible exception is thrown by sum()
         int n = 1 + quantities.length;
