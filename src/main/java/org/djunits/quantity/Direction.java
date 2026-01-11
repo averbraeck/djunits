@@ -1,9 +1,9 @@
 package org.djunits.quantity;
 
-import org.djunits.quantity.Direction.DirectionReference;
+import org.djunits.quantity.Direction.Reference;
 import org.djunits.quantity.def.AbsoluteQuantity;
-import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
@@ -17,7 +17,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, DirectionReference>
+public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -28,7 +28,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
      * @param unit the angle unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this direction
      */
-    public Direction(final double value, final Angle.Unit unit, final DirectionReference reference)
+    public Direction(final double value, final Angle.Unit unit, final Reference reference)
     {
         super(new Angle(value, unit), reference);
     }
@@ -39,7 +39,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this direction
      */
-    public Direction(final double value, final String abbreviation, final DirectionReference reference)
+    public Direction(final double value, final String abbreviation, final Reference reference)
     {
         this(value, Units.resolve(Angle.Unit.class, abbreviation), reference);
     }
@@ -49,7 +49,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
      * @param angle the angle, relative to the reference point
      * @param reference the reference point of this direction
      */
-    public Direction(final Angle angle, final DirectionReference reference)
+    public Direction(final Angle angle, final Reference reference)
     {
         super(angle, reference);
     }
@@ -60,13 +60,13 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
      * @param reference the reference point of this direction
      * @return the Direction instance based on an SI value
      */
-    public static Direction ofSi(final double si, final DirectionReference reference)
+    public static Direction ofSi(final double si, final Reference reference)
     {
         return new Direction(si, Angle.Unit.SI, reference);
     }
 
     @Override
-    public Direction instantiate(final Angle angle, final DirectionReference reference)
+    public Direction instantiate(final Angle angle, final Reference reference)
     {
         return new Direction(angle, reference);
     }
@@ -87,7 +87,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static Direction valueOf(final String text, final DirectionReference reference)
+    public static Direction valueOf(final String text, final Reference reference)
     {
         return new Direction(Quantity.valueOf(text, Angle.ZERO), reference);
     }
@@ -101,7 +101,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Direction of(final double value, final String unitString, final DirectionReference reference)
+    public static Direction of(final double value, final String unitString, final Reference reference)
     {
         return new Direction(Quantity.of(value, unitString, Angle.ZERO), reference);
     }
@@ -130,15 +130,14 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
     /**
      * The reference class to define a reference point for the direction.
      */
-    public static final class DirectionReference extends AbstractReference<DirectionReference, Angle>
+    public static final class Reference extends AbstractReference<Reference, Angle>
     {
         /** East is zero. */
-        public static final DirectionReference EAST =
-                new DirectionReference("EAST", "East = 0 degrees (counter-clockwise)", Angle.ZERO, null);
+        public static final Reference EAST = new Reference("EAST", "East = 0 degrees (counter-clockwise)", Angle.ZERO, null);
 
         /** North is zero. */
-        public static final DirectionReference NORTH =
-                new DirectionReference("NORTH", "North = 0 degrees (counter-clockwise)", Angle.HALF_PI, EAST);
+        public static final Reference NORTH =
+                new Reference("NORTH", "North = 0 degrees (counter-clockwise)", Angle.HALF_PI, EAST);
 
         /**
          * Define a new reference point for the direction.
@@ -147,8 +146,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
          * @param offset the offset w.r.t. the offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public DirectionReference(final String id, final String name, final Angle offset,
-                final DirectionReference offsetReference)
+        public Reference(final String id, final String name, final Angle offset, final Reference offsetReference)
         {
             super(id, name, offset, offsetReference);
         }
@@ -159,7 +157,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
          * @param name the name or explanation
          * @param offset the offset w.r.t. EAST
          */
-        public DirectionReference(final String id, final String name, final Angle offset)
+        public Reference(final String id, final String name, final Angle offset)
         {
             this(id, name, offset, EAST);
         }
@@ -171,9 +169,9 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
          * @param offset the offset w.r.t. offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public static void add(final String id, final String name, final Angle offset, final DirectionReference offsetReference)
+        public static void add(final String id, final String name, final Angle offset, final Reference offsetReference)
         {
-            new DirectionReference(id, name, offset, offsetReference);
+            new Reference(id, name, offset, offsetReference);
         }
 
         /**
@@ -184,7 +182,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
          */
         public static void add(final String id, final String name, final Angle offset)
         {
-            new DirectionReference(id, name, offset);
+            new Reference(id, name, offset);
         }
 
         /**
@@ -192,9 +190,9 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Di
          * @param id the id
          * @return the DirectionReference object
          */
-        public static DirectionReference get(final String id)
+        public static Reference get(final String id)
         {
-            return (DirectionReference) referenceMap.get(id);
+            return (Reference) referenceMap.get(id);
         }
     }
 }

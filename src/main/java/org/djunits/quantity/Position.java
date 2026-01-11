@@ -15,7 +15,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Position.PositionReference>
+public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Position.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -26,7 +26,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * @param unit the length unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this position
      */
-    public Position(final double value, final Length.Unit unit, final PositionReference reference)
+    public Position(final double value, final Length.Unit unit, final Reference reference)
     {
         super(new Length(value, unit), reference);
     }
@@ -37,7 +37,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this position
      */
-    public Position(final double value, final String abbreviation, final PositionReference reference)
+    public Position(final double value, final String abbreviation, final Reference reference)
     {
         this(value, Units.resolve(Length.Unit.class, abbreviation), reference);
     }
@@ -47,7 +47,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * @param length the length, relative to the reference point
      * @param reference the reference point of this position
      */
-    public Position(final Length length, final PositionReference reference)
+    public Position(final Length length, final Reference reference)
     {
         super(length, reference);
     }
@@ -58,13 +58,13 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * @param reference the reference point of this position
      * @return the Position instance based on an SI value
      */
-    public static Position ofSi(final double si, final PositionReference reference)
+    public static Position ofSi(final double si, final Reference reference)
     {
         return new Position(si, Length.Unit.SI, reference);
     }
 
     @Override
-    public Position instantiate(final Length length, final PositionReference reference)
+    public Position instantiate(final Length length, final Reference reference)
     {
         return new Position(length, reference);
     }
@@ -85,7 +85,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static Position valueOf(final String text, final PositionReference reference)
+    public static Position valueOf(final String text, final Reference reference)
     {
         return new Position(Quantity.valueOf(text, Length.ZERO), reference);
     }
@@ -99,7 +99,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Position of(final double value, final String unitString, final PositionReference reference)
+    public static Position of(final double value, final String unitString, final Reference reference)
     {
         return new Position(Quantity.of(value, unitString, Length.ZERO), reference);
     }
@@ -129,7 +129,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
      * The reference class to define a reference point for the position. No references have been defined yet, since there is no
      * "natural" origin for a position that we can include here. User-defined origins van be easily added and used.
      */
-    public static final class PositionReference extends AbstractReference<PositionReference, Length>
+    public static final class Reference extends AbstractReference<Reference, Length>
     {
         /**
          * Define a new reference point for the position.
@@ -138,8 +138,8 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          * @param offset the offset w.r.t. the offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public PositionReference(final String id, final String name, final Length offset,
-                final PositionReference offsetReference)
+        public Reference(final String id, final String name, final Length offset,
+                final Reference offsetReference)
         {
             super(id, name, offset, offsetReference);
         }
@@ -149,7 +149,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          * @param id the id
          * @param name the name or explanation
          */
-        public PositionReference(final String id, final String name)
+        public Reference(final String id, final String name)
         {
             this(id, name, null, null);
         }
@@ -161,9 +161,9 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          * @param offset the offset w.r.t. the offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public static void add(final String id, final String name, final Length offset, final PositionReference offsetReference)
+        public static void add(final String id, final String name, final Length offset, final Reference offsetReference)
         {
-            new PositionReference(id, name, offset, offsetReference);
+            new Reference(id, name, offset, offsetReference);
         }
 
         /**
@@ -173,7 +173,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          */
         public static void add(final String id, final String name)
         {
-            new PositionReference(id, name);
+            new Reference(id, name);
         }
 
         /**
@@ -181,9 +181,9 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          * @param id the id
          * @return the PositionReference object
          */
-        public static PositionReference get(final String id)
+        public static Reference get(final String id)
         {
-            return (PositionReference) referenceMap.get(id);
+            return (Reference) referenceMap.get(id);
         }
     }
 }

@@ -1,8 +1,8 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.def.AbsoluteQuantity;
-import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
@@ -15,7 +15,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.TimeReference>
+public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -26,7 +26,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
      * @param unit the duration unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this time
      */
-    public Time(final double value, final Duration.Unit unit, final TimeReference reference)
+    public Time(final double value, final Duration.Unit unit, final Reference reference)
     {
         super(new Duration(value, unit), reference);
     }
@@ -37,7 +37,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this time
      */
-    public Time(final double value, final String abbreviation, final TimeReference reference)
+    public Time(final double value, final String abbreviation, final Reference reference)
     {
         this(value, Units.resolve(Duration.Unit.class, abbreviation), reference);
     }
@@ -47,7 +47,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
      * @param duration the duration, relative to the reference point
      * @param reference the reference point of this time
      */
-    public Time(final Duration duration, final TimeReference reference)
+    public Time(final Duration duration, final Reference reference)
     {
         super(duration, reference);
     }
@@ -58,13 +58,13 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
      * @param reference the reference point of this time
      * @return the Time instance based on an SI value
      */
-    public static Time ofSi(final double si, final TimeReference reference)
+    public static Time ofSi(final double si, final Reference reference)
     {
         return new Time(si, Duration.Unit.SI, reference);
     }
 
     @Override
-    public Time instantiate(final Duration duration, final TimeReference reference)
+    public Time instantiate(final Duration duration, final Reference reference)
     {
         return new Time(duration, reference);
     }
@@ -85,7 +85,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static Time valueOf(final String text, final TimeReference reference)
+    public static Time valueOf(final String text, final Reference reference)
     {
         return new Time(Quantity.valueOf(text, Duration.ZERO), reference);
     }
@@ -99,7 +99,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Time of(final double value, final String unitString, final TimeReference reference)
+    public static Time of(final double value, final String unitString, final Reference reference)
     {
         return new Time(Quantity.of(value, unitString, Duration.ZERO), reference);
     }
@@ -128,16 +128,16 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
     /**
      * The reference class to define a reference point for the time.
      */
-    public static final class TimeReference extends AbstractReference<TimeReference, Duration>
+    public static final class Reference extends AbstractReference<Reference, Duration>
     {
         /** Gregorian. */
-        public static final TimeReference GREGORIAN = new TimeReference("GREGORIAN", "Gregorian time origin (1-1-0000)");
+        public static final Reference GREGORIAN = new Reference("GREGORIAN", "Gregorian time origin (1-1-0000)");
 
         /** Unix. */
-        public static final TimeReference UNIX = new TimeReference("UNIX", "UNIX epoch, 1-1-1970, 00:00 GMT");
+        public static final Reference UNIX = new Reference("UNIX", "UNIX epoch, 1-1-1970, 00:00 GMT");
 
         /** GPS. */
-        public static final TimeReference GPS = new TimeReference("GPS", "GPS epoch, 6-1-1980");
+        public static final Reference GPS = new Reference("GPS", "GPS epoch, 6-1-1980");
 
         /**
          * Define a new reference point for the time, with an offset value to another reference.
@@ -146,7 +146,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
          * @param offset the offset w.r.t. offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public TimeReference(final String id, final String name, final Duration offset, final TimeReference offsetReference)
+        public Reference(final String id, final String name, final Duration offset, final Reference offsetReference)
         {
             super(id, name, offset, offsetReference);
         }
@@ -156,7 +156,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
          * @param id the id
          * @param name the name or explanation
          */
-        public TimeReference(final String id, final String name)
+        public Reference(final String id, final String name)
         {
             super(id, name, Duration.ZERO, null);
         }
@@ -168,9 +168,9 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
          * @param offset the offset w.r.t. offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public static void add(final String id, final String name, final Duration offset, final TimeReference offsetReference)
+        public static void add(final String id, final String name, final Duration offset, final Reference offsetReference)
         {
-            new TimeReference(id, name, offset, offsetReference);
+            new Reference(id, name, offset, offsetReference);
         }
 
         /**
@@ -180,7 +180,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
          */
         public static void add(final String id, final String name)
         {
-            new TimeReference(id, name);
+            new Reference(id, name);
         }
 
         /**
@@ -188,9 +188,9 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
          * @param id the id
          * @return the TimeReference object
          */
-        public static TimeReference get(final String id)
+        public static Reference get(final String id)
         {
-            return (TimeReference) referenceMap.get(id);
+            return (Reference) referenceMap.get(id);
         }
     }
 }

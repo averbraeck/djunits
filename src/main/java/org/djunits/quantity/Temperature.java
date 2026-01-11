@@ -17,7 +17,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  */
 public class Temperature extends
-        AbsoluteQuantity<Temperature, TemperatureDifference, TemperatureDifference.Unit, Temperature.TemperatureReference>
+        AbsoluteQuantity<Temperature, TemperatureDifference, TemperatureDifference.Unit, Temperature.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -28,7 +28,7 @@ public class Temperature extends
      * @param unit the temperature unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final TemperatureDifference.Unit unit, final TemperatureReference reference)
+    public Temperature(final double value, final TemperatureDifference.Unit unit, final Reference reference)
     {
         super(new TemperatureDifference(value, unit), reference);
     }
@@ -40,7 +40,7 @@ public class Temperature extends
      */
     public Temperature(final double value, final TemperatureDifference.Unit unit)
     {
-        this(value, unit, TemperatureReference.KELVIN);
+        this(value, unit, Reference.KELVIN);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Temperature extends
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final String abbreviation, final TemperatureReference reference)
+    public Temperature(final double value, final String abbreviation, final Reference reference)
     {
         this(value, Units.resolve(TemperatureDifference.Unit.class, abbreviation), reference);
     }
@@ -61,7 +61,7 @@ public class Temperature extends
      */
     public Temperature(final double value, final String abbreviation)
     {
-        this(value, abbreviation, TemperatureReference.KELVIN);
+        this(value, abbreviation, Reference.KELVIN);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Temperature extends
      * @param temperature the temperature, relative to the reference point
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final TemperatureDifference temperature, final TemperatureReference reference)
+    public Temperature(final TemperatureDifference temperature, final Reference reference)
     {
         super(temperature, reference);
     }
@@ -80,7 +80,7 @@ public class Temperature extends
      */
     public Temperature(final TemperatureDifference temperature)
     {
-        this(temperature, TemperatureReference.KELVIN);
+        this(temperature, Reference.KELVIN);
     }
 
     /**
@@ -89,7 +89,7 @@ public class Temperature extends
      * @param reference the reference point of this absolute temperature
      * @return the AbsoluteTemperature instance based on an SI value
      */
-    public static Temperature ofSi(final double si, final TemperatureReference reference)
+    public static Temperature ofSi(final double si, final Reference reference)
     {
         return new Temperature(si, TemperatureDifference.Unit.SI, reference);
     }
@@ -101,11 +101,11 @@ public class Temperature extends
      */
     public static Temperature ofSi(final double si)
     {
-        return new Temperature(si, TemperatureDifference.Unit.SI, TemperatureReference.KELVIN);
+        return new Temperature(si, TemperatureDifference.Unit.SI, Reference.KELVIN);
     }
 
     @Override
-    public Temperature instantiate(final TemperatureDifference temperature, final TemperatureReference reference)
+    public Temperature instantiate(final TemperatureDifference temperature, final Reference reference)
     {
         return new Temperature(temperature, reference);
     }
@@ -126,7 +126,7 @@ public class Temperature extends
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
      */
-    public static Temperature valueOf(final String text, final TemperatureReference reference)
+    public static Temperature valueOf(final String text, final Reference reference)
     {
         return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), reference);
     }
@@ -142,7 +142,7 @@ public class Temperature extends
      */
     public static Temperature valueOf(final String text)
     {
-        return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), TemperatureReference.KELVIN);
+        return new Temperature(Quantity.valueOf(text, TemperatureDifference.ZERO), Reference.KELVIN);
     }
 
     /**
@@ -154,7 +154,7 @@ public class Temperature extends
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Temperature of(final double value, final String unitString, final TemperatureReference reference)
+    public static Temperature of(final double value, final String unitString, final Reference reference)
     {
         return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), reference);
     }
@@ -170,7 +170,7 @@ public class Temperature extends
      */
     public static Temperature of(final double value, final String unitString)
     {
-        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), TemperatureReference.KELVIN);
+        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), Reference.KELVIN);
     }
 
     @Override
@@ -197,18 +197,18 @@ public class Temperature extends
     /**
      * The reference class to define a reference point for the absolute temperature.
      */
-    public static final class TemperatureReference extends AbstractReference<TemperatureReference, TemperatureDifference>
+    public static final class Reference extends AbstractReference<Reference, TemperatureDifference>
     {
         /** Kelvin. */
-        public static final TemperatureReference KELVIN =
-                new TemperatureReference("KELVIN", "Kelvin scale temperature", TemperatureDifference.ZERO, null);
+        public static final Reference KELVIN =
+                new Reference("KELVIN", "Kelvin scale temperature", TemperatureDifference.ZERO, null);
 
         /** Celsius. */
-        public static final TemperatureReference CELSIUS =
-                new TemperatureReference("CELSIUS", "Celsius scale temperature", TemperatureDifference.ofSi(273.15), KELVIN);
+        public static final Reference CELSIUS =
+                new Reference("CELSIUS", "Celsius scale temperature", TemperatureDifference.ofSi(273.15), KELVIN);
 
         /** Fahrenheit. */
-        public static final TemperatureReference FAHRENHEIT = new TemperatureReference("FAHRENHEIT",
+        public static final Reference FAHRENHEIT = new Reference("FAHRENHEIT",
                 "Fahrenheit scale temperature", TemperatureDifference.ofSi(273.15 - 32 / 1.8), KELVIN);
 
         /**
@@ -218,8 +218,8 @@ public class Temperature extends
          * @param offset the offset w.r.t. offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public TemperatureReference(final String id, final String name, final TemperatureDifference offset,
-                final TemperatureReference offsetReference)
+        public Reference(final String id, final String name, final TemperatureDifference offset,
+                final Reference offsetReference)
         {
             super(id, name, offset, offsetReference);
         }
@@ -230,7 +230,7 @@ public class Temperature extends
          * @param name the name or explanation
          * @param offset the offset w.r.t. offsetReference
          */
-        public TemperatureReference(final String id, final String name, final TemperatureDifference offset)
+        public Reference(final String id, final String name, final TemperatureDifference offset)
         {
             super(id, name, offset, KELVIN);
         }
@@ -243,7 +243,7 @@ public class Temperature extends
          */
         public static void add(final String id, final String name, final TemperatureDifference offset)
         {
-            new TemperatureReference(id, name, offset);
+            new Reference(id, name, offset);
         }
 
         /**
@@ -251,9 +251,9 @@ public class Temperature extends
          * @param id the id
          * @return the AbsoluteTemperatureReference object
          */
-        public static TemperatureReference get(final String id)
+        public static Reference get(final String id)
         {
-            return (TemperatureReference) referenceMap.get(id);
+            return (Reference) referenceMap.get(id);
         }
     }
 }
