@@ -1,0 +1,121 @@
+package org.djunits.util;
+
+import org.djunits.quantity.Dimensionless;
+import org.djunits.quantity.ElectricCharge;
+import org.djunits.quantity.Frequency;
+import org.djunits.quantity.Mass;
+import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Speed;
+import org.djunits.unit.Unitless;
+
+/**
+ * <p>
+ * Various physical constants. For many, see
+ * <a href="https://en.wikipedia.org/wiki/2019_redefinition_of_the_SI_base_units">Wikipedia 2019 redefinition of the SI base
+ * units</a>
+ * </p>
+ * @author <a href="https://www.tudelft.nl/staff/p.knoppers">Peter Knoppers</a>
+ */
+public final class Constants
+{
+    /** Utility class. */
+    private Constants()
+    {
+        // utility class
+    }
+
+    /**
+     * Number of constituent particles in a Mole; a.k.a. Avogadro's number. This value is exact since the 2019 redefinition of
+     * the SI base units.
+     */
+    public static final SIQuantity AVOGADRO = SIQuantity.of(6.02214076e23, "1/mol");
+
+    /**
+     * Boltzmann constant in Joule per Kelvin (this value is exact since the 2019 redefinition of SI base units). See
+     * <a href="https://en.wikipedia.org/wiki/Boltzmann_constant">Wikipedia: Boltzmann constant</a>
+     */
+    public static final SIQuantity BOLTZMANN = SIQuantity.of(1.380649e-23, "kgm2/s2K");
+
+    /**
+     * The Cesium 133 ground state hyperfine structure transition frequency. This value is exact since the 2006 redefinition of
+     * the SI base units.
+     */
+    public static final Frequency CESIUM133_FREQUENCY = Frequency.of(9192631770d, "1/s");
+
+    /** Electric charge of one electron. This value is exact since the 2019 redefinition of the SI base units. */
+    public static final ElectricCharge ELECTRONCHARGE = new ElectricCharge(-1, ElectricCharge.Unit.e);
+
+    /**
+     * Mass of an electron. See <a href="https://en.wikipedia.org/wiki/Physical_constant">Wikipedia Physical constant</a>. This
+     * value of this physical constant has an uncertainty of 2.8e-40 kg.
+     */
+    public static final Mass ELECTRONMASS = Mass.of(9.1093837015e-31, "kg");
+
+    /** ElectricCharge of one proton. */
+    public static final ElectricCharge PROTONCHARGE = new ElectricCharge(1, ElectricCharge.Unit.e);
+
+    /**
+     * Mass of a neutron. See <a href="https://en.wikipedia.org/wiki/List_of_physical_constants">Wikipedia List of physical
+     * constants</a>. This value of this physical constant has an uncertainty of 9.5e-37 kg.
+     */
+    public static final Mass NEUTRONMASS = Mass.of(1.6749274714e-27, "kg");
+
+    /**
+     * Mass of a proton. See <a href="https://en.wikipedia.org/wiki/Physical_constant">Wikipedia Physical constant</a>. This
+     * value of this physical constant has an uncertainty of 5.1e-37.
+     */
+    public static final Mass PROTONMASS = Mass.of(1.67262192369e-27, "kg");
+
+    /**
+     * Gravitational constant, a.k.a. Newtonian constant of gravitation. This is the 2018 best known approximation, which has an
+     * uncertainty 1.5e-15 m^3/kgs^2
+     */
+    public static final SIQuantity G = SIQuantity.of(6.67430e-11, "m3/kgs2");
+
+    /** Speed of light in vacuum. This value is exact (since the 2006 redefinition of the SI base units). */
+    public static final Speed LIGHTSPEED = Speed.of(299792458, "m/s");
+
+    /**
+     * Permeability of vacuum. See <a href="https://en.wikipedia.org/wiki/Vacuum_permeability">Wikipedia, Vacuum
+     * permeability</a>. The uncertainty of this value is 1.9e-16N/A^2.
+     */
+    public static final SIQuantity VACUUMPERMEABILITY = SIQuantity.of(1.25663706212e-6, "kgm/s2A2");
+
+    /**
+     * Permittivity of vacuum. See <a href="https://en.wikipedia.org/wiki/Vacuum_permittivity">Wikipedia Vacuum
+     * permittivity</a>. The uncertainty of this value is 1.3e-21 F/m.
+     */
+    public static final SIQuantity VACUUMPERMITTIVITY = SIQuantity.of(8.8541878128e-12, "s4A2/kgm3");
+
+    /** Impedance of vacuum. */
+    public static final SIQuantity VACUUMIMPEDANCE = VACUUMPERMEABILITY.multiply(LIGHTSPEED);
+
+    /**
+     * Planck constant; ratio of a photon's energy and its frequency. This value is exact since the 2019 redefinition of the SI
+     * base units.
+     */
+    public static final SIQuantity PLANCK = SIQuantity.of(6.62607015e-34, "kgm2/s");
+
+    /**
+     * The luminous efficacy Kcd of monochromatic radiation of frequency 540×10^12 Hz (540 THz). This is the frequency of a
+     * green-colored light at approximately the peak sensitivity of the human eye. This value is exact since the 2006
+     * redefinition of the SI base units.
+     */
+    public static final SIQuantity LUMINOUS_EFFICACY_540THZ = SIQuantity.of(683d, "cdsrs3/kg");
+
+    /** Ratio of a half circumference of a circle and its radius. */
+    public static final Dimensionless PI = new Dimensionless(Math.PI, Unitless.BASE);
+
+    /** Ratio of circumference of circle and its radius. */
+    public static final Dimensionless TAU = new Dimensionless(Math.PI * 2, Unitless.BASE);
+
+    /** Euler's constant. */
+    public static final Dimensionless E = new Dimensionless(Math.E, Unitless.BASE);
+
+    /** Golden ratio. */
+    public static final Dimensionless PHI = new Dimensionless((1.0 + Math.sqrt(5.0)) / 2.0, Unitless.BASE);
+
+    /** Reduced Planck constant, a.k.a. angular Planck constant; Planck constant divided by 2 pi. */
+    public static final SIQuantity PLANCKREDUCED = PLANCK.divide(TAU);
+
+}
