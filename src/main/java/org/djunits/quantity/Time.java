@@ -5,7 +5,6 @@ import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
-import org.djutils.exceptions.Throw;
 
 /**
  * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero.<br>
@@ -107,10 +106,8 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.R
     @Override
     public Duration subtract(final Time other)
     {
-        Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
-                "cannot subtract two absolute quantities with a different reference: %s <> %s", getReference().getId(),
-                other.getReference().getId());
-        return Duration.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit());
+        var otherRef = other.relativeTo(getReference());
+        return Duration.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override

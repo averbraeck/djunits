@@ -6,7 +6,6 @@ import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
-import org.djutils.exceptions.Throw;
 
 /**
  * Direction is the absolute equivalent of Angle, and can, e.g., represent an angle relative to a defined "zero" angle such as
@@ -109,10 +108,8 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Re
     @Override
     public Angle subtract(final Direction other)
     {
-        Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
-                "cannot subtract two absolute quantities with a different reference: %s <> %s", getReference().getId(),
-                other.getReference().getId());
-        return Angle.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit());
+        var otherRef = other.relativeTo(getReference());
+        return Angle.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override

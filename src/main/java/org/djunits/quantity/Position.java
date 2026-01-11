@@ -1,11 +1,10 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.def.AbsoluteQuantity;
-import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
-import org.djutils.exceptions.Throw;
 
 /**
  * Position is the absolute equivalent of Length, and can, e.g., represent an absolute offset relative to a defined origin.<br>
@@ -107,10 +106,8 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
     @Override
     public Length subtract(final Position other)
     {
-        Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
-                "cannot subtract two absolute quantities with a different reference: %s <> %s", getReference().getId(),
-                other.getReference().getId());
-        return Length.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit());
+        var otherRef = other.relativeTo(getReference());
+        return Length.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -138,8 +135,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          * @param offset the offset w.r.t. the offsetReference
          * @param offsetReference the reference to which the offset is relative
          */
-        public Reference(final String id, final String name, final Length offset,
-                final Reference offsetReference)
+        public Reference(final String id, final String name, final Length offset, final Reference offsetReference)
         {
             super(id, name, offset, offsetReference);
         }

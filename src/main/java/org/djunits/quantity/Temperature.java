@@ -10,7 +10,6 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.exceptions.Throw;
 
 /**
  * Temperature is the absolute equivalent of Temperature, and represents a true temperature rather than a temperature
@@ -25,19 +24,6 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
 {
     /** */
     private static final long serialVersionUID = 600L;
-
-    static
-    {
-        try
-        {
-            Class.forName("org.djunits.quantity.Temperature$Reference");
-            Class.forName("org.djunits.quantity.Temperature$Unit");
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Instantiate a Temperature quantity with a unit and a reference point.
@@ -194,10 +180,8 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
     @Override
     public TemperatureDifference subtract(final Temperature other)
     {
-        Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
-                "cannot subtract two absolute quantities with a different reference: %s <> %s", getReference().getId(),
-                other.getReference().getId());
-        return TemperatureDifference.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit());
+        var otherRef = other.relativeTo(getReference());
+        return TemperatureDifference.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -383,7 +367,7 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
          */
         protected Reference getReference()
         {
-            // reference may be null because at initialization Unit needs Reference and Reference needs Unit
+            // reference may be null because at initialization, Unit needs Reference and Reference needs Unit
             if (this.reference == null)
             {
                 K.reference = Reference.KELVIN;
