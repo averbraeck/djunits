@@ -631,14 +631,19 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
     /**********************************************************************************/
 
     /**
-     * Subtract two absolute quantities from each other, resulting in the corresponding relative quantity.
+     * Subtract two absolute quantities from each other, resulting in the corresponding relative quantity. The unit of the
+     * resulting quantity will be the unit of 'this' absolute quantity. Quantity 'other' will be transformed to the reference
+     * point of this absolute quantity. If the reference points of this and other are different, and no transformations between
+     * the reference points exist, an exception will be thrown.
      * @param other the absolute quantity to subtract
      * @return the relative quantity as a result of the subtraction
+     * @throws IllegalArgumentException when the reference points are unequal and cannot be transformed to each other
      */
     public abstract Q subtract(A other);
 
     /**
-     * Add a relative quantity to this absolute quantity, resulting in a new absolute quantity containing the sum.
+     * Add a relative quantity to this absolute quantity, resulting in a new absolute quantity containing the sum. The new
+     * quantity will have the same reference point and unit as this absolute quantity.
      * @param other the relative quantity to add
      * @return the absolute quantity as a result of the addition
      */
@@ -646,6 +651,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
 
     /**
      * Subtract a relative quantity from this absolute quantity, resulting in a new absolute quantity containing the difference.
+     * The new quantity will have the same reference point and unit as this absolute quantity.
      * @param other the relative quantity to subtract
      * @return the absolute quantity as a result of the subtraction
      */
