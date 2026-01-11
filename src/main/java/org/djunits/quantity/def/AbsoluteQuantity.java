@@ -445,6 +445,8 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
     {
         if (getReference().equals(otherReference))
             return (A) this;
+        if (getReference().equals(otherReference.getOffsetReference()))
+            return instantiate(getQuantity().subtract(otherReference.getOffset()), otherReference);
         var offsetReference = getReference().getOffsetReference();
         Throw.when(offsetReference == null, IllegalArgumentException.class,
                 "Reference %s cannot be transformed to a base reference for a transformation", getReference().getId());
