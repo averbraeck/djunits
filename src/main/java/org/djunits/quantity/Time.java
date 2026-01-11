@@ -1,9 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-
 import org.djunits.quantity.def.AbsoluteQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
@@ -132,11 +128,8 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
     /**
      * The reference class to define a reference point for the time.
      */
-    public static final class TimeReference implements Reference
+    public static final class TimeReference extends Reference<TimeReference, Duration>
     {
-        /** the list of possible reference points to use. */
-        private static Map<String, TimeReference> referenceList = new LinkedHashMap<>();
-
         /** Gregorian. */
         public static final TimeReference GREGORIAN = new TimeReference("GREGORIAN", "Gregorian time origin (1-1-0000)");
 
@@ -146,26 +139,42 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
         /** GPS. */
         public static final TimeReference GPS = new TimeReference("GPS", "GPS epoch, 6-1-1980");
 
-        /** The id. */
-        private String id;
-
-        /** The explanation. */
-        private String name;
-
         /**
-         * Define a new reference point for the time.
+         * Define a new reference point for the time, with an offset value to another reference.
          * @param id the id
          * @param name the name or explanation
+         * @param offset the offset w.r.t. offsetReference
+         * @param offsetReference the reference to which the offset is relative
          */
-        private TimeReference(final String id, final String name)
+        public TimeReference(final String id, final String name, final Duration offset, final TimeReference offsetReference)
         {
-            this.id = id;
-            this.name = name;
-            referenceList.put(id, this);
+            super(id, name, offset, offsetReference);
         }
 
         /**
-         * Define a new reference point for the time.
+         * Define a new reference point for the time without an offset to a base reference.
+         * @param id the id
+         * @param name the name or explanation
+         */
+        public TimeReference(final String id, final String name)
+        {
+            super(id, name, Duration.ZERO, null);
+        }
+
+        /**
+         * Define a new reference point for the time, with an offset value to another reference.
+         * @param id the id
+         * @param name the name or explanation
+         * @param offset the offset w.r.t. offsetReference
+         * @param offsetReference the reference to which the offset is relative
+         */
+        public static void add(final String id, final String name, final Duration offset, final TimeReference offsetReference)
+        {
+            new TimeReference(id, name, offset, offsetReference);
+        }
+
+        /**
+         * Define a new reference point for the time without an offset to a base reference.
          * @param id the id
          * @param name the name or explanation
          */
@@ -181,45 +190,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.T
          */
         public static TimeReference get(final String id)
         {
-            return referenceList.get(id);
-        }
-
-        @Override
-        public String getId()
-        {
-            return this.id;
-        }
-
-        @Override
-        public String getName()
-        {
-            return this.name;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            return Objects.hash(this.id, this.name);
-        }
-
-        @SuppressWarnings("checkstyle:needbraces")
-        @Override
-        public boolean equals(final Object obj)
-        {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            TimeReference other = (TimeReference) obj;
-            return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name);
-        }
-
-        @Override
-        public String toString()
-        {
-            return this.id;
+            return (TimeReference) referenceMap.get(id);
         }
     }
 }
