@@ -151,6 +151,18 @@ public class Duration extends Quantity<Duration, Duration.Unit>
     }
 
     /**
+     * Add an (absolute) time to this duration, and return a time. The unit of the return value will be the unit of this
+     * duration, and the reference of the return value will be the reference belonging to the given time. <code>R.add(A)</code>
+     * = unit of R and reference value of A.
+     * @param time the absolute time to add
+     * @return the absolute time plus this duration
+     */
+    public final Time add(final Time time)
+    {
+        return time.add(this).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
      * Calculate the division of Duration and Duration, which results in a Dimensionless quantity.
      * @param v quantity
      * @return quantity as a division of Duration and Duration

@@ -139,6 +139,18 @@ public class Angle extends Quantity<Angle, Angle.Unit>
     }
 
     /**
+     * Add an (absolute) direction to this angle, and return a direction. The unit of the return value will be the unit of this
+     * angle, and the reference of the return value will be the reference belonging to the given direction.
+     * <code>R.add(A)</code> = unit of R and reference value of A.
+     * @param direction the absolute direction to add
+     * @return the absolute direction plus this angle
+     */
+    public final Direction add(final Direction direction)
+    {
+        return direction.add(this).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
      * Calculate the division of Angle and Angle, which results in a Dimensionless scalar.
      * @param v scalar
      * @return scalar as a division of Angle and Angle

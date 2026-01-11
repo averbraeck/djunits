@@ -149,6 +149,18 @@ public class Length extends Quantity<Length, Length.Unit>
     }
 
     /**
+     * Add an (absolute) position to this length, and return a position. The unit of the return value will be the unit of this
+     * length, and the reference of the return value will be the reference belonging to the given position.
+     * <code>R.add(A)</code> = unit of R and reference value of A.
+     * @param position the absolute position to add
+     * @return the absolute position plus this length
+     */
+    public final Position add(final Position position)
+    {
+        return position.add(this).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
      * Calculate the division of Length and Length, which results in a Dimensionless quantity.
      * @param v quantity
      * @return quantity as a division of Length and Length

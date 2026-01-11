@@ -122,6 +122,18 @@ public class TemperatureDifference extends Quantity<TemperatureDifference, Tempe
     }
 
     /**
+     * Add an absolute temperature to this temperature difference, and return a new absolute temperature. The unit of the return
+     * value will be the unit of this temperature difference, and the reference point of the return value will be the reference
+     * point of the given temperature. <code>R.add(A)</code> = unit of R and reference value of A.
+     * @param absoluteTemperature the absolute temperature to add
+     * @return the absolute temperature plus this temperature difference
+     */
+    public final Temperature add(final Temperature absoluteTemperature)
+    {
+        return absoluteTemperature.add(this).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
      * Calculate the division of TemperatureDifference and TemperatureDifference, which results in a Dimensionless quantity.
      * @param v quantity
      * @return quantity as a division of TemperatureDifference and Temperature
@@ -131,16 +143,4 @@ public class TemperatureDifference extends Quantity<TemperatureDifference, Tempe
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
 
-    /**
-     * Add an absolute temperature to this temperature (difference), and return an absolute temperature. The unit of the return
-     * value will be the unit of this (relative) temperature.
-     * @param absoluteTemperature the absolute temperature to add
-     * @return the absolute temperature plus this temperature difference
-     */
-    public final Temperature add(final Temperature absoluteTemperature)
-    {
-        var abstemp = Temperature.ofSi(absoluteTemperature.si() + si());
-        abstemp.setDisplayUnit(getDisplayUnit());
-        return abstemp;
-    }
 }
