@@ -435,6 +435,29 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
     /**********************************************************************************/
 
     /**
+     * Return the quantity relative to another reference point.
+     * @param otherReference the reference point to which it has to be defined relatively.
+     * @return the absolute quantity relative to the other reference point
+     * @throws IllegalArgumentException when there is no translation from the current reference point to the provided reference
+     */
+    @SuppressWarnings({"unchecked", "checkstyle:needbraces"})
+    public A relativeTo(final R otherReference)
+    {
+        if (getReference().equals(otherReference))
+            return (A) this;
+        var offsetReference = getReference().getOffsetReference();
+        Throw.when(offsetReference == null, IllegalArgumentException.class,
+                "Reference %s cannot be transformed to a base reference for a transformation", getReference().getId());
+        if (offsetReference.equals(otherReference))
+            return instantiate(getQuantity().add(getReference().getOffset()), otherReference);
+        if (otherReference.getOffsetReference().equals(offsetReference))
+            return instantiate(getQuantity().add(getReference().getOffset()).subtract(otherReference.getOffset()),
+                    otherReference);
+        throw new IllegalArgumentException(String.format("Reference %s cannot be transformed to reference %s",
+                getReference().getId(), otherReference.getId()));
+    }
+
+    /**
      * Format a string according to the current locale and the standard (minimized) format, such as "3.14" or "300.0".
      * @param d the number to format
      * @return the formatted number using the current Locale
