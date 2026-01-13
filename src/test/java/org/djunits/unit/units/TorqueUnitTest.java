@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.TorqueUnit;
 import org.djunits.quantity.Torque;
 import org.djunits.unit.Units;
 import org.djunits.unit.system.UnitSystem;
