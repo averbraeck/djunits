@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class PressureUnitTest extends AbstractLinearUnitTest<Pressure.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
