@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.EquivalentDoseUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.EquivalentDose;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDoseUnit>
+public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDose.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDos
     @Test
     public final void conversions()
     {
-        assertEquals("m2/s2", EquivalentDoseUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(EquivalentDoseUnit.SIEVERT, 1, 0.000001, "sievert", "Sv");
+        assertEquals("m2/s2", EquivalentDose.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(EquivalentDose.Unit.Sv, 1, 0.000001, "sievert", "Sv");
     }
 
     /**
@@ -44,10 +45,10 @@ public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDos
     @Test
     public final void createEquivalentDoseUnit()
     {
-        EquivalentDoseUnit myUnit = EquivalentDoseUnit.SI.deriveLinear(1.23, "my", "myEquivalentDose", UnitSystem.OTHER);
+        EquivalentDose.Unit myUnit = EquivalentDose.Unit.SI.deriveUnit("my", "myEquivalentDose", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new EquivalentDoseUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myEquivalentDose", "my");
-        EquivalentDoseUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }

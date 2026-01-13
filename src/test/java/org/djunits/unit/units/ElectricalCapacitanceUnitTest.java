@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.ElectricalCapacitanceUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.ElectricalCapacitance;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class ElectricalCapacitanceUnitTest extends AbstractLinearUnitTest<ElectricalCapacitanceUnit>
+public class ElectricalCapacitanceUnitTest extends AbstractLinearUnitTest<ElectricalCapacitance.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,9 +35,9 @@ public class ElectricalCapacitanceUnitTest extends AbstractLinearUnitTest<Electr
     @Test
     public final void conversions()
     {
-        assertEquals("s4A2/kgm2", ElectricalCapacitanceUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(ElectricalCapacitanceUnit.FARAD, 1, 0.000001, "farad", "F");
-        checkUnitRatioNameAndAbbreviation(ElectricalCapacitanceUnit.MICROFARAD, 1E-6, 1E-9, "microfarad", "uF");
+        assertEquals("s4A2/kgm2", ElectricalCapacitance.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(ElectricalCapacitance.Unit.F, 1, 0.000001, "farad", "F");
+        checkUnitRatioNameAndAbbreviation(ElectricalCapacitance.Unit.muF, 1E-6, 1E-9, "microfarad", "uF");
     }
 
     /**
@@ -45,11 +46,11 @@ public class ElectricalCapacitanceUnitTest extends AbstractLinearUnitTest<Electr
     @Test
     public final void createElectricalCapacitanceUnit()
     {
-        ElectricalCapacitanceUnit myUnit =
-                ElectricalCapacitanceUnit.SI.deriveLinear(1.23, "my", "myElectricalCapacitance", UnitSystem.OTHER);
+        ElectricalCapacitance.Unit myUnit =
+                ElectricalCapacitance.Unit.SI.deriveUnit("my", "myElectricalCapacitance", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new ElectricalCapacitanceUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myElectricalCapacitance", "my");
-        ElectricalCapacitanceUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }

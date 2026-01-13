@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.FlowMassUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.FlowMass;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class FlowMassUnitTest extends AbstractLinearUnitTest<FlowMassUnit>
+public class FlowMassUnitTest extends AbstractLinearUnitTest<FlowMass.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,14 +35,14 @@ public class FlowMassUnitTest extends AbstractLinearUnitTest<FlowMassUnit>
     @Test
     public final void conversions()
     {
-        assertEquals("kg/s", FlowMassUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(FlowMassUnit.KILOGRAM_PER_SECOND, 1, 0.000001, "kilogram per second", "kg/s");
-        checkUnitRatioNameAndAbbreviation(FlowMassUnit.POUND_PER_SECOND, 0.453592, 0.0001, "pound per second", "lb/s");
+        assertEquals("kg/s", FlowMass.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(FlowMass.Unit.kg_s, 1, 0.000001, "kilogram per second", "kg/s");
+        checkUnitRatioNameAndAbbreviation(FlowMass.Unit.lb_s, 0.453592, 0.0001, "pound per second", "lb/s");
         // Check two conversions between non-standard units
-        assertEquals(2.205, getMultiplicationFactorTo(FlowMassUnit.KILOGRAM_PER_SECOND, FlowMassUnit.POUND_PER_SECOND), 0.0005,
+        assertEquals(2.205, getMultiplicationFactorTo(FlowMass.Unit.kg_s, FlowMass.Unit.lb_s), 0.0005,
                 "one KILOGRAM PER SECOND is about 2.205 POUND PER SECOND");
-        assertEquals(0.453592, getMultiplicationFactorTo(FlowMassUnit.POUND_PER_SECOND, FlowMassUnit.KILOGRAM_PER_SECOND),
-                0.0001, "one POUND PER SECOND is about 0.453592 KILOGRAM PER SECOND");
+        assertEquals(0.453592, getMultiplicationFactorTo(FlowMass.Unit.lb_s, FlowMass.Unit.kg_s), 0.0001,
+                "one POUND PER SECOND is about 0.453592 KILOGRAM PER SECOND");
     }
 
     /**
@@ -50,10 +51,10 @@ public class FlowMassUnitTest extends AbstractLinearUnitTest<FlowMassUnit>
     @Test
     public final void createFlowMassUnit()
     {
-        FlowMassUnit myFMU = FlowMassUnit.KILOGRAM_PER_SECOND.deriveLinear(1234, "wdpu", "WaterDropsPerHour", UnitSystem.OTHER);
+        FlowMass.Unit myFMU = FlowMass.Unit.kg_s.deriveUnit("wdpu", "WaterDropsPerHour", 1234.0, UnitSystem.OTHER);
         assertTrue(null != myFMU, "Can create a new FlowMassUnit");
         checkUnitRatioNameAndAbbreviation(myFMU, 1234, 0.0001, "WaterDropsPerHour", "wdpu");
-        FlowMassUnit.BASE.unregister(myFMU);
+        Units.unregister(myFMU);
     }
 
 }

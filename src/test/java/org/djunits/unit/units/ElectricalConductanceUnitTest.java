@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.ElectricalConductanceUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.ElectricalConductance;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class ElectricalConductanceUnitTest extends AbstractLinearUnitTest<ElectricalConductanceUnit>
+public class ElectricalConductanceUnitTest extends AbstractLinearUnitTest<ElectricalConductance.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class ElectricalConductanceUnitTest extends AbstractLinearUnitTest<Electr
     @Test
     public final void conversions()
     {
-        assertEquals("s3A2/kgm2", ElectricalConductanceUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(ElectricalConductanceUnit.SIEMENS, 1, 0.000001, "siemens", "S");
+        assertEquals("s3A2/kgm2", ElectricalConductance.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(ElectricalConductance.Unit.S, 1, 0.000001, "siemens", "S");
     }
 
     /**
@@ -44,11 +45,11 @@ public class ElectricalConductanceUnitTest extends AbstractLinearUnitTest<Electr
     @Test
     public final void createElectricalConductanceUnit()
     {
-        ElectricalConductanceUnit myUnit =
-                ElectricalConductanceUnit.SI.deriveLinear(1.23, "my", "myElectricalConductance", UnitSystem.OTHER);
+        ElectricalConductance.Unit myUnit =
+                ElectricalConductance.Unit.SI.deriveUnit("my", "myElectricalConductance", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new ElectricalConductanceUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myElectricalConductance", "my");
-        ElectricalConductanceUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }
