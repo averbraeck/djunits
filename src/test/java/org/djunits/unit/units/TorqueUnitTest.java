@@ -26,7 +26,7 @@ public class TorqueUnitTest extends AbstractLinearUnitTest<Torque.Unit>
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
