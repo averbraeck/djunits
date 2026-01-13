@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.IlluminanceUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.Illuminance;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class IlluminanceUnitTest extends AbstractLinearUnitTest<IlluminanceUnit>
+public class IlluminanceUnitTest extends AbstractLinearUnitTest<Illuminance.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class IlluminanceUnitTest extends AbstractLinearUnitTest<IlluminanceUnit>
     @Test
     public final void conversions()
     {
-        assertEquals("srcd/m2", IlluminanceUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(IlluminanceUnit.LUX, 1, 0.000001, "lux", "lx");
+        assertEquals("srcd/m2", Illuminance.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(Illuminance.Unit.lx, 1, 0.000001, "lux", "lx");
     }
 
     /**
@@ -44,10 +45,10 @@ public class IlluminanceUnitTest extends AbstractLinearUnitTest<IlluminanceUnit>
     @Test
     public final void createIlluminanceUnit()
     {
-        IlluminanceUnit myUnit = IlluminanceUnit.SI.deriveLinear(1.23, "my", "myIlluminance", UnitSystem.OTHER);
+        Illuminance.Unit myUnit = Illuminance.Unit.SI.deriveUnit("my", "myIlluminance", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new IlluminanceUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myIlluminance", "my");
-        IlluminanceUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }

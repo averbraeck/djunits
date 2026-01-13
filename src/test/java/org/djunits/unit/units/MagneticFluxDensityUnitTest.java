@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.MagneticFluxDensityUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.MagneticFluxDensity;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class MagneticFluxDensityUnitTest extends AbstractLinearUnitTest<MagneticFluxDensityUnit>
+public class MagneticFluxDensityUnitTest extends AbstractLinearUnitTest<MagneticFluxDensity.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class MagneticFluxDensityUnitTest extends AbstractLinearUnitTest<Magnetic
     @Test
     public final void conversions()
     {
-        assertEquals("kg/s2A", MagneticFluxDensityUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(MagneticFluxDensityUnit.TESLA, 1, 0.000001, "tesla", "T");
+        assertEquals("kg/s2A", MagneticFluxDensity.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(MagneticFluxDensity.Unit.T, 1, 0.000001, "tesla", "T");
     }
 
     /**
@@ -44,11 +45,11 @@ public class MagneticFluxDensityUnitTest extends AbstractLinearUnitTest<Magnetic
     @Test
     public final void createMagneticFluxDensityUnit()
     {
-        MagneticFluxDensityUnit myUnit =
-                MagneticFluxDensityUnit.SI.deriveLinear(1.23, "my", "myMagneticFluxDensity", UnitSystem.OTHER);
+        MagneticFluxDensity.Unit myUnit =
+                MagneticFluxDensity.Unit.SI.deriveUnit("my", "myMagneticFluxDensity", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new MagneticFluxDensityUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myMagneticFluxDensity", "my");
-        MagneticFluxDensityUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }

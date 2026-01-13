@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.LuminousIntensityUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.LuminousIntensity;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class LuminousIntensityUnitTest extends AbstractLinearUnitTest<LuminousIntensityUnit>
+public class LuminousIntensityUnitTest extends AbstractLinearUnitTest<LuminousIntensity.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class LuminousIntensityUnitTest extends AbstractLinearUnitTest<LuminousIn
     @Test
     public final void conversions()
     {
-        assertEquals("cd", LuminousIntensityUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(LuminousIntensityUnit.CANDELA, 1, 0.000001, "candela", "cd");
+        assertEquals("cd", LuminousIntensity.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(LuminousIntensity.Unit.cd, 1, 0.000001, "candela", "cd");
     }
 
     /**
@@ -44,11 +45,11 @@ public class LuminousIntensityUnitTest extends AbstractLinearUnitTest<LuminousIn
     @Test
     public final void createLuminousIntensityUnit()
     {
-        LuminousIntensityUnit myUnit =
-                LuminousIntensityUnit.SI.deriveLinear(1.23, "my", "myLuminousIntensity", UnitSystem.OTHER);
+        LuminousIntensity.Unit myUnit =
+                LuminousIntensity.Unit.SI.deriveUnit("my", "myLuminousIntensity", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new LuminousIntensityUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myLuminousIntensity", "my");
-        LuminousIntensityUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }
