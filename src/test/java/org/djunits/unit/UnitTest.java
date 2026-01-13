@@ -184,7 +184,7 @@ public final class UnitTest
 
         // toString is display abbreviation
         assertEquals("ft", foot1.toString());
-        assertEquals("\u212B", Length.Unit.A.toString());
+        assertEquals("\u00C5", Length.Unit.A.toString());
     }
 
     /*-
