@@ -76,6 +76,21 @@ public final class Units
     }
 
     /**
+     * Unregister a unit, e.g. in a unit test. No exception will be thrown when the unit was not in the registration map.
+     * @param unit the unit to unregister
+     * @throws NullPointerException when unit is null
+     */
+    public static void unregister(final UnitInterface<?, ?> unit)
+    {
+        Throw.whenNull(unit, "unit");
+        var subMap = UNIT_MAP.get(quantityName(unit.getClass()));
+        if (subMap != null)
+        {
+            subMap.remove(unit.getStoredTextualAbbreviation());
+        }
+    }
+
+    /**
      * Look up a unit in the registry, based on its textual abbreviation.
      * @param unitClass the unit class for which the abbreviation has to be looked up
      * @param abbreviation the abbreviation to look up in the unit registry
