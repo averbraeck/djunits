@@ -260,7 +260,7 @@ public class Mass extends Quantity<Mass, Mass.Unit>
                 kg.deriveUnit("long tn", "long ton", CONST_TON_LONG, UnitSystem.IMPERIAL);
 
         /** short ton = 2000 lb. */
-        public static final Mass.Unit sn_tn =
+        public static final Mass.Unit sh_tn =
                 kg.deriveUnit("sh tn", "short ton", CONST_TON_SHORT, UnitSystem.US_CUSTOMARY);
 
         /** metric ton = 1000 kg. */
