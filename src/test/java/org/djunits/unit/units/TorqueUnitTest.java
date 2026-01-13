@@ -1,4 +1,4 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Locale;
 
 import org.djunits.old.unit.TorqueUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.Torque;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,7 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class TorqueUnitTest extends AbstractLinearUnitTest<TorqueUnit>
+public class TorqueUnitTest extends AbstractLinearUnitTest<Torque.Unit>
 {
     /**
      * Set the locale to "en" so we know what texts should be retrieved from the resources.
@@ -34,15 +36,15 @@ public class TorqueUnitTest extends AbstractLinearUnitTest<TorqueUnit>
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s2", TorqueUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(TorqueUnit.NEWTON_METER, 1, 0.00000001, "Newton meter", "N.m");
-        checkUnitRatioNameAndAbbreviation(TorqueUnit.METER_KILOGRAM_FORCE, 9.80665, 0.000005, "meter kilogram-force", "m.kgf");
-        checkUnitRatioNameAndAbbreviation(TorqueUnit.POUND_FOOT, 1.35581794833, 0.0000001, "pound-foot", "lbf.ft");
+        assertEquals("kgm2/s2", Torque.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(Torque.Unit.Nm, 1, 0.00000001, "newton meter", "Nm");
+        checkUnitRatioNameAndAbbreviation(Torque.Unit.m_kgf, 9.80665, 0.000005, "meter kilogram-force", "m.kgf");
+        checkUnitRatioNameAndAbbreviation(Torque.Unit.lbf_ft, 1.35581794833, 0.0000001, "pound-force foot", "lbf.ft");
         // Check two conversions between non-standard units
-        assertEquals(12, getMultiplicationFactorTo(TorqueUnit.POUND_FOOT, TorqueUnit.POUND_INCH), 0.0001,
+        assertEquals(12, getMultiplicationFactorTo(Torque.Unit.lbf_ft, Torque.Unit.lbf_in), 0.0001,
                 "one FOOT POUND FORCE is 12 INCH_POUND_FORCE");
         // Check conversion factor to standard unit for all remaining acceleration units
-        checkUnitRatioNameAndAbbreviation(TorqueUnit.POUND_INCH, 0.112984829, 0.000000001, "pound-inch", "lbf.in");
+        checkUnitRatioNameAndAbbreviation(Torque.Unit.lbf_in, 0.112984829, 0.000000001, "pound-force inch", "lbf.in");
     }
 
     /**
@@ -51,10 +53,10 @@ public class TorqueUnitTest extends AbstractLinearUnitTest<TorqueUnit>
     @Test
     public final void createTorqueUnit()
     {
-        TorqueUnit myUnit = TorqueUnit.SI.deriveLinear(1.23, "my", "myTorque", UnitSystem.OTHER);
+        Torque.Unit myUnit = Torque.Unit.SI.deriveUnit("my", "myTorque", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new TorqueUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myTorque", "my");
-        TorqueUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }
