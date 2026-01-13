@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.CatalyticActivityUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.CatalyticActivity;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticActivityUnit>
+public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticActivity.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticA
     @Test
     public final void conversions()
     {
-        assertEquals("mol/s", CatalyticActivityUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(CatalyticActivityUnit.KATAL, 1, 0.000001, "katal", "kat");
+        assertEquals("mol/s", CatalyticActivity.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(CatalyticActivity.Unit.kat, 1, 0.000001, "katal", "kat");
     }
 
     /**
@@ -44,11 +45,11 @@ public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticA
     @Test
     public final void createCatalyticActivityUnit()
     {
-        CatalyticActivityUnit myUnit =
-                CatalyticActivityUnit.SI.deriveLinear(1.23, "my", "myCatalyticActivity", UnitSystem.OTHER);
+        CatalyticActivity.Unit myUnit =
+                CatalyticActivity.Unit.SI.deriveUnit("my", "myCatalyticActivity", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new CatalyticActivityUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myCatalyticActivity", "my");
-        CatalyticActivityUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }

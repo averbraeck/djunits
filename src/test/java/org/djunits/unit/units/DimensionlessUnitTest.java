@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.DimensionlessUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.unit.Unitless;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class DimensionlessUnitTest extends AbstractLinearUnitTest<DimensionlessUnit>
+public class DimensionlessUnitTest extends AbstractLinearUnitTest<Unitless>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,20 +35,20 @@ public class DimensionlessUnitTest extends AbstractLinearUnitTest<DimensionlessU
     @Test
     public final void conversions()
     {
-        assertEquals("", DimensionlessUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(DimensionlessUnit.SI, 1, 0.000001, "", "");
+        assertEquals("", Unitless.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(Unitless.BASE, 1, 0.000001, " ", " ");
     }
 
     /**
      * Verify that we can create our own Dimensionless unit.
      */
     @Test
-    public final void createDimensionlessUnit()
+    public final void createUnitless()
     {
-        DimensionlessUnit myUnit = DimensionlessUnit.SI.deriveLinear(1.23, "my", "myDimensionless", UnitSystem.OTHER);
-        assertTrue(null != myUnit, "Can create a new DimensionlessUnit");
+        Unitless myUnit = Unitless.BASE.deriveUnit("my", "myDimensionless", 1.23, UnitSystem.OTHER);
+        assertTrue(null != myUnit, "Can create a new Unitless");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myDimensionless", "my");
-        DimensionlessUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }

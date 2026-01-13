@@ -1,12 +1,13 @@
-package org.djunits.old.unit;
+package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.old.unit.AmountOfSubstanceUnit;
-import org.djunits.old.unit.unitsystem.UnitSystem;
+import org.djunits.quantity.AmountOfSubstance;
+import org.djunits.unit.Units;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.Test;
  * </p>
  * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
  */
-public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSubstanceUnit>
+public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSubstance.Unit>
 {
     /**
-     * Set the locale to "en" so we know what texts should be retrieved from the resources.
+     * Set the locale to "US" so we know what texts should be retrieved from the resources.
      */
     @BeforeEach
     public final void setup()
     {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -34,8 +35,8 @@ public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSu
     @Test
     public final void conversions()
     {
-        assertEquals("mol", AmountOfSubstanceUnit.SI.getQuantity().getSiDimensions().toString(true, false));
-        checkUnitRatioNameAndAbbreviation(AmountOfSubstanceUnit.MOLE, 1, 0.000001, "mole", "mol");
+        assertEquals("mol", AmountOfSubstance.Unit.SI_UNIT.toString(true, false));
+        checkUnitRatioNameAndAbbreviation(AmountOfSubstance.Unit.mol, 1, 0.000001, "mole", "mol");
     }
 
     /**
@@ -44,11 +45,11 @@ public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSu
     @Test
     public final void createAmountOfSubstanceUnit()
     {
-        AmountOfSubstanceUnit myUnit =
-                AmountOfSubstanceUnit.SI.deriveLinear(1.23, "my", "myAmountOfSubstance", UnitSystem.OTHER);
+        AmountOfSubstance.Unit myUnit =
+                AmountOfSubstance.Unit.SI.deriveUnit("my", "myAmountOfSubstance", 1.23, UnitSystem.OTHER);
         assertTrue(null != myUnit, "Can create a new AmountOfSubstanceUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myAmountOfSubstance", "my");
-        AmountOfSubstanceUnit.BASE.unregister(myUnit);
+        Units.unregister(myUnit);
     }
 
 }
