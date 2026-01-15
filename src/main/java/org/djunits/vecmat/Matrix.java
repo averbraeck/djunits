@@ -1,10 +1,13 @@
 package org.djunits.vecmat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.djunits.formatter.Format;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.operations.VectorMatrixOps;
 import org.djutils.exceptions.Throw;
 
@@ -105,6 +108,113 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     public Q value(final int row, final int col)
     {
         return this.displayUnit.ofSi(si(row, col)).setDisplayUnit(this.displayUnit);
+    }
+
+    /**
+     * Return the vector as a 2D-array of scalars.
+     * @return the vector as a 2D-array of scalars
+     */
+    @SuppressWarnings("unchecked")
+    public Q[][] getScalars()
+    {
+        List<Q[]> result = new ArrayList<>();
+        for (int i = 1; i <= rows(); i++)
+        {
+            List<Q> row = new ArrayList<>();
+            for (int j = 1; j <= cols(); j++)
+            {
+                row.add(value(i, j));
+            }
+            result.add((Q[]) row.toArray());
+        }
+        return (Q[][]) result.toArray();
+    }
+
+    /**
+     * Retrieve a row from the matrix as a vector.
+     * @param row row of the values to retrieve
+     * @return the row as a Vector
+     * @throws IndexOutOfBoundsException in case row is out of bounds
+     */
+    public VectorN.Row<Q, U> getRow(final int row) throws IndexOutOfBoundsException
+    {
+        // TODO
+        return null;
+    }
+
+    /**
+     * Retrieve a column from the matrix as a vector.
+     * @param column column of the values to retrieve
+     * @return the column as a Vector
+     * @throws IndexOutOfBoundsException in case column is out of bounds
+     */
+    public VectorN.Col<Q, U> getColumn(final int column) throws IndexOutOfBoundsException
+    {
+        // TODO
+        return null;
+    }
+
+    /**
+     * Retrieve the main diagonal of the matrix as a column vector.
+     * @return the main diagonal as a Vector
+     * @throws IllegalStateException in case the matrix is not square
+     */
+    public VectorN.Col<Q, U> getDiagonal() throws IllegalStateException
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
+        // TODO
+        return null;
+    }
+
+    /**
+     * Retrieve a row from the matrix as an array of scalars.
+     * @param row row of the values to retrieve
+     * @return the row as a Scalar array
+     * @throws IndexOutOfBoundsException in case row is out of bounds
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getRowScalars(final int row) throws IndexOutOfBoundsException
+    {
+        List<Q> rowScalars = new ArrayList<>();
+        for (int j = 1; j <= cols(); j++)
+        {
+            rowScalars.add(value(row, j));
+        }
+        return (Q[]) rowScalars.toArray();
+    }
+
+    /**
+     * Retrieve a column from the matrix as an array of scalars.
+     * @param column column of the values to retrieve
+     * @return the column as a Scalar array
+     * @throws IndexOutOfBoundsException in case column is out of bounds
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getColumnScalars(final int column) throws IndexOutOfBoundsException
+    {
+        List<Q> columnScalars = new ArrayList<>();
+        for (int i = 1; i <= cols(); i++)
+        {
+            columnScalars.add(value(i, column));
+        }
+        return (Q[]) columnScalars.toArray();
+    }
+
+    /**
+     * Retrieve the main diagonal of the matrix as an array of scalars.
+     * @return the main diagonal as a Scalar array
+     * @throws IllegalStateException in case the matrix is not square
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getDiagonalScalars() throws IllegalStateException
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
+        List<Q> diagScalars = new ArrayList<>();
+        for (int i = 1; i <= cols(); i++)
+        {
+            diagScalars.add(value(i, i));
+        }
+        return (Q[]) diagScalars.toArray();
     }
 
     @Override
