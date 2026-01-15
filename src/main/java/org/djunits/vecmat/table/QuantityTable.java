@@ -5,7 +5,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.DataGridMatrix;
 import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.dn.MatrixNxN;
@@ -25,14 +25,11 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Matrix<Q, U, QuantityTable<Q, U>>
-        implements Hadamard<QuantityTable<?, ?>>
+public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
+        extends DataGridMatrix<Q, U, QuantityTable<Q, U>> implements Hadamard<QuantityTable<?, ?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
-
-    /** The data of the matrix, in SI unit. */
-    private final DataGrid<?> dataSi;
 
     /**
      * Create a new NxM Matrix with a unit, based on a DataGrid storage object that contains SI data.
@@ -41,27 +38,13 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
      */
     public QuantityTable(final DataGrid<?> dataSi, final U displayUnit)
     {
-        super(displayUnit, dataSi.rows(), dataSi.cols());
-        this.dataSi = dataSi;
+        super(dataSi, displayUnit);
     }
 
     @Override
     public QuantityTable<Q, U> instantiate(final double[] siNew)
     {
         return new QuantityTable<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit());
-    }
-
-    @Override
-    public double[] si()
-    {
-        return this.dataSi.getDataArray();
-    }
-
-    @Override
-    public double si(final int row, final int col)
-    {
-        // internal storage is 0-based, user access is 1-based
-        return this.dataSi.get(row - 1, col - 1);
     }
 
     @Override

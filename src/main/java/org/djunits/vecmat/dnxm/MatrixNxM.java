@@ -6,7 +6,7 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.DataGridMatrix;
 import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d2.Vector2;
 import org.djunits.vecmat.d3.Matrix3x3;
@@ -27,14 +27,11 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Matrix<Q, U, MatrixNxM<Q, U>>
+public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends DataGridMatrix<Q, U, MatrixNxM<Q, U>>
         implements Hadamard<MatrixNxM<?, ?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
-
-    /** The data of the matrix, in SI unit. */
-    private final DataGrid<?> dataSi;
 
     /**
      * Create a new NxM Matrix with a unit, based on a DataGrid storage object that contains SI data.
@@ -44,9 +41,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public MatrixNxM(final DataGrid<?> dataSi, final U displayUnit)
     {
-        super(displayUnit, dataSi.rows(), dataSi.cols());
-        Throw.whenNull(dataSi, "dataSi");
-        this.dataSi = dataSi;
+        super(dataSi, displayUnit);
     }
 
     /**
@@ -112,19 +107,6 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxM<Q, U> instantiate(final double[] siNew)
     {
         return new MatrixNxM<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit());
-    }
-
-    @Override
-    public double[] si()
-    {
-        return this.dataSi.getDataArray();
-    }
-
-    @Override
-    public double si(final int row, final int col)
-    {
-        // internal storage is 0-based, user access is 1-based
-        return this.dataSi.get(row - 1, col - 1);
     }
 
     @Override
