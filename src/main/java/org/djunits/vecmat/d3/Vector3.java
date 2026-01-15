@@ -1,5 +1,8 @@
 package org.djunits.vecmat.d3;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
@@ -12,6 +15,7 @@ import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.Normed;
 import org.djunits.vecmat.operations.VectorMatrixOps;
+import org.djunits.vecmat.operations.VectorOps;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
@@ -29,7 +33,7 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Col or Row)
  */
 public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector3<Q, U, V>>
-        implements Normed<Q, U>, VectorMatrixOps<Q, U, V>
+        implements Normed<Q, U>, VectorMatrixOps<Q, U, V>, VectorOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -77,6 +81,45 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         Throw.when(siNew.length != 3, IllegalArgumentException.class, "Size of new data for Vector3 != 2, but %d",
                 siNew.length);
         return instantiate(siNew[0], siNew[1], siNew[2]);
+    }
+
+    @Override
+    public int size()
+    {
+        return 3;
+    }
+
+    @Override
+    public Q get(final int index) throws IndexOutOfBoundsException
+    {
+        return switch (index)
+        {
+            case 1 -> x();
+            case 2 -> y();
+            case 3 -> z();
+            default -> throw new IndexOutOfBoundsException("Cannot retrieve Vector3[" + index + "]");
+        };
+    }
+
+    @Override
+    public Iterator<Q> iterator()
+    {
+        final double[] si = new double[] {this.xSi, this.ySi, this.zSi};
+        final U frozenDisplayUnit = getDisplayUnit(); // capture once
+        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
+    }
+
+    @Override
+    public Q[] getScalarArray()
+    {
+        final Q qx = x();
+        final Class<?> qClass = qx.getClass();
+        @SuppressWarnings("unchecked")
+        final Q[] out = (Q[]) Array.newInstance(qClass, 3);
+        out[0] = qx;
+        out[1] = y();
+        out[2] = z();
+        return out;
     }
 
     /**

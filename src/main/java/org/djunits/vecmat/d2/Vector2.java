@@ -1,5 +1,8 @@
 package org.djunits.vecmat.d2;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
@@ -10,6 +13,7 @@ import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.Normed;
 import org.djunits.vecmat.operations.VectorMatrixOps;
+import org.djunits.vecmat.operations.VectorOps;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
@@ -26,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Row or Col)
  */
 public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2<Q, U, V>>
-        implements Normed<Q, U>, VectorMatrixOps<Q, U, V>
+        implements Normed<Q, U>, VectorMatrixOps<Q, U, V>, VectorOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -61,6 +65,43 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @return a new column or row vector with adapted x and y values
      */
     protected abstract V instantiate(double xSiNew, double ySiNew);
+
+    @Override
+    public int size()
+    {
+        return 2;
+    }
+
+    @Override
+    public Q get(final int index) throws IndexOutOfBoundsException
+    {
+        return switch (index)
+        {
+            case 1 -> x();
+            case 2 -> y();
+            default -> throw new IndexOutOfBoundsException("Cannot retrieve Vector3[" + index + "]");
+        };
+    }
+
+    @Override
+    public Iterator<Q> iterator()
+    {
+        final double[] si = new double[] {this.xSi, this.ySi};
+        final U frozenDisplayUnit = getDisplayUnit(); // capture once
+        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
+    }
+
+    @Override
+    public Q[] getScalarArray()
+    {
+        final Q qx = x();
+        final Class<?> qClass = qx.getClass();
+        @SuppressWarnings("unchecked")
+        final Q[] out = (Q[]) Array.newInstance(qClass, 2);
+        out[0] = qx;
+        out[1] = y();
+        return out;
+    }
 
     @Override
     public V instantiate(final double[] siNew)

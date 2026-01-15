@@ -1,12 +1,17 @@
 package org.djunits.vecmat.dn;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Iterator;
+
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.DataGridMatrix;
 import org.djunits.vecmat.operations.Hadamard;
+import org.djunits.vecmat.operations.VectorOps;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djunits.vecmat.storage.DataGrid;
 import org.djutils.exceptions.Throw;
@@ -23,14 +28,10 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Col or Row)
  */
 public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends VectorN<Q, U, V>>
-        extends Matrix<Q, U, VectorN<Q, U, ?>>
+        extends DataGridMatrix<Q, U, VectorN<Q, U, ?>> implements VectorOps<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
-
-    /** The data of the vector, in SI unit. */
-    @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected final DataGrid<?> dataSi;
 
     /**
      * Create a new VectorN with a unit, based on a DataGrid storage object that contains SI data.
@@ -40,22 +41,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      */
     protected VectorN(final DataGrid<?> dataSi, final U displayUnit)
     {
-        super(displayUnit, dataSi.rows(), dataSi.cols());
-        Throw.whenNull(dataSi, "dataSi");
-        this.dataSi = dataSi;
-    }
-
-    @Override
-    public double[] si()
-    {
-        return this.dataSi.getDataArray();
-    }
-
-    @Override
-    public double si(final int row, final int col)
-    {
-        // internal storage is 0-based, user access is 1-based
-        return this.dataSi.get(row + 1, col + 1);
+        super(dataSi, displayUnit);
     }
 
     /**
@@ -63,6 +49,31 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @return whether this vector is a column vector
      */
     public abstract boolean isColumnVector();
+
+    @Override
+    public Iterator<Q> iterator()
+    {
+        final double[] si = this.dataSi.getDataArray(); // should be immutable, otherwise make defensive copy
+        final U frozenDisplayUnit = getDisplayUnit(); // capture once
+        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
+    }
+
+    @Override
+    public Q[] getScalarArray()
+    {
+        final double[] si = this.dataSi.getDataArray(); // should be immutable, otherwise make defensive copy
+        final U frozenDisplayUnit = getDisplayUnit(); // capture once
+        final Q first = frozenDisplayUnit.ofSi(si[0]).setDisplayUnit(frozenDisplayUnit);
+        final Class<?> qClass = first.getClass();
+        @SuppressWarnings("unchecked")
+        final Q[] out = (Q[]) Array.newInstance(qClass, si.length);
+        out[0] = first;
+        for (int i = 1; i < si.length; i++)
+        {
+            out[i] = frozenDisplayUnit.ofSi(si[i]).setDisplayUnit(frozenDisplayUnit);
+        }
+        return out;
+    }
 
     @Override
     public String toString(final U withUnit)
@@ -111,7 +122,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        protected Col(final DataGrid<?> dataSi, final U displayUnit)
+        public Col(final DataGrid<?> dataSi, final U displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.cols() != 1, IllegalArgumentException.class,
@@ -128,6 +139,18 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public boolean isColumnVector()
         {
             return true;
+        }
+
+        @Override
+        public int size()
+        {
+            return this.dataSi.rows();
+        }
+
+        @Override
+        public Q get(final int index) throws IndexOutOfBoundsException
+        {
+            return getDisplayUnit().ofSi(this.dataSi.get(0, index - 1));
         }
 
         @Override
@@ -183,7 +206,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        protected Row(final DataGrid<?> dataSi, final U displayUnit)
+        public Row(final DataGrid<?> dataSi, final U displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.rows() != 1, IllegalArgumentException.class, "Row vector initialized with more than one row");
@@ -199,6 +222,18 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public VectorN.Row<Q, U> instantiate(final double[] data)
         {
             return new VectorN.Row<>(this.dataSi.instantiate(data), getDisplayUnit());
+        }
+
+        @Override
+        public int size()
+        {
+            return this.dataSi.cols();
+        }
+
+        @Override
+        public Q get(final int index) throws IndexOutOfBoundsException
+        {
+            return getDisplayUnit().ofSi(this.dataSi.get(index - 1, 0));
         }
 
         @Override
