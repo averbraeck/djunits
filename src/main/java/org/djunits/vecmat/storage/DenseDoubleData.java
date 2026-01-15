@@ -3,6 +3,8 @@ package org.djunits.vecmat.storage;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.UnitInterface;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -56,13 +58,38 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         this.rows = data.length;
         this.cols = data[0].length;
-        for (int r = 1; r < this.rows; r++)
-            Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
-                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
         this.data = new double[this.rows * this.cols];
         for (int r = 0; r < this.rows; r++)
+        {
+            Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
             for (int c = 0; c < this.cols; c++)
                 this.data[r * this.cols + c] = data[r][c];
+        }
+    }
+
+    /**
+     * Instantiate a data object with a Q[rows][cols]. A safe copy of the data is stored.
+     * @param data the data in row-major format
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> DenseDoubleData(final Q[][] data)
+    {
+        Throw.whenNull(data, "dataSi");
+        Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        this.rows = data.length;
+        this.cols = data[0].length;
+        this.data = new double[this.rows * this.cols];
+        for (int r = 0; r < this.rows; r++)
+        {
+            Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
+            for (int c = 0; c < this.cols; c++)
+                this.data[r * this.cols + c] = data[r][c].si();
+        }
     }
 
     @Override
