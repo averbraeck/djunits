@@ -50,6 +50,12 @@ public interface DataGrid<D extends DataGrid<D>>
     D copy();
     
     /**
+     * Compute and return the number of non-zero cells in this indexed value.
+     * @return the number of non-zero cells
+     */
+    int cardinality();
+
+    /**
      * Instantiate a new version of the DataGrid object with the given data.
      * @param data the data in row-major format
      * @return a new version of the DataGrid object with the given data

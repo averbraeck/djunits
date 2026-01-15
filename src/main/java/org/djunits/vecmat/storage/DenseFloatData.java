@@ -116,6 +116,16 @@ public class DenseFloatData implements DataGrid<DenseFloatData>
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
+    public int cardinality()
+    {
+        int result = 0;
+        for (int i = 0; i < this.data.length; i++)
+            result += this.data[i] == 0.0f ? 0 : 1;
+        return result;
+    }
+
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
     public DenseFloatData instantiate(final double[] newData)
     {
         Throw.when(newData.length != rows() * cols(), IllegalArgumentException.class,

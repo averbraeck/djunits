@@ -184,6 +184,16 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
         return new SparseDoubleData(this.sparseData.clone(), this.indexes.clone(), rows(), cols());
     }
 
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public int cardinality()
+    {
+        int result = 0;
+        for (int i = 0; i < this.sparseData.length; i++)
+            result += this.sparseData[i] == 0.0 ? 0 : 1;
+        return result;
+    }
+
     @Override
     public SparseDoubleData instantiate(final double[] denseData)
     {

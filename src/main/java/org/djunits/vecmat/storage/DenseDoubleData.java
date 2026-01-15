@@ -109,6 +109,16 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         return new DenseDoubleData(this.data.clone(), rows(), cols());
     }
 
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public int cardinality()
+    {
+        int result = 0;
+        for (int i = 0; i < this.data.length; i++)
+            result += this.data[i] == 0.0 ? 0 : 1;
+        return result;
+    }
+
     @Override
     public DenseDoubleData instantiate(final double[] newData)
     {
