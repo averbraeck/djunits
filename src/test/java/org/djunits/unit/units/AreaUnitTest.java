@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Area;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,6 +64,21 @@ public class AreaUnitTest extends AbstractLinearUnitTest<Area.Unit>
         assertTrue(null != myUnit, "Can create a new AreaUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myArea", "my");
         Units.unregister(myUnit);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("m2"), Area.ONE.getDisplayUnit().siUnit());
+        assertEquals(Area.Unit.m2, Area.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Area.ONE, Area.Unit.m2.ofSi(1.0));
+
+        Area.Unit nonlinearUnit = new Area.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

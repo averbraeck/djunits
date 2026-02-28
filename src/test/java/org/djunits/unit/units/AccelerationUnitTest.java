@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Acceleration;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,6 +75,21 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<Acceleration.Un
         assertTrue(null != myUnit, "Can create a new AccelerationUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myAcceleration", "my");
         Units.unregister(myUnit);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("m/s2"), Acceleration.ONE.getDisplayUnit().siUnit());
+        assertEquals(Acceleration.Unit.m_s2, Acceleration.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Acceleration.ONE, Acceleration.Unit.m_s2.ofSi(1.0));
+
+        Acceleration.Unit nonlinearUnit = new Acceleration.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

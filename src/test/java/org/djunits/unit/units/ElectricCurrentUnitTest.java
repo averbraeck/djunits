@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.ElectricCurrent;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,6 +59,21 @@ public class ElectricCurrentUnitTest extends AbstractLinearUnitTest<ElectricCurr
         assertTrue(null != myUnit, "Can create a new ElectricCurrentUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myElectricCurrent", "my");
         Units.unregister(myUnit);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("A"), ElectricCurrent.ONE.getDisplayUnit().siUnit());
+        assertEquals(ElectricCurrent.Unit.A, ElectricCurrent.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(ElectricCurrent.ONE, ElectricCurrent.Unit.A.ofSi(1.0));
+
+        ElectricCurrent.Unit nonlinearUnit = new ElectricCurrent.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

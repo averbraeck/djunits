@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Density;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +57,21 @@ public class DensityUnitTest extends AbstractLinearUnitTest<Density.Unit>
         assertTrue(null != myDU, "Can create a new DensityUnit");
         checkUnitRatioNameAndAbbreviation(myDU, 515.3, 0.1, "DensityUnit", "SPCF");
         Units.unregister(myDU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kg/m3"), Density.ONE.getDisplayUnit().siUnit());
+        assertEquals(Density.Unit.kg_m3, Density.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Density.ONE, Density.Unit.kg_m3.ofSi(1.0));
+
+        Density.Unit nonlinearUnit = new Density.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

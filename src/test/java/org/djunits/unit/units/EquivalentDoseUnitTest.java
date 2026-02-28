@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.EquivalentDose;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +53,21 @@ public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDos
         assertTrue(null != myUnit, "Can create a new EquivalentDoseUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myEquivalentDose", "my");
         Units.unregister(myUnit);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("m2/s2"), EquivalentDose.ONE.getDisplayUnit().siUnit());
+        assertEquals(EquivalentDose.Unit.Sv, EquivalentDose.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(EquivalentDose.ONE, EquivalentDose.Unit.Sv.ofSi(1.0));
+
+        EquivalentDose.Unit nonlinearUnit = new EquivalentDose.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

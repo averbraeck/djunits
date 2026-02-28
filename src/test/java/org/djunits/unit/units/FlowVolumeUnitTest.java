@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.FlowVolume;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,6 +59,21 @@ public class FlowVolumeUnitTest extends AbstractLinearUnitTest<FlowVolume.Unit>
         assertTrue(null != myFVU, "Can create a new FlowMassUnit");
         checkUnitRatioNameAndAbbreviation(myFVU, 100. / 3600, 0.0001, "TrucksPerHour", "tph");
         Units.unregister(myFVU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("m3/s"), FlowVolume.ONE.getDisplayUnit().siUnit());
+        assertEquals(FlowVolume.Unit.m3_s, FlowVolume.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(FlowVolume.ONE, FlowVolume.Unit.m3_s.ofSi(1.0));
+
+        FlowVolume.Unit nonlinearUnit = new FlowVolume.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

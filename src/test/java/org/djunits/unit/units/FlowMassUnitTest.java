@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.FlowMass;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,6 +59,21 @@ public class FlowMassUnitTest extends AbstractLinearUnitTest<FlowMass.Unit>
         assertTrue(null != myFMU, "Can create a new FlowMassUnit");
         checkUnitRatioNameAndAbbreviation(myFMU, 1234, 0.0001, "WaterDropsPerHour", "wdpu");
         Units.unregister(myFMU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kg/s"), FlowMass.ONE.getDisplayUnit().siUnit());
+        assertEquals(FlowMass.Unit.kg_s, FlowMass.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(FlowMass.ONE, FlowMass.Unit.kg_s.ofSi(1.0));
+
+        FlowMass.Unit nonlinearUnit = new FlowMass.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

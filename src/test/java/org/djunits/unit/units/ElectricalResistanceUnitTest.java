@@ -1,6 +1,7 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
@@ -8,7 +9,10 @@ import java.util.Locale;
 import org.djunits.quantity.ElectricCurrent;
 import org.djunits.quantity.ElectricPotential;
 import org.djunits.quantity.ElectricalResistance;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,6 +68,22 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
         assertTrue(null != abOhm, "Can create Abohm unit");
         checkUnitRatioNameAndAbbreviation(abOhm, 1e-9, 1e-12, "abOhm(CGS)", "abOO");
         Units.unregister(myERU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kgm2/s3A2"), ElectricalResistance.ONE.getDisplayUnit().siUnit());
+        assertEquals(ElectricalResistance.Unit.ohm, ElectricalResistance.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(ElectricalResistance.ONE, ElectricalResistance.Unit.ohm.ofSi(1.0));
+
+        ElectricalResistance.Unit nonlinearUnit =
+                new ElectricalResistance.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

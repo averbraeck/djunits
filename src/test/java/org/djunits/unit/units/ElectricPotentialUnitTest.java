@@ -1,6 +1,7 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
@@ -8,7 +9,10 @@ import java.util.Locale;
 import org.djunits.quantity.ElectricCurrent;
 import org.djunits.quantity.ElectricPotential;
 import org.djunits.quantity.Power;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,6 +67,22 @@ public class ElectricPotentialUnitTest extends AbstractLinearUnitTest<ElectricPo
         assertTrue(null != myEPU, "Can create a new ElectricPotential.Unit");
         checkUnitRatioNameAndAbbreviation(myEPU, 376.6, 0.1, "foot pound-force per hour per microA", "ft.lbfph/uA");
         Units.unregister(myEPU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kgm2/s3A"), ElectricPotential.ONE.getDisplayUnit().siUnit());
+        assertEquals(ElectricPotential.Unit.V, ElectricPotential.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(ElectricPotential.ONE, ElectricPotential.Unit.V.ofSi(1.0));
+
+        ElectricPotential.Unit nonlinearUnit =
+                new ElectricPotential.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

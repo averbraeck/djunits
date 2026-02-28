@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Length;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,4 +70,20 @@ public class LengthUnitTest extends AbstractLinearUnitTest<Length.Unit>
         checkUnitRatioNameAndAbbreviation(myLU, 200, 2, "Furlong", "fl");
         Units.unregister(myLU);
     }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("m"), Length.ONE.getDisplayUnit().siUnit());
+        assertEquals(Length.Unit.m, Length.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Length.ONE, Length.Unit.m.ofSi(1.0));
+
+        Length.Unit nonlinearUnit = new Length.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
+    }
+
 }
