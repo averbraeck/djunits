@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public final class UnitTest
+final class UnitTest
 {
     /*-
      * ====================================================================== 
@@ -52,7 +52,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("UnitInterface default conversions: base and derived")
-    public void testUnitInterfaceDefaultConversions()
+    void testUnitInterfaceDefaultConversions()
     {
         // Base (meter): identity conversion
         UnitInterface<?, ?> m = Length.Unit.m;
@@ -75,7 +75,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("UnitInterface.quantityInUnit: SI value and display unit are set")
-    public void testUnitInterfaceQuantityInUnit()
+    void testUnitInterfaceQuantityInUnit()
     {
         // 2.0 km -> si=2000 m, display unit == km
         Length.Unit km = Length.Unit.km;
@@ -95,7 +95,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("UnitInterface metadata: id/name/abbreviations/system/scale")
-    public void testUnitInterfaceMetadata()
+    void testUnitInterfaceMetadata()
     {
         // Length: meter
         Length.Unit m = Length.Unit.m;
@@ -143,7 +143,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("AbstractUnit: constructor validation")
-    public void testAbstractUnitConstructorValidation()
+    void testAbstractUnitConstructorValidation()
     {
         // textualAbbreviation null
         assertThrows(NullPointerException.class, () -> new Length.Unit(null, "name", 1.0, UnitSystem.OTHER));
@@ -166,7 +166,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("AbstractUnit: equals/hashCode and toString")
-    public void testAbstractUnitEqualsHashCodeToString()
+    void testAbstractUnitEqualsHashCodeToString()
     {
         Length.Unit foot1 = new Length.Unit("ft", "ft", "foot", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
         Length.Unit foot2 = new Length.Unit("ft", "ft", "foot", new LinearScale(Length.Unit.CONST_FT), UnitSystem.IMPERIAL);
@@ -198,7 +198,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("AbstractUnit.generateSiPrefixes: guard paths and positives")
-    public void testGenerateSiPrefixes()
+    void testGenerateSiPrefixes()
     {
         // Guard: only possible on base-scale units
         Length.Unit foot = Length.Unit.ft; // not base-scale (0.3048)
@@ -224,7 +224,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("UnitInterface: set/get SI prefix on a fresh unit")
-    public void testSetGetSiPrefix()
+    void testSetGetSiPrefix()
     {
         // fresh Length unit instance (identity scale)
         Length.Unit u = new Length.Unit("m*", "meter*", 1.0, UnitSystem.SI_BASE);
@@ -256,7 +256,7 @@ public final class UnitTest
     /**
      * Minimal Jerk quantity to exercise {@link AbstractUnit} extensibility inside the test.
      */
-    public static final class Jerk extends Quantity<Jerk, Jerk.Unit>
+    static final class Jerk extends Quantity<Jerk, Jerk.Unit>
     {
         /** */
         private static final long serialVersionUID = 1L;
@@ -266,7 +266,7 @@ public final class UnitTest
          * @param value the value expressed in the unit
          * @param unit the unit
          */
-        public Jerk(final double value, final Unit unit)
+        Jerk(final double value, final Unit unit)
         {
             super(value, unit);
         }
@@ -276,7 +276,7 @@ public final class UnitTest
          * @param si the si value to use
          * @return the constructed quantity
          */
-        public static Jerk ofSi(final double si)
+        static Jerk ofSi(final double si)
         {
             return new Jerk(si, Unit.SI);
         }
@@ -296,17 +296,16 @@ public final class UnitTest
         /**
          * Unit for Jerk (m/s^3).
          */
-        public static final class Unit extends AbstractUnit<Jerk.Unit, Jerk>
+        static final class Unit extends AbstractUnit<Jerk.Unit, Jerk>
         {
             /** SI dimensions for jerk: m/s^3. */
-            public static final SIUnit SI_UNIT = SIUnit.of("m/s3");
+            static final SIUnit SI_UNIT = SIUnit.of("m/s3");
 
             /** Base jerk unit (identity scale). */
-            public static final Jerk.Unit BASE =
-                    new Jerk.Unit("m/s3", "m/s^3", "jerk", new LinearScale(1.0), UnitSystem.SI_DERIVED);
+            static final Jerk.Unit BASE = new Jerk.Unit("m/s3", "m/s^3", "jerk", new LinearScale(1.0), UnitSystem.SI_DERIVED);
 
             /** SI/base handle for {@link Jerk#ofSi(double)}. */
-            public static final Jerk.Unit SI = BASE.generateSiPrefixes(false, false);
+            static final Jerk.Unit SI = BASE.generateSiPrefixes(false, false);
 
             /**
              * ctor with factor.
@@ -315,7 +314,7 @@ public final class UnitTest
              * @param scaleFactorToBaseUnit the scale factor
              * @param unitSystem the system
              */
-            public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
+            Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
             {
                 super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
             }
@@ -328,8 +327,8 @@ public final class UnitTest
              * @param scale the scale
              * @param unitSystem the unit system
              */
-            public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                    final Scale scale, final UnitSystem unitSystem)
+            Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                    final UnitSystem unitSystem)
             {
                 super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
             }
@@ -377,7 +376,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("New unit (Jerk): prefixes, derivation, ofSi, quantityInUnit")
-    public void testCustomUnitJerk()
+    void testCustomUnitJerk()
     {
         // The SI/base jerk unit uses identity scale (allowed for prefix generation).
         assertTrue(Jerk.Unit.BASE.getScale().isBaseScale());
@@ -418,7 +417,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("deriveUnit: linear factor multiplication and non-linear guard")
-    public void testDeriveUnitLinearAndGuard()
+    void testDeriveUnitLinearAndGuard()
     {
         // Linear -> Linear, multiplying factors
         Length.Unit meterTimes2 = Length.Unit.m.deriveUnit("m2", "m2", "meter2", 2.0, UnitSystem.SI_BASE);
@@ -466,7 +465,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("UnitInterface.ofSi: concrete units produce correct quantity type/SI value")
-    public void testOfSiConcreteSmoke()
+    void testOfSiConcreteSmoke()
     {
         Length l = Length.Unit.SI.ofSi(42.0);
         assertEquals(42.0, l.si(), 0.0);
@@ -489,7 +488,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("Stored vs localized getters are sane and stable")
-    public void testStoredVsLocalizedGetters()
+    void testStoredVsLocalizedGetters()
     {
         Length.Unit m = Length.Unit.m;
         assertEquals("m", m.getStoredTextualAbbreviation());
@@ -525,7 +524,7 @@ public final class UnitTest
      * A minimal test-local quantity representing a "per mass" value (unit: 1/kg), used to verify correct behavior of
      * <b>per-kilo</b> SI-prefix generation on {@link AbstractUnit}.
      */
-    public static final class PerMass extends Quantity<PerMass, PerMass.Unit>
+    static final class PerMass extends Quantity<PerMass, PerMass.Unit>
     {
         /** */
         private static final long serialVersionUID = 1L;
@@ -535,7 +534,7 @@ public final class UnitTest
          * @param value double; the numeric value
          * @param unit Unit; the unit in which {@code value} is expressed
          */
-        public PerMass(final double value, final Unit unit)
+        PerMass(final double value, final Unit unit)
         {
             super(value, unit);
         }
@@ -545,7 +544,7 @@ public final class UnitTest
          * @param si double; the SI (BASE) value
          * @return PerMass; new instance with SI value
          */
-        public static PerMass ofSi(final double si)
+        static PerMass ofSi(final double si)
         {
             return new PerMass(si, Unit.SI);
         }
@@ -567,17 +566,17 @@ public final class UnitTest
          * name is {@code "per kilogram"} so that {@link AbstractUnit#generateSiPrefixes(boolean, boolean)} with
          * {@code kilo=true, perUnit=true} passes the guards and uses {@link SIPrefixes#PER_KILO_PREFIXES}.
          */
-        public static final class Unit extends AbstractUnit<PerMass.Unit, PerMass>
+        static final class Unit extends AbstractUnit<PerMass.Unit, PerMass>
         {
             /** SI dimensions of per-mass: 1/kg. */
-            public static final SIUnit SI_UNIT = SIUnit.of("/kg");
+            static final SIUnit SI_UNIT = SIUnit.of("/kg");
 
             /** Base per-kilo unit (1/kg). */
-            public static final PerMass.Unit PER_KILOGRAM =
+            static final PerMass.Unit PER_KILOGRAM =
                     new PerMass.Unit("/kg", "/kg", "per kilogram", new LinearScale(1.0), UnitSystem.SI_DERIVED);
 
             /** Handle for {@link PerMass#ofSi(double)} after prefix generation. */
-            public static final PerMass.Unit SI = PER_KILOGRAM.generateSiPrefixes(true, true);
+            static final PerMass.Unit SI = PER_KILOGRAM.generateSiPrefixes(true, true);
 
             /**
              * Construct a PerMass unit with an explicit (linear) scale factor to BASE (1/kg).
@@ -586,7 +585,7 @@ public final class UnitTest
              * @param scaleFactorToBaseUnit double; numeric factor to convert to 1/kg
              * @param unitSystem UnitSystem; system of the unit (typically SI_DERIVED)
              */
-            public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
+            Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
             {
                 super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
             }
@@ -599,8 +598,8 @@ public final class UnitTest
              * @param scale Scale; scale used to convert to/from BASE (1/kg)
              * @param unitSystem UnitSystem; system of the unit (typically SI_DERIVED)
              */
-            public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                    final Scale scale, final UnitSystem unitSystem)
+            Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+                    final UnitSystem unitSystem)
             {
                 super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
             }
@@ -649,7 +648,7 @@ public final class UnitTest
      */
     @Test
     @DisplayName("Per-kilo unit generation and semantics (PerMass: 1/kg)")
-    public void testPerKiloUnitGenerationAndSemantics()
+    void testPerKiloUnitGenerationAndSemantics()
     {
         // Base is per kilogram, identity scale to 1/kg
         assertTrue(PerMass.Unit.PER_KILOGRAM.getScale().isBaseScale());

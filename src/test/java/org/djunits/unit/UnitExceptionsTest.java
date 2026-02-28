@@ -1,5 +1,6 @@
 package org.djunits.unit;
 
+import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djutils.test.ExceptionTest;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,7 @@ public class UnitExceptionsTest
     {
         ExceptionTest.testExceptionClass(UnitException.class);
         ExceptionTest.testExceptionClass(UnitRuntimeException.class);
+        ExceptionTest.testExceptionClass(NonInvertibleMatrixException.class);
     }
 
 }
