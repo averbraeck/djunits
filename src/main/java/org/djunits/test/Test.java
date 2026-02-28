@@ -170,7 +170,7 @@ public final class Test
      */
     public static void main(final String[] args)
     {
-        Locale.setDefault(Locale.forLanguageTag("de"));
+        Locale.setDefault(Locale.forLanguageTag("ko"));
         new Test();
     }
 

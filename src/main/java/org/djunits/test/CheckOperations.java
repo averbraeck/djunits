@@ -55,7 +55,6 @@ import org.djunits.quantity.RadioActivity;
 import org.djunits.quantity.SolidAngle;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.TemperatureDifference;
-import org.djunits.quantity.Time;
 import org.djunits.quantity.Torque;
 import org.djunits.quantity.Volume;
 import org.djunits.quantity.VolumetricObjectDensity;
@@ -98,7 +97,7 @@ public final class CheckOperations
             EquivalentDose.class, FlowMass.class, FlowVolume.class, Force.class, Frequency.class, Illuminance.class,
             Length.class, LinearDensity.class, LinearObjectDensity.class, LuminousFlux.class, LuminousIntensity.class,
             MagneticFlux.class, MagneticFluxDensity.class, Mass.class, Momentum.class, Power.class, Pressure.class,
-            RadioActivity.class, SolidAngle.class, Speed.class, TemperatureDifference.class, Time.class, Torque.class, Volume.class,
+            RadioActivity.class, SolidAngle.class, Speed.class, TemperatureDifference.class, Torque.class, Volume.class,
             VolumetricObjectDensity.class};
 
     /** Immutable set of quantity classes for quick membership tests. */
