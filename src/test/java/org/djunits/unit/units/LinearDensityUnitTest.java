@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.LinearDensity;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +53,21 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensity.
         assertTrue(null != muLDU, "Can create a new LinearDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "KgPerInch", "kgperin");
         Units.unregister(muLDU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kg/m"), LinearDensity.ONE.getDisplayUnit().siUnit());
+        assertEquals(LinearDensity.Unit.kg_m, LinearDensity.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(LinearDensity.ONE, LinearDensity.Unit.kg_m.ofSi(1.0));
+
+        LinearDensity.Unit nonlinearUnit = new LinearDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

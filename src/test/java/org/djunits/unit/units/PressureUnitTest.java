@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Pressure;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,10 +59,8 @@ public class PressureUnitTest extends AbstractLinearUnitTest<Pressure.Unit>
         checkUnitRatioNameAndAbbreviation(Pressure.Unit.inHg, 3386, 0.5, "inch mercury", "inHg");
         checkUnitRatioNameAndAbbreviation(Pressure.Unit.kgf_mm2, 9806650, 0.5, "kilogram-force per square millimeter",
                 "kgf/mm2");
-        checkUnitRatioNameAndAbbreviation(Pressure.Unit.lbf_ft2, 47.880259, 0.000001, "pound-force per square foot",
-                "lbf/ft2");
-        checkUnitRatioNameAndAbbreviation(Pressure.Unit.lbf_in2, 6894.75729, 0.00001, "pound-force per square inch",
-                "lbf/in2");
+        checkUnitRatioNameAndAbbreviation(Pressure.Unit.lbf_ft2, 47.880259, 0.000001, "pound-force per square foot", "lbf/ft2");
+        checkUnitRatioNameAndAbbreviation(Pressure.Unit.lbf_in2, 6894.75729, 0.00001, "pound-force per square inch", "lbf/in2");
     }
 
     /**
@@ -71,6 +73,21 @@ public class PressureUnitTest extends AbstractLinearUnitTest<Pressure.Unit>
         assertTrue(null != myPU, "Can create a new PowerUnit");
         checkUnitRatioNameAndAbbreviation(myPU, 14132.1711, 0.01, "HealthyHumanHeart", "hhhp");
         Units.unregister(myPU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kg/ms2"), Pressure.ONE.getDisplayUnit().siUnit());
+        assertEquals(Pressure.Unit.Pa, Pressure.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Pressure.ONE, Pressure.Unit.Pa.ofSi(1.0));
+
+        Pressure.Unit nonlinearUnit = new Pressure.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

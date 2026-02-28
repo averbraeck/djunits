@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Power;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,6 +68,21 @@ public class PowerUnitTest extends AbstractLinearUnitTest<Power.Unit>
         assertTrue(null != myMU, "Can create a new PowerUnit");
         checkUnitRatioNameAndAbbreviation(myMU, 250, 1, "Person", "pnp");
         Units.unregister(myMU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kgm2/s3"), Power.ONE.getDisplayUnit().siUnit());
+        assertEquals(Power.Unit.W, Power.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Power.ONE, Power.Unit.W.ofSi(1.0));
+
+        Power.Unit nonlinearUnit = new Power.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

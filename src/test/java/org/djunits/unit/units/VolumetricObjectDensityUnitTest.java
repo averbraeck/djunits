@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.VolumetricObjectDensity;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +54,22 @@ public class VolumetricObjectDensityUnitTest extends AbstractLinearUnitTest<Volu
         assertTrue(null != muLDU, "Can create a new VolumetricObjectDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "PerInch3", "perin3");
         Units.unregister(muLDU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("/m3"), VolumetricObjectDensity.ONE.getDisplayUnit().siUnit());
+        assertEquals(VolumetricObjectDensity.Unit.per_m3, VolumetricObjectDensity.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(VolumetricObjectDensity.ONE, VolumetricObjectDensity.Unit.per_m3.ofSi(1.0));
+
+        VolumetricObjectDensity.Unit nonlinearUnit =
+                new VolumetricObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }

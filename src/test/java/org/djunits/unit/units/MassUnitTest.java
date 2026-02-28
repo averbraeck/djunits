@@ -1,12 +1,16 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
 import org.djunits.quantity.Mass;
+import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.GradeScale;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,6 +63,21 @@ public class MassUnitTest extends AbstractLinearUnitTest<Mass.Unit>
         assertTrue(null != myMU, "Can create a new MassUnit");
         checkUnitRatioNameAndAbbreviation(myMU, 80, 1, "Person", "pn");
         Units.unregister(myMU);
+    }
+
+    /**
+     * Check the standard methods.
+     */
+    @Test
+    final void testStandardMethods()
+    {
+        assertEquals(SIUnit.of("kg"), Mass.ONE.getDisplayUnit().siUnit());
+        assertEquals(Mass.Unit.kg, Mass.ONE.getDisplayUnit().getBaseUnit());
+        assertEquals(Mass.ONE, Mass.Unit.kg.ofSi(1.0));
+
+        Mass.Unit nonlinearUnit = new Mass.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        Units.unregister(nonlinearUnit);
     }
 
 }
