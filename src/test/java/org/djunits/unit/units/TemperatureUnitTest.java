@@ -36,7 +36,7 @@ public class TemperatureUnitTest extends AbstractLinearUnitTest<Temperature.Unit
     public final void conversions()
     {
         assertEquals("K", Temperature.Unit.SI_UNIT.toString(true, false));
-        checkUnitRatioNameAndAbbreviation(Temperature.Unit.K, 1.0, 0.00001, "Kelvin", "K");
+        checkUnitRatioNameAndAbbreviation(Temperature.Unit.K, 1.0, 0.00001, "kelvin", "K");
         checkUnitRatioNameAndAbbreviation(Temperature.Unit.degC, 1.0, 0.000001, "degree Celsius", "\u00B0C");
         checkUnitRatioNameAndAbbreviation(Temperature.Unit.degF, 5.0 / 9.0, 0.00001, "degree Fahrenheit", "\u00B0F");
         // Check two conversions between non-standard units
