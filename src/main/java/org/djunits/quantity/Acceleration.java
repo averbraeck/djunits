@@ -288,7 +288,7 @@ public class Acceleration extends Quantity<Acceleration, Acceleration.Unit>
         @Override
         public Acceleration ofSi(final double si)
         {
-            return null;
+            return Acceleration.ofSi(si);
         }
 
         @Override
