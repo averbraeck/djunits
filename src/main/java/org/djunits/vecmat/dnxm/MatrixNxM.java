@@ -45,7 +45,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Create a new MatrixNxM with a unit, based on a 1-dimensional array.
+     * Create a new MatrixNxM with a unit, based on a 1-dimensional double array.
      * @param valueArray the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
@@ -73,7 +73,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Create a new MatrixNxM with a unit, based on a 2-dimensional grid.
+     * Create a new MatrixNxM with a unit, based on a 2-dimensional double grid.
      * @param valueGrid the matrix values {{a11, a12, a1M}, ..., {aN1, N32, aNM}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
@@ -103,6 +103,23 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         return new MatrixNxM<Q, U>(new DenseDoubleData(aSi, rows, cols), displayUnit);
     }
 
+    /**
+     * Create a new MatrixNxM with a unit, based on a 1-dimensional quantity array.
+     * @param valueGrid the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     * @return a new MatrixNxM with a unit
+     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in valueArray is not
+     *             equal to rows*cols
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final Q[][] valueGrid,
+            final U displayUnit)
+    {
+        return new MatrixNxM<Q, U>(new DenseDoubleData(valueGrid), displayUnit);
+    }
+    
     @Override
     public MatrixNxM<Q, U> instantiate(final double[] siNew)
     {
