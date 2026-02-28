@@ -1,12 +1,9 @@
-package org.djunits.old.value;
+package org.djunits.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Locale;
 
-import org.djunits.old.value.formatter.EngineeringFormatter;
-import org.djunits.old.value.formatter.Format;
-import org.djunits.old.value.formatter.Formatter;
 import org.junit.jupiter.api.Test;
 
 /**
