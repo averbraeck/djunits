@@ -96,6 +96,8 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     @SuppressWarnings("unchecked")
     public Q[][] getScalars()
     {
+        // TODO: Q cel = getDisplayUnit().ofSi(0.0);
+        // TODO: Q[][] i = (Q[][]) Array.newInstance(cel.getClass(), rows(), cols());
         List<Q[]> result = new ArrayList<>();
         for (int i = 1; i <= rows(); i++)
         {
