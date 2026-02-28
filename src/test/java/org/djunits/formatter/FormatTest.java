@@ -22,7 +22,7 @@ public class FormatTest
     public final void format()
     {
         Locale.setDefault(Locale.US);
-        double[] baseValues = {1, (float) (1 / 3d)};
+        double[] baseValues = {0, 1, -1, -10000, (1.0 / 3.0), -0.003};
         for (int width = 8; width <= 20; width++)
         {
             for (int precision = 0; precision <= 10; precision++)
@@ -35,27 +35,8 @@ public class FormatTest
                     }
                     for (double baseValue : baseValues)
                     {
-                        float value = (float) (baseValue * Math.pow(10, power));
-                        // System.out.print("Trying " + width + ", " + precision + ", " + value);
-                        String result = Formatter.format(value, width, precision);
-                        // System.out.println(": \"" + result + "\"");
-                        assertEquals(width, result.length(), "Length of result should equal specified width");
-                        double reverseValue = Double.parseDouble(result);
-                        int expectedPrecision = precision - 2;
-                        if (expectedPrecision > 6)
-                        {
-                            expectedPrecision = 6;
-                        }
-                        double tolerance = Math.abs(value / Math.pow(10, expectedPrecision));
-                        assertEquals(value, reverseValue, tolerance,
-                                "Parsed result should equal original value within tolerance " + tolerance);
-                    }
-                    for (double baseValue : baseValues)
-                    {
                         double value = baseValue * Math.pow(10, power);
-                        // System.out.print("Trying " + width + ", " + precision + ", " + value);
                         String result = Formatter.format(value, width, precision);
-                        // System.out.println(": \"" + result + "\"");
                         assertEquals(width, result.length(), "Length of result should equal specified width");
                         double reverseValue = Double.parseDouble(result);
                         int expectedPrecision = precision - 2;
@@ -66,6 +47,13 @@ public class FormatTest
                         double tolerance = Math.abs(value / Math.pow(10, expectedPrecision));
                         assertEquals(value, reverseValue, tolerance,
                                 "Parsed result should equal original value within tolerance " + tolerance);
+                        result = Formatter.format(value, width);
+                        if (width - Formatter.DEFAULTPRECISION > 6)
+                        {
+                            assertEquals(width, result.length(), "Length of result should equal specified width");
+                        }
+                        result = Formatter.format(value);
+                        assertEquals(Format.DEFAULTSIZE, result.length(), "Length of result should equal default width");
                     }
                 }
             }
