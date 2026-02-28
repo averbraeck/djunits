@@ -41,43 +41,6 @@ public final class Formatter
      * @param precision the number of fractional digits in the result
      * @return the formatted floating point value
      */
-    public static String format(final float value, final int width, final int precision)
-    {
-        if (0 == value || Math.abs(value) > 0.01 && Math.abs(value) < 9999.0)
-        {
-            return String.format(formatString(width, precision, "f"), value);
-        }
-        return String.format(formatString(width, precision, "e"), value);
-    }
-
-    /**
-     * Format a floating point value.
-     * @param value the value to format
-     * @param size the number of characters in the result
-     * @return the formatted floating point value
-     */
-    public static String format(final float value, final int size)
-    {
-        return Formatter.format(value, size, Formatter.DEFAULTPRECISION);
-    }
-
-    /**
-     * Format a floating point value.
-     * @param value the value to format
-     * @return the formatted floating point value
-     */
-    public static String format(final float value)
-    {
-        return format(value, Format.DEFAULTSIZE, Formatter.DEFAULTPRECISION);
-    }
-
-    /**
-     * Format a floating point value.
-     * @param value the value to format
-     * @param width the number of characters in the result
-     * @param precision the number of fractional digits in the result
-     * @return the formatted floating point value
-     */
     public static String format(final double value, final int width, final int precision)
     {
         if (0 == value || Math.abs(value) > 0.01 && Math.abs(value) < 9999.0)
@@ -90,12 +53,22 @@ public final class Formatter
     /**
      * Format a floating point value.
      * @param value the value to format
-     * @param size the number of characters in the result
+     * @param width the number of characters in the result
      * @return the formatted floating point value
      */
-    public static String format(final double value, final int size)
+    public static String format(final double value, final int width)
     {
-        return format(value, size, Formatter.DEFAULTPRECISION);
+        return format(value, width, Formatter.DEFAULTPRECISION);
+    }
+
+    /**
+     * Format a floating point value.
+     * @param value the value to format
+     * @return the formatted floating point value
+     */
+    public static String format(final double value)
+    {
+        return format(value, Format.DEFAULTSIZE, Formatter.DEFAULTPRECISION);
     }
 
 }
