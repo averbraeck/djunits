@@ -383,7 +383,7 @@ public class Length extends Quantity<Length, Length.Unit>
         public static final Length.Unit ly = new Length.Unit("ly", "lightyear", CONST_LY, UnitSystem.OTHER);
 
         /** Parsec = AU / tan(1 arcsecond) = AU * 648,000 / PI m. */
-        public static final Length.Unit Pc = new Length.Unit("Pc", "Parsec", CONST_PC, UnitSystem.OTHER);
+        public static final Length.Unit pc = new Length.Unit("pc", "Parsec", CONST_PC, UnitSystem.OTHER);
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit A =

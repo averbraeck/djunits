@@ -350,8 +350,8 @@ public class Volume extends Quantity<Volume, Volume.Unit>
                 m3.deriveUnit("ly3", "cubic lightyear", cubed(Length.Unit.CONST_LY), UnitSystem.OTHER);
 
         /** Cubic Parsec. */
-        public static final Volume.Unit Pc3 =
-                m3.deriveUnit("Pc3", "cubic Parsec", cubed(Length.Unit.CONST_PC), UnitSystem.OTHER);
+        public static final Volume.Unit pc3 =
+                m3.deriveUnit("pc3", "cubic Parsec", cubed(Length.Unit.CONST_PC), UnitSystem.OTHER);
 
         /**
          * Create a new Volume unit.
