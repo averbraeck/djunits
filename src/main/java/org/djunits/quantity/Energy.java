@@ -326,7 +326,7 @@ public class Energy extends Quantity<Energy, Energy.Unit>
 
         /** gigawatt hour. */
         public static final Energy.Unit GWh =
-                WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E9, UnitSystem.SI_DERIVED);
+                WATT_HOUR.deriveUnit("GWh", "gigawatt hour", 1E9, UnitSystem.SI_DERIVED);
 
         /** terawatt hour. */
         public static final Energy.Unit TWh =
