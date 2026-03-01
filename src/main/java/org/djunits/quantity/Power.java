@@ -254,7 +254,7 @@ public class Power extends Quantity<Power, Power.Unit>
         /** milliwatt. */
         public static final Power.Unit mW = Units.resolve(Power.Unit.class, "mW");
 
-        /** kiloawatt. */
+        /** kilowatt. */
         public static final Power.Unit kW = Units.resolve(Power.Unit.class, "kW");
 
         /** megawatt. */
