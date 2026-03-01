@@ -178,10 +178,10 @@ public class Illuminance extends Quantity<Illuminance, Illuminance.Unit>
         public static final Illuminance.Unit klx = lx.deriveUnit("klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED);
 
         /** phot. */
-        public static final Illuminance.Unit ph = klx.deriveUnit("ph", "phot", 10.0, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit ph = klx.deriveUnit("ph", "phot", 10.0, UnitSystem.CGS);
 
         /** nox. */
-        public static final Illuminance.Unit nx = mlx.deriveUnit("nx", "nox", 1.0, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit nx = mlx.deriveUnit("nx", "nox", 1.0, UnitSystem.OTHER);
 
         /**
          * Create a new Illuminance unit.
