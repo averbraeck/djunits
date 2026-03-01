@@ -252,7 +252,7 @@ public class Mass extends Quantity<Mass, Mass.Unit>
         /** pound. */
         public static final Mass.Unit lb = kg.deriveUnit("lb", "pound", CONST_LB, UnitSystem.IMPERIAL);
 
-        /** pound. */
+        /** ounce. */
         public static final Mass.Unit oz = kg.deriveUnit("oz", "ounce", CONST_OUNCE, UnitSystem.IMPERIAL);
 
         /** long ton = 2240 lb. */
@@ -269,8 +269,8 @@ public class Mass extends Quantity<Mass, Mass.Unit>
         /** metric ton = 1000 kg. */
         public static final Mass.Unit t_mts = kg.deriveUnit("t(mts)", "tonne", 1000.0, UnitSystem.MTS);
 
-        /** dalton. */
-        public static final Mass.Unit Da = kg.deriveUnit("Da", "Dalton", 1.6605388628E-27, UnitSystem.SI_ACCEPTED);
+        /** Dalton, according to CODATA 2018. */
+        public static final Mass.Unit Da = kg.deriveUnit("Da", "Dalton", 1.66053906660E-27, UnitSystem.SI_ACCEPTED);
 
         /** electronvolt = 1.782661907E-36 kg. See http://physics.nist.gov/cuu/Constants/Table/allascii.txt. */
         public static final Mass.Unit eV =
