@@ -147,7 +147,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          */
         public Reference(final String id, final String name)
         {
-            this(id, name, null, null);
+            this(id, name, Length.ZERO, null);
         }
 
         /**
