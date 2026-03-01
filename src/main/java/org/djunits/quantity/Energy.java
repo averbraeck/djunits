@@ -239,7 +239,7 @@ public class Energy extends Quantity<Energy, Energy.Unit>
     /******************************************************************************************************/
 
     /**
-     * Energy.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Energy.Unit encodes the units of energy.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is

@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.djunits.formatter.Format;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
@@ -353,11 +354,39 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
         {
             NumberParser numberParser = new NumberParser().lenient().trailing();
             double d = numberParser.parseDouble(text);
-            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
+
+            // Everything after the parsed number is considered the unit token.
+            String unitStringRaw = text.substring(numberParser.getTrailingPosition());
+            String unitString = unitStringRaw.trim();
+
             @SuppressWarnings("unchecked")
-            U unit = (U) Units.resolve(example.getDisplayUnit().getClass(), unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity %s", unitString,
-                    quantityClass);
+            Class<U> unitClass = (Class<U>) example.getDisplayUnit().getClass();
+
+            U unit;
+            if (unitString.isEmpty())
+            {
+                // Special-case: DIMENSIONLESS can omit the unit entirely ("" or all whitespace).
+                if (Unitless.class.isAssignableFrom(unitClass))
+                {
+                    @SuppressWarnings("unchecked")
+                    U unitless = (U) Unitless.BASE;
+                    unit = unitless;
+                }
+                else
+                {
+                    throw new IllegalArgumentException(
+                            String.format("Error parsing %s: missing unit in '%s'", quantityClass, text));
+                }
+            }
+            else
+            {
+                // Normal path: resolve the unit string for the quantity's unit class.
+                U resolved = (U) Units.resolve(unitClass, unitString);
+                Throw.when(resolved == null, IllegalArgumentException.class, "Unit '%s' not found for quantity %s", unitString,
+                        quantityClass);
+                unit = resolved;
+            }
+
             return example.instantiate(d, unit);
         }
         catch (Exception exception)

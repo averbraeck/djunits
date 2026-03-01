@@ -149,7 +149,7 @@ public class Illuminance extends Quantity<Illuminance, Illuminance.Unit>
     /******************************************************************************************************/
 
     /**
-     * Illuminance.Unit encodes the units of absorbed dose (of ionizing radiation).<br>
+     * Illuminance.Unit encodes the units of illuminance.<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
