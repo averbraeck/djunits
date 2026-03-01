@@ -162,7 +162,7 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity, MagneticF
         /** The dimensions of the magnetic flux density: kg/s2A. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/s2A");
 
-        /** Gray. */
+        /** Tesla. */
         public static final MagneticFluxDensity.Unit T = new MagneticFluxDensity.Unit("T", "tesla", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
