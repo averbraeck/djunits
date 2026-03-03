@@ -178,10 +178,10 @@ public class Pressure extends Quantity<Pressure, Pressure.Unit>
         /** The SI or BASE unit. */
         public static final Pressure.Unit SI = Pa.generateSiPrefixes(false, false);
 
-        /** hectoPascal. */
+        /** hectopascal. */
         public static final Pressure.Unit hPa = Units.resolve(Pressure.Unit.class, "hPa");
 
-        /** kiloPascal. */
+        /** kilopascal. */
         public static final Pressure.Unit kPa = Units.resolve(Pressure.Unit.class, "kPa");
 
         /** standard atmosphere. */
@@ -228,6 +228,9 @@ public class Pressure extends Quantity<Pressure, Pressure.Unit>
         public static final Pressure.Unit lbf_in2 = Pa.deriveUnit("lbf/in2", "pound-force per square inch",
                 Mass.Unit.CONST_LB * Acceleration.Unit.CONST_GRAVITY / (Length.Unit.CONST_IN * Length.Unit.CONST_IN),
                 UnitSystem.IMPERIAL);
+
+        /** psi = pound-force per square inch. */
+        public static final Pressure.Unit psi = lbf_in2;
 
         /** pieze. */
         public static final Pressure.Unit pz = Pa.deriveUnit("pz", "pi\u00E8ze", 1000.0, UnitSystem.MTS);

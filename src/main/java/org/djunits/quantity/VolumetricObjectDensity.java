@@ -232,7 +232,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity, V
         /** The dimensions of the number of objects per unit of volume: per cubic meter (/m3). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m3");
 
-        /** per meter. */
+        /** per cubic meter. */
         public static final VolumetricObjectDensity.Unit per_m3 =
                 new VolumetricObjectDensity.Unit("/m3", "per cubic meter", 1.0, UnitSystem.SI_DERIVED);
 

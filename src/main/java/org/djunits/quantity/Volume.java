@@ -239,7 +239,7 @@ public class Volume extends Quantity<Volume, Volume.Unit>
     /******************************************************************************************************/
 
     /**
-     * Volume.Unit encodes the area unit (length x length).<br>
+     * Volume.Unit encodes the volume unit (length x length x length).<br>
      * <br>
      * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is

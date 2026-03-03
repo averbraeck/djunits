@@ -229,7 +229,7 @@ public class Torque extends Quantity<Torque, Torque.Unit>
     @SuppressWarnings("checkstyle:constantname")
     public static class Unit extends AbstractUnit<Torque.Unit, Torque>
     {
-        /** The dimensions of the absorbed dose: kgm2/s2. */
+        /** The dimensions of torque: kgm2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2");
 
         /** Newton meter. */
