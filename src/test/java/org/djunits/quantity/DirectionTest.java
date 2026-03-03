@@ -130,5 +130,9 @@ class DirectionTest
         Angle westMinusEast = w0.subtract(new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST));
         assertEquals(Math.PI, westMinusEast.si(), 1E-12);
         assertEquals(w0.getDisplayUnit(), westMinusEast.getDisplayUnit());
+        
+        // clean up
+        Direction.Reference.get("WEST").unregister();
+        Direction.Reference.get("NE").unregister();
     }
 }
