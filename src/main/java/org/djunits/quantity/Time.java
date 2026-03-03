@@ -7,7 +7,8 @@ import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 
 /**
- * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero.<br>
+ * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero. Note that built-in time
+ * references are independent; DJUNITS does not embed calendar calculations.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -123,7 +124,8 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.R
     }
 
     /**
-     * The reference class to define a reference point for the time.
+     * The reference class to define a reference point for the time. Note that built-in time references are independent; DJUNITS
+     * does not embed calendar calculations.
      */
     public static final class Reference extends AbstractReference<Reference, Duration>
     {
@@ -187,7 +189,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.R
          */
         public static Reference get(final String id)
         {
-            return (Reference) referenceMap.get(id);
+            return AbstractReference.get(Time.Reference.class, id);
         }
     }
 }

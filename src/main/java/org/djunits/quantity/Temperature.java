@@ -255,7 +255,7 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
          */
         public static Reference get(final String id)
         {
-            return (Reference) referenceMap.get(id);
+            return AbstractReference.get(Temperature.Reference.class, id);
         }
     }
 
@@ -303,6 +303,9 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
 
         /** the default reference for this unit (used for absolute quantities). */
         private Reference reference;
+
+        /** Guard to assign default references lazily, safely, exactly once. */
+        private static volatile boolean defaultReferencesAssigned = false;
 
         /**
          * Create a new Temperature unit.
@@ -362,19 +365,48 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
         }
 
         /**
-         * Return the reference for an absolute temperature.
+         * Ensure default references for all Temperature units are assigned once and only when needed. This avoids circular
+         * initialization between Temperature.Unit, Temperature.Reference, and TemperatureDifference. The method is deliberately
+         * minimal: it only assigns references to existing unit singletons and does not create new objects or resolve units.
+         */
+        private static void ensureDefaultReferencesAssigned()
+        {
+            if (defaultReferencesAssigned)
+            {
+                return;
+            }
+            synchronized (Unit.class)
+            {
+                if (!defaultReferencesAssigned)
+                {
+                    // IMPORTANT:
+                    // - Assign only to already-constructed constants.
+                    // - Do NOT create new objects here.
+                    // - Do NOT call Units.resolve(...) or valueOf(...) here.
+                    // - Do NOT refer to TemperatureDifference.ZERO, etc., from here.
+
+                    K.reference = Reference.KELVIN;
+                    degC.reference = Reference.CELSIUS;
+                    degF.reference = Reference.FAHRENHEIT;
+                    degR.reference = Reference.KELVIN; // Rankine uses Kelvin as default reference
+                    degRe.reference = Reference.CELSIUS; // Réaumur uses Celsius as default reference
+
+                    defaultReferencesAssigned = true;
+                }
+            }
+        }
+
+        /**
+         * Return the default reference for this unit. References are assigned lazily and safely (once) to avoid circular class
+         * initialization issues.
          * @return the reference for an absolute temperature
          */
         protected Reference getReference()
         {
-            // reference may be null because at initialization, Unit needs Reference and Reference needs Unit
             if (this.reference == null)
             {
-                K.reference = Reference.KELVIN;
-                degC.reference = Reference.CELSIUS;
-                degF.reference = Reference.FAHRENHEIT;
-                degR.reference = Reference.KELVIN;
-                degRe.reference = Reference.CELSIUS;
+                // assign for all units exactly once, then return for this instance
+                ensureDefaultReferencesAssigned();
             }
             return this.reference;
         }

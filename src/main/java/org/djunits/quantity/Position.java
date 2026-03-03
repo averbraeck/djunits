@@ -179,7 +179,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Length.Unit, Po
          */
         public static Reference get(final String id)
         {
-            return (Reference) referenceMap.get(id);
+            return AbstractReference.get(Position.Reference.class, id);
         }
     }
 }

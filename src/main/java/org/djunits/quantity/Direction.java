@@ -189,7 +189,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Angle.Unit, Re
          */
         public static Reference get(final String id)
         {
-            return (Reference) referenceMap.get(id);
+            return AbstractReference.get(Direction.Reference.class, id);
         }
     }
 }
