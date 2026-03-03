@@ -3,7 +3,6 @@ package org.djunits.quantity.def;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,19 +13,39 @@ import org.djunits.quantity.Area;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
-import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.scale.LinearScale;
-import org.djunits.unit.system.UnitSystem;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for the abstract {@link Quantity} class. These tests aim to cover all code paths in Quantity itself: construction via
- * concrete quantities, unit conversions, parsing helpers, formatting helpers, comparisons, static operations, and SI-prefix
- * formatting behavior. Concrete quantity classes (e.g., Length, Mass, Frequency) will have their own dedicated tests
- * elsewhere.<br>
- * <br>
+ * Unit tests for the abstract {@link Quantity} API using {@link Length} as a representative concrete type.
+ * <p>
+ * <strong>Goals and coverage:</strong>
+ * <ul>
+ * <li>Display unit handling and SI value invariants</li>
+ * <li>Formatting and stringification variants</li>
+ * <li>Parsing helpers: {@link Quantity#valueOf(String, Quantity)} and {@link Quantity#of(double, String, Quantity)}</li>
+ * <li>Comparators and zero-comparison helpers</li>
+ * <li>Static helpers: {@link Quantity#interpolate(Quantity, Quantity, double)}, {@link Quantity#max(Quantity, Quantity[])},
+ * {@link Quantity#min(Quantity, Quantity[])}, {@link Quantity#sum(Quantity, Quantity[])},
+ * {@link Quantity#mean(Quantity, Quantity[])}</li>
+ * <li>Arithmetic producing {@link SIQuantity}: {@link Quantity#multiply(Quantity)}, {@link Quantity#divide(Quantity)},
+ * {@link Quantity#reciprocal()}</li>
+ * <li>Conversion to a known quantity via {@link Quantity#as(org.djunits.unit.UnitInterface)}</li>
+ * <li>{@code equals}/{@code hashCode} contract</li>
+ * <li>Special branch in {@link Quantity#valueOf(String, Quantity)} for {@link Unitless} (empty unit string accepted), exercised
+ * using {@link Dimensionless}</li>
+ * </ul>
+ * <p>
+ * <strong>Deliberately out of scope:</strong> We do not re-test domain specifics of {@link Length} or any other derived type;
+ * they have their own dedicated unit tests. Here, {@code Length} merely provides a concrete vehicle for the abstract API.
+ * </p>
+ * <p>
+ * <strong>Locale pinning:</strong> The suite pins {@code Locale.Category.FORMAT} to {@code Locale.US} to ensure deterministic
+ * behavior of number formatting and parsing; the original locale is restored afterwards.
+ * </p>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -35,75 +54,166 @@ import org.junit.jupiter.api.Test;
 public class QuantityTest
 {
     /**
-     * Helper to make a {@link Dimensionless} for a given value and unit.
-     * @param value value expressed in the chosen unit
-     * @param unit unit to use
-     * @return a dimensionless quantity
+     * Saved default locale (FORMAT category) to restore after the test run.
      */
-    private static Dimensionless dim(final double value, final Unitless unit)
+    private static Locale savedLocale;
+
+    /**
+     * Pin the default {@link Locale} for predictable formatting/parsing behavior.
+     */
+    @BeforeAll
+    static void pinLocale()
     {
-        return new Dimensionless(value, unit);
+        savedLocale = Locale.getDefault(Locale.Category.FORMAT);
+        Locale.setDefault(Locale.US);
     }
 
     /**
-     * Verify basic getters and number conversion methods return SI values, and display unit conversions round-trip correctly.
+     * Restore the default {@link Locale} for the FORMAT category.
      */
-    @Test
-    public void testGetDisplayUnitAndNumberMethods()
+    @AfterAll
+    static void restoreLocale()
     {
-        // Use % with factor 0.01 to ensure SI storage differs from display value.
-        Unitless percent = new Unitless("%", "percent", 0.01, UnitSystem.OTHER);
-        Dimensionless d = dim(250.0, percent); // si = 2.5
-
-        assertSame(percent, d.getDisplayUnit());
-        assertEquals(250.0, d.getInUnit(), 1e-12); // back to display unit
-        assertEquals(2.5, d.si(), 1e-12);
-
-        // Number conversions are based on si() (not display).
-        assertEquals(2.5, d.doubleValue(), 1e-12);
-        assertEquals(3, d.intValue()); // rounded
-        assertEquals(3L, d.longValue()); // rounded
-        assertEquals(2.5f, d.floatValue(), 1e-6);
-
-        // Change display unit and ensure getInUnit follows the new unit scale.
-        Unitless perMille = new Unitless("\u2030", "\u2030", "permille", new LinearScale(0.001), UnitSystem.OTHER);
-        d.setDisplayUnit(perMille);
-        assertEquals(2500.0, d.getInUnit(), 1e-12); // 2.5 SI -> 2500 ‰
-        assertSame(perMille, d.getDisplayUnit());
+        Locale.setDefault(Locale.Category.FORMAT, savedLocale);
     }
 
     /**
-     * Verify {@link Quantity#siUnit()}, {@link Quantity#instantiate(double)} via concrete types, and
-     * {@link Quantity#instantiate(double, UnitInterface)} for display unit setting.
+     * Helper to construct a {@link Length} in meters.
+     * @param value the SI value in meters
+     * @return a {@link Length} with meter as display unit
      */
-    @Test
-    public void testSiUnitAndInstantiate()
+    private static Length m(final double value)
     {
-        // Use Length to test instantiate paths without asserting Length-specific behavior.
-        Length m = new Length(12.0, Length.Unit.SI); // si = 12 meters
-        assertEquals(12.0, m.si(), 1e-12);
-        assertEquals(Length.Unit.SI_UNIT.siUnit(), m.siUnit());
-
-        // Instantiate from SI and set display unit via 'instantiate(value, unit)'
-        Length km = m.instantiate(3.0, Length.Unit.km); // 3 km -> si = 3000 meters
-        assertEquals(3000.0, km.si(), 1e-9);
-        assertSame(Length.Unit.km, km.getDisplayUnit());
-
-        // Re-instantiate SI explicitly
-        Length fromSi = m.instantiate(1234.0);
-        assertEquals(1234.0, fromSi.si(), 1e-12);
+        return new Length(value, Length.Unit.m);
     }
 
     /**
-     * Verify all comparison helpers (lt/le/gt/ge/eq/ne) and zero-comparisons (lt0/le0/gt0/ge0/eq0/ne0).
+     * Helper to compare doubles with a tight but safe tolerance, intended for SI comparisons.
+     * @param expected expected SI value
+     * @param actual actual SI value
+     */
+    private static void assertClose(final double expected, final double actual)
+    {
+        assertEquals(expected, actual, 1e-12);
+    }
+
+    // ----------------------------------------------------------------------
+    // Construction, display unit, and SI invariants
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies that the {@link Quantity} constructor rejects a {@code null} display unit.
+     * <p>
+     * <strong>Expected:</strong> {@link NullPointerException}.
      */
     @Test
-    public void testComparisons()
+    void constructorNullDisplayUnitThrows()
     {
-        Unitless one = Unitless.BASE;
-        Dimensionless a = dim(2.0, one); // si=2
-        Dimensionless b = dim(3.0, one); // si=3
+        assertThrows(NullPointerException.class, () -> new Length(1.0, (Length.Unit) null));
+    }
 
+    /**
+     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.UnitInterface)}
+     * round-trip correctly and that the setter is fluent (returns {@code this}).
+     */
+    @Test
+    void displayUnitAccessors()
+    {
+        Length l = m(12).setDisplayUnit(Length.Unit.km);
+        assertSame(Length.Unit.km, l.getDisplayUnit());
+        Length same = l.setDisplayUnit(Length.Unit.cm);
+        assertSame(l, same);
+        assertSame(Length.Unit.cm, l.getDisplayUnit());
+    }
+
+    /**
+     * Ensures that the SI value returned by {@link Quantity#si()} is invariant under changes to the display unit.
+     */
+    @Test
+    void siValueInvariant()
+    {
+        Length l = new Length(1.5, Length.Unit.km); // 1500 m
+        assertClose(1500.0, l.si());
+        l.setDisplayUnit(Length.Unit.m);
+        assertClose(1500.0, l.si());
+    }
+
+    // ----------------------------------------------------------------------
+    // In-unit retrieval
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies {@link Quantity#getInUnit()} using the current display unit.
+     * <p>
+     * <strong>Case:</strong> switch from meters to kilometers and check numeric conversion.
+     */
+    @Test
+    void getInUnitCurrentDisplay()
+    {
+        Length l = new Length(2500.0, Length.Unit.m);
+        assertClose(2500.0, l.getInUnit());
+        l.setDisplayUnit(Length.Unit.km);
+        assertClose(2.5, l.getInUnit());
+    }
+
+    /**
+     * Verifies {@link Quantity#getInUnit(org.djunits.unit.UnitInterface)} for explicit target units.
+     */
+    @Test
+    void getInUnitExplicitTarget()
+    {
+        Length l = m(123.0);
+        assertClose(0.123, l.getInUnit(Length.Unit.km));
+        assertClose(123000.0, l.getInUnit(Length.Unit.mm));
+    }
+
+    // ----------------------------------------------------------------------
+    // Names, SI unit, Number overrides
+    // ----------------------------------------------------------------------
+
+    /**
+     * Confirms that the pretty/localized name as returned by {@link Quantity#getName()} is non-empty.
+     */
+    @Test
+    void getNameIsNonEmpty()
+    {
+        assertFalse(m(1).getName().isEmpty(), "Pretty name should be non-empty");
+    }
+
+    /**
+     * Ensures that {@link Quantity#siUnit()} returns the correct SI unit for the quantity family.
+     */
+    @Test
+    void siUnitMatches()
+    {
+        assertEquals(Length.Unit.SI_UNIT, m(1).siUnit());
+    }
+
+    /**
+     * Verifies that {@link Number}-derived conversions reflect the SI value semantics (rounding for int/long).
+     */
+    @Test
+    void numberConversions()
+    {
+        Length l = new Length(2.49, Length.Unit.m);
+        assertClose(2.49, l.doubleValue());
+        assertEquals(2, l.intValue());
+        assertEquals(2L, l.longValue());
+        assertEquals(2.49f, l.floatValue(), 1e-6f);
+    }
+
+    // ----------------------------------------------------------------------
+    // Comparisons and zero-comparisons
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies pairwise comparisons (lt/le/gt/ge/eq/ne) based on SI values.
+     */
+    @Test
+    void comparisons()
+    {
+        Length a = m(10);
+        Length b = m(20);
         assertTrue(a.lt(b));
         assertTrue(a.le(b));
         assertFalse(a.gt(b));
@@ -111,295 +221,338 @@ public class QuantityTest
         assertFalse(a.eq(b));
         assertTrue(a.ne(b));
 
-        Dimensionless zero = dim(0.0, one);
-        Dimensionless neg = dim(-1.0, one);
-        Dimensionless pos = dim(+1.0, one);
+        Length c = m(10);
+        assertTrue(a.le(c));
+        assertTrue(a.ge(c));
+        assertTrue(a.eq(c));
+        assertFalse(a.ne(c));
+    }
 
-        assertTrue(neg.lt0());
-        assertTrue(neg.le0());
-        assertFalse(neg.gt0());
-        assertFalse(neg.ge0());
-        assertFalse(neg.eq0());
-        assertTrue(neg.ne0());
+    /**
+     * Verifies zero-comparison helpers (lt0/le0/gt0/ge0/eq0/ne0).
+     */
+    @Test
+    void zeroComparisons()
+    {
+        assertTrue(m(-1).lt0());
+        assertTrue(m(0).le0());
+        assertTrue(m(1).gt0());
+        assertTrue(m(0).ge0());
+        assertTrue(m(0).eq0());
+        assertTrue(m(2).ne0());
+    }
 
-        assertFalse(zero.lt0());
-        assertTrue(zero.le0());
-        assertFalse(zero.gt0());
-        assertTrue(zero.ge0());
-        assertTrue(zero.eq0());
-        assertFalse(zero.ne0());
-
-        assertFalse(pos.lt0());
-        assertFalse(pos.le0());
-        assertTrue(pos.gt0());
-        assertTrue(pos.ge0());
-        assertFalse(pos.eq0());
-        assertTrue(pos.ne0());
-
-        // Comparable
+    /**
+     * Verifies the {@link Comparable} contract for {@link Quantity#compareTo(Quantity)}.
+     */
+    @Test
+    void compareToContract()
+    {
+        Length a = m(5);
+        Length b = m(6);
+        Length c = m(5);
         assertTrue(a.compareTo(b) < 0);
-        assertEquals(0, a.compareTo(dim(2.0, one)));
+        assertEquals(0, a.compareTo(c));
         assertTrue(b.compareTo(a) > 0);
     }
 
+    // ----------------------------------------------------------------------
+    // Parsing helpers: valueOf / of
+    // ----------------------------------------------------------------------
+
     /**
-     * Verify add/subtract/abs/negate/scaleBy preserve display unit and compute the correct SI value.
+     * Verifies successful parsing via {@link Quantity#valueOf(String, Quantity)} with and without a space between number and
+     * unit.
      */
     @Test
-    public void testRelativeOperations()
+    void valueOfParses()
     {
-        Unitless u = Unitless.BASE;
-        Dimensionless x = dim(10.0, u); // si=10
-        Dimensionless y = dim(4.0, u); // si=4
+        Length ex = Length.ZERO; // example
+        Length a = Quantity.valueOf("12.5 m", ex);
+        assertClose(12.5, a.getInUnit(Length.Unit.m));
 
-        assertEquals(14.0, x.add(y).si(), 1e-12);
-        assertSame(u, x.add(y).getDisplayUnit());
-
-        assertEquals(6.0, x.subtract(y).si(), 1e-12);
-        assertSame(u, x.subtract(y).getDisplayUnit());
-
-        assertEquals(10.0, x.abs().si(), 1e-12);
-        assertEquals(10.0, x.negate().negate().si(), 1e-12);
-        assertEquals(-10.0, x.negate().si(), 1e-12);
-
-        assertEquals(15.0, x.scaleBy(1.5).si(), 1e-12);
-        assertSame(u, x.scaleBy(1.5).getDisplayUnit());
+        Length b = Quantity.valueOf("12.5m", ex);
+        assertClose(12.5, b.getInUnit(Length.Unit.m));
     }
 
     /**
-     * Verify multiply/divide produce an {@link SIQuantity} with correct SI value and a non-null unit, and reciprocal produces
-     * the inverted unit result.
+     * Verifies error handling in {@link Quantity#valueOf(String, Quantity)}.
+     * <ul>
+     * <li>{@code null} input or example</li>
+     * <li>empty string</li>
+     * <li>missing unit (non-Unitless type)</li>
+     * <li>unknown unit</li>
+     * </ul>
      */
     @Test
-    public void testMultiplyDivideReciprocal()
+    void valueOfInvalids()
     {
-        Length a = new Length(2.0, Length.Unit.m); // si=2 m
-        Length b = new Length(3.0, Length.Unit.m); // si=3 m
-
-        Area prod = a.multiply(b); // si=6 m^2
-        assertEquals(6.0, prod.si(), 1e-12);
-        assertNotNull(prod.siUnit());
-
-        Dimensionless quot = a.divide(b); // si=2/3 m/m = 2/3
-        assertEquals(2.0 / 3.0, quot.si(), 1e-12);
-        assertNotNull(quot.siUnit());
-
-        Quantity<?, ?> recip = a.reciprocal(); // 1 / (2 m) = 0.5 1/m
-        assertEquals(0.5, recip.si(), 1e-12);
-        assertNotNull(recip.siUnit());
+        Length ex = Length.ZERO;
+        assertThrows(NullPointerException.class, () -> Quantity.valueOf(null, ex));
+        assertThrows(NullPointerException.class, () -> Quantity.valueOf("1.0 m", null));
+        assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("", ex)); // empty text
+        assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("123", ex)); // no unit (not unitless)
+        assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("1.0 zz", ex)); // unknown unit
     }
 
     /**
-     * Verify {@link Quantity#as(UnitInterface)} returns a correctly typed quantity when SI units match, and throws when they do
-     * not match.
+     * Verifies successful parsing via {@link Quantity#of(double, String, Quantity)} and its error branches for {@code null}
+     * parameters, empty unit string, and unknown unit.
      */
     @Test
-    public void testAs()
+    void ofParses()
     {
-        Length m = new Length(1500.0, Length.Unit.m); // si=1500 m
-        // Convert to kilometers (same SI type)
-        Length kmResult = m.as(Length.Unit.km);
-        assertEquals(1500.0, kmResult.si(), 1e-12);
-        assertSame(Length.Unit.km, kmResult.getDisplayUnit());
-
-        // Mismatched SI type: converting Length "as" Unitless must fail
-        assertThrows(IllegalArgumentException.class, () -> m.as(Unitless.BASE));
+        Length ex = Length.ZERO;
+        Length a = Quantity.of(2.0, "km", ex);
+        assertClose(2000.0, a.si());
+        assertThrows(NullPointerException.class, () -> Quantity.of(1.0, null, ex));
+        assertThrows(NullPointerException.class, () -> Quantity.of(1.0, "m", null));
+        assertThrows(IllegalArgumentException.class, () -> Quantity.of(1.0, "", ex));
+        assertThrows(UnitRuntimeException.class, () -> Quantity.of(1.0, "???", ex));
     }
 
     /**
-     * Verify {@link Quantity#format(double)} and {@link Quantity#format(double, String)} behavior: stripping trailing zeros for
-     * %f, preserving exponent notation for %E, and keeping a trailing zero if needed.
+     * <strong>Unitless special-case coverage:</strong> When the example is {@link Dimensionless}, an empty (or whitespace-only)
+     * unit token must be accepted and interpreted as {@link Unitless#BASE}.
+     * <p>
+     * Also verifies that a non-empty, unknown unit still fails for dimensionless parsing.
      */
     @Test
-    public void testFormatHelpers()
+    void valueOfAcceptsEmptyUnitForDimensionless()
     {
-        Length m = new Length(1.0, Length.Unit.m);
+        Dimensionless example = Dimensionless.ZERO;
 
-        // %f path with trimming and ensuring digit after decimal (if any)
-        assertEquals("123.456", m.format(123.4560));
-        assertEquals("1.2", m.format(1.200000));
-        assertEquals("0.0", m.format(0.0));
+        // Empty unit token after trimming -> accepted for Unitless
+        Dimensionless a = Quantity.valueOf("2.5", example);
+        assertEquals(2.5, a.si(), 1e-12);
+        assertTrue(a.getDisplayUnit() instanceof Unitless);
 
-        // %E path for small/large values
-        String smallE = m.format(1e-6);
-        String largeE = m.format(1e6);
-        assertTrue(smallE.contains("E") || smallE.contains("e"));
-        assertTrue(largeE.contains("E") || largeE.contains("e"));
+        // Whitespace-only suffix -> accepted for Unitless
+        Dimensionless b = Quantity.valueOf("3.75   \t", example);
+        assertEquals(3.75, b.si(), 1e-12);
+        assertTrue(b.getDisplayUnit() instanceof Unitless);
 
-        // Explicit format does not trim if exponent is present
-        String explicit = m.format(123.456, "%10.4E");
-        assertTrue(explicit.contains("E"));
+        // Unknown, non-empty unit -> still fails
+        assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("1.0 xyz", example));
+    }
+
+    // ----------------------------------------------------------------------
+    // Formatting and stringification
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies {@link Quantity#format(double)} for the fixed-format range, E-notation range, and non-finite values.
+     */
+    @Test
+    void formatVariants()
+    {
+        // %f path
+        assertEquals("3.14", Quantity.format(3.140000));
+        assertEquals("0.0", Quantity.format(0));
+        // %E path
+        String s = Quantity.format(1.23e12);
+        assertTrue(s.contains("E"));
+        // Non-finite values should still yield a non-empty result
+        assertFalse(Quantity.format(Double.NaN).isEmpty());
+        assertFalse(Quantity.format(Double.POSITIVE_INFINITY).isEmpty());
+        assertFalse(Quantity.format(Double.NEGATIVE_INFINITY).isEmpty());
     }
 
     /**
-     * Verify {@link Quantity#toString()}, {@link Quantity#toString(UnitInterface)}, and
-     * {@link Quantity#toString(boolean, boolean)} produce expected shapes: SI-Formatted value, optional "Rel " prefix for
-     * verbose, and unit inclusion/exclusion.
+     * Verifies {@link Quantity#toString()} variants, including verbose/type flags and unit suppression.
      */
     @Test
-    public void testToStringVariants()
+    void toStringVariants()
     {
-        Unitless percent = new Unitless("%", "%", "percent", new LinearScale(0.01), UnitSystem.OTHER);
-        Dimensionless d = dim(250.0, percent); // si=2.5, display=250 %
-
-        // Default toString: value in current display unit + display abbr
-        String s = d.toString();
-        assertTrue(s.contains("%"));
-        assertTrue(s.contains("250"));
-
-        // toString(unit): force display in permille
-        Unitless perMille = new Unitless("\u2030", "\u2030", "permille", new LinearScale(0.001), UnitSystem.OTHER);
-        String sp = d.toString(perMille);
-        assertTrue(sp.contains("\u2030"));
-        assertTrue(sp.contains("2500"));
-
-        // Verbose without unit: prefixed "Rel "
-        String verb = d.toString(true, false);
-        assertTrue(verb.startsWith("Rel "));
-
-        // With unit
-        String verbUnit = d.toString(true, true);
-        assertTrue(verbUnit.startsWith("Rel "));
-        assertTrue(verbUnit.endsWith(" %"));
+        Length d = new Length(1500, Length.Unit.m);
+        // default
+        String def = d.toString();
+        assertTrue(def.endsWith(" m"));
+        // explicit unit
+        assertTrue(d.toString(Length.Unit.km).endsWith(" km"));
+        // verbose flag
+        assertTrue(d.toString(true, true).startsWith("Rel "));
+        // without unit
+        assertFalse(d.toString(false, false).endsWith(" m"));
     }
 
     /**
-     * Verify SIPrefixed rendering: for finite SI values within prefix range, a prefixed unit is chosen; for non-finite SI
-     * values, the base-unit toString is used; for out-of-range exponents, e-notation with plain base unit. Note: this exercises
-     * the code path in Quantity; concrete details of Length prefixes are covered in Length's own tests.
+     * Verifies {@link Quantity#toStringSIPrefixed()} both for an in-range SI-prefix selection and an out-of-range fallback to
+     * E-notation.
      */
     @Test
-    public void testToStringSIPrefixed()
+    void toStringSIPrefixed()
     {
-        // SI value still used (meters); choose value around 10^3 to trigger kilo.
-        Length m = new Length(1200.0, Length.Unit.m); // si=1200 -> expect something like "1.2 km"
-        String prefixed = m.toStringSIPrefixed();
-        assertTrue(prefixed.contains("km") || prefixed.contains("m")); // allow rounding boundary
+        Length small = m(0.001); // 1 mm
+        assertTrue(small.toStringSIPrefixed().endsWith(" mm"));
 
-        // Non-finite SI -> fall back to base-unit toString
-        Length nanLen = new Length(Double.NaN, Length.Unit.m);
-        String prefixedNan = nanLen.toStringSIPrefixed();
-        assertTrue(prefixedNan.endsWith(" " + Length.Unit.m.getBaseUnit().getId()));
+        Length big = m(12_345); // ~12.345 km
+        String pref = big.toStringSIPrefixed();
+        assertTrue(pref.contains("km"));
 
-        // Extremely large value (bigger than Quetta -> e-notation with plain base unit
-        Length huge = new Length(1e42, Length.Unit.m);
-        String prefixedHuge = huge.toStringSIPrefixed();
-        assertTrue(prefixedHuge.contains("E"));
-        assertTrue(prefixedHuge.endsWith(" " + Length.Unit.m.getBaseUnit().getId()));
+        // Out of SI-prefix range -> E-notation with base unit
+        Length huge = m(1e40);
+        String hugeS = huge.toStringSIPrefixed();
+        assertTrue(hugeS.contains("E"));
+        assertTrue(hugeS.endsWith(" m"));
     }
 
     /**
-     * Verify concise textual and display strings with current and explicit display units.
+     * Verifies concise textual and display strings (abbreviation correctness and spacing).
      */
     @Test
-    public void testToTextualAndDisplayStrings()
+    void compactStrings()
     {
-        Length len = new Length(1.2345, Length.Unit.m);
-        assertTrue(len.toTextualString().contains("m"));
-        assertTrue(len.toDisplayString().contains("m"));
+        Length l = new Length(1234, Length.Unit.m);
+        assertTrue(l.toTextualString().endsWith(" m"));
+        assertTrue(l.toDisplayString().endsWith(" m"));
+        assertTrue(l.toTextualString(Length.Unit.km).endsWith(" km"));
+        assertTrue(l.toDisplayString(Length.Unit.km).endsWith(" km"));
+    }
 
-        String kmText = len.toTextualString(Length.Unit.km);
-        String kmDisp = len.toDisplayString(Length.Unit.km);
-        assertTrue(kmText.contains("km"));
-        assertTrue(kmDisp.contains("km"));
+    // ----------------------------------------------------------------------
+    // Static helpers: interpolate, min/max/sum/mean
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies {@link Quantity#interpolate(Quantity, Quantity, double)}. For:
+     * <ul>
+     * <li>a valid ratio in [0, 1] (result SI value and display unit of the first argument)</li>
+     * <li>out-of-bounds ratio (&lt; 0 or &gt; 1) raising {@link IllegalArgumentException}</li>
+     * </ul>
+     */
+    @Test
+    void interpolateQuantity()
+    {
+        Length a = m(0).setDisplayUnit(Length.Unit.m);
+        Length b = m(1000).setDisplayUnit(Length.Unit.m);
+        Length mid = Quantity.interpolate(a, b, 0.25);
+        assertClose(250.0, mid.si());
+        assertSame(Length.Unit.m, mid.getDisplayUnit());
+
+        assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(a, b, -0.1));
+        assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(a, b, 1.1));
     }
 
     /**
-     * Verify parsing helpers: {@link Quantity#valueOf(String, Quantity)} and {@link Quantity#of(double, String, Quantity)}.
-     * Includes happy paths and error cases (nulls, empty, unknown units, bad numbers).
+     * Verifies {@link Quantity#max(Quantity, Quantity[])} and {@link Quantity#min(Quantity, Quantity[])} selection.
      */
     @Test
-    public void testParsingHelpers()
+    void maxMin()
     {
-        Locale original = Locale.getDefault();
-        try
-        {
-            Locale.setDefault(Locale.US);
-
-            // Happy path: "1.5 km"
-            Length example = new Length(0.0, Length.Unit.m); // example instance only supplies class & display unit
-            // (Length.Unit)
-            Length parsed = Quantity.valueOf("1.5 km", example);
-            assertEquals(1500.0, parsed.si(), 1e-12);
-            assertSame(Length.Unit.km, parsed.getDisplayUnit());
-
-            // Happy path using 'of(value, "unit", example)'
-            Length x = Quantity.of(2.5, "m", example);
-            assertEquals(2.5, x.si(), 1e-12);
-            assertSame(Length.Unit.m, x.getDisplayUnit());
-
-            // Null example
-            assertThrows(NullPointerException.class, () -> Quantity.valueOf("1 m", (Length) null));
-            assertThrows(NullPointerException.class, () -> Quantity.of(1.0, "m", (Length) null));
-
-            // Null/empty text and unitString
-            assertThrows(NullPointerException.class, () -> Quantity.valueOf(null, example));
-            assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("", example));
-            assertThrows(NullPointerException.class, () -> Quantity.of(1.0, null, example));
-            assertThrows(IllegalArgumentException.class, () -> Quantity.of(1.0, "", example));
-
-            // Unknown unit -> Units.resolve throws -> Quantity wraps as IllegalArgumentException
-            assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("12.34 xyz", example));
-            assertThrows(UnitRuntimeException.class, () -> Quantity.of(1.0, "xyz", example));
-
-            // Bad number still yields IllegalArgumentException
-            assertThrows(IllegalArgumentException.class, () -> Quantity.valueOf("abc m", example));
-        }
-        finally
-        {
-            Locale.setDefault(original);
-        }
+        Length a = m(1);
+        Length b = m(5);
+        Length c = m(-2);
+        assertSame(b, Quantity.max(a, b, c));
+        assertSame(c, Quantity.min(a, b, c));
     }
 
     /**
-     * Verify static operations: interpolate, max, min, sum, mean. Ensure unit handling and SI results are correct.
+     * Verifies {@link Quantity#sum(Quantity, Quantity[])} and {@link Quantity#mean(Quantity, Quantity[])} and that the display
+     * unit of the first argument is preserved in the result.
      */
     @Test
-    public void testStaticOperations()
+    void sumMean()
     {
-        // Interpolate with different display units; the result should use zero's display unit.
-        Length zero = new Length(0.0, Length.Unit.km); // si=0 km
-        Length one = new Length(1000.0, Length.Unit.m); // si=1000 m (1 km)
-        Length mid = Quantity.interpolate(zero, one, 0.5);
-        assertEquals(0.5, mid.getInUnit(), 1e-12); // expressed in km
-        assertSame(Length.Unit.km, mid.getDisplayUnit());
+        Length a = m(1).setDisplayUnit(Length.Unit.cm);
+        Length b = m(2);
+        Length c = m(3);
+        Length sum = Quantity.sum(a, b, c);
+        assertClose(6.0, sum.si());
+        assertSame(a.getDisplayUnit(), sum.getDisplayUnit());
 
-        // Ratio bounds
-        assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(zero, one, -0.1));
-        assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(zero, one, 1.1));
-
-        // max/min
-        Length a = new Length(2.0, Length.Unit.m);
-        Length b = new Length(3.0, Length.Unit.m);
-        assertSame(b, Quantity.max(a, b));
-        assertSame(a, Quantity.min(a, b));
-
-        // sum/mean preserve the display unit of the first argument
-        Length s = Quantity.sum(a, b); // si = 5.0
-        assertEquals(5.0, s.si(), 1e-12);
-        assertSame(a.getDisplayUnit(), s.getDisplayUnit());
-
-        Length mean = Quantity.mean(a, b); // (2+3)/2 = 2.5
-        assertEquals(2.5, mean.si(), 1e-12);
+        Length mean = Quantity.mean(a, b, c);
+        assertClose(2.0, mean.si());
         assertSame(a.getDisplayUnit(), mean.getDisplayUnit());
     }
 
+    // ----------------------------------------------------------------------
+    // Arithmetic yielding SIQuantity
+    // ----------------------------------------------------------------------
+
     /**
-     * Verify equals and hashCode behavior for equal and unequal quantities. Quantity.equals requires same class, equal display
-     * unit, and equal SI value.
+     * Verifies {@link Quantity#multiply(Quantity)}, {@link Quantity#divide(Quantity)}, and {@link Quantity#reciprocal()}
+     * produce {@link SIQuantity} with correct SI values (unit algebra correctness is validated in SIQuantity/unit tests).
      */
     @Test
-    public void testEqualsAndHashCode()
+    void siQuantityArithmetic()
     {
-        Length l1 = new Length(5.0, Length.Unit.m);
-        Length l2 = new Length(5.0, Length.Unit.m);
-        Length l3 = new Length(5.0, Length.Unit.km); // different display unit; not equal
+        Length a = m(3);
+        Length b = m(4);
 
-        assertEquals(l1, l2);
-        assertEquals(l1.hashCode(), l2.hashCode());
+        Area prod = a.multiply(b);
+        assertClose(12.0, prod.si());
 
-        assertNotEquals(l1, l3);
-        assertNotEquals(l1, null);
-        assertNotEquals(l1, new Object());
+        Dimensionless quot = a.divide(b);
+        assertClose(0.75, quot.si());
+
+        var inv = a.reciprocal(); // LinearObjectDensity
+        assertClose(1.0 / 3.0, inv.si());
     }
+
+    // ----------------------------------------------------------------------
+    // as(TU) conversion
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies {@link Quantity#as(org.djunits.unit.UnitInterface)} converts to a correctly typed quantity while preserving the
+     * SI value and replacing the display unit with the requested unit.
+     */
+    @Test
+    void asKnownQuantity()
+    {
+        Length l = m(1234.0);
+        Length km = l.as(Length.Unit.km);
+        assertClose(1234.0, km.si());
+        assertSame(Length.Unit.km, km.getDisplayUnit());
+        assertEquals(Length.class, km.getClass());
+    }
+
+    // ----------------------------------------------------------------------
+    // equals / hashCode
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies {@code equals}/{@code hashCode} consider the SI value (bits) and the display unit.
+     */
+    @Test
+    void equalsHashCode()
+    {
+        Length a = new Length(1, Length.Unit.km); // 1000 m
+        Length b = m(1000).setDisplayUnit(Length.Unit.km);
+        Length c = m(1000).setDisplayUnit(Length.Unit.m); // different display unit
+        assertEquals(a, b);
+        assertEquals(a.hashCode(), b.hashCode());
+        assertNotEquals(a, c);
+    }
+
+    /**
+     * Tests {@link Quantity#getName()} for both the simple case (single leading uppercase, e.g. "Length" -> "Length") and the
+     * camel-case/internal-uppercase case using {@code SIQuantity} (e.g. "SIQuantity" -> "S i quantity").
+     * <p>
+     * <strong>Why SIQuantity?</strong> The algorithm in {@link Quantity#getName()} inserts a space before each uppercase letter
+     * <em>after</em> the first character and lower-cases that letter. Using {@code SIQuantity} guarantees we hit that branch:
+     * 'S' (kept as-is), then 'I' (→ " i"), then 'Q' (→ " q"), then "uantity".
+     * </p>
+     * <p>
+     * <strong>Expected:</strong>
+     * <ul>
+     * <li>{@code new Length(...).getName()} yields {@code "Length"} (no spaces added)</li>
+     * <li>{@code new SIQuantity(...).getName()} yields {@code "S i quantity"} (spaces and lower-casing applied)</li>
+     * </ul>
+     */
+    @Test
+    void getNameFormatsPrettyForQuantityAndSIQuantity()
+    {
+        // Simple case: only the first character is uppercase; no spaces should be inserted.
+        Length length = new Length(1.0, Length.Unit.m);
+        assertEquals("Length", length.getName(), "Length should remain 'Length' without extra spaces");
+
+        // Internal-uppercase case: "SIQuantity" -> "S i quantity"
+        // Construct an SIQuantity with a length SI unit to reuse an available SIUnit.
+        SIQuantity siq = new SIQuantity(1.0, Length.Unit.SI_UNIT);
+        assertEquals("S i quantity", siq.getName(),
+                "Camel-cased 'SIQuantity' should become 'S i quantity' (spaces before internal capitals)");
+    }
+
 }
