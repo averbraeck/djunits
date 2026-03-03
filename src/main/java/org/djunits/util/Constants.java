@@ -101,7 +101,7 @@ public final class Constants
      * green-colored light at approximately the peak sensitivity of the human eye. This value is exact since the 2006
      * redefinition of the SI base units.
      */
-    public static final SIQuantity LUMINOUS_EFFICACY_540THZ = SIQuantity.of(683d, "cdsrs3/kg");
+    public static final SIQuantity LUMINOUS_EFFICACY_540THZ = SIQuantity.of(683d, "cdsrs3/kgm2");
 
     /** Ratio of a half circumference of a circle and its radius. */
     public static final Dimensionless PI = new Dimensionless(Math.PI, Unitless.BASE);
