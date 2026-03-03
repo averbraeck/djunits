@@ -40,7 +40,7 @@ public final class Constants
      * The Cesium 133 ground state hyperfine structure transition frequency. This value is exact since the 2006 redefinition of
      * the SI base units.
      */
-    public static final Frequency CESIUM133_FREQUENCY = Frequency.of(9192631770d, "1/s");
+    public static final Frequency CESIUM133_FREQUENCY = Frequency.of(9192631770d, "Hz");
 
     /** Electric charge of one electron. This value is exact since the 2019 redefinition of the SI base units. */
     public static final ElectricCharge ELECTRONCHARGE = new ElectricCharge(-1, ElectricCharge.Unit.e);
