@@ -430,7 +430,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param d the number to format
      * @return the formatted number using the current Locale
      */
-    public String format(final double d)
+    public static String format(final double d)
     {
         if (d == 0.0 || (Math.abs(d) >= 1E-5 && Math.abs(d) <= 1E5) || !Double.isFinite(d))
         {
@@ -445,7 +445,7 @@ public abstract class Quantity<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param format the formatting string to use for the number
      * @return the formatted number using the current Locale and the format string
      */
-    public String format(final double d, final String format)
+    public static String format(final double d, final String format)
     {
         String s = String.format(format, d);
         if (s.contains("e") || s.contains("E"))
