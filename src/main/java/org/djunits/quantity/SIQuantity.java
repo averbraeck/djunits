@@ -3,7 +3,6 @@ package org.djunits.quantity;
 import java.util.Locale;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -39,7 +38,7 @@ public class SIQuantity extends Quantity<SIQuantity, SIUnit>
      */
     public SIQuantity(final double value, final String abbreviation)
     {
-        this(value, Units.resolve(SIUnit.class, abbreviation));
+        this(value, SIUnit.of(abbreviation));
     }
 
     /**
@@ -81,7 +80,7 @@ public class SIQuantity extends Quantity<SIQuantity, SIUnit>
             NumberParser numberParser = new NumberParser().lenient().trailing();
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            SIUnit unit = Units.resolve(SIUnit.class, unitString);
+            SIUnit unit = SIUnit.of(unitString);
             Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity SI", unitString);
             return new SIQuantity(d, unit);
         }
@@ -105,7 +104,7 @@ public class SIQuantity extends Quantity<SIQuantity, SIUnit>
     {
         Throw.whenNull(unitString, "Error parsing SI quantity: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SI quantity: empty unitString");
-        SIUnit unit = Units.resolve(SIUnit.class, unitString);
+        SIUnit unit = SIUnit.of(unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing SI quantity with unit %s", unitString);
         return new SIQuantity(value, unit);
     }
