@@ -79,7 +79,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             case 1 -> x();
             case 2 -> y();
-            default -> throw new IndexOutOfBoundsException("Cannot retrieve Vector3[" + index + "]");
+            default -> throw new IndexOutOfBoundsException("Cannot retrieve Vector2[" + index + "]");
         };
     }
 
@@ -212,7 +212,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public Q normL1()
     {
-        return this.displayUnit.ofSi((Math.abs(this.xSi) + Math.abs(this.ySi)) / 2.0).setDisplayUnit(getDisplayUnit());
+        return this.displayUnit.ofSi(Math.abs(this.xSi) + Math.abs(this.ySi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -224,7 +224,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public Q normLp(final int p)
     {
-        return this.displayUnit.ofSi(Math.pow(Math.pow(this.xSi, p) + Math.pow(this.ySi, p), 1.0 / p))
+        return this.displayUnit.ofSi(Math.pow(Math.pow(Math.abs(this.xSi), p) + Math.pow(Math.abs(this.ySi), p), 1.0 / p))
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -418,14 +418,14 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public Vector2.Col<SIQuantity, SIUnit> multiplyElements(final Vector2.Col<?, ?> other)
         {
-            SIUnit siUnit = SIUnit.add(x().siUnit(), other.x().siUnit());
+            SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector2.Col<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), siUnit);
         }
 
         @Override
         public Vector2.Col<SIQuantity, SIUnit> divideElements(final Vector2.Col<?, ?> other)
         {
-            SIUnit siUnit = SIUnit.subtract(x().siUnit(), other.x().siUnit());
+            SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector2.Col<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), siUnit);
         }
 
@@ -543,14 +543,14 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public Vector2.Row<SIQuantity, SIUnit> multiplyElements(final Vector2.Row<?, ?> other)
         {
-            SIUnit siUnit = SIUnit.add(x().siUnit(), other.x().siUnit());
+            SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector2.Row<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), siUnit);
         }
 
         @Override
         public Vector2.Row<SIQuantity, SIUnit> divideElements(final Vector2.Row<?, ?> other)
         {
-            SIUnit siUnit = SIUnit.subtract(x().siUnit(), other.x().siUnit());
+            SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector2.Row<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), siUnit);
         }
 
