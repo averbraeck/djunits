@@ -46,25 +46,25 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
 
     /**
      * Create a new Vector2 with a unit.
-     * @param xSi the x-value expressed in SI or BASE units
-     * @param ySi the y-value expressed in SI or BASE units
+     * @param xInUnit the x-value expressed in the given unit
+     * @param yInUnit the y-value expressed in the given unit
      * @param displayUnit the display unit to use
      */
-    protected Vector2(final double xSi, final double ySi, final U displayUnit)
+    protected Vector2(final double xInUnit, final double yInUnit, final U displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
-        this.xSi = xSi;
-        this.ySi = ySi;
+        this.xSi = displayUnit.toBaseValue(xInUnit);
+        this.ySi = displayUnit.toBaseValue(yInUnit);
         this.displayUnit = displayUnit;
     }
 
     /**
-     * Return a new column or row vector with adapted x and y values.
-     * @param xSiNew the x value to use
-     * @param ySiNew the y value to use
+     * Return a column or row vector with x and y values in SI or BASE units.
+     * @param xSiNew the x value in SI or BASE units
+     * @param ySiNew the y value in SI or BASE units
      * @return a new column or row vector with adapted x and y values
      */
-    protected abstract V instantiate(double xSiNew, double ySiNew);
+    protected abstract V instantiateSi(double xSiNew, double ySiNew);
 
     @Override
     public int size()
@@ -104,11 +104,11 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
-    public V instantiate(final double[] siNew)
+    public V instantiateSi(final double[] siNew)
     {
         Throw.when(siNew.length != 2, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
                 siNew.length);
-        return instantiate(siNew[0], siNew[1]);
+        return instantiateSi(siNew[0], siNew[1]);
     }
 
     /**
@@ -182,31 +182,31 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public V scaleBy(final double factor)
     {
-        return instantiate(this.xSi * factor, this.ySi * factor);
+        return instantiateSi(this.xSi * factor, this.ySi * factor);
     }
 
     @Override
     public V add(final V other)
     {
-        return instantiate(this.xSi + other.xSi(), this.ySi + other.ySi());
+        return instantiateSi(this.xSi + other.xSi(), this.ySi + other.ySi());
     }
 
     @Override
     public V subtract(final V other)
     {
-        return instantiate(this.xSi - other.xSi(), this.ySi - other.ySi());
+        return instantiateSi(this.xSi - other.xSi(), this.ySi - other.ySi());
     }
 
     @Override
     public V negate()
     {
-        return instantiate(-this.xSi, -this.ySi);
+        return instantiateSi(-this.xSi, -this.ySi);
     }
 
     @Override
     public V abs()
     {
-        return instantiate(Math.abs(this.xSi), Math.abs(this.ySi));
+        return instantiateSi(Math.abs(this.xSi), Math.abs(this.ySi));
     }
 
     @Override
@@ -274,13 +274,13 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public V add(final Q increment)
     {
-        return instantiate(this.xSi + increment.si(), this.ySi + increment.si());
+        return instantiateSi(this.xSi + increment.si(), this.ySi + increment.si());
     }
 
     @Override
     public V subtract(final Q decrement)
     {
-        return instantiate(this.xSi - decrement.si(), this.ySi - decrement.si());
+        return instantiateSi(this.xSi - decrement.si(), this.ySi - decrement.si());
     }
 
     @Override
@@ -355,28 +355,28 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
 
         /**
          * Create a new 2 column vector with a unit.
-         * @param xSi the x-value expressed in SI or BASE units
-         * @param ySi the y-value expressed in SI or BASE units
+         * @param xInUnit the x-value expressed in the given display unit
+         * @param yInUnit the y-value expressed in the given display unit
          * @param displayUnit the display unit to use
          */
-        public Col(final double xSi, final double ySi, final U displayUnit)
+        public Col(final double xInUnit, final double yInUnit, final U displayUnit)
         {
-            super(xSi, ySi, displayUnit);
+            super(xInUnit, yInUnit, displayUnit);
         }
 
         /**
          * Create a Vector2 column vector without needing generics.
-         * @param x the x-value expressed in the display unit
-         * @param y the y-value expressed in the display unit
+         * @param xInUnit the x-value expressed in the display unit
+         * @param yInUnit the y-value expressed in the display unit
          * @param displayUnit the display unit to use
          * @return a new Vector2 with a unit
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2.Col<Q, U> of(final double x,
-                final double y, final U displayUnit)
+        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2.Col<Q, U> of(final double xInUnit,
+                final double yInUnit, final U displayUnit)
         {
-            return new Vector2.Col<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
+            return new Vector2.Col<>(xInUnit, yInUnit, displayUnit);
         }
 
         @Override
@@ -398,9 +398,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        protected Vector2.Col<Q, U> instantiate(final double xSi, final double ySi)
+        protected Vector2.Col<Q, U> instantiateSi(final double xSi, final double ySi)
         {
-            return new Vector2.Col<>(xSi, ySi, getDisplayUnit());
+            return new Vector2.Col<>(xSi, ySi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -480,28 +480,28 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
 
         /**
          * Create a new 2 row vector with a unit.
-         * @param xSi the x-value expressed in SI or BASE units
-         * @param ySi the y-value expressed in SI or BASE units
+         * @param xInUnit the x-value expressed in the given unit
+         * @param yInUnit the y-value expressed in the given unit
          * @param displayUnit the display unit to use
          */
-        public Row(final double xSi, final double ySi, final U displayUnit)
+        public Row(final double xInUnit, final double yInUnit, final U displayUnit)
         {
-            super(xSi, ySi, displayUnit);
+            super(xInUnit, yInUnit, displayUnit);
         }
 
         /**
          * Create a Vector2 row vector without needing generics.
-         * @param x the x-value expressed in the display unit
-         * @param y the y-value expressed in the display unit
+         * @param xInUnit the x-value expressed in the display unit
+         * @param yInUnit the y-value expressed in the display unit
          * @param displayUnit the display unit to use
          * @return a new Vector2 with a unit
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2.Row<Q, U> of(final double x,
-                final double y, final U displayUnit)
+        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2.Row<Q, U> of(final double xInUnit,
+                final double yInUnit, final U displayUnit)
         {
-            return new Vector2.Row<>(displayUnit.toBaseValue(x), displayUnit.toBaseValue(y), displayUnit);
+            return new Vector2.Row<>(xInUnit, yInUnit, displayUnit);
         }
 
         @Override
@@ -523,9 +523,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        protected Vector2.Row<Q, U> instantiate(final double xSi, final double ySi)
+        protected Vector2.Row<Q, U> instantiateSi(final double xSi, final double ySi)
         {
-            return new Vector2.Row<>(xSi, ySi, getDisplayUnit());
+            return new Vector2.Row<>(xSi, ySi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
