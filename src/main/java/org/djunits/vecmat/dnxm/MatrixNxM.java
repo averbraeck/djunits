@@ -46,7 +46,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new MatrixNxM with a unit, based on a 1-dimensional double array.
-     * @param valueArray the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
+     * @param valueArrayInUnit the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -57,24 +57,25 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      *             equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final double[] valueArray,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final double[] valueArrayInUnit,
             final int rows, final int cols, final U displayUnit)
     {
-        Throw.whenNull(valueArray, "valueArray");
+        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
         Throw.when(rows <= 0, IllegalArgumentException.class, "rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "cols <= 0");
-        Throw.when(rows * cols != valueArray.length, IllegalArgumentException.class,
-                "valueArray does not contain a the correct number of entries (%d x %d != %d)", rows, cols, valueArray.length);
+        Throw.when(rows * cols != valueArrayInUnit.length, IllegalArgumentException.class,
+                "valueArrayInUnit does not contain a the correct number of entries (%d x %d != %d)", rows, cols,
+                valueArrayInUnit.length);
         double[] aSi = new double[rows * cols];
-        for (int i = 0; i < valueArray.length; i++)
-            aSi[i] = displayUnit.toBaseValue(valueArray[i]);
+        for (int i = 0; i < valueArrayInUnit.length; i++)
+            aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
         return new MatrixNxM<Q, U>(new DenseDoubleData(aSi, rows, cols), displayUnit);
     }
 
     /**
      * Create a new MatrixNxM with a unit, based on a 2-dimensional double grid.
-     * @param valueGrid the matrix values {{a11, a12, a1M}, ..., {aN1, N32, aNM}} expressed in the display unit
+     * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, N32, aNM}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -83,47 +84,49 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      *             equal to the number of columns in another row
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final double[][] valueGrid,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final double[][] valueGridInUnit,
             final U displayUnit)
     {
-        Throw.whenNull(valueGrid, "valueGrid");
+        Throw.whenNull(valueGridInUnit, "valueGridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        int rows = valueGrid.length;
-        Throw.when(rows == 0, IllegalArgumentException.class, "valueGrid has 0 rows");
-        int cols = valueGrid[0].length;
-        Throw.when(cols == 0, IllegalArgumentException.class, "row 0 in valueGrid has 0 columns");
+        int rows = valueGridInUnit.length;
+        Throw.when(rows == 0, IllegalArgumentException.class, "valueGridInUnit has 0 rows");
+        int cols = valueGridInUnit[0].length;
+        Throw.when(cols == 0, IllegalArgumentException.class, "row 0 in valueGridInUnit has 0 columns");
         double[] aSi = new double[rows * cols];
         for (int r = 0; r < rows; r++)
         {
-            Throw.when(valueGrid[r].length != cols, IllegalArgumentException.class,
-                    "valueGrid is not a NxM array; row %d has a length of %d, not %d", r, valueGrid[r].length, cols);
+            Throw.when(valueGridInUnit[r].length != cols, IllegalArgumentException.class,
+                    "valueGridInUnit is not a NxM array; row %d has a length of %d, not %d", r, valueGridInUnit[r].length,
+                    cols);
             for (int c = 0; c < cols; c++)
-                aSi[cols * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
+                aSi[cols * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
         }
         return new MatrixNxM<Q, U>(new DenseDoubleData(aSi, rows, cols), displayUnit);
     }
 
     /**
-     * Create a new MatrixNxM with a unit, based on a 1-dimensional quantity array.
-     * @param valueGrid the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
-     * @param displayUnit the display unit to use
+     * Create a new MatrixNxM with a unit, based on a 2-dimensional quantity grid.
+     * @param quantityGrid the matrix values {{a11, a12, ..., a1M}, {aN2, ..., aNM}}, each with their own unit
+     * @param displayUnit the display unit to use for the resulting matrix
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new MatrixNxM with a unit
-     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in valueArray is not
+     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in quantityGrid is not
      *             equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final Q[][] valueGrid,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxM<Q, U> of(final Q[][] quantityGrid,
             final U displayUnit)
     {
-        return new MatrixNxM<Q, U>(new DenseDoubleData(valueGrid), displayUnit);
+        return new MatrixNxM<Q, U>(new DenseDoubleData(quantityGrid), displayUnit);
     }
-    
+
     @Override
-    public MatrixNxM<Q, U> instantiate(final double[] siNew)
+    public MatrixNxM<Q, U> instantiateSi(final double[] siNew)
     {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit());
+        return new MatrixNxM<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
