@@ -46,7 +46,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
                 newSi[n * i + j] = data[n * j + i];
-        return instantiate(newSi);
+        return instantiateSi(newSi);
     }
 
     /**
