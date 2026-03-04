@@ -9,6 +9,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.operations.VectorMatrixOps;
+import org.djunits.vecmat.storage.DenseDoubleData;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -138,8 +139,17 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      */
     public VectorN.Row<Q, U> getRow(final int row) throws IndexOutOfBoundsException
     {
-        // TODO
-        return null;
+        if (row < 1 || row > rows())
+        {
+            throw new IndexOutOfBoundsException("Row " + row + " out of bounds [1.." + rows() + "]");
+        }
+        final double[] data = new double[cols()];
+        for (int c = 1; c <= cols(); c++)
+        {
+            data[c - 1] = si(row, c);
+        }
+        // 1 × cols() row-shape
+        return new VectorN.Row<Q, U>(new DenseDoubleData(data, 1, cols()), getDisplayUnit());
     }
 
     /**
@@ -150,8 +160,17 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      */
     public VectorN.Col<Q, U> getColumn(final int column) throws IndexOutOfBoundsException
     {
-        // TODO
-        return null;
+        if (column < 1 || column > cols())
+        {
+            throw new IndexOutOfBoundsException("Column " + column + " out of bounds [1.." + cols() + "]");
+        }
+        final double[] data = new double[rows()];
+        for (int r = 1; r <= rows(); r++)
+        {
+            data[r - 1] = si(r, column);
+        }
+        // rows() × 1 column-shape
+        return new VectorN.Col<Q, U>(new DenseDoubleData(data, rows(), 1), getDisplayUnit());
     }
 
     /**
@@ -162,8 +181,14 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     public VectorN.Col<Q, U> getDiagonal() throws IllegalStateException
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
-        // TODO
-        return null;
+        final int n = rows();
+        final double[] data = new double[n];
+        for (int i = 1; i <= n; i++)
+        {
+            data[i - 1] = si(i, i);
+        }
+        // n × 1 column-shape
+        return new VectorN.Col<Q, U>(new DenseDoubleData(data, n, 1), getDisplayUnit());
     }
 
     /**
@@ -175,12 +200,16 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     @SuppressWarnings("unchecked")
     public Q[] getRowScalars(final int row) throws IndexOutOfBoundsException
     {
-        List<Q> rowScalars = new ArrayList<>();
+        List<Q> result = new ArrayList<>();
         for (int j = 1; j <= cols(); j++)
         {
-            rowScalars.add(value(row, j));
+            result.add(value(row, j));
         }
-        return (Q[]) rowScalars.toArray();
+
+        // Use the runtime type of the first element
+        Q sample = result.get(0);
+        Q[] array = (Q[]) java.lang.reflect.Array.newInstance(sample.getClass(), result.size());
+        return result.toArray(array);
     }
 
     /**
@@ -192,12 +221,15 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     @SuppressWarnings("unchecked")
     public Q[] getColumnScalars(final int column) throws IndexOutOfBoundsException
     {
-        List<Q> columnScalars = new ArrayList<>();
-        for (int i = 1; i <= cols(); i++)
+        List<Q> result = new ArrayList<>();
+        for (int i = 1; i <= rows(); i++)
         {
-            columnScalars.add(value(i, column));
+            result.add(value(i, column));
         }
-        return (Q[]) columnScalars.toArray();
+
+        Q sample = result.get(0);
+        Q[] array = (Q[]) java.lang.reflect.Array.newInstance(sample.getClass(), result.size());
+        return result.toArray(array);
     }
 
     /**
@@ -209,12 +241,16 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     public Q[] getDiagonalScalars() throws IllegalStateException
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
-        List<Q> diagScalars = new ArrayList<>();
-        for (int i = 1; i <= cols(); i++)
+
+        List<Q> result = new ArrayList<>();
+        for (int i = 1; i <= rows(); i++)
         {
-            diagScalars.add(value(i, i));
+            result.add(value(i, i));
         }
-        return (Q[]) diagScalars.toArray();
+
+        Q sample = result.get(0);
+        Q[] array = (Q[]) java.lang.reflect.Array.newInstance(sample.getClass(), result.size());
+        return result.toArray(array);
     }
 
     @Override
