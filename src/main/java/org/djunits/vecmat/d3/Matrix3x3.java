@@ -30,17 +30,17 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new Matrix3x3 with a unit.
-     * @param aSi the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in SI or BASE units
+     * @param arrayInUnit the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the display unit
      * @param displayUnit the display unit to use
      */
-    protected Matrix3x3(final double[] aSi, final U displayUnit)
+    protected Matrix3x3(final double[] arrayInUnit, final U displayUnit)
     {
-        super(aSi, displayUnit, 3);
+        super(arrayInUnit, displayUnit, 3);
     }
 
     /**
      * Create a new Matrix3x3 with a unit, based on a 1-dimensional array.
-     * @param valueArray the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the display unit
+     * @param arrayInUnit the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -49,45 +49,43 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[] valueArray,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[] arrayInUnit,
             final U displayUnit)
     {
-        Throw.whenNull(valueArray, "valueArray");
+        Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(valueArray.length != 9, IllegalArgumentException.class, "Length of vector != 9 but %d", valueArray.length);
-        double[] aSi = new double[9];
-        for (int i = 0; i < 9; i++)
-            aSi[i] = displayUnit.toBaseValue(valueArray[i]);
-        return new Matrix3x3<Q, U>(aSi, displayUnit);
+        Throw.when(arrayInUnit.length != 9, IllegalArgumentException.class, "Length of array != 9 but %d", arrayInUnit.length);
+        return new Matrix3x3<Q, U>(arrayInUnit, displayUnit);
     }
 
     /**
      * Create a new Matrix3x3 with a unit, based on a 2-dimensional grid.
-     * @param valueGrid the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
+     * @param gridInUnit the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new Matrix3x3 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[][] valueGrid,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[][] gridInUnit,
             final U displayUnit)
     {
-        Throw.whenNull(valueGrid, "valueGrid");
+        Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        double[] aSi = new double[9];
-        Throw.when(valueGrid.length != 3 || valueGrid[0].length != 3 || valueGrid[1].length != 3 || valueGrid[2].length != 3,
-                IllegalArgumentException.class, "valueGrid is not a 3x3 array");
+        double[] aInUnit = new double[9];
+        Throw.when(
+                gridInUnit.length != 3 || gridInUnit[0].length != 3 || gridInUnit[1].length != 3 || gridInUnit[2].length != 3,
+                IllegalArgumentException.class, "gridInUnit is not a 3x3 array");
         for (int r = 0; r < 3; r++)
             for (int c = 0; c < 3; c++)
-                aSi[3 * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
-        return new Matrix3x3<Q, U>(aSi, displayUnit);
+                aInUnit[3 * r + c] = gridInUnit[r][c];
+        return new Matrix3x3<Q, U>(aInUnit, displayUnit);
     }
 
     @Override
-    public Matrix3x3<Q, U> instantiate(final double[] siNew)
+    public Matrix3x3<Q, U> instantiateSi(final double[] siNew)
     {
-        return new Matrix3x3<Q, U>(siNew, getDisplayUnit());
+        return new Matrix3x3<Q, U>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
