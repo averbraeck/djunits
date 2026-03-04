@@ -1,5 +1,6 @@
 package org.djunits.vecmat;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,7 +85,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     @Override
     public M setDisplayUnit(final U newUnit)
     {
-        setDisplayUnit(newUnit);
+        super.setDisplayUnit(newUnit);
         return (M) this;
     }
 
@@ -102,26 +103,30 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     }
 
     /**
-     * Return the vector as a 2D-array of scalars.
-     * @return the vector as a 2D-array of scalars
+     * {@inheritDoc}
+     * <p>
+     * This implementation creates a {@code Q[][]} using the runtime component type of the first element and fills it in one
+     * pass. It avoids intermediate lists and prevents {@code ClassCastException} that can arise from casting {@code Object[][]}
+     * to {@code Q[][]}.
+     * </p>
+     * @return a new 2‑D array of quantities with the same shape ({@code rows() x cols()}) as this matrix; each entry
+     *         {@code [i-1][j-1]} contains {@code value(i, j)} with the current display unit
      */
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
     public Q[][] getScalars()
     {
-        // TODO: Q cel = getDisplayUnit().ofSi(0.0);
-        // TODO: Q[][] i = (Q[][]) Array.newInstance(cel.getClass(), rows(), cols());
-        List<Q[]> result = new ArrayList<>();
+        // Obtain the runtime class of Q by instantiating the first cell.
+        final Q[][] out = (Q[][]) Array.newInstance(value(1, 1).getClass(), rows(), cols());
         for (int i = 1; i <= rows(); i++)
         {
-            List<Q> row = new ArrayList<>();
             for (int j = 1; j <= cols(); j++)
             {
-                row.add(value(i, j));
+                out[i - 1][j - 1] = value(i, j);
             }
-            result.add((Q[]) row.toArray());
         }
-        return (Q[][]) result.toArray();
+        return out;
+
     }
 
     /**
