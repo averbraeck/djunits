@@ -11,6 +11,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.vecmat.DataGridMatrix;
 import org.djunits.vecmat.operations.Hadamard;
+import org.djunits.vecmat.operations.Normed;
 import org.djunits.vecmat.operations.VectorOps;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djunits.vecmat.storage.DataGrid;
@@ -28,7 +29,7 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Col or Row)
  */
 public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends VectorN<Q, U, V>>
-        extends DataGridMatrix<Q, U, VectorN<Q, U, ?>> implements VectorOps<Q, U, V>
+        extends DataGridMatrix<Q, U, VectorN<Q, U, ?>> implements VectorOps<Q, U, V>, Normed<Q, U>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -49,6 +50,18 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @return whether this vector is a column vector
      */
     public abstract boolean isColumnVector();
+
+    /**
+     * Set a new display unit of this vector.
+     * @param newUnit the new display unit of this vector
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public V setDisplayUnit(final U newUnit)
+    {
+        super.setDisplayUnit(newUnit);
+        return (V) this;
+    }
 
     @Override
     public Iterator<Q> iterator()
@@ -73,6 +86,50 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
             out[i] = frozenDisplayUnit.ofSi(si[i]).setDisplayUnit(frozenDisplayUnit);
         }
         return out;
+    }
+
+    @Override
+    public Q normL1()
+    {
+        double n = 0.0;
+        for (var d : si())
+        {
+            n += Math.abs(d);
+        }
+        return getDisplayUnit().ofSi(n).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Q normL2()
+    {
+        double n = 0.0;
+        for (var d : si())
+        {
+            n += d * d;
+        }
+        return getDisplayUnit().ofSi(Math.sqrt(n)).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Q normLp(final int p)
+    {
+        double n = 0.0;
+        for (var d : si())
+        {
+            n += Math.pow(Math.abs(d), p);
+        }
+        return getDisplayUnit().ofSi(Math.pow(n, 1.0 / p)).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Q normLinf()
+    {
+        double max = Double.NEGATIVE_INFINITY;
+        for (var d : si())
+        {
+            max = Math.max(Math.abs(d), max);
+        }
+        return getDisplayUnit().ofSi(max).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -130,9 +187,10 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Col<Q, U> instantiate(final double[] data)
+        public VectorN.Col<Q, U> instantiateSi(final double[] data)
         {
-            return new VectorN.Col<Q, U>(this.dataSi.instantiate(data), getDisplayUnit());
+            return new VectorN.Col<Q, U>(this.dataSi.instantiate(data), getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -219,7 +277,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Row<Q, U> instantiate(final double[] data)
+        public VectorN.Row<Q, U> instantiateSi(final double[] data)
         {
             return new VectorN.Row<>(this.dataSi.instantiate(data), getDisplayUnit());
         }
