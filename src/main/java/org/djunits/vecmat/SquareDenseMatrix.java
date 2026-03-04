@@ -30,16 +30,20 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
 
     /**
      * Create a new SquareDenseMatrix with a unit.
-     * @param dataSi the matrix values [a11, a12, ..., a21, a22, ...] expressed in SI or BASE units
+     * @param dataInUnit the matrix values [a11, a12, ..., a21, a22, ...] expressed in the display unit
      * @param displayUnit the display unit to use
      * @param order the order of the square matrix (number of rows/columns)
      */
-    protected SquareDenseMatrix(final double[] dataSi, final U displayUnit, final int order)
+    protected SquareDenseMatrix(final double[] dataInUnit, final U displayUnit, final int order)
     {
         super(displayUnit, order, order);
-        Throw.when(dataSi.length != order * order, IllegalArgumentException.class,
-                "SquareDenseMatrix initialized with %d values instead of %d", dataSi.length, order * order);
-        this.dataSi = dataSi.clone(); // safe copy
+        Throw.when(dataInUnit.length != order * order, IllegalArgumentException.class,
+                "SquareDenseMatrix initialized with %d values instead of %d", dataInUnit.length, order * order);
+        this.dataSi = new double[dataInUnit.length];
+        for (int i = 0; i < this.dataSi.length; i++)
+        {
+            this.dataSi[i] = displayUnit.toBaseValue(dataInUnit[i]);
+        }
     }
 
     @Override
