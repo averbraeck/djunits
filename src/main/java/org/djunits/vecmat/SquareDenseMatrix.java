@@ -30,7 +30,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
 
     /**
      * Create a new SquareDenseMatrix with a unit.
-     * @param dataInUnit the matrix values [a11, a12, ..., a21, a22, ...] expressed in the display unit
+     * @param dataInUnit the matrix values {a11, a12, ..., a21, a22, ...} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param order the order of the square matrix (number of rows/columns)
      */
