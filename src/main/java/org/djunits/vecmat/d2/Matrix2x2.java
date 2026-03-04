@@ -30,17 +30,17 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new Matrix2x2 with a unit.
-     * @param aInUnit the matrix values [a11, a12, a21, a22] expressed in the displayUnit
+     * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the displayUnit
      * @param displayUnit the display unit to use
      */
-    protected Matrix2x2(final double[] aInUnit, final U displayUnit)
+    protected Matrix2x2(final double[] arrayInUnit, final U displayUnit)
     {
-        super(aInUnit, displayUnit, 2);
+        super(arrayInUnit, displayUnit, 2);
     }
 
     /**
      * Create a new Matrix2x2 with a unit, based on a 1-dimensional array.
-     * @param valueArrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
+     * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -48,33 +48,33 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @throws IllegalArgumentException when valueArray does not contain 2x2 = 4 values
      * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[] valueArrayInUnit,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[] arrayInUnit,
             final U displayUnit)
     {
-        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
+        Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(valueArrayInUnit.length != 4, IllegalArgumentException.class, "Length of vector != 4 but %d",
-                valueArrayInUnit.length);
-        return new Matrix2x2<Q, U>(valueArrayInUnit, displayUnit);
+        Throw.when(arrayInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d",
+                arrayInUnit.length);
+        return new Matrix2x2<Q, U>(arrayInUnit, displayUnit);
     }
 
     /**
      * Create a new Matrix2x2 with a unit, based on a 2-dimensional grid.
-     * @param valueGrid the matrix values {{a11, a12}, {a21, a22}} expressed in the display unit
+     * @param gridInUnit the matrix values {{a11, a12}, {a21, a22}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new Matrix2x2 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[][] valueGrid,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[][] gridInUnit,
             final U displayUnit)
     {
-        Throw.whenNull(valueGrid, "valueGrid");
+        Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(valueGrid.length != 2 || valueGrid[0].length != 2 || valueGrid[1].length != 2,
-                IllegalArgumentException.class, "valueGrid is not a 2x2 array");
-        return new Matrix2x2<Q, U>(new double[] {valueGrid[0][0], valueGrid[0][1], valueGrid[1][0], valueGrid[1][1]},
+        Throw.when(gridInUnit.length != 2 || gridInUnit[0].length != 2 || gridInUnit[1].length != 2,
+                IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
+        return new Matrix2x2<Q, U>(new double[] {gridInUnit[0][0], gridInUnit[0][1], gridInUnit[1][0], gridInUnit[1][1]},
                 displayUnit);
     }
 
