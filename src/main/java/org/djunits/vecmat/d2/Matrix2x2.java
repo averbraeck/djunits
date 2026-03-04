@@ -30,17 +30,17 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new Matrix2x2 with a unit.
-     * @param aSi the matrix values [a11, a12, a21, a22] expressed in SI or BASE units
+     * @param aInUnit the matrix values [a11, a12, a21, a22] expressed in the displayUnit
      * @param displayUnit the display unit to use
      */
-    protected Matrix2x2(final double[] aSi, final U displayUnit)
+    protected Matrix2x2(final double[] aInUnit, final U displayUnit)
     {
-        super(aSi, displayUnit, 2);
+        super(aInUnit, displayUnit, 2);
     }
 
     /**
      * Create a new Matrix2x2 with a unit, based on a 1-dimensional array.
-     * @param valueArray the matrix values {a11, a12, a21, a22} expressed in the display unit
+     * @param valueArrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -48,17 +48,14 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @throws IllegalArgumentException when valueArray does not contain 2x2 = 4 values
      * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[] valueArray,
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[] valueArrayInUnit,
             final U displayUnit)
     {
-        Throw.whenNull(valueArray, "valueArray");
+        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(valueArray.length != 4, IllegalArgumentException.class, "Length of vector != 4 but %d", valueArray.length);
-        double[] aSi = new double[valueArray.length];
-        for (int i = 0; i < valueArray.length; i++)
-            aSi[i] = displayUnit.toBaseValue(valueArray[i]);
-        return new Matrix2x2<Q, U>(aSi, displayUnit);
+        Throw.when(valueArrayInUnit.length != 4, IllegalArgumentException.class, "Length of vector != 4 but %d",
+                valueArrayInUnit.length);
+        return new Matrix2x2<Q, U>(valueArrayInUnit, displayUnit);
     }
 
     /**
@@ -75,19 +72,16 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.whenNull(valueGrid, "valueGrid");
         Throw.whenNull(displayUnit, "displayUnit");
-        double[] aSi = new double[4];
         Throw.when(valueGrid.length != 2 || valueGrid[0].length != 2 || valueGrid[1].length != 2,
                 IllegalArgumentException.class, "valueGrid is not a 2x2 array");
-        for (int r = 0; r < valueGrid.length; r++)
-            for (int c = 0; c < valueGrid.length; c++)
-                aSi[2 * r + c] = displayUnit.toBaseValue(valueGrid[r][c]);
-        return new Matrix2x2<Q, U>(aSi, displayUnit);
+        return new Matrix2x2<Q, U>(new double[] {valueGrid[0][0], valueGrid[0][1], valueGrid[1][0], valueGrid[1][1]},
+                displayUnit);
     }
 
     @Override
-    public Matrix2x2<Q, U> instantiate(final double[] siNew)
+    public Matrix2x2<Q, U> instantiateSi(final double[] siNew)
     {
-        return new Matrix2x2<Q, U>(siNew, getDisplayUnit());
+        return new Matrix2x2<Q, U>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
