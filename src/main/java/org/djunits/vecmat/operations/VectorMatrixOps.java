@@ -45,7 +45,7 @@ public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @param siNew the values for the new matrix
      * @return a new matrix with the provided SI or BASE values
      */
-    VM instantiate(double[] siNew);
+    VM instantiateSi(double[] siNew);
 
     /**
      * Return the mean value of the elements of the vector or matrix.
@@ -108,7 +108,7 @@ public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      */
     default VM add(final Q increment)
     {
-        return instantiate(ArrayMath.add(si(), increment.si()));
+        return instantiateSi(ArrayMath.add(si(), increment.si()));
     }
 
     /**
@@ -118,19 +118,19 @@ public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      */
     default VM subtract(final Q decrement)
     {
-        return instantiate(ArrayMath.add(si(), -decrement.si()));
+        return instantiateSi(ArrayMath.add(si(), -decrement.si()));
     }
 
     @Override
     default VM add(final VM other)
     {
-        return instantiate(ArrayMath.add(si(), other.si()));
+        return instantiateSi(ArrayMath.add(si(), other.si()));
     }
 
     @Override
     default VM subtract(final VM other)
     {
-        return instantiate(ArrayMath.subtract(si(), other.si()));
+        return instantiateSi(ArrayMath.subtract(si(), other.si()));
     }
 
     @Override
@@ -142,13 +142,13 @@ public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
     @Override
     default VM abs()
     {
-        return instantiate(ArrayMath.abs(si()));
+        return instantiateSi(ArrayMath.abs(si()));
     }
 
     @Override
     default VM scaleBy(final double factor)
     {
-        return instantiate(ArrayMath.scaleBy(si(), factor));
+        return instantiateSi(ArrayMath.scaleBy(si(), factor));
     }
 
 }
