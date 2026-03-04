@@ -76,6 +76,19 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     }
 
     /**
+     * Set a new display unit of this matrix.
+     * @param newUnit the new display unit of this matrix
+     * @return the matrix for fluent design
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public M setDisplayUnit(final U newUnit)
+    {
+        setDisplayUnit(newUnit);
+        return (M) this;
+    }
+
+    /**
      * Return the (r,c)-value of the matrix as a quantity with the correct unit. Note that this method follows a 1-based (a11,
      * a12, etc.) numbering scheme from matrix calculations, where the internal storage is 0-based.
      * @param row the row, from 1, ..., N
