@@ -42,7 +42,7 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     }
 
     @Override
-    public QuantityTable<Q, U> instantiate(final double[] siNew)
+    public QuantityTable<Q, U> instantiateSi(final double[] siNew)
     {
         return new QuantityTable<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit());
     }
