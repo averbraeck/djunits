@@ -18,8 +18,8 @@ import org.djutils.exceptions.Throw;
  * display unit, which can be changed. <br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
@@ -217,7 +217,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
 
         // Use the runtime type of the first element
         Q sample = result.get(0);
-        Q[] array = (Q[]) java.lang.reflect.Array.newInstance(sample.getClass(), result.size());
+        Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
         return result.toArray(array);
     }
 
@@ -237,7 +237,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         }
 
         Q sample = result.get(0);
-        Q[] array = (Q[]) java.lang.reflect.Array.newInstance(sample.getClass(), result.size());
+        Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
         return result.toArray(array);
     }
 
@@ -258,7 +258,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         }
 
         Q sample = result.get(0);
-        Q[] array = (Q[]) java.lang.reflect.Array.newInstance(sample.getClass(), result.size());
+        Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
         return result.toArray(array);
     }
 
