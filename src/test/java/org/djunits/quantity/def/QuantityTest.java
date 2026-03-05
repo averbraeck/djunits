@@ -13,6 +13,7 @@ import org.djunits.quantity.Area;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Temperature;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.junit.jupiter.api.AfterAll;
@@ -47,9 +48,9 @@ import org.junit.jupiter.api.Test;
  * behavior of number formatting and parsing; the original locale is restored afterwards.
  * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
- * @author Alexander Verbraeck
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class QuantityTest
 {
@@ -154,6 +155,14 @@ public class QuantityTest
         assertClose(2500.0, l.getInUnit());
         l.setDisplayUnit(Length.Unit.km);
         assertClose(2.5, l.getInUnit());
+        l.setDisplayUnit("hm");
+        assertClose(25.0, l.getInUnit());
+        assertTrue(l.isRelative());
+        assertFalse(l.isAbsolute());
+        
+        Temperature t = new Temperature(23.0, "degC");
+        assertFalse(t.isRelative());
+        assertTrue(t.isAbsolute());
     }
 
     /**

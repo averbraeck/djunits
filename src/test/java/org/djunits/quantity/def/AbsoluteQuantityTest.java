@@ -51,6 +51,10 @@ import org.junit.jupiter.api.Test;
  * {@link AbstractReference#unregister() unregistered} in {@link #cleanup()} to avoid cross-test pollution of the static
  * per-class registry.
  * </p>
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class AbsoluteQuantityTest
 {

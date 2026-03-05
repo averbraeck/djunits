@@ -17,9 +17,9 @@ import org.junit.jupiter.api.Test;
  * PressureTest tests the Pressure quantity class.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information https://djutils.org. The DJUTILS project is distributed under a https://djutils.org/docs/license.html
- * three-clause BSD-style license.
- * @author Alexander
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 class PressureTest
 {
@@ -114,8 +114,8 @@ class PressureTest
         assertEquals(9.80665e4, new Pressure(1.0, at).si(), 1e-2);
 
         // Barye (Ba) = dyne/cm^2 = 0.1 Pa
-        Pressure.Unit Ba = Pressure.Unit.Ba;
-        assertEquals(0.1, new Pressure(1.0, Ba).si(), 1e-12);
+        Pressure.Unit pBa = Pressure.Unit.Ba;
+        assertEquals(0.1, new Pressure(1.0, pBa).si(), 1e-12);
 
         // Mercury column units
         Pressure.Unit cmHg = Pressure.Unit.cmHg;

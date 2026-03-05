@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
  * <li>Unit derivation behavior—including linear unit derivation and the exception path for non-linear scale derivation</li>
  * <li>Proper resolution of units through the Units registry</li>
  * </ul>
- * <br>
- * This test class aims for full branch coverage. <br>
- * <br>
- * © 2025–2025 Delft University of Technology. Distributed under the three-clause BSD license.
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 class TorqueTest
 {
