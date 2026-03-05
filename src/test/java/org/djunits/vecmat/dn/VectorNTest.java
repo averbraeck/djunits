@@ -60,8 +60,8 @@ public final class VectorNTest
      * <p>
      * This grid stores values in a row-major contiguous {@code double[]} of length {@code rows * cols}. The implementation
      * conforms to the contract of {@link DataGrid}: indices are 0-based; {@link #getDataArray()} may return the internal array
-     * for efficiency; and {@link #instantiate(double[])} preserves shape while changing the data contents. The semantics match
-     * the uploaded {@code DataGrid} interface.
+     * for efficiency; and {@link #instantiateNew(double[])} preserves shape while changing the data contents. The semantics
+     * match the uploaded {@code DataGrid} interface.
      * [1](https://tud365-my.sharepoint.com/personal/averbraeck_tudelft_nl/Documents/Microsoft%20Copilot%20Chat%20Files/DataGrid.java)
      * </p>
      */
@@ -183,10 +183,23 @@ public final class VectorNTest
          * @throws IllegalArgumentException if {@code newData} length is invalid
          */
         @Override
-        public DenseGrid instantiate(final double[] newData)
+        public DenseGrid instantiateNew(final double[] newData)
         {
             return new DenseGrid(this.rows, this.cols, newData);
         }
+
+        /**
+         * {@inheritDoc}
+         * @param newData the new row-major data; must have length {@code rows * cols}
+         * @return a new {@code DenseGrid} with identical shape and the provided data contents
+         * @throws IllegalArgumentException if {@code newData} length is invalid
+         */
+        @Override
+        public DenseGrid instantiateNew(final double[] newData, final int r, final int c)
+        {
+            return new DenseGrid(r, c, newData);
+        }
+
     }
 
     /**
