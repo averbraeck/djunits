@@ -14,8 +14,8 @@ import org.djunits.unit.system.UnitSystem;
  * Illuminance is the luminous flux incident on a surface per unit area, measured in lux (lx).<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
 public class Illuminance extends Quantity<Illuminance, Illuminance.Unit>
@@ -152,8 +152,8 @@ public class Illuminance extends Quantity<Illuminance, Illuminance.Unit>
      * Illuminance.Unit encodes the units of illuminance.<br>
      * <br>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+     * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")

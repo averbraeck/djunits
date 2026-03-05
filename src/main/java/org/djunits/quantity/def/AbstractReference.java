@@ -11,8 +11,8 @@ import org.djutils.exceptions.Throw;
  * Reference contains information about the reference point or origin / zero point of an absolute quantity.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <R> the reference type itself
  * @param <Q> the relative quantity for the offset

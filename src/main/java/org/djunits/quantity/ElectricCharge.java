@@ -15,8 +15,8 @@ import org.djunits.unit.system.UnitSystem;
  * expressed in coulomb.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
 public class ElectricCharge extends Quantity<ElectricCharge, ElectricCharge.Unit>
@@ -183,8 +183,8 @@ public class ElectricCharge extends Quantity<ElectricCharge, ElectricCharge.Unit
      * ElectricCharge.Unit is a unit of electric charge and is expressed in Coulomb.<br>
      * <br>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+     * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
