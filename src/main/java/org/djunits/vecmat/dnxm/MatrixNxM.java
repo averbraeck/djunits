@@ -65,7 +65,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         Throw.when(rows <= 0, IllegalArgumentException.class, "rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "cols <= 0");
         Throw.when(rows * cols != valueArrayInUnit.length, IllegalArgumentException.class,
-                "valueArrayInUnit does not contain a the correct number of entries (%d x %d != %d)", rows, cols,
+                "valueArrayInUnit does not contain the correct number of entries (%d x %d != %d)", rows, cols,
                 valueArrayInUnit.length);
         double[] aSi = new double[rows * cols];
         for (int i = 0; i < valueArrayInUnit.length; i++)
@@ -75,7 +75,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new MatrixNxM with a unit, based on a 2-dimensional double grid.
-     * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, N32, aNM}} expressed in the display unit
+     * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, aN2, aNM}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -154,7 +154,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this matrix with another matrix and return the resulting matrix, using the same underlying data storage type. If
-     * this matrix has dimensions N x M, the other matrix should have dimensions N x P.
+     * this matrix has dimensions N x M, the other matrix should have dimensions M x P.
      * @param otherMat the matrix to multiply with
      * @return the multiplication of this matrix with the other matrix.
      * @throws IllegalArgumentException when the sizes of the matrices do not match for multiplication
