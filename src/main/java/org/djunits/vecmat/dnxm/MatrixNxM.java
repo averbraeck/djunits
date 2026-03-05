@@ -23,8 +23,8 @@ import org.djutils.exceptions.Throw;
  * be changed. Internal storage can be float or double, and dense or sparse. MatrixNxN and VectorN extend from this class.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
@@ -127,7 +127,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     @Override
     public MatrixNxM<Q, U> instantiateSi(final double[] siNew)
     {
-        return new MatrixNxM<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit().getBaseUnit())
+        return new MatrixNxM<Q, U>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -135,21 +135,21 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxM<SIQuantity, SIUnit> invertElements()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.reciprocal(si())), siUnit);
+        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
     }
 
     @Override
     public MatrixNxM<SIQuantity, SIUnit> multiplyElements(final MatrixNxM<?, ?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.multiply(si(), other.si())), siUnit);
+        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
     }
 
     @Override
     public MatrixNxM<SIQuantity, SIUnit> divideElements(final MatrixNxM<?, ?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
+        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
@@ -164,8 +164,9 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxM<?, ?> otherMat)
     {
-        return new MatrixNxM<SIQuantity, SIUnit>(
-                this.dataSi.instantiate(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
+        double[] resultData = MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols());
+        DataGrid<?> resultDataGrid = this.dataSi.instantiateNew(resultData, rows(), otherMat.cols());
+        return new MatrixNxM<SIQuantity, SIUnit>(resultDataGrid,
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
@@ -180,7 +181,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix2x2<?, ?> otherMat)
     {
         return new MatrixNxM<SIQuantity, SIUnit>(
-                this.dataSi.instantiate(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
+                this.dataSi.instantiateNew(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
@@ -195,7 +196,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> otherMat)
     {
         return new MatrixNxM<SIQuantity, SIUnit>(
-                this.dataSi.instantiate(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
+                this.dataSi.instantiateNew(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
@@ -210,13 +211,13 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
     {
         return new MatrixNxM<SIQuantity, SIUnit>(
-                this.dataSi.instantiate(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
+                this.dataSi.instantiateNew(MatrixMath.multiply(si(), otherMat.si(), rows(), cols(), otherMat.cols())),
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
     /**
      * Multiply this (N × 2) matrix with a column vector of size 2, resulting in a column vector of size N.
-     * @param colVec the 2‑element column vector to multiply with
+     * @param colVec the 2-element column vector to multiply with
      * @return the column vector with N elements as the result of A·v
      * @throws IllegalArgumentException when sizes do not match
      * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -230,7 +231,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this (N × 3) matrix with a column vector of size 3, resulting in a column vector of size N.
-     * @param colVec the 3‑element column vector to multiply with
+     * @param colVec the 3-element column vector to multiply with
      * @return the column vector with N elements as the result of A·v
      * @throws IllegalArgumentException when sizes do not match
      * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -244,7 +245,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this (N × M) matrix with a column vector of size M, resulting in a column vector of size N.
-     * @param colVec the M‑element column vector to multiply with
+     * @param colVec the M-element column vector to multiply with
      * @return the column vector with N elements as the result of A·v
      * @throws IllegalArgumentException when sizes do not match
      * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -271,7 +272,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxM.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxM<TQ, TU>(this.dataSi.instantiate(si()), targetUnit);
+        return new MatrixNxM<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit);
     }
 
     /**
@@ -284,12 +285,15 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix2x2<TQ, TU> asMatrix2x2(final TU targetUnit)
     {
-        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class, "Matrix is not 2×2");
+        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
+                "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
         // Convert SI → target display values for the factory:
         final double[] disp = new double[4];
         final double[] data = si();
         for (int i = 0; i < 4; i++)
+        {
             disp[i] = targetUnit.fromBaseValue(data[i]);
+        }
         return Matrix2x2.of(disp, targetUnit);
     }
 
@@ -303,11 +307,14 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix3x3<TQ, TU> asMatrix3x3(final TU targetUnit)
     {
-        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class, "Matrix is not 3×3");
+        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
+                "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
         final double[] disp = new double[9];
         final double[] data = si();
         for (int i = 0; i < 9; i++)
+        {
             disp[i] = targetUnit.fromBaseValue(data[i]);
+        }
         return Matrix3x3.of(disp, targetUnit);
     }
 
@@ -321,12 +328,13 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> MatrixNxN<TQ, TU> asMatrixNxN(final TU targetUnit)
     {
-        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
+        Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
+                rows(), cols());
         return new MatrixNxN<TQ, TU>(new DenseDoubleData(si(), rows(), cols()), targetUnit);
     }
 
     /**
-     * Return this matrix as a 2‑element column vector with the given unit. Shape must be 2 × 1.
+     * Return this matrix as a 2-element column vector with the given unit. Shape must be 2 × 1.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -342,7 +350,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix as a 3‑element column vector with the given unit. Shape must be 3 × 1.
+     * Return this matrix as a 3-element column vector with the given unit. Shape must be 3 × 1.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -358,7 +366,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix as an N‑element column vector with the given unit. Shape must be N × 1.
+     * Return this matrix as an N-element column vector with the given unit. Shape must be N × 1.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -372,7 +380,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix as a 2‑element row vector with the given unit. Shape must be 1 × 2.
+     * Return this matrix as a 2-element row vector with the given unit. Shape must be 1 × 2.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -387,7 +395,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix as a 3‑element row vector with the given unit. Shape must be 1 × 3.
+     * Return this matrix as a 3-element row vector with the given unit. Shape must be 1 × 3.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -403,7 +411,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix as an N‑element row vector with the given unit. Shape must be 1 × N.
+     * Return this matrix as an N-element row vector with the given unit. Shape must be 1 × N.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
