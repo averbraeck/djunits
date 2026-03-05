@@ -1,5 +1,6 @@
 package org.djunits.vecmat;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -112,23 +113,31 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     }
 
     /**
-     * Return the vector as a 2D-array of scalars.
-     * @return the vector as a 2D-array of scalars
+     * Return the matrix as a 2D array of scalars.
+     * <p>
+     * This implementation allocates a {@code Q[][]} using the runtime class of {@code Q} and fills it directly with
+     * {@link #value(int, int)} results. It avoids intermediate {@code List} instances and prevents {@link ClassCastException}
+     * caused by casting {@code Object[][]} to {@code Q[][]}.
+     * </p>
+     * @return a new {@code Q[rows()][cols()]} array; entry {@code [i-1][j-1]} contains {@code value(i, j)}
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
     public Q[][] getScalars()
     {
-        List<Q[]> result = new ArrayList<>();
+        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 1.
+        final Q first = value(1, 1);
+        final Class<?> qClass = first.getClass();
+
+        // Allocate a Q[rows()][cols()] array and fill it.
+        final Q[][] out = (Q[][]) Array.newInstance(qClass, rows(), cols());
         for (int i = 1; i <= rows(); i++)
         {
-            List<Q> row = new ArrayList<>();
             for (int j = 1; j <= cols(); j++)
             {
-                row.add(value(i, j));
+                out[i - 1][j - 1] = value(i, j);
             }
-            result.add((Q[]) row.toArray());
         }
-        return (Q[][]) result.toArray();
+        return out;
     }
 
     /**
