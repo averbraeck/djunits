@@ -10,13 +10,11 @@ import java.util.Locale;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test the Engineering formatter
- * <p>
- * Copyright (c) 2015-2026 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
- * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
- * </p>
- * @version $Revision: 954 $, $LastChangedDate: 2022-01-10 03:42:57 +0100 (Mon, 10 Jan 2022) $, by $Author: averbraeck $,
- *          initial version 11 sep. 2015 <br>
+ * Test the Engineering formatter <br>
+ * <br>
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Peter Knoppers
  */
 public class EngineeringFormatterTest
