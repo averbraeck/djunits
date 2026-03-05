@@ -7,7 +7,7 @@ import org.djutils.exceptions.Throw;
  * with dimensions N x 1 or 1 x N. The DataGrid <i>communicates</i> as if it is a dense grid of double values, but underneath,
  * storage can be, e.g., sparse and/or float.<br>
  * <br>
- * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck

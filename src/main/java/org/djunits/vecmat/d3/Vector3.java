@@ -24,7 +24,7 @@ import org.djutils.exceptions.Throw;
  * be changed. Many of the method that have been defined already for a generic vector have been re-implemented for
  * efficiency.<br>
  * <br>
- * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
@@ -374,7 +374,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * Vector3.Col implements a column vector with three real-valued entries. The vector is immutable, except for the display
      * unit, which can be changed. <br>
      * <br>
-     * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
@@ -502,7 +502,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * Vector3.Row implements a row vector with three real-valued entries. The vector is immutable, except for the display unit,
      * which can be changed. <br>
      * <br>
-     * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
+     * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck

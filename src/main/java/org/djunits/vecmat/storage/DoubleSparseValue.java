@@ -9,7 +9,7 @@ import org.djutils.exceptions.Throw;
 /**
  * Double-precision data point for a matrix that can be used for constructing sparse matrices.
  * <p>
- * Copyright (c) 2019-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2019-2026 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * </p>
  * @author Alexander Verbraeck

@@ -14,7 +14,7 @@ import org.djutils.exceptions.Throw;
  * SIUnit stores the dimensionality of a unit using the SI standards. Angle (rad) and solid angle (sr) have been added to be
  * able to specify often used units regarding rotation.
  * <p>
- * Copyright (c) 2019-2025 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
+ * Copyright (c) 2019-2026 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
  * </p>
  * @author Alexander Verbraeck

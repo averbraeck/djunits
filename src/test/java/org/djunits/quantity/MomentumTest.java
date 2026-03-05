@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 /**
  * MomentumTest tests the Momentum quantity class.<br>
  * <br>
- * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information https://djutils.org. The DJUTILS project is distributed under a https://djutils.org/docs/license.html
  * three-clause BSD-style license.
  * @author Alexander Verbraeck

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
  * tested with a small tolerance to account for those stated uncertainties. Exact definitions (e.g., c, h, N_A) are still
  * subject to floating-point representation; we therefore use a tiny absolute/relative tolerance.
  * </p>
- * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
