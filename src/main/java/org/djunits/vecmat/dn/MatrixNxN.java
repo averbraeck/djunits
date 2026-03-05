@@ -21,8 +21,8 @@ import org.djutils.exceptions.Throw;
  * which can be changed. Internal storage can be float or double, and dense or sparse. <br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
@@ -112,7 +112,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     @Override
     public MatrixNxN<Q, U> instantiateSi(final double[] siNew)
     {
-        return new MatrixNxN<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit().getBaseUnit())
+        return new MatrixNxN<Q, U>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -133,35 +133,36 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxN<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), order());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(invData), getDisplayUnit().siUnit().invert());
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(invData), getDisplayUnit().siUnit().invert());
     }
 
     @Override
     public MatrixNxN<SIQuantity, SIUnit> adjugate()
     {
         double[] invData = MatrixMath.adjugate(si(), order());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(invData), getDisplayUnit().siUnit().pow(order() - 1));
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(invData),
+                getDisplayUnit().siUnit().pow(order() - 1));
     }
 
     @Override
     public MatrixNxN<SIQuantity, SIUnit> invertElements()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.reciprocal(si())), siUnit);
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
     }
 
     @Override
     public MatrixNxN<SIQuantity, SIUnit> multiplyElements(final MatrixNxN<?, ?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.multiply(si(), other.si())), siUnit);
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
     }
 
     @Override
     public MatrixNxN<SIQuantity, SIUnit> divideElements(final MatrixNxN<?, ?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
@@ -203,7 +204,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         final int n = order();
         final double[] resultData = MatrixMath.multiply(si(), otherMat.si(), n, n, n);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(resultData), resultUnit);
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(resultData), resultUnit);
     }
 
     /**
@@ -216,8 +217,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @return the resulting column vector from the multiplication
      * @throws IllegalArgumentException if the vector size does not equal {@code order()}
      */
-    public org.djunits.vecmat.dn.VectorN.Col<SIQuantity, SIUnit> multiply(
-            final org.djunits.vecmat.dn.VectorN.Col<?, ?> otherVec)
+    public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> otherVec)
     {
         final int n = order();
         // Defensive check in case VectorN.Col#getData shape is inconsistent
@@ -227,7 +227,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         }
         final double[] resultData = MatrixMath.multiply(si(), otherVec.si(), n, n, 1);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
-        return new org.djunits.vecmat.dn.VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleData(resultData, n, 1), resultUnit);
+        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleData(resultData, n, 1), resultUnit);
     }
 
     /**
@@ -247,7 +247,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxN<TQ, TU>(this.dataSi.instantiate(si()), targetUnit);
+        return new MatrixNxN<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit);
     }
 
 }

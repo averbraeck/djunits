@@ -21,8 +21,8 @@ import org.djutils.exceptions.Throw;
  * VectorN.java.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
@@ -160,8 +160,8 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * which can be changed. <br>
      * <br>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+     * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -189,7 +189,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public VectorN.Col<Q, U> instantiateSi(final double[] data)
         {
-            return new VectorN.Col<Q, U>(this.dataSi.instantiate(data), getDisplayUnit().getBaseUnit())
+            return new VectorN.Col<Q, U>(this.dataSi.instantiateNew(data), getDisplayUnit().getBaseUnit())
                     .setDisplayUnit(getDisplayUnit());
         }
 
@@ -221,21 +221,21 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public VectorN.Col<SIQuantity, SIUnit> invertElements()
         {
             SIUnit siUnit = getDisplayUnit().siUnit().invert();
-            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.reciprocal(si())), siUnit);
+            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
         }
 
         @Override
         public VectorN.Col<SIQuantity, SIUnit> multiplyElements(final VectorN.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.multiply(si(), other.si())), siUnit);
+            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
         }
 
         @Override
         public VectorN.Col<SIQuantity, SIUnit> divideElements(final VectorN.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
+            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
         }
 
     }
@@ -245,8 +245,8 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * can be changed. <br>
      * <br>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+     * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      * @param <U> the unit type
@@ -279,7 +279,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public VectorN.Row<Q, U> instantiateSi(final double[] data)
         {
-            return new VectorN.Row<>(this.dataSi.instantiate(data), getDisplayUnit());
+            return new VectorN.Row<>(this.dataSi.instantiateNew(data), getDisplayUnit());
         }
 
         @Override
@@ -304,21 +304,21 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public VectorN.Row<SIQuantity, SIUnit> invertElements()
         {
             SIUnit siUnit = getDisplayUnit().siUnit().invert();
-            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.reciprocal(si())), siUnit);
+            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
         }
 
         @Override
         public VectorN.Row<SIQuantity, SIUnit> multiplyElements(final VectorN.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.multiply(si(), other.si())), siUnit);
+            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
         }
 
         @Override
         public VectorN.Row<SIQuantity, SIUnit> divideElements(final VectorN.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
+            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
         }
 
     }
