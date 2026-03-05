@@ -147,11 +147,19 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
     }
 
     @Override
-    public DenseDoubleData instantiate(final double[] newData)
+    public DenseDoubleData instantiateNew(final double[] newData)
     {
         Throw.when(newData.length != rows() * cols(), IllegalArgumentException.class,
                 "Data object length != rows * cols, %d != %d * %d", newData.length, rows(), cols());
         return new DenseDoubleData(newData, rows(), cols());
+    }
+
+    @Override
+    public DenseDoubleData instantiateNew(final double[] newData, final int newRows, final int newCols)
+    {
+        Throw.when(newData.length != newRows * newCols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", newData.length, newRows, newCols);
+        return new DenseDoubleData(newData, newRows, newCols);
     }
 
     @Override

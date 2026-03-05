@@ -152,7 +152,7 @@ public class DenseFloatData implements DataGrid<DenseFloatData>
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public DenseFloatData instantiate(final double[] newData)
+    public DenseFloatData instantiateNew(final double[] newData)
     {
         Throw.when(newData.length != rows() * cols(), IllegalArgumentException.class,
                 "Data object length != rows * cols, %d != %d * %d", newData.length, rows(), cols());
@@ -160,6 +160,18 @@ public class DenseFloatData implements DataGrid<DenseFloatData>
         for (int i = 0; i < floatData.length; i++)
             floatData[i] = (float) newData[i];
         return new DenseFloatData(floatData, rows(), cols());
+    }
+
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public DenseFloatData instantiateNew(final double[] newData, final int newRows, final int newCols)
+    {
+        Throw.when(newData.length != newRows * newCols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", newData.length, newRows, newCols);
+        float[] floatData = new float[newData.length];
+        for (int i = 0; i < floatData.length; i++)
+            floatData[i] = (float) newData[i];
+        return new DenseFloatData(floatData, newRows, newCols);
     }
 
     @Override

@@ -350,11 +350,19 @@ public class SparseFloatData implements DataGrid<SparseFloatData>
     }
 
     @Override
-    public SparseFloatData instantiate(final double[] denseData)
+    public SparseFloatData instantiateNew(final double[] denseData)
     {
         Throw.when(denseData.length != rows() * cols(), IllegalArgumentException.class,
                 "Data object length != rows * cols, %d != %d * %d", denseData.length, rows(), cols());
         return new SparseFloatData(denseData, rows(), cols());
+    }
+
+    @Override
+    public SparseFloatData instantiateNew(final double[] denseData, final int newRows, final int newCols)
+    {
+        Throw.when(denseData.length != newRows * newCols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", denseData.length, newRows, newCols);
+        return new SparseFloatData(denseData, newRows, newCols);
     }
 
     @Override
