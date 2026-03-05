@@ -42,8 +42,8 @@ import org.junit.jupiter.api.Test;
  * <li>Statistics: {@code min()}, {@code max()}, {@code mean()}, {@code median()}, {@code mode()}, {@code sum()}</li>
  * </ul>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public final class VectorNTest
@@ -62,7 +62,6 @@ public final class VectorNTest
      * conforms to the contract of {@link DataGrid}: indices are 0-based; {@link #getDataArray()} may return the internal array
      * for efficiency; and {@link #instantiateNew(double[])} preserves shape while changing the data contents. The semantics
      * match the uploaded {@code DataGrid} interface.
-     * [1](https://tud365-my.sharepoint.com/personal/averbraeck_tudelft_nl/Documents/Microsoft%20Copilot%20Chat%20Files/DataGrid.java)
      * </p>
      */
     private static final class DenseGrid implements DataGrid<DenseGrid>
