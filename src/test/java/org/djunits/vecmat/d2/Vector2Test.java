@@ -43,6 +43,10 @@ import org.junit.jupiter.api.Test;
  * <strong>Important:</strong> Values passed to the {@code Vector2} constructors are interpreted in the provided display unit
  * and converted to SI for internal storage. The tests validate that convention.
  * </p>
+ * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
+ * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class Vector2Test
 {
