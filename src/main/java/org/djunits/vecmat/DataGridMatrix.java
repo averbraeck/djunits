@@ -66,7 +66,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
      * Return the (r,c)-value of the matrix in SI or BASE units. Note that this method follows a 1-based (a11, a12, etc.)
      * numbering scheme from matrix calculations, where the internal storage is 0-based.
      * @param row the row, from 1, ..., N
-     * @param col the column, from 1, ..., N
+     * @param col the column, from 1, ..., M
      * @return the (r,c)-value of the matrix in SI or BASE units
      */
     @Override
@@ -93,7 +93,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
      * Return the (r,c)-value of the matrix as a quantity with the correct unit. Note that this method follows a 1-based (a11,
      * a12, etc.) numbering scheme from matrix calculations, where the internal storage is 0-based.
      * @param row the row, from 1, ..., N
-     * @param col the column, from 1, ..., N
+     * @param col the column, from 1, ..., M
      * @return the (r,c)-value of the matrix as a quantity with the correct unit
      */
     @Override
