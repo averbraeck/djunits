@@ -19,8 +19,8 @@ import org.djutils.exceptions.Throw;
  * not for vector/matrix operations. A QuantityTable can be transformed to a MatrixNxM or vice versa. <br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
@@ -32,7 +32,8 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     private static final long serialVersionUID = 600L;
 
     /**
-     * Create a new NxM Matrix with a unit, based on a DataGrid storage object that contains SI data.
+     * Create a new NxM QuantityTable with a unit, based on a DataGrid storage object. This constructor assumes dataSi stores SI
+     * values. Note: NO safe copy is made.
      * @param dataSi the data of the matrix, in SI unit.
      * @param displayUnit the display unit to use
      */
@@ -44,35 +45,36 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     @Override
     public QuantityTable<Q, U> instantiateSi(final double[] siNew)
     {
-        return new QuantityTable<Q, U>(this.dataSi.instantiate(siNew), getDisplayUnit());
+        return new QuantityTable<Q, U>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public QuantityTable<?, ?> invertElements()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.reciprocal(si())), siUnit);
+        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
     }
 
     @Override
     public QuantityTable<?, ?> multiplyElements(final QuantityTable<?, ?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.multiply(si(), other.si())), siUnit);
+        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
     }
 
     @Override
     public QuantityTable<?, ?> divideElements(final QuantityTable<?, ?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiate(ArrayMath.divide(si(), other.si())), siUnit);
+        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
     // --------------------------------------- AS() FUNCTIONS ---------------------------------
 
     /**
-     * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
-     * when the SI units of this vector and the target vector do not match.
+     * Return the QuantityTable 'as' a QuantityTable with a known quantity, using a unit to express the result in. Throw a
+     * Runtime exception when the SI units of this vector and the target vector do not match.
      * @param targetUnit the unit to convert the matrix to
      * @return a matrix typed in the target matrix class
      * @throws IllegalArgumentException when the units do not match
@@ -85,11 +87,11 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new QuantityTable<TQ, TU>(this.dataSi.instantiate(si()), targetUnit);
+        return new QuantityTable<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit);
     }
 
     /**
-     * Return the matrix as a strongly-typed 2x2 matrix.
+     * Return the QuantityTable as a strongly-typed 2x2 matrix.
      * @return the 2x2 matrix
      * @throws IllegalStateException when the current matrix is not a 2x2 matrix
      */
@@ -97,11 +99,11 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     {
         Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
                 "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
-        return Matrix2x2.of(si(), getDisplayUnit());
+        return Matrix2x2.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     /**
-     * Return the matrix as a strongly-typed 3x3 matrix.
+     * Return the QuantityTable as a strongly-typed 3x3 matrix.
      * @return the 3x3 matrix
      * @throws IllegalStateException when the current matrix is not a 3x3 matrix
      */
@@ -109,11 +111,11 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     {
         Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
                 "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
-        return Matrix3x3.of(si(), getDisplayUnit());
+        return Matrix3x3.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     /**
-     * Return the matrix as a strongly-typed NxN matrix.
+     * Return the QuantityTable as a strongly-typed NxN matrix.
      * @return the NxN matrix
      * @throws IllegalStateException when the current matrix is not an NxN matrix
      */
@@ -121,16 +123,16 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
                 rows(), cols());
-        return MatrixNxN.of(si(), getDisplayUnit());
+        return MatrixNxN.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     /**
-     * Return the matrix as a strongly-typed NxM matrix.
+     * Return the QuantityTable as a strongly-typed NxM matrix.
      * @return the NxM matrix
      */
     public MatrixNxM<Q, U> asMatrixNxM()
     {
-        return MatrixNxM.of(si(), rows(), cols(), getDisplayUnit());
+        return MatrixNxM.of(si(), rows(), cols(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
 }
