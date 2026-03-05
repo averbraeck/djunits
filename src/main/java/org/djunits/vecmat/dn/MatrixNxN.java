@@ -124,20 +124,20 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public double si(final int row, final int col)
     {
         // internal storage is 0-based, user access is 1-based
-        return this.dataSi.get(row + 1, col + 1);
+        return this.dataSi.get(row - 1, col - 1);
     }
 
     @Override
     public MatrixNxN<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
     {
-        double[] invData = MatrixMath.inverse(si(), 3);
+        double[] invData = MatrixMath.inverse(si(), order());
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(invData), getDisplayUnit().siUnit().invert());
     }
 
     @Override
     public MatrixNxN<SIQuantity, SIUnit> adjugate()
     {
-        double[] invData = MatrixMath.adjugate(si(), 3);
+        double[] invData = MatrixMath.adjugate(si(), order());
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(invData), getDisplayUnit().siUnit().pow(order() - 1));
     }
 
@@ -164,5 +164,65 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
 
-    // TODO matrix multiplication and as()
+    /**
+     * Multiply this matrix with another matrix using matrix multiplication and return the result.
+     * <p>
+     * The unit of the result is the SI-unit “sum” of this matrix and the other matrix (i.e., {@code U.plus(V)} on the
+     * underlying {@link SIUnit}s).
+     * </p>
+     * @param otherMat the right-hand matrix to multiply with
+     * @return the product matrix with the correct SI unit
+     */
+    public MatrixNxN<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
+    {
+        final int n = order();
+        final double[] resultData = MatrixMath.multiply(si(), otherMat.si(), n, n, n);
+        final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit());
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiate(resultData), resultUnit);
+    }
+
+    /**
+     * Multiply this matrix with a column vector, resulting in a column vector.
+     * <p>
+     * The unit of the result is the SI-unit “sum” of this matrix and the vector (i.e., {@code U.plus(V)} on the underlying
+     * {@link SIUnit}s).
+     * </p>
+     * @param otherVec the column vector to multiply with (size {@code N})
+     * @return the resulting column vector from the multiplication
+     * @throws IllegalArgumentException if the vector size does not equal {@code order()}
+     */
+    public org.djunits.vecmat.dn.VectorN.Col<SIQuantity, SIUnit> multiply(
+            final org.djunits.vecmat.dn.VectorN.Col<?, ?> otherVec)
+    {
+        final int n = order();
+        // Defensive check in case VectorN.Col#getData shape is inconsistent
+        if (otherVec.size() != n)
+        {
+            throw new IllegalArgumentException("Vector size " + otherVec.size() + " != matrix order " + n);
+        }
+        final double[] resultData = MatrixMath.multiply(si(), otherVec.si(), n, n, 1);
+        final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
+        return new org.djunits.vecmat.dn.VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleData(resultData, n, 1), resultUnit);
+    }
+
+    /**
+     * Return the matrix "as" a matrix with a known quantity, using a unit to express the result in.
+     * <p>
+     * The SI units of this matrix and the target unit must match; otherwise an {@link IllegalArgumentException} is thrown. The
+     * returned matrix shares the SI values but has the specified display unit.
+     * </p>
+     * @param <TQ> target quantity type
+     * @param <TU> target unit type
+     * @param targetUnit the unit to convert the matrix to
+     * @return a matrix typed in the target quantity with the specified display unit
+     * @throws IllegalArgumentException when the units do not match
+     */
+    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> MatrixNxN<TQ, TU> as(final TU targetUnit)
+    {
+        Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
+                "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
+        return new MatrixNxN<TQ, TU>(this.dataSi.instantiate(si()), targetUnit);
+    }
+
 }
