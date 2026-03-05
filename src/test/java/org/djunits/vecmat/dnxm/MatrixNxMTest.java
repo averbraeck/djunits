@@ -234,7 +234,7 @@ public class MatrixNxMTest
 
     /** Verify A(N×2)·v2 and A(N×3)·v3 and A(N×M)·vN return VectorN.Col with correct unit. */
     @Test
-    @DisplayName("A·v: size‑2, size‑3, and size‑N")
+    @DisplayName("A·v: size 2, size 3, and size N")
     public void testMultiplyVector()
     {
         MatrixNxM<Length, Length.Unit> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
