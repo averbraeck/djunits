@@ -28,8 +28,8 @@ public interface DataGrid<D extends DataGrid<D>>
     int cols();
 
     /**
-     * Return element (row, col) from the grid as a double value, independent of the fact whether it is stored as a
-     * double. Note that row and col are 0-based for fast calculations.
+     * Return element (row, col) from the grid as a double value, independent of the fact whether it is stored as a double. Note
+     * that row and col are 0-based for fast calculations.
      * @param row the row number (0-based)
      * @param col the column number (0-based)
      * @return element (row, col) from the grid as a double value
@@ -48,7 +48,7 @@ public interface DataGrid<D extends DataGrid<D>>
      * @return a deep copy of the DataGrid object
      */
     D copy();
-    
+
     /**
      * Compute and return the number of non-zero cells in this indexed value.
      * @return the number of non-zero cells
@@ -56,12 +56,21 @@ public interface DataGrid<D extends DataGrid<D>>
     int cardinality();
 
     /**
-     * Instantiate a new version of the DataGrid object with the given data.
+     * Instantiate a new version of the DataGrid object with the given data and the same number of rows and columns.
      * @param data the data in row-major format
-     * @return a new version of the DataGrid object with the given data
+     * @return a new version of the DataGrid object with the given data, same number of rows and columns
      */
-    D instantiate(double[] data);
-    
+    D instantiateNew(double[] data);
+
+    /**
+     * Instantiate a new version of the DataGrid object with the given data and the given number of rows and columns.
+     * @param data the data in row-major format
+     * @param newRows the new number of rows
+     * @param newCols the new number of columms
+     * @return a new version of the DataGrid object with the given data, new number of rows and columns
+     */
+    D instantiateNew(double[] data, int newRows, int newCols);
+
     /**
      * Get the data of a row as a (dense) double array.
      * @param row the row number (0-based)
