@@ -19,9 +19,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the {@link Units} utility covering US parsing, localization lookups, bundle loading, nested-class naming, and
  * safe-copy behavior. <br>
+ * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
 public class UnitsTest
@@ -156,28 +157,28 @@ public class UnitsTest
         assertEquals("Speed.Unit", nestedSpeed);
     }
 
-//    /**
-//     * Verify {@link Units#localizedQuantityName(Locale, String)} falls back to the provided default when the key is missing for
-//     * a given locale.
-//     */
-//    @Test
-//    public void testLocalizedQuantityNameFallback()
-//    {
-//        Locale original = Locale.getDefault();
-//        try
-//        {
-//            Locale bogus = new Locale("xx", "XX");
-//            Locale.setDefault(bogus);
-//
-//            // Using a bogus locale; key may not exist; must fallback to provided quantityName.
-//            String qName = Units.localizedQuantityName(Locale.getDefault(), "NonExistingQuantity");
-//            assertEquals("NonExistingQuantity", qName);
-//        }
-//        finally
-//        {
-//            Locale.setDefault(original);
-//        }
-//    }
+    /**
+     * Verify {@link Units#localizedQuantityName(Locale, String)} falls back to the provided default when the key is missing for
+     * a given locale.
+     */
+    @Test
+    public void testLocalizedQuantityNameFallback()
+    {
+        Locale original = Locale.getDefault();
+        try
+        {
+            Locale bogus = new Locale("xx", "XX");
+            Locale.setDefault(bogus);
+
+            // Using a bogus locale; key may not exist; must fallback to provided quantityName.
+            String qName = Units.localizedQuantityName(Locale.getDefault(), "NonExistingQuantity");
+            assertEquals("NonExistingQuantity", qName);
+        }
+        finally
+        {
+            Locale.setDefault(original);
+        }
+    }
 
     /**
      * Verify {@link Units#registeredUnits()} returns a safe top-level copy: mutating the returned map does not affect the
