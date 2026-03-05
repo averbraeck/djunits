@@ -1,8 +1,6 @@
 package org.djunits.vecmat;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.djunits.quantity.def.Quantity;
@@ -17,8 +15,8 @@ import org.djutils.exceptions.Throw;
  * display unit, which can be changed. <br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
@@ -109,7 +107,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
      * pass. It avoids intermediate lists and prevents {@code ClassCastException} that can arise from casting {@code Object[][]}
      * to {@code Q[][]}.
      * </p>
-     * @return a new 2‑D array of quantities with the same shape ({@code rows() x cols()}) as this matrix; each entry
+     * @return a new 2-D array of quantities with the same shape ({@code rows() x cols()}) as this matrix; each entry
      *         {@code [i-1][j-1]} contains {@code value(i, j)} with the current display unit
      */
     @Override
@@ -184,12 +182,16 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     @SuppressWarnings("unchecked")
     public Q[] getRowScalars(final int row) throws IndexOutOfBoundsException
     {
-        List<Q> rowScalars = new ArrayList<>();
-        for (int j = 1; j <= cols(); j++)
+        Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", row, rows());
+
+        // Build a Q[] of length cols() using the runtime class of the first element
+        Q first = value(row, 1);
+        Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), cols());
+        for (int c = 1; c <= cols(); c++)
         {
-            rowScalars.add(value(row, j));
+            out[c - 1] = value(row, c);
         }
-        return (Q[]) rowScalars.toArray();
+        return out;
     }
 
     /**
@@ -202,12 +204,16 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     @SuppressWarnings("unchecked")
     public Q[] getColumnScalars(final int column) throws IndexOutOfBoundsException
     {
-        List<Q> columnScalars = new ArrayList<>();
-        for (int i = 1; i <= cols(); i++)
+        Throw.when(column < 1 || column > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", column,
+                cols());
+
+        Q first = value(1, column);
+        Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), rows());
+        for (int r = 1; r <= rows(); r++)
         {
-            columnScalars.add(value(i, column));
+            out[r - 1] = value(r, column);
         }
-        return (Q[]) columnScalars.toArray();
+        return out;
     }
 
     /**
@@ -220,12 +226,14 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     public Q[] getDiagonalScalars() throws IllegalStateException
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
-        List<Q> diagScalars = new ArrayList<>();
-        for (int i = 1; i <= cols(); i++)
+
+        Q first = value(1, 1);
+        Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), rows());
+        for (int i = 1; i <= rows(); i++)
         {
-            diagScalars.add(value(i, i));
+            out[i - 1] = value(i, i);
         }
-        return (Q[]) diagScalars.toArray();
+        return out;
     }
 
     @Override
