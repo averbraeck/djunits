@@ -1,5 +1,7 @@
 package org.djunits.vecmat.dn;
 
+import java.util.Objects;
+
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
@@ -163,6 +165,29 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Objects.hash(this.dataSi);
+        return result;
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:needbraces")
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MatrixNxN<?, ?> other = (MatrixNxN<?, ?>) obj;
+        return Objects.equals(this.dataSi, other.dataSi);
+    }
 
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.
