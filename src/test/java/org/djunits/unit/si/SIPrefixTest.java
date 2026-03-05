@@ -269,7 +269,7 @@ public class SIPrefixTest
      * KILO-default maps: KILO and PER_KILO.
      * <ul>
      * <li>KILO_PREFIXES: "" (empty) is 1e-3 relative to kilo-default; large prefixes scale positively.</li>
-     * <li>PER_KILO_PREFIXES: "/" is 1e3; "/k" is 1.0 identity for per‑kilo.</li>
+     * <li>PER_KILO_PREFIXES: "/" is 1e3; "/k" is 1.0 identity for per-kilo.</li>
      * <li>getSiPrefixKilo("k") should be identity → factor 1.0 (this currently requires adding "k" to KILO_PREFIXES).</li>
      * </ul>
      */

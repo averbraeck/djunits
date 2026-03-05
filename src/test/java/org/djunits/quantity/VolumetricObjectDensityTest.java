@@ -31,11 +31,11 @@ import org.junit.jupiter.api.Test;
  * </ul>
  * </li>
  * <li>reciprocal() → Volume</li>
- * <li>Unit derivation behaviour: linear success + non‑linear exception path</li>
+ * <li>Unit derivation behaviour: linear success + non-linear exception path</li>
  * <li>Units registry sanity</li>
  * </ul>
  * <br>
- * © 2025–2025 Delft University of Technology. BSD‑3 license.
+ * © 2025–2025 Delft University of Technology. BSD-3 license.
  */
 class VolumetricObjectDensityTest
 {

@@ -87,7 +87,7 @@ public class MatrixNxMTest
         assertAll(() -> assertEquals(2, m.rows()), () -> assertEquals(3, m.cols()));
     }
 
-    /** Verify of(Q[][],U) accepts per‑cell units via DenseDoubleData and sets display unit. */
+    /** Verify of(Q[][],U) accepts per-cell units via DenseDoubleData and sets display unit. */
     @Test
     @DisplayName("of(Q[][],U): quantity grid accepted")
     public void testFactoryQuantityGrid()

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
  * <li>String parsing and all parsing-related error branches</li>
  * <li>Arithmetic operations (divide and multiply) producing correct quantities</li>
  * <li>Unit conversions, including imperial units (lbf·ft, lbf·in) and kilogram-force meters</li>
- * <li>Unit derivation behavior—including linear unit derivation and the exception path for non‑linear scale derivation</li>
+ * <li>Unit derivation behavior—including linear unit derivation and the exception path for non-linear scale derivation</li>
  * <li>Proper resolution of units through the Units registry</li>
  * </ul>
  * <br>
@@ -107,7 +107,7 @@ class TorqueTest
     }
 
     /**
-     * Test correctness of unit conversions for Nm, meter‑kilogram‑force, pound‑foot, and pound‑inch. Also verifies registry
+     * Test correctness of unit conversions for Nm, meter-kilogram-force, pound-foot, and pound-inch. Also verifies registry
      * resolution behavior.
      */
     @Test

@@ -374,7 +374,7 @@ public class Vector3Test
     // Hadamard
     // -----------------------------------------------------------------------------------------------------------------
 
-    /** Verify Hadamard operations and result‑unit composition (Col). */
+    /** Verify Hadamard operations and result-unit composition (Col). */
     @Test
     @DisplayName("Hadamard: invert/multiply/divide + unit composition (Col)")
     public void testHadamardCol()
@@ -395,7 +395,7 @@ public class Vector3Test
                 () -> assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit()));
     }
 
-    /** Verify Hadamard operations and result‑unit composition (Row). */
+    /** Verify Hadamard operations and result-unit composition (Row). */
     @Test
     @DisplayName("Hadamard: invert/multiply/divide + unit composition (Row)")
     public void testHadamardRow()
@@ -432,7 +432,7 @@ public class Vector3Test
                 () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), dot.siUnit()));
     }
 
-    /** Col·Row → Matrix3x3 with plus‑unit composition. */
+    /** Col·Row → Matrix3x3 with plus-unit composition. */
     @Test
     @DisplayName("Col · Row → Matrix3x3 with unit composition")
     public void testColTimesRow()
@@ -446,7 +446,7 @@ public class Vector3Test
                 () -> assertEquals(SIUnit.add(Length.Unit.km.siUnit(), Length.Unit.m.siUnit()), m.getDisplayUnit().siUnit()));
     }
 
-    /** Row·Matrix3x3 → Col with plus‑unit composition. */
+    /** Row·Matrix3x3 → Col with plus-unit composition. */
     @Test
     @DisplayName("Row · Matrix3x3 → Col with unit composition")
     public void testRowTimesMatrix()
