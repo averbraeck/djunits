@@ -108,7 +108,7 @@ public class FloatSparseValue<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public String toString()
     {
-        return "DoubleSparseValue [row=" + this.row + ", column=" + this.column + ", valueSI=" + this.si + "]";
+        return "FloatSparseValue [row=" + this.row + ", column=" + this.column + ", valueSI=" + this.si + "]";
     }
 
 }

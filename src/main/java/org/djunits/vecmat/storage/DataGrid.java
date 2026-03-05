@@ -8,8 +8,8 @@ import org.djutils.exceptions.Throw;
  * storage can be, e.g., sparse and/or float.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <D> The datagrid type
  */
@@ -50,7 +50,8 @@ public interface DataGrid<D extends DataGrid<D>>
     D copy();
 
     /**
-     * Compute and return the number of non-zero cells in this indexed value.
+     * Compute and return the number of non-zero cells in this indexed value. Counts entries that are not exactly 0.0 (including
+     * -0.0 as zero). NaN and infinite values are counted as non-zero.
      * @return the number of non-zero cells
      */
     int cardinality();
@@ -79,7 +80,7 @@ public interface DataGrid<D extends DataGrid<D>>
      */
     default double[] getRowArray(final int row)
     {
-        Throw.when(row < 0 || row >= rows(), IndexOutOfBoundsException.class, "row %d not in range 0..%d", row, rows());
+        Throw.when(row < 0 || row >= rows(), IndexOutOfBoundsException.class, "row %d not in range 0..%d", row, rows() - 1);
         double[] result = new double[cols()];
         for (int c = 0; c < cols(); c++)
         {
@@ -96,7 +97,7 @@ public interface DataGrid<D extends DataGrid<D>>
      */
     default double[] getColArray(final int col)
     {
-        Throw.when(col < 0 || col >= cols(), IndexOutOfBoundsException.class, "column %d not in range 0..%d", col, cols());
+        Throw.when(col < 0 || col >= cols(), IndexOutOfBoundsException.class, "column %d not in range 0..%d", col, cols() - 1);
         double[] result = new double[rows()];
         for (int r = 0; r < rows(); r++)
         {

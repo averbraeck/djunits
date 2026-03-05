@@ -8,11 +8,11 @@ import org.djunits.unit.UnitInterface;
 import org.djutils.exceptions.Throw;
 
 /**
- * DenseDoubleData implements a dense data grid for N x M matrices or N x 1 or 1 x N vectors with double values.<br>
+ * DenseDoubleData implements a dense data grid for N x M matrices or N x 1 or 1 x M vectors with double values.<br>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
 public class DenseDoubleData implements DataGrid<DenseDoubleData>
@@ -36,7 +36,7 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
      */
     public DenseDoubleData(final double[] data, final int rows, final int cols)
     {
-        Throw.whenNull(data, "dataSi");
+        Throw.whenNull(data, "data");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
         Throw.when(data.length != rows * cols, IllegalArgumentException.class,
@@ -54,7 +54,7 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
     @SuppressWarnings("checkstyle:needbraces")
     public DenseDoubleData(final double[][] data)
     {
-        Throw.whenNull(data, "dataSi");
+        Throw.whenNull(data, "data");
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         this.rows = data.length;
         this.cols = data[0].length;
@@ -62,7 +62,8 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         for (int r = 0; r < this.rows; r++)
         {
             Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
-                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, data[r].length,
+                    this.cols);
             for (int c = 0; c < this.cols; c++)
                 this.data[r * this.cols + c] = data[r][c];
         }
@@ -78,7 +79,7 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
     @SuppressWarnings("checkstyle:needbraces")
     public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> DenseDoubleData(final Q[][] data)
     {
-        Throw.whenNull(data, "dataSi");
+        Throw.whenNull(data, "data");
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         this.rows = data.length;
         this.cols = data[0].length;
@@ -86,7 +87,8 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         for (int r = 0; r < this.rows; r++)
         {
             Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
-                    "Number of columns in row %d (%d)is not equal to number of columns in row 0 (%d)", r, data[r], this.cols);
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, data[r].length,
+                    this.cols);
             for (int c = 0; c < this.cols; c++)
                 this.data[r * this.cols + c] = data[r][c].si();
         }
