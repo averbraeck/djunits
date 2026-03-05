@@ -16,11 +16,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * <p>
- * Copyright (c) 2013-2026 Delft University of Technology, PO Box 5, 2600 AA, Delft, the Netherlands. All rights reserved. <br>
- * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
- * </p>
- * @author <a href="https://tudelft.nl/pknoppers">Peter Knoppers</a>
+ * EquivalentDose.Unit test. <br>
+ * <br>
+ * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * @author Peter Knoppers
  */
 public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDose.Unit>
 {
