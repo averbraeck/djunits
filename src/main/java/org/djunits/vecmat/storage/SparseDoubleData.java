@@ -195,9 +195,9 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
         int index = 0;
         for (var value : indexedData)
         {
-            Throw.when(value.getRow() < 0 || value.getRow() >= rows, IndexOutOfBoundsException.class,
-                    "Row index for indexed value %s out of bounds", value.toString());
-            Throw.when(value.getColumn() < 0 || value.getColumn() >= cols, IndexOutOfBoundsException.class,
+            Throw.when(value.getRow() >= rows, IndexOutOfBoundsException.class, "Row index for indexed value %s out of bounds",
+                    value.toString());
+            Throw.when(value.getColumn() >= cols, IndexOutOfBoundsException.class,
                     "Column index for indexed value %s out of bounds", value.toString());
             this.sparseData[index] = value.si();
             this.indexes[index++] = value.getRow() * this.cols + value.getColumn();
