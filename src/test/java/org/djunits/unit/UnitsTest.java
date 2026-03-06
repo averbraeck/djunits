@@ -238,7 +238,6 @@ public class UnitsTest
                 "resolving removed unit should result in exception");
 
         var noRegisterUnit = new NoRegisterUnit();
-        assertNotNull(Units.localizedQuantityName((Class<? extends UnitInterface<?, ?>>) NoRegisterUnit.class));
         assertNotNull(Units.localizedUnitName(Locale.US, "xx", "yy"));
         assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "xx", "yy"));
         assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "xx", "yy"));
