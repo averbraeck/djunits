@@ -81,7 +81,6 @@ public class SIQuantity extends Quantity<SIQuantity, SIUnit>
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             SIUnit unit = SIUnit.of(unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity SI", unitString);
             return new SIQuantity(d, unit);
         }
         catch (Exception exception)
@@ -105,7 +104,6 @@ public class SIQuantity extends Quantity<SIQuantity, SIUnit>
         Throw.whenNull(unitString, "Error parsing SI quantity: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SI quantity: empty unitString");
         SIUnit unit = SIUnit.of(unitString);
-        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing SI quantity with unit %s", unitString);
         return new SIQuantity(value, unit);
     }
 
