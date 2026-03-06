@@ -14,6 +14,11 @@ import org.djunits.quantity.Frequency;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Power;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIUnit;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -215,4 +220,280 @@ public class UnitsTest
         String hpMetricAbbrDe = de.getString("unit.Power.hp(M).abbr");
         assertEquals("PS", hpMetricAbbrDe);
     }
+
+    /**
+     * Test register/unregister and retrieving localication for unknown quantities.
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testRegisterUnregister()
+    {
+        Length.Unit lu = Length.Unit.m.deriveUnit("two", "two", 2.0, UnitSystem.OTHER);
+        assertEquals(lu, Units.resolve(Length.Unit.class, "two"));
+        assertNotNull(Units.localizedUnitName(Locale.US, "Length", "two"));
+        assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "Length", "two"));
+        assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "Length", "two"));
+        Units.unregister(lu);
+        assertThrows(UnitRuntimeException.class, () -> Units.resolve(Length.Unit.class, "two"),
+                "resolving removed unit should result in exception");
+
+        var noRegisterUnit = new NoRegisterUnit();
+        assertNotNull(Units.localizedQuantityName((Class<? extends UnitInterface<?, ?>>) NoRegisterUnit.class));
+        assertNotNull(Units.localizedUnitName(Locale.US, "xx", "yy"));
+        assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "xx", "yy"));
+        assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "xx", "yy"));
+
+        QUnit qu = new QUnit();
+        Units.register(qu);
+        assertNotNull(Units.localizedQuantityName((Class<? extends UnitInterface<?, ?>>) QUnit.class));
+        assertNotNull(Units.localizedUnitName(Locale.US, "UnitsTest.QUnit", "xx"));
+        assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
+        assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
+        Units.unregister(qu);
+ 
+        // resolving a non-registered unit should lead to an exception
+        assertThrows(UnitRuntimeException.class, () -> Units.resolve(NoRegisterUnit.class, "no"),
+                "resolving non-registered unit should result in exception");
+        // unregistering a non-registered unit should not lead to an exception
+        Units.unregister(noRegisterUnit);
+    }
+
+    /** UnitInterface class that does not register itself. */
+    @SuppressWarnings("rawtypes")
+    static class NoRegisterUnit implements UnitInterface
+    {
+        @Override
+        public String getId()
+        {
+            return null;
+        }
+
+        @Override
+        public Scale getScale()
+        {
+            return null;
+        }
+
+        @Override
+        public UnitSystem getUnitSystem()
+        {
+            return null;
+        }
+
+        @Override
+        public SIUnit siUnit()
+        {
+            return null;
+        }
+
+        @Override
+        public UnitInterface getBaseUnit()
+        {
+            return null;
+        }
+
+        @Override
+        public String getDisplayAbbreviation()
+        {
+            return null;
+        }
+
+        @Override
+        public String getTextualAbbreviation()
+        {
+            return null;
+        }
+
+        @Override
+        public String getName()
+        {
+            return null;
+        }
+
+        @Override
+        public String getStoredDisplayAbbreviation()
+        {
+            return null;
+        }
+
+        @Override
+        public String getStoredTextualAbbreviation()
+        {
+            return null;
+        }
+
+        @Override
+        public String getStoredName()
+        {
+            return null;
+        }
+
+        @Override
+        public UnitInterface setSiPrefix(final SIPrefix siPrefix)
+        {
+            return null;
+        }
+
+        @Override
+        public UnitInterface setSiPrefix(final String prefix)
+        {
+            return null;
+        }
+
+        @Override
+        public UnitInterface setSiPrefixKilo(final String prefix)
+        {
+            return null;
+        }
+
+        @Override
+        public UnitInterface setSiPrefixPer(final String prefix)
+        {
+            return null;
+        }
+
+        @Override
+        public SIPrefix getSiPrefix()
+        {
+            return null;
+        }
+
+        @Override
+        public Quantity ofSi(final double si)
+        {
+            return null;
+        }
+    };
+
+    /** Quantity Q. */
+    static class Q extends Quantity<Q, QUnit>
+    {
+        /** */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * @param value the Q value
+         * @param displayUnit the unit
+         */
+        Q(final double value, final QUnit displayUnit)
+        {
+            super(value, displayUnit);
+        }
+
+        @Override
+        public Q instantiate(final double siValue)
+        {
+            return new Q(siValue, QUnit.DEFAULT);
+        }
+    }
+    
+    /** UnitInterface Length class that does not register itself. */
+    static class QUnit implements UnitInterface<QUnit, Q>
+    {
+        /** */
+        public static final QUnit DEFAULT = new QUnit();
+
+        @Override
+        public String getId()
+        {
+            return "Q";
+        }
+
+        @Override
+        public Scale getScale()
+        {
+            return null;
+        }
+
+        @Override
+        public UnitSystem getUnitSystem()
+        {
+            return null;
+        }
+
+        @Override
+        public SIUnit siUnit()
+        {
+            return null;
+        }
+
+        @Override
+        public QUnit getBaseUnit()
+        {
+            return null;
+        }
+
+        @Override
+        public String getDisplayAbbreviation()
+        {
+            return "Q";
+        }
+
+        @Override
+        public String getTextualAbbreviation()
+        {
+            return "Q";
+        }
+
+        @Override
+        public String getName()
+        {
+            return "Q";
+        }
+
+        @Override
+        public String getStoredDisplayAbbreviation()
+        {
+            return "Q";
+        }
+
+        @Override
+        public String getStoredTextualAbbreviation()
+        {
+            return "Q";
+        }
+
+        @Override
+        public String getStoredName()
+        {
+            return "Q";
+        }
+
+        @Override
+        public QUnit setSiPrefix(final SIPrefix siPrefix)
+        {
+            return null;
+        }
+
+        @Override
+        public QUnit setSiPrefix(final String prefix)
+        {
+            return null;
+        }
+
+        @Override
+        public QUnit setSiPrefixKilo(final String prefix)
+        {
+            return null;
+        }
+
+        @Override
+        public QUnit setSiPrefixPer(final String prefix)
+        {
+            return null;
+        }
+
+        @Override
+        public SIPrefix getSiPrefix()
+        {
+            return null;
+        }
+
+        @Override
+        public Q ofSi(final double si)
+        {
+            return null;
+        } 
+    }
+
 }
