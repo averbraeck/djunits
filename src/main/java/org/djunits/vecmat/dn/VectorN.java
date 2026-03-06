@@ -214,7 +214,8 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public VectorN.Row<Q, U> transpose()
         {
-            return new VectorN.Row<Q, U>(this.dataSi.copy(), getDisplayUnit());
+            var newSi = this.dataSi.instantiateNew(this.dataSi.getDataArray().clone(), cols(), rows());
+            return new VectorN.Row<Q, U>(newSi, getDisplayUnit());
         }
 
         @Override
@@ -228,7 +229,8 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public VectorN.Col<SIQuantity, SIUnit> multiplyElements(final VectorN.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
+            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())),
+                    siUnit);
         }
 
         @Override
@@ -297,7 +299,8 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public VectorN.Col<Q, U> transpose()
         {
-            return new VectorN.Col<Q, U>(this.dataSi.copy(), getDisplayUnit());
+            var newSi = this.dataSi.instantiateNew(this.dataSi.getDataArray().clone(), cols(), rows());
+            return new VectorN.Col<Q, U>(newSi, getDisplayUnit());
         }
 
         @Override
@@ -311,7 +314,8 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public VectorN.Row<SIQuantity, SIUnit> multiplyElements(final VectorN.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
+            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())),
+                    siUnit);
         }
 
         @Override
