@@ -106,4 +106,28 @@ public interface DataGrid<D extends DataGrid<D>>
         return result;
     }
 
+    /**
+     * Test if two datagrids are equal to a maximum absolute error epsilon. The number of rows and columns is also compared.
+     * @param other the other datagrid to compare to
+     * @param epsilon the maximum absolute error for a value
+     * @return whether two datagrid arrays are equal to a maximum absolute error epsilon
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    default boolean equals(final DataGrid<?> other, final double epsilon)
+    {
+        Throw.when(epsilon < 0, IllegalArgumentException.class, "epsilon should be >= 0");
+        if (other == null)
+            return false;
+        if (rows() != other.rows() || cols() != other.cols())
+            return false;
+        double[] da1 = getDataArray();
+        double[] da2 = other.getDataArray();
+        for (int i = 0; i < da1.length; i++)
+        {
+            if (Math.abs(da1[i] - da2[i]) > epsilon)
+                return false;
+        }
+        return true;
+    }
+
 }

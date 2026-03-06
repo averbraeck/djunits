@@ -183,9 +183,13 @@ public class DenseDoubleData implements DataGrid<DenseDoubleData>
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
+        {
+            if (obj instanceof DataGrid dg)
+                return this.cols == dg.cols()  && this.rows == dg.rows() && Arrays.equals(this.data, dg.getDataArray());
             return false;
+        }
         DenseDoubleData other = (DenseDoubleData) obj;
-        return this.cols == other.cols && Arrays.equals(this.data, other.data) && this.rows == other.rows;
+        return this.cols == other.cols && this.rows == other.rows && Arrays.equals(this.data, other.data);
     }
 
 }

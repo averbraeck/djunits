@@ -181,7 +181,7 @@ public class DenseFloatData implements DataGrid<DenseFloatData>
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(this.data);
+        result = prime * result + Arrays.hashCode(getDataArray());
         result = prime * result + Objects.hash(this.cols, this.rows);
         return result;
     }
@@ -195,9 +195,13 @@ public class DenseFloatData implements DataGrid<DenseFloatData>
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
+        {
+            if (obj instanceof DataGrid dg)
+                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(getDataArray(), dg.getDataArray());
             return false;
+        }
         DenseFloatData other = (DenseFloatData) obj;
-        return this.cols == other.cols && Arrays.equals(this.data, other.data) && this.rows == other.rows;
+        return this.cols == other.cols && this.rows == other.rows && Arrays.equals(this.data, other.data);
     }
 
 }

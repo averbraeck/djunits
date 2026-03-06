@@ -413,8 +413,7 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(this.sparseData);
-        result = prime * result + Arrays.hashCode(this.indexes);
+        result = prime * result + Arrays.hashCode(getDataArray());
         result = prime * result + Objects.hash(this.cols, this.rows);
         return result;
     }
@@ -428,10 +427,14 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
+        {
+            if (obj instanceof DataGrid dg)
+                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(getDataArray(), dg.getDataArray());
             return false;
+        }
         SparseDoubleData other = (SparseDoubleData) obj;
-        return this.cols == other.cols && Arrays.equals(this.sparseData, other.sparseData)
-                && Arrays.equals(this.indexes, other.indexes) && this.rows == other.rows;
+        return this.cols == other.cols && this.rows == other.rows && Arrays.equals(this.sparseData, other.sparseData)
+                && Arrays.equals(this.indexes, other.indexes);
     }
 
 }
