@@ -40,13 +40,13 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new Matrix2x2 with a unit, based on a 1-dimensional array.
+     * <p><strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
      * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new Matrix2x2 with a unit
      * @throws IllegalArgumentException when valueArray does not contain 2x2 = 4 values
-     * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix2x2<Q, U> of(final double[] arrayInUnit,
             final U displayUnit)

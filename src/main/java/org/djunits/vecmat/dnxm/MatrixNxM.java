@@ -157,10 +157,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     /**
      * Multiply this matrix with another matrix and return the resulting matrix, using the same underlying data storage type. If
      * this matrix has dimensions N × M, the other matrix must have dimensions M × P.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param otherMat the matrix to multiply with
      * @return the multiplication of this matrix with the other matrix
      * @throws IllegalArgumentException when the sizes of the matrices do not match for multiplication
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxM<?, ?> otherMat)
     {
@@ -173,10 +175,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     /**
      * Multiply this matrix with a 2 x 2 matrix and return the resulting matrix, using the same underlying data storage type.
      * This matrix should have dimensions N x 2, to return an N x 2 matrix.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param otherMat the matrix to multiply with
      * @return the multiplication of this matrix with the other matrix.
      * @throws IllegalArgumentException when the sizes of the matrices do not match for multiplication
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix2x2<?, ?> otherMat)
     {
@@ -188,10 +192,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     /**
      * Multiply this matrix with a 3 x 3 matrix and return the resulting matrix, using the same underlying data storage type.
      * This matrix should have dimensions N x 3, to return an N x 3 matrix.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param otherMat the matrix to multiply with
      * @return the multiplication of this matrix with the other matrix.
      * @throws IllegalArgumentException when the sizes of the matrices do not match for multiplication
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> otherMat)
     {
@@ -203,10 +209,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     /**
      * Multiply this matrix (N x M) with a square matrix (M x M), returning an (N x M) result when {@code M} equals
      * {@code otherMat.order()}.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param otherMat the square matrix to multiply with
      * @return the product with correct unit composition
      * @throws IllegalArgumentException when sizes do not conform to matrix multiplication rules
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
     {
@@ -217,10 +225,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this (N × 2) matrix with a column vector of size 2, resulting in a column vector of size N.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param colVec the 2-element column vector to multiply with
      * @return the column vector with N elements as the result of A·v
      * @throws IllegalArgumentException when sizes do not match
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final Vector2.Col<?, ?> colVec)
     {
@@ -231,10 +241,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this (N × 3) matrix with a column vector of size 3, resulting in a column vector of size N.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param colVec the 3-element column vector to multiply with
      * @return the column vector with N elements as the result of A·v
      * @throws IllegalArgumentException when sizes do not match
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> colVec)
     {
@@ -245,10 +257,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this (N × M) matrix with a column vector of size M, resulting in a column vector of size N.
+     * <p>
+     * <strong>Implementation Note:</strong> Checking of the dimensions is done by
+     * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      * @param colVec the M-element column vector to multiply with
      * @return the column vector with N elements as the result of A·v
      * @throws IllegalArgumentException when sizes do not match
-     * @implNote Checking of the dimensions is done by {@link MatrixMath#multiply(double[], double[], int, int, int)}.
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> colVec)
     {

@@ -40,13 +40,13 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new Matrix3x3 with a unit, based on a 1-dimensional array.
+     * <p><strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
      * @param arrayInUnit the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
      * @return a new Matrix3x3 with a unit
      * @throws IllegalArgumentException when valueArray does not contain 3x3 = 9 values
-     * @implNote the condition is also checked by super() but the fail fast approach is used here
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[] arrayInUnit,
