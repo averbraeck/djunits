@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Test;
  * <li>All branches and all exception paths</li>
  * </ul>
  * <p>
- * Tests assert functional intent; if the implementation is incorrect, these tests will fail by design.
- * <br>
+ * Tests assert functional intent; if the implementation is incorrect, these tests will fail by design. <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -342,4 +341,5 @@ public class DenseDoubleDataTest
         l[0][0] = new Length(42.0, Length.Unit.m);
         assertArrayEquals(expected, d.getDataArray(), 1e-12, "safe copy on ctor(Q[][])");
     }
+
 }
