@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  * <li>Constructors, factories, and display→SI conversion</li>
  * <li>Accessors: x(), y(), z(), xSi(), ySi(), zSi(), si(), get(index)</li>
  * <li>Iterator and getScalarArray()</li>
- * <li>Vector algebra: add/sub (Q & V), negate, abs, scaleBy</li>
+ * <li>Vector algebra: add/sub (Q &amp; V), negate, abs, scaleBy</li>
  * <li>Normed: norm(), normL1(), normL2(), normLp(p), normLinf()</li>
  * <li>Orientation &amp; shape: rows(), cols(), isColumnVector()</li>
  * <li>Transposition Row&lt;↔&gt;Col</li>
@@ -351,7 +351,7 @@ public class Vector3Test
     // Normed
     // -----------------------------------------------------------------------------------------------------------------
 
-    /** Verify norm(), normL1(), normL2(), normLp(p), normLinf() (Row & Col). */
+    /** Verify norm(), normL1(), normL2(), normLp(p), normLinf() (Row &amp; Col). */
     @Test
     @DisplayName("Normed: norm(), normL1(), normL2(), normLp(p), normLinf()")
     public void testNorms()
@@ -463,7 +463,7 @@ public class Vector3Test
     // as(targetUnit)
     // -----------------------------------------------------------------------------------------------------------------
 
-    /** Verify as(targetUnit) succeeds for m↔km and fails for mismatched SI unit (Row & Col). */
+    /** Verify as(targetUnit) succeeds for m↔km and fails for mismatched SI unit (Row &amp; Col). */
     @Test
     @DisplayName("as(targetUnit) success for m↔km and failure for mismatched SI unit")
     public void testAs()

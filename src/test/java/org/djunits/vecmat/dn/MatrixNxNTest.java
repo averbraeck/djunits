@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * <li>VectorMatrixOps defaults: {@code add/sub (Q & VM)}, {@code negate}, {@code abs}, {@code scaleBy}, stats</li>
  * <li>SquareMatrixOps: {@code transpose}, {@code determinantScalar}, {@code determinant}, {@code trace}, {@code normFrobenius},
  * {@code isSymmetric} (± tol), {@code isSkewSymmetric} (± tol)</li>
- * <li>Inverse/adjugate (success + singular), matrix×matrix, matrix×vector</li>
+ * <li>Inverse/adjugate (success + singular), matrixxmatrix, matrixxvector</li>
  * <li>Hadamard: {@code invertElements}, {@code multiplyElements}, {@code divideElements} (+ unit composition)</li>
  * <li>{@code as(targetUnit)} success/failure</li>
  * <li>Scalar extraction helpers: {@code getScalars}, {@code getRowScalars}, {@code getColumnScalars},
@@ -52,7 +52,7 @@ public class MatrixNxNTest
     private static final double EPS = 1.0E-12;
 
     /**
-     * Build a 4×4 matrix from SI values with a given display unit.
+     * Build a 4x4 matrix from SI values with a given display unit.
      * @param si a flat 16-element SI (m) array in row-major order
      * @param unit display unit
      * @return matrix instance
@@ -82,7 +82,7 @@ public class MatrixNxNTest
         assertThrows(NullPointerException.class, () -> MatrixNxN.of(new double[16], null));
         assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new double[15], Length.Unit.m));
 
-        // 4×4 in km → SI m
+        // 4x4 in km → SI m
         double[] inKm = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
         MatrixNxN<Length, Length.Unit> m = MatrixNxN.of(inKm, Length.Unit.km);
         double[] expectedSi = new double[inKm.length];
@@ -94,7 +94,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} checks 4×4 shape and converts to SI.
+     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} checks 4x4 shape and converts to SI.
      */
     @Test
     @DisplayName("of(double[][],U): shape & SI conversion")
@@ -258,7 +258,7 @@ public class MatrixNxNTest
     }
 
     // ------------------------------------------------------------------------------------
-    // Inverse/adjugate, matrix×matrix, matrix×vector
+    // Inverse/adjugate, matrixxmatrix, matrixxvector
     // ------------------------------------------------------------------------------------
 
     /**
@@ -279,10 +279,10 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify matrix×matrix and matrix×vector multiplication with unit composition.
+     * Verify matrixxmatrix and matrixxvector multiplication with unit composition.
      */
     @Test
-    @DisplayName("matrix × matrix and matrix × vector")
+    @DisplayName("matrix x matrix and matrix x vector")
     public void testMultiply()
     {
         MatrixNxN<Length, Length.Unit> a = ofSi4(new double[] {1, 2, 3, 4, 0, 1, 0, 0, 0, 0, 1, 0, 5, 6, 7, 8}, Length.Unit.m);

@@ -134,7 +134,7 @@ public class UnitlessTest
         assertEquals(1.0 * 0.001, pls.getScaleFactorToBaseUnit(), 1e-12);
         assertEquals(1.0, pls.toBaseValue(1000.0), 1e-12);
 
-        // Compose on an already scaled Unitless: 0.01 (percent) × 2 -> 0.02.
+        // Compose on an already scaled Unitless: 0.01 (percent) x 2 -> 0.02.
         Unitless percent = new Unitless("%", "percent", 0.01, UnitSystem.OTHER);
         Unitless twoPercent = percent.deriveUnit("2%", "2%", "two percent", 2.0, UnitSystem.OTHER);
         assertTrue(twoPercent.getScale() instanceof LinearScale);

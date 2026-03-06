@@ -156,7 +156,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         {
             data[c - 1] = si(row, c);
         }
-        // 1 × cols() row-shape
+        // 1 x cols() row-shape
         return new VectorN.Row<Q, U>(new DenseDoubleData(data, 1, cols()), getDisplayUnit());
     }
 
@@ -177,7 +177,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         {
             data[r - 1] = si(r, column);
         }
-        // rows() × 1 column-shape
+        // rows() x 1 column-shape
         return new VectorN.Col<Q, U>(new DenseDoubleData(data, rows(), 1), getDisplayUnit());
     }
 
@@ -195,7 +195,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         {
             data[i - 1] = si(i, i);
         }
-        // n × 1 column-shape
+        // n x 1 column-shape
         return new VectorN.Col<Q, U>(new DenseDoubleData(data, n, 1), getDisplayUnit());
     }
 

@@ -96,7 +96,7 @@ public final class Constants
     public static final SIQuantity PLANCK = SIQuantity.of(6.62607015e-34, "kgm2/s");
 
     /**
-     * The luminous efficacy Kcd of monochromatic radiation of frequency 540×10^12 Hz (540 THz). This is the frequency of a
+     * The luminous efficacy Kcd of monochromatic radiation of frequency 540x10^12 Hz (540 THz). This is the frequency of a
      * green-colored light at approximately the peak sensitivity of the human eye. This value is exact since the 2006
      * redefinition of the SI base units.
      */

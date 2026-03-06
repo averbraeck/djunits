@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
  * <li>Parsing success and all parsing error branches</li>
  * <li>All arithmetic operators:
  * <ul>
- * <li>VOD × Volume → Dimensionless</li>
- * <li>VOD × Area → LinearObjectDensity</li>
- * <li>VOD × Length → ArealObjectDensity</li>
+ * <li>VOD x Volume → Dimensionless</li>
+ * <li>VOD x Area → LinearObjectDensity</li>
+ * <li>VOD x Length → ArealObjectDensity</li>
  * <li>VOD ÷ LOD → ArealObjectDensity</li>
  * <li>VOD ÷ AOD → LinearObjectDensity</li>
  * <li>VOD ÷ VOD → Dimensionless</li>
@@ -132,17 +132,17 @@ class VolumetricObjectDensityTest
     @Test
     void testOperations()
     {
-        // (1/m3) × m3 → Dimensionless
+        // (1/m3) x m3 → Dimensionless
         var d1 = VolumetricObjectDensity.ofSi(2.0).multiply(Volume.ofSi(3.0));
         assertTrue(d1 instanceof Dimensionless);
         assertEquals(6.0, d1.si(), 1E-12);
 
-        // (1/m3) × m2 → (1/m)
+        // (1/m3) x m2 → (1/m)
         var lod1 = VolumetricObjectDensity.ofSi(4.0).multiply(Area.ofSi(2.0));
         assertTrue(lod1 instanceof LinearObjectDensity);
         assertEquals(8.0, lod1.si(), 1E-12);
 
-        // (1/m3) × m → (1/m2)
+        // (1/m3) x m → (1/m2)
         var aod1 = VolumetricObjectDensity.ofSi(5.0).multiply(Length.ofSi(2.0));
         assertTrue(aod1 instanceof ArealObjectDensity);
         assertEquals(10.0, aod1.si(), 1E-12);

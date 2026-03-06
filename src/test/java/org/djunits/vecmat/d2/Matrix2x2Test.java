@@ -314,7 +314,7 @@ public class Matrix2x2Test
     }
 
     // ------------------------------------------------------------------------------------
-    // Inversion, adjugate, matrix × matrix, matrix × vector, element-wise ops (Hadamard)
+    // Inversion, adjugate, matrix x matrix, matrix x vector, element-wise ops (Hadamard)
     // ------------------------------------------------------------------------------------
 
     /**
@@ -364,7 +364,7 @@ public class Matrix2x2Test
      * Verify standard 2x2 matrix multiplication.
      */
     @Test
-    @DisplayName("matrix × matrix multiplication")
+    @DisplayName("matrix x matrix multiplication")
     public void testMatrixMultiply()
     {
         // A = [[1,2],[3,4]] ; B = [[5,6],[7,8]] ; A*B = [[19,22],[43,50]]
@@ -372,7 +372,7 @@ public class Matrix2x2Test
         var b = new Matrix2x2<Length, Length.Unit>(new double[] {5, 6, 7, 8}, Length.Unit.km);
         Matrix2x2<SIQuantity, SIUnit> c = a.multiply(b);
         assertArrayEquals(new double[] {19_000.0, 22_000.0, 43_000.0, 50_000.0}, c.si(), EPS,
-                "result in SI reflects both inputs (m×km→m^2 in SI numerical terms)");
+                "result in SI reflects both inputs (mxkm→m^2 in SI numerical terms)");
     }
 
     /**
@@ -380,7 +380,7 @@ public class Matrix2x2Test
      * unit) is available.
      */
     @Test
-    @DisplayName("matrix × vector (column)")
+    @DisplayName("matrix x vector (column)")
     public void testMatrixTimesVector()
     {
         Matrix2x2<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);

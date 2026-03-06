@@ -156,7 +156,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Multiply this matrix with another matrix and return the resulting matrix, using the same underlying data storage type. If
-     * this matrix has dimensions N × M, the other matrix must have dimensions M × P.
+     * this matrix has dimensions N x M, the other matrix must have dimensions M x P.
      * <p>
      * <strong>Implementation Note:</strong> Checking of the dimensions is done by
      * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -224,7 +224,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Multiply this (N × 2) matrix with a column vector of size 2, resulting in a column vector of size N.
+     * Multiply this (N x 2) matrix with a column vector of size 2, resulting in a column vector of size N.
      * <p>
      * <strong>Implementation Note:</strong> Checking of the dimensions is done by
      * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -240,7 +240,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Multiply this (N × 3) matrix with a column vector of size 3, resulting in a column vector of size N.
+     * Multiply this (N x 3) matrix with a column vector of size 3, resulting in a column vector of size N.
      * <p>
      * <strong>Implementation Note:</strong> Checking of the dimensions is done by
      * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -256,7 +256,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Multiply this (N × M) matrix with a column vector of size M, resulting in a column vector of size N.
+     * Multiply this (N x M) matrix with a column vector of size M, resulting in a column vector of size N.
      * <p>
      * <strong>Implementation Note:</strong> Checking of the dimensions is done by
      * {@link MatrixMath#multiply(double[], double[], int, int, int)}.
@@ -290,12 +290,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix typed as a {@link Matrix2x2} with the given unit. The shape must be 2 × 2.
+     * Return this matrix typed as a {@link Matrix2x2} with the given unit. The shape must be 2 x 2.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit unit for the returned matrix
      * @return a {@code Matrix2x2} with identical SI data and the specified display unit
-     * @throws IllegalStateException if this matrix is not 2 × 2
+     * @throws IllegalStateException if this matrix is not 2 x 2
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix2x2<TQ, TU> asMatrix2x2(final TU targetUnit)
     {
@@ -312,12 +312,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix typed as a {@link Matrix3x3} with the given unit. The shape must be 3 × 3.
+     * Return this matrix typed as a {@link Matrix3x3} with the given unit. The shape must be 3 x 3.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit unit for the returned matrix
      * @return a {@code Matrix3x3} with identical SI data and the specified display unit
-     * @throws IllegalStateException if this matrix is not 3 × 3
+     * @throws IllegalStateException if this matrix is not 3 x 3
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix3x3<TQ, TU> asMatrix3x3(final TU targetUnit)
     {
@@ -348,39 +348,39 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     }
 
     /**
-     * Return this matrix as a 2-element column vector with the given unit. Shape must be 2 × 1.
+     * Return this matrix as a 2-element column vector with the given unit. Shape must be 2 x 1.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
      * @return a {@code Vector2.Col} with identical SI data and the specified display unit
-     * @throws IllegalStateException if shape is not 2 × 1
+     * @throws IllegalStateException if shape is not 2 x 1
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2.Col<TQ, TU> asVector2Col(final TU targetUnit)
     {
-        Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2×1");
+        Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
         // Vector2 constructors take display-unit values; convert SI → display.
         final double[] data = si();
         return new Vector2.Col<TQ, TU>(targetUnit.fromBaseValue(data[0]), targetUnit.fromBaseValue(data[1]), targetUnit);
     }
 
     /**
-     * Return this matrix as a 3-element column vector with the given unit. Shape must be 3 × 1.
+     * Return this matrix as a 3-element column vector with the given unit. Shape must be 3 x 1.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
      * @return a {@code Vector3.Col} with identical SI data and the specified display unit
-     * @throws IllegalStateException if shape is not 3 × 1
+     * @throws IllegalStateException if shape is not 3 x 1
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector3.Col<TQ, TU> asVector3Col(final TU targetUnit)
     {
-        Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3×1");
+        Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
         final double[] d = si();
         return new Vector3.Col<TQ, TU>(targetUnit.fromBaseValue(d[0]), targetUnit.fromBaseValue(d[1]),
                 targetUnit.fromBaseValue(d[2]), targetUnit);
     }
 
     /**
-     * Return this matrix as an N-element column vector with the given unit. Shape must be N × 1.
+     * Return this matrix as an N-element column vector with the given unit. Shape must be N x 1.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -389,43 +389,43 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Col<TQ, TU> asVectorNCol(final TU targetUnit)
     {
-        Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not N×1");
+        Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
         return new VectorN.Col<TQ, TU>(new DenseDoubleData(si(), rows(), 1), targetUnit);
     }
 
     /**
-     * Return this matrix as a 2-element row vector with the given unit. Shape must be 1 × 2.
+     * Return this matrix as a 2-element row vector with the given unit. Shape must be 1 x 2.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
      * @return a {@code Vector2.Row} with identical SI data and the specified display unit
-     * @throws IllegalStateException if shape is not 1 × 2
+     * @throws IllegalStateException if shape is not 1 x 2
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2.Row<TQ, TU> asVector2Row(final TU targetUnit)
     {
-        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1×2");
+        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
         final double[] d = si();
         return new Vector2.Row<TQ, TU>(targetUnit.fromBaseValue(d[0]), targetUnit.fromBaseValue(d[1]), targetUnit);
     }
 
     /**
-     * Return this matrix as a 3-element row vector with the given unit. Shape must be 1 × 3.
+     * Return this matrix as a 3-element row vector with the given unit. Shape must be 1 x 3.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
      * @return a {@code Vector3.Row} with identical SI data and the specified display unit
-     * @throws IllegalStateException if shape is not 1 × 3
+     * @throws IllegalStateException if shape is not 1 x 3
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector3.Row<TQ, TU> asVector3Row(final TU targetUnit)
     {
-        Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1×3");
+        Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
         final double[] d = si();
         return new Vector3.Row<TQ, TU>(targetUnit.fromBaseValue(d[0]), targetUnit.fromBaseValue(d[1]),
                 targetUnit.fromBaseValue(d[2]), targetUnit);
     }
 
     /**
-     * Return this matrix as an N-element row vector with the given unit. Shape must be 1 × N.
+     * Return this matrix as an N-element row vector with the given unit. Shape must be 1 x N.
      * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit display unit for the vector
@@ -434,7 +434,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Row<TQ, TU> asVectorNRow(final TU targetUnit)
     {
-        Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1×N");
+        Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
         return new VectorN.Row<TQ, TU>(new DenseDoubleData(si(), 1, cols()), targetUnit);
     }
 

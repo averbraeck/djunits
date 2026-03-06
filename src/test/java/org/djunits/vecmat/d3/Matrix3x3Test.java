@@ -313,7 +313,7 @@ public class Matrix3x3Test
     }
 
     // ------------------------------------------------------------------------------------
-    // Inversion, adjugate, matrix × matrix, matrix × vector, element-wise ops (Hadamard)
+    // Inversion, adjugate, matrix x matrix, matrix x vector, element-wise ops (Hadamard)
     // ------------------------------------------------------------------------------------
 
     /**
@@ -351,17 +351,17 @@ public class Matrix3x3Test
      * Verify standard 3x3 matrix multiplication (A·B).
      */
     @Test
-    @DisplayName("matrix × matrix multiplication")
+    @DisplayName("matrix x matrix multiplication")
     public void testMatrixMultiply()
     {
         // A = [[1,2,3],[4,5,6],[7,8,9]]
         Matrix3x3<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
-        // B in km ⇒ SI is 1000×
+        // B in km ⇒ SI is 1000x
         Matrix3x3<Length, Length.Unit> b = Matrix3x3.of(new double[] {9, 8, 7, 6, 5, 4, 3, 2, 1}, Length.Unit.km);
 
         Matrix3x3<SIQuantity, SIUnit> c = a.multiply(b);
-        // Compute expected in SI: m × km ⇒ elements in m^2 numerically; A·(1000·B')
-        // A·B' = [[30,24,18],[84,69,54],[138,114,90]] then ×1000
+        // Compute expected in SI: m x km ⇒ elements in m^2 numerically; A·(1000·B')
+        // A·B' = [[30,24,18],[84,69,54],[138,114,90]] then x1000
         assertArrayEquals(new double[] {30_000, 24_000, 18_000, 84_000, 69_000, 54_000, 138_000, 114_000, 90_000}, c.si(), EPS);
     }
 
@@ -369,7 +369,7 @@ public class Matrix3x3Test
      * Verify multiplication with a column vector (A·v).
      */
     @Test
-    @DisplayName("matrix × vector (column)")
+    @DisplayName("matrix x vector (column)")
     public void testMatrixTimesVector()
     {
         // A same as above (in m); v in km → SI [1000, 2000, 3000]

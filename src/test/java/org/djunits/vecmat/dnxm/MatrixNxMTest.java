@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for {@link MatrixNxM} with concrete quantity {@link Length} and unit {@link org.djunits.quantity.Length.Unit}.
  * <p>
- * Tests cover factories, {@code instantiateSi}, algebra/stats (defaults), Hadamard ops, matrix×matrix, matrix×vector, “as”
+ * Tests cover factories, {@code instantiateSi}, algebra/stats (defaults), Hadamard ops, matrixxmatrix, matrixxvector, “as”
  * conversions to square matrices and vectors, scalar extraction helpers, equals/hashCode, and display-unit behavior.
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -68,7 +68,7 @@ public class MatrixNxMTest
         assertThrows(IllegalArgumentException.class, () -> MatrixNxM.of(new double[6], 0, 2, Length.Unit.m));
         assertThrows(IllegalArgumentException.class, () -> MatrixNxM.of(new double[6], 3, 0, Length.Unit.m));
 
-        // 3×2 in km → SI
+        // 3x2 in km → SI
         MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
         assertAll(() -> assertEquals(3, m.rows()), () -> assertEquals(2, m.cols()));
@@ -84,7 +84,7 @@ public class MatrixNxMTest
         assertThrows(IllegalArgumentException.class, () -> MatrixNxM.of(new double[][] {}, Length.Unit.m));
         assertThrows(IllegalArgumentException.class, () -> MatrixNxM.of(new double[][] {{}, {1}}, Length.Unit.m));
 
-        // 2×3 in km
+        // 2x3 in km
         MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.km);
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
         assertAll(() -> assertEquals(2, m.rows()), () -> assertEquals(3, m.cols()));
@@ -116,7 +116,7 @@ public class MatrixNxMTest
     // Basics: rows/cols/value/isRelative, setDisplayUnit, toString
     // ------------------------------------------------------------------------------------
 
-    /** Verify rows/cols/value/isRelative on a 3×2 matrix. */
+    /** Verify rows/cols/value/isRelative on a 3x2 matrix. */
     @Test
     @DisplayName("rows/cols/value/isRelative")
     public void testShapeAndValue()
@@ -151,7 +151,7 @@ public class MatrixNxMTest
     // Algebra/stats defaults and Hadamard
     // ------------------------------------------------------------------------------------
 
-    /** Verify add/sub (Q & VM), negate/abs/scaleBy, stats on 2×3 matrix. */
+    /** Verify add/sub (Q &amp; VM), negate/abs/scaleBy, stats on 2x3 matrix. */
     @Test
     @DisplayName("add/sub (Q & VM), negate/abs/scaleBy, stats")
     public void testAlgebraAndStats()
@@ -195,17 +195,17 @@ public class MatrixNxMTest
     }
 
     // ------------------------------------------------------------------------------------
-    // Matrix × matrix (NxM×MxP, Nx2×2x2, Nx3×3x3) and Matrix × vector (2,3,N)
+    // Matrix x matrix (NxMxMxP, Nx2x2x2, Nx3x3x3) and Matrix x vector (2,3,N)
     // ------------------------------------------------------------------------------------
 
-    /** Verify general (NxM)×(MxP) multiplication and unit composition. */
+    /** Verify general (NxM)x(MxP) multiplication and unit composition. */
     @Test
-    @DisplayName("A(N×M) × B(M×P) → C(N×P)")
+    @DisplayName("A(NxM) x B(MxP) → C(NxP)")
     public void testMultiplyGeneral()
     {
-        // A(3×2) in m
+        // A(3x2) in m
         MatrixNxM<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        // B(2×3) in km (display) ⇒ SI = ×1000
+        // B(2x3) in km (display) ⇒ SI = x1000
         MatrixNxM<Length, Length.Unit> b = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.km);
 
         MatrixNxM<SIQuantity, SIUnit> c = a.multiply(b);
@@ -216,26 +216,26 @@ public class MatrixNxMTest
         assertArrayEquals(new double[] {9000, 12000, 15000, 19000, 26000, 33000, 29000, 40000, 51000}, c.si(), EPS);
     }
 
-    /** Verify Nx2 × 2×2 and Nx3 × 3×3 multiplication variants. */
+    /** Verify Nx2 x 2x2 and Nx3 x 3x3 multiplication variants. */
     @Test
-    @DisplayName("A(N×2)×B(2×2), A(N×3)×B(3×3)")
+    @DisplayName("A(Nx2)xB(2x2), A(Nx3)xB(3x3)")
     public void testMultiply2x2And3x3()
     {
-        // A(3×2) and 2×2
+        // A(3x2) and 2x2
         MatrixNxM<Length, Length.Unit> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
         Matrix2x2<Length, Length.Unit> b22 = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
         MatrixNxM<SIQuantity, SIUnit> r32 = a32.multiply(b22);
         assertArrayEquals(new double[] {7000, 10000, 15000, 22000, 23000, 34000}, r32.si(), EPS);
 
-        // A(2×3) and 3×3
+        // A(2x3) and 3x3
         MatrixNxM<Length, Length.Unit> a23 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
         Matrix3x3<Length, Length.Unit> b33 = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
         MatrixNxM<SIQuantity, SIUnit> r23 = a23.multiply(b33);
-        // A·B' = [[30,36,42],[66,81,96]] then ×1000
+        // A·B' = [[30,36,42],[66,81,96]] then x1000
         assertArrayEquals(new double[] {30_000, 36_000, 42_000, 66_000, 81_000, 96_000}, r23.si(), EPS);
     }
 
-    /** Verify A(N×2)·v2 and A(N×3)·v3 and A(N×M)·vN return VectorN.Col with correct unit. */
+    /** Verify A(Nx2)·v2 and A(Nx3)·v3 and A(NxM)·vN return VectorN.Col with correct unit. */
     @Test
     @DisplayName("A·v: size 2, size 3, and size N")
     public void testMultiplyVector()

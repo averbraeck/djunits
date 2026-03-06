@@ -140,7 +140,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
     /**
      * Multiplies this areal object density by an area to yield a dimensionless count.
      * <p>
-     * Formula: (1/m²) × m² = 1.
+     * Formula: (1/m²) x m² = 1.
      * @param area the area multiplier; must not be {@code null}.
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code area} is {@code null}.
@@ -153,7 +153,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
     /**
      * Multiplies this areal object density by a length to yield a linear object density.
      * <p>
-     * Formula: (1/m²) × m = 1/m.
+     * Formula: (1/m²) x m = 1/m.
      * @param length the length multiplier; must not be {@code null}.
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code length} is {@code null}.

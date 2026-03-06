@@ -127,7 +127,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity, V
     /**
      * Multiplies this volumetric object density by a volume to yield a dimensionless count.
      * <p>
-     * Formula: (1/m³) × m³ = 1.
+     * Formula: (1/m³) x m³ = 1.
      * @param volume the volume multiplier; must not be {@code null}.
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code volume} is {@code null}.
@@ -140,7 +140,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity, V
     /**
      * Multiplies this volumetric object density by an area to yield a linear object density.
      * <p>
-     * Formula: (1/m³) × m² = 1/m.
+     * Formula: (1/m³) x m² = 1/m.
      * @param area the area multiplier; must not be {@code null}.
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code area} is {@code null}.
@@ -153,7 +153,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity, V
     /**
      * Multiplies this volumetric object density by a length to yield an areal object density.
      * <p>
-     * Formula: (1/m³) × m = 1/m².
+     * Formula: (1/m³) x m = 1/m².
      * @param length the length multiplier; must not be {@code null}.
      * @return the resulting areal object density in SI (1/m²).
      * @throws NullPointerException if {@code length} is {@code null}.
