@@ -259,6 +259,7 @@ class PowerTest
         Power.Unit twoW = Power.Unit.W.deriveUnit("2W", "2W", "two watt", 2.0, UnitSystem.OTHER);
         Power x = new Power(1.0, twoW); // 1 * 2 W == 2 W
         assertEquals(2.0, x.si(), 1E-12);
+        Units.unregister(twoW);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Power.Unit nonLinear = new Power.Unit("gWatt", "gWatt", "grade-like watt (nonlinear)",
@@ -267,6 +268,7 @@ class PowerTest
         {
             nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER);
         });
+        Units.unregister(nonLinear);
 
         // Registry sanity for prefixes and specials
         assertEquals(Power.Unit.kW, Units.resolve(Power.Unit.class, "kW"));

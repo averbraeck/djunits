@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Locale;
 
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.Units;
 import org.djunits.unit.scale.GradeScale;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
@@ -194,11 +195,13 @@ class DurationTest
         Duration.Unit twoS = Duration.Unit.s.deriveUnit("2s", "2s", "two seconds", 2.0, UnitSystem.OTHER);
         Duration x = new Duration(1.0, twoS); // 1 * 2 s == 2 s
         assertEquals(2.0, x.si(), 1E-12);
+        Units.unregister(twoS);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Duration.Unit nonLinear =
                 new Duration.Unit("gs", "gs", "grade-like second (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
         assertThrows(UnitRuntimeException.class, () ->
         { nonLinear.deriveUnit("g2s", "g2s", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        Units.unregister(nonLinear);
     }
 }
