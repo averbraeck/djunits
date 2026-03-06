@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.Locale;
-
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
@@ -12,8 +10,6 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * Speed is the rate of change of position over time.<br>
@@ -113,23 +109,7 @@ public class Speed extends Quantity<Speed, Speed.Unit>
      */
     public static Speed valueOf(final String text)
     {
-        Throw.whenNull(text, "Error parsing Speed: text to parse is null");
-        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing Speed: empty text to parse");
-        try
-        {
-            NumberParser numberParser = new NumberParser().lenient().trailing();
-            double d = numberParser.parseDouble(text);
-            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            Speed.Unit unit = Units.resolve(Speed.Unit.class, unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Speed", unitString);
-            return new Speed(d, unit);
-        }
-        catch (Exception exception)
-        {
-            throw new IllegalArgumentException(
-                    "Error parsing Speed from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
-                    exception);
-        }
+        return Quantity.valueOf(text, ZERO);
     }
 
     /**
@@ -142,11 +122,7 @@ public class Speed extends Quantity<Speed, Speed.Unit>
      */
     public static Speed of(final double value, final String unitString)
     {
-        Throw.whenNull(unitString, "Error parsing Speed: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Speed: empty unitString");
-        Speed.Unit unit = Units.resolve(Speed.Unit.class, unitString);
-        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Speed with unit %s", unitString);
-        return new Speed(value, unit);
+        return Quantity.of(value, unitString, ZERO);
     }
 
     /**

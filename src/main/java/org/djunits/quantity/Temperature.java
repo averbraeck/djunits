@@ -334,37 +334,6 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
         }
 
         /**
-         * Create a new Temperature unit with a given reference.
-         * @param id the id or main abbreviation of the unit
-         * @param name the full name of the unit
-         * @param scaleFactorToBaseUnit the scale factor of the unit to convert it TO the base (SI) unit
-         * @param unitSystem the unit system such as SI or IMPERIAL
-         * @param reference the default reference for this unit
-         */
-        protected Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem,
-                final Reference reference)
-        {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
-            this.reference = reference;
-        }
-
-        /**
-         * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation, and a given reference.
-         * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
-         * @param displayAbbreviation the display abbreviation of the unit
-         * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
-         * @param unitSystem unit system, e.g. SI or Imperial
-         * @param reference the default reference for this unit
-         */
-        protected Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem, final Reference reference)
-        {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
-            this.reference = reference;
-        }
-
-        /**
          * Ensure default references for all Temperature units are assigned once and only when needed. This avoids circular
          * initialization between Temperature.Unit, Temperature.Reference, and TemperatureDifference. The method is deliberately
          * minimal: it only assigns references to existing unit singletons and does not create new objects or resolve units.

@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.Locale;
-
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
@@ -11,8 +9,6 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * Frequency encodes the number of events per unit of duration.<br>
@@ -112,23 +108,7 @@ public class Frequency extends Quantity<Frequency, Frequency.Unit>
      */
     public static Frequency valueOf(final String text)
     {
-        Throw.whenNull(text, "Error parsing Frequency: text to parse is null");
-        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing Frequency: empty text to parse");
-        try
-        {
-            NumberParser numberParser = new NumberParser().lenient().trailing();
-            double d = numberParser.parseDouble(text);
-            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            Frequency.Unit unit = Units.resolve(Frequency.Unit.class, unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Frequency", unitString);
-            return new Frequency(d, unit);
-        }
-        catch (Exception exception)
-        {
-            throw new IllegalArgumentException(
-                    "Error parsing Frequency from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
-                    exception);
-        }
+        return Quantity.valueOf(text, ZERO);
     }
 
     /**
@@ -141,11 +121,7 @@ public class Frequency extends Quantity<Frequency, Frequency.Unit>
      */
     public static Frequency of(final double value, final String unitString)
     {
-        Throw.whenNull(unitString, "Error parsing Frequency: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Frequency: empty unitString");
-        Frequency.Unit unit = Units.resolve(Frequency.Unit.class, unitString);
-        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Frequency with unit %s", unitString);
-        return new Frequency(value, unit);
+        return Quantity.of(value, unitString, ZERO);
     }
 
     /**

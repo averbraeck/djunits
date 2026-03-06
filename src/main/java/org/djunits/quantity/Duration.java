@@ -1,7 +1,5 @@
 package org.djunits.quantity;
 
-import java.util.Locale;
-
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
@@ -11,8 +9,6 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
-import org.djutils.base.NumberParser;
-import org.djutils.exceptions.Throw;
 
 /**
  * Duration is the interval of time between two events, measured in seconds (s). This quantity encodes a <i>relative</i> amount
@@ -114,23 +110,7 @@ public class Duration extends Quantity<Duration, Duration.Unit>
      */
     public static Duration valueOf(final String text)
     {
-        Throw.whenNull(text, "Error parsing Duration: text to parse is null");
-        Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing Duration: empty text to parse");
-        try
-        {
-            NumberParser numberParser = new NumberParser().lenient().trailing();
-            double d = numberParser.parseDouble(text);
-            String unitString = text.substring(numberParser.getTrailingPosition()).trim();
-            Duration.Unit unit = Units.resolve(Duration.Unit.class, unitString);
-            Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity Duration", unitString);
-            return new Duration(d, unit);
-        }
-        catch (Exception exception)
-        {
-            throw new IllegalArgumentException(
-                    "Error parsing Duration from " + text + " using Locale " + Locale.getDefault(Locale.Category.FORMAT),
-                    exception);
-        }
+        return Quantity.valueOf(text, ZERO);
     }
 
     /**
@@ -143,11 +123,7 @@ public class Duration extends Quantity<Duration, Duration.Unit>
      */
     public static Duration of(final double value, final String unitString)
     {
-        Throw.whenNull(unitString, "Error parsing Duration: unitString is null");
-        Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing Duration: empty unitString");
-        Duration.Unit unit = Units.resolve(Duration.Unit.class, unitString);
-        Throw.when(unit == null, IllegalArgumentException.class, "Error parsing Duration with unit %s", unitString);
-        return new Duration(value, unit);
+        return Quantity.of(value, unitString, ZERO);
     }
 
     /**
