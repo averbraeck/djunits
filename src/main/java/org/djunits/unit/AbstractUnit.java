@@ -17,11 +17,10 @@ import org.djutils.exceptions.Throw;
  * <p>
  * The conversion to and from the base unit is left to a Scale. Many scales are linear (e.g., converting dm, cm, and mm to
  * meters), but there are also non-linear scales such as the percentage for an angle, where 90 degrees equals an infinite
- * percentage.
- * </p>
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * percentage. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights
+ * reserved. See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS
+ * project is distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style
+ * license</a>.
  * @author Alexander Verbraeck
  * @param <U> the unit type
  * @param <Q> the quantity type belonging to this unit

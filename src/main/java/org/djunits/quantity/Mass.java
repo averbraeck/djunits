@@ -256,12 +256,10 @@ public class Mass extends Quantity<Mass, Mass.Unit>
         public static final Mass.Unit oz = kg.deriveUnit("oz", "ounce", CONST_OUNCE, UnitSystem.IMPERIAL);
 
         /** long ton = 2240 lb. */
-        public static final Mass.Unit long_tn =
-                kg.deriveUnit("long tn", "long ton", CONST_TON_LONG, UnitSystem.IMPERIAL);
+        public static final Mass.Unit long_tn = kg.deriveUnit("long tn", "long ton", CONST_TON_LONG, UnitSystem.IMPERIAL);
 
         /** short ton = 2000 lb. */
-        public static final Mass.Unit sh_tn =
-                kg.deriveUnit("sh tn", "short ton", CONST_TON_SHORT, UnitSystem.US_CUSTOMARY);
+        public static final Mass.Unit sh_tn = kg.deriveUnit("sh tn", "short ton", CONST_TON_SHORT, UnitSystem.US_CUSTOMARY);
 
         /** metric ton = 1000 kg. */
         public static final Mass.Unit t = kg.deriveUnit("t", "metric tonne", 1000.0, UnitSystem.SI_ACCEPTED);
@@ -273,28 +271,22 @@ public class Mass extends Quantity<Mass, Mass.Unit>
         public static final Mass.Unit Da = kg.deriveUnit("Da", "Dalton", 1.66053906660E-27, UnitSystem.SI_ACCEPTED);
 
         /** electronvolt = 1.782661907E-36 kg. See http://physics.nist.gov/cuu/Constants/Table/allascii.txt. */
-        public static final Mass.Unit eV =
-                kg.deriveUnit("eV", "electronvolt", 1.782661907E-36, UnitSystem.OTHER);
+        public static final Mass.Unit eV = kg.deriveUnit("eV", "electronvolt", 1.782661907E-36, UnitSystem.OTHER);
 
         /** microelectronvolt. */
-        public static final Mass.Unit mueV =
-                eV.deriveUnit("mueV", "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
+        public static final Mass.Unit mueV = eV.deriveUnit("mueV", "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
 
         /** millielectronvolt (note, no dash between milli and electron; the SI style guide forbids spaces or hyphens). */
-        public static final Mass.Unit meV =
-                eV.deriveUnit("meV", "millielectronvolt", 1E-3, UnitSystem.OTHER);
+        public static final Mass.Unit meV = eV.deriveUnit("meV", "millielectronvolt", 1E-3, UnitSystem.OTHER);
 
         /** kiloelectronvolt. */
-        public static final Mass.Unit keV =
-                eV.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.OTHER);
+        public static final Mass.Unit keV = eV.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.OTHER);
 
         /** megaelectronvolt. */
-        public static final Mass.Unit MeV =
-                eV.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.OTHER);
+        public static final Mass.Unit MeV = eV.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.OTHER);
 
         /** gigaelectronvolt. */
-        public static final Mass.Unit GeV =
-                eV.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.OTHER);
+        public static final Mass.Unit GeV = eV.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.OTHER);
 
         /**
          * Create a new Mass unit.

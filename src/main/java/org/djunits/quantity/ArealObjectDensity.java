@@ -128,7 +128,6 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
      * Divides this areal object density by another areal object density to yield a dimensionless ratio.
      * <p>
      * Formula: (1/m²) / (1/m²) = 1.
-     * </p>
      * @param other the areal object density divisor; must not be {@code null}.
      * @return the resulting dimensionless ratio in SI (1).
      * @throws NullPointerException if {@code other} is {@code null}.
@@ -142,7 +141,6 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
      * Multiplies this areal object density by an area to yield a dimensionless count.
      * <p>
      * Formula: (1/m²) × m² = 1.
-     * </p>
      * @param area the area multiplier; must not be {@code null}.
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code area} is {@code null}.
@@ -156,7 +154,6 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
      * Multiplies this areal object density by a length to yield a linear object density.
      * <p>
      * Formula: (1/m²) × m = 1/m.
-     * </p>
      * @param length the length multiplier; must not be {@code null}.
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code length} is {@code null}.
@@ -170,7 +167,6 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
      * Divides this areal object density by a length to yield a volumetric object density.
      * <p>
      * Formula: (1/m²) / m = 1/m³.
-     * </p>
      * @param length the length divisor; must not be {@code null}.
      * @return the resulting volumetric object density in SI (1/m³).
      * @throws NullPointerException if {@code length} is {@code null}.
@@ -184,7 +180,6 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
      * Divides this areal object density by a volumetric object density to yield a length.
      * <p>
      * Formula: (1/m²) / (1/m³) = m.
-     * </p>
      * @param vod the volumetric object density divisor; must not be {@code null}.
      * @return the resulting length in SI (m).
      * @throws NullPointerException if {@code vod} is {@code null}.

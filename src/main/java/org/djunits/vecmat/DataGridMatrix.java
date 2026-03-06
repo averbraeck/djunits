@@ -106,7 +106,6 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
      * This implementation creates a {@code Q[][]} using the runtime component type of the first element and fills it in one
      * pass. It avoids intermediate lists and prevents {@code ClassCastException} that can arise from casting {@code Object[][]}
      * to {@code Q[][]}.
-     * </p>
      * @return a new 2-D array of quantities with the same shape ({@code rows() x cols()}) as this matrix; each entry
      *         {@code [i-1][j-1]} contains {@code value(i, j)} with the current display unit
      */

@@ -25,10 +25,8 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The tests encode intended behavior (display → SI conversion, unit algebra via {@link SIUnit#plus(SIUnit)} /
  * {@link SIUnit#add(SIUnit, SIUnit)}, etc.). They fail if the implementation deviates—by design.
- * </p>
  * <p>
  * <strong>Coverage:</strong>
- * </p>
  * <ul>
  * <li>Factories ({@code of(double[],U)}, {@code of(double[][],U)})</li>
  * <li>{@code instantiateSi(double[])}</li>

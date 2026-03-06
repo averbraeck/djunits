@@ -26,10 +26,8 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The tests encode the <em>intended</em> functional specification. They will fail when the implementation deviates (e.g.,
  * incorrect addressing in {@code get(index)} or wrong unit composition in Hadamard operations).
- * </p>
  * <p>
  * Coverage scope:
- * </p>
  * <ul>
  * <li>Construction via a {@link DataGrid}-backed SI store</li>
  * <li>Accessors: {@code size()}, {@code rows()}, {@code cols()}, {@code isColumnVector()}, {@code si()},
@@ -62,8 +60,7 @@ public final class VectorNTest
      * <p>
      * Values are given in {@code unit} and converted to SI for internal storage; the vector's display unit is set to
      * {@code unit}.
-     * </p>
-     * @param inUnit the values expressed in the given display unit; never {@code null}
+         * @param inUnit the values expressed in the given display unit; never {@code null}
      * @param unit the display unit to use; never {@code null}
      * @return a newly constructed {@link VectorN.Col} with SI storage and the specified display unit
      */
@@ -82,8 +79,7 @@ public final class VectorNTest
      * <p>
      * Values are given in {@code unit} and converted to SI for internal storage; the vector's display unit is set to
      * {@code unit}.
-     * </p>
-     * @param inUnit the values expressed in the given display unit; never {@code null}
+         * @param inUnit the values expressed in the given display unit; never {@code null}
      * @param unit the display unit to use; never {@code null}
      * @return a newly constructed {@link VectorN.Row} with SI storage and the specified display unit
      */

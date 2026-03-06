@@ -138,7 +138,6 @@ public class LinearDensity extends Quantity<LinearDensity, LinearDensity.Unit>
      * Divides this linear density by a mass to yield a linear object density.
      * <p>
      * Formula: (kg/m) / kg = 1/m.
-     * </p>
      * @param mass the mass divisor; must not be {@code null}.
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code mass} is {@code null}.
@@ -152,7 +151,6 @@ public class LinearDensity extends Quantity<LinearDensity, LinearDensity.Unit>
      * Divides this linear density by a linear object density to yield a mass.
      * <p>
      * Formula: (kg/m) / (1/m) = kg.
-     * </p>
      * @param lod the linear object density divisor; must not be {@code null}.
      * @return the resulting mass in SI (kg).
      * @throws NullPointerException if {@code lod} is {@code null}.
@@ -166,7 +164,6 @@ public class LinearDensity extends Quantity<LinearDensity, LinearDensity.Unit>
      * Multiplies this linear density by a length to yield a mass.
      * <p>
      * Formula: (kg/m) * m = kg.
-     * </p>
      * @param length the length multiplier; must not be {@code null}.
      * @return the resulting mass in SI (kg).
      * @throws NullPointerException if {@code length} is {@code null}.
@@ -180,7 +177,6 @@ public class LinearDensity extends Quantity<LinearDensity, LinearDensity.Unit>
      * Multiplies this linear density by a speed to yield a mass flow.
      * <p>
      * Formula: (kg/m) * (m/s) = kg/s.
-     * </p>
      * @param speed the speed multiplier; must not be {@code null}.
      * @return the resulting mass flow in SI (kg/s).
      * @throws NullPointerException if {@code speed} is {@code null}.

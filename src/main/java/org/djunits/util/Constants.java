@@ -13,7 +13,6 @@ import org.djunits.unit.Unitless;
  * Various physical constants. For many, see
  * <a href="https://en.wikipedia.org/wiki/2019_redefinition_of_the_SI_base_units">Wikipedia 2019 redefinition of the SI base
  * units</a>
- * </p>
  * @author <a href="https://www.tudelft.nl/staff/p.knoppers">Peter Knoppers</a>
  */
 public final class Constants

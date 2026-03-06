@@ -118,7 +118,6 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * This implementation allocates a {@code Q[][]} using the runtime class of {@code Q} and fills it directly with
      * {@link #value(int, int)} results. It avoids intermediate {@code List} instances and prevents {@link ClassCastException}
      * caused by casting {@code Object[][]} to {@code Q[][]}.
-     * </p>
      * @return a new {@code Q[rows()][cols()]} array; entry {@code [i-1][j-1]} contains {@code value(i, j)}
      */
     @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]

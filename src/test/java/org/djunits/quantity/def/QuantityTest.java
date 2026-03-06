@@ -49,11 +49,9 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <strong>Deliberately out of scope:</strong> We do not re-test domain specifics of {@link Length} or any other derived type;
  * they have their own dedicated unit tests. Here, {@code Length} merely provides a concrete vehicle for the abstract API.
- * </p>
  * <p>
  * <strong>Locale pinning:</strong> The suite pins {@code Locale.Category.FORMAT} to {@code Locale.US} to ensure deterministic
  * behavior of number formatting and parsing; the original locale is restored afterwards.
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -597,8 +595,7 @@ public class QuantityTest
      * <strong>Why SIQuantity?</strong> The algorithm in {@link Quantity#getName()} inserts a space before each uppercase letter
      * <em>after</em> the first character and lower-cases that letter. Using {@code SIQuantity} guarantees we hit that branch:
      * 'S' (kept as-is), then 'I' (→ " i"), then 'Q' (→ " q"), then "uantity".
-     * </p>
-     * <p>
+         * <p>
      * <strong>Expected:</strong>
      * <ul>
      * <li>{@code new Length(...).getName()} yields {@code "Length"} (no spaces added)</li>

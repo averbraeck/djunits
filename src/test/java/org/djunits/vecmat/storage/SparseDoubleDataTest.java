@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
  * This test class achieves full branch coverage of all constructors, helper methods, index validation, sparse storage
  * generation, DataGrid default methods, binary-search access path, copy semantics, instantiation operations, equals/hashCode,
  * and all Q-based constructors, including SI-conversion.
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

@@ -39,7 +39,6 @@ import org.junit.jupiter.api.Test;
  * incorrectly implemented (including TODOs not implemented), tests will fail, as desired.
  * <p>
  * <strong>Conventions used in these tests</strong>
- * </p>
  * <ul>
  * <li>Quantities: {@link Length}</li>
  * <li>Units under test: {@link org.djunits.quantity.Length.Unit#m} (SI base), {@link org.djunits.quantity.Length.Unit#km}

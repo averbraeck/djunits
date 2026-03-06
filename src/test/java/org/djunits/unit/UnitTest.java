@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
  * {@link org.djunits.quantity.Mass.Unit}, {@link org.djunits.quantity.Frequency.Unit}).</li>
  * <li>Defining a new unit inside the test (Jerk: m/s^3) using {@link AbstractUnit} to verify extensibility.</li>
  * </ul>
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

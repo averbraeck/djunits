@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
  * <li>All matrices are provided in row-major layout, matching {@link MatrixMath} contracts.</li>
  * <li>Floating-point comparisons use a tight tolerance; identities from inversion are validated numerically.</li>
  * </ul>
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -306,7 +305,6 @@ public class MatrixMathTest
      * Correctness is evaluated by using the mathematical identity: {@code adj(A) = det(A) * inverse(A)}. For small matrices
      * (1x1, 2x2, 3x3), expected adjugates are computed analytically. For larger matrices (4x4, 5x5), correctness is verified by
      * checking that A * adj(A) equals det(A) times the identity matrix.
-     * </p>
      */
     @Test
     @SuppressWarnings("avoidnestedblocks")

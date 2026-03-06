@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
  * the implementation contains defects (e.g., wrong L1 norm, incorrect Hadamard unit composition).
  * <p>
  * Coverage goals:
- * </p>
  * <ul>
  * <li>Constructors, factories, and SI conversion semantics</li>
  * <li>Accessors: x(), y(), xSi(), ySi(), si(), get(index)</li>
@@ -42,7 +41,6 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <strong>Important:</strong> Values passed to the {@code Vector2} constructors are interpreted in the provided display unit
  * and converted to SI for internal storage. The tests validate that convention.
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -340,8 +338,7 @@ public class Vector2Test
      * <p>
      * <strong>Note:</strong> This test assumes correct L1 definition: |x| + |y|. If the implementation divides by 2, this test
      * will fail (as intended).
-     * </p>
-     */
+         */
     @Test
     @DisplayName("Normed: norm(), normL1(), normL2(), normLp(p), normLinf()")
     public void testNorms()

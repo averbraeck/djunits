@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
  * implementation contains defects (e.g., wrong factories, wrong rows/cols, etc.).
  * <p>
  * Coverage goals:
- * </p>
  * <ul>
  * <li>Constructors, factories, and display→SI conversion</li>
  * <li>Accessors: x(), y(), z(), xSi(), ySi(), zSi(), si(), get(index)</li>

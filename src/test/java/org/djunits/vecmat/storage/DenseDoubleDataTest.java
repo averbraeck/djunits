@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
  * <p>
  * This test class verifies the functional behavior of {@link DenseDoubleData} and the default methods in the {@link DataGrid}
  * interface:
- * </p>
  * <ul>
  * <li>Constructors: double[], double[][], and Q[][] (SI values)</li>
  * <li>Accessors: {@code rows()}, {@code cols()}, {@code get(int,int)}, {@code getDataArray()}</li>
@@ -29,7 +28,6 @@ import org.junit.jupiter.api.Test;
  * </ul>
  * <p>
  * Tests assert functional intent; if the implementation is incorrect, these tests will fail by design.
- * </p>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is

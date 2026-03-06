@@ -296,8 +296,7 @@ public class Energy extends Quantity<Energy, Energy.Unit>
                 J.deriveUnit("BTU(IT)", "British thermal unit (Int. Table)", 1.05505585262E3, UnitSystem.IMPERIAL);
 
         /** calorie (International Table). */
-        public static final Energy.Unit cal_IT =
-                J.deriveUnit("cal(IT)", "calorie (Int. Table)", 4.1868, UnitSystem.IMPERIAL);
+        public static final Energy.Unit cal_IT = J.deriveUnit("cal(IT)", "calorie (Int. Table)", 4.1868, UnitSystem.IMPERIAL);
 
         /** calorie. */
         public static final Energy.Unit cal = J.deriveUnit("cal", "calorie", 4.184, UnitSystem.OTHER);
@@ -313,44 +312,34 @@ public class Energy extends Quantity<Energy, Energy.Unit>
                 WATT_HOUR.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
 
         /** milliwatt hour. */
-        public static final Energy.Unit mWh =
-                WATT_HOUR.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit mWh = WATT_HOUR.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
 
         /** kilowatt hour. */
-        public static final Energy.Unit kWh =
-                WATT_HOUR.deriveUnit("kWh", "kilowatt hour", 1E3, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit kWh = WATT_HOUR.deriveUnit("kWh", "kilowatt hour", 1E3, UnitSystem.SI_DERIVED);
 
         /** megawatt hour. */
-        public static final Energy.Unit MWh =
-                WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E6, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit MWh = WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E6, UnitSystem.SI_DERIVED);
 
         /** gigawatt hour. */
-        public static final Energy.Unit GWh =
-                WATT_HOUR.deriveUnit("GWh", "gigawatt hour", 1E9, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit GWh = WATT_HOUR.deriveUnit("GWh", "gigawatt hour", 1E9, UnitSystem.SI_DERIVED);
 
         /** terawatt hour. */
-        public static final Energy.Unit TWh =
-                WATT_HOUR.deriveUnit("TWh", "terawatt hour", 1E12, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit TWh = WATT_HOUR.deriveUnit("TWh", "terawatt hour", 1E12, UnitSystem.SI_DERIVED);
 
         /** petawatt hour. */
-        public static final Energy.Unit PWh =
-                WATT_HOUR.deriveUnit("PWh", "petawatt hour", 1E15, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit PWh = WATT_HOUR.deriveUnit("PWh", "petawatt hour", 1E15, UnitSystem.SI_DERIVED);
 
         /** electronvolt. */
-        public static final Energy.Unit eV =
-                new Energy.Unit("eV", "electronvolt", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit eV = new Energy.Unit("eV", "electronvolt", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
 
         /** kilo-electronvolt. */
-        public static final Energy.Unit keV =
-                eV.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit keV = eV.deriveUnit("keV", "kiloelectronvolt", 1E3, UnitSystem.SI_ACCEPTED);
 
         /** mega-electronvolt. */
-        public static final Energy.Unit MeV =
-                eV.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit MeV = eV.deriveUnit("MeV", "megaelectronvolt", 1E6, UnitSystem.SI_ACCEPTED);
 
         /** giga-electronvolt. */
-        public static final Energy.Unit GeV =
-                eV.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.SI_ACCEPTED);
+        public static final Energy.Unit GeV = eV.deriveUnit("GeV", "gigaelectronvolt", 1E9, UnitSystem.SI_ACCEPTED);
 
         /** sthene-meter (mts). */
         public static final Energy.Unit sn_m = J.deriveUnit("sn.m", "sthene meter", 1000.0, UnitSystem.MTS);

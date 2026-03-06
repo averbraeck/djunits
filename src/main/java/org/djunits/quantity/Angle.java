@@ -234,8 +234,7 @@ public class Angle extends Quantity<Angle, Angle.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("rad");
 
         /** radian. */
-        public static final Angle.Unit rad =
-                new Angle.Unit("rad", "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+        public static final Angle.Unit rad = new Angle.Unit("rad", "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final Angle.Unit SI = rad;
@@ -244,15 +243,13 @@ public class Angle extends Quantity<Angle, Angle.Unit>
         public static final Angle.Unit percent = new Angle.Unit("%", "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
 
         /** degree. */
-        public static final Angle.Unit deg =
-                rad.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final Angle.Unit deg = rad.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
 
         /** arcminute. */
         public static final Angle.Unit arcmin = deg.deriveUnit("arcmin", "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
 
         /** arcsecond. */
-        public static final Angle.Unit arcsec =
-                deg.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final Angle.Unit arcsec = deg.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
 
         /** grad. */
         public static final Angle.Unit grad = rad.deriveUnit("grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);

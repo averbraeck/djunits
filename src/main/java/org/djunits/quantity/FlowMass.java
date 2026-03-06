@@ -223,8 +223,7 @@ public class FlowMass extends Quantity<FlowMass, FlowMass.Unit>
         public static final SIUnit SI_UNIT = SIUnit.of("kg/s");
 
         /** kg/s. */
-        public static final FlowMass.Unit kg_s =
-                new FlowMass.Unit("kg/s", "kilogram per second", 1.0, UnitSystem.SI_DERIVED);
+        public static final FlowMass.Unit kg_s = new FlowMass.Unit("kg/s", "kilogram per second", 1.0, UnitSystem.SI_DERIVED);
 
         /** The SI or BASE unit. */
         public static final FlowMass.Unit SI = kg_s;

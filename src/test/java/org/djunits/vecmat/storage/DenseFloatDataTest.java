@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
  * This test class verifies the complete functional behavior of {@link DenseFloatData} and all default methods inherited from
  * {@link DataGrid}. All tests focus on correct functional semantics. If the implementation contains bugs or produces incorrect
  * results, these tests are designed to fail.
- * </p>
  * <ul>
  * <li>All constructors (float[], float[][], Q[][])</li>
  * <li>Bounds checking on {@code get(int,int)}</li>

@@ -6,11 +6,10 @@ package org.djunits.value;
  * absolute scalar.
  * <p>
  * Warning: additive operations on units with an Offset Scale might lead to unexpected answers. 10 &deg;C + 5 &deg;C = 288.15
- * &deg;C and not 15 &deg;C.
- * </p>
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * &deg;C and not 15 &deg;C. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the
+ * Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <T> the element type
  */

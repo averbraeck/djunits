@@ -30,11 +30,9 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <strong>Out of scope:</strong> we do not re-test {@link SIUnit} parsing/formatting logic in depth—those are covered by the
  * dedicated {@code SIUnit} test suite. Here we only verify interactions required by {@code SIQuantity}.
- * </p>
  * <p>
  * <strong>Locale pinning:</strong> The tests pin {@code Locale.Category.FORMAT} to {@link Locale#US} for deterministic number
  * parsing/formatting and restore it afterwards.
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -155,8 +153,7 @@ public class SIQuantityTest
      * (camel case with internal capitals).
      * <p>
      * Expected: {@code "SIQuantity"} becomes {@code "S i quantity"}.
-     * </p>
-     */
+         */
     @Test
     void getNamePrettyFormatting()
     {

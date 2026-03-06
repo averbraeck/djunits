@@ -195,8 +195,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * <p>
      * The unit of the result is the SI-unit “sum” of this matrix and the other matrix (i.e., {@code U.plus(V)} on the
      * underlying {@link SIUnit}s).
-     * </p>
-     * @param otherMat the right-hand matrix to multiply with
+         * @param otherMat the right-hand matrix to multiply with
      * @return the product matrix with the correct SI unit
      */
     public MatrixNxN<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
@@ -212,8 +211,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * <p>
      * The unit of the result is the SI-unit “sum” of this matrix and the vector (i.e., {@code U.plus(V)} on the underlying
      * {@link SIUnit}s).
-     * </p>
-     * @param otherVec the column vector to multiply with (size {@code N})
+         * @param otherVec the column vector to multiply with (size {@code N})
      * @return the resulting column vector from the multiplication
      * @throws IllegalArgumentException if the vector size does not equal {@code order()}
      */
@@ -235,8 +233,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * <p>
      * The SI units of this matrix and the target unit must match; otherwise an {@link IllegalArgumentException} is thrown. The
      * returned matrix shares the SI values but has the specified display unit.
-     * </p>
-     * @param <TQ> target quantity type
+         * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit the unit to convert the matrix to
      * @return a matrix typed in the target quantity with the specified display unit

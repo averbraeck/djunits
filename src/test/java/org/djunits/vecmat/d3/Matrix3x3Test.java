@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
  * Unit tests for {@link Matrix3x3} with concrete quantity {@link Length} and unit {@link org.djunits.quantity.Length.Unit}.
  * <p>
  * The tests aim for 100% method and branch coverage of Matrix3x3 and inherited/default behavior from:
- * </p>
  * <ul>
  * <li>{@link Matrix}</li>
  * <li>{@link SquareDenseMatrix}</li>
@@ -37,10 +36,8 @@ import org.junit.jupiter.api.Test;
  * <p>
  * Assertions reflect the intended functional specification. If any method is incorrectly implemented, tests will fail—by
  * design.
- * </p>
  * <p>
  * <strong>Conventions used</strong>
- * </p>
  * <ul>
  * <li>Quantities: {@link Length}</li>
  * <li>Units: {@link org.djunits.quantity.Length.Unit#m} (SI base), {@link org.djunits.quantity.Length.Unit#km} (scale 1000),

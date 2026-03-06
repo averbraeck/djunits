@@ -42,16 +42,13 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <strong>Deliberately out of scope:</strong> We do not re-test domain specifics of {@link Position}/{@link Length}. Those are
  * covered by their dedicated tests; here, {@code Position} provides a concrete vehicle to exercise the abstract API.
- * </p>
  * <p>
  * <strong>Locale pinning:</strong> The suite pins {@code Locale.Category.FORMAT} to {@code Locale.US} for deterministic
  * formatting/parsing behavior; the original locale is restored afterwards.
- * </p>
  * <p>
  * <strong>Reference registry hygiene:</strong> Each created {@link org.djunits.quantity.Position.Reference} is
  * {@link AbstractReference#unregister() unregistered} in {@link #cleanup()} to avoid cross-test pollution of the static
  * per-class registry.
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -581,11 +578,9 @@ public class AbsoluteQuantityTest
      * the "no internal uppercase" path. If you want to also cover the branch that inserts spaces for internal capitals for
      * absolute quantities, add a trivial test-only subclass, e.g., {@code TestPositionAbsolute extends Position}, and assert
      * that {@code new TestPositionAbsolute(...).getName()} becomes {@code "Test position absolute"}.
-     * </p>
-     * <p>
+         * <p>
      * <strong>Expected:</strong> {@code new Position(...).getName()} yields {@code "Position"}.
-     * </p>
-     */
+         */
     @Test
     void getNameFormatsPrettyForAbsoluteQuantity()
     {

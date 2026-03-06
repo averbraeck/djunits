@@ -155,7 +155,6 @@ public final class Math2
      * <li>For an odd count, returns the middle value after sorting.</li>
      * <li>For an even count, returns the arithmetic mean of the two middle values.</li>
      * </ul>
-     * </p>
      * @param d values to consider; NaNs are skipped
      * @return the median as defined above, or {@code Double.NaN} if no valid values
      */

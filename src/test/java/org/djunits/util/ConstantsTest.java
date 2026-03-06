@@ -22,11 +22,10 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <strong>Notes on tolerances:</strong> Some constants include an uncertainty in the comment; relations like μ0·ε0·c² = 1 are
  * tested with a small tolerance to account for those stated uncertainties. Exact definitions (e.g., c, h, N_A) are still
- * subject to floating-point representation; we therefore use a tiny absolute/relative tolerance.
- * </p>
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * subject to floating-point representation; we therefore use a tiny absolute/relative tolerance. Copyright (c) 2025-2026 Delft
+ * University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class ConstantsTest

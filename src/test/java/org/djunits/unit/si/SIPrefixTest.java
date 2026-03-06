@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
  * <li>The {@code FACTORS} map resolves typical exponents (e.g., -6 → micro, +3 → kilo, 0 → identity).</li>
  * <li>Enum constants presence and basic invariants.</li>
  * </ul>
- * </p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

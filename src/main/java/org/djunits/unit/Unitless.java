@@ -9,8 +9,8 @@ import org.djunits.unit.system.UnitSystem;
 /**
  * Unitless encodes a unit without dimensions, e.g., to encode a constant.<br>
  * <br>
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
- * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
@@ -42,8 +42,8 @@ public class Unitless extends AbstractUnit<Unitless, Dimensionless>
      * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
      * @param unitSystem unit system, e.g. SI or Imperial
      */
-    public Unitless(final String textualAbbreviation, final String displayAbbreviation, final String name,
-            final Scale scale, final UnitSystem unitSystem)
+    public Unitless(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
+            final UnitSystem unitSystem)
     {
         super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
     }
