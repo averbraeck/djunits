@@ -63,7 +63,7 @@ public enum SIPrefixes
         unitPrefixes.put("m", new SIPrefix("m", "milli", 1.0E-3));
         unitPrefixes.put("c", new SIPrefix("c", "centi", 1.0E-2));
         unitPrefixes.put("d", new SIPrefix("d", "deci", 1.0E-1));
-        
+
         unitPrefixes.put("", new SIPrefix("", "", 1.0E0));
 
         unitPrefixes.put("da", new SIPrefix("da", "deca", 1.0E1));

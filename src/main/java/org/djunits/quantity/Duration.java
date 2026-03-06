@@ -12,8 +12,8 @@ import org.djunits.unit.system.UnitSystem;
 
 /**
  * Duration is the interval of time between two events, measured in seconds (s). This quantity encodes a <i>relative</i> amount
- * of time. The Time quantity encodes an absolute time instant.<br>
- * <br>
+ * of time. The Time quantity encodes an absolute time instant.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -269,8 +269,8 @@ public class Duration extends Quantity<Duration, Duration.Unit>
     /******************************************************************************************************/
 
     /**
-     * Duration.Unit encodes the units of relative time.<br>
-     * <br>
+     * Duration.Unit encodes the units of relative time.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Torque is a measure of rotational force about an axis, measured in newton meters (Nm).<br>
- * <br>
+ * Torque is a measure of rotational force about an axis, measured in newton meters (Nm).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -219,8 +219,8 @@ public class Torque extends Quantity<Torque, Torque.Unit>
     /******************************************************************************************************/
 
     /**
-     * Torque.Unit encodes the units of rotational force about an axis, measured in newton meters (Nm).<br>
-     * <br>
+     * Torque.Unit encodes the units of rotational force about an axis, measured in newton meters (Nm).
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

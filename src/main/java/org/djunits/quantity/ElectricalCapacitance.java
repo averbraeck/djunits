@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * ElectricalCapacitance denotes the ability of an object to store electric charge, and is expressed in farad.<br>
- * <br>
+ * ElectricalCapacitance denotes the ability of an object to store electric charge, and is expressed in farad.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -169,8 +169,8 @@ public class ElectricalCapacitance extends Quantity<ElectricalCapacitance, Elect
     /******************************************************************************************************/
 
     /**
-     * ElectricalCapacitance.Unit encodes the units of capacitance (in farad).<br>
-     * <br>
+     * ElectricalCapacitance.Unit encodes the units of capacitance (in farad).
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

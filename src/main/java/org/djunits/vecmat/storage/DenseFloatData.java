@@ -9,8 +9,8 @@ import org.djutils.exceptions.Throw;
 
 /**
  * DenseFloatData implements a dense data grid for N x M matrices or N x 1 or 1 x N vectors with float values. Calculations are
- * carried out in double precision, so the instantiate() and si() method work with double[].<br>
- * <br>
+ * carried out in double precision, so the instantiate() and si() method work with double[].
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

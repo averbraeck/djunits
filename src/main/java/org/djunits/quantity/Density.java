@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Density is mass per unit volume of a substance, measured in kilograms per cubic meter (kg/m3).<br>
- * <br>
+ * Density is mass per unit volume of a substance, measured in kilograms per cubic meter (kg/m3).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -159,8 +159,8 @@ public class Density extends Quantity<Density, Density.Unit>
     /******************************************************************************************************/
 
     /**
-     * Density.Unit encodes the units of density based on mass per volume.<br>
-     * <br>
+     * Density.Unit encodes the units of density based on mass per volume.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

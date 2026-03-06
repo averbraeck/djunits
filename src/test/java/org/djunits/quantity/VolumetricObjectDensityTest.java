@@ -14,8 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * VolumetricObjectDensityTest tests the VolumetricObjectDensity quantity class.<br>
- * <br>
+ * VolumetricObjectDensityTest tests the VolumetricObjectDensity quantity class.<p>
  * This suite verifies:
  * <ul>
  * <li>Constructors, constants, SI behavior, copy constructor</li>

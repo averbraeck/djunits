@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Magnetic flux density is the strength of the magnetic field per unit area, measured in teslas (T).<br>
- * <br>
+ * Magnetic flux density is the strength of the magnetic field per unit area, measured in teslas (T).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -149,8 +149,8 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity, MagneticF
     /******************************************************************************************************/
 
     /**
-     * MagneticFluxDensity.Unit encodes the units of strength of the magnetic field per unit area.<br>
-     * <br>
+     * MagneticFluxDensity.Unit encodes the units of strength of the magnetic field per unit area.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

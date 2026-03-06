@@ -9,8 +9,8 @@ import org.djutils.exceptions.Throw;
 
 /**
  * SquareDenseMatrix implements the core functions for a matrix with n x n real-valued entries. The data is stored in a dense
- * double[] field. The matrix is immutable, except for the display unit, which can be changed. <br>
- * <br>
+ * double[] field. The matrix is immutable, except for the display unit, which can be changed.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

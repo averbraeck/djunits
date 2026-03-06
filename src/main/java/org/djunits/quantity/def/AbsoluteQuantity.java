@@ -13,8 +13,8 @@ import org.djutils.exceptions.Throw;
 
 /**
  * AbsoluteQuantity is an abstract class that stores the basic information about a absolute quantity. An absolute quantity wraps
- * a relative Quantity and has a reference point that acts as an origin or zero point. <br>
- * <br>
+ * a relative Quantity and has a reference point that acts as an origin or zero point.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

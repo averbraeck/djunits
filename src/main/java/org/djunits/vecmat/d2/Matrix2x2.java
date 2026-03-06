@@ -13,8 +13,8 @@ import org.djutils.exceptions.Throw;
 
 /**
  * Matrix2x2 implements a matrix with 2x2 real-valued entries. The matrix is immutable, except for the display unit, which can
- * be changed. <br>
- * <br>
+ * be changed.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -40,7 +40,8 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
 
     /**
      * Create a new Matrix2x2 with a unit, based on a 1-dimensional array.
-     * <p><strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
+     * <p>
+     * <strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
      * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
@@ -53,8 +54,7 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(arrayInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d",
-                arrayInUnit.length);
+        Throw.when(arrayInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d", arrayInUnit.length);
         return new Matrix2x2<Q, U>(arrayInUnit, displayUnit);
     }
 

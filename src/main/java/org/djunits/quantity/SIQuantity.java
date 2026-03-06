@@ -9,8 +9,8 @@ import org.djutils.exceptions.Throw;
 
 /**
  * SI quantity, with arbitrary SI unit. The class has <code>as...</code> methods such as <code>asDuration(...)</code>, which
- * will succeed if the SI unit of the quantity is a duration unit, i.e., 's'.<br>
- * <br>
+ * will succeed if the SI unit of the quantity is a duration unit, i.e., 's'.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

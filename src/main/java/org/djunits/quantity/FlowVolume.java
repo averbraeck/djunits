@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Flow volume is the rate of volume passing through a surface per unit time, measured in cubic meters per second (m3/s).<br>
- * <br>
+ * Flow volume is the rate of volume passing through a surface per unit time, measured in cubic meters per second (m3/s).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -199,8 +199,8 @@ public class FlowVolume extends Quantity<FlowVolume, FlowVolume.Unit>
     /******************************************************************************************************/
 
     /**
-     * FlowVolume.Unit encodes the units of volume flow.<br>
-     * <br>
+     * FlowVolume.Unit encodes the units of volume flow.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

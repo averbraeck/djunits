@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Angular velocity is the rate of rotation around an axis, measured in radians per second (rad/s).<br>
- * <br>
+ * Angular velocity is the rate of rotation around an axis, measured in radians per second (rad/s).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -139,8 +139,8 @@ public class AngularVelocity extends Quantity<AngularVelocity, AngularVelocity.U
     /******************************************************************************************************/
 
     /**
-     * AngularVelocity.Unit encodes the units of angle (radians, degrees).<br>
-     * <br>
+     * AngularVelocity.Unit encodes the units of angle (radians, degrees).
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

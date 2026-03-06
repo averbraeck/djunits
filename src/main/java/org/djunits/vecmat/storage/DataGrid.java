@@ -5,8 +5,8 @@ import org.djutils.exceptions.Throw;
 /**
  * DataGrid is an interface identifies the methods for storing and changing data for an N x M grid. Vectors are stored as a grid
  * with dimensions N x 1 or 1 x N. The DataGrid <i>communicates</i> as if it is a dense grid of double values, but underneath,
- * storage can be, e.g., sparse and/or float.<br>
- * <br>
+ * storage can be, e.g., sparse and/or float.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

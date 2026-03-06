@@ -14,8 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * TorqueTest tests the Torque quantity class.<br>
- * <br>
+ * TorqueTest tests the Torque quantity class.<p>
  * This test suite verifies:
  * <ul>
  * <li>Constructors, constants, copy behavior, and SI conversions</li>

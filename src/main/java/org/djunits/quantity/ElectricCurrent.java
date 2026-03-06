@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * ElectricCurrent is the net rate of flow of electric charge through a surface.<br>
- * <br>
+ * ElectricCurrent is the net rate of flow of electric charge through a surface.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -190,8 +190,8 @@ public class ElectricCurrent extends Quantity<ElectricCurrent, ElectricCurrent.U
     /******************************************************************************************************/
 
     /**
-     * ElectricCurrent.Unit encodes the units of electric current (A).<br>
-     * <br>
+     * ElectricCurrent.Unit encodes the units of electric current (A).
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

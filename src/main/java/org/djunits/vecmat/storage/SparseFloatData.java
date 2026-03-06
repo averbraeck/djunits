@@ -11,8 +11,8 @@ import org.djutils.exceptions.Throw;
 /**
  * SparseFloatData implements a sparse data grid for N x M matrices or N x 1 or 1 x N vectors with float values. The sparse grid
  * is implemented with an index array that indicates the position of the data values in the dense array. Any index that is
- * missing indicates a data value of 0.<br>
- * <br>
+ * missing indicates a data value of 0.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

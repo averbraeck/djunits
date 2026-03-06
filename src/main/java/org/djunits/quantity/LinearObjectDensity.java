@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Linear object density counts the number of objects per unit of length, measured in number per meter (/m).<br>
- * <br>
+ * Linear object density counts the number of objects per unit of length, measured in number per meter (/m).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -185,8 +185,8 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity, LinearObj
     /******************************************************************************************************/
 
     /**
-     * LinearObjectDensity.Unit encodes the unit for the number of objects per unit of length.<br>
-     * <br>
+     * LinearObjectDensity.Unit encodes the unit for the number of objects per unit of length.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

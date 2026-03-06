@@ -8,8 +8,8 @@ import org.djunits.unit.si.SIUnit;
 
 /**
  * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero. Note that built-in time
- * references are independent; DJUNITS does not embed calendar calculations.<br>
- * <br>
+ * references are independent; DJUNITS does not embed calendar calculations.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

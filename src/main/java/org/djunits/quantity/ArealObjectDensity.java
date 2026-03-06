@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Areal object density counts the number of objects per unit of area, measured in number per square meter (/m2).<br>
- * <br>
+ * Areal object density counts the number of objects per unit of area, measured in number per square meter (/m2).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -200,8 +200,8 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity, ArealObject
     /******************************************************************************************************/
 
     /**
-     * ArealObjectDensity.Unit encodes the unit for number of objects per unit of area.<br>
-     * <br>
+     * ArealObjectDensity.Unit encodes the unit for number of objects per unit of area.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

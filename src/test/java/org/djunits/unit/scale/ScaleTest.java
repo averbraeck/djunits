@@ -10,8 +10,7 @@ import org.djunits.unit.UnitException;
 import org.junit.jupiter.api.Test;
 
 /**
- * ScaleTest tests the different types of conversion scales for units. <br>
- * <br>
+ * ScaleTest tests the different types of conversion scales for units. <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

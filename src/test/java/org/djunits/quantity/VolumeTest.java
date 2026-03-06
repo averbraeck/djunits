@@ -14,8 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * VolumeTest tests the Volume quantity class.<br>
- * <br>
+ * VolumeTest tests the Volume quantity class.<p>
  * This test suite verifies:
  * <ul>
  * <li>Constructors, constants, copy behavior, and SI conversions</li>

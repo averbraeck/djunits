@@ -23,8 +23,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for the {@link Units} utility covering US parsing, localization lookups, bundle loading, nested-class naming, and
- * safe-copy behavior. <br>
- * <br>
+ * safe-copy behavior.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -249,7 +249,7 @@ public class UnitsTest
         assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
         assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
         Units.unregister(qu);
- 
+
         // resolving a non-registered unit should lead to an exception
         assertThrows(UnitRuntimeException.class, () -> Units.resolve(NoRegisterUnit.class, "no"),
                 "resolving non-registered unit should result in exception");
@@ -385,7 +385,7 @@ public class UnitsTest
             return new Q(siValue, QUnit.DEFAULT);
         }
     }
-    
+
     /** UnitInterface Length class that does not register itself. */
     static class QUnit implements UnitInterface<QUnit, Q>
     {
@@ -492,7 +492,7 @@ public class UnitsTest
         public Q ofSi(final double si)
         {
             return null;
-        } 
+        }
     }
 
 }

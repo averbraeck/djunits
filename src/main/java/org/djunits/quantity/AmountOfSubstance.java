@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Amount of substance is the quantity representing the number of entities, measured in moles (mol).<br>
- * <br>
+ * Amount of substance is the quantity representing the number of entities, measured in moles (mol).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -159,8 +159,8 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance, AmountOfSubst
     /******************************************************************************************************/
 
     /**
-     * AmountOfSubstance.Unit encodes the units of amount of substance (base unit is mol).<br>
-     * <br>
+     * AmountOfSubstance.Unit encodes the units of amount of substance (base unit is mol).
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

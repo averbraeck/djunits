@@ -12,8 +12,8 @@ import org.djunits.unit.system.UnitSystem;
 
 /**
  * ElectricPotential is the difference in electric potential energy per unit of electric charge between two points in a static
- * electric field.<br>
- * <br>
+ * electric field.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -170,8 +170,8 @@ public class ElectricPotential extends Quantity<ElectricPotential, ElectricPoten
     /******************************************************************************************************/
 
     /**
-     * ElectricPotential.Unit encodes the units of electric potential (difference)<br>
-     * <br>
+     * ElectricPotential.Unit encodes the units of electric potential (difference)
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

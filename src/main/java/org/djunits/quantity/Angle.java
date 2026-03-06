@@ -13,8 +13,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Angle is the measure of rotation between two intersecting lines, expressed in radians (rad) or degrees.<br>
- * <br>
+ * Angle is the measure of rotation between two intersecting lines, expressed in radians (rad) or degrees.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -220,8 +220,8 @@ public class Angle extends Quantity<Angle, Angle.Unit>
     /******************************************************************************************************/
 
     /**
-     * Angle.Unit encodes the units of angle (radians, degrees).<br>
-     * <br>
+     * Angle.Unit encodes the units of angle (radians, degrees).
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

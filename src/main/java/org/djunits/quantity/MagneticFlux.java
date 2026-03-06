@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Magnetic flux is the total magnetic field passing through a given area, measured in webers (Wb).<br>
- * <br>
+ * Magnetic flux is the total magnetic field passing through a given area, measured in webers (Wb).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -199,8 +199,8 @@ public class MagneticFlux extends Quantity<MagneticFlux, MagneticFlux.Unit>
     /******************************************************************************************************/
 
     /**
-     * MagneticFlux.Unit encodes the units of total magnetic field passing through a given area.<br>
-     * <br>
+     * MagneticFlux.Unit encodes the units of total magnetic field passing through a given area.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

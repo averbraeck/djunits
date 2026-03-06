@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Pressure is the force exerted per unit area, measured in pascals (Pa).<br>
- * <br>
+ * Pressure is the force exerted per unit area, measured in pascals (Pa).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -159,8 +159,8 @@ public class Pressure extends Quantity<Pressure, Pressure.Unit>
     /******************************************************************************************************/
 
     /**
-     * Pressure.Unit encodes the units of force exerted per unit area.<br>
-     * <br>
+     * Pressure.Unit encodes the units of force exerted per unit area.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

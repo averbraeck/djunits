@@ -18,8 +18,8 @@ import org.djutils.exceptions.Throw;
 
 /**
  * MatrixNxN implements a square matrix with NxN real-valued entries. The matrix is immutable, except for the display unit,
- * which can be changed. Internal storage can be float or double, and dense or sparse. <br>
- * <br>
+ * which can be changed. Internal storage can be float or double, and dense or sparse.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -195,7 +195,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * <p>
      * The unit of the result is the SI-unit “sum” of this matrix and the other matrix (i.e., {@code U.plus(V)} on the
      * underlying {@link SIUnit}s).
-         * @param otherMat the right-hand matrix to multiply with
+     * @param otherMat the right-hand matrix to multiply with
      * @return the product matrix with the correct SI unit
      */
     public MatrixNxN<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
@@ -211,7 +211,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * <p>
      * The unit of the result is the SI-unit “sum” of this matrix and the vector (i.e., {@code U.plus(V)} on the underlying
      * {@link SIUnit}s).
-         * @param otherVec the column vector to multiply with (size {@code N})
+     * @param otherVec the column vector to multiply with (size {@code N})
      * @return the resulting column vector from the multiplication
      * @throws IllegalArgumentException if the vector size does not equal {@code order()}
      */
@@ -233,7 +233,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * <p>
      * The SI units of this matrix and the target unit must match; otherwise an {@link IllegalArgumentException} is thrown. The
      * returned matrix shares the SI values but has the specified display unit.
-         * @param <TQ> target quantity type
+     * @param <TQ> target quantity type
      * @param <TU> target unit type
      * @param targetUnit the unit to convert the matrix to
      * @return a matrix typed in the target quantity with the specified display unit

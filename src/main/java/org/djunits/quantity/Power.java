@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Power is the rate of energy transfer or work done per unit time, measured in watts (W).<br>
- * <br>
+ * Power is the rate of energy transfer or work done per unit time, measured in watts (W).
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -229,8 +229,8 @@ public class Power extends Quantity<Power, Power.Unit>
     /******************************************************************************************************/
 
     /**
-     * Power.Unit encodes the units for the rate of energy transfer or work done per unit time.<br>
-     * <br>
+     * Power.Unit encodes the units for the rate of energy transfer or work done per unit time.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

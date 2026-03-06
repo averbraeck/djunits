@@ -11,8 +11,8 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
 /**
- * Inductance is the tendency of an electrical conductor to oppose a change in the electric current flowing through it.<br>
- * <br>
+ * Inductance is the tendency of an electrical conductor to oppose a change in the electric current flowing through it.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -139,8 +139,8 @@ public class ElectricalInductance extends Quantity<ElectricalInductance, Electri
     /******************************************************************************************************/
 
     /**
-     * ElectricalInductance.Unit encodes the units of electromagnetic inductance.<br>
-     * <br>
+     * ElectricalInductance.Unit encodes the units of electromagnetic inductance.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.

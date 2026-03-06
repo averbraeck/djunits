@@ -18,8 +18,8 @@ import org.djunits.vecmat.storage.DataGrid;
 import org.djutils.exceptions.Throw;
 
 /**
- * VectorN.java.<br>
- * <br>
+ * VectorN.java.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -157,8 +157,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
 
     /**
      * VectorN.Col implements a column vector with real-valued entries. The vector is immutable, except for the display unit,
-     * which can be changed. <br>
-     * <br>
+     * which can be changed. <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -244,8 +243,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
 
     /**
      * VectorN.Row implements a row vector with real-valued entries. The vector is immutable, except for the display unit, which
-     * can be changed. <br>
-     * <br>
+     * can be changed. <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
