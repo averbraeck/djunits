@@ -62,6 +62,11 @@ public class TemperatureUnitTest extends AbstractLinearUnitTest<Temperature.Unit
         assertTrue(null != myTU, "Can create a new TempteratureUnit");
         checkUnitRatioNameAndAbbreviation(myTU, 3.0, 0.0001, "Newton", "N");
         Units.unregister(myTU);
+        
+        Temperature.Unit myTU2 = new Temperature.Unit("N", "Newton", 3.0, UnitSystem.OTHER);
+        assertTrue(null != myTU2, "Can create a new TempteratureUnit");
+        checkUnitRatioNameAndAbbreviation(myTU2, 3.0, 0.0001, "Newton", "N");
+        Units.unregister(myTU2);
     }
 
     /**

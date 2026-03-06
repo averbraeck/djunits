@@ -69,6 +69,11 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
         assertTrue(null != abOhm, "Can create Abohm unit");
         checkUnitRatioNameAndAbbreviation(abOhm, 1e-9, 1e-12, "abOhm(CGS)", "abOO");
         Units.unregister(myERU);
+
+        myERU = new ElectricalResistance.Unit("GigOhm", "GigaOhm", 1.0E9, UnitSystem.SI_DERIVED);
+        assertTrue(null != myERU, "Can create a new ElectricalResistanceUnit");
+        checkUnitRatioNameAndAbbreviation(myERU, 1e9, 0.1, "GigaOhm", "GigOhm");
+        Units.unregister(myERU);
     }
 
     /**

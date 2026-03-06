@@ -82,6 +82,11 @@ public class AngleUnitTest extends AbstractLinearUnitTest<Angle.Unit>
         assertTrue(null != myAPU, "Can create a new AngleUnit");
         checkUnitValueNameAndAbbreviation(myAPU, 0.19634954085, 0.0000001, "point", "pt");
         Units.unregister(myAPU);
+        
+        myAPU = new Angle.Unit("pt", "point", 0.19634954085, UnitSystem.OTHER);
+        assertTrue(null != myAPU, "Can create a new AngleUnit");
+        checkUnitValueNameAndAbbreviation(myAPU, 0.19634954085, 0.0000001, "point", "pt");
+        Units.unregister(myAPU);
     }
 
     /**
