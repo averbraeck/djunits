@@ -3,6 +3,7 @@ package org.djunits.vecmat.storage;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -53,6 +54,24 @@ public class SparseFloatDataTest
         return new double[][] {{1.0, 0.0, 2.0}, {0.0, 3.0, 4.0}};
     }
 
+    /**
+     * Helper dense array for 2x3 float matrix: {1, 0, 2, 0, 3, 4}.
+     * @return sample dense data
+     */
+    private static float[] dense2x3Float()
+    {
+        return new float[] {1.0f, 0.0f, 2.0f, 0.0f, 3.0f, 4.0f};
+    }
+
+    /**
+     * Helper dense 2x3 float matrix.
+     * @return {{1,0,2},{0,3,4}}
+     */
+    private static float[][] dense2x3FloatMatrix()
+    {
+        return new float[][] {{1.0f, 0.0f, 2.0f}, {0.0f, 3.0f, 4.0f}};
+    }
+
     // ----------------------------------------------------------------------
     // Constructor: protected SparseFloatData(float[], int[], r, c)
     // ----------------------------------------------------------------------
@@ -89,6 +108,65 @@ public class SparseFloatDataTest
 
         // Not strictly increasing → fail
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(sparse, new int[] {0, 2, 2}, 2, 3));
+        
+        // Negative index
+        int[] idx2 = new int[] {-2, 2, 4};
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseFloatData(sparse, idx2, 2, 3));
+    }
+
+    /**
+     * Test length errors.
+     */
+    @Test
+    public void testLengthErrors()
+    {
+        float[] float6 = new float[] {1, 0, 2, 0, 4, 0};
+        float[] float5 = new float[] {1, 0, 2, 0, 4};
+        float[] float7 = new float[] {1, 0, 2, 0, 4, 0, 0};
+        double[] double6 = new double[] {1, 0, 2, 0, 4, 0};
+        double[] double5 = new double[] {1, 0, 2, 0, 4};
+        double[] double7 = new double[] {1, 0, 2, 0, 4, 0, 0};
+        int[] idx = new int[] {0, 2, 4};
+
+        // data length != rows x cols
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(double6, 1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(double5, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(double7, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(float6, 1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(float5, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(float7, 3, 2));
+
+        // Q[] constructor
+        Length[] lengthArray3 = new Length[] {Length.ONE, Length.of(2.0, "m"), Length.of(4.0, "m")};
+        Length[] lengthArray4 = new Length[] {Length.ONE, Length.of(2.0, "m"), Length.of(4.0, "m"), Length.of(5.0, "m")};
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, idx, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, -1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, 3, -2));
+        
+        // Q[] dense constructor
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, -1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, 2, -1));
+        
+        // DoubleSparseValue constructor
+        List<FloatSparseValue<Length, Length.Unit>> svl = new ArrayList<>();
+        svl.add(new FloatSparseValue<>(0, 0, 1.0f));
+        svl.add(new FloatSparseValue<>(0, 1, 2.0f));
+        svl.add(new FloatSparseValue<>(1, 1, 4.0f));
+        assertNotNull(new SparseFloatData(svl, 3, 2)); // base ok?
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, -3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, 3, -2));
+        
+        svl.add(new FloatSparseValue<>(3, 1, 8.0f));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseFloatData(svl, 3, 2));
+        svl.remove(3);
+        svl.add(new FloatSparseValue<>(2, 2, 8.0f));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseFloatData(svl, 3, 2));
+        svl.remove(3);
     }
 
     // ----------------------------------------------------------------------
@@ -108,6 +186,28 @@ public class SparseFloatDataTest
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(new double[] {1, 2}, 2, 3));
 
         SparseFloatData d = new SparseFloatData(dense2x3(), 2, 3);
+        assertEquals(1.0, d.get(0, 0), 1e-12);
+        assertEquals(0.0, d.get(0, 1), 1e-12);
+        assertEquals(3.0, d.get(1, 1), 1e-12);
+    }
+
+    // ----------------------------------------------------------------------
+    // Constructor: float[] denseData
+    // ----------------------------------------------------------------------
+
+    /**
+     * Constructor: float[] denseData.
+     */
+    @Test
+    @DisplayName("ctor(float[],r,c): basic sparse conversion + validations")
+    public void testCtorDenseFloatData()
+    {
+        assertThrows(NullPointerException.class, () -> new SparseFloatData((float[]) null, 2, 3));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(dense2x3Float(), 0, 3));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(dense2x3Float(), 2, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(new float[] {1, 2}, 2, 3));
+
+        SparseFloatData d = new SparseFloatData(dense2x3Float(), 2, 3);
         assertEquals(1.0, d.get(0, 0), 1e-12);
         assertEquals(0.0, d.get(0, 1), 1e-12);
         assertEquals(3.0, d.get(1, 1), 1e-12);
@@ -136,6 +236,32 @@ public class SparseFloatDataTest
 
         // Modify source → must not change
         m[0][0] = 999.0;
+        assertEquals(1.0, d.get(0, 0), 1e-12);
+    }
+
+    // ----------------------------------------------------------------------
+    // Constructor: float[][] densely
+    // ----------------------------------------------------------------------
+
+    /**
+     * Constructor: float[][] densely.
+     */
+    @Test
+    @DisplayName("ctor(float[][]): ragged detection + safe sparse copy")
+    public void testCtorFloatMatrix()
+    {
+        assertThrows(NullPointerException.class, () -> new SparseFloatData((float[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(new float[][] {}));
+
+        // Ragged
+        assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(new float[][] {{1.0f}, {1.0f, 2.0f}}));
+
+        float[][] m = dense2x3FloatMatrix();
+        SparseFloatData d = new SparseFloatData(m);
+        assertArrayEquals(dense2x3(), d.getDataArray(), 1e-12);
+
+        // Modify source → must not change
+        m[0][0] = 999.0f;
         assertEquals(1.0, d.get(0, 0), 1e-12);
     }
 

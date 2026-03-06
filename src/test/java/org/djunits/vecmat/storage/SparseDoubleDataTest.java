@@ -3,6 +3,7 @@ package org.djunits.vecmat.storage;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,10 +20,10 @@ import org.junit.jupiter.api.Test;
  * <p>
  * This test class achieves full branch coverage of all constructors, helper methods, index validation, sparse storage
  * generation, DataGrid default methods, binary-search access path, copy semantics, instantiation operations, equals/hashCode,
- * and all Q-based constructors, including SI-conversion.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * and all Q-based constructors, including SI-conversion. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5,
+ * 2628 BX Delft, the Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class SparseDoubleDataTest
@@ -56,7 +57,7 @@ public class SparseDoubleDataTest
     @DisplayName("protected ctor(double[],indexes,r,c): validates length, order, bounds")
     public void testProtectedConstructor()
     {
-        double[] sparse = new double[] {1f, 2f, 3f};
+        double[] sparse = new double[] {1, 2, 3};
         int[] idx = new int[] {0, 2, 4};
 
         // Valid case
@@ -81,6 +82,59 @@ public class SparseDoubleDataTest
 
         // Not strictly increasing → fail
         assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(sparse, new int[] {0, 2, 2}, 2, 3));
+        
+        // Negative index
+        int[] idx2 = new int[] {-2, 2, 4};
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(sparse, idx2, 2, 3));
+    }
+
+    /**
+     * Test length errors.
+     */
+    @Test
+    public void testLengthErrors()
+    {
+        double[] double6 = new double[] {1, 0, 2, 0, 4, 0};
+        double[] double5 = new double[] {1, 0, 2, 0, 4};
+        double[] double7 = new double[] {1, 0, 2, 0, 4, 0, 0};
+        int[] idx = new int[] {0, 2, 4};
+
+        // data length != rows x cols
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(double6, 1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(double5, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(double7, 3, 2));
+
+        // Q[] sparse constructor
+        Length[] lengthArray3 = new Length[] {Length.ONE, Length.of(2.0, "m"), Length.of(4.0, "m")};
+        Length[] lengthArray4 = new Length[] {Length.ONE, Length.of(2.0, "m"), Length.of(4.0, "m"), Length.of(5.0, "m")};
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, idx, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, -1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, 3, -2));
+
+        // Q[] dense constructor
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, -1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, 2, -1));
+
+        // DoubleSparseValue constructor
+        List<DoubleSparseValue<Length, Length.Unit>> svl = new ArrayList<>();
+        svl.add(new DoubleSparseValue<>(0, 0, 1.0));
+        svl.add(new DoubleSparseValue<>(0, 1, 2.0));
+        svl.add(new DoubleSparseValue<>(1, 1, 4.0));
+        assertNotNull(new SparseDoubleData(svl, 3, 2)); // base ok?
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, -3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, 3, -2));
+        
+        svl.add(new DoubleSparseValue<>(3, 1, 8.0));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(svl, 3, 2));
+        svl.remove(3);
+        svl.add(new DoubleSparseValue<>(2, 2, 8.0));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(svl, 3, 2));
+        svl.remove(3);
     }
 
     // ----------------------------------------------------------------------
