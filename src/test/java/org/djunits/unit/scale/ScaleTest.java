@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.djunits.unit.UnitException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -20,10 +19,9 @@ public class ScaleTest
 {
     /**
      * Test the correct implementation of scales.
-     * @throws UnitException on (unexpected) error
      */
     @Test
-    public void testScale() throws UnitException
+    public void testScale()
     {
         IdentityScale sscale = IdentityScale.SCALE;
         assertEquals(1.0, sscale.getScaleFactorToBaseUnit(), 0.0001);

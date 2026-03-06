@@ -20,7 +20,6 @@ public class UnitExceptionsTest
     @Test
     public void testUnitExceptions()
     {
-        ExceptionTest.testExceptionClass(UnitException.class);
         ExceptionTest.testExceptionClass(UnitRuntimeException.class);
         ExceptionTest.testExceptionClass(NonInvertibleMatrixException.class);
     }
