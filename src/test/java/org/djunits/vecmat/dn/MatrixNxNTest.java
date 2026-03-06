@@ -104,6 +104,7 @@ public class MatrixNxNTest
     {
         assertThrows(NullPointerException.class, () -> MatrixNxN.of((double[][]) null, Length.Unit.km));
         assertThrows(NullPointerException.class, () -> MatrixNxN.of(new double[4][4], null));
+        assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new double[0][0], Length.Unit.km));
 
         // Not square or wrong shape should throw
         assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new double[][] {{1, 2}, {3, 4, 5}}, Length.Unit.m));
@@ -130,6 +131,21 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> inst = base.instantiateSi(newSi);
         assertAll(() -> assertEquals(base.getDisplayUnit(), inst.getDisplayUnit()),
                 () -> assertArrayEquals(newSi, inst.si(), EPS));
+    }
+
+    /**
+     * Verify constructor.
+     */
+    @Test
+    @DisplayName("MatrixNxN constructor")
+    public void testConstructor()
+    {
+        var dataSi = new DenseDoubleData(new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+        assertThrows(IllegalArgumentException.class, () -> new MatrixNxN<>(dataSi, Length.Unit.m));
+
+        var dataSi2x2 = new DenseDoubleData(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+        var mat = new MatrixNxN<>(dataSi2x2, Length.Unit.m);
+        assertEquals(4.0, mat.si(2, 2));
     }
 
     // ------------------------------------------------------------------------------------
@@ -284,6 +300,11 @@ public class MatrixNxNTest
         VectorN.Col<SIQuantity, SIUnit> r = a.multiply(v);
         assertEquals(4, r.size());
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r.getDisplayUnit());
+
+        // A·v (size 3): should give exception
+        VectorN.Col<Length, Length.Unit> v3 =
+                new VectorN.Col<>(new DenseDoubleData(new double[] {1000, 2000, 3000}, 3, 1), Length.Unit.km);
+        assertThrows(IllegalArgumentException.class, () -> a.multiply(v3));
     }
 
     // ------------------------------------------------------------------------------------
@@ -370,7 +391,11 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> b =
                 ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17}, Length.Unit.m);
 
-        assertAll(() -> assertEquals(a1, a1), () -> assertEquals(a1, a2), () -> assertEquals(a1.hashCode(), a2.hashCode()),
-                () -> assertNotEquals(a1, b), () -> assertNotEquals(a1, null), () -> assertNotEquals(a1, "other"));
+        assertEquals(a1, a1);
+        assertEquals(a1, a2);
+        assertEquals(a1.hashCode(), a2.hashCode());
+        assertNotEquals(a1, b);
+        assertNotEquals(a1, null);
+        assertNotEquals(a1, "other");
     }
 }

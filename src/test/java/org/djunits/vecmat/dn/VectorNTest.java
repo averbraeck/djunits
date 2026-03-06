@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,6 +16,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.storage.DataGrid;
+import org.djunits.vecmat.storage.DenseDoubleData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -56,152 +58,6 @@ public final class VectorNTest
     // =====================================================================================
 
     /**
-     * Minimal dense {@link DataGrid} implementation suitable for testing.
-     * <p>
-     * This grid stores values in a row-major contiguous {@code double[]} of length {@code rows * cols}. The implementation
-     * conforms to the contract of {@link DataGrid}: indices are 0-based; {@link #getDataArray()} may return the internal array
-     * for efficiency; and {@link #instantiateNew(double[])} preserves shape while changing the data contents. The semantics
-     * match the uploaded {@code DataGrid} interface.
-     * </p>
-     */
-    private static final class DenseGrid implements DataGrid<DenseGrid>
-    {
-        /** Number of rows of the grid (must be {@code > 0}). */
-        private final int rows;
-
-        /** Number of columns of the grid (must be {@code > 0}). */
-        private final int cols;
-
-        /** Row-major dense storage of size {@code rows * cols}; immutable reference, defensive copy in constructor. */
-        private final double[] data;
-
-        /**
-         * Construct a new dense grid.
-         * @param rows the number of rows; must be {@code > 0}
-         * @param cols the number of columns; must be {@code > 0}
-         * @param data the row-major data array; length must equal {@code rows * cols}
-         * @throws IllegalArgumentException if {@code rows <= 0}, {@code cols <= 0}, or the {@code data} length is invalid
-         */
-        DenseGrid(final int rows, final int cols, final double[] data)
-        {
-            if (rows <= 0 || cols <= 0)
-            {
-                throw new IllegalArgumentException("rows/cols must be > 0");
-            }
-            if (data == null || data.length != rows * cols)
-            {
-                throw new IllegalArgumentException("data length must equal rows * cols");
-            }
-            this.rows = rows;
-            this.cols = cols;
-            this.data = data.clone();
-        }
-
-        /**
-         * {@inheritDoc}
-         * @return the number of rows of the grid
-         */
-        @Override
-        public int rows()
-        {
-            return this.rows;
-        }
-
-        /**
-         * {@inheritDoc}
-         * @return the number of columns of the grid
-         */
-        @Override
-        public int cols()
-        {
-            return this.cols;
-        }
-
-        /**
-         * {@inheritDoc}
-         * @param row the 0-based row index to retrieve
-         * @param col the 0-based column index to retrieve
-         * @return the value at {@code (row, col)} as a {@code double}
-         * @throws IndexOutOfBoundsException if {@code row} or {@code col} lies outside the legal range
-         */
-        @Override
-        public double get(final int row, final int col)
-        {
-            if (row < 0 || row >= this.rows || col < 0 || col >= this.cols)
-            {
-                throw new IndexOutOfBoundsException("get(" + row + "," + col + ")");
-            }
-            return this.data[row * this.cols + col];
-        }
-
-        /**
-         * {@inheritDoc}
-         * <p>
-         * For this dense helper, the internal array is returned. This is acceptable for testing purposes.
-         * </p>
-         * @return the internal row-major data array
-         */
-        @Override
-        public double[] getDataArray()
-        {
-            return this.data;
-        }
-
-        /**
-         * {@inheritDoc}
-         * @return a deep copy of this grid; underlying {@code data} is cloned via constructor
-         */
-        @Override
-        public DenseGrid copy()
-        {
-            return new DenseGrid(this.rows, this.cols, this.data);
-        }
-
-        /**
-         * {@inheritDoc}
-         * @return the number of non-zero cells in this grid
-         */
-        @Override
-        public int cardinality()
-        {
-            int c = 0;
-            for (double v : this.data)
-            {
-                if (v != 0.0)
-                {
-                    c++;
-                }
-            }
-            return c;
-        }
-
-        /**
-         * {@inheritDoc}
-         * @param newData the new row-major data; must have length {@code rows * cols}
-         * @return a new {@code DenseGrid} with identical shape and the provided data contents
-         * @throws IllegalArgumentException if {@code newData} length is invalid
-         */
-        @Override
-        public DenseGrid instantiateNew(final double[] newData)
-        {
-            return new DenseGrid(this.rows, this.cols, newData);
-        }
-
-        /**
-         * {@inheritDoc}
-         * @param newData the new row-major data; must have length {@code rows * cols}
-         * @return a new {@code DenseGrid} with identical shape and the provided data contents
-         * @throws IllegalArgumentException if {@code newData} length is invalid
-         */
-        @Override
-        public DenseGrid instantiateNew(final double[] newData, final int r, final int c)
-        {
-            return new DenseGrid(r, c, newData);
-        }
-
-    }
-
-    /**
      * Helper that constructs a {@link VectorN.Col} of {@link Length} with display-unit inputs.
      * <p>
      * Values are given in {@code unit} and converted to SI for internal storage; the vector's display unit is set to
@@ -218,7 +74,7 @@ public final class VectorNTest
         {
             si[i] = unit.toBaseValue(inUnit[i]);
         }
-        return new VectorN.Col<>(new DenseGrid(inUnit.length, 1, si), unit);
+        return new VectorN.Col<>(new DenseDoubleData(si, inUnit.length, 1), unit);
     }
 
     /**
@@ -238,7 +94,7 @@ public final class VectorNTest
         {
             si[i] = unit.toBaseValue(inUnit[i]);
         }
-        return new VectorN.Row<>(new DenseGrid(1, inUnit.length, si), unit);
+        return new VectorN.Row<>(new DenseDoubleData(si, 1, inUnit.length), unit);
     }
 
     // =====================================================================================
@@ -557,4 +413,39 @@ public final class VectorNTest
         assertEquals(max, c.mode().si(), EPS, "mode defaults to max");
         assertEquals(sum, c.sum().si(), EPS, "sum");
     }
+
+    /**
+     * Verify equals() and hashCode() methods.
+     */
+    @Test
+    @DisplayName("Equals and hashCode")
+    public void testEqualsHashCode()
+    {
+        final VectorN.Col<Length, Length.Unit> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Col<Length, Length.Unit> ad = col(new double[] {10, -20, 30, -40}, Length.Unit.dm);
+        final VectorN.Col<Length, Length.Unit> ae = col(new double[] {1, -2, 3, 4}, Length.Unit.m);
+        final VectorN.Row<Length, Length.Unit> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+
+        assertEquals(ac, ac);
+        assertEquals(ac, ad);
+        assertNotEquals(ac, ar);
+        assertNotEquals(ac, ae);
+        assertNotEquals(ac, null);
+        assertNotEquals(ac, "");
+    }
+
+    /**
+     * Verify transpose() method.
+     */
+    @Test
+    @DisplayName("Transpose")
+    public void testTranspose()
+    {
+        final VectorN.Col<Length, Length.Unit> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Row<Length, Length.Unit> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+
+        assertEquals(ac, ar.transpose());
+        assertEquals(ar, ac.transpose());
+    }
+
 }
