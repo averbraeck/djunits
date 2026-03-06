@@ -14,8 +14,15 @@ import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Temperature;
+import org.djunits.quantity.Volume;
+import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
+import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
+import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIUnit;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -159,7 +166,7 @@ public class QuantityTest
         assertClose(25.0, l.getInUnit());
         assertTrue(l.isRelative());
         assertFalse(l.isAbsolute());
-        
+
         Temperature t = new Temperature(23.0, "degC");
         assertFalse(t.isRelative());
         assertTrue(t.isAbsolute());
@@ -230,6 +237,13 @@ public class QuantityTest
         assertFalse(a.eq(b));
         assertTrue(a.ne(b));
 
+        assertFalse(b.lt(a));
+        assertFalse(b.le(a));
+        assertTrue(b.gt(a));
+        assertTrue(b.ge(a));
+        assertTrue(a.eq(a));
+        assertFalse(b.ne(b));
+
         Length c = m(10);
         assertTrue(a.le(c));
         assertTrue(a.ge(c));
@@ -249,6 +263,13 @@ public class QuantityTest
         assertTrue(m(0).ge0());
         assertTrue(m(0).eq0());
         assertTrue(m(2).ne0());
+
+        assertFalse(m(1).lt0());
+        assertFalse(m(1).le0());
+        assertFalse(m(-1).gt0());
+        assertFalse(m(-1).ge0());
+        assertFalse(m(1).eq0());
+        assertFalse(m(0).ne0());
     }
 
     /**
@@ -420,7 +441,7 @@ public class QuantityTest
     }
 
     // ----------------------------------------------------------------------
-    // Static helpers: interpolate, min/max/sum/mean
+    // Static helpers: interpolate, min/max/sum/mean/etc.
     // ----------------------------------------------------------------------
 
     /**
@@ -475,6 +496,26 @@ public class QuantityTest
         assertSame(a.getDisplayUnit(), mean.getDisplayUnit());
     }
 
+    /**
+     * Verifies abs and negate.
+     */
+    @Test
+    void absNegate()
+    {
+        Length a = m(-1).setDisplayUnit(Length.Unit.cm);
+        Length aa = a.abs();
+        assertClose(1.0, aa.si());
+        assertSame(a.getDisplayUnit(), aa.getDisplayUnit());
+
+        Length one = m(1).setDisplayUnit(Length.Unit.cm);
+        Length none = one.negate();
+        Length na = a.negate();
+        assertClose(1.0, na.si());
+        assertClose(-1.0, none.si());
+        assertSame(one.getDisplayUnit(), none.getDisplayUnit());
+        assertSame(a.getDisplayUnit(), na.getDisplayUnit());
+    }
+
     // ----------------------------------------------------------------------
     // Arithmetic yielding SIQuantity
     // ----------------------------------------------------------------------
@@ -491,6 +532,17 @@ public class QuantityTest
 
         Area prod = a.multiply(b);
         assertClose(12.0, prod.si());
+
+        SIQuantity prod2 = Quantity.product(a, b);
+        assertClose(12.0, prod2.si());
+        assertEquals("m2", prod2.siUnit().toString(true, false));
+
+        SIQuantity prod3 = Quantity.product(a, b, a);
+        assertClose(36.0, prod3.si());
+        assertEquals("m3", prod3.siUnit().toString(true, false));
+        Volume v3 = prod3.as(Volume.Unit.m3);
+        assertEquals(36.0, v3.si());
+        assertThrows(IllegalArgumentException.class, () -> prod3.as(Area.Unit.m2));
 
         Dimensionless quot = a.divide(b);
         assertClose(0.75, quot.si());
@@ -530,6 +582,9 @@ public class QuantityTest
         Length a = new Length(1, Length.Unit.km); // 1000 m
         Length b = m(1000).setDisplayUnit(Length.Unit.km);
         Length c = m(1000).setDisplayUnit(Length.Unit.m); // different display unit
+        assertEquals(a, a);
+        assertNotEquals(a, null);
+        assertNotEquals(a, "");
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
         assertNotEquals(a, c);
@@ -557,11 +612,84 @@ public class QuantityTest
         Length length = new Length(1.0, Length.Unit.m);
         assertEquals("Length", length.getName(), "Length should remain 'Length' without extra spaces");
 
+        // AbsoluteQuantity name with capitals
+        var q = new ExampleQuantityAQxyz(3.0, ExampleQuantityAQxyz.Unit.DEFAULT);
+        assertEquals("Example quantity a qxyz", q.getName(), "Quantity name: camel case should result in spaces");
+        assertEquals("m", q.siUnit().toString(true, false));
+        Units.unregister(ExampleQuantityAQxyz.Unit.DEFAULT);
+
         // Internal-uppercase case: "SIQuantity" -> "S i quantity"
         // Construct an SIQuantity with a length SI unit to reuse an available SIUnit.
         SIQuantity siq = new SIQuantity(1.0, Length.Unit.SI_UNIT);
         assertEquals("S i quantity", siq.getName(),
                 "Camel-cased 'SIQuantity' should become 'S i quantity' (spaces before internal capitals)");
+    }
+
+    /**
+     * Quantity class for test.
+     */
+    static class ExampleQuantityAQxyz extends Quantity<ExampleQuantityAQxyz, ExampleQuantityAQxyz.Unit>
+    {
+        /** */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * @param value v
+         * @param displayUnit du
+         */
+        ExampleQuantityAQxyz(final double value, final Unit displayUnit)
+        {
+            super(value, displayUnit);
+        }
+
+        @Override
+        public ExampleQuantityAQxyz instantiate(final double siValue)
+        {
+            return null;
+        }
+
+        /** The unit for ExampleQuantityAQxyz. */
+        static class Unit extends AbstractUnit<Unit, ExampleQuantityAQxyz>
+        {
+            /** */
+            static final Unit DEFAULT = new Unit("u", "u", IdentityScale.SCALE, UnitSystem.OTHER);
+
+            /**
+             * @param textualAbbreviation x
+             * @param name x
+             * @param scale x
+             * @param unitSystem x
+             */
+            Unit(final String textualAbbreviation, final String name, final Scale scale, final UnitSystem unitSystem)
+            {
+                super(textualAbbreviation, name, scale, unitSystem);
+            }
+
+            @Override
+            public SIUnit siUnit()
+            {
+                return SIUnit.of("m");
+            }
+
+            @Override
+            public Unit getBaseUnit()
+            {
+                return null;
+            }
+
+            @Override
+            public ExampleQuantityAQxyz ofSi(final double si)
+            {
+                return null;
+            }
+
+            @Override
+            public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                    final double scaleFactor, final UnitSystem unitSystem)
+            {
+                return null;
+            }
+        }
     }
 
 }

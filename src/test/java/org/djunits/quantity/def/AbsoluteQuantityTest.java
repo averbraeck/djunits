@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Position;
+import org.djunits.quantity.Position.Reference;
 import org.djunits.unit.UnitRuntimeException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -225,6 +226,14 @@ public class AbsoluteQuantityTest
         assertFalse(aA.ge(bA));
         assertFalse(aA.eq(bA));
         assertTrue(aA.ne(bA));
+
+        assertFalse(bA.lt(aA));
+        assertFalse(bA.le(aA));
+        assertTrue(bA.gt(aA));
+        assertTrue(bA.ge(aA));
+        assertTrue(aA.eq(aA));
+        assertFalse(aA.ne(aA));
+
         assertEquals(0, aA.compareTo(pos(1, this.refA, Length.Unit.m)));
 
         Position aB = pos(1, this.refB, Length.Unit.m);
@@ -247,6 +256,13 @@ public class AbsoluteQuantityTest
         assertTrue(pos(0, this.refA, Length.Unit.m).ge0());
         assertTrue(pos(0, this.refA, Length.Unit.m).eq0());
         assertTrue(pos(2, this.refA, Length.Unit.m).ne0());
+
+        assertFalse(pos(1, this.refA, Length.Unit.m).lt0());
+        assertFalse(pos(1, this.refA, Length.Unit.m).le0());
+        assertFalse(pos(-1, this.refA, Length.Unit.m).gt0());
+        assertFalse(pos(-1, this.refA, Length.Unit.m).ge0());
+        assertFalse(pos(1, this.refA, Length.Unit.m).eq0());
+        assertFalse(pos(0, this.refA, Length.Unit.m).ne0());
     }
 
     // ----------------------------------------------------------------------
@@ -534,10 +550,20 @@ public class AbsoluteQuantityTest
         Position p1 = pos(10, this.refA, Length.Unit.m);
         Position p2 = pos(10, this.refA, Length.Unit.m);
         Position p3 = pos(10, this.refB, Length.Unit.m); // different reference
+        Position p4 = pos(20, this.refA, Length.Unit.m); // same reference, different position
 
+        assertEquals(p1, p1);
         assertEquals(p1, p2);
         assertEquals(p1.hashCode(), p2.hashCode());
         assertNotEquals(p1, p3);
+        assertNotEquals(p1, null);
+        assertNotEquals(p1, "");
+        assertNotEquals(p1, p4);
+
+        assertTrue(p1.eq(p2));
+        assertFalse(p1.eq(p3));
+        assertFalse(p1.eq(p4));
+        assertFalse(p1.ne(p2));
     }
 
     /**
@@ -570,7 +596,55 @@ public class AbsoluteQuantityTest
         // For "Position" (only first char uppercase), no spaces are inserted; the result should be identical.
         assertEquals("Position", pos.getName(), "Position should remain 'Position' without extra spaces");
 
+        // AbsoluteQuantity name with capitals
+        var aq = new AbsoluteExampleQuantityAQxyz(Length.ONE, ref);
+        assertEquals("Absolute example quantity a qxyz", aq.getName(), "Quantity name: camel case should result in spaces");
+        assertEquals("m", aq.siUnit().toString(true, false));
+
         // Clean up the test-created reference registry entry to avoid cross-test pollution.
         assertTrue(ref.unregister(), "Reference should be unregistered to keep the registry clean for other tests");
+    }
+
+    /**
+     * Absolute quantity class for test.
+     */
+    static class AbsoluteExampleQuantityAQxyz
+            extends AbsoluteQuantity<AbsoluteExampleQuantityAQxyz, Length, Length.Unit, Position.Reference>
+    {
+        /** */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * @param quantity length
+         * @param reference position reference
+         */
+        AbsoluteExampleQuantityAQxyz(final Length quantity, final Reference reference)
+        {
+            super(quantity, reference);
+        }
+
+        @Override
+        public AbsoluteExampleQuantityAQxyz instantiate(final Length quantity, final Reference reference)
+        {
+            return null;
+        }
+
+        @Override
+        public Length subtract(final AbsoluteExampleQuantityAQxyz other)
+        {
+            return null;
+        }
+
+        @Override
+        public AbsoluteExampleQuantityAQxyz add(final Length other)
+        {
+            return null;
+        }
+
+        @Override
+        public AbsoluteExampleQuantityAQxyz subtract(final Length other)
+        {
+            return null;
+        }
     }
 }

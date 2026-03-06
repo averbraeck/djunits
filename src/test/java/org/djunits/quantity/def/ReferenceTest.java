@@ -2,6 +2,7 @@ package org.djunits.quantity.def;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,7 +60,7 @@ class ReferenceTest
 
         // The same id should be allowed for Time.Reference (different Reference subclass)
         Time.Reference.add("REF_SAME", "Time origin");
-        var tRef = AbstractReference.get(Time.Reference.class, "REF_SAME"); 
+        var tRef = AbstractReference.get(Time.Reference.class, "REF_SAME");
         // using generic accessor to avoid relying on Time.Reference.get implementation here
         assertNotNull(tRef);
         assertEquals("REF_SAME", tRef.getId());
@@ -68,7 +69,7 @@ class ReferenceTest
         // Cross-check: ensure Position.Reference.get doesn't see Time.Reference entries
         assertNotNull(Position.Reference.get("REF_SAME"));
         assertNull(Position.Reference.get("NOT_THERE"));
-        
+
         // clean up
         Position.Reference.get("REF_SAME").unregister();
         Time.Reference.get("REF_SAME").unregister();
@@ -90,7 +91,7 @@ class ReferenceTest
 
         // Second registration with the same id for Position.Reference must throw
         assertThrows(IllegalArgumentException.class, () -> Position.Reference.add(id, "Second"));
-        
+
         // clean up
         Position.Reference.get(id).unregister();
     }
@@ -119,7 +120,7 @@ class ReferenceTest
         snap.remove(id);
         assertFalse(snap.containsKey(id)); // snapshot changed
         assertNotNull(Position.Reference.get(id)); // real registry unchanged
-        
+
         // clean up
         Position.Reference.get(id).unregister();
     }
@@ -146,9 +147,67 @@ class ReferenceTest
         Position pB0 = new Position(0.0, Length.Unit.m, b);
         Position pB0RelA = pB0.relativeTo(a);
         assertEquals(10.0, pB0RelA.si(), 1E-12);
-        
+
         // clean up
         Position.Reference.get("A_POS").unregister();
         Position.Reference.get("B_POS").unregister();
+    }
+
+    // ----------------------------------------------------------------------
+    // equals / hashCode
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verifies {@code equals}, {@code hashCode}, {@code toString()}, {@code containsId()}.
+     */
+    @Test
+    void equalsHashCode()
+    {
+        Position.Reference.add("A_POS", "A position origin");
+        var a = Position.Reference.get("A_POS");
+        Position.Reference.add("B_POS", "B = A + 10 m", Length.ofSi(10.0), a);
+        var b = Position.Reference.get("B_POS");
+        var b2 = Position.Reference.get("B_POS");
+        Position.Reference.add("C_POS", "C = A + 10 m", Length.ofSi(10.0), a);
+        var c = Position.Reference.get("C_POS");
+
+        assertEquals(a, a);
+        assertEquals(b, b2);
+        assertNotEquals(b, c);
+        assertNotEquals(a, b);
+        assertNotEquals(a, null);
+        assertNotEquals(a, "");
+
+        assertTrue(Position.Reference.containsId(Position.Reference.class, "C_POS"));
+        assertFalse(Position.Reference.containsId(Position.Reference.class, "X_POS"));
+        
+        assertFalse(EmptyReference.containsId(EmptyReference.class, "X_REF"));
+        assertEquals(0, EmptyReference.snapshotMap(EmptyReference.class).size());
+        assertNull(EmptyReference.get(EmptyReference.class, "X_REF"));
+        
+        assertEquals("A_POS", a.toString());
+
+        // clean up
+        Position.Reference.get("A_POS").unregister();
+        Position.Reference.get("B_POS").unregister();
+        Position.Reference.get("C_POS").unregister();
+    }
+    
+    /**
+     * Empty reference class.
+     */
+    static class EmptyReference extends AbstractReference<EmptyReference, Length>
+    {
+        /**
+         * @param id id
+         * @param name name
+         * @param offset offset
+         * @param offsetReference offset reference
+         */
+        EmptyReference(final String id, final String name, final Length offset, final EmptyReference offsetReference)
+        {
+            super(id, name, offset, offsetReference);
+        }
+        
     }
 }
