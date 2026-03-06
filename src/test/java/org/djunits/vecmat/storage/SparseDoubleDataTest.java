@@ -425,9 +425,13 @@ public class SparseDoubleDataTest
     @DisplayName("cardinality: counts non-zero sparse entries")
     public void testCardinality()
     {
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
         // dense2x3 has 4 non-zero values
+        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
         assertEquals(4, d.cardinality());
+
+        // explicit 0.0 value in the data -- cardinality should not count it
+        SparseDoubleData d0 = new SparseDoubleData(new double[] {1.0, 0.0}, new int[] {1, 3}, 3, 2);
+        assertEquals(1, d0.cardinality());
     }
 
     // ----------------------------------------------------------------------

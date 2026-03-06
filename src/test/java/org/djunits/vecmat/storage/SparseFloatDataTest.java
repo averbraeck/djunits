@@ -108,7 +108,7 @@ public class SparseFloatDataTest
 
         // Not strictly increasing → fail
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(sparse, new int[] {0, 2, 2}, 2, 3));
-        
+
         // Negative index
         int[] idx2 = new int[] {-2, 2, 4};
         assertThrows(IndexOutOfBoundsException.class, () -> new SparseFloatData(sparse, idx2, 2, 3));
@@ -144,12 +144,12 @@ public class SparseFloatDataTest
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, -1, 2));
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, 3, 0));
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray3, idx, 3, -2));
-        
+
         // Q[] dense constructor
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, 3, 2));
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, -1, 2));
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(lengthArray4, 2, -1));
-        
+
         // DoubleSparseValue constructor
         List<FloatSparseValue<Length, Length.Unit>> svl = new ArrayList<>();
         svl.add(new FloatSparseValue<>(0, 0, 1.0f));
@@ -160,7 +160,7 @@ public class SparseFloatDataTest
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, -3, 2));
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, 3, 0));
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatData(svl, 3, -2));
-        
+
         svl.add(new FloatSparseValue<>(3, 1, 8.0f));
         assertThrows(IndexOutOfBoundsException.class, () -> new SparseFloatData(svl, 3, 2));
         svl.remove(3);
@@ -488,8 +488,13 @@ public class SparseFloatDataTest
     @DisplayName("cardinality: count non-zero sparse entries")
     public void testCardinality()
     {
+        // dense2x3 has 4 non-zero values
         SparseFloatData d = new SparseFloatData(dense2x3(), 2, 3);
         assertEquals(4, d.cardinality());
+
+        // explicit 0.0 value in the data -- cardinality should not count it
+        SparseFloatData d0 = new SparseFloatData(new float[] {1.0f, 0.0f}, new int[] {1, 3}, 3, 2);
+        assertEquals(1, d0.cardinality());
     }
 
     // ----------------------------------------------------------------------
