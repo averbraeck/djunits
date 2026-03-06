@@ -176,7 +176,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.id, this.name, this.offset, this.offsetReference);
+        return Objects.hash(this.id);
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -190,8 +190,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
         if (getClass() != obj.getClass())
             return false;
         AbstractReference<?, ?> other = (AbstractReference<?, ?>) obj;
-        return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name)
-                && Objects.equals(this.offset, other.offset) && Objects.equals(this.offsetReference, other.offsetReference);
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
