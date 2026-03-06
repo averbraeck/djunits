@@ -174,7 +174,7 @@ public final class MatrixMath
     /**
      * Helper class for LU decomposition with partial pivoting.
      */
-    private static final class LU
+    protected static final class LU
     {
         /** combined L (unit diag) and U, row-major. */
         private final double[] lu;
@@ -210,7 +210,7 @@ public final class MatrixMath
      * @param n the order of the square matrix
      * @return an LU object containing L and U in one array
      */
-    private static LU luDecompose(final double[] a, final int n)
+    protected static LU luDecompose(final double[] a, final int n)
     {
         double[] lu = a.clone();
         int[] piv = new int[n];
@@ -280,7 +280,7 @@ public final class MatrixMath
      * @param relTol the relative tolerance
      * @return whether the matrix is singular
      */
-    private static boolean isSingularFromLU(final LU luRes, final int n, final double relTol)
+    protected static boolean isSingularFromLU(final LU luRes, final int n, final double relTol)
     {
         double tol = Math.max(1.0, luRes.scale) * relTol;
         for (int i = 0; i < n; i++)
@@ -297,7 +297,7 @@ public final class MatrixMath
      * @param n the order of the matrix
      * @return the determinant of the matrix
      */
-    private static double detFromLU(final LU luRes, final int n)
+    protected static double detFromLU(final LU luRes, final int n)
     {
         double det = luRes.pivotSign;
         for (int i = 0; i < n; i++)
@@ -313,7 +313,7 @@ public final class MatrixMath
      * @param n the order of the matrix
      * @param b the right-hand side
      */
-    private static void luSolveInPlace(final LU luRes, final int n, final double[] b)
+    protected static void luSolveInPlace(final LU luRes, final int n, final double[] b)
     {
         // Apply row permutations to b
         double[] bp = b.clone();
@@ -520,15 +520,8 @@ public final class MatrixMath
                     }
                 }
                 double detMinor;
-                if (m == 1)
-                {
-                    detMinor = minor[0];
-                }
-                else if (m == 2)
-                {
-                    detMinor = minor[0] * minor[3] - minor[1] * minor[2];
-                }
-                else if (m == 3)
+                // note that m=1 and m=2 are not possible because they have been captured by n=1, n=2 and n=3
+                if (m == 3)
                 {
                     double A = minor[0], B = minor[1], C = minor[2];
                     double D = minor[3], E = minor[4], F = minor[5];
