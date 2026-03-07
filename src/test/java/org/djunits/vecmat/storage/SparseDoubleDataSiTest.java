@@ -82,7 +82,7 @@ public class SparseDoubleDataSiTest
 
         // Not strictly increasing → fail
         assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(sparse, new int[] {0, 2, 2}, 2, 3));
-        
+
         // Negative index
         int[] idx2 = new int[] {-2, 2, 4};
         assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(sparse, idx2, 2, 3));
@@ -128,7 +128,7 @@ public class SparseDoubleDataSiTest
         assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, -3, 2));
         assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, 3, 0));
         assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, 3, -2));
-        
+
         svl.add(new DoubleSparseValue<>(3, 1, 8.0));
         assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(svl, 3, 2));
         svl.remove(3);

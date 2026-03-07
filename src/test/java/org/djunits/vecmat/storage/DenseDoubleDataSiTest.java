@@ -300,7 +300,7 @@ public class DenseDoubleDataSiTest
         // Must be row-major: [1,2,3, 4,5,6]
         assertArrayEquals(sample2x3(), d.getDataArray(), 1e-12, "row-major order");
 
-        // Safe copy: mutate source matrix; DenseDoubleData must remain unchanged
+        // Safe copy: mutate source matrix; DenseDoubleDataSi must remain unchanged
         m[0][0] = 999.0;
         assertEquals(1.0, d.get(0, 0), 1e-12, "safe copy on ctor(double[][])");
     }

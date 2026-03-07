@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
  * Unit tests for {@link DenseFloatDataSi}.
  * <p>
  * This test class verifies the complete functional behavior of {@link DenseFloatDataSi} and all default methods inherited from
- * {@link DataGridSi}. All tests focus on correct functional semantics. If the implementation contains bugs or produces incorrect
- * results, these tests are designed to fail.
+ * {@link DataGridSi}. All tests focus on correct functional semantics. If the implementation contains bugs or produces
+ * incorrect results, these tests are designed to fail.
  * <ul>
  * <li>All constructors (float[], float[][], Q[][])</li>
  * <li>Bounds checking on {@code get(int,int)}</li>
@@ -309,7 +309,7 @@ public class DenseFloatDataSiTest
         assertEquals(3, d.cols());
         assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, d.getDataArray(), 1e-12);
 
-        // Modify source; DenseFloatData must remain stable
+        // Modify source; DenseFloatDataSi must remain stable
         arr[0][0] = 999f;
         assertEquals(1.0, d.get(0, 0), 1e-12);
     }
@@ -337,7 +337,7 @@ public class DenseFloatDataSiTest
         // Expected SI values (float-cast): 1000.0, 1.0, 0.02, 0.003
         assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);
 
-        // Modify input source -> DenseFloatData must not change
+        // Modify input source -> DenseFloatDataSi must not change
         q[0][0] = new Length(7.0, Length.Unit.m);
         assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);
     }

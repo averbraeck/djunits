@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * DataGridTest tests equals, hashCode, equals(obj, eps) for the different DataGrid classes.<br>
+ * DataGridSiTest tests equals, hashCode, equals(obj, eps) for the different DataGridSi classes.<br>
  * <br>
  * Copyright (c) 2025-2025 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUTILS project is
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 public class DataGridSiTest
 {
     /**
-     * Test equals() with other DataGrid instances.
+     * Test equals() with other DataGridSi instances.
      */
     @Test
     public void testEquals()
@@ -104,7 +104,7 @@ public class DataGridSiTest
     }
 
     /**
-     * Test hashCode() with other DataGrid instances.
+     * Test hashCode() with other DataGridSi instances.
      */
     @Test
     public void testHashCode()
@@ -187,7 +187,7 @@ public class DataGridSiTest
     }
 
     /**
-     * Test equals(obj, eps) with other DataGrid instances.
+     * Test equals(obj, eps) with other DataGridSi instances.
      */
     @Test
     public void testEqualsEps()
@@ -236,7 +236,7 @@ public class DataGridSiTest
     }
 
     /**
-     * Test equals() with other DataGrid instances with zeroes.
+     * Test equals() with other DataGridSi instances with zeroes.
      */
     @Test
     public void testEquals0()
