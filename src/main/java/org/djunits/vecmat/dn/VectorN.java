@@ -14,7 +14,7 @@ import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.Normed;
 import org.djunits.vecmat.operations.VectorOps;
 import org.djunits.vecmat.operations.VectorTransposable;
-import org.djunits.vecmat.storage.DataGrid;
+import org.djunits.vecmat.storage.DataGridSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -40,7 +40,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    protected VectorN(final DataGrid<?> dataSi, final U displayUnit)
+    protected VectorN(final DataGridSi<?> dataSi, final U displayUnit)
     {
         super(dataSi, displayUnit);
     }
@@ -178,7 +178,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        public Col(final DataGrid<?> dataSi, final U displayUnit)
+        public Col(final DataGridSi<?> dataSi, final U displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.cols() != 1, IllegalArgumentException.class,
@@ -264,7 +264,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        public Row(final DataGrid<?> dataSi, final U displayUnit)
+        public Row(final DataGridSi<?> dataSi, final U displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.rows() != 1, IllegalArgumentException.class, "Row vector initialized with more than one row");

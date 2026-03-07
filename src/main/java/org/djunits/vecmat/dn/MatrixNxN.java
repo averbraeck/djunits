@@ -12,8 +12,8 @@ import org.djunits.vecmat.Matrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.SquareMatrixOps;
-import org.djunits.vecmat.storage.DataGrid;
-import org.djunits.vecmat.storage.DenseDoubleData;
+import org.djunits.vecmat.storage.DataGridSi;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -34,7 +34,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     private static final long serialVersionUID = 600L;
 
     /** The data of the matrix, in SI unit. */
-    private final DataGrid<?> dataSi;
+    private final DataGridSi<?> dataSi;
 
     /**
      * Create a new NxN Matrix with a unit, based on a DataGrid storage object that contains SI data.
@@ -42,7 +42,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    public MatrixNxN(final DataGrid<?> dataSi, final U displayUnit)
+    public MatrixNxN(final DataGridSi<?> dataSi, final U displayUnit)
     {
         super(displayUnit, dataSi.rows(), dataSi.cols());
         Throw.whenNull(dataSi, "dataSi");
@@ -77,7 +77,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         double[] aSi = new double[valueArrayInUnit.length];
         for (int i = 0; i < valueArrayInUnit.length; i++)
             aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
-        return new MatrixNxN<Q, U>(new DenseDoubleData(aSi, n, n), displayUnit);
+        return new MatrixNxN<Q, U>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
     }
 
     /**
@@ -106,7 +106,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
             for (int c = 0; c < n; c++)
                 aSi[n * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
         }
-        return new MatrixNxN<Q, U>(new DenseDoubleData(aSi, n, n), displayUnit);
+        return new MatrixNxN<Q, U>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
     }
 
     @Override
@@ -225,7 +225,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         }
         final double[] resultData = MatrixMath.multiply(si(), otherVec.si(), n, n, 1);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
-        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleData(resultData, n, 1), resultUnit);
+        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(resultData, n, 1), resultUnit);
     }
 
     /**

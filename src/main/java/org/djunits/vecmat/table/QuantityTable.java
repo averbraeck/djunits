@@ -11,7 +11,7 @@ import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.storage.DataGrid;
+import org.djunits.vecmat.storage.DataGridSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -37,7 +37,7 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
      * @param dataSi the data of the matrix, in SI unit.
      * @param displayUnit the display unit to use
      */
-    public QuantityTable(final DataGrid<?> dataSi, final U displayUnit)
+    public QuantityTable(final DataGridSi<?> dataSi, final U displayUnit)
     {
         super(dataSi, displayUnit);
     }
