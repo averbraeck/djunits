@@ -9,7 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.djunits.quantity.Length;
@@ -60,7 +62,7 @@ public final class VectorNTest
      * <p>
      * Values are given in {@code unit} and converted to SI for internal storage; the vector's display unit is set to
      * {@code unit}.
-         * @param inUnit the values expressed in the given display unit; never {@code null}
+     * @param inUnit the values expressed in the given display unit; never {@code null}
      * @param unit the display unit to use; never {@code null}
      * @return a newly constructed {@link VectorN.Col} with SI storage and the specified display unit
      */
@@ -71,7 +73,7 @@ public final class VectorNTest
         {
             si[i] = unit.toBaseValue(inUnit[i]);
         }
-        return new VectorN.Col<>(new DenseDoubleDataSi(si, inUnit.length, 1), unit);
+        return VectorN.Col.ofSi(si, unit);
     }
 
     /**
@@ -79,7 +81,7 @@ public final class VectorNTest
      * <p>
      * Values are given in {@code unit} and converted to SI for internal storage; the vector's display unit is set to
      * {@code unit}.
-         * @param inUnit the values expressed in the given display unit; never {@code null}
+     * @param inUnit the values expressed in the given display unit; never {@code null}
      * @param unit the display unit to use; never {@code null}
      * @return a newly constructed {@link VectorN.Row} with SI storage and the specified display unit
      */
@@ -90,7 +92,7 @@ public final class VectorNTest
         {
             si[i] = unit.toBaseValue(inUnit[i]);
         }
-        return new VectorN.Row<>(new DenseDoubleDataSi(si, 1, inUnit.length), unit);
+        return VectorN.Row.ofSi(si, unit);
     }
 
     // =====================================================================================
@@ -110,6 +112,9 @@ public final class VectorNTest
                 () -> assertEquals(3, c.size(), "size"), () -> assertEquals(3, c.rows(), "rows"),
                 () -> assertEquals(1, c.cols(), "cols"), () -> assertTrue(c.isColumnVector(), "isColumnVector"),
                 () -> assertEquals(Length.Unit.km, c.getDisplayUnit(), "display unit"));
+
+        var ddd = new DenseDoubleDataSi(new double[] {1, 2, 3, 4}, 2, 2);
+        assertThrows(IllegalArgumentException.class, () -> new VectorN.Col<>(ddd, Length.Unit.km));
     }
 
     /**
@@ -125,6 +130,61 @@ public final class VectorNTest
                 () -> assertEquals(3, r.size(), "size"), () -> assertEquals(1, r.rows(), "rows"),
                 () -> assertEquals(3, r.cols(), "cols"), () -> assertFalse(r.isColumnVector(), "isColumnVector"),
                 () -> assertEquals(Length.Unit.cm, r.getDisplayUnit(), "display unit"));
+
+        var ddd = new DenseDoubleDataSi(new double[] {1, 2, 3, 4}, 2, 2);
+        assertThrows(IllegalArgumentException.class, () -> new VectorN.Row<>(ddd, Length.Unit.km));
+    }
+
+    /**
+     * Test the of() methods for Col.
+     */
+    @Test
+    public void testOfCol()
+    {
+        var v1 = VectorN.Col.of(new double[] {1, 3, 5}, Length.Unit.km);
+        assertEquals(3000.0, v1.si()[1], 1E-6);
+
+        var q2 = new Length[] {Length.of(1.0, "km"), Length.of(3.0, "km"), Length.of(5.0, "km")};
+        var v2 = VectorN.Col.of(q2, Length.Unit.km);
+        assertEquals(3000.0, v2.si()[1], 1E-6);
+
+        List<Length> l3 = Arrays.asList(q2);
+        var v3 = VectorN.Col.of(l3, Length.Unit.km);
+        assertEquals(3000.0, v3.si()[1], 1E-6);
+        
+        var dsi = new double[] {1, 2, 3, 4};
+        var ddd = new DenseDoubleDataSi(dsi, 4, 1);
+        var v4 = VectorN.Col.ofSi(ddd, Length.Unit.km);
+        assertEquals(2.0, v4.si()[1], 1E-6);
+        
+        var v5 = VectorN.Col.ofSi(dsi, Length.Unit.km);
+        assertEquals(2.0, v5.si()[1], 1E-6);
+    }
+
+    /**
+     * Test the of() methods for Row.
+     */
+    @Test
+    public void testOfRow()
+    {
+        var v1 = VectorN.Row.of(new double[] {1, 3, 5}, Length.Unit.km);
+        assertEquals(3000.0, v1.si()[1], 1E-6);
+
+        var q2 = new Length[] {Length.of(1.0, "km"), Length.of(3.0, "km"), Length.of(5.0, "km")};
+        var v2 = VectorN.Row.of(q2, Length.Unit.km);
+        assertEquals(3000.0, v2.si()[1], 1E-6);
+
+        List<Length> l3 = Arrays.asList(q2);
+        var v3 = VectorN.Row.of(l3, Length.Unit.km);
+        assertEquals(3000.0, v3.si()[1], 1E-6);
+        
+        var dsi = new double[] {1, 2, 3, 4};
+        var ddd = new DenseDoubleDataSi(dsi, 1, 4);
+        var v4 = VectorN.Row.ofSi(ddd, Length.Unit.km);
+        assertEquals(2.0, v4.si()[1], 1E-6);
+        
+        var v5 = VectorN.Row.ofSi(dsi, Length.Unit.km);
+        assertEquals(2.0, v5.si()[1], 1E-6);
     }
 
     // =====================================================================================

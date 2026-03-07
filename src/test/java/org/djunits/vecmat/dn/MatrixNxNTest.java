@@ -293,15 +293,13 @@ public class MatrixNxNTest
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), c.getDisplayUnit());
 
         // A·v (size 4): create v in km → SI [1000,2000,3000,4000]
-        VectorN.Col<Length, Length.Unit> v =
-                new VectorN.Col<>(new DenseDoubleDataSi(new double[] {1000, 2000, 3000, 4000}, 4, 1), Length.Unit.km);
+        VectorN.Col<Length, Length.Unit> v = VectorN.Col.ofSi(new double[] {1000, 2000, 3000, 4000}, Length.Unit.km);
         VectorN.Col<SIQuantity, SIUnit> r = a.multiply(v);
         assertEquals(4, r.size());
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r.getDisplayUnit());
 
         // A·v (size 3): should give exception
-        VectorN.Col<Length, Length.Unit> v3 =
-                new VectorN.Col<>(new DenseDoubleDataSi(new double[] {1000, 2000, 3000}, 3, 1), Length.Unit.km);
+        VectorN.Col<Length, Length.Unit> v3 = VectorN.Col.ofSi(new double[] {1000, 2000, 3000}, Length.Unit.km);
         assertThrows(IllegalArgumentException.class, () -> a.multiply(v3));
     }
 

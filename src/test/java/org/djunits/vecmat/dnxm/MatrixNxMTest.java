@@ -16,6 +16,7 @@ import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dn.VectorN;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,10 +24,10 @@ import org.junit.jupiter.api.Test;
  * Unit tests for {@link MatrixNxM} with concrete quantity {@link Length} and unit {@link org.djunits.quantity.Length.Unit}.
  * <p>
  * Tests cover factories, {@code instantiateSi}, algebra/stats (defaults), Hadamard ops, matrixxmatrix, matrixxvector, “as”
- * conversions to square matrices and vectors, scalar extraction helpers, equals/hashCode, and display-unit behavior.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * conversions to square matrices and vectors, scalar extraction helpers, equals/hashCode, and display-unit behavior. Copyright
+ * (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See for
+ * project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed
+ * under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class MatrixNxMTest
@@ -252,8 +253,8 @@ public class MatrixNxMTest
         assertAll(() -> assertEquals(2, r3.size()), () -> assertArrayEquals(new double[] {14000, 32000}, r3.si(), EPS));
 
         // General VectorN.Col (size = cols)
-        VectorN.Col<Length, Length.Unit> vN = new VectorN.Col<>(
-                new org.djunits.vecmat.storage.DenseDoubleDataSi(new double[] {1000, 2000}, 2, 1), Length.Unit.km);
+        VectorN.Col<Length, Length.Unit> vN =
+                VectorN.Col.ofSi(new DenseDoubleDataSi(new double[] {1000, 2000}, 2, 1), Length.Unit.km);
         VectorN.Col<SIQuantity, SIUnit> rN = a32.multiply(vN);
         assertArrayEquals(new double[] {5000, 11000, 17000}, rN.si(), EPS);
     }
