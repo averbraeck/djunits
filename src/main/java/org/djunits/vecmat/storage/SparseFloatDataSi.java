@@ -9,8 +9,8 @@ import org.djunits.unit.UnitInterface;
 import org.djutils.exceptions.Throw;
 
 /**
- * SparseDoubleData implements a sparse data grid for N x M matrices or N x 1 or 1 x N vectors with double values. The sparse
- * grid is implemented with an index array that indicates the position of the data values in the dense array. Any index that is
+ * SparseFloatData implements a sparse data grid for N x M matrices or N x 1 or 1 x N vectors with float values. The sparse grid
+ * is implemented with an index array that indicates the position of the data values in the dense array. Any index that is
  * missing indicates a data value of 0.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -18,10 +18,10 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class SparseDoubleData implements DataGrid<SparseDoubleData>
+public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
 {
     /** The sparse data stored in row-major format, where only non-zero values are stored. */
-    private double[] sparseData;
+    private float[] sparseData;
 
     /** The index array, giving the position in the dense data array of the values in data. */
     private int[] indexes;
@@ -43,7 +43,7 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
      *             or columns is not positive, or when indexes is not in strictly increasing order
      * @throws IndexOutOfBoundsException when one of the entries in indexes is out of bounds
      */
-    protected SparseDoubleData(final double[] sparseData, final int[] indexes, final int rows, final int cols)
+    protected SparseFloatDataSi(final float[] sparseData, final int[] indexes, final int rows, final int cols)
     {
         Throw.whenNull(sparseData, "sparseData");
         Throw.whenNull(indexes, "indexes");
@@ -60,13 +60,33 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
 
     /**
      * Instantiate a data object with one array in row-major format. Note that NO safe copy of the data is stored.
-     * @param denseData the dense data in row-major format
+     * @param denseData the dense data as double values in row-major format
      * @param rows the number of rows
      * @param cols the number of columns
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public SparseDoubleData(final double[] denseData, final int rows, final int cols)
+    public SparseFloatDataSi(final double[] denseData, final int rows, final int cols)
+    {
+        Throw.whenNull(denseData, "denseData");
+        Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
+        Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
+        Throw.when(denseData.length != rows * cols, IllegalArgumentException.class,
+                "denseData.length (%d) != rows x cols (%d x %d)", denseData.length, rows, cols);
+        this.rows = rows;
+        this.cols = cols;
+        storeSparse(denseData);
+    }
+
+    /**
+     * Instantiate a data object with one array in row-major format. Note that NO safe copy of the data is stored.
+     * @param denseData the dense data as float values in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     */
+    public SparseFloatDataSi(final float[] denseData, final int rows, final int cols)
     {
         Throw.whenNull(denseData, "denseData");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
@@ -84,7 +104,26 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
      * @throws IllegalArgumentException when the matrix is ragged
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public SparseDoubleData(final double[][] denseData)
+    public SparseFloatDataSi(final double[][] denseData)
+    {
+        Throw.whenNull(denseData, "denseData");
+        Throw.when(denseData.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        this.rows = denseData.length;
+        this.cols = denseData[0].length;
+        for (int r = 1; r < this.rows; r++)
+            Throw.when(denseData[r].length != this.cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, denseData[r].length,
+                    this.cols);
+        storeSparse(denseData);
+    }
+
+    /**
+     * Instantiate a data object with a dense double[rows][cols]. A sparse, safe copy of the data is stored.
+     * @param denseData the data in row-major format as a float[][]
+     * @throws IllegalArgumentException when the matrix is ragged
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public SparseFloatDataSi(final float[][] denseData)
     {
         Throw.whenNull(denseData, "denseData");
         Throw.when(denseData.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
@@ -110,7 +149,7 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
      * @param <U> the unit type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseDoubleData(final Q[] sparseData, final int[] indexes,
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[] sparseData, final int[] indexes,
             final int rows, final int cols)
     {
         Throw.whenNull(sparseData, "sparseData");
@@ -122,9 +161,9 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
         this.rows = rows;
         this.cols = cols;
         checkIndexes(indexes);
-        this.sparseData = new double[sparseData.length];
+        this.sparseData = new float[sparseData.length];
         for (int i = 0; i < sparseData.length; i++)
-            this.sparseData[i] = sparseData[i].si();
+            this.sparseData[i] = sparseData[i].floatValue();
         this.indexes = indexes.clone();
     }
 
@@ -138,7 +177,7 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseDoubleData(final Q[] denseData, final int rows,
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[] denseData, final int rows,
             final int cols)
     {
         Throw.whenNull(denseData, "denseData");
@@ -159,7 +198,7 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
      * @param <U> the unit type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseDoubleData(final Q[][] denseData)
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[][] denseData)
     {
         Throw.whenNull(denseData, "denseData");
         Throw.when(denseData.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
@@ -182,15 +221,15 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
      * @param <U> the unit type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseDoubleData(
-            final Collection<DoubleSparseValue<Q, U>> indexedData, final int rows, final int cols)
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(
+            final Collection<FloatSparseValue<Q, U>> indexedData, final int rows, final int cols)
     {
         Throw.whenNull(indexedData, "indexedData");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
         this.rows = rows;
         this.cols = cols;
-        this.sparseData = new double[indexedData.size()];
+        this.sparseData = new float[indexedData.size()];
         this.indexes = new int[indexedData.size()];
         int index = 0;
         for (var value : indexedData)
@@ -199,7 +238,7 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
                     value.toString());
             Throw.when(value.getColumn() >= cols, IndexOutOfBoundsException.class,
                     "Column index for indexed value %s out of bounds", value.toString());
-            this.sparseData[index] = value.si();
+            this.sparseData[index] = (float) value.si();
             this.indexes[index++] = value.getRow() * this.cols + value.getColumn();
         }
     }
@@ -242,11 +281,34 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
         for (int i = 0; i < denseData.length; i++)
             if (denseData[i] != 0.0)
                 nonzero++;
-        this.sparseData = new double[nonzero];
+        this.sparseData = new float[nonzero];
         this.indexes = new int[nonzero];
         int index = 0;
         for (int i = 0; i < denseData.length; i++)
             if (denseData[i] != 0.0)
+            {
+                this.sparseData[index] = (float) denseData[i];
+                this.indexes[index] = i;
+                index++;
+            }
+    }
+
+    /**
+     * Store sparse data[] and indexes[].
+     * @param denseData the dense data in row-major format
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public void storeSparse(final float[] denseData)
+    {
+        int nonzero = 0;
+        for (int i = 0; i < denseData.length; i++)
+            if (denseData[i] != 0.0f)
+                nonzero++;
+        this.sparseData = new float[nonzero];
+        this.indexes = new int[nonzero];
+        int index = 0;
+        for (int i = 0; i < denseData.length; i++)
+            if (denseData[i] != 0.0f)
             {
                 this.sparseData[index] = denseData[i];
                 this.indexes[index] = i;
@@ -266,14 +328,39 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
             for (int j = 0; j < denseData[i].length; j++)
                 if (denseData[i][j] != 0.0)
                     nonzero++;
-        this.sparseData = new double[nonzero];
+        this.sparseData = new float[nonzero];
         this.indexes = new int[nonzero];
         int index = 0;
         for (int i = 0; i < denseData.length; i++)
             for (int j = 0; j < denseData[i].length; j++)
                 if (denseData[i][j] != 0.0)
                 {
-                    this.sparseData[index] = denseData[i][j];
+                    this.sparseData[index] = (float) denseData[i][j];
+                    this.indexes[index] = i * this.cols + j;
+                    index++;
+                }
+    }
+
+    /**
+     * Store sparse data[] and indexes[].
+     * @param denseData the dense data in row-major format
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public void storeSparse(final float[][] denseData)
+    {
+        int nonzero = 0;
+        for (int i = 0; i < denseData.length; i++)
+            for (int j = 0; j < denseData[i].length; j++)
+                if (denseData[i][j] != 0.0f)
+                    nonzero++;
+        this.sparseData = new float[nonzero];
+        this.indexes = new int[nonzero];
+        int index = 0;
+        for (int i = 0; i < denseData.length; i++)
+            for (int j = 0; j < denseData[i].length; j++)
+                if (denseData[i][j] != 0.0f)
+                {
+                    this.sparseData[index] = (float) denseData[i][j];
                     this.indexes[index] = i * this.cols + j;
                     index++;
                 }
@@ -292,13 +379,13 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
         for (int i = 0; i < denseData.length; i++)
             if (denseData[i].ne0())
                 nonzero++;
-        this.sparseData = new double[nonzero];
+        this.sparseData = new float[nonzero];
         this.indexes = new int[nonzero];
         int index = 0;
         for (int i = 0; i < denseData.length; i++)
             if (denseData[i].ne0())
             {
-                this.sparseData[index] = denseData[i].si();
+                this.sparseData[index] = denseData[i].floatValue();
                 this.indexes[index] = i;
                 index++;
             }
@@ -318,14 +405,14 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
             for (int j = 0; j < denseData[i].length; j++)
                 if (denseData[i][j].ne0())
                     nonzero++;
-        this.sparseData = new double[nonzero];
+        this.sparseData = new float[nonzero];
         this.indexes = new int[nonzero];
         int index = 0;
         for (int i = 0; i < denseData.length; i++)
             for (int j = 0; j < denseData[i].length; j++)
                 if (denseData[i][j].ne0())
                 {
-                    this.sparseData[index] = denseData[i][j].si();
+                    this.sparseData[index] = denseData[i][j].floatValue();
                     this.indexes[index] = i * this.cols + j;
                     index++;
                 }
@@ -377,9 +464,9 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
     }
 
     @Override
-    public SparseDoubleData copy()
+    public SparseFloatDataSi copy()
     {
-        return new SparseDoubleData(this.sparseData.clone(), this.indexes.clone(), rows(), cols());
+        return new SparseFloatDataSi(this.sparseData.clone(), this.indexes.clone(), rows(), cols());
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -393,19 +480,19 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
     }
 
     @Override
-    public SparseDoubleData instantiateNew(final double[] denseData)
+    public SparseFloatDataSi instantiateNew(final double[] denseData)
     {
         Throw.when(denseData.length != rows() * cols(), IllegalArgumentException.class,
                 "Data object length != rows * cols, %d != %d * %d", denseData.length, rows(), cols());
-        return new SparseDoubleData(denseData, rows(), cols());
+        return new SparseFloatDataSi(denseData, rows(), cols());
     }
 
     @Override
-    public SparseDoubleData instantiateNew(final double[] denseData, final int newRows, final int newCols)
+    public SparseFloatDataSi instantiateNew(final double[] denseData, final int newRows, final int newCols)
     {
         Throw.when(denseData.length != newRows * newCols, IllegalArgumentException.class,
                 "Data object length != rows * cols, %d != %d * %d", denseData.length, newRows, newCols);
-        return new SparseDoubleData(denseData, newRows, newCols);
+        return new SparseFloatDataSi(denseData, newRows, newCols);
     }
 
     @Override
@@ -428,11 +515,11 @@ public class SparseDoubleData implements DataGrid<SparseDoubleData>
             return false;
         if (getClass() != obj.getClass())
         {
-            if (obj instanceof DataGrid dg)
+            if (obj instanceof DataGridSi dg)
                 return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(getDataArray(), dg.getDataArray());
             return false;
         }
-        SparseDoubleData other = (SparseDoubleData) obj;
+        SparseFloatDataSi other = (SparseFloatDataSi) obj;
         return this.cols == other.cols && this.rows == other.rows && Arrays.equals(this.sparseData, other.sparseData)
                 && Arrays.equals(this.indexes, other.indexes);
     }

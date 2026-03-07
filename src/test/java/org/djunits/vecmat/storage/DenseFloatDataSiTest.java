@@ -12,10 +12,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for {@link DenseFloatData}.
+ * Unit tests for {@link DenseFloatDataSi}.
  * <p>
- * This test class verifies the complete functional behavior of {@link DenseFloatData} and all default methods inherited from
- * {@link DataGrid}. All tests focus on correct functional semantics. If the implementation contains bugs or produces incorrect
+ * This test class verifies the complete functional behavior of {@link DenseFloatDataSi} and all default methods inherited from
+ * {@link DataGridSi}. All tests focus on correct functional semantics. If the implementation contains bugs or produces incorrect
  * results, these tests are designed to fail.
  * <ul>
  * <li>All constructors (float[], float[][], Q[][])</li>
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
-public class DenseFloatDataTest
+public class DenseFloatDataSiTest
 {
     /**
      * Helper method: create a simple 2x3 float array stored in row-major format.
@@ -56,7 +56,7 @@ public class DenseFloatDataTest
     @DisplayName("rows/cols/get: happy-path read access")
     public void testRowsColsGet()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         assertEquals(2, d.rows(), "rows()");
         assertEquals(3, d.cols(), "cols()");
@@ -75,7 +75,7 @@ public class DenseFloatDataTest
     @DisplayName("get: bounds checking exceptions")
     public void testGetOutOfBounds()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         assertThrows(IndexOutOfBoundsException.class, () -> d.get(-1, 0));
         assertThrows(IndexOutOfBoundsException.class, () -> d.get(2, 0));
@@ -94,7 +94,7 @@ public class DenseFloatDataTest
     @DisplayName("DataGrid.getRowArray: normal and error paths")
     public void testGetRowArray()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         assertArrayEquals(new double[] {1, 2, 3}, d.getRowArray(0), 1e-12);
         assertArrayEquals(new double[] {4, 5, 6}, d.getRowArray(1), 1e-12);
@@ -110,7 +110,7 @@ public class DenseFloatDataTest
     @DisplayName("DataGrid.getColArray: normal and error paths")
     public void testGetColArray()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         assertArrayEquals(new double[] {1, 4}, d.getColArray(0), 1e-12);
         assertArrayEquals(new double[] {2, 5}, d.getColArray(1), 1e-12);
@@ -131,7 +131,7 @@ public class DenseFloatDataTest
     @DisplayName("getDataArray: returns new array every time; not exposing internals")
     public void testGetDataArrayCopy()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         double[] a1 = d.getDataArray();
         double[] a2 = d.getDataArray();
@@ -155,8 +155,8 @@ public class DenseFloatDataTest
     @DisplayName("copy: deep-copy of internal float array")
     public void testCopy()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
-        DenseFloatData copy = d.copy();
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
+        DenseFloatDataSi copy = d.copy();
 
         assertEquals(d.rows(), copy.rows());
         assertEquals(d.cols(), copy.cols());
@@ -183,10 +183,10 @@ public class DenseFloatDataTest
     @DisplayName("instantiateNew(double[]): shape preserved, float cast correct")
     public void testInstantiateNewSameDims()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         double[] newData = new double[] {1.5, -2.25, 3.75, 4.5, 0.0, Double.NaN};
-        DenseFloatData d2 = d.instantiateNew(newData);
+        DenseFloatDataSi d2 = d.instantiateNew(newData);
 
         assertEquals(2, d2.rows());
         assertEquals(3, d2.cols());
@@ -207,10 +207,10 @@ public class DenseFloatDataTest
     @DisplayName("instantiateNew(double[],r,c): reshape + float casting")
     public void testInstantiateNewNewDims()
     {
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
         double[] newData = new double[] {9, 8, 7, 6, 5, 4};
-        DenseFloatData reshaped = d.instantiateNew(newData, 3, 2);
+        DenseFloatDataSi reshaped = d.instantiateNew(newData, 3, 2);
 
         assertEquals(3, reshaped.rows());
         assertEquals(2, reshaped.cols());
@@ -232,7 +232,7 @@ public class DenseFloatDataTest
     public void testCardinality()
     {
         float[] raw = new float[] {0f, -0f, 2f, -3f, Float.NaN, Float.POSITIVE_INFINITY};
-        DenseFloatData d = new DenseFloatData(raw, 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(raw, 2, 3);
 
         // zero and -zero count as zero, NaN and infinities count as non-zero
         assertEquals(4, d.cardinality());
@@ -249,10 +249,10 @@ public class DenseFloatDataTest
     @DisplayName("equals/hashCode: reflexivity, symmetry, difference detection")
     public void testEqualsHashCode()
     {
-        DenseFloatData a = new DenseFloatData(sample2x3(), 2, 3);
-        DenseFloatData b = new DenseFloatData(sample2x3(), 2, 3);
-        DenseFloatData c = new DenseFloatData(new float[] {1, 2, 3, 4, 5, 7}, 2, 3);
-        DenseFloatData d3x2 = new DenseFloatData(sample2x3(), 3, 2);
+        DenseFloatDataSi a = new DenseFloatDataSi(sample2x3(), 2, 3);
+        DenseFloatDataSi b = new DenseFloatDataSi(sample2x3(), 2, 3);
+        DenseFloatDataSi c = new DenseFloatDataSi(new float[] {1, 2, 3, 4, 5, 7}, 2, 3);
+        DenseFloatDataSi d3x2 = new DenseFloatDataSi(sample2x3(), 3, 2);
 
         assertEquals(a, a);
         assertEquals(a, b);
@@ -275,12 +275,12 @@ public class DenseFloatDataTest
     @DisplayName("ctor(float[],r,c): validation of null, size, geometry")
     public void testCtorFloatArrayValidation()
     {
-        assertThrows(NullPointerException.class, () -> new DenseFloatData((float[]) null, 1, 1));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(new float[] {1}, 0, 1));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(new float[] {1}, 1, 0));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(new float[] {1, 2}, 1, 1));
+        assertThrows(NullPointerException.class, () -> new DenseFloatDataSi((float[]) null, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new float[] {1}, 0, 1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new float[] {1}, 1, 0));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new float[] {1, 2}, 1, 1));
 
-        DenseFloatData d = new DenseFloatData(sample2x3(), 2, 3);
+        DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
     }
@@ -293,18 +293,18 @@ public class DenseFloatDataTest
     @DisplayName("ctor(float[][]): validation, safe copy, row-major, ragged detection")
     public void testCtor2DFloatArray()
     {
-        assertThrows(NullPointerException.class, () -> new DenseFloatData((float[][]) null));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(new float[][] {}));
+        assertThrows(NullPointerException.class, () -> new DenseFloatDataSi((float[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new float[][] {}));
 
         // Ragged rows -> must throw exactly IllegalArgumentException
         float[][] ragged = new float[][] {{1f, 2f}, {3f}};
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(ragged));
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(ragged));
         assertEquals(IllegalArgumentException.class, ex.getClass(),
                 "Expected IAE; formatting bug in code would produce different exception");
 
         // Valid safe-copy
         float[][] arr = new float[][] {{1f, 2f, 3f}, {4f, 5f, 6f}};
-        DenseFloatData d = new DenseFloatData(arr);
+        DenseFloatDataSi d = new DenseFloatDataSi(arr);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
         assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, d.getDataArray(), 1e-12);
@@ -321,18 +321,18 @@ public class DenseFloatDataTest
     @DisplayName("ctor(Q[][]): SI conversion, safe copy, ragged detection")
     public void testCtorQuantityArray()
     {
-        assertThrows(NullPointerException.class, () -> new DenseFloatData((Length[][]) null));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(new Length[][] {}));
+        assertThrows(NullPointerException.class, () -> new DenseFloatDataSi((Length[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new Length[][] {}));
 
         // Ragged rows must throw exactly IAE
         Length[][] ragged = new Length[][] {{new Length(1, Length.Unit.m)}, {}};
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> new DenseFloatData(ragged));
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(ragged));
         assertEquals(IllegalArgumentException.class, ex.getClass());
 
         // Valid mixed-unit input
         Length[][] q = new Length[][] {{new Length(1.0, Length.Unit.km), new Length(1.0, Length.Unit.m)},
                 {new Length(2.0, Length.Unit.cm), new Length(3.0, Length.Unit.mm)}};
-        DenseFloatData d = new DenseFloatData(q);
+        DenseFloatDataSi d = new DenseFloatDataSi(q);
 
         // Expected SI values (float-cast): 1000.0, 1.0, 0.02, 0.003
         assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);

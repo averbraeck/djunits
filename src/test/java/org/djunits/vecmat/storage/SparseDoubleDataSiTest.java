@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for {@link SparseDoubleData}.
+ * Unit tests for {@link SparseDoubleDataSi}.
  * <p>
  * This test class achieves full branch coverage of all constructors, helper methods, index validation, sparse storage
  * generation, DataGrid default methods, binary-search access path, copy semantics, instantiation operations, equals/hashCode,
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
  * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
-public class SparseDoubleDataTest
+public class SparseDoubleDataSiTest
 {
     /**
      * Helper: produce a dense matrix (2x3) for easy reuse.
@@ -61,31 +61,31 @@ public class SparseDoubleDataTest
         int[] idx = new int[] {0, 2, 4};
 
         // Valid case
-        SparseDoubleData d = new SparseDoubleData(sparse, idx, 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(sparse, idx, 2, 3);
         assertEquals(1.0, d.get(0, 0), 1e-12);
         assertEquals(2.0, d.get(0, 2), 1e-12);
         assertEquals(3.0, d.get(1, 1), 1e-12);
 
         // Null arrays
-        assertThrows(NullPointerException.class, () -> new SparseDoubleData((double[]) null, idx, 2, 3));
-        assertThrows(NullPointerException.class, () -> new SparseDoubleData(sparse, null, 2, 3));
+        assertThrows(NullPointerException.class, () -> new SparseDoubleDataSi((double[]) null, idx, 2, 3));
+        assertThrows(NullPointerException.class, () -> new SparseDoubleDataSi(sparse, null, 2, 3));
 
         // Length mismatch
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(new double[] {1}, new int[] {0, 1}, 2, 3));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(new double[] {1}, new int[] {0, 1}, 2, 3));
 
         // Wrong dims
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(sparse, idx, 0, 3));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(sparse, idx, 2, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(sparse, idx, 0, 3));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(sparse, idx, 2, 0));
 
         // Out of bounds index
-        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(sparse, new int[] {0, 2, 6}, 2, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(sparse, new int[] {0, 2, 6}, 2, 3));
 
         // Not strictly increasing → fail
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(sparse, new int[] {0, 2, 2}, 2, 3));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(sparse, new int[] {0, 2, 2}, 2, 3));
         
         // Negative index
         int[] idx2 = new int[] {-2, 2, 4};
-        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(sparse, idx2, 2, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(sparse, idx2, 2, 3));
     }
 
     /**
@@ -100,40 +100,40 @@ public class SparseDoubleDataTest
         int[] idx = new int[] {0, 2, 4};
 
         // data length != rows x cols
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(double6, 1, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(double5, 3, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(double7, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(double6, 1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(double5, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(double7, 3, 2));
 
         // Q[] sparse constructor
         Length[] lengthArray3 = new Length[] {Length.ONE, Length.of(2.0, "m"), Length.of(4.0, "m")};
         Length[] lengthArray4 = new Length[] {Length.ONE, Length.of(2.0, "m"), Length.of(4.0, "m"), Length.of(5.0, "m")};
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, idx, 3, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, 0, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, -1, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, 3, 0));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray3, idx, 3, -2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray4, idx, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray3, idx, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray3, idx, -1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray3, idx, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray3, idx, 3, -2));
 
         // Q[] dense constructor
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, 3, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, -1, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(lengthArray4, 2, -1));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray4, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray4, -1, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray4, 2, -1));
 
         // DoubleSparseValue constructor
         List<DoubleSparseValue<Length, Length.Unit>> svl = new ArrayList<>();
         svl.add(new DoubleSparseValue<>(0, 0, 1.0));
         svl.add(new DoubleSparseValue<>(0, 1, 2.0));
         svl.add(new DoubleSparseValue<>(1, 1, 4.0));
-        assertNotNull(new SparseDoubleData(svl, 3, 2)); // base ok?
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, 0, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, -3, 2));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, 3, 0));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(svl, 3, -2));
+        assertNotNull(new SparseDoubleDataSi(svl, 3, 2)); // base ok?
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, -3, 2));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(svl, 3, -2));
         
         svl.add(new DoubleSparseValue<>(3, 1, 8.0));
-        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(svl, 3, 2));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(svl, 3, 2));
         svl.remove(3);
         svl.add(new DoubleSparseValue<>(2, 2, 8.0));
-        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(svl, 3, 2));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(svl, 3, 2));
         svl.remove(3);
     }
 
@@ -149,14 +149,14 @@ public class SparseDoubleDataTest
     public void testCtorDenseData()
     {
         // Null → NPE
-        assertThrows(NullPointerException.class, () -> new SparseDoubleData((double[]) null, 2, 2));
+        assertThrows(NullPointerException.class, () -> new SparseDoubleDataSi((double[]) null, 2, 2));
 
         // Bad dims
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(dense2x3(), 0, 3));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(dense2x3(), 2, 0));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(dense2x3(), 0, 3));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(dense2x3(), 2, 0));
 
         // Happy path
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(dense2x3(), 2, 3);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
 
@@ -179,15 +179,15 @@ public class SparseDoubleDataTest
     @DisplayName("ctor(double[][]): ragged detection + safe copy + sparse")
     public void testCtorMatrix()
     {
-        assertThrows(NullPointerException.class, () -> new SparseDoubleData((double[][]) null));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(new double[][] {}));
+        assertThrows(NullPointerException.class, () -> new SparseDoubleDataSi((double[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(new double[][] {}));
 
         // Ragged
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(new double[][] {{1.0}, {1.0, 2.0}}));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(new double[][] {{1.0}, {1.0, 2.0}}));
 
         // Happy path
         double[][] m = dense2x3Matrix();
-        SparseDoubleData d = new SparseDoubleData(m);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(m);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
 
@@ -212,7 +212,7 @@ public class SparseDoubleDataTest
         };
         int[] idx = new int[] {0, 3, 5};
 
-        SparseDoubleData d = new SparseDoubleData(q, idx, 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(q, idx, 2, 3);
 
         // Check SI conversion
         double[] dense = d.getDataArray();
@@ -240,7 +240,7 @@ public class SparseDoubleDataTest
     {
         Length[] q = new Length[] {new Length(0.0, Length.Unit.m), new Length(1.0, Length.Unit.m),
                 new Length(0.0, Length.Unit.m), new Length(2.0, Length.Unit.km)};
-        SparseDoubleData d = new SparseDoubleData(q, 2, 2);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(q, 2, 2);
 
         double[] expected = new double[4];
         expected[1] = 1.0;
@@ -260,15 +260,15 @@ public class SparseDoubleDataTest
     @DisplayName("ctor(Q[][]): SI conversion + sparse + ragged detection")
     public void testCtorMatrixQ()
     {
-        assertThrows(NullPointerException.class, () -> new SparseDoubleData((Length[][]) null));
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(new Length[][] {}));
+        assertThrows(NullPointerException.class, () -> new SparseDoubleDataSi((Length[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(new Length[][] {}));
 
         Length[][] ragged = new Length[][] {{Length.ofSi(1.0)}, {}};
-        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleData(ragged));
+        assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(ragged));
 
         Length[][] m = new Length[][] {{new Length(1.0, Length.Unit.km), new Length(0.0, Length.Unit.m)},
                 {new Length(2.0, Length.Unit.cm), new Length(3.0, Length.Unit.mm)}};
-        SparseDoubleData d = new SparseDoubleData(m);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(m);
 
         double[] dense = d.getDataArray();
         assertEquals(1000.0, dense[0], 1e-12);
@@ -300,7 +300,7 @@ public class SparseDoubleDataTest
         col.add(new DoubleSparseValue<>(1, 1, v2));
         col.add(new DoubleSparseValue<>(1, 2, v3));
 
-        SparseDoubleData d = new SparseDoubleData(col, 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(col, 2, 3);
 
         assertEquals(1.0, d.get(0, 0), 1e-12);
         assertEquals(2000.0, d.get(1, 1), 1e-12);
@@ -308,11 +308,11 @@ public class SparseDoubleDataTest
 
         // Invalid row
         assertThrows(IllegalArgumentException.class, () -> List.of(new DoubleSparseValue<>(-1, 0, v1)));
-        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(col, 3, 2));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(col, 3, 2));
 
         // Invalid column: current buggy code uses >= rows instead of >= cols
         var col3 = List.of(new DoubleSparseValue<>(0, 3, v1));
-        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleData(col3, 2, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> new SparseDoubleDataSi(col3, 2, 3));
     }
 
     // ----------------------------------------------------------------------
@@ -326,7 +326,7 @@ public class SparseDoubleDataTest
     @DisplayName("get/getDataArray: binary search hit/miss + safe copy")
     public void testGetAndGetDataArray()
     {
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(dense2x3(), 2, 3);
 
         // Direct checks of get()
         assertEquals(1.0, d.get(0, 0), 1e-12); // hit
@@ -353,7 +353,7 @@ public class SparseDoubleDataTest
     @DisplayName("DataGrid.getRowArray and getColArray work and check bounds")
     public void testDefaultRowColMethods()
     {
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(dense2x3(), 2, 3);
 
         assertArrayEquals(new double[] {1.0, 0.0, 2.0}, d.getRowArray(0), 1e-12);
         assertArrayEquals(new double[] {0.0, 3.0, 4.0}, d.getRowArray(1), 1e-12);
@@ -376,15 +376,15 @@ public class SparseDoubleDataTest
     @DisplayName("copy(): deep copy of sparseData and indexes")
     public void testCopy()
     {
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
-        SparseDoubleData c = d.copy();
+        SparseDoubleDataSi d = new SparseDoubleDataSi(dense2x3(), 2, 3);
+        SparseDoubleDataSi c = d.copy();
 
         assertNotSame(d, c);
         assertNotSame(d.getDataArray(), c.getDataArray());
         assertArrayEquals(d.getDataArray(), c.getDataArray(), 1e-12);
 
         // Mutate original sparseData via instantiateNew → copy unaffected
-        SparseDoubleData d2 = d.instantiateNew(new double[] {0, 0, 0, 0, 0, 1});
+        SparseDoubleDataSi d2 = d.instantiateNew(new double[] {0, 0, 0, 0, 0, 1});
         assertEquals(1.0, d2.get(1, 2), 1e-12);
         assertArrayEquals(d.getDataArray(), c.getDataArray(), 1e-12);
     }
@@ -400,10 +400,10 @@ public class SparseDoubleDataTest
     @DisplayName("instantiateNew: reshape + validation")
     public void testInstantiateNew()
     {
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(dense2x3(), 2, 3);
 
         double[] newDense = new double[] {0, 5, 0, 6};
-        SparseDoubleData d2 = d.instantiateNew(newDense, 2, 2);
+        SparseDoubleDataSi d2 = d.instantiateNew(newDense, 2, 2);
 
         assertEquals(2, d2.rows());
         assertEquals(2, d2.cols());
@@ -426,11 +426,11 @@ public class SparseDoubleDataTest
     public void testCardinality()
     {
         // dense2x3 has 4 non-zero values
-        SparseDoubleData d = new SparseDoubleData(dense2x3(), 2, 3);
+        SparseDoubleDataSi d = new SparseDoubleDataSi(dense2x3(), 2, 3);
         assertEquals(4, d.cardinality());
 
         // explicit 0.0 value in the data -- cardinality should not count it
-        SparseDoubleData d0 = new SparseDoubleData(new double[] {1.0, 0.0}, new int[] {1, 3}, 3, 2);
+        SparseDoubleDataSi d0 = new SparseDoubleDataSi(new double[] {1.0, 0.0}, new int[] {1, 3}, 3, 2);
         assertEquals(1, d0.cardinality());
     }
 
@@ -445,10 +445,10 @@ public class SparseDoubleDataTest
     @DisplayName("equals/hashCode: correct semantics")
     public void testEqualsHashCode()
     {
-        SparseDoubleData a = new SparseDoubleData(dense2x3(), 2, 3);
-        SparseDoubleData b = new SparseDoubleData(dense2x3(), 2, 3);
-        SparseDoubleData c = new SparseDoubleData(new double[] {1, 2, 0, 0, 0, 0}, 2, 3);
-        SparseDoubleData d3x2 = new SparseDoubleData(dense2x3(), 3, 2);
+        SparseDoubleDataSi a = new SparseDoubleDataSi(dense2x3(), 2, 3);
+        SparseDoubleDataSi b = new SparseDoubleDataSi(dense2x3(), 2, 3);
+        SparseDoubleDataSi c = new SparseDoubleDataSi(new double[] {1, 2, 0, 0, 0, 0}, 2, 3);
+        SparseDoubleDataSi d3x2 = new SparseDoubleDataSi(dense2x3(), 3, 2);
 
         assertEquals(a, a);
         assertEquals(a, b);

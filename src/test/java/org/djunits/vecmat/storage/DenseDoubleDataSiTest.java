@@ -13,14 +13,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for {@link DenseDoubleData}.
+ * Unit tests for {@link DenseDoubleDataSi}.
  * <p>
- * This test class verifies the functional behavior of {@link DenseDoubleData} and the default methods in the {@link DataGrid}
+ * This test class verifies the functional behavior of {@link DenseDoubleDataSi} and the default methods in the {@link DataGridSi}
  * interface:
  * <ul>
  * <li>Constructors: double[], double[][], and Q[][] (SI values)</li>
  * <li>Accessors: {@code rows()}, {@code cols()}, {@code get(int,int)}, {@code getDataArray()}</li>
- * <li>Default methods in {@link DataGrid}: {@code getRowArray(int)}, {@code getColArray(int)} including bounds checks</li>
+ * <li>Default methods in {@link DataGridSi}: {@code getRowArray(int)}, {@code getColArray(int)} including bounds checks</li>
  * <li>Copy and instantiation: {@code copy()}, {@code instantiateNew(double[])}, {@code instantiateNew(double[],int,int)}</li>
  * <li>Cardinality semantics, including 0.0, -0.0, {@code NaN}, and infinities</li>
  * <li>Equality and hash code contracts</li>
@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
-public class DenseDoubleDataTest
+public class DenseDoubleDataSiTest
 {
     /**
      * Create a sample dense row-major array for a 2x3 matrix.
@@ -52,7 +52,7 @@ public class DenseDoubleDataTest
     public void testRowsColsAndGet()
     {
         double[] data = sample2x3();
-        DenseDoubleData d = new DenseDoubleData(data, 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(data, 2, 3);
 
         assertEquals(2, d.rows(), "rows()");
         assertEquals(3, d.cols(), "cols()");
@@ -71,7 +71,7 @@ public class DenseDoubleDataTest
     @DisplayName("get: index bounds checking")
     public void testGetOutOfBounds()
     {
-        DenseDoubleData d = new DenseDoubleData(sample2x3(), 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(sample2x3(), 2, 3);
 
         assertThrows(IndexOutOfBoundsException.class, () -> d.get(-1, 0), "row < 0 should throw");
         assertThrows(IndexOutOfBoundsException.class, () -> d.get(2, 0), "row >= rows should throw");
@@ -80,13 +80,13 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify that {@link DataGrid#getRowArray(int)} returns a dense copy with correct values and enforces bounds.
+     * Verify that {@link DataGridSi#getRowArray(int)} returns a dense copy with correct values and enforces bounds.
      */
     @Test
     @DisplayName("DataGrid.getRowArray: happy path + bounds")
     public void testGetRowArray()
     {
-        DenseDoubleData d = new DenseDoubleData(sample2x3(), 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(sample2x3(), 2, 3);
         assertArrayEquals(new double[] {1.0, 2.0, 3.0}, d.getRowArray(0), 1e-12, "row 0");
         assertArrayEquals(new double[] {4.0, 5.0, 6.0}, d.getRowArray(1), 1e-12, "row 1");
 
@@ -95,13 +95,13 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify that {@link DataGrid#getColArray(int)} returns a dense copy with correct values and enforces bounds.
+     * Verify that {@link DataGridSi#getColArray(int)} returns a dense copy with correct values and enforces bounds.
      */
     @Test
     @DisplayName("DataGrid.getColArray: happy path + bounds")
     public void testGetColArray()
     {
-        DenseDoubleData d = new DenseDoubleData(sample2x3(), 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(sample2x3(), 2, 3);
         assertArrayEquals(new double[] {1.0, 4.0}, d.getColArray(0), 1e-12, "col 0");
         assertArrayEquals(new double[] {2.0, 5.0}, d.getColArray(1), 1e-12, "col 1");
         assertArrayEquals(new double[] {3.0, 6.0}, d.getColArray(2), 1e-12, "col 2");
@@ -111,7 +111,7 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify exposure semantics of {@link DenseDoubleData#getDataArray()} (no safe copy). Modifications through the returned
+     * Verify exposure semantics of {@link DenseDoubleDataSi#getDataArray()} (no safe copy). Modifications through the returned
      * array are reflected in the object, by design.
      */
     @Test
@@ -119,7 +119,7 @@ public class DenseDoubleDataTest
     public void testGetDataArrayExposure()
     {
         double[] data = sample2x3();
-        DenseDoubleData d = new DenseDoubleData(data, 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(data, 2, 3);
 
         // Same reference is returned (no safe copy)
         assertSame(data, d.getDataArray(), "Internal array should be exposed by design");
@@ -131,14 +131,14 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify {@link DenseDoubleData#copy()} creates a deep copy (independent backing array).
+     * Verify {@link DenseDoubleDataSi#copy()} creates a deep copy (independent backing array).
      */
     @Test
     @DisplayName("copy: deep copy of data and identical geometry")
     public void testCopy()
     {
-        DenseDoubleData original = new DenseDoubleData(sample2x3(), 2, 3);
-        DenseDoubleData copy = original.copy();
+        DenseDoubleDataSi original = new DenseDoubleDataSi(sample2x3(), 2, 3);
+        DenseDoubleDataSi copy = original.copy();
 
         assertEquals(original.rows(), copy.rows(), "rows identical");
         assertEquals(original.cols(), copy.cols(), "cols identical");
@@ -152,16 +152,16 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify {@link DenseDoubleData#instantiateNew(double[])} returns a new instance with same shape and exposed backing.
+     * Verify {@link DenseDoubleDataSi#instantiateNew(double[])} returns a new instance with same shape and exposed backing.
      */
     @Test
     @DisplayName("instantiateNew(double[]): shape preserved, backing exposed")
     public void testInstantiateNewSameDims()
     {
-        DenseDoubleData d = new DenseDoubleData(sample2x3(), 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(sample2x3(), 2, 3);
 
         double[] other = new double[] {7.0, 8.0, 9.0, 10.0, -0.0, Double.NaN};
-        DenseDoubleData d2 = d.instantiateNew(other);
+        DenseDoubleDataSi d2 = d.instantiateNew(other);
 
         assertEquals(2, d2.rows(), "rows preserved");
         assertEquals(3, d2.cols(), "cols preserved");
@@ -175,17 +175,17 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify {@link DenseDoubleData#instantiateNew(double[], int, int)} for new shape and argument validation.
+     * Verify {@link DenseDoubleDataSi#instantiateNew(double[], int, int)} for new shape and argument validation.
      */
     @Test
     @DisplayName("instantiateNew(double[], r, c): new shape and length checks")
     public void testInstantiateNewNewDims()
     {
-        DenseDoubleData d = new DenseDoubleData(sample2x3(), 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(sample2x3(), 2, 3);
 
         // Valid reshape to 3x2 with new content
         double[] data3x2 = new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
-        DenseDoubleData reshaped = d.instantiateNew(data3x2, 3, 2);
+        DenseDoubleDataSi reshaped = d.instantiateNew(data3x2, 3, 2);
         assertEquals(3, reshaped.rows());
         assertEquals(2, reshaped.cols());
         assertSame(data3x2, reshaped.getDataArray(), "backing exposed (by design)");
@@ -201,7 +201,7 @@ public class DenseDoubleDataTest
     }
 
     /**
-     * Verify {@link DenseDoubleData#cardinality()} semantics: counts non-zero entries (treats +/-0.0 as zero; counts NaN and
+     * Verify {@link DenseDoubleDataSi#cardinality()} semantics: counts non-zero entries (treats +/-0.0 as zero; counts NaN and
      * infinities as non-zero).
      */
     @Test
@@ -209,7 +209,7 @@ public class DenseDoubleDataTest
     public void testCardinality()
     {
         double[] payload = new double[] {0.0, -0.0, 1.0, -2.0, Double.NaN, Double.POSITIVE_INFINITY};
-        DenseDoubleData d = new DenseDoubleData(payload, 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(payload, 2, 3);
 
         // 0.0 -> zero, -0.0 -> zero, 1.0 -> non-zero, -2.0 -> non-zero, NaN -> non-zero, +inf -> non-zero
         assertEquals(4, d.cardinality(), "cardinality should count non-zeros incl. NaN and infinities");
@@ -222,10 +222,10 @@ public class DenseDoubleDataTest
     @DisplayName("equals/hashCode: reflexive, symmetric, and data/shape sensitive")
     public void testEqualsHashCode()
     {
-        DenseDoubleData a = new DenseDoubleData(sample2x3(), 2, 3);
-        DenseDoubleData b = new DenseDoubleData(sample2x3(), 2, 3);
-        DenseDoubleData c = new DenseDoubleData(new double[] {1, 2, 3, 4, 5, 7}, 2, 3);
-        DenseDoubleData d3x2 = new DenseDoubleData(sample2x3(), 3, 2);
+        DenseDoubleDataSi a = new DenseDoubleDataSi(sample2x3(), 2, 3);
+        DenseDoubleDataSi b = new DenseDoubleDataSi(sample2x3(), 2, 3);
+        DenseDoubleDataSi c = new DenseDoubleDataSi(new double[] {1, 2, 3, 4, 5, 7}, 2, 3);
+        DenseDoubleDataSi d3x2 = new DenseDoubleDataSi(sample2x3(), 3, 2);
 
         // Reflexive
         assertEquals(a, a, "reflexive");
@@ -254,18 +254,18 @@ public class DenseDoubleDataTest
     public void testCtorDoubleArrayValidationAndExposure()
     {
         // Null data -> NullPointerException (from Throw.whenNull)
-        assertThrows(NullPointerException.class, () -> new DenseDoubleData((double[]) null, 1, 1));
+        assertThrows(NullPointerException.class, () -> new DenseDoubleDataSi((double[]) null, 1, 1));
 
         // rows <= 0
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(new double[] {1.0}, 0, 1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new double[] {1.0}, 0, 1));
         // cols <= 0
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(new double[] {1.0}, 1, 0));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new double[] {1.0}, 1, 0));
         // length mismatch
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(new double[] {1.0, 2.0}, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new double[] {1.0, 2.0}, 1, 1));
 
         // Happy path
         double[] payload = sample2x3();
-        DenseDoubleData d = new DenseDoubleData(payload, 2, 3);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(payload, 2, 3);
         assertSame(payload, d.getDataArray(), "no safe copy on ctor(double[])");
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
@@ -280,20 +280,20 @@ public class DenseDoubleDataTest
     public void testCtor2DArrayValidationCopyingAndOrder()
     {
         // Null -> NPE (from Throw.whenNull)
-        assertThrows(NullPointerException.class, () -> new DenseDoubleData((double[][]) null));
+        assertThrows(NullPointerException.class, () -> new DenseDoubleDataSi((double[][]) null));
 
         // Empty outer array -> IAE
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(new double[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new double[][] {}));
 
         // Ragged array -> should throw exactly IllegalArgumentException (not a subclass)
         double[][] ragged = new double[][] {{1.0, 2.0}, {3.0}};
-        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(ragged));
+        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(ragged));
         assertEquals(IllegalArgumentException.class, raggedEx.getClass(),
                 "Ragged rows must throw exactly IllegalArgumentException (format bug would cause a different type)");
 
         // Happy path; verify safe copy and row-major
         double[][] m = new double[][] {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}};
-        DenseDoubleData d = new DenseDoubleData(m);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(m);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
 
@@ -315,21 +315,21 @@ public class DenseDoubleDataTest
     public void testCtorQuantity2DArraySIConversion()
     {
         // Null -> NPE
-        assertThrows(NullPointerException.class, () -> new DenseDoubleData((Length[][]) null));
+        assertThrows(NullPointerException.class, () -> new DenseDoubleDataSi((Length[][]) null));
 
         // Empty -> IAE
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(new Length[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new Length[][] {}));
 
         // Ragged -> should throw exactly IllegalArgumentException (not a subclass)
         Length[][] ragged = new Length[][] {{new Length(1.0, Length.Unit.m)}, {}};
-        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> new DenseDoubleData(ragged));
+        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(ragged));
         assertEquals(IllegalArgumentException.class, raggedEx.getClass(),
                 "Ragged rows must throw exactly IllegalArgumentException (format bug would cause a different type)");
 
         // Happy path with mixed units; SI values are meters
         Length[][] l = new Length[][] {{new Length(1.0, Length.Unit.km), new Length(2.0, Length.Unit.m)},
                 {new Length(3.0, Length.Unit.cm), new Length(4.0, Length.Unit.mm)}};
-        DenseDoubleData d = new DenseDoubleData(l);
+        DenseDoubleDataSi d = new DenseDoubleDataSi(l);
 
         // Expected SI (meters): [1000.0, 2.0, 0.03, 0.004]
         double[] expected = new double[] {1000.0, 2.0, 0.03, 0.004};

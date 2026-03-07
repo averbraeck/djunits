@@ -13,7 +13,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <D> The datagrid type
  */
-public interface DataGrid<D extends DataGrid<D>>
+public interface DataGridSi<D extends DataGridSi<D>>
 {
     /**
      * Return the number of rows in the grid.
@@ -113,7 +113,7 @@ public interface DataGrid<D extends DataGrid<D>>
      * @return whether two datagrid arrays are equal to a maximum absolute error epsilon
      */
     @SuppressWarnings("checkstyle:needbraces")
-    default boolean equals(final DataGrid<?> other, final double epsilon)
+    default boolean equals(final DataGridSi<?> other, final double epsilon)
     {
         Throw.when(epsilon < 0, IllegalArgumentException.class, "epsilon should be >= 0");
         if (other == null)

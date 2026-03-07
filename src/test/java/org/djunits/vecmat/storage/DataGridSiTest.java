@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class DataGridTest
+public class DataGridSiTest
 {
     /**
      * Test equals() with other DataGrid instances.
@@ -29,10 +29,10 @@ public class DataGridTest
         float[] f3x2 = new float[] {1f, 2.0f, -3.0f, 4.0f, 5.0f, -6.0f};
         int[] ind32 = new int[] {0, 1, 2, 3, 4, 5};
 
-        DenseDoubleData dddd = new DenseDoubleData(d3x2, 3, 2);
-        DenseFloatData dfdf = new DenseFloatData(f3x2, 3, 2);
-        SparseDoubleData sddd = new SparseDoubleData(d3x2, ind32, 3, 2);
-        SparseFloatData sfdf = new SparseFloatData(f3x2, ind32, 3, 2);
+        DenseDoubleDataSi dddd = new DenseDoubleDataSi(d3x2, 3, 2);
+        DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
+        SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2, ind32, 3, 2);
+        SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2, ind32, 3, 2);
 
         assertAll(() -> assertEquals(dddd, dddd), () -> assertEquals(dddd, dfdf), () -> assertEquals(dddd, sddd),
                 () -> assertEquals(dddd, sfdf));
@@ -43,10 +43,10 @@ public class DataGridTest
         assertAll(() -> assertEquals(sfdf, dddd), () -> assertEquals(sfdf, dfdf), () -> assertEquals(sfdf, sddd),
                 () -> assertEquals(sfdf, sfdf));
 
-        DenseDoubleData dddd2 = new DenseDoubleData(d3x2, 2, 3);
-        DenseFloatData dfdf2 = new DenseFloatData(f3x2, 2, 3);
-        SparseDoubleData sddd2 = new SparseDoubleData(d3x2, ind32, 2, 3);
-        SparseFloatData sfdf2 = new SparseFloatData(f3x2, ind32, 2, 3);
+        DenseDoubleDataSi dddd2 = new DenseDoubleDataSi(d3x2, 2, 3);
+        DenseFloatDataSi dfdf2 = new DenseFloatDataSi(f3x2, 2, 3);
+        SparseDoubleDataSi sddd2 = new SparseDoubleDataSi(d3x2, ind32, 2, 3);
+        SparseFloatDataSi sfdf2 = new SparseFloatDataSi(f3x2, ind32, 2, 3);
 
         assertAll(() -> assertNotEquals(dddd, dddd2), () -> assertNotEquals(dddd, dfdf2), () -> assertNotEquals(dddd, sddd2),
                 () -> assertNotEquals(dddd, sfdf2));
@@ -61,10 +61,10 @@ public class DataGridTest
         float[] f2x2 = new float[] {1f, 2.0f, -3.0f, 4.0f};
         int[] ind2x2 = new int[] {0, 1, 2, 3};
 
-        DenseDoubleData dddd22 = new DenseDoubleData(d2x2, 2, 2);
-        DenseFloatData dfdf22 = new DenseFloatData(f2x2, 2, 2);
-        SparseDoubleData sddd22 = new SparseDoubleData(d2x2, ind2x2, 2, 2);
-        SparseFloatData sfdf22 = new SparseFloatData(f2x2, ind2x2, 2, 2);
+        DenseDoubleDataSi dddd22 = new DenseDoubleDataSi(d2x2, 2, 2);
+        DenseFloatDataSi dfdf22 = new DenseFloatDataSi(f2x2, 2, 2);
+        SparseDoubleDataSi sddd22 = new SparseDoubleDataSi(d2x2, ind2x2, 2, 2);
+        SparseFloatDataSi sfdf22 = new SparseFloatDataSi(f2x2, ind2x2, 2, 2);
 
         assertAll(() -> assertNotEquals(dddd, dddd22), () -> assertNotEquals(dddd, dfdf22), () -> assertNotEquals(dddd, sddd22),
                 () -> assertNotEquals(dddd, sfdf22));
@@ -88,10 +88,10 @@ public class DataGridTest
         float[] f3x2hard = new float[] {(float) (1.0 / 3.0), (float) Math.PI, (float) (-Math.E), (float) Math.sin(5.1),
                 (float) 1E7, (float) -1E-10};
 
-        DenseDoubleData ddddhard = new DenseDoubleData(d3x2hard, 3, 2);
-        DenseFloatData dfdfhard = new DenseFloatData(f3x2hard, 3, 2);
-        SparseDoubleData sdddhard = new SparseDoubleData(d3x2hard, ind32, 3, 2);
-        SparseFloatData sfdfhard = new SparseFloatData(f3x2hard, ind32, 3, 2);
+        DenseDoubleDataSi ddddhard = new DenseDoubleDataSi(d3x2hard, 3, 2);
+        DenseFloatDataSi dfdfhard = new DenseFloatDataSi(f3x2hard, 3, 2);
+        SparseDoubleDataSi sdddhard = new SparseDoubleDataSi(d3x2hard, ind32, 3, 2);
+        SparseFloatDataSi sfdfhard = new SparseFloatDataSi(f3x2hard, ind32, 3, 2);
 
         assertAll(() -> assertNotEquals(dddd, ddddhard), () -> assertNotEquals(dddd, dfdfhard),
                 () -> assertNotEquals(dddd, sdddhard), () -> assertNotEquals(dddd, sfdfhard));
@@ -113,10 +113,10 @@ public class DataGridTest
         float[] f3x2 = new float[] {1f, 2.0f, -3.0f, 4.0f, 5.0f, -6.0f};
         int[] ind32 = new int[] {0, 1, 2, 3, 4, 5};
 
-        DenseDoubleData dddd = new DenseDoubleData(d3x2, 3, 2);
-        DenseFloatData dfdf = new DenseFloatData(f3x2, 3, 2);
-        SparseDoubleData sddd = new SparseDoubleData(d3x2, ind32, 3, 2);
-        SparseFloatData sfdf = new SparseFloatData(f3x2, ind32, 3, 2);
+        DenseDoubleDataSi dddd = new DenseDoubleDataSi(d3x2, 3, 2);
+        DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
+        SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2, ind32, 3, 2);
+        SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2, ind32, 3, 2);
 
         assertAll(() -> assertEquals(dddd.hashCode(), dddd.hashCode()), () -> assertEquals(dddd.hashCode(), dfdf.hashCode()),
                 () -> assertEquals(dddd.hashCode(), sddd.hashCode()), () -> assertEquals(dddd.hashCode(), sfdf.hashCode()));
@@ -127,10 +127,10 @@ public class DataGridTest
         assertAll(() -> assertEquals(sfdf.hashCode(), dddd.hashCode()), () -> assertEquals(sfdf.hashCode(), dfdf.hashCode()),
                 () -> assertEquals(sfdf.hashCode(), sddd.hashCode()), () -> assertEquals(sfdf.hashCode(), sfdf.hashCode()));
 
-        DenseDoubleData dddd2 = new DenseDoubleData(d3x2, 2, 3);
-        DenseFloatData dfdf2 = new DenseFloatData(f3x2, 2, 3);
-        SparseDoubleData sddd2 = new SparseDoubleData(d3x2, ind32, 2, 3);
-        SparseFloatData sfdf2 = new SparseFloatData(f3x2, ind32, 2, 3);
+        DenseDoubleDataSi dddd2 = new DenseDoubleDataSi(d3x2, 2, 3);
+        DenseFloatDataSi dfdf2 = new DenseFloatDataSi(f3x2, 2, 3);
+        SparseDoubleDataSi sddd2 = new SparseDoubleDataSi(d3x2, ind32, 2, 3);
+        SparseFloatDataSi sfdf2 = new SparseFloatDataSi(f3x2, ind32, 2, 3);
 
         assertAll(() -> assertNotEquals(dddd, dddd2.hashCode()), () -> assertNotEquals(dddd, dfdf2.hashCode()),
                 () -> assertNotEquals(dddd, sddd2.hashCode()), () -> assertNotEquals(dddd, sfdf2.hashCode()));
@@ -150,10 +150,10 @@ public class DataGridTest
         float[] f2x2 = new float[] {1f, 2.0f, -3.0f, 4.0f};
         int[] ind2x2 = new int[] {0, 1, 2, 3};
 
-        DenseDoubleData dddd22 = new DenseDoubleData(d2x2, 2, 2);
-        DenseFloatData dfdf22 = new DenseFloatData(f2x2, 2, 2);
-        SparseDoubleData sddd22 = new SparseDoubleData(d2x2, ind2x2, 2, 2);
-        SparseFloatData sfdf22 = new SparseFloatData(f2x2, ind2x2, 2, 2);
+        DenseDoubleDataSi dddd22 = new DenseDoubleDataSi(d2x2, 2, 2);
+        DenseFloatDataSi dfdf22 = new DenseFloatDataSi(f2x2, 2, 2);
+        SparseDoubleDataSi sddd22 = new SparseDoubleDataSi(d2x2, ind2x2, 2, 2);
+        SparseFloatDataSi sfdf22 = new SparseFloatDataSi(f2x2, ind2x2, 2, 2);
 
         assertAll(() -> assertNotEquals(dddd, dddd22), () -> assertNotEquals(dddd, dfdf22.hashCode()),
                 () -> assertNotEquals(dddd, sddd22.hashCode()), () -> assertNotEquals(dddd, sfdf22.hashCode()));
@@ -197,10 +197,10 @@ public class DataGridTest
                 (float) 1E7, (float) -1E-10};
         int[] ind32 = new int[] {0, 1, 2, 3, 4, 5};
 
-        DenseDoubleData ddddhard = new DenseDoubleData(d3x2hard, 3, 2);
-        DenseFloatData dfdfhard = new DenseFloatData(f3x2hard, 3, 2);
-        SparseDoubleData sdddhard = new SparseDoubleData(d3x2hard, ind32, 3, 2);
-        SparseFloatData sfdfhard = new SparseFloatData(f3x2hard, ind32, 3, 2);
+        DenseDoubleDataSi ddddhard = new DenseDoubleDataSi(d3x2hard, 3, 2);
+        DenseFloatDataSi dfdfhard = new DenseFloatDataSi(f3x2hard, 3, 2);
+        SparseDoubleDataSi sdddhard = new SparseDoubleDataSi(d3x2hard, ind32, 3, 2);
+        SparseFloatDataSi sfdfhard = new SparseFloatDataSi(f3x2hard, ind32, 3, 2);
 
         double eps = 1E-6;
         assertTrue(ddddhard.equals(ddddhard, eps));
@@ -221,9 +221,9 @@ public class DataGridTest
         assertTrue(sfdfhard.equals(sfdfhard, eps));
 
         double[] d2x2 = new double[] {1.0, 3.0, 4.0, 5.0};
-        DenseDoubleData ddd2x2 = new DenseDoubleData(d2x2, 2, 2);
+        DenseDoubleDataSi ddd2x2 = new DenseDoubleDataSi(d2x2, 2, 2);
         double[] d3x1 = new double[] {1.0, 3.0, 5.0};
-        DenseDoubleData ddd3x1 = new DenseDoubleData(d3x1, 3, 1);
+        DenseDoubleDataSi ddd3x1 = new DenseDoubleDataSi(d3x1, 3, 1);
         assertFalse(ddddhard.equals(null, eps));
         assertFalse(ddddhard.equals(ddd2x2, eps));
         assertFalse(ddddhard.equals(ddd3x1, eps));
@@ -231,7 +231,7 @@ public class DataGridTest
         assertThrows(IllegalArgumentException.class, () -> ddddhard.equals(ddddhard, -eps));
 
         double[] d3x2b = new double[] {1.0 / 3.0, Math.PI, -Math.E, Math.sin(5.1), 1E7, 1E-5};
-        DenseDoubleData ddd3x2b = new DenseDoubleData(d3x2b, 3, 2);
+        DenseDoubleDataSi ddd3x2b = new DenseDoubleDataSi(d3x2b, 3, 2);
         assertFalse(ddddhard.equals(ddd3x2b, eps));
     }
 
@@ -247,10 +247,10 @@ public class DataGridTest
         float[] f3x2s = new float[] {1f, 2f};
         int[] ind0 = new int[] {0, 3};
 
-        DenseDoubleData dddd = new DenseDoubleData(d3x2, 3, 2);
-        DenseFloatData dfdf = new DenseFloatData(f3x2, 3, 2);
-        SparseDoubleData sddd = new SparseDoubleData(d3x2s, ind0, 3, 2);
-        SparseFloatData sfdf = new SparseFloatData(f3x2s, ind0, 3, 2);
+        DenseDoubleDataSi dddd = new DenseDoubleDataSi(d3x2, 3, 2);
+        DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
+        SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2s, ind0, 3, 2);
+        SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2s, ind0, 3, 2);
 
         assertAll(() -> assertEquals(dddd, dddd), () -> assertEquals(dddd, dfdf), () -> assertEquals(dddd, sddd),
                 () -> assertEquals(dddd, sfdf));
@@ -262,8 +262,8 @@ public class DataGridTest
                 () -> assertEquals(sfdf, sfdf));
 
         int[] ind2 = new int[] {0, 2};
-        SparseDoubleData sddd2 = new SparseDoubleData(d3x2s, ind2, 3, 2);
-        SparseFloatData sfdf2 = new SparseFloatData(f3x2s, ind2, 3, 2);
+        SparseDoubleDataSi sddd2 = new SparseDoubleDataSi(d3x2s, ind2, 3, 2);
+        SparseFloatDataSi sfdf2 = new SparseFloatDataSi(f3x2s, ind2, 3, 2);
         assertNotEquals(sddd, sddd2);
         assertNotEquals(sddd, sfdf2);
         assertNotEquals(sfdf, sddd2);
@@ -282,11 +282,11 @@ public class DataGridTest
         float[] f3x2s = new float[] {1f, 2f};
         int[] ind0 = new int[] {0, 3};
 
-        DenseDoubleData dddd = new DenseDoubleData(d3x2, 3, 2);
-        DenseFloatData dfdf = new DenseFloatData(f3x2, 3, 2);
-        SparseDoubleData sddd = new SparseDoubleData(d3x2s, ind0, 3, 2);
-        SparseFloatData sfdf = new SparseFloatData(f3x2s, ind0, 3, 2);
-        DataGrid<?>[] dgArray = new DataGrid[] {dddd, dfdf, sddd, sfdf};
+        DenseDoubleDataSi dddd = new DenseDoubleDataSi(d3x2, 3, 2);
+        DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
+        SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2s, ind0, 3, 2);
+        SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2s, ind0, 3, 2);
+        DataGridSi<?>[] dgArray = new DataGridSi[] {dddd, dfdf, sddd, sfdf};
 
         for (var dg : dgArray)
         {
@@ -309,11 +309,11 @@ public class DataGridTest
         float[] f3x2s = new float[] {1f, 2f};
         int[] ind0 = new int[] {0, 3};
 
-        DenseDoubleData dddd = new DenseDoubleData(d3x2, 3, 2);
-        DenseFloatData dfdf = new DenseFloatData(f3x2, 3, 2);
-        SparseDoubleData sddd = new SparseDoubleData(d3x2s, ind0, 3, 2);
-        SparseFloatData sfdf = new SparseFloatData(f3x2s, ind0, 3, 2);
-        DataGrid<?>[] dgArray = new DataGrid[] {dddd, dfdf, sddd, sfdf};
+        DenseDoubleDataSi dddd = new DenseDoubleDataSi(d3x2, 3, 2);
+        DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
+        SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2s, ind0, 3, 2);
+        SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2s, ind0, 3, 2);
+        DataGridSi<?>[] dgArray = new DataGridSi[] {dddd, dfdf, sddd, sfdf};
 
         for (var dg : dgArray)
         {
@@ -333,11 +333,11 @@ public class DataGridTest
         float[] f3x2s = new float[] {1f, 2f};
         int[] ind0 = new int[] {0, 3};
 
-        DenseDoubleData dddd = new DenseDoubleData(d3x2, 3, 2);
-        DenseFloatData dfdf = new DenseFloatData(f3x2, 3, 2);
-        SparseDoubleData sddd = new SparseDoubleData(d3x2s, ind0, 3, 2);
-        SparseFloatData sfdf = new SparseFloatData(f3x2s, ind0, 3, 2);
-        DataGrid<?>[] dgArray = new DataGrid[] {dddd, dfdf, sddd, sfdf};
+        DenseDoubleDataSi dddd = new DenseDoubleDataSi(d3x2, 3, 2);
+        DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
+        SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2s, ind0, 3, 2);
+        SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2s, ind0, 3, 2);
+        DataGridSi<?>[] dgArray = new DataGridSi[] {dddd, dfdf, sddd, sfdf};
 
         for (var dg : dgArray)
         {
