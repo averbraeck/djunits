@@ -225,7 +225,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         }
         final double[] resultData = MatrixMath.multiply(si(), otherVec.si(), n, n, 1);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
-        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(resultData, n, 1), resultUnit);
+        return VectorN.Col.ofSi(resultData, resultUnit);
     }
 
     /**

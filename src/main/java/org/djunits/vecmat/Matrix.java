@@ -10,7 +10,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.operations.VectorMatrixOps;
-import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -157,7 +156,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
             data[c - 1] = si(row, c);
         }
         // 1 x cols() row-shape
-        return new VectorN.Row<Q, U>(new DenseDoubleDataSi(data, 1, cols()), getDisplayUnit());
+        return VectorN.Row.of(data, getDisplayUnit());
     }
 
     /**
@@ -178,7 +177,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
             data[r - 1] = si(r, column);
         }
         // rows() x 1 column-shape
-        return new VectorN.Col<Q, U>(new DenseDoubleDataSi(data, rows(), 1), getDisplayUnit());
+        return VectorN.Col.ofSi(data, getDisplayUnit());
     }
 
     /**
@@ -196,7 +195,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
             data[i - 1] = si(i, i);
         }
         // n x 1 column-shape
-        return new VectorN.Col<Q, U>(new DenseDoubleDataSi(data, n, 1), getDisplayUnit());
+        return VectorN.Col.ofSi(data, getDisplayUnit());
     }
 
     /**

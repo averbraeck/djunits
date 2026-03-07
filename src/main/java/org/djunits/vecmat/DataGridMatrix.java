@@ -7,7 +7,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.storage.DataGridSi;
-import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -137,7 +136,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     public VectorN.Row<Q, U> getRow(final int row) throws IndexOutOfBoundsException
     {
         double[] data = this.dataSi.getRowArray(row - 1);
-        return new VectorN.Row<Q, U>(new DenseDoubleDataSi(data, 1, cols()), getDisplayUnit());
+        return VectorN.Row.of(data, getDisplayUnit());
     }
 
     /**
@@ -151,7 +150,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     public VectorN.Col<Q, U> getColumn(final int column) throws IndexOutOfBoundsException
     {
         double[] data = this.dataSi.getColArray(column - 1);
-        return new VectorN.Col<Q, U>(new DenseDoubleDataSi(data, rows(), 1), getDisplayUnit());
+        return VectorN.Col.ofSi(data, getDisplayUnit());
     }
 
     /**
@@ -168,7 +167,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
         {
             data[i] = this.dataSi.get(i, i);
         }
-        return new VectorN.Col<Q, U>(new DenseDoubleDataSi(data, rows(), 1), getDisplayUnit());
+        return VectorN.Col.ofSi(data, getDisplayUnit());
     }
 
     /**

@@ -236,7 +236,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         final double[] result = MatrixMath.multiply(si(), colVec.si(), rows(), cols(), 1);
         final SIUnit u = getDisplayUnit().siUnit().plus(colVec.getDisplayUnit().siUnit());
-        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), 1), u);
+        return VectorN.Col.ofSi(result, u);
     }
 
     /**
@@ -252,7 +252,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         final double[] result = MatrixMath.multiply(si(), colVec.si(), rows(), cols(), 1);
         final SIUnit u = getDisplayUnit().siUnit().plus(colVec.getDisplayUnit().siUnit());
-        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), 1), u);
+        return VectorN.Col.ofSi(result, u);
     }
 
     /**
@@ -268,7 +268,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         final double[] result = MatrixMath.multiply(si(), colVec.si(), rows(), cols(), 1);
         final SIUnit u = getDisplayUnit().siUnit().plus(colVec.getDisplayUnit().siUnit());
-        return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), 1), u);
+        return VectorN.Col.ofSi(result, u);
     }
 
     /**
@@ -390,7 +390,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Col<TQ, TU> asVectorNCol(final TU targetUnit)
     {
         Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
-        return new VectorN.Col<TQ, TU>(new DenseDoubleDataSi(si(), rows(), 1), targetUnit);
+        return VectorN.Col.ofSi(si(), targetUnit);
     }
 
     /**
@@ -435,7 +435,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Row<TQ, TU> asVectorNRow(final TU targetUnit)
     {
         Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
-        return new VectorN.Row<TQ, TU>(new DenseDoubleDataSi(si(), 1, cols()), targetUnit);
+        return VectorN.Row.of(si(), targetUnit);
     }
 
 }
