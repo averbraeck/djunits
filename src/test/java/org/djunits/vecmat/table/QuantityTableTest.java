@@ -13,8 +13,8 @@ import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
-import org.djunits.vecmat.storage.DataGrid;
-import org.djunits.vecmat.storage.DenseDoubleData;
+import org.djunits.vecmat.storage.DataGridSi;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +35,7 @@ public class QuantityTableTest
     private static QuantityTable<Length, Length.Unit> create2x2()
     {
         double[] si = new double[] {1, 2, 3, 4};
-        DataGrid<?> dg = new DenseDoubleData(si, 2, 2);
+        DataGridSi<?> dg = new DenseDoubleDataSi(si, 2, 2);
         return new QuantityTable<>(dg, Length.Unit.m);
     }
 
@@ -46,7 +46,7 @@ public class QuantityTableTest
     private static QuantityTable<Length, Length.Unit> create3x3()
     {
         double[] si = new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        return new QuantityTable<>(new DenseDoubleData(si, 3, 3), Length.Unit.m);
+        return new QuantityTable<>(new DenseDoubleDataSi(si, 3, 3), Length.Unit.m);
     }
 
     /**
@@ -56,7 +56,7 @@ public class QuantityTableTest
     private static QuantityTable<Length, Length.Unit> create2x3()
     {
         double[] si = new double[] {1, 2, 3, 4, 5, 6};
-        return new QuantityTable<>(new DenseDoubleData(si, 2, 3), Length.Unit.m);
+        return new QuantityTable<>(new DenseDoubleDataSi(si, 2, 3), Length.Unit.m);
     }
 
     // ----------------------------------------------------------------------
@@ -110,7 +110,7 @@ public class QuantityTableTest
     public void testInvertElements()
     {
         QuantityTable<Length, Length.Unit> q =
-                new QuantityTable<>(new DenseDoubleData(new double[] {1, 2, 4, 5}, 2, 2), Length.Unit.m);
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 4, 5}, 2, 2), Length.Unit.m);
 
         QuantityTable<?, ?> inv = q.invertElements();
         double[] expected = new double[] {1.0, 1.0 / 2.0, 1.0 / 4.0, 1.0 / 5.0};
@@ -131,10 +131,10 @@ public class QuantityTableTest
     public void testMultiplyElements()
     {
         QuantityTable<Length, Length.Unit> a =
-                new QuantityTable<>(new DenseDoubleData(new double[] {1, 2, 3, 4}, 2, 2), Length.Unit.m);
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4}, 2, 2), Length.Unit.m);
 
         QuantityTable<Length, Length.Unit> b =
-                new QuantityTable<>(new DenseDoubleData(new double[] {10, 20, 30, 40}, 2, 2), Length.Unit.m);
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 20, 30, 40}, 2, 2), Length.Unit.m);
 
         QuantityTable<?, ?> result = a.multiplyElements(b);
 
@@ -153,10 +153,10 @@ public class QuantityTableTest
     public void testDivideElements()
     {
         QuantityTable<Length, Length.Unit> a =
-                new QuantityTable<>(new DenseDoubleData(new double[] {100, 50, 20, 10}, 2, 2), Length.Unit.m);
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {100, 50, 20, 10}, 2, 2), Length.Unit.m);
 
         QuantityTable<Length, Length.Unit> b =
-                new QuantityTable<>(new DenseDoubleData(new double[] {10, 5, 2, 1}, 2, 2), Length.Unit.m);
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 5, 2, 1}, 2, 2), Length.Unit.m);
 
         QuantityTable<?, ?> result = a.divideElements(b);
 
@@ -204,7 +204,7 @@ public class QuantityTableTest
 
         // Non-2x2
         QuantityTable<Length, Length.Unit> non2 =
-                new QuantityTable<>(new DenseDoubleData(new double[] {1, 2, 3}, 3, 1), Length.Unit.m);
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3}, 3, 1), Length.Unit.m);
         assertThrows(IllegalStateException.class, non2::asMatrix2x2);
     }
 
@@ -277,7 +277,7 @@ public class QuantityTableTest
         // Base test data: a 2x2 table expressed in kilometers, SI values are meters.
         // SI array: {1000, 2000, 3000, 4000} meaning {1,2,3,4} km
         double[] si = new double[] {1000, 2000, 3000, 4000};
-        QuantityTable<Length, Length.Unit> qtKm = new QuantityTable<>(new DenseDoubleData(si, 2, 2), Length.Unit.km);
+        QuantityTable<Length, Length.Unit> qtKm = new QuantityTable<>(new DenseDoubleDataSi(si, 2, 2), Length.Unit.km);
 
         // ----------------------------------------------------------------------
         // 1. asMatrixNxM() must preserve SI and assign displayUnit correctly
@@ -297,7 +297,7 @@ public class QuantityTableTest
         // 3. Create a 3x3 km-table for asMatrix3x3 and asMatrixNxN
         // ----------------------------------------------------------------------
         double[] si9 = new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000};
-        QuantityTable<Length, Length.Unit> qtKm9 = new QuantityTable<>(new DenseDoubleData(si9, 3, 3), Length.Unit.km);
+        QuantityTable<Length, Length.Unit> qtKm9 = new QuantityTable<>(new DenseDoubleDataSi(si9, 3, 3), Length.Unit.km);
 
         Matrix3x3<Length, Length.Unit> m3 = qtKm9.asMatrix3x3();
         assertArrayEquals(si9, m3.si(), 1e-12, "asMatrix3x3(): SI values must be preserved for 3x3");

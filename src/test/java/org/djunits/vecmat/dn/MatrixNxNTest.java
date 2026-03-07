@@ -15,7 +15,7 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.Matrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.storage.DenseDoubleData;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -138,10 +138,10 @@ public class MatrixNxNTest
     @DisplayName("MatrixNxN constructor")
     public void testConstructor()
     {
-        var dataSi = new DenseDoubleData(new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+        var dataSi = new DenseDoubleDataSi(new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
         assertThrows(IllegalArgumentException.class, () -> new MatrixNxN<>(dataSi, Length.Unit.m));
 
-        var dataSi2x2 = new DenseDoubleData(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+        var dataSi2x2 = new DenseDoubleDataSi(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
         var mat = new MatrixNxN<>(dataSi2x2, Length.Unit.m);
         assertEquals(4.0, mat.si(2, 2));
     }
@@ -294,14 +294,14 @@ public class MatrixNxNTest
 
         // A·v (size 4): create v in km → SI [1000,2000,3000,4000]
         VectorN.Col<Length, Length.Unit> v =
-                new VectorN.Col<>(new DenseDoubleData(new double[] {1000, 2000, 3000, 4000}, 4, 1), Length.Unit.km);
+                new VectorN.Col<>(new DenseDoubleDataSi(new double[] {1000, 2000, 3000, 4000}, 4, 1), Length.Unit.km);
         VectorN.Col<SIQuantity, SIUnit> r = a.multiply(v);
         assertEquals(4, r.size());
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r.getDisplayUnit());
 
         // A·v (size 3): should give exception
         VectorN.Col<Length, Length.Unit> v3 =
-                new VectorN.Col<>(new DenseDoubleData(new double[] {1000, 2000, 3000}, 3, 1), Length.Unit.km);
+                new VectorN.Col<>(new DenseDoubleDataSi(new double[] {1000, 2000, 3000}, 3, 1), Length.Unit.km);
         assertThrows(IllegalArgumentException.class, () -> a.multiply(v3));
     }
 

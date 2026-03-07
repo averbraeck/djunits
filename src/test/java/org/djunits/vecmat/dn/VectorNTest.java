@@ -15,8 +15,8 @@ import java.util.NoSuchElementException;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.storage.DataGrid;
-import org.djunits.vecmat.storage.DenseDoubleData;
+import org.djunits.vecmat.storage.DataGridSi;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  * <p>
  * Coverage scope:
  * <ul>
- * <li>Construction via a {@link DataGrid}-backed SI store</li>
+ * <li>Construction via a {@link DataGridSi}-backed SI store</li>
  * <li>Accessors: {@code size()}, {@code rows()}, {@code cols()}, {@code isColumnVector()}, {@code si()},
  * {@code get(index)}</li>
  * <li>Iteration and {@code getScalarArray()} correctness (types, order, unit)</li>
@@ -71,7 +71,7 @@ public final class VectorNTest
         {
             si[i] = unit.toBaseValue(inUnit[i]);
         }
-        return new VectorN.Col<>(new DenseDoubleData(si, inUnit.length, 1), unit);
+        return new VectorN.Col<>(new DenseDoubleDataSi(si, inUnit.length, 1), unit);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class VectorNTest
         {
             si[i] = unit.toBaseValue(inUnit[i]);
         }
-        return new VectorN.Row<>(new DenseDoubleData(si, 1, inUnit.length), unit);
+        return new VectorN.Row<>(new DenseDoubleDataSi(si, 1, inUnit.length), unit);
     }
 
     // =====================================================================================

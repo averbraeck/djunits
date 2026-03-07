@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.djunits.quantity.Length;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
-import org.djunits.vecmat.storage.DataGrid;
-import org.djunits.vecmat.storage.DenseDoubleData;
+import org.djunits.vecmat.storage.DataGridSi;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +53,7 @@ public class DataGridMatrixTest
     private static MatrixNxM<Length, Length.Unit> create2x3Meters()
     {
         double[] data = new double[] {1, 2, 3, 4, 5, 6};
-        DataGrid<?> dg = new DenseDoubleData(data, 2, 3);
+        DataGridSi<?> dg = new DenseDoubleDataSi(data, 2, 3);
         return new MatrixNxM<>(dg, Length.Unit.m);
     }
 
@@ -64,7 +64,7 @@ public class DataGridMatrixTest
     private static MatrixNxM<Length, Length.Unit> create3x3Meters()
     {
         double[] data = new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        return new MatrixNxM<>(new DenseDoubleData(data, 3, 3), Length.Unit.m);
+        return new MatrixNxM<>(new DenseDoubleDataSi(data, 3, 3), Length.Unit.m);
     }
 
     // ----------------------------------------------------------------------
@@ -79,7 +79,7 @@ public class DataGridMatrixTest
     public void testGetDataGrid()
     {
         MatrixNxM<Length, Length.Unit> m = create2x3Meters();
-        DataGrid<?> grid = m.getDataGrid();
+        DataGridSi<?> grid = m.getDataGrid();
         assertNotNull(grid);
         assertEquals(2, grid.rows());
         assertEquals(3, grid.cols());
@@ -330,11 +330,11 @@ public class DataGridMatrixTest
 
         // Different data
         MatrixNxM<Length, Length.Unit> c =
-                new MatrixNxM<>(new DenseDoubleData(new double[] {9, 8, 7, 6, 5, 4}, 2, 3), Length.Unit.m);
+                new MatrixNxM<>(new DenseDoubleDataSi(new double[] {9, 8, 7, 6, 5, 4}, 2, 3), Length.Unit.m);
         assertNotEquals(a, c);
 
         // Different shape
-        MatrixNxM<Length, Length.Unit> d = new MatrixNxM<>(new DenseDoubleData(new double[] {1, 2, 3, 4}, 2, 2), Length.Unit.m);
+        MatrixNxM<Length, Length.Unit> d = new MatrixNxM<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4}, 2, 2), Length.Unit.m);
         assertNotEquals(a, d);
 
         // Different type

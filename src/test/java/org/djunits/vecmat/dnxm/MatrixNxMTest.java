@@ -253,7 +253,7 @@ public class MatrixNxMTest
 
         // General VectorN.Col (size = cols)
         VectorN.Col<Length, Length.Unit> vN = new VectorN.Col<>(
-                new org.djunits.vecmat.storage.DenseDoubleData(new double[] {1000, 2000}, 2, 1), Length.Unit.km);
+                new org.djunits.vecmat.storage.DenseDoubleDataSi(new double[] {1000, 2000}, 2, 1), Length.Unit.km);
         VectorN.Col<SIQuantity, SIUnit> rN = a32.multiply(vN);
         assertArrayEquals(new double[] {5000, 11000, 17000}, rN.si(), EPS);
     }
