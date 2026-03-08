@@ -12,6 +12,7 @@ import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.storage.DataGridSi;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -40,6 +41,84 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     public QuantityTable(final DataGridSi<?> dataSi, final U displayUnit)
     {
         super(dataSi, displayUnit);
+    }
+
+    /**
+     * Create a new NxM QuantityTable with a unit, based on a 1-dimensional double array.
+     * @param valueArrayInUnit the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     * @param rows the number of rows in the valueArray
+     * @param cols the number of columns in the valueArray
+     * @return a new NxM QuantityTable with a unit
+     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in valueArray is not
+     *             equal to rows*cols
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> QuantityTable<Q, U> of(
+            final double[] valueArrayInUnit, final int rows, final int cols, final U displayUnit)
+    {
+        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
+        Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(rows <= 0, IllegalArgumentException.class, "rows <= 0");
+        Throw.when(cols <= 0, IllegalArgumentException.class, "cols <= 0");
+        Throw.when(rows * cols != valueArrayInUnit.length, IllegalArgumentException.class,
+                "valueArrayInUnit does not contain the correct number of entries (%d x %d != %d)", rows, cols,
+                valueArrayInUnit.length);
+        double[] aSi = new double[rows * cols];
+        for (int i = 0; i < valueArrayInUnit.length; i++)
+            aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
+        return new QuantityTable<Q, U>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
+    }
+
+    /**
+     * Create a new NxM QuantityTable with a unit, based on a 2-dimensional double grid.
+     * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, aN2, aNM}} expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     * @return a new NxM QuantityTable with a unit
+     * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
+     *             equal to the number of columns in another row
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q, U>,
+            U extends UnitInterface<U, Q>> QuantityTable<Q, U> of(final double[][] valueGridInUnit, final U displayUnit)
+    {
+        Throw.whenNull(valueGridInUnit, "valueGridInUnit");
+        Throw.whenNull(displayUnit, "displayUnit");
+        int rows = valueGridInUnit.length;
+        Throw.when(rows == 0, IllegalArgumentException.class, "valueGridInUnit has 0 rows");
+        int cols = valueGridInUnit[0].length;
+        Throw.when(cols == 0, IllegalArgumentException.class, "row 0 in valueGridInUnit has 0 columns");
+        double[] aSi = new double[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.when(valueGridInUnit[r].length != cols, IllegalArgumentException.class,
+                    "valueGridInUnit is not a NxM array; row %d has a length of %d, not %d", r, valueGridInUnit[r].length,
+                    cols);
+            for (int c = 0; c < cols; c++)
+                aSi[cols * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
+        }
+        return new QuantityTable<Q, U>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
+    }
+
+    /**
+     * Create a new NxM QuantityTable with a unit, based on a 2-dimensional quantity grid.
+     * @param quantityGrid the matrix values {{a11, a12, ..., a1M}, {aN2, ..., aNM}}, each with their own unit
+     * @param displayUnit the display unit to use for the resulting matrix
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     * @return a new NxM QuantityTable with a unit
+     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in quantityGrid is not
+     *             equal to rows*cols
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> QuantityTable<Q, U> of(final Q[][] quantityGrid,
+            final U displayUnit)
+    {
+        return new QuantityTable<Q, U>(new DenseDoubleDataSi(quantityGrid), displayUnit);
     }
 
     @Override
@@ -95,7 +174,7 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new QuantityTable<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit);
+        return new QuantityTable<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
