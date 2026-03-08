@@ -172,7 +172,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix3x3<TQ, TU>(si(), targetUnit);
+        return new Matrix3x3<TQ, TU>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
 }
