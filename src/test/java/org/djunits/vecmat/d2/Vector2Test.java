@@ -18,7 +18,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.operations.VectorOps;
+import org.djunits.vecmat.operations.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -213,7 +213,7 @@ public class Vector2Test
     }
 
     /**
-     * Verify {@link VectorOps#getScalarArray()} returns a Q[] (not Object[]) with the correct order and values.
+     * Verify {@link Vector#getScalarArray()} returns a Q[] (not Object[]) with the correct order and values.
      */
     @Test
     @DisplayName("getScalarArray() returns Q[] with x,y in order")

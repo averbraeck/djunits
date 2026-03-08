@@ -145,15 +145,15 @@ public class DataGridMatrixTest
     public void testValue()
     {
         MatrixNxM<Length, Length.Unit> m = create2x3Meters();
-        Length v = m.value(2, 3); // value = 6 (meters)
+        Length v = m.get(2, 3); // value = 6 (meters)
         assertEquals(6, v.si(), 1e-12);
         assertEquals(Length.Unit.m, v.getDisplayUnit());
 
         // Out of bounds
-        assertThrows(IndexOutOfBoundsException.class, () -> m.value(0, 1));
-        assertThrows(IndexOutOfBoundsException.class, () -> m.value(1, 0));
-        assertThrows(IndexOutOfBoundsException.class, () -> m.value(3, 1));
-        assertThrows(IndexOutOfBoundsException.class, () -> m.value(1, 4));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(3, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(1, 4));
     }
 
     // ----------------------------------------------------------------------

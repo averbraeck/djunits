@@ -127,7 +127,7 @@ public class MatrixNxMTest
     {
         MatrixNxM<Length, Length.Unit> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
         assertAll(() -> assertEquals(3, a32.rows()), () -> assertEquals(2, a32.cols()),
-                () -> assertEquals(1.0, a32.value(1, 1).si(), EPS), () -> assertTrue(a32.isRelative()));
+                () -> assertEquals(1.0, a32.get(1, 1).si(), EPS), () -> assertTrue(a32.isRelative()));
     }
 
     /** setDisplayUnit only affects presentation; SI unchanged. */
@@ -137,7 +137,7 @@ public class MatrixNxMTest
     {
         MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1000, 2000, 3000, 4000}, 2, 2, Length.Unit.km);
         m.setDisplayUnit(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit()), () -> assertEquals(1000.0, m.value(1, 1).si(), EPS));
+        assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit()), () -> assertEquals(1000.0, m.get(1, 1).si(), EPS));
         m.setDisplayUnit(Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
@@ -381,10 +381,10 @@ public class MatrixNxMTest
         var d = Duration.of(2.0, "h");
         MatrixNxM<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.value(2, 1).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.value(2, 2).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(2, 1).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.get(2, 2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

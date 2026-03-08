@@ -18,7 +18,7 @@ import org.djunits.quantity.Speed;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.SquareDenseMatrix;
 import org.djunits.vecmat.operations.Hadamard;
@@ -31,11 +31,11 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The tests aim for 100% method and branch coverage in Matrix2x2 and the inherited default functionality from:
  * <ul>
- * <li>{@link Matrix}</li>
+ * <li>{@link AbstractMatrix}</li>
  * <li>{@link SquareDenseMatrix}</li>
  * <li>{@link SquareMatrixOps}</li>
  * <li>{@link Hadamard}</li>
- * <li>and the value interfaces used by {@code VectorMatrixOps} (Additive, Scalable, Value)</li>
+ * <li>and the value interfaces used by {@code MatrixOps} (Additive, Scalable, Value)</li>
  * </ul>
  * <p>
  * The assertions are written to reflect the <em>intended</em> functional specification. If any method in the class hierarchy is
@@ -142,7 +142,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix#rows()}, {@link Matrix#cols()}, {@link Matrix#value(int, int)} and relative/absolute flag.
+     * Verify {@link AbstractMatrix#rows()}, {@link AbstractMatrix#cols()}, {@link AbstractMatrix#get(int, int)} and relative/absolute flag.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -150,12 +150,12 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
         assertAll(() -> assertEquals(2, m.rows(), "rows"), () -> assertEquals(2, m.cols(), "cols"),
-                () -> assertEquals(1.0, m.value(1, 1).si(), EPS, "(1,1) in SI"),
+                () -> assertEquals(1.0, m.get(1, 1).si(), EPS, "(1,1) in SI"),
                 () -> assertTrue(m.isRelative(), "Length is a relative quantity (not absolute)"));
     }
 
     /**
-     * Verify that {@link Matrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
+     * Verify that {@link AbstractMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -167,14 +167,14 @@ public class Matrix2x2Test
         m.setDisplayUnit(Length.Unit.m);
         assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit(), "display unit changed"),
                 () -> assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.si(), EPS, "SI unchanged"),
-                () -> assertEquals(1000.0, m.value(1, 1).si(), EPS, "value SI unaffected"));
+                () -> assertEquals(1000.0, m.get(1, 1).si(), EPS, "value SI unaffected"));
         // back to km
         m.setDisplayUnit(Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
 
     /**
-     * Call {@link Matrix#toString()} and {@link Matrix#toString(UnitInterface)} for coverage. We assert the unit abbreviation
+     * Call {@link AbstractMatrix#toString()} and {@link AbstractMatrix#toString(UnitInterface)} for coverage. We assert the unit abbreviation
      * is present; we do not depend on exact formatting of numbers.
      */
     @Test
@@ -189,11 +189,11 @@ public class Matrix2x2Test
     }
 
     // ------------------------------------------------------------------------------------
-    // VectorMatrixOps defaults: add/subtract (Q and VM), negate, abs, scaleBy, mean/median/min/max/mode/sum
+    // MatrixOps defaults: add/subtract (Q and VM), negate, abs, scaleBy, mean/median/min/max/mode/sum
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link org.djunits.vecmat.operations.VectorMatrixOps#add(Quantity)} and {@code subtract(Q)} with quantities.
+     * Verify {@link org.djunits.vecmat.operations.Matrix#add(Quantity)} and {@code subtract(Q)} with quantities.
      */
     @Test
     @DisplayName("add(Q) / subtract(Q) apply element-wise SI increments")
@@ -207,7 +207,7 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@link org.djunits.vecmat.operations.VectorMatrixOps#add(Quantity)} and {@code subtract(VM)} with another matrix.
+     * Verify {@link org.djunits.vecmat.operations.Matrix#add(Quantity)} and {@code subtract(VM)} with another matrix.
      */
     @Test
     @DisplayName("add(VM) / subtract(VM) element-wise")
@@ -220,9 +220,9 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@link org.djunits.vecmat.operations.VectorMatrixOps#negate()},
-     * {@link org.djunits.vecmat.operations.VectorMatrixOps#abs()}, and
-     * {@link org.djunits.vecmat.operations.VectorMatrixOps#scaleBy(double)}.
+     * Verify {@link org.djunits.vecmat.operations.Matrix#negate()},
+     * {@link org.djunits.vecmat.operations.Matrix#abs()}, and
+     * {@link org.djunits.vecmat.operations.Matrix#scaleBy(double)}.
      */
     @Test
     @DisplayName("negate / abs / scaleBy")
@@ -446,7 +446,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify scalar array extraction helpers on {@link Matrix}.
+     * Verify scalar array extraction helpers on {@link AbstractMatrix}.
      */
     @Test
     @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
@@ -493,7 +493,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify equality and hashCode semantics across {@link Matrix}, {@link SquareDenseMatrix}, and {@link Matrix2x2}.
+     * Verify equality and hashCode semantics across {@link AbstractMatrix}, {@link SquareDenseMatrix}, and {@link Matrix2x2}.
      */
     @Test
     @DisplayName("equals / hashCode")
@@ -522,9 +522,9 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length, Length.Unit> m = Matrix2x2.of(new double[] {1.0, 200.0, 3.0, 400.0}, Length.Unit.cm);
         // SI values: [0.01, 2.0, 0.03, 4.0]
-        assertAll(() -> assertDoesNotThrow(() -> m.value(1, 1)), () -> assertDoesNotThrow(() -> m.value(2, 2)),
-                () -> assertEquals(0.01, m.value(1, 1).si(), EPS),
-                () -> assertEquals(4.0, m.value(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS));
+        assertAll(() -> assertDoesNotThrow(() -> m.get(1, 1)), () -> assertDoesNotThrow(() -> m.get(2, 2)),
+                () -> assertEquals(0.01, m.get(1, 1).si(), EPS),
+                () -> assertEquals(4.0, m.get(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS));
     }
 
     /**
@@ -537,10 +537,10 @@ public class Matrix2x2Test
         var d = Duration.of(2.0, "h");
         Matrix2x2<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.value(2, 1).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.value(2, 2).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(2, 1).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.get(2, 2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

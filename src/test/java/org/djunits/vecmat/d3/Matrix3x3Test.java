@@ -17,7 +17,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.SquareDenseMatrix;
 import org.djunits.vecmat.operations.Hadamard;
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The tests aim for 100% method and branch coverage of Matrix3x3 and inherited/default behavior from:
  * <ul>
- * <li>{@link Matrix}</li>
+ * <li>{@link AbstractMatrix}</li>
  * <li>{@link SquareDenseMatrix}</li>
  * <li>{@link SquareMatrixOps}</li>
  * <li>{@link Hadamard}</li>
@@ -139,7 +139,7 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix#rows()}, {@link Matrix#cols()}, {@link Matrix#value(int, int)} and relative/absolute flag.
+     * Verify {@link AbstractMatrix#rows()}, {@link AbstractMatrix#cols()}, {@link AbstractMatrix#get(int, int)} and relative/absolute flag.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -147,12 +147,12 @@ public class Matrix3x3Test
     {
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
         assertAll(() -> assertEquals(3, m.rows()), () -> assertEquals(3, m.cols()),
-                () -> assertEquals(1.0, m.value(1, 1).si(), EPS),
+                () -> assertEquals(1.0, m.get(1, 1).si(), EPS),
                 () -> assertTrue(m.isRelative(), "Length is relative (not absolute)"));
     }
 
     /**
-     * Verify that {@link Matrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
+     * Verify that {@link AbstractMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -169,7 +169,7 @@ public class Matrix3x3Test
     }
 
     /**
-     * Verify {@link Matrix#toString()} and {@link Matrix#toString(UnitInterface)}.
+     * Verify {@link AbstractMatrix#toString()} and {@link AbstractMatrix#toString(UnitInterface)}.
      */
     @Test
     @DisplayName("toString() and toString(unit) contain unit abbreviation")
@@ -440,7 +440,7 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify scalar array extraction helpers on {@link Matrix}.
+     * Verify scalar array extraction helpers on {@link AbstractMatrix}.
      */
     @Test
     @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
@@ -487,7 +487,7 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify equality and hashCode semantics across {@link Matrix}, {@link SquareDenseMatrix}, and {@link Matrix3x3}.
+     * Verify equality and hashCode semantics across {@link AbstractMatrix}, {@link SquareDenseMatrix}, and {@link Matrix3x3}.
      */
     @Test
     @DisplayName("equals / hashCode")
@@ -517,9 +517,9 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> m =
                 Matrix3x3.of(new double[] {1.0, 200.0, 3.0, 400.0, 5.0, 600.0, 7.0, 800.0, 9.0}, Length.Unit.cm);
         // SI values: [0.01, 2.0, 0.03, 4.0, 0.05, 6.0, 0.07, 8.0, 0.09]
-        assertAll(() -> assertDoesNotThrow(() -> m.value(1, 1)), () -> assertDoesNotThrow(() -> m.value(3, 3)),
-                () -> assertEquals(0.01, m.value(1, 1).si(), EPS),
-                () -> assertEquals(0.09, m.value(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS));
+        assertAll(() -> assertDoesNotThrow(() -> m.get(1, 1)), () -> assertDoesNotThrow(() -> m.get(3, 3)),
+                () -> assertEquals(0.01, m.get(1, 1).si(), EPS),
+                () -> assertEquals(0.09, m.get(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS));
     }
 
     /**
@@ -533,10 +533,10 @@ public class Matrix3x3Test
         var d = Duration.of(2.0, "h");
         Matrix3x3<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.value(1, 3).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.value(2, 1).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.get(2, 1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

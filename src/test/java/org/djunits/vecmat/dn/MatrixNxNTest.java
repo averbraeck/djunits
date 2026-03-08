@@ -16,7 +16,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
@@ -154,7 +154,7 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix#rows()}, {@link Matrix#cols()}, {@link Matrix#value(int, int)}, and {@link Matrix#isRelative()}.
+     * Verify {@link AbstractMatrix#rows()}, {@link AbstractMatrix#cols()}, {@link AbstractMatrix#get(int, int)}, and {@link AbstractMatrix#isRelative()}.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -163,11 +163,11 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> m =
                 ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
         assertAll(() -> assertEquals(4, m.rows()), () -> assertEquals(4, m.cols()),
-                () -> assertEquals(1.0, m.value(1, 1).si(), EPS), () -> assertTrue(m.isRelative()));
+                () -> assertEquals(1.0, m.get(1, 1).si(), EPS), () -> assertTrue(m.isRelative()));
     }
 
     /**
-     * Verify that {@link Matrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
+     * Verify that {@link AbstractMatrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -176,13 +176,13 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> m = ofSi4(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
                 11000, 12000, 13000, 14000, 15000, 16000}, Length.Unit.km);
         m.setDisplayUnit(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit()), () -> assertEquals(1000.0, m.value(1, 1).si(), EPS));
+        assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit()), () -> assertEquals(1000.0, m.get(1, 1).si(), EPS));
         m.setDisplayUnit(Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
 
     /**
-     * Verify {@link Matrix#toString()} and {@link Matrix#toString(UnitInterface)} include unit abbreviation.
+     * Verify {@link AbstractMatrix#toString()} and {@link AbstractMatrix#toString(UnitInterface)} include unit abbreviation.
      */
     @Test
     @DisplayName("toString()/toString(unit) include unit")
@@ -409,10 +409,10 @@ public class MatrixNxNTest
         var d = Duration.of(2.0, "h");
         MatrixNxN<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.value(1, 3).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.value(2, 1).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.get(2, 1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

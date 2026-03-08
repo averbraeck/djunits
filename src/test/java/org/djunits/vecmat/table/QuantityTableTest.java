@@ -389,10 +389,10 @@ public class QuantityTableTest
         var d = Duration.of(2.0, "h");
         QuantityTable<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.value(1, 3).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.value(2, 1).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.get(2, 1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 
