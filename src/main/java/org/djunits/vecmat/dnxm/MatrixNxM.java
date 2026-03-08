@@ -156,8 +156,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public MatrixNxM<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),
-                siUnit);
+        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
@@ -294,7 +293,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxM.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxM<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit);
+        return new MatrixNxM<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -309,14 +308,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
                 "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
-        // Convert SI → target display values for the factory:
-        final double[] disp = new double[4];
-        final double[] data = si();
-        for (int i = 0; i < 4; i++)
-        {
-            disp[i] = targetUnit.fromBaseValue(data[i]);
-        }
-        return Matrix2x2.of(disp, targetUnit);
+        return Matrix2x2.of(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -331,13 +323,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
                 "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
-        final double[] disp = new double[9];
-        final double[] data = si();
-        for (int i = 0; i < 9; i++)
-        {
-            disp[i] = targetUnit.fromBaseValue(data[i]);
-        }
-        return Matrix3x3.of(disp, targetUnit);
+        return Matrix3x3.of(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -352,7 +338,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
                 rows(), cols());
-        return new MatrixNxN<TQ, TU>(new DenseDoubleDataSi(si(), rows(), cols()), targetUnit);
+        return new MatrixNxN<TQ, TU>(new DenseDoubleDataSi(si(), rows(), cols()), targetUnit.getBaseUnit())
+                .setDisplayUnit(targetUnit);
     }
 
     /**
@@ -366,9 +353,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2.Col<TQ, TU> asVector2Col(final TU targetUnit)
     {
         Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
-        // Vector2 constructors take display-unit values; convert SI → display.
         final double[] data = si();
-        return new Vector2.Col<TQ, TU>(targetUnit.fromBaseValue(data[0]), targetUnit.fromBaseValue(data[1]), targetUnit);
+        return new Vector2.Col<TQ, TU>(data[0], data[1], targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -382,9 +368,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector3.Col<TQ, TU> asVector3Col(final TU targetUnit)
     {
         Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
-        final double[] d = si();
-        return new Vector3.Col<TQ, TU>(targetUnit.fromBaseValue(d[0]), targetUnit.fromBaseValue(d[1]),
-                targetUnit.fromBaseValue(d[2]), targetUnit);
+        final double[] data = si();
+        return new Vector3.Col<TQ, TU>(data[0], data[1], data[2], targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -398,7 +383,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Col<TQ, TU> asVectorNCol(final TU targetUnit)
     {
         Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
-        return VectorN.Col.ofSi(si(), targetUnit);
+        return VectorN.Col.ofSi(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -412,8 +397,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2.Row<TQ, TU> asVector2Row(final TU targetUnit)
     {
         Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
-        final double[] d = si();
-        return new Vector2.Row<TQ, TU>(targetUnit.fromBaseValue(d[0]), targetUnit.fromBaseValue(d[1]), targetUnit);
+        final double[] data = si();
+        return new Vector2.Row<TQ, TU>(data[0], data[1], targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -427,9 +412,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector3.Row<TQ, TU> asVector3Row(final TU targetUnit)
     {
         Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
-        final double[] d = si();
-        return new Vector3.Row<TQ, TU>(targetUnit.fromBaseValue(d[0]), targetUnit.fromBaseValue(d[1]),
-                targetUnit.fromBaseValue(d[2]), targetUnit);
+        final double[] data = si();
+        return new Vector3.Row<TQ, TU>(data[0], data[1], data[2], targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -443,7 +427,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Row<TQ, TU> asVectorNRow(final TU targetUnit)
     {
         Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
-        return VectorN.Row.of(si(), targetUnit);
+        return VectorN.Row.of(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
 }
