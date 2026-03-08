@@ -8,7 +8,7 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.operations.SquareMatrixOps;
@@ -27,7 +27,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Matrix<Q, U, MatrixNxN<Q, U>>
+public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends AbstractMatrix<Q, U, MatrixNxN<Q, U>>
         implements SquareMatrixOps<Q, U, MatrixNxN<Q, U>>, Hadamard<MatrixNxN<?, ?>, MatrixNxN<SIQuantity, SIUnit>>
 {
     /** */

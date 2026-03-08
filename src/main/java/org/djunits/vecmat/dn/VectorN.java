@@ -12,8 +12,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.vecmat.DataGridMatrix;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.Normed;
-import org.djunits.vecmat.operations.VectorOps;
+import org.djunits.vecmat.operations.Vector;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -31,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Col or Row)
  */
 public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends VectorN<Q, U, V>>
-        extends DataGridMatrix<Q, U, VectorN<Q, U, ?>> implements VectorOps<Q, U, V>, Normed<Q, U>
+        extends DataGridMatrix<Q, U, V> implements Vector<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;

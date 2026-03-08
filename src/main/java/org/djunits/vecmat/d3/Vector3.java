@@ -13,9 +13,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.Normed;
-import org.djunits.vecmat.operations.VectorMatrixOps;
-import org.djunits.vecmat.operations.VectorOps;
+import org.djunits.vecmat.operations.Vector;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
@@ -32,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Col or Row)
  */
 public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector3<Q, U, V>>
-        implements Normed<Q, U>, VectorMatrixOps<Q, U, V>, VectorOps<Q, U, V>
+        implements Vector<Q, U, V>
 {
     /** */
     private static final long serialVersionUID = 600L;
