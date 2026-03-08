@@ -18,7 +18,7 @@ import org.djunits.unit.UnitInterface;
  * @param <V> the vector or matrix type
  */
 public interface Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector<Q, U, V>>
-        extends VectorMatrixOps<Q, U, V>, Iterable<Q>
+        extends VectorMatrixOps<Q, U, V>, Iterable<Q>, Normed<Q, U>
 {
     /**
      * Retrieve the size of the vector.
