@@ -298,7 +298,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public Q get(final int index) throws IndexOutOfBoundsException
         {
-            return getDisplayUnit().ofSi(this.dataSi.get(index - 1, 0));
+            return getDisplayUnit().ofSi(this.dataSi.get(index - 1, 0)).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -354,7 +354,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new VectorN.Col<TQ, TU>(this.dataSi, targetUnit);
+            return new VectorN.Col<TQ, TU>(this.dataSi, targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
     }
@@ -498,7 +498,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         public Q get(final int index) throws IndexOutOfBoundsException
         {
-            return getDisplayUnit().ofSi(this.dataSi.get(0, index - 1));
+            return getDisplayUnit().ofSi(this.dataSi.get(0, index - 1)).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -554,7 +554,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new VectorN.Row<TQ, TU>(this.dataSi, targetUnit);
+            return new VectorN.Row<TQ, TU>(this.dataSi, targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
     }
