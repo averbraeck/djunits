@@ -12,8 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.djunits.quantity.Area;
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.operations.VectorOps;
 import org.junit.jupiter.api.DisplayName;
@@ -40,10 +43,10 @@ import org.junit.jupiter.api.Test;
  * </ul>
  * <p>
  * <strong>Important:</strong> Values passed to the {@code Vector2} constructors are interpreted in the provided display unit
- * and converted to SI for internal storage. The tests validate that convention.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * and converted to SI for internal storage. The tests validate that convention. Copyright (c) 2025-2026 Delft University of
+ * Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class Vector2Test
@@ -338,7 +341,7 @@ public class Vector2Test
      * <p>
      * <strong>Note:</strong> This test assumes correct L1 definition: |x| + |y|. If the implementation divides by 2, this test
      * will fail (as intended).
-         */
+     */
     @Test
     @DisplayName("Normed: norm(), normL1(), normL2(), normLp(p), normLinf()")
     public void testNorms()
@@ -558,5 +561,27 @@ public class Vector2Test
         assertAll(() -> assertEquals(Length.Unit.m, c.getDisplayUnit()),
                 () -> assertEquals(c, returnedC, "fluent returns this"),
                 () -> assertTrue(c.isRelative(), "Length is a relative quantity"));
+    }
+
+    /**
+     * Test multiply/divide by scalar and as() method.
+     */
+    @Test
+    public void testMultiplyScalarAs()
+    {
+        Vector2.Col<Length, Length.Unit> r = col(1.0, 2.0, Length.Unit.km);
+        var d = Duration.of(2.0, "h");
+        Vector2.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
+        assertEquals(0.5, sr.get(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(2).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+
+        Vector2.Row<Length, Length.Unit> c = row(1.0, 2.0, Length.Unit.km);
+        Vector2.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
+        assertEquals(0.5, sc.get(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sc.get(2).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
     }
 }

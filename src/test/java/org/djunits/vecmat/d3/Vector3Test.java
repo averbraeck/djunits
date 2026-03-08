@@ -13,8 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.djunits.quantity.Area;
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -508,4 +511,29 @@ public class Vector3Test
         assertAll(() -> assertEquals(Length.Unit.km, r1.getDisplayUnit()), () -> assertEquals(r1, ret),
                 () -> assertTrue(r1.isRelative(), "Length is a relative quantity"));
     }
+
+    /**
+     * Test multiply/divide by scalar and as() method.
+     */
+    @Test
+    public void testMultiplyScalarAs()
+    {
+        Vector3.Col<Length, Length.Unit> r = col(1.0, 2.0, 3.0, Length.Unit.km);
+        var d = Duration.of(2.0, "h");
+        Vector3.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
+        assertEquals(0.5, sr.get(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+
+        Vector3.Row<Length, Length.Unit> c = row(1.0, 2.0, 3.0, Length.Unit.km);
+        Vector3.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
+        assertEquals(0.5, sc.get(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sc.get(2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
+    }
+
 }

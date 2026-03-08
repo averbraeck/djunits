@@ -1,5 +1,6 @@
 package org.djunits.vecmat.table;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,7 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.djunits.quantity.Area;
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d3.Matrix3x3;
@@ -28,6 +32,9 @@ import org.junit.jupiter.api.Test;
  */
 public class QuantityTableTest
 {
+    /** Numerical tolerance. */
+    private static final double EPS = 1.0E-12;
+
     /**
      * Helper: create a simple 2x2 QuantityTable with Length quantities in meters.
      * @return 2x2 table with values {1,2,3,4} m
@@ -75,6 +82,54 @@ public class QuantityTableTest
         assertEquals(2, q.cols());
         assertEquals(Length.Unit.m, q.getDisplayUnit());
         assertNotNull(q.getDataGrid());
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Factories / constructors
+    // ------------------------------------------------------------------------------------
+
+    /** Verify of(double[], rows, cols, U) rejects nulls/bad sizes and converts display→SI. */
+    @Test
+    @DisplayName("of(double[],rows,cols,U): nulls/bad sizes/SI convert")
+    public void testFactoryArray()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.of((double[]) null, 3, 2, Length.Unit.km));
+        assertThrows(NullPointerException.class, () -> QuantityTable.of(new double[6], 3, 2, null));
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[5], 3, 2, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[6], 0, 2, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[6], 3, 0, Length.Unit.m));
+
+        // 3x2 in km → SI
+        QuantityTable<Length, Length.Unit> m = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
+        assertAll(() -> assertEquals(3, m.rows()), () -> assertEquals(2, m.cols()));
+    }
+
+    /** Verify of(double[][],U) checks rectangular shape and converts display→SI. */
+    @Test
+    @DisplayName("of(double[][],U): rectangular shape & SI convert")
+    public void testFactoryGrid()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.of((double[][]) null, Length.Unit.km));
+        assertThrows(NullPointerException.class, () -> QuantityTable.of(new double[][] {{1, 2}, {3, 4}}, null));
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[][] {}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[][] {{}, {1}}, Length.Unit.m));
+
+        // 2x3 in km
+        QuantityTable<Length, Length.Unit> m = QuantityTable.of(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.km);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
+        assertAll(() -> assertEquals(2, m.rows()), () -> assertEquals(3, m.cols()));
+    }
+
+    /** Verify of(Q[][],U) accepts per-cell units via DenseDoubleData and sets display unit. */
+    @Test
+    @DisplayName("of(Q[][],U): quantity grid accepted")
+    public void testFactoryQuantityGrid()
+    {
+        Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
+        QuantityTable<Length, Length.Unit> m = QuantityTable.of(q, Length.Unit.m);
+        assertArrayEquals(new double[] {1000.0, 200.0}, m.si(), EPS);
+        assertAll(() -> assertEquals(1, m.rows()), () -> assertEquals(2, m.cols()));
     }
 
     // ----------------------------------------------------------------------
@@ -321,6 +376,24 @@ public class QuantityTableTest
         // ----------------------------------------------------------------------
         assertThrows(IllegalArgumentException.class, () -> qtKm.as(org.djunits.unit.si.SIUnit.of("s")),
                 "as(): mismatching SI unit must throw IllegalArgumentException");
+    }
+
+    /**
+     * Test multiply/divide by scalar and as() method.
+     */
+    @Test
+    public void testMultiplyScalarAs()
+    {
+        QuantityTable<Length, Length.Unit> r =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
+        var d = Duration.of(2.0, "h");
+        QuantityTable<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
+        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.value(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.value(2, 1).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 
 }

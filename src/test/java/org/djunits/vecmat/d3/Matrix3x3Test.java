@@ -10,8 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.djunits.quantity.Area;
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.Matrix;
@@ -518,4 +521,23 @@ public class Matrix3x3Test
                 () -> assertEquals(0.01, m.value(1, 1).si(), EPS),
                 () -> assertEquals(0.09, m.value(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS));
     }
+
+    /**
+     * Test multiply/divide by scalar and as() method.
+     */
+    @Test
+    public void testMultiplyScalarAs()
+    {
+        Matrix3x3<Length, Length.Unit> r =
+                Matrix3x3.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
+        var d = Duration.of(2.0, "h");
+        Matrix3x3<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
+        assertEquals(0.5, sr.value(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.value(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.value(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.value(2, 1).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+    }
+
 }

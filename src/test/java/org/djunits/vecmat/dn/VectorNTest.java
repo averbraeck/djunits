@@ -14,8 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.djunits.quantity.Area;
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -151,12 +154,12 @@ public final class VectorNTest
         List<Length> l3 = Arrays.asList(q2);
         var v3 = VectorN.Col.of(l3, Length.Unit.km);
         assertEquals(3000.0, v3.si()[1], 1E-6);
-        
+
         var dsi = new double[] {1, 2, 3, 4};
         var ddd = new DenseDoubleDataSi(dsi, 4, 1);
         var v4 = VectorN.Col.ofSi(ddd, Length.Unit.km);
         assertEquals(2.0, v4.si()[1], 1E-6);
-        
+
         var v5 = VectorN.Col.ofSi(dsi, Length.Unit.km);
         assertEquals(2.0, v5.si()[1], 1E-6);
     }
@@ -177,12 +180,12 @@ public final class VectorNTest
         List<Length> l3 = Arrays.asList(q2);
         var v3 = VectorN.Row.of(l3, Length.Unit.km);
         assertEquals(3000.0, v3.si()[1], 1E-6);
-        
+
         var dsi = new double[] {1, 2, 3, 4};
         var ddd = new DenseDoubleDataSi(dsi, 1, 4);
         var v4 = VectorN.Row.ofSi(ddd, Length.Unit.km);
         assertEquals(2.0, v4.si()[1], 1E-6);
-        
+
         var v5 = VectorN.Row.ofSi(dsi, Length.Unit.km);
         assertEquals(2.0, v5.si()[1], 1E-6);
     }
@@ -502,6 +505,30 @@ public final class VectorNTest
 
         assertEquals(ac, ar.transpose());
         assertEquals(ar, ac.transpose());
+    }
+
+    /**
+     * Test multiply/divide by scalar and as() method.
+     */
+    @Test
+    public void testMultiplyScalarAs()
+    {
+        VectorN.Col<Length, Length.Unit> r = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
+        var d = Duration.of(2.0, "h");
+        VectorN.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
+        assertEquals(0.5, sr.get(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.get(2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+
+        VectorN.Row<Length, Length.Unit> c = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
+        VectorN.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
+        assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
+        assertEquals(0.5, sc.get(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sc.get(2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
     }
 
 }
