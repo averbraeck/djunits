@@ -6,7 +6,7 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.Matrix;
+import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 
 /**
@@ -22,7 +22,7 @@ import org.djunits.vecmat.NonInvertibleMatrixException;
  * @param <M> the square matrix type
  */
 public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends SquareMatrixOps<Q, U, M>>
-        extends VectorMatrixOps<Q, U, M>
+        extends Matrix<Q, U, M>
 {
     /**
      * Return the order (the number of rows/columns) of this matrix.
@@ -79,14 +79,14 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @return the inverse of the square matrix, if the matrix is non-singular
      * @throws NonInvertibleMatrixException when the matrix is singular or cannot be inverted
      */
-    Matrix<SIQuantity, SIUnit, ?> inverse() throws NonInvertibleMatrixException;
+    AbstractMatrix<SIQuantity, SIUnit, ?> inverse() throws NonInvertibleMatrixException;
 
     /**
      * Return the adjugate (classical adjoint) matrix for this matrix, often denoted as adj(M). The unit of adj(M) is U^(n-1)
      * where n is the order of the matrix.
      * @return the adjugate (classical adjoint) matrix
      */
-    Matrix<SIQuantity, SIUnit, ?> adjugate();
+    AbstractMatrix<SIQuantity, SIUnit, ?> adjugate();
 
     /**
      * Return the trace of the matrix (the sum of the diagonal elements). It results in a quantity with the same unit as the

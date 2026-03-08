@@ -22,7 +22,7 @@ import org.djutils.exceptions.Throw;
  * @param <M> the matrix type
  */
 public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends DataGridMatrix<Q, U, M>>
-        extends Matrix<Q, U, DataGridMatrix<Q, U, M>>
+        extends AbstractMatrix<Q, U, M>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -94,7 +94,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
      * @return the (r,c)-value of the matrix as a quantity with the correct unit
      */
     @Override
-    public Q value(final int row, final int col)
+    public Q get(final int row, final int col)
     {
         return getDisplayUnit().ofSi(si(row, col)).setDisplayUnit(getDisplayUnit());
     }
@@ -113,12 +113,12 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     public Q[][] getScalars()
     {
         // Obtain the runtime class of Q by instantiating the first cell.
-        final Q[][] out = (Q[][]) Array.newInstance(value(1, 1).getClass(), rows(), cols());
+        final Q[][] out = (Q[][]) Array.newInstance(get(1, 1).getClass(), rows(), cols());
         for (int i = 1; i <= rows(); i++)
         {
             for (int j = 1; j <= cols(); j++)
             {
-                out[i - 1][j - 1] = value(i, j);
+                out[i - 1][j - 1] = get(i, j);
             }
         }
         return out;
@@ -183,11 +183,11 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
         Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", row, rows());
 
         // Build a Q[] of length cols() using the runtime class of the first element
-        Q first = value(row, 1);
+        Q first = get(row, 1);
         Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), cols());
         for (int c = 1; c <= cols(); c++)
         {
-            out[c - 1] = value(row, c);
+            out[c - 1] = get(row, c);
         }
         return out;
     }
@@ -205,11 +205,11 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
         Throw.when(column < 1 || column > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", column,
                 cols());
 
-        Q first = value(1, column);
+        Q first = get(1, column);
         Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), rows());
         for (int r = 1; r <= rows(); r++)
         {
-            out[r - 1] = value(r, column);
+            out[r - 1] = get(r, column);
         }
         return out;
     }
@@ -225,11 +225,11 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
 
-        Q first = value(1, 1);
+        Q first = get(1, 1);
         Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), rows());
         for (int i = 1; i <= rows(); i++)
         {
-            out[i - 1] = value(i, i);
+            out[i - 1] = get(i, i);
         }
         return out;
     }
@@ -237,7 +237,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     @Override
     public boolean isRelative()
     {
-        return value(1, 1).isRelative();
+        return get(1, 1).isRelative();
     }
 
     @Override

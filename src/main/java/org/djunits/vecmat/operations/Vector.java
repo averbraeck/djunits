@@ -17,8 +17,8 @@ import org.djunits.unit.UnitInterface;
  * @param <U> the unit type
  * @param <V> the vector or matrix type
  */
-public interface VectorOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends VectorOps<Q, U, V>>
-        extends Iterable<Q>
+public interface Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector<Q, U, V>>
+        extends VectorMatrixOps<Q, U, V>, Iterable<Q>
 {
     /**
      * Retrieve the size of the vector.
@@ -28,7 +28,7 @@ public interface VectorOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
 
     /**
      * Retrieve a value from the vector.
-     * @param index the index to retrieve the value at
+     * @param index the index (1-based) to retrieve the value from
      * @return the value as a Scalar
      * @throws IndexOutOfBoundsException in case index is out of bounds
      */

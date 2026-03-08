@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <M> the matrix type
  */
 public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-        M extends SquareDenseMatrix<Q, U, M>> extends Matrix<Q, U, M> implements SquareMatrixOps<Q, U, M>
+        M extends SquareDenseMatrix<Q, U, M>> extends AbstractMatrix<Q, U, M> implements SquareMatrixOps<Q, U, M>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -67,7 +67,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     @Override
     public boolean isRelative()
     {
-        return value(1, 1).isRelative();
+        return get(1, 1).isRelative();
     }
 
     @Override

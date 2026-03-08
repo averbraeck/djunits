@@ -9,7 +9,7 @@ import org.djunits.formatter.Format;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.dn.VectorN;
-import org.djunits.vecmat.operations.VectorMatrixOps;
+import org.djunits.vecmat.operations.Matrix;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -24,8 +24,8 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  * @param <M> the matrix type
  */
-public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends Matrix<Q, U, M>>
-        implements VectorMatrixOps<Q, U, M>
+public abstract class AbstractMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends AbstractMatrix<Q, U, M>>
+        implements Matrix<Q, U, M>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -46,7 +46,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * @param cols the number of columns of the matrix
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    protected Matrix(final U displayUnit, final int rows, final int cols)
+    protected AbstractMatrix(final U displayUnit, final int rows, final int cols)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
@@ -92,38 +92,21 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         return this.cols;
     }
 
-    /**
-     * Return the (r,c)-value of the matrix in SI or BASE units.
-     * @param row the row, from 1, ..., N
-     * @param col the column, from 1, ..., N
-     * @return the (r,c)-value of the matrix in SI or BASE units
-     */
+    @Override
     public abstract double si(int row, int col);
 
-    /**
-     * Return the (r,c)-value of the matrix as a quantity with the correct unit.
-     * @param row the row, from 1, ..., N
-     * @param col the column, from 1, ..., N
-     * @return the (r,c)-value of the matrix as a quantity with the correct unit
-     */
-    public Q value(final int row, final int col)
+    @Override
+    public Q get(final int row, final int col)
     {
         return this.displayUnit.ofSi(si(row, col)).setDisplayUnit(this.displayUnit);
     }
 
-    /**
-     * Return the matrix as a 2D array of scalars.
-     * <p>
-     * This implementation allocates a {@code Q[][]} using the runtime class of {@code Q} and fills it directly with
-     * {@link #value(int, int)} results. It avoids intermediate {@code List} instances and prevents {@link ClassCastException}
-     * caused by casting {@code Object[][]} to {@code Q[][]}.
-     * @return a new {@code Q[rows()][cols()]} array; entry {@code [i-1][j-1]} contains {@code value(i, j)}
-     */
+    @Override
     @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
     public Q[][] getScalars()
     {
         // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 1.
-        final Q first = value(1, 1);
+        final Q first = get(1, 1);
         final Class<?> qClass = first.getClass();
 
         // Allocate a Q[rows()][cols()] array and fill it.
@@ -132,7 +115,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         {
             for (int j = 1; j <= cols(); j++)
             {
-                out[i - 1][j - 1] = value(i, j);
+                out[i - 1][j - 1] = get(i, j);
             }
         }
         return out;
@@ -210,7 +193,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         List<Q> result = new ArrayList<>();
         for (int j = 1; j <= cols(); j++)
         {
-            result.add(value(row, j));
+            result.add(get(row, j));
         }
 
         // Use the runtime type of the first element
@@ -231,7 +214,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         List<Q> result = new ArrayList<>();
         for (int i = 1; i <= rows(); i++)
         {
-            result.add(value(i, column));
+            result.add(get(i, column));
         }
 
         Q sample = result.get(0);
@@ -252,7 +235,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         List<Q> result = new ArrayList<>();
         for (int i = 1; i <= rows(); i++)
         {
-            result.add(value(i, i));
+            result.add(get(i, i));
         }
 
         Q sample = result.get(0);
@@ -263,7 +246,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     @Override
     public boolean isRelative()
     {
-        return value(1, 1).isRelative();
+        return get(1, 1).isRelative();
     }
 
     @Override
@@ -282,7 +265,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Matrix<?, ?, ?> other = (Matrix<?, ?, ?>) obj;
+        AbstractMatrix<?, ?, ?> other = (AbstractMatrix<?, ?, ?>) obj;
         return this.cols == other.cols && this.rows == other.rows;
     }
 
