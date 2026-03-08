@@ -1,5 +1,6 @@
 package org.djunits.vecmat.operations;
 
+import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.util.ArrayMath;
@@ -149,6 +150,28 @@ public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
     default VM scaleBy(final double factor)
     {
         return instantiateSi(ArrayMath.scaleBy(si(), factor));
+    }
+
+    /**
+     * Multiply the elements of this vector, matrix or table by the given quantity. This is actually a Hadamard operation, but
+     * since it is equivalent to a scaleBy operation, it is included in this interface.
+     * @param quantity the scalar quantity to multiply by
+     * @return a vector, matrix or table where the elements have been multiplied by the given quantity
+     */
+    default VM multiplyElements(final Dimensionless quantity)
+    {
+        return scaleBy(quantity.si());
+    }
+
+    /**
+     * Multiply the elements of this vector, matrix or table by the given quantity. This is actually a Hadamard operation, but
+     * since it is equivalent to a scaleBy operation, it is included in this interface.
+     * @param quantity the scalar quantity to multiply by
+     * @return a vector, matrix or table where the elements have been multiplied by the given quantity
+     */
+    default VM divideElements(final Dimensionless quantity)
+    {
+        return scaleBy(1.0 / quantity.si());
     }
 
 }

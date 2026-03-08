@@ -25,8 +25,8 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
-        extends DataGridMatrix<Q, U, QuantityTable<Q, U>> implements Hadamard<QuantityTable<?, ?>>
+public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends
+        DataGridMatrix<Q, U, QuantityTable<Q, U>> implements Hadamard<QuantityTable<?, ?>, QuantityTable<SIQuantity, SIUnit>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -50,24 +50,32 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     }
 
     @Override
-    public QuantityTable<?, ?> invertElements()
+    public QuantityTable<SIQuantity, SIUnit> invertElements()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
         return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
     }
 
     @Override
-    public QuantityTable<?, ?> multiplyElements(final QuantityTable<?, ?> other)
+    public QuantityTable<SIQuantity, SIUnit> multiplyElements(final QuantityTable<?, ?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
         return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
     }
 
     @Override
-    public QuantityTable<?, ?> divideElements(final QuantityTable<?, ?> other)
+    public QuantityTable<SIQuantity, SIUnit> divideElements(final QuantityTable<?, ?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
         return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+    }
+
+    @Override
+    public QuantityTable<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+    {
+        SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+        return new QuantityTable<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),
+                siUnit);
     }
 
     // --------------------------------------- AS() FUNCTIONS ---------------------------------

@@ -23,7 +23,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareDenseMatrix<Q, U, Matrix2x2<Q, U>>
-        implements Hadamard<Matrix2x2<?, ?>>
+        implements Hadamard<Matrix2x2<?, ?>, Matrix2x2<SIQuantity, SIUnit>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -143,6 +143,13 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 2, 1);
         return new Vector2.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+    }
+
+    @Override
+    public Matrix2x2<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+    {
+        SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+        return new Matrix2x2<SIQuantity, SIUnit>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
     }
 
     /**

@@ -23,7 +23,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareDenseMatrix<Q, U, Matrix3x3<Q, U>>
-        implements Hadamard<Matrix3x3<?, ?>>
+        implements Hadamard<Matrix3x3<?, ?>, Matrix3x3<SIQuantity, SIUnit>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -148,6 +148,13 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
         return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+    }
+
+    @Override
+    public Matrix3x3<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+    {
+        SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+        return new Matrix3x3<SIQuantity, SIUnit>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
     }
 
     /**

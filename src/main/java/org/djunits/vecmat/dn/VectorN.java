@@ -169,7 +169,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param <U> the unit type
      */
     public static class Col<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends VectorN<Q, U, Col<Q, U>>
-            implements VectorTransposable<Row<Q, U>>, Hadamard<VectorN.Col<?, ?>>
+            implements VectorTransposable<Row<Q, U>>, Hadamard<VectorN.Col<?, ?>, VectorN.Col<SIQuantity, SIUnit>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -330,6 +330,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
             return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
         }
 
+        @Override
+        public VectorN.Col<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        {
+            SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+            return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),
+                    siUnit);
+        }
+
         /**
          * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
          * exception when the SI units of this vector and the target vector do not match. The dataSi object containing the
@@ -363,7 +371,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param <U> the unit type
      */
     public static class Row<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends VectorN<Q, U, Row<Q, U>>
-            implements VectorTransposable<Col<Q, U>>, Hadamard<VectorN.Row<?, ?>>
+            implements VectorTransposable<Col<Q, U>>, Hadamard<VectorN.Row<?, ?>, VectorN.Row<SIQuantity, SIUnit>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -520,6 +528,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+        }
+
+        @Override
+        public VectorN.Row<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        {
+            SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+            return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),
+                    siUnit);
         }
 
         /**

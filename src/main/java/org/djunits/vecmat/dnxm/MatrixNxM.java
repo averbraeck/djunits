@@ -30,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  */
 public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends DataGridMatrix<Q, U, MatrixNxM<Q, U>>
-        implements Hadamard<MatrixNxM<?, ?>>
+        implements Hadamard<MatrixNxM<?, ?>, MatrixNxM<SIQuantity, SIUnit>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -150,6 +150,14 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+    }
+
+    @Override
+    public MatrixNxM<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+    {
+        SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+        return new MatrixNxM<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),
+                siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------

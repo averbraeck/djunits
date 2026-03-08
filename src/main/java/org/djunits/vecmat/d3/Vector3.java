@@ -371,7 +371,8 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
 
     /**
      * Vector3.Col implements a column vector with three real-valued entries. The vector is immutable, except for the display
-     * unit, which can be changed. <p>
+     * unit, which can be changed.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -380,7 +381,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param <U> the unit type
      */
     public static class Col<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Vector3<Q, U, Col<Q, U>>
-            implements VectorTransposable<Row<Q, U>>, Hadamard<Vector3.Col<?, ?>>
+            implements VectorTransposable<Row<Q, U>>, Hadamard<Vector3.Col<?, ?>, Vector3.Col<SIQuantity, SIUnit>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -476,6 +477,14 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
                     getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
         }
 
+        @Override
+        public Vector3.Col<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        {
+            SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+            return new Vector3.Col<SIQuantity, SIUnit>(xSi() * quantity.si(), ySi() * quantity.si(), zSi() * quantity.si(),
+                    siUnit);
+        }
+
         /**
          * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
          * exception when the SI units of this vector and the target vector do not match.
@@ -498,7 +507,8 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
 
     /**
      * Vector3.Row implements a row vector with three real-valued entries. The vector is immutable, except for the display unit,
-     * which can be changed. <p>
+     * which can be changed.
+     * <p>
      * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -507,7 +517,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param <U> the unit type
      */
     public static class Row<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Vector3<Q, U, Row<Q, U>>
-            implements VectorTransposable<Col<Q, U>>, Hadamard<Vector3.Row<?, ?>>
+            implements VectorTransposable<Col<Q, U>>, Hadamard<Vector3.Row<?, ?>, Vector3.Row<SIQuantity, SIUnit>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -612,6 +622,14 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
             double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 1, 3, 3);
             return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
                     getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+        }
+
+        @Override
+        public Vector3.Row<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        {
+            SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
+            return new Vector3.Row<SIQuantity, SIUnit>(xSi() * quantity.si(), ySi() * quantity.si(), zSi() * quantity.si(),
+                    siUnit);
         }
 
         /**
