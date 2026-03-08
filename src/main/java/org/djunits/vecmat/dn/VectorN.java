@@ -330,6 +330,25 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
             return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
         }
 
+        /**
+         * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
+         * exception when the SI units of this vector and the target vector do not match. The dataSi object containing the
+         * vector values is NOT copied.
+         * @param targetUnit the unit to convert the vector to
+         * @return a quantity typed in the target vector class
+         * @throws IllegalArgumentException when the units do not match
+         * @param <TQ> target quantity type
+         * @param <TU> target unit type
+         */
+        public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Col<TQ, TU> as(final TU targetUnit)
+                throws IllegalArgumentException
+        {
+            Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
+                    "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                    getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
+            return new VectorN.Col<TQ, TU>(this.dataSi, targetUnit);
+        }
+
     }
 
     /**
@@ -501,6 +520,25 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+        }
+
+        /**
+         * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
+         * exception when the SI units of this vector and the target vector do not match. The dataSi object containing the
+         * vector values is NOT copied.
+         * @param targetUnit the unit to convert the vector to
+         * @return a quantity typed in the target vector class
+         * @throws IllegalArgumentException when the units do not match
+         * @param <TQ> target quantity type
+         * @param <TU> target unit type
+         */
+        public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> VectorN.Row<TQ, TU> as(final TU targetUnit)
+                throws IllegalArgumentException
+        {
+            Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
+                    "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                    getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
+            return new VectorN.Row<TQ, TU>(this.dataSi, targetUnit);
         }
 
     }
