@@ -500,7 +500,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new Vector3.Col<TQ, TU>(xSi(), ySi(), zSi(), targetUnit);
+            return new Vector3.Col<TQ, TU>(xSi(), ySi(), zSi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
     }
@@ -647,7 +647,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new Vector3.Row<TQ, TU>(xSi(), ySi(), zSi(), targetUnit);
+            return new Vector3.Row<TQ, TU>(xSi(), ySi(), zSi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
     }
