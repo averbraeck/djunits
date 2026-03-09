@@ -74,58 +74,6 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
     }
 
     /**
-     * Set a new display unit of this matrix.
-     * @param newUnit the new display unit of this matrix
-     * @return the matrix for fluent design
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public M setDisplayUnit(final U newUnit)
-    {
-        super.setDisplayUnit(newUnit);
-        return (M) this;
-    }
-
-    /**
-     * Return the (r,c)-value of the matrix as a quantity with the correct unit. Note that this method follows a 1-based (a11,
-     * a12, etc.) numbering scheme from matrix calculations, where the internal storage is 0-based.
-     * @param row the row, from 1, ..., N
-     * @param col the column, from 1, ..., M
-     * @return the (r,c)-value of the matrix as a quantity with the correct unit
-     */
-    @Override
-    public Q get(final int row, final int col)
-    {
-        return getDisplayUnit().ofSi(si(row, col)).setDisplayUnit(getDisplayUnit());
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This implementation creates a {@code Q[][]} using the runtime component type of the first element and fills it in one
-     * pass. It avoids intermediate lists and prevents {@code ClassCastException} that can arise from casting {@code Object[][]}
-     * to {@code Q[][]}.
-     * @return a new 2-D array of quantities with the same shape ({@code rows() x cols()}) as this matrix; each entry
-     *         {@code [i-1][j-1]} contains {@code value(i, j)} with the current display unit
-     */
-    @Override
-    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
-    public Q[][] getScalars()
-    {
-        // Obtain the runtime class of Q by instantiating the first cell.
-        final Q[][] out = (Q[][]) Array.newInstance(get(1, 1).getClass(), rows(), cols());
-        for (int i = 1; i <= rows(); i++)
-        {
-            for (int j = 1; j <= cols(); j++)
-            {
-                out[i - 1][j - 1] = get(i, j);
-            }
-        }
-        return out;
-
-    }
-
-    /**
      * Retrieve a 1-based row from the matrix as a vector. Note that this method follows a 1-based (a11, a12, etc.) numbering
      * scheme from matrix calculations, where the internal storage is 0-based.
      * @param row row of the values to retrieve
@@ -184,7 +132,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
 
         // Build a Q[] of length cols() using the runtime class of the first element
         Q first = get(row, 1);
-        Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), cols());
+        Q[] out = (Q[]) Array.newInstance(first.getClass(), cols());
         for (int c = 1; c <= cols(); c++)
         {
             out[c - 1] = get(row, c);
@@ -206,7 +154,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
                 cols());
 
         Q first = get(1, column);
-        Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), rows());
+        Q[] out = (Q[]) Array.newInstance(first.getClass(), rows());
         for (int r = 1; r <= rows(); r++)
         {
             out[r - 1] = get(r, column);
@@ -226,7 +174,7 @@ public abstract class DataGridMatrix<Q extends Quantity<Q, U>, U extends UnitInt
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
 
         Q first = get(1, 1);
-        Q[] out = (Q[]) java.lang.reflect.Array.newInstance(first.getClass(), rows());
+        Q[] out = (Q[]) Array.newInstance(first.getClass(), rows());
         for (int i = 1; i <= rows(); i++)
         {
             out[i - 1] = get(i, i);
