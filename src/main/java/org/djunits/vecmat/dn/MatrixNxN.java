@@ -1,5 +1,8 @@
 package org.djunits.vecmat.dn;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
@@ -8,10 +11,8 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.SquareMatrixOps;
+import org.djunits.vecmat.def.SquareMatrix;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
@@ -27,8 +28,8 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends AbstractMatrix<Q, U, MatrixNxN<Q, U>>
-        implements SquareMatrixOps<Q, U, MatrixNxN<Q, U>>, Hadamard<MatrixNxN<?, ?>, MatrixNxN<SIQuantity, SIUnit>>
+public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
+        extends SquareMatrix<Q, U, MatrixNxN<Q, U>, MatrixNxN<SIQuantity, SIUnit>, MatrixNxN<?, ?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -44,7 +45,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
      */
     public MatrixNxN(final DataGridSi<?> dataSi, final U displayUnit)
     {
-        super(displayUnit, dataSi.rows(), dataSi.cols());
+        super(displayUnit);
         Throw.whenNull(dataSi, "dataSi");
         Throw.when(dataSi.rows() != dataSi.cols(), IllegalArgumentException.class, "Data for the NxN matrix is not square");
         this.dataSi = dataSi;
@@ -127,6 +128,91 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     {
         // internal storage is 0-based, user access is 1-based
         return this.dataSi.get(row - 1, col - 1);
+    }
+
+    @Override
+    public int rows()
+    {
+        return this.dataSi.rows();
+    }
+
+    @Override
+    public int cols()
+    {
+        return this.dataSi.cols();
+    }
+
+    @Override
+    public MatrixNxN<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+    {
+        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(siNew), siUnit);
+    }
+
+    @Override
+    public VectorN.Row<Q, U> getRowVector(final int row)
+    {
+        checkRow(row);
+        return VectorN.Row.ofSi(this.dataSi.getRowArray(row), getDisplayUnit());
+    }
+
+    @Override
+    public VectorN.Col<Q, U> getColumnVector(final int col)
+    {
+        checkCol(col);
+        return VectorN.Col.ofSi(this.dataSi.getColArray(col), getDisplayUnit());
+    }
+
+    /**
+     * Retrieve the main diagonal of the matrix as a column vector.
+     * @return the main diagonal as a Vector
+     * @throws IllegalStateException in case the matrix is not square
+     */
+    public VectorN.Col<Q, U> getDiagonalVector() throws IllegalStateException
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
+        final int n = rows();
+        final double[] data = new double[n];
+        for (int i = 1; i <= n; i++)
+        {
+            data[i - 1] = si(i, i);
+        }
+        // n x 1 column-shape
+        return VectorN.Col.ofSi(data, getDisplayUnit());
+    }
+
+    /**
+     * Retrieve the main diagonal of the matrix as an array of scalars.
+     * @return the main diagonal as a Scalar array
+     * @throws IllegalStateException in case the matrix is not square
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getDiagonalScalars() throws IllegalStateException
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
+
+        List<Q> result = new ArrayList<>();
+        for (int i = 1; i <= rows(); i++)
+        {
+            result.add(get(i, i));
+        }
+
+        Q sample = result.get(0);
+        Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
+        return result.toArray(array);
+    }
+
+    @Override
+    public double[] getRowSi(final int row)
+    {
+        checkRow(row);
+        return this.dataSi.getRowArray(row);
+    }
+
+    @Override
+    public double[] getColumnSi(final int col)
+    {
+        checkCol(col);
+        return this.dataSi.getColArray(col);
     }
 
     @Override
