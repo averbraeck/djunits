@@ -1,9 +1,11 @@
-package org.djunits.vecmat.operations;
+package org.djunits.vecmat.d2;
 
 import java.util.Iterator;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.vecmat.VectorMatrix;
+import org.djunits.vecmat.operations.Normed;
 
 /**
  * VectorOps contains the contract for Vector classes. In addition, Vector classes can implement other interfaces as well, such
@@ -18,7 +20,7 @@ import org.djunits.unit.UnitInterface;
  * @param <V> the vector or matrix type
  */
 public interface Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector<Q, U, V>>
-        extends VectorMatrixOps<Q, U, V>, Iterable<Q>, Normed<Q, U>
+        extends VectorMatrix<Q, U, V>, Iterable<Q>, Normed<Q, U>
 {
     /**
      * Retrieve the size of the vector.
