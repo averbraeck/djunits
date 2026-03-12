@@ -19,9 +19,9 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.SquareDenseMatrix;
+import org.djunits.vecmat.def.SquareDenseMatrix;
+import org.djunits.vecmat.def.SquareMatrix;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.SquareMatrix;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

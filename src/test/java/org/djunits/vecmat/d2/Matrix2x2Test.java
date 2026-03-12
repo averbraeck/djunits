@@ -18,11 +18,11 @@ import org.djunits.quantity.Speed;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.SquareDenseMatrix;
+import org.djunits.vecmat.def.SquareDenseMatrix;
+import org.djunits.vecmat.def.SquareMatrix;
+import org.djunits.vecmat.def.VectorMatrix;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.SquareMatrixOps;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +31,9 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The tests aim for 100% method and branch coverage in Matrix2x2 and the inherited default functionality from:
  * <ul>
- * <li>{@link AbstractMatrix}</li>
+ * <li>{@link VectorMatrix}</li>
  * <li>{@link SquareDenseMatrix}</li>
- * <li>{@link SquareMatrixOps}</li>
+ * <li>{@link SquareMatrix}</li>
  * <li>{@link Hadamard}</li>
  * <li>and the value interfaces used by {@code MatrixOps} (Additive, Scalable, Value)</li>
  * </ul>
@@ -142,7 +142,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link AbstractMatrix#rows()}, {@link AbstractMatrix#cols()}, {@link AbstractMatrix#get(int, int)} and relative/absolute flag.
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute flag.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -155,7 +155,7 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify that {@link AbstractMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
+     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -174,7 +174,7 @@ public class Matrix2x2Test
     }
 
     /**
-     * Call {@link AbstractMatrix#toString()} and {@link AbstractMatrix#toString(UnitInterface)} for coverage. We assert the unit abbreviation
+     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)} for coverage. We assert the unit abbreviation
      * is present; we do not depend on exact formatting of numbers.
      */
     @Test
@@ -193,7 +193,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link org.djunits.vecmat.operations.Matrix#add(Quantity)} and {@code subtract(Q)} with quantities.
+     * Verify {@link org.djunits.vecmat.def.Matrix#add(Quantity)} and {@code subtract(Q)} with quantities.
      */
     @Test
     @DisplayName("add(Q) / subtract(Q) apply element-wise SI increments")
@@ -207,7 +207,7 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@link org.djunits.vecmat.operations.Matrix#add(Quantity)} and {@code subtract(VM)} with another matrix.
+     * Verify {@link org.djunits.vecmat.def.Matrix#add(Quantity)} and {@code subtract(VM)} with another matrix.
      */
     @Test
     @DisplayName("add(VM) / subtract(VM) element-wise")
@@ -220,9 +220,9 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@link org.djunits.vecmat.operations.Matrix#negate()},
-     * {@link org.djunits.vecmat.operations.Matrix#abs()}, and
-     * {@link org.djunits.vecmat.operations.Matrix#scaleBy(double)}.
+     * Verify {@link org.djunits.vecmat.def.Matrix#negate()},
+     * {@link org.djunits.vecmat.def.Matrix#abs()}, and
+     * {@link org.djunits.vecmat.def.Matrix#scaleBy(double)}.
      */
     @Test
     @DisplayName("negate / abs / scaleBy")
@@ -446,7 +446,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify scalar array extraction helpers on {@link AbstractMatrix}.
+     * Verify scalar array extraction helpers on {@link VectorMatrix}.
      */
     @Test
     @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
@@ -493,7 +493,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify equality and hashCode semantics across {@link AbstractMatrix}, {@link SquareDenseMatrix}, and {@link Matrix2x2}.
+     * Verify equality and hashCode semantics across {@link VectorMatrix}, {@link SquareDenseMatrix}, and {@link Matrix2x2}.
      */
     @Test
     @DisplayName("equals / hashCode")

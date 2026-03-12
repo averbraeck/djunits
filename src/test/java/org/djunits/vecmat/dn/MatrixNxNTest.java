@@ -16,8 +16,8 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
+import org.djunits.vecmat.def.VectorMatrix;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * <li>Factories ({@code of(double[],U)}, {@code of(double[][],U)})</li>
  * <li>{@code instantiateSi(double[])}</li>
  * <li>Matrix basics: {@code rows()}, {@code cols()}, {@code value(r,c)}, {@code setDisplayUnit}, {@code toString}</li>
- * <li>VectorMatrixOps defaults: {@code add/sub (Q & VM)}, {@code negate}, {@code abs}, {@code scaleBy}, stats</li>
+ * <li>Ops defaults: {@code add/sub (Q & VM)}, {@code negate}, {@code abs}, {@code scaleBy}, stats</li>
  * <li>SquareMatrixOps: {@code transpose}, {@code determinantScalar}, {@code determinant}, {@code trace}, {@code normFrobenius},
  * {@code isSymmetric} (± tol), {@code isSkewSymmetric} (± tol)</li>
  * <li>Inverse/adjugate (success + singular), matrixxmatrix, matrixxvector</li>
@@ -154,7 +154,8 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link AbstractMatrix#rows()}, {@link AbstractMatrix#cols()}, {@link AbstractMatrix#get(int, int)}, and {@link AbstractMatrix#isRelative()}.
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)}, and
+     * {@link VectorMatrix#isRelative()}.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -167,7 +168,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify that {@link AbstractMatrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
+     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -182,7 +183,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link AbstractMatrix#toString()} and {@link AbstractMatrix#toString(UnitInterface)} include unit abbreviation.
+     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)} include unit abbreviation.
      */
     @Test
     @DisplayName("toString()/toString(unit) include unit")
@@ -194,7 +195,7 @@ public class MatrixNxNTest
     }
 
     // ------------------------------------------------------------------------------------
-    // VectorMatrixOps defaults: add/sub (Q & VM), negate/abs/scaleBy, stats
+    // Ops defaults: add/sub (Q & VM), negate/abs/scaleBy, stats
     // ------------------------------------------------------------------------------------
 
     /**
@@ -362,7 +363,7 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> m =
                 ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
 
-        Length[][] q = m.getScalars();
+        Length[][] q = m.getScalarGrid();
         assertAll(() -> assertEquals(4, q.length), () -> assertEquals(4, q[0].length),
                 () -> assertEquals(1.0, q[0][0].si(), EPS), () -> assertEquals(16.0, q[3][3].si(), EPS));
 
@@ -397,7 +398,7 @@ public class MatrixNxNTest
         assertNotEquals(a1, null);
         assertNotEquals(a1, "other");
     }
-    
+
     /**
      * Test multiply/divide by scalar and as() method.
      */
