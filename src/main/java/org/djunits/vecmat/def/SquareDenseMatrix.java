@@ -1,10 +1,10 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.def;
 
 import java.util.Arrays;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.vecmat.operations.SquareMatrix;
+import org.djunits.vecmat.AbstractMatrix;
 import org.djutils.exceptions.Throw;
 
 /**

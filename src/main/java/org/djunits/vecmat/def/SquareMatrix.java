@@ -1,4 +1,4 @@
-package org.djunits.vecmat.operations;
+package org.djunits.vecmat.def;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
@@ -6,7 +6,6 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.Matrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 
 /**

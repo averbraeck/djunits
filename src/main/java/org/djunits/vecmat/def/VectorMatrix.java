@@ -1,4 +1,4 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.def;
 
 import java.lang.reflect.Array;
 import java.util.Objects;

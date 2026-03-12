@@ -1,4 +1,4 @@
-package org.djunits.vecmat;
+package org.djunits.vecmat.def;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
