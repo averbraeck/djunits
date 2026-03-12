@@ -21,7 +21,7 @@ import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.SquareDenseMatrix;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.SquareMatrixOps;
+import org.djunits.vecmat.operations.SquareMatrix;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  * <ul>
  * <li>{@link AbstractMatrix}</li>
  * <li>{@link SquareDenseMatrix}</li>
- * <li>{@link SquareMatrixOps}</li>
+ * <li>{@link SquareMatrix}</li>
  * <li>{@link Hadamard}</li>
  * <li>and value-related interfaces used by VectorMatrixOps (Additive, Scalable, Value)</li>
  * </ul>

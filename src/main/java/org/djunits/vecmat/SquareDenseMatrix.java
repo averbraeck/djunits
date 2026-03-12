@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.vecmat.operations.SquareMatrixOps;
+import org.djunits.vecmat.operations.SquareMatrix;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <M> the matrix type
  */
 public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-        M extends SquareDenseMatrix<Q, U, M>> extends AbstractMatrix<Q, U, M> implements SquareMatrixOps<Q, U, M>
+        M extends SquareDenseMatrix<Q, U, M>> extends AbstractMatrix<Q, U, M> implements SquareMatrix<Q, U, M>
 {
     /** */
     private static final long serialVersionUID = 600L;

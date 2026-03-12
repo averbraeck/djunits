@@ -6,11 +6,11 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.AbstractMatrix;
+import org.djunits.vecmat.Matrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 
 /**
- * SquareMatrixOps defines a number of operations that can be applied to square matrixes, such as transpose, invert, and
+ * SquareMatrix defines a number of operations that can be applied to square matrixes, such as transpose, invert, and
  * determinant.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -19,16 +19,31 @@ import org.djunits.vecmat.NonInvertibleMatrixException;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
- * @param <M> the square matrix type
+ * @param <M> the 'SELF' square matrix type
+ * @param <SI> the square matrix type with generics &lt;SIQuantity, SIUnit&lt;
+ * @param <H> the generic square matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends SquareMatrixOps<Q, U, M>>
-        extends Matrix<Q, U, M>
+public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+        M extends SquareMatrix<Q, U, M, SI, H>, SI extends SquareMatrix<SIQuantity, SIUnit, SI, ?, ?>,
+        H extends SquareMatrix<?, ?, ?, ?, ?>> extends Matrix<Q, U, M, SI, H>
 {
+    /** */
+    private static final long serialVersionUID = 600L;
+
+    /**
+     * Create a new square matrix with a unit.
+     * @param displayUnit the display unit to use
+     */
+    public SquareMatrix(final U displayUnit)
+    {
+        super(displayUnit);
+    }
+
     /**
      * Return the order (the number of rows/columns) of this matrix.
      * @return the order (the number of rows/columns) of this matrix
      */
-    default int order()
+    public int order()
     {
         return rows();
     }
@@ -38,7 +53,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @return the transposed square matrix
      */
     @SuppressWarnings("checkstyle:needbraces")
-    default M transpose()
+    public M transpose()
     {
         double[] data = si();
         double[] newSi = new double[data.length];
@@ -53,7 +68,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * Return the determinant of the square matrix as a scalar in SI or BASE units.
      * @return the determinant of the square matrix as a scalar in SI or BASE units
      */
-    default double determinantScalar()
+    public double determinantScalar()
     {
         return MatrixMath.determinant(si(), order());
     }
@@ -62,7 +77,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * Return the determinant of the square matrix as quantity with unit U^n where n is the order of the matrix.
      * @return the determinant of the square matrix as a quantity
      */
-    default SIQuantity determinant()
+    public SIQuantity determinant()
     {
         SIUnit siu = getDisplayUnit().siUnit();
         int[] newDim = new int[SIUnit.NUMBER_DIMENSIONS];
@@ -79,21 +94,21 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @return the inverse of the square matrix, if the matrix is non-singular
      * @throws NonInvertibleMatrixException when the matrix is singular or cannot be inverted
      */
-    AbstractMatrix<SIQuantity, SIUnit, ?> inverse() throws NonInvertibleMatrixException;
+    public abstract SI inverse() throws NonInvertibleMatrixException;
 
     /**
      * Return the adjugate (classical adjoint) matrix for this matrix, often denoted as adj(M). The unit of adj(M) is U^(n-1)
      * where n is the order of the matrix.
      * @return the adjugate (classical adjoint) matrix
      */
-    AbstractMatrix<SIQuantity, SIUnit, ?> adjugate();
+    public abstract SI adjugate();
 
     /**
      * Return the trace of the matrix (the sum of the diagonal elements). It results in a quantity with the same unit as the
      * original matrix.
      * @return the trace of this matrix
      */
-    default Q trace()
+    public Q trace()
     {
         return getDisplayUnit().ofSi(MatrixMath.trace(si(), order()));
     }
@@ -105,16 +120,16 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * for more information.
      * @return the Frobenius norm of this matrix
      */
-    default Q normFrobenius()
+    public Q normFrobenius()
     {
         return getDisplayUnit().ofSi(Math.sqrt(Math2.sumSqr(si()))).setDisplayUnit(getDisplayUnit());
     }
 
     /**
-     * Return whether the matrix is symmetric. Use a default tolerance of 1.0E-12 times the largest absolute si quantity.
+     * Return whether the matrix is symmetric. Use a public tolerance of 1.0E-12 times the largest absolute si quantity.
      * @return whether the matrix is symmetric
      */
-    default boolean isSymmetric()
+    public boolean isSymmetric()
     {
         return MatrixMath.isSymmetric(si(), order());
     }
@@ -124,16 +139,16 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @param tolerance the tolerance, expressed as a quantity
      * @return whether the matrix is symmetric
      */
-    default boolean isSymmetric(final Q tolerance)
+    public boolean isSymmetric(final Q tolerance)
     {
         return MatrixMath.isSymmetric(si(), order(), tolerance.si());
     }
 
     /**
-     * Return whether the matrix is skew symmetric. Use a default tolerance of 1.0E-12 times the largest absolute si quantity.
+     * Return whether the matrix is skew symmetric. Use a public tolerance of 1.0E-12 times the largest absolute si quantity.
      * @return whether the matrix is skew symmetric
      */
-    default boolean isSkewSymmetric()
+    public boolean isSkewSymmetric()
     {
         return MatrixMath.isSkewSymmetric(si(), order());
     }
@@ -143,7 +158,7 @@ public interface SquareMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterfa
      * @param tolerance the tolerance, expressed as a quantity
      * @return whether the matrix is skew symmetric
      */
-    default boolean isSkewSymmetric(final Q tolerance)
+    public boolean isSkewSymmetric(final Q tolerance)
     {
         return MatrixMath.isSkewSymmetric(si(), order(), tolerance.si());
     }
