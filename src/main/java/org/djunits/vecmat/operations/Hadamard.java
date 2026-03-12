@@ -9,10 +9,10 @@ import org.djunits.quantity.def.Quantity;
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
- * @param <H> the implementing type with generics &lt;?, ?&gt; to, e.g., multiply by
- * @param <SI> the implementing type as a type&lt;SIQuantity, SIUnit&gt;
+ * @param <VM> the implementing vector or matrix type with generics &lt;?, ?&gt; to, e.g., multiply by
+ * @param <SI> the implementing vector or matrix type with generics &lt;SIQuantity, SIUnit&gt;
  */
-public interface Hadamard<H extends Hadamard<H, SI>, SI extends Hadamard<H, SI>>
+public interface Hadamard<VM, SI>
 {
     /**
      * Invert the vector, matrix or table on an element-by-element basis.
@@ -26,7 +26,7 @@ public interface Hadamard<H extends Hadamard<H, SI>, SI extends Hadamard<H, SI>>
      * @param other the other collection of the same type
      * @return a vector, matrix or table with an element-by-element multiplication of its elements
      */
-    SI multiplyElements(H other);
+    SI multiplyElements(VM other);
 
     /**
      * Divide the elements of this vector, matrix or table on an element-by-element basis with those of another collection of
@@ -34,7 +34,7 @@ public interface Hadamard<H extends Hadamard<H, SI>, SI extends Hadamard<H, SI>>
      * @param other the other collection of the same type
      * @return a vector, matrix or table with an element-by-element division of this collection's elements and other's elements
      */
-    SI divideElements(H other);
+    SI divideElements(VM other);
 
     /**
      * Multiply the elements of this vector, matrix or table by the given quantity.

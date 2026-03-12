@@ -1,8 +1,10 @@
 package org.djunits.vecmat.operations;
 
 import org.djunits.quantity.Dimensionless;
+import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
+import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.Math2;
 import org.djunits.value.Additive;
@@ -10,7 +12,7 @@ import org.djunits.value.Scalable;
 import org.djunits.value.Value;
 
 /**
- * VectorMatrixOps contains a number of standard operations on vectors and matrices of relative quantities.
+ * VectorMatrix contains a number of standard operations on vectors and matrices of relative quantities.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -18,10 +20,13 @@ import org.djunits.value.Value;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
- * @param <VM> the vector or matrix type
+ * @param <VM> the 'SELF' vector or matrix type
+ * @param <SI> the vector or matrix type with generics &lt;SIQuantity, SIUnit&lt;
+ * @param <H> the generic vector or matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public interface VectorMatrixOps<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, VM extends VectorMatrixOps<Q, U, VM>>
-        extends Value<U, VM>, Scalable<VM>, Additive<VM>
+public interface VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, VM extends VectorMatrix<Q, U, VM, SI, H>,
+        SI extends VectorMatrix<SIQuantity, SIUnit, SI, ?, ?>, H extends VectorMatrix<?, ?, ?, ?, ?>>
+        extends Value<U, VM>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
 {
     /**
      * Return the number of rows.
