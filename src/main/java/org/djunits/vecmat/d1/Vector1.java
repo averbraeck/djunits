@@ -110,28 +110,28 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     @Override
     public Vector1<Q, U> getRowVector(final int row)
     {
-        Throw.when(row != 1, IllegalArgumentException.class, "row out of bounds");
+        checkRow(row);
         return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Vector1<Q, U> getColumnVector(final int col)
     {
-        Throw.when(col != 1, IllegalArgumentException.class, "col out of bounds");
+        checkCol(col);
         return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public double[] getRowSi(final int row)
     {
-        Throw.when(row != 1, IllegalArgumentException.class, "row out of bounds");
+        checkRow(row);
         return new double[] {this.xSi};
     }
 
     @Override
     public double[] getColumnSi(final int col)
     {
-        Throw.when(col != 1, IllegalArgumentException.class, "col out of bounds");
+        checkCol(col);
         return new double[] {this.xSi};
     }
 

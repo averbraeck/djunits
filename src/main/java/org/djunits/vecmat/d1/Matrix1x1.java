@@ -93,12 +93,14 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     @Override
     public Vector1<Q, U> getRowVector(final int row)
     {
+        checkRow(row);
         return new Vector1<>(si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Vector1<Q, U> getColumnVector(final int col)
     {
+        checkCol(col);
         return new Vector1<>(si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
