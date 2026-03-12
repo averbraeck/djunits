@@ -4,7 +4,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.VectorMatrix;
+import org.djunits.vecmat.def.VectorMatrix;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
