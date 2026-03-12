@@ -47,14 +47,14 @@ public interface VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<
     double[] si();
 
     /**
-     * Return a new matrix with the given SI or BASE values.
+     * Return a new vector or matrix with the given SI or BASE values.
      * @param siNew the values for the new vector or matrix in row-major format
      * @return a new matrix with the provided SI or BASE values
      */
     VM instantiateSi(double[] siNew);
 
     /**
-     * Return a new matrix in SI-units with the given SI or BASE values.
+     * Return a new vector or matrix in SI-units with the given SI or BASE values.
      * @param siNew the values for the new vector or matrix in row-major format
      * @param siUnit the new unit for the new vector or matrix
      * @return a new matrix with the provided SI or BASE values
