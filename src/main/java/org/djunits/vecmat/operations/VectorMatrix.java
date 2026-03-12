@@ -48,10 +48,18 @@ public interface VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<
 
     /**
      * Return a new matrix with the given SI or BASE values.
-     * @param siNew the values for the new matrix
+     * @param siNew the values for the new vector or matrix in row-major format
      * @return a new matrix with the provided SI or BASE values
      */
     VM instantiateSi(double[] siNew);
+
+    /**
+     * Return a new matrix in SI-units with the given SI or BASE values.
+     * @param siNew the values for the new vector or matrix in row-major format
+     * @param siUnit the new unit for the new vector or matrix
+     * @return a new matrix with the provided SI or BASE values
+     */
+    SI instantiateSi(double[] siNew, SIUnit siUnit);
 
     /**
      * Return the mean value of the elements of the vector or matrix.
@@ -177,6 +185,33 @@ public interface VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<
     default VM divideElements(final Dimensionless quantity)
     {
         return scaleBy(1.0 / quantity.si());
+    }
+
+    @Override
+    default SI invertElements()
+    {
+        return (SI) instantiateSi(ArrayMath.reciprocal(si()), getDisplayUnit().siUnit().invert());
+    }
+
+    @Override
+    default SI multiplyElements(final H other)
+    {
+        return (SI) instantiateSi(ArrayMath.multiply(si(), other.si()),
+                getDisplayUnit().siUnit().plus(other.getDisplayUnit().siUnit()));
+    }
+
+    @Override
+    default SI divideElements(final H other)
+    {
+        return (SI) instantiateSi(ArrayMath.divide(si(), other.si()),
+                getDisplayUnit().siUnit().minus(other.getDisplayUnit().siUnit()));
+    }
+
+    @Override
+    default SI multiplyElements(final Quantity<?, ?> quantity)
+    {
+        return (SI) instantiateSi(ArrayMath.scaleBy(si(), quantity.si()),
+                getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));
     }
 
 }
