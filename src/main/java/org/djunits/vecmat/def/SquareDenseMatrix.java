@@ -2,9 +2,10 @@ package org.djunits.vecmat.def;
 
 import java.util.Arrays;
 
+import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.vecmat.AbstractMatrix;
+import org.djunits.unit.si.SIUnit;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -17,10 +18,13 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <U> the unit type
- * @param <M> the matrix type
+ * @param <M> the 'SELF' square dense matrix type
+ * @param <SI> the square dense matrix type with generics &lt;SIQuantity, SIUnit&lt;
+ * @param <H> the generic square dense matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
 public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-        M extends SquareDenseMatrix<Q, U, M>> extends AbstractMatrix<Q, U, M> implements SquareMatrix<Q, U, M>
+        M extends SquareDenseMatrix<Q, U, M, SI, H>, SI extends SquareDenseMatrix<SIQuantity, SIUnit, SI, ?, ?>,
+        H extends SquareDenseMatrix<?, ?, ?, ?, ?>> extends SquareMatrix<Q, U, M, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -36,7 +40,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
      */
     protected SquareDenseMatrix(final double[] dataInUnit, final U displayUnit, final int order)
     {
-        super(displayUnit, order, order);
+        super(displayUnit);
         Throw.when(dataInUnit.length != order * order, IllegalArgumentException.class,
                 "SquareDenseMatrix initialized with %d values instead of %d", dataInUnit.length, order * order);
         this.dataSi = new double[dataInUnit.length];
@@ -44,12 +48,6 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
         {
             this.dataSi[i] = displayUnit.toBaseValue(dataInUnit[i]);
         }
-    }
-
-    @Override
-    public int order()
-    {
-        return rows();
     }
 
     @Override
@@ -62,12 +60,6 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     public double si(final int r, final int c)
     {
         return this.dataSi[order() * (r - 1) + c - 1];
-    }
-
-    @Override
-    public boolean isRelative()
-    {
-        return get(1, 1).isRelative();
     }
 
     @Override
@@ -89,7 +81,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SquareDenseMatrix<?, ?, ?> other = (SquareDenseMatrix<?, ?, ?>) obj;
+        SquareDenseMatrix<?, ?, ?, ?, ?> other = (SquareDenseMatrix<?, ?, ?, ?, ?>) obj;
         return Arrays.equals(this.dataSi, other.dataSi);
     }
 
