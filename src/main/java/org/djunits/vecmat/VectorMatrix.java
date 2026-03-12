@@ -3,6 +3,7 @@ package org.djunits.vecmat;
 import java.lang.reflect.Array;
 import java.util.Objects;
 
+import org.djunits.formatter.Format;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
@@ -14,7 +15,6 @@ import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
 import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.Vector;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -108,6 +108,29 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     public abstract double si(int row, int col) throws IndexOutOfBoundsException;
 
     /**
+     * Return the vector or matrix as a 2D array of scalars.
+     * @return a new Q[rows()][cols()] array; entry [i-1][j-1] contains get(i, j).
+     */
+    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
+    public Q[][] getScalarGrid()
+    {
+        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 1.
+        final Q first = get(1, 1);
+        final Class<?> qClass = first.getClass();
+
+        // Allocate a Q[rows()][cols()] array and fill it.
+        final Q[][] out = (Q[][]) Array.newInstance(qClass, rows(), cols());
+        for (int i = 1; i <= rows(); i++)
+        {
+            for (int j = 1; j <= cols(); j++)
+            {
+                out[i - 1][j - 1] = get(i, j);
+            }
+        }
+        return out;
+    }
+
+    /**
      * Return the quantity at position (row, col), where both row and col are 1-based values.
      * @param row the row (1-based)
      * @param col the column (1-based)
@@ -125,7 +148,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @param row the row number to retrieve (1-based)
      * @return a row vector with the data at the given row
      */
-    public abstract Vector<Q, U, ?> getRowVector(int row);
+    public abstract Vector<Q, U, ?, ?, ?> getRowVector(int row);
 
     /**
      * Return a quantity column (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -133,7 +156,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @param col the column number to retrieve (1-based)
      * @return a column vector with the data at the given column
      */
-    public abstract Vector<Q, U, ?> getColumnVector(int col);
+    public abstract Vector<Q, U, ?, ?, ?> getColumnVector(int col);
 
     /**
      * Return an array with SI-values for the given row (1-based) from the vector or matrix.
@@ -348,6 +371,32 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     {
         return (SI) instantiateSi(ArrayMath.scaleBy(si(), quantity.si()),
                 getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));
+    }
+
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public String toString(final U withUnit)
+    {
+        var s = new StringBuilder();
+        for (int r = 1; r <= rows(); r++)
+        {
+            s.append(r == 1 ? "[" : "\n ");
+            for (int c = 1; c <= cols(); c++)
+            {
+                if (c > 1)
+                    s.append(", ");
+                s.append(Format.format(withUnit.fromBaseValue(si(r, c))));
+            }
+        }
+        s.append("] ");
+        s.append(withUnit.getDisplayAbbreviation());
+        return s.toString();
+    }
+
+    @Override
+    public String toString()
+    {
+        return toString(getDisplayUnit());
     }
 
     @Override
