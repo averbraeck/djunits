@@ -7,8 +7,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.NonInvertibleMatrixException;
-import org.djunits.vecmat.SquareDenseMatrix;
-import org.djunits.vecmat.operations.Hadamard;
+import org.djunits.vecmat.def.SquareDenseMatrix;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -22,8 +21,8 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  */
-public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends SquareDenseMatrix<Q, U, Matrix2x2<Q, U>>
-        implements Hadamard<Matrix2x2<?, ?>, Matrix2x2<SIQuantity, SIUnit>>
+public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
+        extends SquareDenseMatrix<Q, U, Matrix2x2<Q, U>, Matrix2x2<SIQuantity, SIUnit>, Matrix2x2<?, ?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -82,6 +81,28 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> 
     public Matrix2x2<Q, U> instantiateSi(final double[] siNew)
     {
         return new Matrix2x2<Q, U>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Matrix2x2<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+    {
+        return new Matrix2x2<SIQuantity, SIUnit>(siNew, siUnit);
+    }
+
+    @Override
+    public Vector2.Row<Q, U> getRowVector(final int row)
+    {
+        checkRow(row);
+        return new Vector2.Row<Q, U>(this.si(row, 1), this.si(row, 2), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector2.Col<Q, U> getColumnVector(final int col)
+    {
+        checkCol(col);
+        return new Vector2.Col<Q, U>(this.si(1, col), this.si(2, col), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
