@@ -43,6 +43,12 @@ public abstract class Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * @return the size of the vector
      */
     public abstract int size();
+    
+    /**
+     * Return whether this vector is a column vector.
+     * @return whether this vector is a column vector
+     */
+    public abstract boolean isColumnVector();
 
     /**
      * Retrieve a value from the vector.

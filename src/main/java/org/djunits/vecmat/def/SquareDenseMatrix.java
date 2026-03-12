@@ -1,7 +1,5 @@
 package org.djunits.vecmat.def;
 
-import java.util.Arrays;
-
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
@@ -32,6 +30,9 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     /** The n x n values in si-units. */
     private final double[] dataSi;
 
+    /** the order (n in n x n) of the matrix. */
+    private final int order;
+
     /**
      * Create a new SquareDenseMatrix with a unit.
      * @param dataInUnit the matrix values {a11, a12, ..., a21, a22, ...} expressed in the display unit
@@ -48,6 +49,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
         {
             this.dataSi[i] = displayUnit.toBaseValue(dataInUnit[i]);
         }
+        this.order = order;
     }
 
     @Override
@@ -59,30 +61,41 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     @Override
     public double si(final int r, final int c)
     {
-        return this.dataSi[order() * (r - 1) + c - 1];
+        return this.dataSi[this.order * (r - 1) + c - 1];
     }
 
     @Override
-    public int hashCode()
+    public int rows()
     {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Arrays.hashCode(this.dataSi);
-        return result;
+        return this.order;
     }
 
-    @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public boolean equals(final Object obj)
+    public int cols()
     {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        SquareDenseMatrix<?, ?, ?, ?, ?> other = (SquareDenseMatrix<?, ?, ?, ?, ?>) obj;
-        return Arrays.equals(this.dataSi, other.dataSi);
+        return this.order;
+    }
+
+    @Override
+    public double[] getRowSi(final int row)
+    {
+        double[] vSi = new double[this.order];
+        for (int col = 0; col < this.order; col++)
+        {
+            vSi[col] = this.dataSi[this.order * (row - 1) + col - 1];
+        }
+        return vSi;
+    }
+
+    @Override
+    public double[] getColumnSi(final int col)
+    {
+        double[] vSi = new double[this.order];
+        for (int row = 0; row < this.order; row++)
+        {
+            vSi[row] = this.dataSi[this.order * (row - 1) + col - 1];
+        }
+        return vSi;
     }
 
 }

@@ -179,6 +179,26 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
+     * Check if the 1-based row is within bounds.
+     * @param row the 1-based row to check
+     * @throws IndexOutOfBoundsException when row is out of bounds
+     */
+    protected void checkRow(final int row)
+    {
+        Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", row, rows());
+    }
+
+    /**
+     * Check if the 1-based column is within bounds.
+     * @param col the 1-based column to check
+     * @throws IndexOutOfBoundsException when column is out of bounds
+     */
+    protected void checkCol(final int col)
+    {
+        Throw.when(col < 1 || col > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", col, cols());
+    }
+
+    /**
      * Retrieve a row (1-based) from the matrix as an array of scalars.
      * @param row row of the values to retrieve (1-based)
      * @return the row as a Scalar array
@@ -187,7 +207,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @SuppressWarnings("unchecked")
     public Q[] getRowScalars(final int row) throws IndexOutOfBoundsException
     {
-        Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", row, rows());
+        checkRow(row);
 
         // Build a Q[] of length cols() using the runtime class of the first element
         Q first = get(row, 1);
@@ -208,8 +228,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @SuppressWarnings("unchecked")
     public Q[] getColumnScalars(final int column) throws IndexOutOfBoundsException
     {
-        Throw.when(column < 1 || column > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", column,
-                cols());
+        checkCol(column);
 
         Q first = get(1, column);
         Q[] out = (Q[]) Array.newInstance(first.getClass(), rows());
