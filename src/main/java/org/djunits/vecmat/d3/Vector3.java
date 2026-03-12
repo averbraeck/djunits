@@ -12,8 +12,8 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.operations.Hadamard;
-import org.djunits.vecmat.operations.Vector;
+import org.djunits.vecmat.d1.Vector1;
+import org.djunits.vecmat.def.Vector;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
@@ -28,9 +28,11 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  * @param <U> the unit type
  * @param <V> the vector type (Col or Row)
+ * @param <SI> the vector type with generics &lt;SIQuantity, SIUnit&lt;
+ * @param <H> the generic vector type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector3<Q, U, V>>
-        implements Vector<Q, U, V>
+public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector3<Q, U, V, SI, H>,
+        SI extends Vector3<SIQuantity, SIUnit, SI, ?, ?>, H extends Vector3<?, ?, ?, ?, ?>> extends Vector<Q, U, V, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -56,11 +58,10 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      */
     protected Vector3(final double xInUnit, final double yInUnit, final double zInUnit, final U displayUnit)
     {
-        Throw.whenNull(displayUnit, "displayUnit");
+        super(displayUnit);
         this.xSi = displayUnit.toBaseValue(xInUnit);
         this.ySi = displayUnit.toBaseValue(yInUnit);
         this.zSi = displayUnit.toBaseValue(zInUnit);
-        this.displayUnit = displayUnit;
     }
 
     /**
@@ -321,6 +322,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * Return whether this vector is a column vector.
      * @return whether this vector is a column vector
      */
+    @Override
     public abstract boolean isColumnVector();
 
     @Override
@@ -339,7 +341,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Vector3<?, ?, ?> other = (Vector3<?, ?, ?>) obj;
+        Vector3<?, ?, ?, ?, ?> other = (Vector3<?, ?, ?, ?, ?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi)
                 && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi)
                 && Double.doubleToLongBits(this.zSi) == Double.doubleToLongBits(other.zSi);
@@ -378,8 +380,8 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static class Col<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Vector3<Q, U, Col<Q, U>>
-            implements VectorTransposable<Row<Q, U>>, Hadamard<Vector3.Col<?, ?>, Vector3.Col<SIQuantity, SIUnit>>
+    public static class Col<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
+            extends Vector3<Q, U, Col<Q, U>, Col<SIQuantity, SIUnit>, Col<?, ?>> implements VectorTransposable<Row<Q, U>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -434,6 +436,50 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         protected Vector3.Col<Q, U> instantiateSi(final double xSi, final double ySi, final double zSi)
         {
             return new Vector3.Col<>(xSi, ySi, zSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public Vector3.Col<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+        {
+            Throw.when(siNew.length != 3, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
+                    siNew.length);
+            return new Vector3.Col<SIQuantity, SIUnit>(siNew[0], siNew[1], siNew[3], siUnit);
+        }
+
+        @Override
+        public double si(final int row, final int col) throws IndexOutOfBoundsException
+        {
+            checkRow(row);
+            checkCol(col);
+            return row == 1 ? xSi() : row == 2 ? ySi() : zSi();
+        }
+
+        @Override
+        public Vector1<Q, U> getRowVector(final int row)
+        {
+            checkRow(row);
+            return new Vector1<Q, U>(si(row, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public Vector3.Col<Q, U> getColumnVector(final int col)
+        {
+            checkCol(col);
+            return instantiateSi(xSi(), ySi(), zSi()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public double[] getRowSi(final int row)
+        {
+            checkRow(row);
+            return new double[] {si(row, 1)};
+        }
+
+        @Override
+        public double[] getColumnSi(final int col)
+        {
+            checkCol(col);
+            return new double[] {xSi(), ySi(), zSi()};
         }
 
         @Override
@@ -514,8 +560,8 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param <Q> the quantity type
      * @param <U> the unit type
      */
-    public static class Row<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> extends Vector3<Q, U, Row<Q, U>>
-            implements VectorTransposable<Col<Q, U>>, Hadamard<Vector3.Row<?, ?>, Vector3.Row<SIQuantity, SIUnit>>
+    public static class Row<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
+            extends Vector3<Q, U, Row<Q, U>, Row<SIQuantity, SIUnit>, Row<?, ?>> implements VectorTransposable<Col<Q, U>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -570,6 +616,50 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         protected Vector3.Row<Q, U> instantiateSi(final double xSi, final double ySi, final double zSi)
         {
             return new Vector3.Row<>(xSi, ySi, zSi, getDisplayUnit());
+        }
+
+        @Override
+        public Vector3.Row<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+        {
+            Throw.when(siNew.length != 3, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
+                    siNew.length);
+            return new Vector3.Row<SIQuantity, SIUnit>(siNew[0], siNew[1], siNew[3], siUnit);
+        }
+
+        @Override
+        public double si(final int row, final int col) throws IndexOutOfBoundsException
+        {
+            checkRow(row);
+            checkCol(col);
+            return col == 1 ? xSi() : ySi();
+        }
+
+        @Override
+        public Vector3.Row<Q, U> getRowVector(final int row)
+        {
+            checkRow(row);
+            return instantiateSi(xSi(), ySi(), zSi()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public Vector1<Q, U> getColumnVector(final int col)
+        {
+            checkCol(col);
+            return new Vector1<Q, U>(si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public double[] getRowSi(final int row)
+        {
+            checkRow(row);
+            return new double[] {xSi(), ySi(), zSi()};
+        }
+
+        @Override
+        public double[] getColumnSi(final int col)
+        {
+            checkCol(col);
+            return new double[] {si(1, col)};
         }
 
         @Override
