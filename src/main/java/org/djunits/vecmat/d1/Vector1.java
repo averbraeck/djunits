@@ -136,10 +136,10 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     }
 
     @Override
-    public Q get(final int index) throws IndexOutOfBoundsException
+    public double si(final int index) throws IndexOutOfBoundsException
     {
-        Throw.when(index != 1, IndexOutOfBoundsException.class, "Cannot retrieve Vector1[%d]", index);
-        return x();
+        Throw.when(index != 0, IndexOutOfBoundsException.class, "Cannot retrieve Vector1[%d]", index);
+        return this.xSi;
     }
 
     @Override

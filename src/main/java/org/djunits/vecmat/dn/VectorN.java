@@ -366,9 +366,9 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Q get(final int index) throws IndexOutOfBoundsException
+        public double si(final int index) throws IndexOutOfBoundsException
         {
-            return getDisplayUnit().ofSi(this.dataSi.get(index - 1, 0)).setDisplayUnit(getDisplayUnit());
+            return this.dataSi.get(index, 0);
         }
 
         @Override
@@ -638,9 +638,9 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Q get(final int index) throws IndexOutOfBoundsException
+        public double si(final int index) throws IndexOutOfBoundsException
         {
-            return getDisplayUnit().ofSi(this.dataSi.get(0, index - 1)).setDisplayUnit(getDisplayUnit());
+            return this.dataSi.get(0, index);
         }
 
         @Override

@@ -85,13 +85,13 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
-    public Q get(final int index) throws IndexOutOfBoundsException
+    public double si(final int index) throws IndexOutOfBoundsException
     {
         return switch (index)
         {
-            case 1 -> x();
-            case 2 -> y();
-            case 3 -> z();
+            case 0 -> this.xSi;
+            case 1 -> this.ySi;
+            case 2 -> this.zSi;
             default -> throw new IndexOutOfBoundsException("Cannot retrieve Vector3[" + index + "]");
         };
     }

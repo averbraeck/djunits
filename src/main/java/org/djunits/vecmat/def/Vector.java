@@ -51,12 +51,45 @@ public abstract class Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U
     public abstract boolean isColumnVector();
 
     /**
-     * Retrieve a value from the vector.
+     * Retrieve an si-value from the vector.
+     * @param index the index (0-based) to retrieve the value from
+     * @return the value as a Scalar
+     * @throws IndexOutOfBoundsException in case index is out of bounds
+     */
+    public abstract double si(int index) throws IndexOutOfBoundsException;
+
+    /**
+     * Retrieve an si-value from the vector, based on a 1-valued index.
      * @param index the index (1-based) to retrieve the value from
      * @return the value as a Scalar
      * @throws IndexOutOfBoundsException in case index is out of bounds
      */
-    public abstract Q get(int index) throws IndexOutOfBoundsException;
+    public double msi(final int index) throws IndexOutOfBoundsException
+    {
+        return si(index - 1);
+    }
+
+    /**
+     * Retrieve a value from the vector.
+     * @param index the index (0-based) to retrieve the value from
+     * @return the value as a Scalar
+     * @throws IndexOutOfBoundsException in case index is out of bounds
+     */
+    public Q get(final int index) throws IndexOutOfBoundsException
+    {
+        return getDisplayUnit().ofSi(si(index)).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Retrieve a value from the vector, based on a 1-valued index.
+     * @param index the index (1-based) to retrieve the value from
+     * @return the value as a Scalar
+     * @throws IndexOutOfBoundsException in case index is out of bounds
+     */
+    public Q mget(final int index) throws IndexOutOfBoundsException
+    {
+        return getDisplayUnit().ofSi(si(index - 1)).setDisplayUnit(getDisplayUnit());
+    }
 
     /**
      * Return the vector as an array of scalars.
