@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
 public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q extends Quantity<Q, ?>> implements Identifiable
 {
     /**
-     * Master registry: per concrete Reference subclass we keep a map of id toreference. This prevents name collisions between
+     * Master registry: per concrete Reference subclass we keep a map of id to reference. This prevents name collisions between
      * different absolute quantities.
      */
     @SuppressWarnings("checkstyle:visibilitymodifier")
