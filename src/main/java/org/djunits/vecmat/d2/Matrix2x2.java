@@ -106,6 +106,13 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
+    public Vector2.Col<Q, U> getDiagonalVector() throws IllegalStateException
+    {
+        return new Vector2.Col<Q, U>(this.si(1, 1), this.si(2, 2), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
     public Matrix2x2<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), 2);

@@ -8,7 +8,9 @@ import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.d2.Vector2;
+import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.def.SquareDenseMatrix;
+import org.djunits.vecmat.dn.VectorN;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -105,6 +107,12 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
+    public Vector1<Q, U> getDiagonalVector() throws IllegalStateException
+    {
+        return new Vector1<>(si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
     public Matrix1x1<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), 1);
@@ -163,6 +171,29 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 2, 1);
         return new Vector2.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+    }
+
+    /**
+     * Multiply this matrix with a column vector, resulting in a column vector.
+     * @param otherVec the column vector to multiply with
+     * @return the resulting vector from the multiplication
+     */
+    public Vector3.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> otherVec)
+    {
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
+        return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
+                getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+    }
+
+    /**
+     * Multiply this matrix with a column vector, resulting in a column vector.
+     * @param otherVec the column vector to multiply with
+     * @return the resulting vector from the multiplication
+     */
+    public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> otherVec)
+    {
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), rows(), rows(), 1);
+        return VectorN.Col.of(resultData, getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     @Override

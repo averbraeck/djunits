@@ -46,9 +46,6 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     /** The z value in si-units. */
     private final double zSi;
 
-    /** The display unit. */
-    private U displayUnit;
-
     /**
      * Create a new Vector3 with a unit.
      * @param xInUnit the x-value expressed in the display unit
@@ -121,28 +118,6 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     /**
-     * Return the display unit of this vector.
-     * @return the display unit of this vector
-     */
-    @Override
-    public U getDisplayUnit()
-    {
-        return this.displayUnit;
-    }
-
-    /**
-     * Set a new display unit of this vector.
-     * @param newUnit the new display unit of this vector
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public V setDisplayUnit(final U newUnit)
-    {
-        this.displayUnit = newUnit;
-        return (V) this;
-    }
-
-    /**
      * Return the x-value of the vector in SI or BASE units.
      * @return the x-value of the vector in SI or BASE units
      */
@@ -185,7 +160,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      */
     public Q x()
     {
-        return this.displayUnit.ofSi(this.xSi).setDisplayUnit(this.displayUnit);
+        return getDisplayUnit().ofSi(this.xSi).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -194,7 +169,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      */
     public Q y()
     {
-        return this.displayUnit.ofSi(this.ySi).setDisplayUnit(this.displayUnit);
+        return getDisplayUnit().ofSi(this.ySi).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -203,7 +178,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
      */
     public Q z()
     {
-        return this.displayUnit.ofSi(this.zSi).setDisplayUnit(this.displayUnit);
+        return getDisplayUnit().ofSi(this.zSi).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -239,21 +214,21 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public Q normL1()
     {
-        return this.displayUnit.ofSi(Math.abs(this.xSi) + Math.abs(this.ySi) + Math.abs(this.zSi))
+        return getDisplayUnit().ofSi(Math.abs(this.xSi) + Math.abs(this.ySi) + Math.abs(this.zSi))
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q normL2()
     {
-        return this.displayUnit.ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi + this.zSi * this.zSi))
+        return getDisplayUnit().ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi + this.zSi * this.zSi))
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q normLp(final int p)
     {
-        return this.displayUnit.ofSi(Math.pow(
+        return getDisplayUnit().ofSi(Math.pow(
                 Math.pow(Math.abs(this.xSi), p) + Math.pow(Math.abs(this.ySi), p) + Math.pow(Math.abs(this.zSi), p), 1.0 / p))
                 .setDisplayUnit(getDisplayUnit());
     }
@@ -261,25 +236,25 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public Q normLinf()
     {
-        return this.displayUnit.ofSi(Math2.maxAbs(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.maxAbs(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q mean()
     {
-        return this.displayUnit.ofSi((this.xSi + this.ySi + this.zSi) / 3.0).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi((this.xSi + this.ySi + this.zSi) / 3.0).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q min()
     {
-        return this.displayUnit.ofSi(Math2.min(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.min(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q max()
     {
-        return this.displayUnit.ofSi(Math2.max(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.max(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -291,13 +266,13 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public Q median()
     {
-        return this.displayUnit.ofSi(Math2.median(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.median(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q sum()
     {
-        return this.displayUnit.ofSi(this.xSi + this.ySi + this.zSi).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(this.xSi + this.ySi + this.zSi).setDisplayUnit(getDisplayUnit());
     }
 
     @Override

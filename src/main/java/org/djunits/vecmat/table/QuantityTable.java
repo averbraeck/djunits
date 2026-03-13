@@ -6,7 +6,14 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.vecmat.d1.Matrix1x1;
+import org.djunits.vecmat.d1.Vector1;
+import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d2.Vector2;
+import org.djunits.vecmat.d3.Matrix3x3;
+import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.def.VectorMatrix;
+import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -240,6 +247,139 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new QuantityTable<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+    }
+
+    /**
+     * Convert this QuantityTable to a {@link Matrix1x1}. The shape must be 1 x 1.
+     * @return a {@code Matrix1x1} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 1 x 1
+     */
+    public Matrix1x1<Q, U> asMatrix1x1()
+    {
+        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class,
+                "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
+        return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a {@link Matrix2x2}. The shape must be 2 x 2.
+     * @return a {@code Matrix2x2} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 2 x 2
+     */
+    public Matrix2x2<Q, U> asMatrix2x2()
+    {
+        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
+                "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
+        return Matrix2x2.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a {@link Matrix3x3}. The shape must be 3 x 3.
+     * @return a {@code Matrix3x3} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 3 x 3
+     */
+    public Matrix3x3<Q, U> asMatrix3x3()
+    {
+        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
+                "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
+        return Matrix3x3.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a {@link MatrixNxN}. The shape must be square.
+     * @return a {@code MatrixNxN} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not square
+     */
+    public MatrixNxN<Q, U> asMatrixNxN()
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
+                rows(), cols());
+        return new MatrixNxN<Q, U>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a 1-element column vector. Shape must be 1 x 1.
+     * @return a {@code Vector1} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 1
+     */
+    public Vector1<Q, U> asVector1()
+    {
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
+        final double[] data = si();
+        return new Vector1<Q, U>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a 2-element column vector. Shape must be 2 x 1.
+     * @return a {@code Vector2.Col} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 2 x 1
+     */
+    public Vector2.Col<Q, U> asVector2Col()
+    {
+        Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
+        final double[] data = si();
+        return new Vector2.Col<Q, U>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a 3-element column vector. Shape must be 3 x 1.
+     * @return a {@code Vector3.Col} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 3 x 1
+     */
+    public Vector3.Col<Q, U> asVector3Col()
+    {
+        Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
+        final double[] data = si();
+        return new Vector3.Col<Q, U>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to an N-element column vector. Shape must be N x 1.
+     * @return a {@code VectorN.Col} with identical SI data and display unit
+     * @throws IllegalStateException if {@code cols() != 1}
+     */
+    public VectorN.Col<Q, U> asVectorNCol()
+    {
+        Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
+        return VectorN.Col.ofSi(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a 2-element row vector. Shape must be 1 x 2.
+     * @return a {@code Vector2.Row} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 2
+     */
+    public Vector2.Row<Q, U> asVector2Row()
+    {
+        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
+        final double[] data = si();
+        return new Vector2.Row<Q, U>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to a 3-element row vector. Shape must be 1 x 3.
+     * @return a {@code Vector3.Row} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 3
+     */
+    public Vector3.Row<Q, U> asVector3Row()
+    {
+        Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
+        final double[] data = si();
+        return new Vector3.Row<Q, U>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this QuantityTable to an N-element row vector. Shape must be 1 x N.
+     * @return a {@code VectorN.Row} with identical SI data and display unit
+     * @throws IllegalStateException if {@code rows() != 1}
+     */
+    public VectorN.Row<Q, U> asVectorNRow()
+    {
+        Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
+        return VectorN.Row.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
 }

@@ -1,5 +1,7 @@
 package org.djunits.vecmat.def;
 
+import java.util.Arrays;
+
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
@@ -96,6 +98,29 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
             vSi[row] = this.dataSi[this.order * (row - 1) + col - 1];
         }
         return vSi;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(this.dataSi);
+        return result;
+    }
+
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SquareDenseMatrix<?, ?, ?, ?, ?> other = (SquareDenseMatrix<?, ?, ?, ?, ?>) obj;
+        return Arrays.equals(this.dataSi, other.dataSi);
     }
 
 }

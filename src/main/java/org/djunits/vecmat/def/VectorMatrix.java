@@ -1,7 +1,6 @@
 package org.djunits.vecmat.def;
 
 import java.lang.reflect.Array;
-import java.util.Objects;
 
 import org.djunits.formatter.Format;
 import org.djunits.quantity.Dimensionless;
@@ -14,7 +13,10 @@ import org.djunits.util.Math2;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
+import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.operations.Hadamard;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
+import org.djunits.vecmat.table.QuantityTable;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -392,6 +394,26 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
                 getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));
     }
 
+    /**
+     * Convert this vector or matrix to a {@link MatrixNxM}.
+     * @return a {@code MatrixNxN} with identical SI data and display unit
+     */
+    public MatrixNxM<Q, U> asMatrixNxM()
+    {
+        return new MatrixNxM<Q, U>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector or matrix to a {@link QuantityTable}.
+     * @return a {@code QuantityTable} with identical SI data and display unit
+     */
+    public QuantityTable<Q, U> asQuantityTable()
+    {
+        return new QuantityTable<Q, U>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
     @SuppressWarnings("checkstyle:needbraces")
     @Override
     public String toString(final U withUnit)
@@ -416,26 +438,6 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     public String toString()
     {
         return toString(getDisplayUnit());
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(this.displayUnit);
-    }
-
-    @SuppressWarnings("checkstyle:needbraces")
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        VectorMatrix<?, ?, ?, ?, ?> other = (VectorMatrix<?, ?, ?, ?, ?>) obj;
-        return Objects.equals(this.displayUnit, other.displayUnit);
     }
 
 }

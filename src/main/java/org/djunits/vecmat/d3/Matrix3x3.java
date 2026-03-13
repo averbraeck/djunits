@@ -98,7 +98,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector3.Row<Q, U> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector3.Row<Q, U>(this.si(row, 1), this.si(row, 2), this.si(row, 3), getDisplayUnit().getBaseUnit())
+        return new Vector3.Row<Q, U>(si(row, 1), si(row, 2), si(row, 3), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -106,7 +106,14 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector3.Col<Q, U> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector3.Col<Q, U>(this.si(1, col), this.si(2, col), this.si(3, col), getDisplayUnit().getBaseUnit())
+        return new Vector3.Col<Q, U>(si(1, col), si(2, col), si(3, col), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector3.Col<Q, U> getDiagonalVector() throws IllegalStateException
+    {
+        return new Vector3.Col<Q, U>(si(1, 1), si(2, 2), si(3, 3), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 

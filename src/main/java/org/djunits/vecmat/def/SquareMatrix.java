@@ -1,5 +1,9 @@
 package org.djunits.vecmat.def;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
@@ -86,6 +90,30 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
         }
         SIUnit detSIUnit = new SIUnit(newDim);
         return new SIQuantity(determinantScalar(), detSIUnit);
+    }
+
+    /**
+     * Retrieve the main diagonal of the matrix as a column vector.
+     * @return the main diagonal as a Vector
+     */
+    public abstract Vector<Q, U, ?, ?, ?> getDiagonalVector();
+
+    /**
+     * Retrieve the main diagonal of the matrix as an array of scalars.
+     * @return the main diagonal as a Scalar array
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getDiagonalScalars()
+    {
+        List<Q> result = new ArrayList<>();
+        for (int i = 1; i <= rows(); i++)
+        {
+            result.add(get(i, i));
+        }
+
+        Q sample = result.get(0);
+        Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
+        return result.toArray(array);
     }
 
     /**

@@ -1,8 +1,5 @@
 package org.djunits.vecmat.dn;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
@@ -12,6 +9,9 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.NonInvertibleMatrixException;
+import org.djunits.vecmat.d1.Matrix1x1;
+import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.def.SquareMatrix;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -142,6 +142,15 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         return this.dataSi.cols();
     }
 
+    /**
+     * Return the data grid in SI units.
+     * @return the data grid in SI units
+     */
+    public DataGridSi<?> getDataGrid()
+    {
+        return this.dataSi;
+    }
+
     @Override
     public MatrixNxN<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
     {
@@ -162,11 +171,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         return VectorN.Col.ofSi(this.dataSi.getColArray(col), getDisplayUnit());
     }
 
-    /**
-     * Retrieve the main diagonal of the matrix as a column vector.
-     * @return the main diagonal as a Vector
-     * @throws IllegalStateException in case the matrix is not square
-     */
+    @Override
     public VectorN.Col<Q, U> getDiagonalVector() throws IllegalStateException
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
@@ -178,27 +183,6 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         }
         // n x 1 column-shape
         return VectorN.Col.ofSi(data, getDisplayUnit());
-    }
-
-    /**
-     * Retrieve the main diagonal of the matrix as an array of scalars.
-     * @return the main diagonal as a Scalar array
-     * @throws IllegalStateException in case the matrix is not square
-     */
-    @SuppressWarnings("unchecked")
-    public Q[] getDiagonalScalars() throws IllegalStateException
-    {
-        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
-
-        List<Q> result = new ArrayList<>();
-        for (int i = 1; i <= rows(); i++)
-        {
-            result.add(get(i, i));
-        }
-
-        Q sample = result.get(0);
-        Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
-        return result.toArray(array);
     }
 
     @Override
@@ -258,30 +242,27 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
     }
 
-    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
-
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Objects.hash(this.dataSi);
-        return result;
+        return Objects.hash(this.dataSi);
     }
 
-    @Override
     @SuppressWarnings("checkstyle:needbraces")
+    @Override
     public boolean equals(final Object obj)
     {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
         MatrixNxN<?, ?> other = (MatrixNxN<?, ?>) obj;
         return Objects.equals(this.dataSi, other.dataSi);
     }
+
+    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
 
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.
@@ -338,6 +319,42 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
                 "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new MatrixNxN<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+    }
+
+    /**
+     * Convert this matrix to a {@link Matrix1x1}. The shape must be 1 x 1.
+     * @return a {@code Matrix1x1} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 1 x 1
+     */
+    public Matrix1x1<Q, U> asMatrix1x1()
+    {
+        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class,
+                "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
+        return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this matrix to a {@link Matrix2x2}. The shape must be 2 x 2.
+     * @return a {@code Matrix2x2} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 2 x 2
+     */
+    public Matrix2x2<Q, U> asMatrix2x2()
+    {
+        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
+                "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
+        return Matrix2x2.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Convert this matrix to a {@link Matrix3x3}. The shape must be 3 x 3.
+     * @return a {@code Matrix3x3} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 3 x 3
+     */
+    public Matrix3x3<Q, U> asMatrix3x3()
+    {
+        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
+                "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
+        return Matrix3x3.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
 }

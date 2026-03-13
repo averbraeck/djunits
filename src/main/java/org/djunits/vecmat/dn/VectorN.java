@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
@@ -11,6 +12,8 @@ import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.vecmat.d1.Vector1;
+import org.djunits.vecmat.d2.Vector2;
+import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.def.Vector;
 import org.djunits.vecmat.operations.VectorTransposable;
 import org.djunits.vecmat.storage.DataGridSi;
@@ -147,6 +150,26 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
+    public int hashCode()
+    {
+        return Objects.hash(this.dataSi);
+    }
+
+    @SuppressWarnings("checkstyle:needbraces")
+    @Override
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        VectorN<?, ?, ?, ?, ?> other = (VectorN<?, ?, ?, ?, ?>) obj;
+        return Objects.equals(this.dataSi, other.dataSi);
+    }
+
+    @Override
     public String toString(final U withUnit)
     {
         double[] data = si();
@@ -194,7 +217,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        protected Col(final DataGridSi<?> dataSi, final U displayUnit)
+        public Col(final DataGridSi<?> dataSi, final U displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.cols() != 1, IllegalArgumentException.class,
@@ -404,6 +427,43 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
             return new VectorN.Col<TQ, TU>(this.dataSi, targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
+        /**
+         * Return this matrix as a 1-element column vector. Shape must be 1 x 1.
+         * @return a {@code Vector1} with identical SI data and display unit
+         * @throws IllegalStateException if shape is not 1 x 1
+         */
+        public Vector1<Q, U> asVector1()
+        {
+            Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
+            final double[] data = si();
+            return new Vector1<Q, U>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        /**
+         * Return this matrix as a 2-element column vector. Shape must be 2 x 1.
+         * @return a {@code Vector2.Col} with identical SI data and display unit
+         * @throws IllegalStateException if shape is not 2 x 1
+         */
+        public Vector2.Col<Q, U> asVector2Col()
+        {
+            Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
+            final double[] data = si();
+            return new Vector2.Col<Q, U>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        /**
+         * Return this matrix as a 3-element column vector. Shape must be 3 x 1.
+         * @return a {@code Vector3.Col} with identical SI data and display unit
+         * @throws IllegalStateException if shape is not 3 x 1
+         */
+        public Vector3.Col<Q, U> asVector3Col()
+        {
+            Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
+            final double[] data = si();
+            return new Vector3.Col<Q, U>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(getDisplayUnit());
+        }
+
     }
 
     /**
@@ -431,7 +491,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        protected Row(final DataGridSi<?> dataSi, final U displayUnit)
+        public Row(final DataGridSi<?> dataSi, final U displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.rows() != 1, IllegalArgumentException.class, "Row vector initialized with more than one row");
@@ -637,6 +697,43 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
             return new VectorN.Row<TQ, TU>(this.dataSi, targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        }
+
+        /**
+         * Return this matrix as a 1-element column vector. Shape must be 1 x 1.
+         * @return a {@code Vector1} with identical SI data and display unit
+         * @throws IllegalStateException if shape is not 1 x 1
+         */
+        public Vector1<Q, U> asVector1()
+        {
+            Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
+            final double[] data = si();
+            return new Vector1<Q, U>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        /**
+         * Return this matrix as a 2-element row vector. Shape must be 1 x 2.
+         * @return a {@code Vector2.Row} with identical SI data and display unit
+         * @throws IllegalStateException if shape is not 1 x 2
+         */
+        public Vector2.Row<Q, U> asVector2Row()
+        {
+            Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
+            final double[] data = si();
+            return new Vector2.Row<Q, U>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        /**
+         * Return this matrix as a 3-element row vector. Shape must be 1 x 3.
+         * @return a {@code Vector3.Row} with identical SI data and display unit
+         * @throws IllegalStateException if shape is not 1 x 3
+         */
+        public Vector3.Row<Q, U> asVector3Row()
+        {
+            Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
+            final double[] data = si();
+            return new Vector3.Row<Q, U>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(getDisplayUnit());
         }
 
     }
