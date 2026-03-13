@@ -106,6 +106,18 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
         return this.cols;
     }
 
+    @Override
+    public boolean isDense()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isDouble()
+    {
+        return true;
+    }
+
     /**
      * Check whether the row and column are within bounds.
      * @param row the row number

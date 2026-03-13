@@ -110,8 +110,8 @@ public class SparseDoubleDataSi implements DataGridSi<SparseDoubleDataSi>
      * @param <U> the unit type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseDoubleDataSi(final Q[] sparseData, final int[] indexes,
-            final int rows, final int cols)
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseDoubleDataSi(final Q[] sparseData,
+            final int[] indexes, final int rows, final int cols)
     {
         Throw.whenNull(sparseData, "sparseData");
         Throw.whenNull(indexes, "indexes");
@@ -341,6 +341,18 @@ public class SparseDoubleDataSi implements DataGridSi<SparseDoubleDataSi>
     public int cols()
     {
         return this.cols;
+    }
+
+    @Override
+    public boolean isDense()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isDouble()
+    {
+        return true;
     }
 
     /**

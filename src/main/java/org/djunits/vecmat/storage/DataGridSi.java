@@ -73,6 +73,36 @@ public interface DataGridSi<D extends DataGridSi<D>>
     D instantiateNew(double[] data, int newRows, int newCols);
 
     /**
+     * Return whether the data is dense.
+     * @return whether the data is dense
+     */
+    boolean isDense();
+    
+    /**
+     * Return whether the data is sparse.
+     * @return whether the data is sparse
+     */
+    default boolean isSparse()
+    {
+        return !isDense();
+    }
+
+    /**
+     * Return whether the data is double precision.
+     * @return whether the data is double precision
+     */
+    boolean isDouble();
+    
+    /**
+     * Return whether the data is single precision.
+     * @return whether the data is single precision
+     */
+    default boolean isFloat()
+    {
+        return !isDouble();
+    }
+
+    /**
      * Get the data of a row as a (dense) double array.
      * @param row the row number (0-based)
      * @return a double[] of length cols() with all the row values

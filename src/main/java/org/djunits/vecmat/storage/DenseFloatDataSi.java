@@ -48,6 +48,30 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
     }
 
     /**
+     * Instantiate a data object with one array in row-major format. Note that NO safe copy of the data is stored.
+     * @param data the data in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     */
+    public DenseFloatDataSi(final double[] data, final int rows, final int cols)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
+        Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
+        Throw.when(data.length != rows * cols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", data.length, rows, cols);
+        this.data = new float[data.length];
+        for (int i = 0; i < data.length; i++)
+        {
+            this.data[i] = (float) data[i];
+        }
+        this.rows = rows;
+        this.cols = cols;
+    }
+
+    /**
      * Instantiate a data object with a float[rows][cols]. A safe copy of the data is stored.
      * @param data the data in row-major format
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
@@ -104,6 +128,18 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
     public int cols()
     {
         return this.cols;
+    }
+
+    @Override
+    public boolean isDense()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isDouble()
+    {
+        return false;
     }
 
     /**

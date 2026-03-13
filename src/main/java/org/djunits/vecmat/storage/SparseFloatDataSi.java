@@ -149,8 +149,8 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @param <U> the unit type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[] sparseData, final int[] indexes,
-            final int rows, final int cols)
+    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[] sparseData,
+            final int[] indexes, final int rows, final int cols)
     {
         Throw.whenNull(sparseData, "sparseData");
         Throw.whenNull(indexes, "indexes");
@@ -428,6 +428,18 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
     public int cols()
     {
         return this.cols;
+    }
+
+    @Override
+    public boolean isDense()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isDouble()
+    {
+        return false;
     }
 
     /**
