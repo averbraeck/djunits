@@ -152,16 +152,27 @@ public class Vector3Test
         assertEquals(0.005, v.xSi(), EPS);
         assertEquals(2.0, v.ySi(), EPS);
         assertEquals(0.03, v.zSi(), EPS);
-        assertEquals(0.5, v.get(1).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
-        assertEquals(200.0, v.get(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
-        assertEquals(3.0, v.get(3).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
 
+        assertEquals(0.005, v.si(0), EPS);
+        assertEquals(2.0, v.si(1), EPS);
+        assertEquals(0.03, v.si(2), EPS);
+        assertEquals(0.5, v.get(0).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(200.0, v.get(1).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(3.0, v.get(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+
+        assertEquals(0.005, v.msi(1), EPS);
+        assertEquals(2.0, v.msi(2), EPS);
+        assertEquals(0.03, v.msi(3), EPS);
+        assertEquals(0.5, v.mget(1).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(200.0, v.mget(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(3.0, v.mget(3).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        
         double[] siCopy = v.si();
         siCopy[0] = 12345.0;
         assertEquals(0.005, v.xSi(), EPS, "internal storage not affected");
 
-        assertThrows(IndexOutOfBoundsException.class, () -> v.get(0));
-        assertThrows(IndexOutOfBoundsException.class, () -> v.get(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.get(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.get(3));
     }
 
     /** Verify size, x/y/z quantities, xSi/ySi/zSi, si(), get(index) (Col). */
@@ -174,16 +185,27 @@ public class Vector3Test
         assertEquals(0.005, v.xSi(), EPS);
         assertEquals(2.0, v.ySi(), EPS);
         assertEquals(0.03, v.zSi(), EPS);
-        assertEquals(0.5, v.get(1).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
-        assertEquals(200.0, v.get(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
-        assertEquals(3.0, v.get(3).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+
+        assertEquals(0.005, v.si(0), EPS);
+        assertEquals(2.0, v.si(1), EPS);
+        assertEquals(0.03, v.si(2), EPS);
+        assertEquals(0.5, v.get(0).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(200.0, v.get(1).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(3.0, v.get(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+
+        assertEquals(0.005, v.msi(1), EPS);
+        assertEquals(2.0, v.msi(2), EPS);
+        assertEquals(0.03, v.msi(3), EPS);
+        assertEquals(0.5, v.mget(1).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(200.0, v.mget(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
+        assertEquals(3.0, v.mget(3).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
 
         double[] siCopy = v.si();
         siCopy[1] = 12345.0;
         assertEquals(2.0, v.ySi(), EPS, "internal storage not affected");
 
-        assertThrows(IndexOutOfBoundsException.class, () -> v.get(0));
-        assertThrows(IndexOutOfBoundsException.class, () -> v.get(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(4));
     }
 
     /** Verify iterator order and unit for Row and Col. */
@@ -545,17 +567,17 @@ public class Vector3Test
         var d = Duration.of(2.0, "h");
         Vector3.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.get(1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.get(2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.mget(3).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
 
         Vector3.Row<Length, Length.Unit> c = row(1.0, 2.0, 3.0, Length.Unit.km);
         Vector3.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
-        assertEquals(0.5, sc.get(1).getInUnit(), 1E-6);
-        assertEquals(1.0, sc.get(2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertEquals(0.5, sc.get(0).getInUnit(), 1E-6);
+        assertEquals(1.0, sc.get(1).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
     }
 

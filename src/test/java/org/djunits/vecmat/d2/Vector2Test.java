@@ -1,6 +1,5 @@
 package org.djunits.vecmat.d2;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -95,8 +94,8 @@ public class Vector2Test
     {
         // 5 km and 6 km → SI = 5000 m and 6000 m for col
         Vector2.Col<Length, Length.Unit> c = col(5.0, 6.0, Length.Unit.km);
-        assertAll(() -> assertArrayEquals(new double[] {5000.0, 6000.0}, c.si(), EPS),
-                () -> assertEquals(Length.Unit.km, c.getDisplayUnit(), "display unit preserved"));
+        assertArrayEquals(new double[] {5000.0, 6000.0}, c.si(), EPS);
+        assertEquals(Length.Unit.km, c.getDisplayUnit(), "display unit preserved");
 
         // Factory .of for Col
         Vector2.Col<Length, Length.Unit> cf = Vector2.Col.of(1.2, 3.4, Length.Unit.m);
@@ -104,8 +103,8 @@ public class Vector2Test
 
         // 5 km and 6 km → SI = 5000 m and 6000 m for row
         Vector2.Row<Length, Length.Unit> r = row(5.0, 6.0, Length.Unit.km);
-        assertAll(() -> assertArrayEquals(new double[] {5000.0, 6000.0}, r.si(), EPS),
-                () -> assertEquals(Length.Unit.km, r.getDisplayUnit(), "display unit preserved"));
+        assertArrayEquals(new double[] {5000.0, 6000.0}, r.si(), EPS);
+        assertEquals(Length.Unit.km, r.getDisplayUnit(), "display unit preserved");
 
         // Factory .of for Row
         Vector2.Row<Length, Length.Unit> rf = Vector2.Row.of(10.0, 200.0, Length.Unit.cm);
@@ -144,12 +143,11 @@ public class Vector2Test
     public void testAccessorsAndIndexing()
     {
         Vector2.Row<Length, Length.Unit> v = row(0.5, 200.0, Length.Unit.cm); // SI: 0.005, 2.0
-        assertAll(() -> assertEquals(2, v.size(), "size is 2"), () -> assertEquals(0.005, v.xSi(), EPS),
-                () -> assertEquals(2.0, v.ySi(), EPS),
-                () -> assertEquals(0.5, v.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS,
-                        "x() returns Length with display unit"),
-                () -> assertEquals(200.0, v.y().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS,
-                        "y() returns Length with display unit"));
+        assertEquals(2, v.size(), "size is 2");
+        assertEquals(0.005, v.xSi(), EPS);
+        assertEquals(2.0, v.ySi(), EPS);
+        assertEquals(0.5, v.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "x() returns Length with display unit");
+        assertEquals(200.0, v.y().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "y() returns Length with display unit");
 
         // si() must return a fresh copy (mutating the returned array must not affect the vector)
         double[] siCopy = v.si();
@@ -157,18 +155,35 @@ public class Vector2Test
         assertEquals(0.005, v.xSi(), EPS, "internal storage not affected by external array mutation");
 
         // get(index) with valid and invalid indices
-        assertEquals(v.x().si(), v.get(1).si(), EPS);
-        assertEquals(v.y().si(), v.get(2).si(), EPS);
-        assertThrows(IndexOutOfBoundsException.class, () -> v.get(0));
-        assertThrows(IndexOutOfBoundsException.class, () -> v.get(3));
+        assertEquals(v.x().si(), v.get(0).si(), EPS);
+        assertEquals(v.y().si(), v.get(1).si(), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.get(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.get(2));
+
+        // mget(index) with valid and invalid indices
+        assertEquals(v.x().si(), v.mget(1).si(), EPS);
+        assertEquals(v.y().si(), v.mget(2).si(), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mget(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mget(3));
+
+        // si(index) with valid and invalid indices
+        assertEquals(v.x().si(), v.si(0), EPS);
+        assertEquals(v.y().si(), v.si(1), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(2));
+
+        // msi(index) with valid and invalid indices
+        assertEquals(v.x().si(), v.msi(1), EPS);
+        assertEquals(v.y().si(), v.msi(2), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(3));
 
         Vector2.Col<Length, Length.Unit> w = col(0.5, 200.0, Length.Unit.cm); // SI: 0.005, 2.0
-        assertAll(() -> assertEquals(2, w.size(), "size is 2"), () -> assertEquals(0.005, w.xSi(), EPS),
-                () -> assertEquals(2.0, w.ySi(), EPS),
-                () -> assertEquals(0.5, w.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS,
-                        "x() returns Length with display unit"),
-                () -> assertEquals(200.0, w.y().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS,
-                        "y() returns Length with display unit"));
+        assertEquals(2, w.size(), "size is 2");
+        assertEquals(0.005, w.xSi(), EPS);
+        assertEquals(2.0, w.ySi(), EPS);
+        assertEquals(0.5, w.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "x() returns Length with display unit");
+        assertEquals(200.0, w.y().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "y() returns Length with display unit");
 
         // si() must return a fresh copy (mutating the returned array must not affect the vector)
         double[] siCopyCol = w.si();
@@ -176,10 +191,10 @@ public class Vector2Test
         assertEquals(0.005, w.xSi(), EPS, "internal storage not affected by external array mutation");
 
         // get(index) with valid and invalid indices
-        assertEquals(w.x().si(), w.get(1).si(), EPS);
-        assertEquals(w.y().si(), w.get(2).si(), EPS);
-        assertThrows(IndexOutOfBoundsException.class, () -> w.get(0));
-        assertThrows(IndexOutOfBoundsException.class, () -> w.get(3));
+        assertEquals(w.x().si(), w.si(0), EPS);
+        assertEquals(w.y().si(), w.si(1), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> w.mget(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> w.mget(3));
     }
 
     /**
@@ -196,9 +211,10 @@ public class Vector2Test
         Length secondCol = itCol.next();
         assertFalse(itCol.hasNext());
         assertThrows(NoSuchElementException.class, itCol::next);
-        assertAll(() -> assertEquals(1.0, firstCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS),
-                () -> assertEquals(2.0, secondCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS),
-                () -> assertEquals(v.get(1).si(), firstCol.si(), EPS), () -> assertEquals(v.get(2).si(), secondCol.si(), EPS));
+        assertEquals(1.0, firstCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(2.0, secondCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(v.get(0).si(), firstCol.si(), EPS);
+        assertEquals(v.get(1).si(), secondCol.si(), EPS);
 
         Vector2.Row<Length, Length.Unit> w = row(1.0, 2.0, Length.Unit.km); // SI: 1000, 2000
         Iterator<Length> itRow = w.iterator();
@@ -207,9 +223,10 @@ public class Vector2Test
         Length secondRow = itRow.next();
         assertFalse(itRow.hasNext());
         assertThrows(NoSuchElementException.class, itRow::next);
-        assertAll(() -> assertEquals(1.0, firstRow.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS),
-                () -> assertEquals(2.0, secondRow.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS),
-                () -> assertEquals(w.get(1).si(), firstRow.si(), EPS), () -> assertEquals(w.get(2).si(), secondRow.si(), EPS));
+        assertEquals(1.0, firstRow.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(2.0, secondRow.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(w.get(0).si(), firstRow.si(), EPS);
+        assertEquals(w.get(1).si(), secondRow.si(), EPS);
     }
 
     /**
@@ -221,15 +238,19 @@ public class Vector2Test
     {
         Vector2.Row<Length, Length.Unit> v = row(3.0, 4.0, Length.Unit.m);
         Length[] arrRow = v.getScalarArray();
-        assertAll(() -> assertEquals(2, arrRow.length), () -> assertInstanceOf(Length.class, arrRow[0]),
-                () -> assertInstanceOf(Length.class, arrRow[1]), () -> assertEquals(3.0, arrRow[0].si(), EPS),
-                () -> assertEquals(4.0, arrRow[1].si(), EPS));
+        assertEquals(2, arrRow.length);
+        assertInstanceOf(Length.class, arrRow[0]);
+        assertInstanceOf(Length.class, arrRow[1]);
+        assertEquals(3.0, arrRow[0].si(), EPS);
+        assertEquals(4.0, arrRow[1].si(), EPS);
 
         Vector2.Col<Length, Length.Unit> w = col(3.0, 4.0, Length.Unit.m);
         Length[] arrCol = w.getScalarArray();
-        assertAll(() -> assertEquals(2, arrCol.length), () -> assertInstanceOf(Length.class, arrCol[0]),
-                () -> assertInstanceOf(Length.class, arrCol[1]), () -> assertEquals(3.0, arrCol[0].si(), EPS),
-                () -> assertEquals(4.0, arrCol[1].si(), EPS));
+        assertEquals(2, arrCol.length);
+        assertInstanceOf(Length.class, arrCol[0]);
+        assertInstanceOf(Length.class, arrCol[1]);
+        assertEquals(3.0, arrCol[0].si(), EPS);
+        assertEquals(4.0, arrCol[1].si(), EPS);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -245,15 +266,19 @@ public class Vector2Test
     {
         Vector2.Row<Length, Length.Unit> r = row(1.0, 2.0, Length.Unit.m);
         Vector2.Col<Length, Length.Unit> c = col(1.0, 2.0, Length.Unit.m);
-        assertAll(() -> assertEquals(1, r.rows()), () -> assertEquals(2, r.cols()), () -> assertFalse(r.isColumnVector()),
-                () -> assertEquals(2, c.rows()), () -> assertEquals(1, c.cols()), () -> assertTrue(c.isColumnVector()));
+        assertEquals(1, r.rows());
+        assertEquals(2, r.cols());
+        assertFalse(r.isColumnVector());
+        assertEquals(2, c.rows());
+        assertEquals(1, c.cols());
+        assertTrue(c.isColumnVector());
 
         Vector2.Col<Length, Length.Unit> rt = r.transpose();
         Vector2.Row<Length, Length.Unit> ct = c.transpose();
-        assertAll(() -> assertArrayEquals(r.si(), rt.si(), EPS, "Row→Col preserves SI"),
-                () -> assertEquals(r.getDisplayUnit(), rt.getDisplayUnit()),
-                () -> assertArrayEquals(c.si(), ct.si(), EPS, "Col→Row preserves SI"),
-                () -> assertEquals(c.getDisplayUnit(), ct.getDisplayUnit()));
+        assertArrayEquals(r.si(), rt.si(), EPS, "Row→Col preserves SI");
+        assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
+        assertArrayEquals(c.si(), ct.si(), EPS, "Col→Row preserves SI");
+        assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -318,18 +343,20 @@ public class Vector2Test
     public void testStatistics()
     {
         Vector2.Col<Length, Length.Unit> v = col(1.0, 3.0, Length.Unit.m); // SI: 1, 3
-        assertAll(() -> assertEquals(1.0, v.min().si(), EPS), () -> assertEquals(3.0, v.max().si(), EPS),
-                () -> assertEquals(2.0, v.mean().si(), EPS),
-                () -> assertEquals(2.0, v.median().si(), EPS, "median of 2-point set = mean"),
-                () -> assertEquals(3.0, v.mode().si(), EPS, "mode defaults to max"),
-                () -> assertEquals(4.0, v.sum().si(), EPS));
+        assertEquals(1.0, v.min().si(), EPS);
+        assertEquals(3.0, v.max().si(), EPS);
+        assertEquals(2.0, v.mean().si(), EPS);
+        assertEquals(2.0, v.median().si(), EPS, "median of 2-point set = mean");
+        assertEquals(3.0, v.mode().si(), EPS, "mode defaults to max");
+        assertEquals(4.0, v.sum().si(), EPS);
 
         Vector2.Row<Length, Length.Unit> w = row(1.0, 3.0, Length.Unit.m); // SI: 1, 3
-        assertAll(() -> assertEquals(1.0, w.min().si(), EPS), () -> assertEquals(3.0, w.max().si(), EPS),
-                () -> assertEquals(2.0, w.mean().si(), EPS),
-                () -> assertEquals(2.0, w.median().si(), EPS, "median of 2-point set = mean"),
-                () -> assertEquals(3.0, w.mode().si(), EPS, "mode defaults to max"),
-                () -> assertEquals(4.0, w.sum().si(), EPS));
+        assertEquals(1.0, w.min().si(), EPS);
+        assertEquals(3.0, w.max().si(), EPS);
+        assertEquals(2.0, w.mean().si(), EPS);
+        assertEquals(2.0, w.median().si(), EPS, "median of 2-point set = mean");
+        assertEquals(3.0, w.mode().si(), EPS, "mode defaults to max");
+        assertEquals(4.0, w.sum().si(), EPS);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -348,19 +375,19 @@ public class Vector2Test
     {
         Vector2.Row<Length, Length.Unit> v = row(3.0, 4.0, Length.Unit.m); // SI: 3, 4
         // L2 = 5; Linf = 4; L1 = 7; Lp(p=3) = (3^3 + 4^3)^(1/3)
-        assertAll(() -> assertEquals(v.normL2().si(), v.norm().si(), EPS, "norm() delegates to normL2()"),
-                () -> assertEquals(7.0, v.normL1().si(), EPS, "L1 = |3| + |4| = 7"),
-                () -> assertEquals(5.0, v.normL2().si(), EPS),
-                () -> assertEquals(Math.cbrt(27.0 + 64.0), v.normLp(3).si(), EPS),
-                () -> assertEquals(4.0, v.normLinf().si(), EPS));
+        assertEquals(v.normL2().si(), v.norm().si(), EPS, "norm() delegates to normL2()");
+        assertEquals(7.0, v.normL1().si(), EPS, "L1 = |3| + |4| = 7");
+        assertEquals(5.0, v.normL2().si(), EPS);
+        assertEquals(Math.cbrt(27.0 + 64.0), v.normLp(3).si(), EPS);
+        assertEquals(4.0, v.normLinf().si(), EPS);
 
         Vector2.Col<Length, Length.Unit> w = col(3.0, 4.0, Length.Unit.m); // SI: 3, 4
         // L2 = 5; Linf = 4; L1 = 7; Lp(p=3) = (3^3 + 4^3)^(1/3)
-        assertAll(() -> assertEquals(w.normL2().si(), w.norm().si(), EPS, "norm() delegates to normL2()"),
-                () -> assertEquals(7.0, w.normL1().si(), EPS, "L1 = |3| + |4| = 7"),
-                () -> assertEquals(5.0, w.normL2().si(), EPS),
-                () -> assertEquals(Math.cbrt(27.0 + 64.0), w.normLp(3).si(), EPS),
-                () -> assertEquals(4.0, w.normLinf().si(), EPS));
+        assertEquals(w.normL2().si(), w.norm().si(), EPS, "norm() delegates to normL2()");
+        assertEquals(7.0, w.normL1().si(), EPS, "L1 = |3| + |4| = 7");
+        assertEquals(5.0, w.normL2().si(), EPS);
+        assertEquals(Math.cbrt(27.0 + 64.0), w.normLp(3).si(), EPS);
+        assertEquals(4.0, w.normLinf().si(), EPS);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -385,13 +412,13 @@ public class Vector2Test
 
         // elementwise multiply → SI: [2*1000, 4*2000] = [2000, 8000]; unit: m ⊕ km
         Vector2.Col<SIQuantity, SIUnit> mul = a.multiplyElements(b);
-        assertAll(() -> assertArrayEquals(new double[] {2000.0, 8000.0}, mul.si(), EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit()));
+        assertArrayEquals(new double[] {2000.0, 8000.0}, mul.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         // elementwise divide → SI: [2/1000, 4/2000] = [0.002, 0.002]; unit: m ⊖ km
         Vector2.Col<SIQuantity, SIUnit> div = a.divideElements(b);
-        assertAll(() -> assertArrayEquals(new double[] {0.002, 0.002}, div.si(), EPS),
-                () -> assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit()));
+        assertArrayEquals(new double[] {0.002, 0.002}, div.si(), EPS);
+        assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
 
     /**
@@ -412,13 +439,13 @@ public class Vector2Test
 
         // elementwise multiply → SI: [2*1000, 4*2000] = [2000, 8000]; unit: m ⊕ km
         Vector2.Row<SIQuantity, SIUnit> mul = a.multiplyElements(b);
-        assertAll(() -> assertArrayEquals(new double[] {2000.0, 8000.0}, mul.si(), EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit()));
+        assertArrayEquals(new double[] {2000.0, 8000.0}, mul.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         // elementwise divide → SI: [2/1000, 4/2000] = [0.002, 0.002]; unit: m ⊖ km
         Vector2.Row<SIQuantity, SIUnit> div = a.divideElements(b);
-        assertAll(() -> assertArrayEquals(new double[] {0.002, 0.002}, div.si(), EPS),
-                () -> assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit()));
+        assertArrayEquals(new double[] {0.002, 0.002}, div.si(), EPS);
+        assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -435,8 +462,8 @@ public class Vector2Test
         Vector2.Row<Length, Length.Unit> r = row(1.0, 2.0, Length.Unit.m); // SI: [1, 2]
         Vector2.Col<Length, Length.Unit> c = col(5.0, 6.0, Length.Unit.km); // SI: [5000, 6000]
         SIQuantity dot = r.multiply(c); // 1*5000 + 2*6000 = 17000
-        assertAll(() -> assertEquals(17_000.0, dot.si(), EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), dot.siUnit()));
+        assertEquals(17_000.0, dot.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), dot.siUnit());
     }
 
     /**
@@ -452,8 +479,8 @@ public class Vector2Test
         // Outer product:
         // [1000*3, 1000*4,
         // 2000*3, 2000*4] = [3000, 4000, 6000, 8000]
-        assertAll(() -> assertArrayEquals(new double[] {3000.0, 4000.0, 6000.0, 8000.0}, m.si(), EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.km.siUnit(), Length.Unit.m.siUnit()), m.getDisplayUnit().siUnit()));
+        assertArrayEquals(new double[] {3000.0, 4000.0, 6000.0, 8000.0}, m.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.km.siUnit(), Length.Unit.m.siUnit()), m.getDisplayUnit().siUnit());
     }
 
     /**
@@ -466,8 +493,8 @@ public class Vector2Test
         Vector2.Row<Length, Length.Unit> r = row(1.0, 2.0, Length.Unit.m); // [1,2]
         Matrix2x2<Length, Length.Unit> a = Matrix2x2.of(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km); // B in km
         Vector2.Col<SIQuantity, SIUnit> res = r.multiply(a); // [1,2]*[[5k,6k],[7k,8k]] = [19k, 22k] ⇒ SI [19000,22000]
-        assertAll(() -> assertArrayEquals(new double[] {19_000.0, 22_000.0}, res.si(), EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), res.getDisplayUnit()));
+        assertArrayEquals(new double[] {19_000.0, 22_000.0}, res.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), res.getDisplayUnit());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -483,8 +510,8 @@ public class Vector2Test
     {
         Vector2.Col<Length, Length.Unit> v = col(1.0, 2.0, Length.Unit.km);
         Vector2.Col<Length, Length.Unit> asMetersCol = v.as(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, asMetersCol.getDisplayUnit()),
-                () -> assertArrayEquals(v.si(), asMetersCol.si(), EPS, "SI storage must be unchanged"));
+        assertEquals(Length.Unit.m, asMetersCol.getDisplayUnit());
+        assertArrayEquals(v.si(), asMetersCol.si(), EPS, "SI storage must be unchanged");
 
         // seconds has different SI dimension; must fail
         SIUnit second = SIUnit.of("s");
@@ -492,8 +519,8 @@ public class Vector2Test
 
         Vector2.Row<Length, Length.Unit> w = row(1.0, 2.0, Length.Unit.km);
         Vector2.Row<Length, Length.Unit> asMetersRow = w.as(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, asMetersRow.getDisplayUnit()),
-                () -> assertArrayEquals(w.si(), asMetersRow.si(), EPS, "SI storage must be unchanged"));
+        assertEquals(Length.Unit.m, asMetersRow.getDisplayUnit());
+        assertArrayEquals(w.si(), asMetersRow.si(), EPS, "SI storage must be unchanged");
 
         // seconds has different SI dimension; must fail
         assertThrows(IllegalArgumentException.class, () -> w.as(second));
@@ -514,11 +541,13 @@ public class Vector2Test
         Vector2.Row<Length, Length.Unit> r2 = row(1.0, 2.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
         Vector2.Col<Length, Length.Unit> c1 = col(1.0, 2.0, Length.Unit.m);
 
-        assertAll(() -> assertEquals(r1, r1, "reflexive"), () -> assertEquals(r1.hashCode(), r1.hashCode(), "hash stable"),
-                () -> assertEquals(r1, r2, "equal SI values despite different original display units"),
-                () -> assertEquals(r1.hashCode(), r2.hashCode(), "hash equal for equal SI"),
-                () -> assertNotEquals(r1, c1, "Row not equal to Col (different classes)"), () -> assertNotEquals(r1, null),
-                () -> assertNotEquals(r1, "not a vector"));
+        assertEquals(r1, r1, "reflexive");
+        assertEquals(r1.hashCode(), r1.hashCode(), "hash stable");
+        assertEquals(r1, r2, "equal SI values despite different original display units");
+        assertEquals(r1.hashCode(), r2.hashCode(), "hash equal for equal SI");
+        assertNotEquals(r1, c1, "Row not equal to Col (different classes)");
+        assertNotEquals(r1, null);
+        assertNotEquals(r1, "not a vector");
     }
 
     /**
@@ -531,16 +560,16 @@ public class Vector2Test
         Vector2.Col<Length, Length.Unit> c = col(1.0, 2.0, Length.Unit.km);
         String s1C = c.toString();
         String s2C = c.toString(Length.Unit.m);
-        assertAll(() -> assertTrue(s1C.startsWith("Col["), "orientation tag"),
-                () -> assertTrue(s1C.contains("km"), "contains display unit abbreviation"),
-                () -> assertTrue(s2C.contains("m"), "toString(withUnit) uses the provided unit"));
+        assertTrue(s1C.startsWith("Col["), "orientation tag");
+        assertTrue(s1C.contains("km"), "contains display unit abbreviation");
+        assertTrue(s2C.contains("m"), "toString(withUnit) uses the provided unit");
 
         Vector2.Row<Length, Length.Unit> r = row(1.0, 2.0, Length.Unit.km);
         String s1R = r.toString();
         String s2R = r.toString(Length.Unit.m);
-        assertAll(() -> assertTrue(s1R.startsWith("Row["), "orientation tag"),
-                () -> assertTrue(s1R.contains("km"), "contains display unit abbreviation"),
-                () -> assertTrue(s2R.contains("m"), "toString(withUnit) uses the provided unit"));
+        assertTrue(s1R.startsWith("Row["), "orientation tag");
+        assertTrue(s1R.contains("km"), "contains display unit abbreviation");
+        assertTrue(s2R.contains("m"), "toString(withUnit) uses the provided unit");
     }
 
     /**
@@ -552,15 +581,15 @@ public class Vector2Test
     {
         Vector2.Row<Length, Length.Unit> r = row(1.0, 2.0, Length.Unit.km);
         Vector2.Row<Length, Length.Unit> returnedR = r.setDisplayUnit(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, r.getDisplayUnit()),
-                () -> assertEquals(r, returnedR, "fluent returns this"),
-                () -> assertTrue(r.isRelative(), "Length is a relative quantity"));
+        assertEquals(Length.Unit.m, r.getDisplayUnit());
+        assertEquals(r, returnedR, "fluent returns this");
+        assertTrue(r.isRelative(), "Length is a relative quantity");
 
         Vector2.Col<Length, Length.Unit> c = col(1.0, 2.0, Length.Unit.km);
         Vector2.Col<Length, Length.Unit> returnedC = c.setDisplayUnit(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, c.getDisplayUnit()),
-                () -> assertEquals(c, returnedC, "fluent returns this"),
-                () -> assertTrue(c.isRelative(), "Length is a relative quantity"));
+        assertEquals(Length.Unit.m, c.getDisplayUnit());
+        assertEquals(c, returnedC, "fluent returns this");
+        assertTrue(c.isRelative(), "Length is a relative quantity");
     }
 
     /**
@@ -573,15 +602,15 @@ public class Vector2Test
         var d = Duration.of(2.0, "h");
         Vector2.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.get(1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.get(2).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
 
         Vector2.Row<Length, Length.Unit> c = row(1.0, 2.0, Length.Unit.km);
         Vector2.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
-        assertEquals(0.5, sc.get(1).getInUnit(), 1E-6);
-        assertEquals(1.0, sc.get(2).getInUnit(), 1E-6);
+        assertEquals(0.5, sc.mget(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sc.mget(2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
     }
 }

@@ -210,16 +210,46 @@ public final class VectorNTest
         final VectorN.Col<Length, Length.Unit> c = col(new double[] {5, 6, 7, 8}, Length.Unit.m);
 
         // Valid indices
-        assertEquals(1.0, r.get(1).si(), EPS, "row get(1)");
-        assertEquals(4.0, r.get(4).si(), EPS, "row get(4)");
-        assertEquals(5.0, c.get(1).si(), EPS, "col get(1)");
-        assertEquals(8.0, c.get(4).si(), EPS, "col get(4)");
+        assertEquals(1.0, r.get(0).si(), EPS, "row get(0)");
+        assertEquals(4.0, r.get(3).si(), EPS, "row get(3)");
+        assertEquals(5.0, c.get(0).si(), EPS, "col get(0)");
+        assertEquals(8.0, c.get(3).si(), EPS, "col get(3)");
+
+        assertEquals(1.0, r.mget(1).si(), EPS, "row mget(1)");
+        assertEquals(4.0, r.mget(4).si(), EPS, "row mget(4)");
+        assertEquals(5.0, c.mget(1).si(), EPS, "col mget(1)");
+        assertEquals(8.0, c.mget(4).si(), EPS, "col mget(4)");
+        
+        assertEquals(1.0, r.si(0), EPS, "row si(0)");
+        assertEquals(4.0, r.si(3), EPS, "row si(3)");
+        assertEquals(5.0, c.si(0), EPS, "col si(0)");
+        assertEquals(8.0, c.si(3), EPS, "col si(3)");
+        
+        assertEquals(1.0, r.msi(1), EPS, "row msi(1)");
+        assertEquals(4.0, r.msi(4), EPS, "row msi(4)");
+        assertEquals(5.0, c.msi(1), EPS, "col msi(1)");
+        assertEquals(8.0, c.msi(4), EPS, "col msi(4)");
 
         // Invalid indices
-        assertThrows(IndexOutOfBoundsException.class, () -> r.get(0), "row get(0) must throw");
-        assertThrows(IndexOutOfBoundsException.class, () -> r.get(5), "row get(5) must throw");
-        assertThrows(IndexOutOfBoundsException.class, () -> c.get(0), "col get(0) must throw");
-        assertThrows(IndexOutOfBoundsException.class, () -> c.get(5), "col get(5) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> r.get(-1), "row get(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> r.get(4), "row get(5) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.get(-1), "col get(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.get(4), "col get(5) must throw");
+        
+        assertThrows(IndexOutOfBoundsException.class, () -> r.si(-1), "row si(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> r.si(4), "row si(5) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.si(-1), "col si(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.si(4), "col si(5) must throw");
+
+        assertThrows(IndexOutOfBoundsException.class, () -> r.mget(0), "row mget(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> r.mget(5), "row mget(5) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.mget(0), "col mget(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.mget(5), "col mget(5) must throw");
+        
+        assertThrows(IndexOutOfBoundsException.class, () -> r.msi(0), "row msi(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> r.msi(5), "row msi(5) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.msi(0), "col msi(0) must throw");
+        assertThrows(IndexOutOfBoundsException.class, () -> c.msi(5), "col msi(5) must throw");
     }
 
     // =====================================================================================
@@ -524,17 +554,17 @@ public final class VectorNTest
         var d = Duration.of(2.0, "h");
         VectorN.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.get(1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.get(2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.mget(3).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
 
         VectorN.Row<Length, Length.Unit> c = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
         VectorN.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
-        assertEquals(0.5, sc.get(1).getInUnit(), 1E-6);
-        assertEquals(1.0, sc.get(2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(3).getInUnit(), 1E-6);
+        assertEquals(0.5, sc.get(0).getInUnit(), 1E-6);
+        assertEquals(1.0, sc.get(1).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.get(2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
     }
 
