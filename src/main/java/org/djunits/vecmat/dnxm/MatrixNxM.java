@@ -283,8 +283,8 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     /**
-     * Multiply this vector or matrix with a MatrixNxN, resulting in a MatrixNxM. The multiplication is a (MxN) x (NxN) matrix
-     * multiplication resulting in an (MxN) matrix.
+     * Multiply this vector or matrix with a MatrixNxM, resulting in a MatrixNxM. The multiplication is a (NxM) x (MxP) matrix
+     * multiplication resulting in an (NxP) matrix.
      * @param matrix the matrix to multiply with
      * @return a MatrixNxM of an SIQuantity as the result of the matrix multiplication
      * @throws IllegalArgumentException when the number of columns of this matrix does not equal the number of rows of the
@@ -294,7 +294,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     {
         Throw.whenNull(matrix, "matrix");
         Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), matrix.rows());
+                "Matrix multiplication of (NxM) x (MxM): numbers for M do not match, %d != %d", cols(), matrix.rows());
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         if (matrix.getDataGrid().isDouble())
