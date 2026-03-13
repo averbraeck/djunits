@@ -17,10 +17,10 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
-import org.djunits.vecmat.AbstractMatrix;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.def.SquareDenseMatrix;
 import org.djunits.vecmat.def.SquareMatrix;
+import org.djunits.vecmat.def.VectorMatrix;
 import org.djunits.vecmat.operations.Hadamard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The tests aim for 100% method and branch coverage of Matrix3x3 and inherited/default behavior from:
  * <ul>
- * <li>{@link AbstractMatrix}</li>
+ * <li>{@link VectorMatrix}</li>
  * <li>{@link SquareDenseMatrix}</li>
  * <li>{@link SquareMatrix}</li>
  * <li>{@link Hadamard}</li>
@@ -139,7 +139,8 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link AbstractMatrix#rows()}, {@link AbstractMatrix#cols()}, {@link AbstractMatrix#get(int, int)} and relative/absolute flag.
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute
+     * flag.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -152,7 +153,7 @@ public class Matrix3x3Test
     }
 
     /**
-     * Verify that {@link AbstractMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
+     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -169,7 +170,7 @@ public class Matrix3x3Test
     }
 
     /**
-     * Verify {@link AbstractMatrix#toString()} and {@link AbstractMatrix#toString(UnitInterface)}.
+     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)}.
      */
     @Test
     @DisplayName("toString() and toString(unit) contain unit abbreviation")
@@ -440,7 +441,7 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify scalar array extraction helpers on {@link AbstractMatrix}.
+     * Verify scalar array extraction helpers on {@link VectorMatrix}.
      */
     @Test
     @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
@@ -448,7 +449,7 @@ public class Matrix3x3Test
     {
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
 
-        Length[][] scalars = m.getScalars();
+        Length[][] scalars = m.getScalarGrid();
         Length[] row2 = m.getRowScalars(2);
         Length[] col3 = m.getColumnScalars(3);
         Length[] diag = m.getDiagonalScalars();
@@ -477,9 +478,9 @@ public class Matrix3x3Test
     {
         Matrix3x3<Length, Length.Unit> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.cm);
 
-        assertAll(() -> assertNotNull(m.getRow(1), "getRow(1) non-null"),
-                () -> assertNotNull(m.getColumn(2), "getColumn(2) non-null"),
-                () -> assertNotNull(m.getDiagonal(), "getDiagonal() non-null"));
+        assertAll(() -> assertNotNull(m.getRowVector(1), "getRow(1) non-null"),
+                () -> assertNotNull(m.getColumnVector(2), "getColumn(2) non-null"),
+                () -> assertNotNull(m.getDiagonalVector(), "getDiagonal() non-null"));
     }
 
     // ------------------------------------------------------------------------------------
@@ -487,7 +488,7 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify equality and hashCode semantics across {@link AbstractMatrix}, {@link SquareDenseMatrix}, and {@link Matrix3x3}.
+     * Verify equality and hashCode semantics across {@link VectorMatrix}, {@link SquareDenseMatrix}, and {@link Matrix3x3}.
      */
     @Test
     @DisplayName("equals / hashCode")

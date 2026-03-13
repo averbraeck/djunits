@@ -284,14 +284,14 @@ public class MatrixNxMTest
     public void testAsMatrixConversions()
     {
         MatrixNxM<Length, Length.Unit> m22 = ofSi(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.m);
-        Matrix2x2<Length, Length.Unit> mm22 = m22.asMatrix2x2(Length.Unit.km);
+        Matrix2x2<Length, Length.Unit> mm22 = m22.asMatrix2x2();
         assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, mm22.si(), EPS);
 
         MatrixNxM<Length, Length.Unit> m33 = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3, Length.Unit.m);
-        Matrix3x3<Length, Length.Unit> mm33 = m33.asMatrix3x3(Length.Unit.km);
+        Matrix3x3<Length, Length.Unit> mm33 = m33.asMatrix3x3();
         assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, mm33.si(), EPS);
 
-        MatrixNxN<Length, Length.Unit> mxn = m33.asMatrixNxN(Length.Unit.km);
+        MatrixNxN<Length, Length.Unit> mxn = m33.asMatrixNxN();
         assertEquals(3, mxn.rows());
     }
 
@@ -302,33 +302,33 @@ public class MatrixNxMTest
     {
         // Col
         MatrixNxM<Length, Length.Unit> c21 = ofSi(new double[] {1000, 2000}, 2, 1, Length.Unit.km);
-        Vector2.Col<Length, Length.Unit> vc2 = c21.asVector2Col(Length.Unit.km);
+        Vector2.Col<Length, Length.Unit> vc2 = c21.asVector2Col();
         assertAll(() -> assertEquals(2, vc2.size()), () -> assertArrayEquals(new double[] {1000, 2000}, vc2.si(), EPS));
 
         MatrixNxM<Length, Length.Unit> c31 = ofSi(new double[] {1, 2, 3}, 3, 1, Length.Unit.m);
-        Vector3.Col<Length, Length.Unit> vc3 = c31.asVector3Col(Length.Unit.m);
+        Vector3.Col<Length, Length.Unit> vc3 = c31.asVector3Col();
         assertArrayEquals(new double[] {1, 2, 3}, vc3.si(), EPS);
 
-        VectorN.Col<Length, Length.Unit> vcn = c31.asVectorNCol(Length.Unit.m);
+        VectorN.Col<Length, Length.Unit> vcn = c31.asVectorNCol();
         assertEquals(3, vcn.size());
 
         // Row
         MatrixNxM<Length, Length.Unit> r12 = ofSi(new double[] {1000, 2000}, 1, 2, Length.Unit.km);
-        Vector2.Row<Length, Length.Unit> vr2 = r12.asVector2Row(Length.Unit.km);
+        Vector2.Row<Length, Length.Unit> vr2 = r12.asVector2Row();
         assertArrayEquals(new double[] {1000, 2000}, vr2.si(), EPS);
 
         MatrixNxM<Length, Length.Unit> r13 = ofSi(new double[] {1, 2, 3}, 1, 3, Length.Unit.m);
-        Vector3.Row<Length, Length.Unit> vr3 = r13.asVector3Row(Length.Unit.m);
+        Vector3.Row<Length, Length.Unit> vr3 = r13.asVector3Row();
         assertArrayEquals(new double[] {1, 2, 3}, vr3.si(), EPS);
 
-        VectorN.Row<Length, Length.Unit> vrn = r13.asVectorNRow(Length.Unit.m);
+        VectorN.Row<Length, Length.Unit> vrn = r13.asVectorNRow();
         assertEquals(3, vrn.size());
 
         // Negative shape checks
         MatrixNxM<Length, Length.Unit> bad = ofSi(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.m);
-        assertAll(() -> assertThrows(IllegalStateException.class, () -> bad.asVector2Col(Length.Unit.m)),
-                () -> assertThrows(IllegalStateException.class, () -> bad.asVector3Row(Length.Unit.m)),
-                () -> assertThrows(IllegalStateException.class, () -> bad.asVectorNRow(Length.Unit.m)) // rows()!=1
+        assertAll(() -> assertThrows(IllegalStateException.class, () -> bad.asVector2Col()),
+                () -> assertThrows(IllegalStateException.class, () -> bad.asVector3Row()),
+                () -> assertThrows(IllegalStateException.class, () -> bad.asVectorNRow()) // rows()!=1
         );
     }
 
@@ -342,7 +342,7 @@ public class MatrixNxMTest
     public void testScalarExtraction()
     {
         MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        Length[][] scalars = m.getScalars();
+        Length[][] scalars = m.getScalarGrid();
         assertAll(() -> assertEquals(3, scalars.length), () -> assertEquals(2, scalars[0].length),
                 () -> assertEquals(1.0, scalars[0][0].si(), EPS), () -> assertEquals(6.0, scalars[2][1].si(), EPS));
 
@@ -351,12 +351,6 @@ public class MatrixNxMTest
         assertAll(() -> assertEquals(2, row2.length), () -> assertEquals(3.0, row2[0].si(), EPS),
                 () -> assertEquals(4.0, row2[1].si(), EPS), () -> assertEquals(3, col2.length),
                 () -> assertEquals(2.0, col2[0].si(), EPS), () -> assertEquals(6.0, col2[2].si(), EPS));
-
-        assertThrows(IllegalStateException.class, () -> m.getDiagonalScalars());
-        MatrixNxM<Length, Length.Unit> m33 = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3, Length.Unit.m);
-        Length[] diag3 = m33.getDiagonalScalars();
-        assertAll(() -> assertEquals(3, diag3.length), () -> assertEquals(1.0, diag3[0].si(), EPS),
-                () -> assertEquals(5.0, diag3[1].si(), EPS), () -> assertEquals(9.0, diag3[2].si(), EPS));
     }
 
     /** Verify equals/hashCode. */

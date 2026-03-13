@@ -142,7 +142,8 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute flag.
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute
+     * flag.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -174,8 +175,8 @@ public class Matrix2x2Test
     }
 
     /**
-     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)} for coverage. We assert the unit abbreviation
-     * is present; we do not depend on exact formatting of numbers.
+     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)} for coverage. We assert the unit
+     * abbreviation is present; we do not depend on exact formatting of numbers.
      */
     @Test
     @DisplayName("toString() and toString(unit) contain unit abbreviation")
@@ -220,8 +221,7 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@link org.djunits.vecmat.def.Matrix#negate()},
-     * {@link org.djunits.vecmat.def.Matrix#abs()}, and
+     * Verify {@link org.djunits.vecmat.def.Matrix#negate()}, {@link org.djunits.vecmat.def.Matrix#abs()}, and
      * {@link org.djunits.vecmat.def.Matrix#scaleBy(double)}.
      */
     @Test
@@ -442,7 +442,8 @@ public class Matrix2x2Test
 
     // ------------------------------------------------------------------------------------
     // getScalars / getRowScalars / getColumnScalars / getDiagonalScalars
-    // getRow / getColumn / getDiagonal (spec-compliant expectations)
+    // getRowVector / getColumnVector / getDiagonalVector (spec-compliant expectations)
+    // getRowSi / getColumnSi / getDiagonalSi (spec-compliant expectations)
     // ------------------------------------------------------------------------------------
 
     /**
@@ -469,20 +470,19 @@ public class Matrix2x2Test
     /**
      * Verify vector extraction helpers ({@code getRow}, {@code getColumn}, {@code getDiagonal}) behave per spec.
      * <p>
-     * This test expects non-null vectors with the correct content. If the implementation is still a TODO returning
-     * {@code null}, this test (by design) will fail to flag the missing functionality.
+     * This test expects non-null vectors with the correct content.
      */
     @Test
-    @DisplayName("getRow / getColumn / getDiagonal return the expected vectors (spec)")
+    @DisplayName("getRowVector / getColumnVector / getDiagonalVector return the expected vectors (spec)")
     public void testVectorExtractionSpec()
     {
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.cm); // different display unit
 
         // The following calls are expected to return non-null vectors of appropriate type and unit.
         // If not implemented, they should cause this test to fail.
-        assertAll(() -> assertNotNull(m.getRow(1), "getRow(1) must return a non-null vector"),
-                () -> assertNotNull(m.getColumn(2), "getColumn(2) must return a non-null vector"),
-                () -> assertNotNull(m.getDiagonal(), "getDiagonal() must return a non-null vector"));
+        assertAll(() -> assertNotNull(m.getRowVector(1), "getRow(1) must return a non-null vector"),
+                () -> assertNotNull(m.getColumnVector(2), "getColumn(2) must return a non-null vector"),
+                () -> assertNotNull(m.getDiagonalVector(), "getDiagonal() must return a non-null vector"));
 
         // Optional (if those vectors expose si() or value accessors, verify content)
         // Here we only assert that the calls succeed and return non-null handles per spec.
@@ -503,10 +503,12 @@ public class Matrix2x2Test
         Matrix2x2<Length, Length.Unit> a2 = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
         Matrix2x2<Length, Length.Unit> b = ofSi(new double[] {1, 2, 3, 5}, Length.Unit.m);
 
-        assertAll(() -> assertEquals(a1, a1, "reflexive"), () -> assertEquals(a1, a2, "equal contents"),
-                () -> assertEquals(a1.hashCode(), a2.hashCode(), "hashCode equal"),
-                () -> assertNotEquals(a1, b, "different contents"), () -> assertNotEquals(a1, null, "not equal to null"),
-                () -> assertNotEquals(a1, "other type", "not equal to other type"));
+        assertEquals(a1, a1, "reflexive");
+        assertEquals(a1, a2, "equal contents");
+        assertEquals(a1.hashCode(), a2.hashCode(), "hashCode equal");
+        assertNotEquals(a1, b, "different contents");
+        assertNotEquals(a1, null, "not equal to null");
+        assertNotEquals(a1, "other type", "not equal to other type");
     }
 
     // ------------------------------------------------------------------------------------
