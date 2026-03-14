@@ -39,6 +39,30 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
     }
 
     /**
+     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
+     * @param matrix the other matrix
+     * @throws IllegalArgumentException when this.cols() != other.rows()
+     */
+    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
+    {
+        Throw.whenNull(matrix, "matrix");
+        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
+                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != matrix.rows (%d)", cols(), matrix.rows());
+    }
+
+    /**
+     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
+     * @param vector the other matrix
+     * @throws IllegalArgumentException when this.cols() != other.rows()
+     */
+    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
+    {
+        Throw.whenNull(vector, "matrix");
+        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
+                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != vector.rows (%d)", cols(), vector.rows());
+    }
+
+    /**
      * Multiply this vector or matrix with a MatrixNxM, resulting in a MatrixNxM. The multiplication is a (NxM) x (MxP) matrix
      * multiplication resulting in an (NxP) matrix.
      * @param matrix the matrix to multiply with
@@ -48,9 +72,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxM<?, ?> matrix)
     {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (NxM) x (MxP): numbers for M do not match, %d != %d", cols(), matrix.rows());
+        checkMultiply(matrix);
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         if (matrix.getDataGrid().isDouble())

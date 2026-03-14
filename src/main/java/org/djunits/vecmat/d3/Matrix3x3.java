@@ -177,6 +177,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix3x3<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> otherMat)
     {
+        checkMultiply(otherMat);
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 3, 3, 3);
         return new Matrix3x3<SIQuantity, SIUnit>(resultData,
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
@@ -189,6 +190,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Vector3.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> otherVec)
     {
+        checkMultiply(otherVec);
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
         return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));

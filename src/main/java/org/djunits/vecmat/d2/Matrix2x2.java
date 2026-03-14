@@ -169,6 +169,7 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix2x2<SIQuantity, SIUnit> multiply(final Matrix2x2<?, ?> otherMat)
     {
+        checkMultiply(otherMat);
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 2, 2, 2);
         return new Matrix2x2<SIQuantity, SIUnit>(resultData,
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
@@ -181,6 +182,7 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Vector2.Col<SIQuantity, SIUnit> multiply(final Vector2.Col<?, ?> otherVec)
     {
+        checkMultiply(otherVec);
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 2, 1);
         return new Vector2.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));

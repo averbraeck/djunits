@@ -287,6 +287,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public MatrixNxN<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
     {
+        checkMultiply(otherMat);
         final int n = order();
         final double[] resultData = MatrixMath.multiply(si(), otherMat.si(), n, n, n);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit());
@@ -304,12 +305,8 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> otherVec)
     {
+        checkMultiply(otherVec);
         final int n = order();
-        // Defensive check in case VectorN.Col#getData shape is inconsistent
-        if (otherVec.size() != n)
-        {
-            throw new IllegalArgumentException("Vector size " + otherVec.size() + " != matrix order " + n);
-        }
         final double[] resultData = MatrixMath.multiply(si(), otherVec.si(), n, n, 1);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
         return VectorN.Col.ofSi(resultData, resultUnit);

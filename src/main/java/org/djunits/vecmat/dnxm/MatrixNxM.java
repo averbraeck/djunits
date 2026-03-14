@@ -250,9 +250,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix1x1<?, ?> matrix)
     {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), matrix.rows());
+        checkMultiply(matrix);
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
@@ -268,9 +266,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix2x2<?, ?> matrix)
     {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), matrix.rows());
+        checkMultiply(matrix);
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
@@ -286,9 +282,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> matrix)
     {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), matrix.rows());
+        checkMultiply(matrix);
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
@@ -304,9 +298,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> matrix)
     {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (NxM) x (MxM): numbers for M do not match, %d != %d", cols(), matrix.rows());
+        checkMultiply(matrix);
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         if (matrix.getDataGrid().isDouble())
@@ -326,9 +318,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public MatrixNxM<SIQuantity, SIUnit> multiply(final Vector1<?, ?> vector)
     {
-        Throw.whenNull(vector, "vector");
-        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), vector.rows());
+        checkMultiply(vector);
         double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
@@ -344,9 +334,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final Vector2.Col<?, ?> vector)
     {
-        Throw.whenNull(vector, "vector");
-        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), vector.rows());
+        checkMultiply(vector);
         double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
@@ -362,9 +350,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> vector)
     {
-        Throw.whenNull(vector, "vector");
-        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), vector.rows());
+        checkMultiply(vector);
         double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
@@ -380,9 +366,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> vector)
     {
-        Throw.whenNull(vector, "vector");
-        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
-                "Matrix multiplication of (MxN) x (NxP): numbers for N do not match, %d != %d", cols(), vector.rows());
+        checkMultiply(vector);
         double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);

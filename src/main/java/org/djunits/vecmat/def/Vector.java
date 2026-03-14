@@ -22,9 +22,9 @@ import org.djunits.vecmat.operations.Normed;
  * @param <SI> the vector type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic vector type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends VectorMatrix<Q, U, V, SI, H>,
-        SI extends VectorMatrix<SIQuantity, SIUnit, SI, ?, ?>, H extends VectorMatrix<?, ?, ?, ?, ?>>
-        extends VectorMatrix<Q, U, V, SI, H> implements Iterable<Q>, Normed<Q, U>
+public abstract class Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector<Q, U, V, SI, H>,
+        SI extends Vector<SIQuantity, SIUnit, SI, ?, ?>, H extends Vector<?, ?, ?, ?, ?>>
+        extends Matrix<Q, U, V, SI, H> implements Iterable<Q>, Normed<Q, U>
 {
     /** */
     private static final long serialVersionUID = 600L;
