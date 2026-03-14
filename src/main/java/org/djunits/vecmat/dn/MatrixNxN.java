@@ -126,8 +126,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     @Override
     public double si(final int row, final int col)
     {
-        // internal storage is 0-based, user access is 1-based
-        return this.dataSi.get(row - 1, col - 1);
+        return this.dataSi.get(row, col);
     }
 
     @Override
@@ -165,10 +164,24 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
+    public VectorN.Row<Q, U> mgetRowVector(final int mrow)
+    {
+        mcheckRow(mrow);
+        return VectorN.Row.ofSi(this.dataSi.getRowArray(mrow - 1), getDisplayUnit());
+    }
+
+    @Override
     public VectorN.Col<Q, U> getColumnVector(final int col)
     {
         checkCol(col);
         return VectorN.Col.ofSi(this.dataSi.getColArray(col), getDisplayUnit());
+    }
+
+    @Override
+    public VectorN.Col<Q, U> mgetColumnVector(final int mcol)
+    {
+        mcheckCol(mcol);
+        return VectorN.Col.ofSi(this.dataSi.getColArray(mcol - 1), getDisplayUnit());
     }
 
     @Override
@@ -177,9 +190,9 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
         final int n = rows();
         final double[] data = new double[n];
-        for (int i = 1; i <= n; i++)
+        for (int i = 0; i < n; i++)
         {
-            data[i - 1] = si(i, i);
+            data[i] = si(i, i);
         }
         // n x 1 column-shape
         return VectorN.Col.ofSi(data, getDisplayUnit());

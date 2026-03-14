@@ -98,7 +98,15 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector3.Row<Q, U> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector3.Row<Q, U>(si(row, 1), si(row, 2), si(row, 3), getDisplayUnit().getBaseUnit())
+        return new Vector3.Row<Q, U>(si(row, 0), si(row, 1), si(row, 2), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector3.Row<Q, U> mgetRowVector(final int mrow)
+    {
+        mcheckRow(mrow);
+        return new Vector3.Row<Q, U>(msi(mrow, 1), msi(mrow, 2), msi(mrow, 3), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -106,14 +114,22 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector3.Col<Q, U> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector3.Col<Q, U>(si(1, col), si(2, col), si(3, col), getDisplayUnit().getBaseUnit())
+        return new Vector3.Col<Q, U>(si(0, col), si(1, col), si(2, col), getDisplayUnit().getBaseUnit())
+                .setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector3.Col<Q, U> mgetColumnVector(final int mcol)
+    {
+        mcheckCol(mcol);
+        return new Vector3.Col<Q, U>(msi(1, mcol), msi(2, mcol), msi(3, mcol), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Vector3.Col<Q, U> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector3.Col<Q, U>(si(1, 1), si(2, 2), si(3, 3), getDisplayUnit().getBaseUnit())
+        return new Vector3.Col<Q, U>(si(0, 0), si(1, 1), si(2, 2), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 

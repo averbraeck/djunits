@@ -161,9 +161,9 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     @Override
     public double si(final int row, final int col) throws IndexOutOfBoundsException
     {
-        Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "row %d out of bounds (1-%d)", row, rows());
-        Throw.when(col < 1 || col > cols(), IndexOutOfBoundsException.class, "col %d out of bounds (1-%d)", col, cols());
-        return this.dataSi.get(row - 1, col - 1);
+        checkRow(row);
+        checkCol(col);
+        return this.dataSi.get(row, col);
     }
 
     @Override
@@ -173,23 +173,35 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     }
 
     @Override
+    public VectorN.Row<Q, U> mgetRowVector(final int mrow)
+    {
+        return VectorN.Row.ofSi(mgetRowSi(mrow), getDisplayUnit());
+    }
+
+    @Override
     public VectorN.Col<Q, U> getColumnVector(final int col)
     {
         return VectorN.Col.ofSi(getColumnSi(col), getDisplayUnit());
     }
 
     @Override
+    public VectorN.Col<Q, U> mgetColumnVector(final int mcol)
+    {
+        return VectorN.Col.ofSi(mgetColumnSi(mcol), getDisplayUnit());
+    }
+
+    @Override
     public double[] getRowSi(final int row)
     {
-        Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "row %d out of bounds (1-%d)", row, rows());
-        return this.dataSi.getRowArray(row - 1);
+        checkRow(row);
+        return this.dataSi.getRowArray(row);
     }
 
     @Override
     public double[] getColumnSi(final int col)
     {
-        Throw.when(col < 1 || col > cols(), IndexOutOfBoundsException.class, "col %d out of bounds (1-%d)", col, cols());
-        return this.dataSi.getColArray(col - 1);
+        checkCol(col);
+        return this.dataSi.getColArray(col);
     }
 
     @Override

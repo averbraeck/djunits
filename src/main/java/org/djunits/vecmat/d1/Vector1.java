@@ -97,7 +97,7 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     @Override
     public double si(final int row, final int col) throws IndexOutOfBoundsException
     {
-        Throw.when(row != 1 || col != 1, IllegalArgumentException.class, "si(r, c) can only request si(1, 1) for a Vector1");
+        Throw.when(row != 0 || col != 0, IllegalArgumentException.class, "si(r, c) can only request si(0, 0) for a Vector1");
         return this.xSi;
     }
 
@@ -115,9 +115,23 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     }
 
     @Override
+    public Vector1<Q, U> mgetRowVector(final int mrow)
+    {
+        mcheckRow(mrow);
+        return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
     public Vector1<Q, U> getColumnVector(final int col)
     {
         checkCol(col);
+        return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector1<Q, U> mgetColumnVector(final int mcol)
+    {
+        mcheckCol(mcol);
         return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 

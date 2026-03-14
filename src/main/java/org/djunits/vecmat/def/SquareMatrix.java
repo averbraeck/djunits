@@ -106,7 +106,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     public Q[] getDiagonalScalars()
     {
         List<Q> result = new ArrayList<>();
-        for (int i = 1; i <= rows(); i++)
+        for (int i = 0; i < rows(); i++)
         {
             result.add(get(i, i));
         }
@@ -114,6 +114,20 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
         Q sample = result.get(0);
         Q[] array = (Q[]) Array.newInstance(sample.getClass(), result.size());
         return result.toArray(array);
+    }
+
+    /**
+     * Retrieve the main diagonal of the matrix as an array of doubles with SI-values.
+     * @return the main diagonal as a doube array with SI-values
+     */
+    public double[] getDiagonalSi()
+    {
+        double[] result = new double[order()];
+        for (int i = 0; i < rows(); i++)
+        {
+            result[i] = si(i, i);
+        }
+        return result;
     }
 
     /**

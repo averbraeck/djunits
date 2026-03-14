@@ -14,7 +14,7 @@ import org.djunits.vecmat.dn.VectorN;
 import org.djutils.exceptions.Throw;
 
 /**
- * Matrix2x2 implements a matrix with 2x2 real-valued entries. The matrix is immutable, except for the display unit, which can
+ * Matrix1x1 implements a matrix with 1x1 real-valued entries. The matrix is immutable, except for the display unit, which can
  * be changed.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -31,42 +31,42 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Create a new Matrix2x2 with a unit.
-     * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the displayUnit
+     * Create a new Matrix1x1 with a unit.
+     * @param arrayInUnit the matrix values {a11} expressed in the displayUnit
      * @param displayUnit the display unit to use
      */
     protected Matrix1x1(final double[] arrayInUnit, final U displayUnit)
     {
-        super(arrayInUnit, displayUnit, 2);
+        super(arrayInUnit, displayUnit, 1);
     }
 
     /**
-     * Create a new Matrix2x2 with a unit, based on a 1-dimensional array.
+     * Create a new Matrix1x1 with a unit, based on a 1-dimensional array.
      * <p>
      * <strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
      * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
-     * @return a new Matrix2x2 with a unit
-     * @throws IllegalArgumentException when valueArray does not contain 2x2 = 4 values
+     * @return a new Matrix1x1 with a unit
+     * @throws IllegalArgumentException when valueArray does not contain 1x1 = 1 value
      */
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix1x1<Q, U> of(final double[] arrayInUnit,
             final U displayUnit)
     {
         Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(arrayInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d", arrayInUnit.length);
+        Throw.when(arrayInUnit.length != 1, IllegalArgumentException.class, "Length of array != 1 but %d", arrayInUnit.length);
         return new Matrix1x1<Q, U>(arrayInUnit, displayUnit);
     }
 
     /**
-     * Create a new Matrix2x2 with a unit, based on a 2-dimensional grid.
-     * @param gridInUnit the matrix values {{a11, a12}, {a21, a22}} expressed in the display unit
+     * Create a new Matrix1x1 with a unit, based on a 2-dimensional grid.
+     * @param gridInUnit the matrix values {{a11}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
      * @param <U> the unit type
-     * @return a new Matrix2x2 with a unit
+     * @return a new Matrix1x1 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix1x1<Q, U> of(final double[][] gridInUnit,
@@ -74,10 +74,9 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(gridInUnit.length != 2 || gridInUnit[0].length != 2 || gridInUnit[1].length != 2,
-                IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
-        return new Matrix1x1<Q, U>(new double[] {gridInUnit[0][0], gridInUnit[0][1], gridInUnit[1][0], gridInUnit[1][1]},
-                displayUnit);
+        Throw.when(gridInUnit.length != 1 || gridInUnit[0].length != 1, IllegalArgumentException.class,
+                "gridInUnit is not a 1x1 array");
+        return new Matrix1x1<Q, U>(new double[] {gridInUnit[0][0]}, displayUnit);
     }
 
     @Override
@@ -96,20 +95,34 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector1<Q, U> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector1<>(si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector1<Q, U> mgetRowVector(final int mrow)
+    {
+        mcheckRow(mrow);
+        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Vector1<Q, U> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector1<>(si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector1<Q, U> mgetColumnVector(final int mcol)
+    {
+        mcheckCol(mcol);
+        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Vector1<Q, U> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector1<>(si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -156,9 +169,21 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix1x1<SIQuantity, SIUnit> multiply(final Matrix1x1<?, ?> otherMat)
     {
-        double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 2, 2, 2);
+        double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 1, 1, 1);
         return new Matrix1x1<SIQuantity, SIUnit>(resultData,
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+    }
+
+    /**
+     * Multiply this matrix with a column vector, resulting in a column vector.
+     * @param otherVec the column vector to multiply with
+     * @return the resulting vector from the multiplication
+     */
+    public Vector1<SIQuantity, SIUnit> multiply(final Vector1<?, ?> otherVec)
+    {
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 1, 1);
+        return new Vector1<SIQuantity, SIUnit>(resultData[0],
+                getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     /**
@@ -216,7 +241,7 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
-                "Matrix2x2.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                "Matrix1x1.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new Matrix1x1<TQ, TU>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }

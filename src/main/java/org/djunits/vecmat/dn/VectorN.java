@@ -333,9 +333,23 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
+        public Vector1<Q, U> mgetRowVector(final int mrow)
+        {
+            mcheckRow(mrow);
+            return new Vector1<Q, U>(msi(mrow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
         public VectorN.Col<Q, U> getColumnVector(final int col)
         {
             checkCol(col);
+            return new VectorN.Col<Q, U>(this.dataSi.copy(), getDisplayUnit());
+        }
+
+        @Override
+        public VectorN.Col<Q, U> mgetColumnVector(final int mcol)
+        {
+            mcheckCol(mcol);
             return new VectorN.Col<Q, U>(this.dataSi.copy(), getDisplayUnit());
         }
 
@@ -611,10 +625,24 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
+        public VectorN.Row<Q, U> mgetRowVector(final int mrow)
+        {
+            mcheckRow(mrow);
+            return new VectorN.Row<Q, U>(this.dataSi.copy(), getDisplayUnit());
+        }
+
+        @Override
         public Vector1<Q, U> getColumnVector(final int col)
         {
             checkCol(col);
             return new Vector1<Q, U>(si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public Vector1<Q, U> mgetColumnVector(final int mcol)
+        {
+            mcheckCol(mcol);
+            return new Vector1<Q, U>(msi(1, mcol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

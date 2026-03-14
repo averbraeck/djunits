@@ -101,13 +101,49 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     public abstract double[] si();
 
     /**
+     * Return the si-value at position (row, col), where both row and col are 0-based values.
+     * @param row the row (0-based)
+     * @param col the column (0-based)
+     * @return the si-value at position (row, col)
+     * @throws IndexOutOfBoundsException when row or col &lt; 0 or larger than number of rows/columns - 1.
+     */
+    public abstract double si(int row, int col) throws IndexOutOfBoundsException;
+
+    /**
      * Return the si-value at position (row, col), where both row and col are 1-based values.
-     * @param row the row (1-based)
-     * @param col the column (1-based)
+     * @param mrow the row (1-based)
+     * @param mcol the column (1-based)
      * @return the si-value at position (row, col)
      * @throws IndexOutOfBoundsException when row or col &lt; 1 or larger than number of rows/columns.
      */
-    public abstract double si(int row, int col) throws IndexOutOfBoundsException;
+    public double msi(final int mrow, final int mcol) throws IndexOutOfBoundsException
+    {
+        return si(mrow - 1, mcol - 1);
+    }
+
+    /**
+     * Return the quantity at position (row, col), where both row and col are 0-based values.
+     * @param row the row (0-based)
+     * @param col the column (0-based)
+     * @return the quantity at position (row, col)
+     * @throws IndexOutOfBoundsException when row or col &lt; 0 or larger than number of rows/columns - 1.
+     */
+    public Q get(final int row, final int col) throws IndexOutOfBoundsException
+    {
+        return getDisplayUnit().ofSi(si(row, col)).setDisplayUnit(getDisplayUnit());
+    }
+
+    /**
+     * Return the quantity at position (row, col), where both row and col are 1-based values.
+     * @param mrow the row (1-based)
+     * @param mcol the column (1-based)
+     * @return the quantity at position (row, col)
+     * @throws IndexOutOfBoundsException when row or col &lt; 1 or larger than number of rows/columns.
+     */
+    public Q mget(final int mrow, final int mcol) throws IndexOutOfBoundsException
+    {
+        return getDisplayUnit().ofSi(msi(mrow, mcol)).setDisplayUnit(getDisplayUnit());
+    }
 
     /**
      * Return the vector or matrix as a 2D array of scalars.
@@ -116,93 +152,140 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
     public Q[][] getScalarGrid()
     {
-        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 1.
-        final Q first = get(1, 1);
+        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 0.
+        final Q first = get(0, 0);
         final Class<?> qClass = first.getClass();
 
         // Allocate a Q[rows()][cols()] array and fill it.
         final Q[][] out = (Q[][]) Array.newInstance(qClass, rows(), cols());
-        for (int i = 1; i <= rows(); i++)
+        for (int i = 0; i < rows(); i++)
         {
-            for (int j = 1; j <= cols(); j++)
+            for (int j = 0; j < cols(); j++)
             {
-                out[i - 1][j - 1] = get(i, j);
+                out[i][j] = get(i, j);
             }
         }
         return out;
     }
 
     /**
-     * Return the quantity at position (row, col), where both row and col are 1-based values.
-     * @param row the row (1-based)
-     * @param col the column (1-based)
-     * @return the quantity at position (row, col)
-     * @throws IndexOutOfBoundsException when row or col &lt; 1 or larger than number of rows/columns.
-     */
-    public Q get(final int row, final int col) throws IndexOutOfBoundsException
-    {
-        return getDisplayUnit().ofSi(si(row, col)).setDisplayUnit(getDisplayUnit());
-    }
-
-    /**
-     * Return a quantity row (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
+     * Return a quantity row (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
      * the implementing class.
-     * @param row the row number to retrieve (1-based)
+     * @param row the row number to retrieve (0-based)
      * @return a row vector with the data at the given row
      */
     public abstract Vector<Q, U, ?, ?, ?> getRowVector(int row);
 
     /**
-     * Return a quantity column (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
+     * Return a quantity row (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
      * the implementing class.
-     * @param col the column number to retrieve (1-based)
+     * @param mrow the row number to retrieve (1-based)
+     * @return a row vector with the data at the given row
+     */
+    public abstract Vector<Q, U, ?, ?, ?> mgetRowVector(int mrow);
+
+    /**
+     * Return a quantity column (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
+     * the implementing class.
+     * @param col the column number to retrieve (0-based)
      * @return a column vector with the data at the given column
      */
     public abstract Vector<Q, U, ?, ?, ?> getColumnVector(int col);
 
     /**
-     * Return an array with SI-values for the given row (1-based) from the vector or matrix.
-     * @param row the row number to retrieve (1-based)
+     * Return a quantity column (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
+     * the implementing class.
+     * @param mcol the column number to retrieve (1-based)
+     * @return a column vector with the data at the given column
+     */
+    public abstract Vector<Q, U, ?, ?, ?> mgetColumnVector(int mcol);
+
+    /**
+     * Return an array with SI-values for the given row (0-based) from the vector or matrix.
+     * @param row the row number to retrieve (0-based)
      * @return an array with SI-values with the data at the given row
      */
     public abstract double[] getRowSi(int row);
 
     /**
-     * Return an array with SI-values for the given column (1-based) from the vector or matrix.
-     * @param col the column number to retrieve (1-based)
+     * Return an array with SI-values for the given row (1-based) from the vector or matrix.
+     * @param mrow the row number to retrieve (1-based)
+     * @return an array with SI-values with the data at the given row
+     */
+    public double[] mgetRowSi(final int mrow)
+    {
+        mcheckRow(mrow);
+        return getRowSi(mrow - 1);
+    }
+
+    /**
+     * Return an array with SI-values for the given column (0-based) from the vector or matrix.
+     * @param col the column number to retrieve (0-based)
      * @return an array with SI-values with the data at the given column
      */
     public abstract double[] getColumnSi(int col);
 
+    /**
+     * Return an array with SI-values for the given column (1-based) from the vector or matrix.
+     * @param mcol the column number to retrieve (1-based)
+     * @return an array with SI-values with the data at the given column
+     */
+    public double[] mgetColumnSi(final int mcol)
+    {
+        mcheckCol(mcol);
+        return getColumnSi(mcol - 1);
+    }
+
     @Override
     public boolean isRelative()
     {
-        return get(1, 1).isRelative();
+        return get(0, 0).isRelative();
     }
 
     /**
-     * Check if the 1-based row is within bounds.
-     * @param row the 1-based row to check
+     * Check if the 0-based row is within bounds.
+     * @param row the 0-based row to check
      * @throws IndexOutOfBoundsException when row is out of bounds
      */
     protected void checkRow(final int row)
     {
-        Throw.when(row < 1 || row > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", row, rows());
+        Throw.when(row < 0 || row >= rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [0..%d]", row, rows() - 1);
     }
 
     /**
-     * Check if the 1-based column is within bounds.
-     * @param col the 1-based column to check
+     * Check if the 0-based column is within bounds.
+     * @param col the 0-based column to check
      * @throws IndexOutOfBoundsException when column is out of bounds
      */
     protected void checkCol(final int col)
     {
-        Throw.when(col < 1 || col > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", col, cols());
+        Throw.when(col < 0 || col >= cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [0..%d]", col,
+                cols() - 1);
     }
 
     /**
-     * Retrieve a row (1-based) from the matrix as an array of scalars.
-     * @param row row of the values to retrieve (1-based)
+     * Check if the 1-based row is within bounds.
+     * @param mrow the 1-based row to check
+     * @throws IndexOutOfBoundsException when row is out of bounds
+     */
+    protected void mcheckRow(final int mrow)
+    {
+        Throw.when(mrow < 1 || mrow > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", mrow, rows());
+    }
+
+    /**
+     * Check if the 1-based column is within bounds.
+     * @param mcol the 1-based column to check
+     * @throws IndexOutOfBoundsException when column is out of bounds
+     */
+    protected void mcheckCol(final int mcol)
+    {
+        Throw.when(mcol < 1 || mcol > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", mcol, cols());
+    }
+
+    /**
+     * Retrieve a row (0-based) from the matrix as an array of scalars.
+     * @param row row of the values to retrieve (0-based)
      * @return the row as a Scalar array
      * @throws IndexOutOfBoundsException in case row is out of bounds
      */
@@ -212,33 +295,57 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
         checkRow(row);
 
         // Build a Q[] of length cols() using the runtime class of the first element
-        Q first = get(row, 1);
+        Q first = get(row, 0);
         Q[] out = (Q[]) Array.newInstance(first.getClass(), cols());
-        for (int c = 1; c <= cols(); c++)
+        for (int c = 0; c < cols(); c++)
         {
-            out[c - 1] = get(row, c);
+            out[c] = get(row, c);
+        }
+        return out;
+    }
+
+    /**
+     * Retrieve a row (1-based) from the matrix as an array of scalars.
+     * @param mrow row of the values to retrieve (1-based)
+     * @return the row as a Scalar array
+     * @throws IndexOutOfBoundsException in case row is out of bounds
+     */
+    public Q[] mgetRowScalars(final int mrow) throws IndexOutOfBoundsException
+    {
+        mcheckRow(mrow);
+        return getRowScalars(mrow - 1);
+    }
+
+    /**
+     * Retrieve a column (0-based) from the matrix as an array of scalars.
+     * @param col column of the values to retrieve (0-based)
+     * @return the column as a Scalar array
+     * @throws IndexOutOfBoundsException in case column is out of bounds
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getColumnScalars(final int col) throws IndexOutOfBoundsException
+    {
+        checkCol(col);
+
+        Q first = get(0, col);
+        Q[] out = (Q[]) Array.newInstance(first.getClass(), rows());
+        for (int r = 0; r < rows(); r++)
+        {
+            out[r] = get(r, col);
         }
         return out;
     }
 
     /**
      * Retrieve a column (1-based) from the matrix as an array of scalars.
-     * @param column column of the values to retrieve (1-based)
+     * @param mcol column of the values to retrieve (1-based)
      * @return the column as a Scalar array
      * @throws IndexOutOfBoundsException in case column is out of bounds
      */
-    @SuppressWarnings("unchecked")
-    public Q[] getColumnScalars(final int column) throws IndexOutOfBoundsException
+    public Q[] mgetColumnScalars(final int mcol) throws IndexOutOfBoundsException
     {
-        checkCol(column);
-
-        Q first = get(1, column);
-        Q[] out = (Q[]) Array.newInstance(first.getClass(), rows());
-        for (int r = 1; r <= rows(); r++)
-        {
-            out[r - 1] = get(r, column);
-        }
-        return out;
+        mcheckCol(mcol);
+        return getColumnScalars(mcol - 1);
     }
 
     /**
@@ -419,12 +526,12 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     public String toString(final U withUnit)
     {
         var s = new StringBuilder();
-        for (int r = 1; r <= rows(); r++)
+        for (int r = 0; r < rows(); r++)
         {
-            s.append(r == 1 ? "[" : "\n ");
-            for (int c = 1; c <= cols(); c++)
+            s.append(r == 0 ? "[" : "\n ");
+            for (int c = 0; c < cols(); c++)
             {
-                if (c > 1)
+                if (c > 0)
                     s.append(", ");
                 s.append(Format.format(withUnit.fromBaseValue(si(r, c))));
             }

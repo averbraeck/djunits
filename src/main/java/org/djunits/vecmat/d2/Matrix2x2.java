@@ -93,7 +93,14 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector2.Row<Q, U> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector2.Row<Q, U>(this.si(row, 1), this.si(row, 2), getDisplayUnit().getBaseUnit())
+        return new Vector2.Row<Q, U>(si(row, 0), si(row, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector2.Row<Q, U> mgetRowVector(final int mrow)
+    {
+        mcheckRow(mrow);
+        return new Vector2.Row<Q, U>(msi(mrow, 1), msi(mrow, 2), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -101,15 +108,21 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     public Vector2.Col<Q, U> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector2.Col<Q, U>(this.si(1, col), this.si(2, col), getDisplayUnit().getBaseUnit())
+        return new Vector2.Col<Q, U>(si(0, col), si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+    }
+
+    @Override
+    public Vector2.Col<Q, U> mgetColumnVector(final int mcol)
+    {
+        mcheckCol(mcol);
+        return new Vector2.Col<Q, U>(msi(1, mcol), msi(2, mcol), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Vector2.Col<Q, U> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector2.Col<Q, U>(this.si(1, 1), this.si(2, 2), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector2.Col<Q, U>(si(0, 0), si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override

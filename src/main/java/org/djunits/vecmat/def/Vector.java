@@ -60,13 +60,13 @@ public abstract class Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U
 
     /**
      * Retrieve an si-value from the vector, based on a 1-valued index.
-     * @param index the index (1-based) to retrieve the value from
+     * @param mindex the index (1-based) to retrieve the value from
      * @return the value as a Scalar
      * @throws IndexOutOfBoundsException in case index is out of bounds
      */
-    public double msi(final int index) throws IndexOutOfBoundsException
+    public double msi(final int mindex) throws IndexOutOfBoundsException
     {
-        return si(index - 1);
+        return si(mindex - 1);
     }
 
     /**
@@ -82,13 +82,13 @@ public abstract class Vector<Q extends Quantity<Q, U>, U extends UnitInterface<U
 
     /**
      * Retrieve a value from the vector, based on a 1-valued index.
-     * @param index the index (1-based) to retrieve the value from
+     * @param mindex the index (1-based) to retrieve the value from
      * @return the value as a Scalar
      * @throws IndexOutOfBoundsException in case index is out of bounds
      */
-    public Q mget(final int index) throws IndexOutOfBoundsException
+    public Q mget(final int mindex) throws IndexOutOfBoundsException
     {
-        return getDisplayUnit().ofSi(si(index - 1)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(si(mindex - 1)).setDisplayUnit(getDisplayUnit());
     }
 
     /**

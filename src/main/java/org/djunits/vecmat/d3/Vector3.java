@@ -426,14 +426,21 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             checkRow(row);
             checkCol(col);
-            return row == 1 ? xSi() : row == 2 ? ySi() : zSi();
+            return row == 0 ? xSi() : row == 1 ? ySi() : zSi();
         }
 
         @Override
         public Vector1<Q, U> getRowVector(final int row)
         {
             checkRow(row);
-            return new Vector1<Q, U>(si(row, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q, U>(si(row, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public Vector1<Q, U> mgetRowVector(final int mrow)
+        {
+            mcheckRow(mrow);
+            return new Vector1<Q, U>(msi(mrow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -444,10 +451,17 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
+        public Vector3.Col<Q, U> mgetColumnVector(final int mcol)
+        {
+            mcheckCol(mcol);
+            return instantiateSi(xSi(), ySi(), zSi()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
         public double[] getRowSi(final int row)
         {
             checkRow(row);
-            return new double[] {si(row, 1)};
+            return new double[] {si(row, 0)};
         }
 
         @Override
@@ -606,7 +620,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             checkRow(row);
             checkCol(col);
-            return col == 1 ? xSi() : ySi();
+            return col == 0 ? xSi() : col == 1 ? ySi() : zSi();
         }
 
         @Override
@@ -617,10 +631,24 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
+        public Vector3.Row<Q, U> mgetRowVector(final int mrow)
+        {
+            mcheckRow(mrow);
+            return instantiateSi(xSi(), ySi(), zSi()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
         public Vector1<Q, U> getColumnVector(final int col)
         {
             checkCol(col);
-            return new Vector1<Q, U>(si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q, U>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        }
+
+        @Override
+        public Vector1<Q, U> mgetColumnVector(final int mcol)
+        {
+            mcheckCol(mcol);
+            return new Vector1<Q, U>(msi(1, mcol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -634,7 +662,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         public double[] getColumnSi(final int col)
         {
             checkCol(col);
-            return new double[] {si(1, col)};
+            return new double[] {si(0, col)};
         }
 
         @Override

@@ -61,9 +61,11 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     }
 
     @Override
-    public double si(final int r, final int c)
+    public double si(final int row, final int col)
     {
-        return this.dataSi[this.order * (r - 1) + c - 1];
+        checkRow(row);
+        checkCol(col);
+        return this.dataSi[this.order * row + col];
     }
 
     @Override
@@ -81,10 +83,11 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     @Override
     public double[] getRowSi(final int row)
     {
+        checkRow(row);
         double[] vSi = new double[this.order];
         for (int col = 0; col < this.order; col++)
         {
-            vSi[col] = this.dataSi[this.order * (row - 1) + col - 1];
+            vSi[col] = this.dataSi[this.order * row + col];
         }
         return vSi;
     }
@@ -92,10 +95,11 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     @Override
     public double[] getColumnSi(final int col)
     {
+        checkCol(col);
         double[] vSi = new double[this.order];
         for (int row = 0; row < this.order; row++)
         {
-            vSi[row] = this.dataSi[this.order * (row - 1) + col - 1];
+            vSi[row] = this.dataSi[this.order * row + col];
         }
         return vSi;
     }
