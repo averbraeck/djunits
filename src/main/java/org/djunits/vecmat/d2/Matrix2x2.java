@@ -97,10 +97,10 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public Vector2.Row<Q, U> mgetRowVector(final int mrow)
+    public Vector2.Row<Q, U> mgetRowVector(final int mRow)
     {
-        mcheckRow(mrow);
-        return new Vector2.Row<Q, U>(msi(mrow, 1), msi(mrow, 2), getDisplayUnit().getBaseUnit())
+        mcheckRow(mRow);
+        return new Vector2.Row<Q, U>(msi(mRow, 1), msi(mRow, 2), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -112,10 +112,10 @@ public class Matrix2x2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public Vector2.Col<Q, U> mgetColumnVector(final int mcol)
+    public Vector2.Col<Q, U> mgetColumnVector(final int mCol)
     {
-        mcheckCol(mcol);
-        return new Vector2.Col<Q, U>(msi(1, mcol), msi(2, mcol), getDisplayUnit().getBaseUnit())
+        mcheckCol(mCol);
+        return new Vector2.Col<Q, U>(msi(1, mCol), msi(2, mCol), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 

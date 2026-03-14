@@ -164,10 +164,10 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public VectorN.Row<Q, U> mgetRowVector(final int mrow)
+    public VectorN.Row<Q, U> mgetRowVector(final int mRow)
     {
-        mcheckRow(mrow);
-        return VectorN.Row.ofSi(this.dataSi.getRowArray(mrow - 1), getDisplayUnit());
+        mcheckRow(mRow);
+        return VectorN.Row.ofSi(this.dataSi.getRowArray(mRow - 1), getDisplayUnit());
     }
 
     @Override
@@ -178,10 +178,10 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public VectorN.Col<Q, U> mgetColumnVector(final int mcol)
+    public VectorN.Col<Q, U> mgetColumnVector(final int mCol)
     {
-        mcheckCol(mcol);
-        return VectorN.Col.ofSi(this.dataSi.getColArray(mcol - 1), getDisplayUnit());
+        mcheckCol(mCol);
+        return VectorN.Col.ofSi(this.dataSi.getColArray(mCol - 1), getDisplayUnit());
     }
 
     @Override

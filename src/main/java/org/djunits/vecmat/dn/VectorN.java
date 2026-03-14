@@ -333,10 +333,10 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector1<Q, U> mgetRowVector(final int mrow)
+        public Vector1<Q, U> mgetRowVector(final int mRow)
         {
-            mcheckRow(mrow);
-            return new Vector1<Q, U>(msi(mrow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            mcheckRow(mRow);
+            return new Vector1<Q, U>(msi(mRow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -347,9 +347,9 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Col<Q, U> mgetColumnVector(final int mcol)
+        public VectorN.Col<Q, U> mgetColumnVector(final int mCol)
         {
-            mcheckCol(mcol);
+            mcheckCol(mCol);
             return new VectorN.Col<Q, U>(this.dataSi.copy(), getDisplayUnit());
         }
 
@@ -625,9 +625,9 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Row<Q, U> mgetRowVector(final int mrow)
+        public VectorN.Row<Q, U> mgetRowVector(final int mRow)
         {
-            mcheckRow(mrow);
+            mcheckRow(mRow);
             return new VectorN.Row<Q, U>(this.dataSi.copy(), getDisplayUnit());
         }
 
@@ -639,10 +639,10 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector1<Q, U> mgetColumnVector(final int mcol)
+        public Vector1<Q, U> mgetColumnVector(final int mCol)
         {
-            mcheckCol(mcol);
-            return new Vector1<Q, U>(msi(1, mcol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            mcheckCol(mCol);
+            return new Vector1<Q, U>(msi(1, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

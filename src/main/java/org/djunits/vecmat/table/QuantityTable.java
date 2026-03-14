@@ -173,9 +173,9 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     }
 
     @Override
-    public VectorN.Row<Q, U> mgetRowVector(final int mrow)
+    public VectorN.Row<Q, U> mgetRowVector(final int mRow)
     {
-        return VectorN.Row.ofSi(mgetRowSi(mrow), getDisplayUnit());
+        return VectorN.Row.ofSi(mgetRowSi(mRow), getDisplayUnit());
     }
 
     @Override
@@ -185,9 +185,9 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
     }
 
     @Override
-    public VectorN.Col<Q, U> mgetColumnVector(final int mcol)
+    public VectorN.Col<Q, U> mgetColumnVector(final int mCol)
     {
-        return VectorN.Col.ofSi(mgetColumnSi(mcol), getDisplayUnit());
+        return VectorN.Col.ofSi(mgetColumnSi(mCol), getDisplayUnit());
     }
 
     @Override

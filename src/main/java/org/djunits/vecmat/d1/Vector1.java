@@ -115,9 +115,9 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     }
 
     @Override
-    public Vector1<Q, U> mgetRowVector(final int mrow)
+    public Vector1<Q, U> mgetRowVector(final int mRow)
     {
-        mcheckRow(mrow);
+        mcheckRow(mRow);
         return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
@@ -129,9 +129,9 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     }
 
     @Override
-    public Vector1<Q, U> mgetColumnVector(final int mcol)
+    public Vector1<Q, U> mgetColumnVector(final int mCol)
     {
-        mcheckCol(mcol);
+        mcheckCol(mCol);
         return new Vector1<Q, U>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 

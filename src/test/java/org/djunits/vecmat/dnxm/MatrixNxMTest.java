@@ -369,14 +369,14 @@ public class MatrixNxMTest
         assertEquals(2.0, col1[0].si(), EPS);
         assertEquals(6.0, col1[2].si(), EPS);
 
-        Length[] mrow2 = m.mgetRowScalars(2);
-        Length[] mcol2 = m.mgetColumnScalars(2);
-        assertEquals(2, mrow2.length);
-        assertEquals(3.0, mrow2[0].si(), EPS);
-        assertEquals(4.0, mrow2[1].si(), EPS);
-        assertEquals(3, mcol2.length);
-        assertEquals(2.0, mcol2[0].si(), EPS);
-        assertEquals(6.0, mcol2[2].si(), EPS);
+        Length[] mRow2 = m.mgetRowScalars(2);
+        Length[] mCol2 = m.mgetColumnScalars(2);
+        assertEquals(2, mRow2.length);
+        assertEquals(3.0, mRow2[0].si(), EPS);
+        assertEquals(4.0, mRow2[1].si(), EPS);
+        assertEquals(3, mCol2.length);
+        assertEquals(2.0, mCol2[0].si(), EPS);
+        assertEquals(6.0, mCol2[2].si(), EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(3));
@@ -410,14 +410,14 @@ public class MatrixNxMTest
         assertEquals(2.0, col1.get(0).si(), EPS);
         assertEquals(6.0, col1.get(2).si(), EPS);
 
-        VectorN.Row<Length, Length.Unit> mrow2 = m.mgetRowVector(2);
-        VectorN.Col<Length, Length.Unit> mcol2 = m.mgetColumnVector(2);
-        assertEquals(2, mrow2.size());
-        assertEquals(3.0, mrow2.get(0).si(), EPS);
-        assertEquals(4.0, mrow2.get(1).si(), EPS);
-        assertEquals(3, mcol2.size());
-        assertEquals(2.0, mcol2.get(0).si(), EPS);
-        assertEquals(6.0, mcol2.get(2).si(), EPS);
+        VectorN.Row<Length, Length.Unit> mRow2 = m.mgetRowVector(2);
+        VectorN.Col<Length, Length.Unit> mCol2 = m.mgetColumnVector(2);
+        assertEquals(2, mRow2.size());
+        assertEquals(3.0, mRow2.get(0).si(), EPS);
+        assertEquals(4.0, mRow2.get(1).si(), EPS);
+        assertEquals(3, mCol2.size());
+        assertEquals(2.0, mCol2.get(0).si(), EPS);
+        assertEquals(6.0, mCol2.get(2).si(), EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(3));
@@ -446,14 +446,14 @@ public class MatrixNxMTest
         assertEquals(2.0, col1[0], EPS);
         assertEquals(6.0, col1[2], EPS);
 
-        double[] mrow2 = m.mgetRowSi(2);
-        double[] mcol2 = m.mgetColumnSi(2);
-        assertEquals(2, mrow2.length);
-        assertEquals(3.0, mrow2[0], EPS);
-        assertEquals(4.0, mrow2[1], EPS);
-        assertEquals(3, mcol2.length);
-        assertEquals(2.0, mcol2[0], EPS);
-        assertEquals(6.0, mcol2[2], EPS);
+        double[] mRow2 = m.mgetRowSi(2);
+        double[] mCol2 = m.mgetColumnSi(2);
+        assertEquals(2, mRow2.length);
+        assertEquals(3.0, mRow2[0], EPS);
+        assertEquals(4.0, mRow2[1], EPS);
+        assertEquals(3, mCol2.length);
+        assertEquals(2.0, mCol2[0], EPS);
+        assertEquals(6.0, mCol2[2], EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(3));

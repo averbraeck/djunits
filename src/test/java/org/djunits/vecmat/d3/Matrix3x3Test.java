@@ -485,14 +485,14 @@ public class Matrix3x3Test
         assertEquals(5.0, diag[1].si(), EPS);
         assertEquals(9.0, diag[2].si(), EPS);
 
-        Length[] mrow2 = m.mgetRowScalars(2);
-        Length[] mcol3 = m.mgetColumnScalars(3);
-        assertEquals(3, mrow2.length);
-        assertEquals(4.0, mrow2[0].si(), EPS);
-        assertEquals(6.0, mrow2[2].si(), EPS);
-        assertEquals(3, mcol3.length);
-        assertEquals(3.0, mcol3[0].si(), EPS);
-        assertEquals(9.0, mcol3[2].si(), EPS);
+        Length[] mRow2 = m.mgetRowScalars(2);
+        Length[] mCol3 = m.mgetColumnScalars(3);
+        assertEquals(3, mRow2.length);
+        assertEquals(4.0, mRow2[0].si(), EPS);
+        assertEquals(6.0, mRow2[2].si(), EPS);
+        assertEquals(3, mCol3.length);
+        assertEquals(3.0, mCol3[0].si(), EPS);
+        assertEquals(9.0, mCol3[2].si(), EPS);
     }
 
     /**
@@ -519,14 +519,14 @@ public class Matrix3x3Test
         assertEquals(5.0, diag[1], EPS);
         assertEquals(9.0, diag[2], EPS);
 
-        double[] mrow2 = m.mgetRowSi(2);
-        double[] mcol3 = m.mgetColumnSi(3);
-        assertEquals(3, mrow2.length);
-        assertEquals(4.0, mrow2[0], EPS);
-        assertEquals(6.0, mrow2[2], EPS);
-        assertEquals(3, mcol3.length);
-        assertEquals(3.0, mcol3[0], EPS);
-        assertEquals(9.0, mcol3[2], EPS);
+        double[] mRow2 = m.mgetRowSi(2);
+        double[] mCol3 = m.mgetColumnSi(3);
+        assertEquals(3, mRow2.length);
+        assertEquals(4.0, mRow2[0], EPS);
+        assertEquals(6.0, mRow2[2], EPS);
+        assertEquals(3, mCol3.length);
+        assertEquals(3.0, mCol3[0], EPS);
+        assertEquals(9.0, mCol3[2], EPS);
     }
 
     /**
@@ -558,14 +558,14 @@ public class Matrix3x3Test
         assertEquals(5.0, diag.get(1).si(), EPS);
         assertEquals(9.0, diag.get(2).si(), EPS);
 
-        Vector3.Row<Length, Length.Unit> mrow2 = m.mgetRowVector(2);
-        Vector3.Col<Length, Length.Unit> mcol3 = m.mgetColumnVector(3);
-        assertEquals(3, mrow2.size());
-        assertEquals(4.0, mrow2.get(0).si(), EPS);
-        assertEquals(6.0, mrow2.get(2).si(), EPS);
-        assertEquals(3, mcol3.size());
-        assertEquals(3.0, mcol3.get(0).si(), EPS);
-        assertEquals(9.0, mcol3.get(2).si(), EPS);
+        Vector3.Row<Length, Length.Unit> mRow2 = m.mgetRowVector(2);
+        Vector3.Col<Length, Length.Unit> mCol3 = m.mgetColumnVector(3);
+        assertEquals(3, mRow2.size());
+        assertEquals(4.0, mRow2.get(0).si(), EPS);
+        assertEquals(6.0, mRow2.get(2).si(), EPS);
+        assertEquals(3, mCol3.size());
+        assertEquals(3.0, mCol3.get(0).si(), EPS);
+        assertEquals(9.0, mCol3.get(2).si(), EPS);
     }
 
     // ------------------------------------------------------------------------------------

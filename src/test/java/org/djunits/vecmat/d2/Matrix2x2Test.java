@@ -474,15 +474,15 @@ public class Matrix2x2Test
         assertEquals(4.0, diag[1].si(), EPS);
 
         // Row/Column/Diagonal scalar arrays
-        Length[] mrow1 = m.mgetRowScalars(1);
-        Length[] mcol2 = m.mgetColumnScalars(2);
+        Length[] mRow1 = m.mgetRowScalars(1);
+        Length[] mCol2 = m.mgetColumnScalars(2);
 
-        assertEquals(2, mrow1.length, "row length");
-        assertEquals(2, mcol2.length, "column length");
-        assertEquals(1.0, mrow1[0].si(), EPS);
-        assertEquals(2.0, mrow1[1].si(), EPS);
-        assertEquals(2.0, mcol2[0].si(), EPS);
-        assertEquals(4.0, mcol2[1].si(), EPS);
+        assertEquals(2, mRow1.length, "row length");
+        assertEquals(2, mCol2.length, "column length");
+        assertEquals(1.0, mRow1[0].si(), EPS);
+        assertEquals(2.0, mRow1[1].si(), EPS);
+        assertEquals(2.0, mCol2[0].si(), EPS);
+        assertEquals(4.0, mCol2[1].si(), EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(2));
@@ -522,15 +522,15 @@ public class Matrix2x2Test
         assertEquals(4.0, diag.get(1).si(), EPS);
 
         // Row/Column/Diagonal scalar arrays
-        Vector2.Row<Length, Length.Unit> mrow1 = m.mgetRowVector(1);
-        Vector2.Col<Length, Length.Unit> mcol2 = m.mgetColumnVector(2);
+        Vector2.Row<Length, Length.Unit> mRow1 = m.mgetRowVector(1);
+        Vector2.Col<Length, Length.Unit> mCol2 = m.mgetColumnVector(2);
 
-        assertEquals(2, mrow1.size(), "row length");
-        assertEquals(2, mcol2.size(), "column length");
-        assertEquals(1.0, mrow1.get(0).si(), EPS);
-        assertEquals(2.0, mrow1.get(1).si(), EPS);
-        assertEquals(2.0, mcol2.get(0).si(), EPS);
-        assertEquals(4.0, mcol2.get(1).si(), EPS);
+        assertEquals(2, mRow1.size(), "row length");
+        assertEquals(2, mCol2.size(), "column length");
+        assertEquals(1.0, mRow1.get(0).si(), EPS);
+        assertEquals(2.0, mRow1.get(1).si(), EPS);
+        assertEquals(2.0, mCol2.get(0).si(), EPS);
+        assertEquals(4.0, mCol2.get(1).si(), EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(2));
@@ -568,15 +568,15 @@ public class Matrix2x2Test
         assertEquals(4.0, diag[1], EPS);
 
         // Row/Column/Diagonal scalar arrays
-        double[] mrow1 = m.mgetRowSi(1);
-        double[] mcol2 = m.mgetColumnSi(2);
+        double[] mRow1 = m.mgetRowSi(1);
+        double[] mCol2 = m.mgetColumnSi(2);
 
-        assertEquals(2, mrow1.length, "row length");
-        assertEquals(2, mcol2.length, "column length");
-        assertEquals(1.0, mrow1[0], EPS);
-        assertEquals(2.0, mrow1[1], EPS);
-        assertEquals(2.0, mcol2[0], EPS);
-        assertEquals(4.0, mcol2[1], EPS);
+        assertEquals(2, mRow1.length, "row length");
+        assertEquals(2, mCol2.length, "column length");
+        assertEquals(1.0, mRow1[0], EPS);
+        assertEquals(2.0, mRow1[1], EPS);
+        assertEquals(2.0, mCol2[0], EPS);
+        assertEquals(4.0, mCol2[1], EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(2));

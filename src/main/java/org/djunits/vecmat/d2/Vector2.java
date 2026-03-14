@@ -402,10 +402,10 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector1<Q, U> mgetRowVector(final int mrow)
+        public Vector1<Q, U> mgetRowVector(final int mRow)
         {
-            mcheckRow(mrow);
-            return new Vector1<Q, U>(msi(mrow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            mcheckRow(mRow);
+            return new Vector1<Q, U>(msi(mRow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -416,9 +416,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Col<Q, U> mgetColumnVector(final int mcol)
+        public Vector2.Col<Q, U> mgetColumnVector(final int mCol)
         {
-            mcheckCol(mcol);
+            mcheckCol(mCol);
             return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -572,9 +572,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Row<Q, U> mgetRowVector(final int mrow)
+        public Vector2.Row<Q, U> mgetRowVector(final int mRow)
         {
-            mcheckRow(mrow);
+            mcheckRow(mRow);
             return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -586,10 +586,10 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector1<Q, U> mgetColumnVector(final int mcol)
+        public Vector1<Q, U> mgetColumnVector(final int mCol)
         {
-            mcheckCol(mcol);
-            return new Vector1<Q, U>(msi(1, mcol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            mcheckCol(mCol);
+            return new Vector1<Q, U>(msi(1, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

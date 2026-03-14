@@ -103,10 +103,10 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public Vector3.Row<Q, U> mgetRowVector(final int mrow)
+    public Vector3.Row<Q, U> mgetRowVector(final int mRow)
     {
-        mcheckRow(mrow);
-        return new Vector3.Row<Q, U>(msi(mrow, 1), msi(mrow, 2), msi(mrow, 3), getDisplayUnit().getBaseUnit())
+        mcheckRow(mRow);
+        return new Vector3.Row<Q, U>(msi(mRow, 1), msi(mRow, 2), msi(mRow, 3), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -119,10 +119,10 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public Vector3.Col<Q, U> mgetColumnVector(final int mcol)
+    public Vector3.Col<Q, U> mgetColumnVector(final int mCol)
     {
-        mcheckCol(mcol);
-        return new Vector3.Col<Q, U>(msi(1, mcol), msi(2, mcol), msi(3, mcol), getDisplayUnit().getBaseUnit())
+        mcheckCol(mCol);
+        return new Vector3.Col<Q, U>(msi(1, mCol), msi(2, mCol), msi(3, mCol), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
