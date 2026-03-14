@@ -133,6 +133,22 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> inst = base.instantiateSi(newSi);
         assertEquals(Length.Unit.km, inst.getDisplayUnit());
         assertArrayEquals(newSi, inst.si(), EPS);
+
+        Matrix3x3<SIQuantity, SIUnit> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, siMatrix.si(), EPS, "si array used as-is");
+        assertEquals(9.0, siMatrix.get(0, 0).si(), EPS);
+
+        Matrix3x3<SIQuantity, SIUnit> siMatrixOf =
+                Matrix3x3.of(new double[][] {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, siMatrixOf.si(), EPS, "si array used as-is");
+        assertEquals(9.0, siMatrixOf.get(0, 0).si(), EPS);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> base.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new double[][] {{10.0, 11.0, 12.0, 13.0, 14.0}}, SIUnit.of("kgm/s2K")));
     }
 
     // ------------------------------------------------------------------------------------
@@ -617,7 +633,7 @@ public class Matrix3x3Test
         assertEquals(0.09, m.get(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS);
         assertEquals(0.01, m.mget(1, 1).si(), EPS);
         assertEquals(0.09, m.mget(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS);
-        
+
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(-1, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(3, 3));
         assertThrows(IndexOutOfBoundsException.class, () -> m.mget(0, 0));

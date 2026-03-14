@@ -2,6 +2,7 @@ package org.djunits.vecmat.table;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,8 +13,12 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.vecmat.d1.Matrix1x1;
+import org.djunits.vecmat.d1.Vector1;
 import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d2.Vector2;
 import org.djunits.vecmat.d3.Matrix3x3;
+import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
@@ -44,26 +49,6 @@ public class QuantityTableTest
         double[] si = new double[] {1, 2, 3, 4};
         DataGridSi<?> dg = new DenseDoubleDataSi(si, 2, 2);
         return new QuantityTable<>(dg, Length.Unit.m);
-    }
-
-    /**
-     * Helper: create a simple 3x3 QuantityTable.
-     * @return 3x3 table with values 1..9 m
-     */
-    private static QuantityTable<Length, Length.Unit> create3x3()
-    {
-        double[] si = new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        return new QuantityTable<>(new DenseDoubleDataSi(si, 3, 3), Length.Unit.m);
-    }
-
-    /**
-     * Helper: create a non-square 2x3 QuantityTable.
-     * @return table 2x3 with values 1..6 m
-     */
-    private static QuantityTable<Length, Length.Unit> create2x3()
-    {
-        double[] si = new double[] {1, 2, 3, 4, 5, 6};
-        return new QuantityTable<>(new DenseDoubleDataSi(si, 2, 3), Length.Unit.m);
     }
 
     // ----------------------------------------------------------------------
@@ -121,6 +106,10 @@ public class QuantityTableTest
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
         assertEquals(2, m.rows());
         assertEquals(3, m.cols());
+
+        // ragged -> error
+        assertThrows(IllegalArgumentException.class,
+                () -> QuantityTable.of(new double[][] {{1, 2, 3}, {4, 5}}, Length.Unit.km));
     }
 
     /** Verify of(Q[][],U) accepts per-cell units via DenseDoubleData and sets display unit. */
@@ -221,6 +210,22 @@ public class QuantityTableTest
         assertArrayEquals(new double[] {10, 10, 10, 10}, result.si(), 1e-12);
     }
 
+    /** Verify equals/hashCode. */
+    @Test
+    @DisplayName("equals / hashCode")
+    public void testEqualsHash()
+    {
+        QuantityTable<Length, Length.Unit> a = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        QuantityTable<Length, Length.Unit> b = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        QuantityTable<Length, Length.Unit> c = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 7}, 3, 2, Length.Unit.m);
+        assertEquals(a, a);
+        assertEquals(a, b);
+        assertEquals(a.hashCode(), b.hashCode());
+        assertNotEquals(a, c);
+        assertNotEquals(a, null);
+        assertNotEquals(a, "other");
+    }
+
     // ----------------------------------------------------------------------
     // as(targetUnit)
     // ----------------------------------------------------------------------
@@ -243,84 +248,425 @@ public class QuantityTableTest
         assertThrows(IllegalArgumentException.class, () -> q.as(SIUnit.of("s"))); // dimension mismatch: meter vs second
     }
 
-    // ----------------------------------------------------------------------
-    // asMatrix2x2()
-    // ----------------------------------------------------------------------
-
     /**
-     * Test asMatrix2x2(): only valid for 2x2 tables.
+     * Verify QuantityTable conversions to fixed-size vectors and matrices preserve SI data and display unit, and that shape
+     * checks throw IllegalStateException with both row- and column-mismatch branches covered.
+     * <p>
+     * Uses kilometers for column-shaped tests and centimeters for row-shaped tests to exercise SI conversion.
      */
     @Test
-    @DisplayName("asMatrix2x2(): success for 2x2, failure otherwise")
-    public void testAsMatrix2x2()
+    @DisplayName("QuantityTable: asVector preserve SI and unit; row/col mismatch branches throw")
+    public void testQuantityTableAsVectorConversions()
     {
-        QuantityTable<Length, Length.Unit> q = create2x2();
-        Matrix2x2<Length, Length.Unit> m2 = q.asMatrix2x2();
+        // ----------------------------
+        // asVector1 (requires 1x1)
+        // ----------------------------
 
-        assertArrayEquals(q.si(), m2.si(), 1e-12);
-        assertEquals(q.getDisplayUnit(), m2.getDisplayUnit());
+        QuantityTable<Length, Length.Unit> m11cm = QuantityTable.of(new double[] {3}, 1, 1, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, m11cm.getDisplayUnit());
+        assertEquals(1, m11cm.si().length);
+        assertEquals(0.03, m11cm.si()[0], EPS);
+        Vector1<Length, Length.Unit> v1cm = m11cm.asVector1();
+        assertEquals(1, v1cm.size());
+        assertEquals(0.03, v1cm.get(0).si(), EPS);
+        assertEquals(Length.Unit.cm, v1cm.getDisplayUnit());
 
-        // Non-2x2
-        QuantityTable<Length, Length.Unit> non2 =
-                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3}, 3, 1), Length.Unit.m);
-        assertThrows(IllegalStateException.class, non2::asMatrix2x2);
+        // row mismatch (2x1) and col mismatch (1x2)
+        QuantityTable<Length, Length.Unit> m21km = QuantityTable.of(new double[] {5.0, 6.0}, 2, 1, Length.Unit.km);
+        QuantityTable<Length, Length.Unit> m12cm = QuantityTable.of(new double[] {3, 4}, 1, 2, Length.Unit.cm);
+        assertThrows(IllegalStateException.class, () -> m21km.asVector1());
+        assertThrows(IllegalStateException.class, () -> m12cm.asVector1());
+
+        // ----------------------------
+        // asVector2Col (requires 2x1)
+        // ----------------------------
+
+        QuantityTable<Length, Length.Unit> m21ok = QuantityTable.of(new double[] {5.0, 6.0}, 2, 1, Length.Unit.km);
+        assertEquals(Length.Unit.km, m21ok.getDisplayUnit());
+        assertEquals(2, m21ok.si().length);
+        assertEquals(5000.0, m21ok.si()[0], EPS);
+        assertEquals(6000.0, m21ok.si()[1], EPS);
+        Vector2.Col<Length, Length.Unit> v2col = m21ok.asVector2Col();
+        assertEquals(2, v2col.size());
+        assertEquals(5000.0, v2col.get(0).si(), EPS);
+        assertEquals(6000.0, v2col.get(1).si(), EPS);
+        assertEquals(Length.Unit.km, v2col.getDisplayUnit());
+
+        // row mismatch (1x1) and col mismatch (2x2)
+        QuantityTable<Length, Length.Unit> m11km = QuantityTable.of(new double[] {7.0}, 1, 1, Length.Unit.km);
+        QuantityTable<Length, Length.Unit> m22km = QuantityTable.of(new double[] {5, 6, 7, 8}, 2, 2, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> m11km.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> m22km.asVector2Col());
+
+        // ----------------------------
+        // asVector2Row (requires 1x2)
+        // ----------------------------
+        QuantityTable<Length, Length.Unit> m12ok = QuantityTable.of(new double[] {3, 4}, 1, 2, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, m12ok.getDisplayUnit());
+        assertEquals(2, m12ok.si().length);
+        assertEquals(0.03, m12ok.si()[0], EPS);
+        assertEquals(0.04, m12ok.si()[1], EPS);
+        Vector2.Row<Length, Length.Unit> v2row = m12ok.asVector2Row();
+        assertEquals(2, v2row.size());
+        assertEquals(0.03, v2row.get(0).si(), EPS);
+        assertEquals(0.04, v2row.get(1).si(), EPS);
+        assertEquals(Length.Unit.cm, v2row.getDisplayUnit());
+
+        // row mismatch (2x2) and col mismatch (1x1)
+        QuantityTable<Length, Length.Unit> m22cm = QuantityTable.of(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.cm);
+        QuantityTable<Length, Length.Unit> m11cm2 = QuantityTable.of(new double[] {0.05}, 1, 1, Length.Unit.cm);
+        assertThrows(IllegalStateException.class, () -> m22cm.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> m11cm2.asVector2Row());
+
+        // ----------------------------
+        // asVector3Col (requires 3x1)
+        // ----------------------------
+        QuantityTable<Length, Length.Unit> m31ok = QuantityTable.of(new double[] {5, 6, 7}, 3, 1, Length.Unit.km);
+        Vector3.Col<Length, Length.Unit> v3col = m31ok.asVector3Col();
+        assertEquals(3, v3col.size());
+        assertEquals(5000.0, v3col.get(0).si(), EPS);
+        assertEquals(6000.0, v3col.get(1).si(), EPS);
+        assertEquals(7000.0, v3col.get(2).si(), EPS);
+        assertEquals(Length.Unit.km, v3col.getDisplayUnit());
+
+        // row mismatch (2x1) and col mismatch (3x2)
+        QuantityTable<Length, Length.Unit> m21bad = QuantityTable.of(new double[] {5.0, 6.0}, 2, 1, Length.Unit.km);
+        QuantityTable<Length, Length.Unit> m32bad =
+                QuantityTable.of(new double[] {5.0, 0.001, 6.0, 0.002, 7.0, 0.003}, 3, 2, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> m21bad.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> m32bad.asVector3Col());
+
+        // ----------------------------
+        // asVector3Row (requires 1x3)
+        // ----------------------------
+        QuantityTable<Length, Length.Unit> m13ok = QuantityTable.of(new double[] {3, 4, 5}, 1, 3, Length.Unit.cm);
+        Vector3.Row<Length, Length.Unit> v3row = m13ok.asVector3Row();
+        assertEquals(3, v3row.size());
+        assertEquals(0.03, v3row.get(0).si(), EPS);
+        assertEquals(0.04, v3row.get(1).si(), EPS);
+        assertEquals(0.05, v3row.get(2).si(), EPS);
+        assertEquals(Length.Unit.cm, v3row.getDisplayUnit());
+
+        // row mismatch (2x3) and col mismatch (1x2)
+        QuantityTable<Length, Length.Unit> m23bad = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.cm);
+        QuantityTable<Length, Length.Unit> m12bad = QuantityTable.of(new double[] {7, 8}, 1, 2, Length.Unit.cm);
+        assertThrows(IllegalStateException.class, () -> m23bad.asVector3Row());
+        assertThrows(IllegalStateException.class, () -> m12bad.asVector3Row());
     }
 
-    // ----------------------------------------------------------------------
-    // asMatrix3x3()
-    // ----------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // QuantityTable — asMatrix2x2 / asMatrix3x3
+    // ------------------------------------------------------------------------------------
 
     /**
-     * Test asMatrix3x3(): only valid for 3x3 tables.
+     * Verify QuantityTable conversions to fixed-size matrices preserve SI data and display unit, and that shape checks throw
+     * IllegalStateException for the mismatch branches covered.
      */
     @Test
-    @DisplayName("asMatrix3x3(): success for 3x3, failure otherwise")
-    public void testAsMatrix3x3()
+    @DisplayName("QuantityTable: asMatrix preserve SI and unit")
+    public void testQuantityTableAsMatrixConversions()
     {
-        QuantityTable<Length, Length.Unit> q = create3x3();
-        Matrix3x3<Length, Length.Unit> m3 = q.asMatrix3x3();
-        assertArrayEquals(q.si(), m3.si(), 1e-12);
+        // ------------------------------------------------------------------------------------
+        // QuantityTable — asMatrix1x1 (happy + bad paths)
+        // ------------------------------------------------------------------------------------
 
-        QuantityTable<Length, Length.Unit> non3 = create2x2();
-        assertThrows(IllegalStateException.class, non3::asMatrix3x3);
+        // Happy path: 1x1, using km to verify SI-preservation (5 km -> 5000 m).
+        QuantityTable<Length, Length.Unit> m1x1km = QuantityTable.of(new double[] {5.0}, 1, 1, Length.Unit.km);
+        assertEquals(Length.Unit.km, m1x1km.getDisplayUnit());
+        assertEquals(1, m1x1km.si().length);
+        assertEquals(5000.0, m1x1km.si()[0], EPS);
+        assertEquals(5000.0, m1x1km.si(0, 0), EPS);
+
+        Matrix1x1<Length, Length.Unit> fixed1x1 = m1x1km.asMatrix1x1();
+        assertEquals(Length.Unit.km, fixed1x1.getDisplayUnit());
+        assertEquals(5000.0, fixed1x1.si(0, 0), EPS);
+        double[] si11 = fixed1x1.si();
+        assertEquals(1, si11.length);
+        assertEquals(5000.0, si11[0], EPS);
+
+        // Bad path: row mismatch (2x1).
+        QuantityTable<Length, Length.Unit> m2x1km = QuantityTable.of(new double[] {5.0, 6.0}, 2, 1, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> m2x1km.asMatrix1x1());
+
+        // Bad path: column mismatch (1x2).
+        QuantityTable<Length, Length.Unit> m1x2km = QuantityTable.of(new double[] {5.0, 6.0}, 1, 2, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> m1x2km.asMatrix1x1());
+
+        // ----------------------------
+        // asMatrix2x2 (requires 2x2)
+        // ----------------------------
+
+        QuantityTable<Length, Length.Unit> m22ok = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
+        Matrix2x2<Length, Length.Unit> m22fixed = m22ok.asMatrix2x2();
+        assertEquals(Length.Unit.m, m22fixed.getDisplayUnit());
+        assertEquals(1.0, m22fixed.si(0, 0), EPS);
+        assertEquals(2.0, m22fixed.si(0, 1), EPS);
+        assertEquals(3.0, m22fixed.si(1, 0), EPS);
+        assertEquals(4.0, m22fixed.si(1, 1), EPS);
+        double[] m22si = m22fixed.si();
+        assertEquals(4, m22si.length);
+        assertEquals(1.0, m22si[0], EPS);
+        assertEquals(2.0, m22si[1], EPS);
+        assertEquals(3.0, m22si[2], EPS);
+        assertEquals(4.0, m22si[3], EPS);
+
+        // row mismatch (1x2) and col mismatch (2x3)
+        QuantityTable<Length, Length.Unit> m12mat = QuantityTable.of(new double[] {9.0, 10.0}, 1, 2, Length.Unit.m);
+        QuantityTable<Length, Length.Unit> m23mat =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        assertThrows(IllegalStateException.class, () -> m12mat.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> m23mat.asMatrix2x2());
+
+        // ----------------------------
+        // asMatrix3x3 (requires 3x3)
+        // ----------------------------
+
+        QuantityTable<Length, Length.Unit> m33ok =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, 3, 3, Length.Unit.m);
+        Matrix3x3<Length, Length.Unit> m33fixed = m33ok.asMatrix3x3();
+        assertEquals(Length.Unit.m, m33fixed.getDisplayUnit());
+        assertEquals(1.0, m33fixed.si(0, 0), EPS);
+        assertEquals(2.0, m33fixed.si(0, 1), EPS);
+        assertEquals(3.0, m33fixed.si(0, 2), EPS);
+        assertEquals(4.0, m33fixed.si(1, 0), EPS);
+        assertEquals(5.0, m33fixed.si(1, 1), EPS);
+        assertEquals(6.0, m33fixed.si(1, 2), EPS);
+        assertEquals(7.0, m33fixed.si(2, 0), EPS);
+        assertEquals(8.0, m33fixed.si(2, 1), EPS);
+        assertEquals(9.0, m33fixed.si(2, 2), EPS);
+        double[] m33si = m33fixed.si();
+        assertEquals(9, m33si.length);
+        assertEquals(1.0, m33si[0], EPS);
+        assertEquals(2.0, m33si[1], EPS);
+        assertEquals(3.0, m33si[2], EPS);
+        assertEquals(4.0, m33si[3], EPS);
+        assertEquals(5.0, m33si[4], EPS);
+        assertEquals(6.0, m33si[5], EPS);
+        assertEquals(7.0, m33si[6], EPS);
+        assertEquals(8.0, m33si[7], EPS);
+        assertEquals(9.0, m33si[8], EPS);
+
+        // row mismatch (2x3) and col mismatch (3x2)
+        QuantityTable<Length, Length.Unit> m23badMat =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        QuantityTable<Length, Length.Unit> m32badMat =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
+        assertThrows(IllegalStateException.class, () -> m23badMat.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> m32badMat.asMatrix3x3());
     }
 
-    // ----------------------------------------------------------------------
-    // asMatrixNxN()
-    // ----------------------------------------------------------------------
-
     /**
-     * Test asMatrixNxN(): only valid for square tables.
+     * Verify QuantityTable conversions to quantity table preserve SI data and display unit, and that shape checks throw
+     * IllegalStateException for the mismatch branches covered.
      */
     @Test
-    @DisplayName("asMatrixNxN(): square only")
+    @DisplayName("QuantityTable: asMatrixNxM preserve SI and unit")
+    public void testQuantityTableAsMatrixNxM()
+    {
+        // ----------------------------
+        // asMatrixNxM
+        // ----------------------------
+
+        double[] newSi = new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+        QuantityTable<Length, Length.Unit> q23ok = QuantityTable.of(newSi, 3, 2, Length.Unit.km);
+        MatrixNxM<Length, Length.Unit> m23fixed = q23ok.asMatrixNxM();
+        assertEquals(Length.Unit.km, m23fixed.getDisplayUnit());
+        assertEquals(m23fixed.cols(), q23ok.cols());
+        assertEquals(m23fixed.rows(), q23ok.rows());
+        assertEquals(1000.0, m23fixed.si(0, 0), EPS);
+        assertEquals(2000.0, m23fixed.si(0, 1), EPS);
+        assertEquals(3000.0, m23fixed.si(1, 0), EPS);
+        assertEquals(4000.0, m23fixed.si(1, 1), EPS);
+        assertEquals(5000.0, m23fixed.si(2, 0), EPS);
+        assertEquals(6000.0, m23fixed.si(2, 1), EPS);
+        double[] m23si = m23fixed.si();
+        assertEquals(6, m23si.length);
+        assertEquals(1000.0 * newSi[0], m23si[0]);
+    }
+
+    // ------------------------------------------------------------------------------------
+    // QuantityTable — asMatrixNxN (happy + bad paths)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify that {@code asMatrixNxN()} preserves SI data and display unit for square matrices (tested with 1x1 and 4x4), and
+     * throws {@link IllegalStateException} for non-square shapes (tested with 2x3 and 3x2). SI correctness is checked via both
+     * the row-major {@code si()} array and {@code si(row, col)} with 0-based indices.
+     */
+    @Test
+    @DisplayName("QuantityTable: asMatrixNxN preserves SI & unit (square) and throws for non-square shapes")
     public void testAsMatrixNxN()
     {
-        QuantityTable<Length, Length.Unit> q = create3x3();
-        MatrixNxN<Length, Length.Unit> nxn = q.asMatrixNxN();
-        assertArrayEquals(q.si(), nxn.si(), 1e-12);
+        // ----------------------------
+        // Happy path: 1x1 (using cm)
+        // ----------------------------
+        QuantityTable<Length, Length.Unit> m11cm = QuantityTable.of(new double[] {3}, 1, 1, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, m11cm.getDisplayUnit());
+        assertEquals(1, m11cm.si().length);
+        assertEquals(0.03, m11cm.si()[0], EPS);
+        assertEquals(0.03, m11cm.si(0, 0), EPS);
 
-        assertThrows(IllegalStateException.class, () -> create2x3().asMatrixNxN());
+        MatrixNxN<Length, Length.Unit> n11 = m11cm.asMatrixNxN();
+        assertEquals(Length.Unit.cm, n11.getDisplayUnit());
+        double[] si11 = n11.si();
+        assertEquals(1, si11.length);
+        assertEquals(0.03, si11[0], EPS);
+        assertEquals(0.03, n11.si(0, 0), EPS);
+
+        // ----------------------------
+        // Happy path: 4x4 (using km)
+        // ----------------------------
+        double[] si44 = new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0};
+        QuantityTable<Length, Length.Unit> m44km = QuantityTable.of(si44, 4, 4, Length.Unit.km);
+        assertEquals(Length.Unit.km, m44km.getDisplayUnit());
+        assertEquals(16, m44km.si().length);
+        assertEquals(1000.0, m44km.si()[0], EPS);
+        assertEquals(16000.0, m44km.si()[15], EPS);
+        assertEquals(1000.0, m44km.si(0, 0), EPS);
+        assertEquals(4000.0, m44km.si(0, 3), EPS);
+        assertEquals(13000.0, m44km.si(3, 0), EPS);
+        assertEquals(16000.0, m44km.si(3, 3), EPS);
+
+        MatrixNxN<Length, Length.Unit> n44 = m44km.asMatrixNxN();
+        assertEquals(Length.Unit.km, n44.getDisplayUnit());
+
+        double[] si44Out = n44.si();
+        assertEquals(16, si44Out.length);
+        assertEquals(1000.0, si44Out[0], EPS);
+        assertEquals(2000.0, si44Out[1], EPS);
+        assertEquals(3000.0, si44Out[2], EPS);
+        assertEquals(4000.0, si44Out[3], EPS);
+        assertEquals(5000.0, si44Out[4], EPS);
+        assertEquals(6000.0, si44Out[5], EPS);
+        assertEquals(7000.0, si44Out[6], EPS);
+        assertEquals(8000.0, si44Out[7], EPS);
+        assertEquals(9000.0, si44Out[8], EPS);
+        assertEquals(10000.0, si44Out[9], EPS);
+        assertEquals(11000.0, si44Out[10], EPS);
+        assertEquals(12000.0, si44Out[11], EPS);
+        assertEquals(13000.0, si44Out[12], EPS);
+        assertEquals(14000.0, si44Out[13], EPS);
+        assertEquals(15000.0, si44Out[14], EPS);
+        assertEquals(16000.0, si44Out[15], EPS);
+
+        assertEquals(1000.0, n44.si(0, 0), EPS);
+        assertEquals(4000.0, n44.si(0, 3), EPS);
+        assertEquals(13000.0, n44.si(3, 0), EPS);
+        assertEquals(16000.0, n44.si(3, 3), EPS);
+
+        // ----------------------------
+        // Bad paths: non-square matrices must throw
+        // ----------------------------
+
+        // 2x3 (row-mismatch branch of "rows != cols")
+        QuantityTable<Length, Length.Unit> m23m =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        assertThrows(IllegalStateException.class, () -> m23m.asMatrixNxN());
+
+        // 3x2 (column-mismatch branch of "rows != cols")
+        QuantityTable<Length, Length.Unit> m32m =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
+        assertThrows(IllegalStateException.class, () -> m32m.asMatrixNxN());
     }
 
-    // ----------------------------------------------------------------------
-    // asMatrixNxM()
-    // ----------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // QuantityTable — asVectorNCol (happy + bad paths)
+    // ------------------------------------------------------------------------------------
 
     /**
-     * Test asMatrixNxM(): always valid.
+     * Verify that {@code asVectorNCol()}:
+     * <ul>
+     * <li>Preserves SI data and display unit for {@code N x 1} matrices (tested with N=4 and N=1),</li>
+     * <li>Throws {@link IllegalStateException} when the matrix has more than one column (e.g., {@code N x 2}).</li>
+     * </ul>
+     * SI correctness is validated via both the row-major {@code si()} array and element access on the returned vector.
      */
     @Test
-    @DisplayName("asMatrixNxM(): always succeeds")
-    public void testAsMatrixNxM()
+    @DisplayName("QuantityTable: asVectorNCol preserves SI & unit (Nx1) and throws for Nx2")
+    public void testAsVectorNCol()
     {
-        QuantityTable<Length, Length.Unit> q = create2x3();
-        MatrixNxM<Length, Length.Unit> m = q.asMatrixNxM();
+        // Happy path: 4x1 using km (values in SI meters: 5,6,7,8 km -> 5000..8000 m)
+        QuantityTable<Length, Length.Unit> m41km = QuantityTable.of(new double[] {5.0, 6.0, 7.0, 8.0}, 4, 1, Length.Unit.km);
 
-        assertEquals(q.rows(), m.rows());
-        assertEquals(q.cols(), m.cols());
-        assertArrayEquals(q.si(), m.si(), 1e-12);
-        assertEquals(q.getDisplayUnit(), m.getDisplayUnit());
+        assertEquals(Length.Unit.km, m41km.getDisplayUnit());
+        assertEquals(4, m41km.si().length);
+        assertEquals(5000.0, m41km.si()[0], EPS);
+        assertEquals(8000.0, m41km.si()[3], EPS);
+        assertEquals(5000.0, m41km.si(0, 0), EPS);
+        assertEquals(8000.0, m41km.si(3, 0), EPS);
+
+        VectorN.Col<Length, Length.Unit> vCol = m41km.asVectorNCol();
+        assertEquals(4, vCol.size());
+        assertEquals(Length.Unit.km, vCol.getDisplayUnit());
+        assertEquals(5000.0, vCol.get(0).si(), EPS);
+        assertEquals(8000.0, vCol.get(3).si(), EPS);
+
+        double[] vColSi = vCol.si();
+        assertEquals(4, vColSi.length);
+        assertEquals(5000.0, vColSi[0], EPS);
+        assertEquals(8000.0, vColSi[3], EPS);
+
+        // Edge happy path: 1x1 also yields a VectorN.Col of length 1
+        QuantityTable<Length, Length.Unit> m11km = QuantityTable.of(new double[] {1.234}, 1, 1, Length.Unit.km);
+        VectorN.Col<Length, Length.Unit> vCol1 = m11km.asVectorNCol();
+        assertEquals(1, vCol1.size());
+        assertEquals(Length.Unit.km, vCol1.getDisplayUnit());
+        assertEquals(1234.0, vCol1.get(0).si(), EPS);
+
+        // Bad path: Nx2 must throw (cols() != 1)
+        QuantityTable<Length, Length.Unit> m42km =
+                QuantityTable.of(new double[] {5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0}, 4, 2, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> m42km.asVectorNCol());
+    }
+
+    // ------------------------------------------------------------------------------------
+    // QuantityTable — asVectorNRow (happy + bad paths)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify that {@code asVectorNRow()}:
+     * <ul>
+     * <li>Preserves SI data and display unit for {@code 1 x N} matrices (tested with N=4 and N=1),</li>
+     * <li>Throws {@link IllegalStateException} when the matrix has more than one row (e.g., {@code 2 x N}).</li>
+     * </ul>
+     * SI correctness is validated via both the row-major {@code si()} array and element access on the returned vector.
+     */
+    @Test
+    @DisplayName("QuantityTable: asVectorNRow preserves SI & unit (1xN) and throws for 2xN")
+    public void testAsVectorNRow()
+    {
+        // Happy path: 1x4 using cm (values in SI meters: 3,4,5,6 cm -> 0.03..0.06 m)
+        QuantityTable<Length, Length.Unit> m14cm = QuantityTable.of(new double[] {3, 4, 5, 6}, 1, 4, Length.Unit.cm);
+
+        assertEquals(Length.Unit.cm, m14cm.getDisplayUnit());
+        assertEquals(4, m14cm.si().length);
+        assertEquals(0.03, m14cm.si()[0], EPS);
+        assertEquals(0.06, m14cm.si()[3], EPS);
+        assertEquals(0.03, m14cm.si(0, 0), EPS);
+        assertEquals(0.06, m14cm.si(0, 3), EPS);
+
+        VectorN.Row<Length, Length.Unit> vRow = m14cm.asVectorNRow();
+        assertEquals(4, vRow.size());
+        assertEquals(Length.Unit.cm, vRow.getDisplayUnit());
+        assertEquals(0.03, vRow.get(0).si(), EPS);
+        assertEquals(0.06, vRow.get(3).si(), EPS);
+
+        double[] vRowSi = vRow.si();
+        assertEquals(4, vRowSi.length);
+        assertEquals(0.03, vRowSi[0], EPS);
+        assertEquals(0.06, vRowSi[3], EPS);
+
+        // Edge happy path: 1x1 also yields a VectorN.Row of length 1
+        QuantityTable<Length, Length.Unit> m11cm = QuantityTable.of(new double[] {0.1}, 1, 1, Length.Unit.cm);
+        VectorN.Row<Length, Length.Unit> vRow1 = m11cm.asVectorNRow();
+        assertEquals(1, vRow1.size());
+        assertEquals(Length.Unit.cm, vRow1.getDisplayUnit());
+        assertEquals(0.001, vRow1.get(0).si(), EPS);
+
+        // Bad path: 2xN must throw (rows() != 1)
+        QuantityTable<Length, Length.Unit> m24cm =
+                QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8}, 2, 4, Length.Unit.cm);
+        assertThrows(IllegalStateException.class, () -> m24cm.asVectorNRow());
     }
 
     /**

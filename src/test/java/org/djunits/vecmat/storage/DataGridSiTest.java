@@ -32,6 +32,26 @@ public class DataGridSiTest
         DenseFloatDataSi dfdf = new DenseFloatDataSi(f3x2, 3, 2);
         SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2, ind32, 3, 2);
         SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2, ind32, 3, 2);
+        
+        assertTrue(dddd.isDense());
+        assertTrue(dddd.isDouble());
+        assertFalse(dddd.isSparse());
+        assertFalse(dddd.isFloat());
+
+        assertTrue(dfdf.isDense());
+        assertFalse(dfdf.isDouble());
+        assertFalse(dfdf.isSparse());
+        assertTrue(dfdf.isFloat());
+
+        assertFalse(sddd.isDense());
+        assertTrue(sddd.isDouble());
+        assertTrue(sddd.isSparse());
+        assertFalse(sddd.isFloat());
+
+        assertFalse(sfdf.isDense());
+        assertFalse(sfdf.isDouble());
+        assertTrue(sfdf.isSparse());
+        assertTrue(sfdf.isFloat());
 
         assertEquals(dddd, dddd);
         assertEquals(dddd, dfdf);
@@ -405,6 +425,18 @@ public class DataGridSiTest
         {
             assertThrows(IllegalArgumentException.class, () -> dg.instantiateNew(new double[] {0, 1, 2}));
         }
+        
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(f3x2, -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(f3x2, 3, -1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(f3x2, 3, 3));
+        
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(d3x2, -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(d3x2, 3, -1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(d3x2, 3, 3));
+        
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(d3x2, -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(d3x2, 3, -1));
+        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(d3x2, 3, 3));
     }
 
 }

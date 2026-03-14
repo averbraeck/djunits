@@ -17,6 +17,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.vecmat.d1.Vector1;
 import org.djunits.vecmat.def.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -129,6 +130,35 @@ public class Vector2Test
         Vector2.Col<Length, Length.Unit> c2 = c1.instantiateSi(new double[] {10.0, 20.0});
         assertArrayEquals(new double[] {10.0, 20.0}, c2.si(), EPS);
         assertEquals(c1.getDisplayUnit(), c2.getDisplayUnit(), "display unit copied by instantiate path");
+        
+        // Row vector
+        double[] newSi = {20, 30};
+        Vector2.Row<SIQuantity, SIUnit> rsiVector = r1.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", rsiVector.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, rsiVector.si(), EPS, "si array used as-is");
+        assertEquals(20.0, rsiVector.get(0, 0).si(), EPS);
+
+        Vector2.Row<SIQuantity, SIUnit> rsiVectorOf = Vector2.Row.of(20.0, 30.0, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, rsiVectorOf.si(), EPS, "si array used as-is");
+        assertEquals(20.0, rsiVectorOf.get(0, 0).si(), EPS);
+        
+        assertThrows(IllegalArgumentException.class,
+                () -> r1.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
+
+        // Column vector
+        Vector2.Col<SIQuantity, SIUnit> csiVector = c1.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", csiVector.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, csiVector.si(), EPS, "si array used as-is");
+        assertEquals(20.0, csiVector.get(0, 0).si(), EPS);
+
+        Vector2.Col<SIQuantity, SIUnit> csiVectorOf = Vector2.Col.of(20.0, 30.0, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, csiVectorOf.si(), EPS, "si array used as-is");
+        assertEquals(20.0, csiVectorOf.get(0, 0).si(), EPS);
+        
+        assertThrows(IllegalArgumentException.class,
+                () -> c1.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -172,11 +202,25 @@ public class Vector2Test
         assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> v.si(2));
 
+        // si(r, c) with valid and invalid indices
+        assertEquals(v.x().si(), v.si(0, 0), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(2, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, 2));
+
         // msi(index) with valid and invalid indices
         assertEquals(v.x().si(), v.msi(1), EPS);
         assertEquals(v.y().si(), v.msi(2), EPS);
         assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0));
         assertThrows(IndexOutOfBoundsException.class, () -> v.msi(3));
+
+        // msi(r, c) with valid and invalid indices
+        assertEquals(v.x().si(), v.msi(1, 1), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(3, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 3));
 
         Vector2.Col<Length, Length.Unit> w = col(0.5, 200.0, Length.Unit.cm); // SI: 0.005, 2.0
         assertEquals(2, w.size(), "size is 2");
@@ -524,6 +568,373 @@ public class Vector2Test
 
         // seconds has different SI dimension; must fail
         assertThrows(IllegalArgumentException.class, () -> w.as(second));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Vector2.Col — getScalars / getRowScalars / getColumnScalars (incl. 1-based)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify scalar array extraction helpers on a {@link Vector2.Col} (2x1) and their 1-based variants.
+     * <p>
+     * This test uses kilometers as display unit to verify correct SI conversion.
+     */
+    @Test
+    @DisplayName("Vector2.Col: getScalars helpers (Row/Column) incl. 1-based, lengths, values, and bounds")
+    public void testColScalarExtraction()
+    {
+        // Column vector: [x; y] = [5 km; 6 km] -> SI = [5000; 6000] m
+        Vector2.Col<Length, Length.Unit> v = col(5.0, 6.0, Length.Unit.km);
+
+        // 0-based: getRowScalars(row) -> each row has 1 column
+        Length[] row0 = v.getRowScalars(0);
+        Length[] row1 = v.getRowScalars(1);
+        assertEquals(1, row0.length);
+        assertEquals(1, row1.length);
+        assertEquals(5000.0, row0[0].si(), EPS);
+        assertEquals(6000.0, row1[0].si(), EPS);
+
+        // 0-based: getColumnScalars(col) -> the only column aggregates both rows
+        Length[] col0 = v.getColumnScalars(0);
+        assertEquals(2, col0.length);
+        assertEquals(5000.0, col0[0].si(), EPS);
+        assertEquals(6000.0, col0[1].si(), EPS);
+
+        // 1-based: mgetRowScalars(row) / mgetColumnScalars(col)
+        Length[] mRow1 = v.mgetRowScalars(1);
+        Length[] mRow2 = v.mgetRowScalars(2);
+        assertEquals(1, mRow1.length);
+        assertEquals(1, mRow2.length);
+        assertEquals(5000.0, mRow1[0].si(), EPS);
+        assertEquals(6000.0, mRow2[0].si(), EPS);
+
+        Length[] mCol1 = v.mgetColumnScalars(1);
+        assertEquals(2, mCol1.length);
+        assertEquals(5000.0, mCol1[0].si(), EPS);
+        assertEquals(6000.0, mCol1[1].si(), EPS);
+
+        // OOB (0-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowScalars(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnScalars(1));
+
+        // OOB (1-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowScalars(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnScalars(2));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Vector2.Col — getRowVector / getColumnVector (incl. 1-based)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify vector extraction helpers on a {@link Vector2.Col} (2x1) for both 0-based and 1-based variants.
+     * <p>
+     * Row vectors returned are {@link Vector1} since each row contains a single element. The full column is returned as a
+     * {@link Vector2.Col}.
+     */
+    @Test
+    @DisplayName("Vector2.Col: getRowVector / getColumnVector incl. 1-based and bounds")
+    public void testColVectorExtractionSpec()
+    {
+        // Column vector: [x; y] = [5 km; 6 km] -> SI = [5000; 6000] m
+        Vector2.Col<Length, Length.Unit> v = col(5.0, 6.0, Length.Unit.km);
+
+        // 0-based: rows -> Vector1
+        Vector1<Length, Length.Unit> row0 = v.getRowVector(0);
+        Vector1<Length, Length.Unit> row1 = v.getRowVector(1);
+        assertEquals(1, row0.size());
+        assertEquals(1, row1.size());
+        assertEquals(5000.0, row0.get(0).si(), EPS);
+        assertEquals(6000.0, row1.get(0).si(), EPS);
+
+        // 0-based: column 0 -> Vector2.Col (full column)
+        Vector2.Col<Length, Length.Unit> fullCol0 = v.getColumnVector(0);
+        assertEquals(2, fullCol0.size());
+        assertEquals(5000.0, fullCol0.get(0).si(), EPS);
+        assertEquals(6000.0, fullCol0.get(1).si(), EPS);
+
+        // 1-based
+        Vector1<Length, Length.Unit> mRow1 = v.mgetRowVector(1);
+        Vector1<Length, Length.Unit> mRow2 = v.mgetRowVector(2);
+        assertEquals(1, mRow1.size());
+        assertEquals(1, mRow2.size());
+        assertEquals(5000.0, mRow1.get(0).si(), EPS);
+        assertEquals(6000.0, mRow2.get(0).si(), EPS);
+
+        Vector2.Col<Length, Length.Unit> mFullCol1 = v.mgetColumnVector(1);
+        assertEquals(2, mFullCol1.size());
+        assertEquals(5000.0, mFullCol1.get(0).si(), EPS);
+        assertEquals(6000.0, mFullCol1.get(1).si(), EPS);
+
+        // OOB (0-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowVector(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnVector(1));
+
+        // OOB (1-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowVector(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnVector(2));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Vector2.Col — getRowSi / getColumnSi (incl. 1-based) + si(r,c) / msi(r,c)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify SI-array extraction helpers on a {@link Vector2.Col} and direct SI element access using {@code si(row, col)} and
+     * {@code msi(row, col)} including bounds.
+     */
+    @Test
+    @DisplayName("Vector2.Col: getRowSi / getColumnSi incl. 1-based + si(r,c)/msi(r,c)")
+    public void testColSiArrayExtractionAndSiAt()
+    {
+        // Column vector: [x; y] = [5 km; 6 km] -> SI = [5000; 6000] m
+        Vector2.Col<Length, Length.Unit> v = col(5.0, 6.0, Length.Unit.km);
+
+        // 0-based SI arrays
+        double[] row0 = v.getRowSi(0);
+        double[] row1 = v.getRowSi(1);
+        double[] col0 = v.getColumnSi(0);
+        assertEquals(1, row0.length);
+        assertEquals(1, row1.length);
+        assertEquals(2, col0.length);
+        assertEquals(5000.0, row0[0], EPS);
+        assertEquals(6000.0, row1[0], EPS);
+        assertEquals(5000.0, col0[0], EPS);
+        assertEquals(6000.0, col0[1], EPS);
+
+        // 1-based SI arrays
+        double[] mRow1 = v.mgetRowSi(1);
+        double[] mRow2 = v.mgetRowSi(2);
+        double[] mCol1 = v.mgetColumnSi(1);
+        assertEquals(1, mRow1.length);
+        assertEquals(1, mRow2.length);
+        assertEquals(2, mCol1.length);
+        assertEquals(5000.0, mRow1[0], EPS);
+        assertEquals(6000.0, mRow2[0], EPS);
+        assertEquals(5000.0, mCol1[0], EPS);
+        assertEquals(6000.0, mCol1[1], EPS);
+
+        // si(row, col) 0-based (rows 0..1, only column 0)
+        assertEquals(5000.0, v.si(0, 0), EPS);
+        assertEquals(6000.0, v.si(1, 0), EPS);
+
+        // msi(row, col) 1-based (rows 1..2, only column 1)
+        assertEquals(5000.0, v.msi(1, 1), EPS);
+        assertEquals(6000.0, v.msi(2, 1), EPS);
+
+        // OOB (0-based) for arrays
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowSi(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnSi(1));
+
+        // OOB (1-based) for arrays
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowSi(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnSi(2));
+
+        // OOB for si(row, col) 0-based
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(2, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, 1));
+
+        // OOB for msi(row, col) 1-based
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(3, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 2));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Vector2.Row — getScalars / getRowScalars / getColumnScalars (incl. 1-based)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify scalar array extraction helpers on a {@link Vector2.Row} (1x2) and their 1-based variants.
+     * <p>
+     * This test uses centimeters as display unit to verify correct SI conversion.
+     */
+    @Test
+    @DisplayName("Vector2.Row: getScalars helpers (Row/Column) incl. 1-based, lengths, values, and bounds")
+    public void testRowScalarExtraction()
+    {
+        // Row vector: [x, y] = [3 cm, 4 cm] -> SI = [0.03, 0.04] m
+        Vector2.Row<Length, Length.Unit> v = row(3.0, 4.0, Length.Unit.cm);
+
+        // 0-based: getRowScalars(row=0) -> two columns
+        Length[] row0 = v.getRowScalars(0);
+        assertEquals(2, row0.length);
+        assertEquals(0.03, row0[0].si(), EPS);
+        assertEquals(0.04, row0[1].si(), EPS);
+
+        // 0-based: getColumnScalars(col) -> each column has 1 row
+        Length[] col0 = v.getColumnScalars(0);
+        Length[] col1 = v.getColumnScalars(1);
+        assertEquals(1, col0.length);
+        assertEquals(1, col1.length);
+        assertEquals(0.03, col0[0].si(), EPS);
+        assertEquals(0.04, col1[0].si(), EPS);
+
+        // 1-based: mgetRowScalars(row=1) and mgetColumnScalars(col=1..2)
+        Length[] mRow1 = v.mgetRowScalars(1);
+        Length[] mCol1 = v.mgetColumnScalars(1);
+        Length[] mCol2 = v.mgetColumnScalars(2);
+        assertEquals(2, mRow1.length);
+        assertEquals(1, mCol1.length);
+        assertEquals(1, mCol2.length);
+        assertEquals(0.03, mRow1[0].si(), EPS);
+        assertEquals(0.04, mRow1[1].si(), EPS);
+        assertEquals(0.03, mCol1[0].si(), EPS);
+        assertEquals(0.04, mCol2[0].si(), EPS);
+
+        // OOB (0-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowScalars(1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnScalars(2));
+
+        // OOB (1-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowScalars(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnScalars(3));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Vector2.Row — getRowVector / getColumnVector (incl. 1-based)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify vector extraction helpers on a {@link Vector2.Row} (1x2) for both 0-based and 1-based variants.
+     * <p>
+     * The full row is a {@link Vector2.Row}, each column is returned as a {@link Vector1}.
+     */
+    @Test
+    @DisplayName("Vector2.Row: getRowVector / getColumnVector incl. 1-based and bounds")
+    public void testRowVectorExtractionSpec()
+    {
+        // Row vector: [x, y] = [3 cm, 4 cm] -> SI = [0.03, 0.04] m
+        Vector2.Row<Length, Length.Unit> v = row(3.0, 4.0, Length.Unit.cm);
+
+        // 0-based: row 0 -> Vector2.Row (full row)
+        Vector2.Row<Length, Length.Unit> fullRow0 = v.getRowVector(0);
+        assertEquals(2, fullRow0.size());
+        assertEquals(0.03, fullRow0.get(0).si(), EPS);
+        assertEquals(0.04, fullRow0.get(1).si(), EPS);
+
+        // 0-based: columns -> Vector1
+        Vector1<Length, Length.Unit> c0 = v.getColumnVector(0);
+        Vector1<Length, Length.Unit> c1 = v.getColumnVector(1);
+        assertEquals(1, c0.size());
+        assertEquals(1, c1.size());
+        assertEquals(0.03, c0.get(0).si(), EPS);
+        assertEquals(0.04, c1.get(0).si(), EPS);
+
+        // 1-based
+        Vector2.Row<Length, Length.Unit> mFullRow1 = v.mgetRowVector(1);
+        Vector1<Length, Length.Unit> mC1 = v.mgetColumnVector(1);
+        Vector1<Length, Length.Unit> mC2 = v.mgetColumnVector(2);
+        assertEquals(2, mFullRow1.size());
+        assertEquals(1, mC1.size());
+        assertEquals(1, mC2.size());
+        assertEquals(0.03, mFullRow1.get(0).si(), EPS);
+        assertEquals(0.04, mFullRow1.get(1).si(), EPS);
+        assertEquals(0.03, mC1.get(0).si(), EPS);
+        assertEquals(0.04, mC2.get(0).si(), EPS);
+
+        // OOB (0-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowVector(1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnVector(2));
+
+        // OOB (1-based)
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowVector(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnVector(3));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Vector2.Row — getRowSi / getColumnSi (incl. 1-based) + si(r,c) / msi(r,c)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify SI-array extraction helpers on a {@link Vector2.Row} and direct SI element access using {@code si(row, col)} and
+     * {@code msi(row, col)} including bounds.
+     */
+    @Test
+    @DisplayName("Vector2.Row: getRowSi / getColumnSi incl. 1-based + si(r,c)/msi(r,c)")
+    public void testRowSiArrayExtractionAndSiAt()
+    {
+        // Row vector: [x, y] = [3 cm, 4 cm] -> SI = [0.03, 0.04] m
+        Vector2.Row<Length, Length.Unit> v = row(3.0, 4.0, Length.Unit.cm);
+
+        // 0-based SI arrays
+        double[] row0 = v.getRowSi(0);
+        double[] col0 = v.getColumnSi(0);
+        double[] col1 = v.getColumnSi(1);
+        assertEquals(2, row0.length);
+        assertEquals(1, col0.length);
+        assertEquals(1, col1.length);
+        assertEquals(0.03, row0[0], EPS);
+        assertEquals(0.04, row0[1], EPS);
+        assertEquals(0.03, col0[0], EPS);
+        assertEquals(0.04, col1[0], EPS);
+
+        // 1-based SI arrays
+        double[] mRow1 = v.mgetRowSi(1);
+        double[] mCol1 = v.mgetColumnSi(1);
+        double[] mCol2 = v.mgetColumnSi(2);
+        assertEquals(2, mRow1.length);
+        assertEquals(1, mCol1.length);
+        assertEquals(1, mCol2.length);
+        assertEquals(0.03, mRow1[0], EPS);
+        assertEquals(0.04, mRow1[1], EPS);
+        assertEquals(0.03, mCol1[0], EPS);
+        assertEquals(0.04, mCol2[0], EPS);
+
+        // si(row, col) 0-based (only row 0, columns 0..1)
+        assertEquals(0.03, v.si(0, 0), EPS);
+        assertEquals(0.04, v.si(0, 1), EPS);
+
+        // msi(row, col) 1-based (only row 1, columns 1..2)
+        assertEquals(0.03, v.msi(1, 1), EPS);
+        assertEquals(0.04, v.msi(1, 2), EPS);
+
+        // OOB (0-based) for arrays
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getRowSi(1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.getColumnSi(2));
+
+        // OOB (1-based) for arrays
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetRowSi(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.mgetColumnSi(3));
+
+        // OOB for si(row, col) 0-based
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, 2));
+
+        // OOB for msi(row, col) 1-based
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(2, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 3));
     }
 
     // -----------------------------------------------------------------------------------------------------------------

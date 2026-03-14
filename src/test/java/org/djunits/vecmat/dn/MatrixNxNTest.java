@@ -16,6 +16,9 @@ import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
+import org.djunits.vecmat.d1.Matrix1x1;
+import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.def.VectorMatrix;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
@@ -54,8 +57,8 @@ public class MatrixNxNTest
     private static final double EPS = 1.0E-12;
 
     /**
-     * Build a 4x4 matrix from SI values with a given display unit.
-     * @param si a flat 16-element SI (m) array in row-major order
+     * Build an NxN matrix from SI values with a given display unit.
+     * @param si a flat n*n-element SI array in row-major order
      * @param unit display unit
      * @return matrix instance
      */
@@ -131,6 +134,22 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> inst = base.instantiateSi(newSi);
         assertEquals(base.getDisplayUnit(), inst.getDisplayUnit());
         assertArrayEquals(newSi, inst.si(), EPS);
+
+        MatrixNxN<SIQuantity, SIUnit> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, siMatrix.si(), EPS, "si array used as-is");
+        assertEquals(16.0, siMatrix.get(0, 0).si(), EPS);
+
+        MatrixNxN<SIQuantity, SIUnit> siMatrixOf = MatrixNxN
+                .of(new double[][] {{16, 15, 14, 13}, {12, 11, 10, 9}, {8, 7, 6, 5}, {4, 3, 2, 1}}, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, siMatrixOf.si(), EPS, "si array used as-is");
+        assertEquals(16.0, siMatrixOf.get(0, 0).si(), EPS);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> base.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
+        assertThrows(IllegalArgumentException.class,
+                () -> MatrixNxN.of(new double[][] {{10.0, 11.0, 12.0, 13.0, 14.0}}, SIUnit.of("kgm/s2K")));
     }
 
     /**
@@ -547,4 +566,127 @@ public class MatrixNxNTest
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 
+    // ------------------------------------------------------------------------------------
+    // MatrixNxN — asMatrix1x1 (happy + bad paths)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify that {@code asMatrix1x1()} preserves SI and display unit for a 1x1 matrix, and throws
+     * {@link IllegalStateException} for other N (N=2 and N=3).
+     * <p>
+     * Note: The current implementation appears to have a bug: it checks {@code cols() != 2} instead of {@code cols() != 1},
+     * which will make this test fail until fixed.
+     */
+    @Test
+    @DisplayName("MatrixNxN: asMatrix1x1 preserves SI & unit for 1x1; throws for N≠1")
+    public void testAsMatrix1x1()
+    {
+        // Happy path: 1x1 with centimeters (3 cm -> 0.03 m)
+        MatrixNxN<Length, Length.Unit> n11cm = ofSi4(new double[] {0.03}, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, n11cm.getDisplayUnit());
+        assertEquals(1, n11cm.si().length);
+        assertEquals(0.03, n11cm.si()[0], EPS);
+        assertEquals(0.03, n11cm.si(0, 0), EPS);
+
+        Matrix1x1<Length, Length.Unit> fixed11 = n11cm.asMatrix1x1();
+        assertEquals(Length.Unit.cm, fixed11.getDisplayUnit());
+        double[] si11 = fixed11.si();
+        assertEquals(1, si11.length);
+        assertEquals(0.03, si11[0], EPS);
+        assertEquals(0.03, fixed11.si(0, 0), EPS);
+
+        // Bad paths: N ≠ 1 (cannot independently vary rows/cols for NxN)
+        MatrixNxN<Length, Length.Unit> n22m = ofSi4(new double[] {1.0, 2.0, 3.0, 4.0}, Length.Unit.m);
+        MatrixNxN<Length, Length.Unit> n33km =
+                ofSi4(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0, 7000.0, 8000.0, 9000.0}, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> n22m.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> n33km.asMatrix1x1());
+    }
+
+    // ------------------------------------------------------------------------------------
+    // MatrixNxN — asMatrix2x2 (happy + bad paths)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify that {@code asMatrix2x2()} preserves SI and display unit for a 2x2 matrix, and throws
+     * {@link IllegalStateException} for other N (tested with N=1 and N=3).
+     */
+    @Test
+    @DisplayName("MatrixNxN: asMatrix2x2 preserves SI & unit for 2x2; throws for N≠2")
+    public void testAsMatrix2x2()
+    {
+        // Happy path: 2x2 with meters
+        MatrixNxN<Length, Length.Unit> n22m = ofSi4(new double[] {1.0, 2.0, 3.0, 4.0}, Length.Unit.m);
+        assertEquals(Length.Unit.m, n22m.getDisplayUnit());
+        assertEquals(4, n22m.si().length);
+        assertEquals(1.0, n22m.si(0, 0), EPS);
+        assertEquals(2.0, n22m.si(0, 1), EPS);
+        assertEquals(3.0, n22m.si(1, 0), EPS);
+        assertEquals(4.0, n22m.si(1, 1), EPS);
+
+        Matrix2x2<Length, Length.Unit> fixed22 = n22m.asMatrix2x2();
+        assertEquals(Length.Unit.m, fixed22.getDisplayUnit());
+        double[] si22 = fixed22.si();
+        assertEquals(4, si22.length);
+        assertEquals(1.0, si22[0], EPS);
+        assertEquals(2.0, si22[1], EPS);
+        assertEquals(3.0, si22[2], EPS);
+        assertEquals(4.0, si22[3], EPS);
+        assertEquals(1.0, fixed22.si(0, 0), EPS);
+        assertEquals(4.0, fixed22.si(1, 1), EPS);
+
+        // Bad paths: N ≠ 2
+        MatrixNxN<Length, Length.Unit> n11cm = ofSi4(new double[] {0.03}, Length.Unit.cm);
+        MatrixNxN<Length, Length.Unit> n33km =
+                ofSi4(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0, 7000.0, 8000.0, 9000.0}, Length.Unit.km);
+        assertThrows(IllegalStateException.class, () -> n11cm.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> n33km.asMatrix2x2());
+    }
+
+    // ------------------------------------------------------------------------------------
+    // MatrixNxN — asMatrix3x3 (happy + bad paths)
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify that {@code asMatrix3x3()} preserves SI and display unit for a 3x3 matrix, and throws
+     * {@link IllegalStateException} for other N (tested with N=2 and N=4).
+     */
+    @Test
+    @DisplayName("MatrixNxN: asMatrix3x3 preserves SI & unit for 3x3; throws for N≠3")
+    public void testAsMatrix3x3()
+    {
+        // Happy path: 3x3 with kilometers (SI values are meters)
+        MatrixNxN<Length, Length.Unit> n33km =
+                ofSi4(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0, 7000.0, 8000.0, 9000.0}, Length.Unit.km);
+        assertEquals(Length.Unit.km, n33km.getDisplayUnit());
+        assertEquals(9, n33km.si().length);
+        assertEquals(1000.0, n33km.si(0, 0), EPS);
+        assertEquals(3000.0, n33km.si(0, 2), EPS);
+        assertEquals(7000.0, n33km.si(2, 0), EPS);
+        assertEquals(9000.0, n33km.si(2, 2), EPS);
+
+        Matrix3x3<Length, Length.Unit> fixed33 = n33km.asMatrix3x3();
+        assertEquals(Length.Unit.km, fixed33.getDisplayUnit());
+        double[] si33 = fixed33.si();
+        assertEquals(9, si33.length);
+        assertEquals(1000.0, si33[0], EPS);
+        assertEquals(2000.0, si33[1], EPS);
+        assertEquals(3000.0, si33[2], EPS);
+        assertEquals(4000.0, si33[3], EPS);
+        assertEquals(5000.0, si33[4], EPS);
+        assertEquals(6000.0, si33[5], EPS);
+        assertEquals(7000.0, si33[6], EPS);
+        assertEquals(8000.0, si33[7], EPS);
+        assertEquals(9000.0, si33[8], EPS);
+        assertEquals(1000.0, fixed33.si(0, 0), EPS);
+        assertEquals(9000.0, fixed33.si(2, 2), EPS);
+
+        // Bad paths: N ≠ 3
+        MatrixNxN<Length, Length.Unit> n22m = ofSi4(new double[] {1.0, 2.0, 3.0, 4.0}, Length.Unit.m);
+        MatrixNxN<Length, Length.Unit> n44m =
+                ofSi4(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0},
+                        Length.Unit.m);
+        assertThrows(IllegalStateException.class, () -> n22m.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> n44m.asMatrix3x3());
+    }
 }

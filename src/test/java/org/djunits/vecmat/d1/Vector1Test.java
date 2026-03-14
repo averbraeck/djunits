@@ -100,9 +100,23 @@ public class Vector1Test
         Vector1<Length, Length.Unit> v1 = vec(1.0, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> v1.instantiateSi(new double[] {1.0, 2.0}),
                 "Wrong length must throw");
-        Vector1<Length, Length.Unit> r2 = v1.instantiateSi(new double[] {20.0});
+        double[] newSi = new double[] {20.0};
+        Vector1<Length, Length.Unit> r2 = v1.instantiateSi(newSi);
         assertArrayEquals(new double[] {20.0}, r2.si(), EPS);
         assertEquals(v1.getDisplayUnit(), r2.getDisplayUnit(), "display unit copied by instantiate path");
+
+        Vector1<SIQuantity, SIUnit> siVector = v1.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siVector.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, siVector.si(), EPS, "si array used as-is");
+        assertEquals(20.0, siVector.get(0, 0).si(), EPS);
+
+        Vector1<SIQuantity, SIUnit> siVectorOf = Vector1.of(20.0, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
+        assertArrayEquals(newSi, siVectorOf.si(), EPS, "si array used as-is");
+        assertEquals(20.0, siVectorOf.get(0, 0).si(), EPS);
+        
+        assertThrows(IllegalArgumentException.class,
+                () -> v1.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -141,10 +155,24 @@ public class Vector1Test
         assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> v.si(1));
 
+        // si(r, c) with valid and invalid indices
+        assertEquals(v.x().si(), v.si(0, 0), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.si(0, 1));
+
         // msi(index) with valid and invalid indices
         assertEquals(v.x().si(), v.msi(1), EPS);
         assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0));
         assertThrows(IndexOutOfBoundsException.class, () -> v.msi(2));
+
+        // msi(r, c) with valid and invalid indices
+        assertEquals(v.x().si(), v.msi(1, 1), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(2, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> v.msi(1, 2));
     }
 
     /**
@@ -319,21 +347,21 @@ public class Vector1Test
     }
 
     // ------------------------------------------------------------------------------------
-    // getScalars / getRowScalars / getColumnScalars / getDiagonalScalars
-    // getRowVector / getColumnVector / getDiagonalVector (spec-compliant expectations)
-    // getRowSi / getColumnSi / getDiagonalSi (spec-compliant expectations)
+    // getScalars / getRowScalars / getColumnScalars
+    // getRowVector / getColumnVector
+    // getRowSi / getColumnSi
     // ------------------------------------------------------------------------------------
 
     /**
      * Verify scalar array extraction helpers on {@link VectorMatrix}.
      */
     @Test
-    @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
+    @DisplayName("getScalars / getRowScalars / getColumnScalars")
     public void testScalarExtraction()
     {
         Vector1<Length, Length.Unit> m = vec(2.0, Length.Unit.m);
 
-        // Row/Column/Diagonal scalar arrays
+        // Row/Column scalar arrays
         Length[] row0 = m.getRowScalars(0);
         Length[] col0 = m.getColumnScalars(0);
 
@@ -342,7 +370,7 @@ public class Vector1Test
         assertEquals(2.0, row0[0].si(), EPS);
         assertEquals(2.0, col0[0].si(), EPS);
 
-        // Row/Column/Diagonal scalar arrays
+        // Row/Column scalar arrays
         Length[] mRow1 = m.mgetRowScalars(1);
         Length[] mCol2 = m.mgetColumnScalars(1);
 
@@ -363,17 +391,17 @@ public class Vector1Test
     }
 
     /**
-     * Verify vector extraction helpers ({@code getRow}, {@code getColumn}, {@code getDiagonal}) behave per spec.
+     * Verify vector extraction helpers ({@code getRowVector}, {@code getColumnVector}) behave per spec.
      * <p>
      * This test expects non-null vectors with the correct content.
      */
     @Test
-    @DisplayName("getRowVector / getColumnVector / getDiagonalVector return the expected vectors (spec)")
+    @DisplayName("getRowVector / getColumnVector return the expected vectors (spec)")
     public void testVectorExtractionSpec()
     {
         Vector1<Length, Length.Unit> m = vec(2.0, Length.Unit.cm); // different display unit
 
-        // Row/Column/Diagonal Vectors
+        // Row/Column Vectors 0-based
         Vector1<Length, Length.Unit> row0 = m.getRowVector(0);
         Vector1<Length, Length.Unit> col1 = m.getColumnVector(0);
 
@@ -382,7 +410,7 @@ public class Vector1Test
         assertEquals(0.02, row0.get(0).si(), EPS);
         assertEquals(0.02, col1.get(0).si(), EPS);
 
-        // Row/Column/Diagonal scalar arrays
+        // Row/Column Vectors 1-based
         Vector1<Length, Length.Unit> mRow1 = m.mgetRowVector(1);
         Vector1<Length, Length.Unit> mCol2 = m.mgetColumnVector(1);
 
@@ -406,12 +434,12 @@ public class Vector1Test
      * Verify si array extraction helpers on {@link VectorMatrix}.
      */
     @Test
-    @DisplayName("getRowSi / getColumnSi / getDiagonalSi")
+    @DisplayName("getRowSi / getColumnSi")
     public void testSiArrayExtraction()
     {
         Vector1<Length, Length.Unit> m = vec(2.0, Length.Unit.m);
 
-        // Row/Column/Diagonal scalar arrays
+        // Row/Column double si arrays 0-based
         double[] row0 = m.getRowSi(0);
         double[] col1 = m.getColumnSi(0);
 
@@ -420,7 +448,7 @@ public class Vector1Test
         assertEquals(2.0, row0[0], EPS);
         assertEquals(2.0, col1[0], EPS);
 
-        // Row/Column/Diagonal scalar arrays
+        // Row/Column double si arrays 1-based
         double[] mRow1 = m.mgetRowSi(1);
         double[] mCol2 = m.mgetColumnSi(1);
 
@@ -453,12 +481,14 @@ public class Vector1Test
     {
         Vector1<Length, Length.Unit> r1 = vec(1000.0, Length.Unit.m);
         Vector1<Length, Length.Unit> r2 = vec(1.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
+        Vector1<Length, Length.Unit> r3 = vec(3000.0, Length.Unit.m);
 
         assertEquals(r1, r1, "reflexive");
         assertEquals(r1.hashCode(), r1.hashCode(), "hash stable");
         assertEquals(r1, r2, "equal SI values despite different original display units");
         assertEquals(r1.hashCode(), r2.hashCode(), "hash equal for equal SI");
         assertNotEquals(r1, null);
+        assertNotEquals(r1, r3);
         assertNotEquals(r1, "not a vector");
     }
 
