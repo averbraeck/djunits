@@ -1,6 +1,5 @@
 package org.djunits.vecmat.table;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,6 +15,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.dn.MatrixNxN;
+import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -102,7 +102,8 @@ public class QuantityTableTest
         // 3x2 in km → SI
         QuantityTable<Length, Length.Unit> m = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
-        assertAll(() -> assertEquals(3, m.rows()), () -> assertEquals(2, m.cols()));
+        assertEquals(3, m.rows());
+        assertEquals(2, m.cols());
     }
 
     /** Verify of(double[][],U) checks rectangular shape and converts display→SI. */
@@ -118,7 +119,8 @@ public class QuantityTableTest
         // 2x3 in km
         QuantityTable<Length, Length.Unit> m = QuantityTable.of(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.km);
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
-        assertAll(() -> assertEquals(2, m.rows()), () -> assertEquals(3, m.cols()));
+        assertEquals(2, m.rows());
+        assertEquals(3, m.cols());
     }
 
     /** Verify of(Q[][],U) accepts per-cell units via DenseDoubleData and sets display unit. */
@@ -129,7 +131,8 @@ public class QuantityTableTest
         Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
         QuantityTable<Length, Length.Unit> m = QuantityTable.of(q, Length.Unit.m);
         assertArrayEquals(new double[] {1000.0, 200.0}, m.si(), EPS);
-        assertAll(() -> assertEquals(1, m.rows()), () -> assertEquals(2, m.cols()));
+        assertEquals(1, m.rows());
+        assertEquals(2, m.cols());
     }
 
     // ----------------------------------------------------------------------
@@ -378,6 +381,131 @@ public class QuantityTableTest
                 "as(): mismatching SI unit must throw IllegalArgumentException");
     }
 
+    // ------------------------------------------------------------------------------------
+    // Scalar extraction & equals/hashCode
+    // ------------------------------------------------------------------------------------
+
+    /** Verify scalar extraction helpers. */
+    @Test
+    @DisplayName("getScalars / getRowScalars / getColumnScalars")
+    public void testScalarExtraction()
+    {
+        QuantityTable<Length, Length.Unit> m =
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2), Length.Unit.m);
+        Length[][] scalars = m.getScalarGrid();
+        assertEquals(3, scalars.length);
+        assertEquals(2, scalars[0].length);
+        assertEquals(1.0, scalars[0][0].si(), EPS);
+        assertEquals(6.0, scalars[2][1].si(), EPS);
+
+        Length[] row1 = m.getRowScalars(1);
+        Length[] col1 = m.getColumnScalars(1);
+        assertEquals(2, row1.length);
+        assertEquals(3.0, row1[0].si(), EPS);
+        assertEquals(4.0, row1[1].si(), EPS);
+        assertEquals(3, col1.length);
+        assertEquals(2.0, col1[0].si(), EPS);
+        assertEquals(6.0, col1[2].si(), EPS);
+
+        Length[] mrow2 = m.mgetRowScalars(2);
+        Length[] mcol2 = m.mgetColumnScalars(2);
+        assertEquals(2, mrow2.length);
+        assertEquals(3.0, mrow2[0].si(), EPS);
+        assertEquals(4.0, mrow2[1].si(), EPS);
+        assertEquals(3, mcol2.length);
+        assertEquals(2.0, mcol2[0].si(), EPS);
+        assertEquals(6.0, mcol2[2].si(), EPS);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnScalars(2));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowScalars(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnScalars(3));
+    }
+
+    /** Verify vector extraction helpers. */
+    @Test
+    @DisplayName("getRowVector / getColumnVector")
+    public void testVectorExtraction()
+    {
+        QuantityTable<Length, Length.Unit> m =
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2), Length.Unit.m);
+        Length[][] scalars = m.getScalarGrid();
+        assertEquals(3, scalars.length);
+        assertEquals(2, scalars[0].length);
+        assertEquals(1.0, scalars[0][0].si(), EPS);
+        assertEquals(6.0, scalars[2][1].si(), EPS);
+
+        VectorN.Row<Length, Length.Unit> row1 = m.getRowVector(1);
+        VectorN.Col<Length, Length.Unit> col1 = m.getColumnVector(1);
+        assertEquals(2, row1.size());
+        assertEquals(3.0, row1.get(0).si(), EPS);
+        assertEquals(4.0, row1.get(1).si(), EPS);
+        assertEquals(3, col1.size());
+        assertEquals(2.0, col1.get(0).si(), EPS);
+        assertEquals(6.0, col1.get(2).si(), EPS);
+
+        VectorN.Row<Length, Length.Unit> mrow2 = m.mgetRowVector(2);
+        VectorN.Col<Length, Length.Unit> mcol2 = m.mgetColumnVector(2);
+        assertEquals(2, mrow2.size());
+        assertEquals(3.0, mrow2.get(0).si(), EPS);
+        assertEquals(4.0, mrow2.get(1).si(), EPS);
+        assertEquals(3, mcol2.size());
+        assertEquals(2.0, mcol2.get(0).si(), EPS);
+        assertEquals(6.0, mcol2.get(2).si(), EPS);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnVector(2));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowVector(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnVector(3));
+    }
+
+    /** Verify double extraction helpers. */
+    @Test
+    @DisplayName("getRowSi / getColumnSi")
+    public void testSiArrayExtraction()
+    {
+        QuantityTable<Length, Length.Unit> m =
+                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2), Length.Unit.m);
+
+        double[] row1 = m.getRowSi(1);
+        double[] col1 = m.getColumnSi(1);
+        assertEquals(2, row1.length);
+        assertEquals(3.0, row1[0], EPS);
+        assertEquals(4.0, row1[1], EPS);
+        assertEquals(3, col1.length);
+        assertEquals(2.0, col1[0], EPS);
+        assertEquals(6.0, col1[2], EPS);
+
+        double[] mrow2 = m.mgetRowSi(2);
+        double[] mcol2 = m.mgetColumnSi(2);
+        assertEquals(2, mrow2.length);
+        assertEquals(3.0, mrow2[0], EPS);
+        assertEquals(4.0, mrow2[1], EPS);
+        assertEquals(3, mcol2.length);
+        assertEquals(2.0, mcol2[0], EPS);
+        assertEquals(6.0, mcol2[2], EPS);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnSi(2));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowSi(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnSi(3));
+    }
+
     /**
      * Test multiply/divide by scalar and as() method.
      */
@@ -389,10 +517,10 @@ public class QuantityTableTest
         var d = Duration.of(2.0, "h");
         QuantityTable<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(1, 3).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.get(2, 1).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.mget(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.mget(2, 1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

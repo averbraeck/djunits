@@ -1,12 +1,10 @@
 package org.djunits.vecmat.d2;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -94,10 +92,10 @@ public class Matrix2x2Test
 
         // Successful creation & SI conversion
         Matrix2x2<Length, Length.Unit> m = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
-        assertAll(() -> assertEquals(2, m.rows(), "rows"), () -> assertEquals(2, m.cols(), "cols"),
-                () -> assertEquals(Length.Unit.km, m.getDisplayUnit(), "display unit preserved"),
-                () -> assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.si(), EPS,
-                        "values converted from km to m (SI)"));
+        assertEquals(2, m.rows(), "rows");
+        assertEquals(2, m.cols(), "cols");
+        assertEquals(Length.Unit.km, m.getDisplayUnit(), "display unit preserved");
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.si(), EPS, "values converted from km to m (SI)");
     }
 
     /**
@@ -133,8 +131,8 @@ public class Matrix2x2Test
         Matrix2x2<Length, Length.Unit> base = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
         double[] newSi = new double[] {10, 20, 30, 40};
         Matrix2x2<Length, Length.Unit> inst = base.instantiateSi(newSi);
-        assertAll(() -> assertEquals(Length.Unit.km, inst.getDisplayUnit(), "display unit retained"),
-                () -> assertArrayEquals(newSi, inst.si(), EPS, "si array used as-is"));
+        assertEquals(Length.Unit.km, inst.getDisplayUnit(), "display unit retained");
+        assertArrayEquals(newSi, inst.si(), EPS, "si array used as-is");
     }
 
     // ------------------------------------------------------------------------------------
@@ -150,9 +148,10 @@ public class Matrix2x2Test
     public void testBasicShapeAndValue()
     {
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
-        assertAll(() -> assertEquals(2, m.rows(), "rows"), () -> assertEquals(2, m.cols(), "cols"),
-                () -> assertEquals(1.0, m.get(1, 1).si(), EPS, "(1,1) in SI"),
-                () -> assertTrue(m.isRelative(), "Length is a relative quantity (not absolute)"));
+        assertEquals(2, m.rows(), "rows");
+        assertEquals(2, m.cols(), "cols");
+        assertEquals(1.0, m.get(0, 0).si(), EPS, "(1,1) in SI");
+        assertTrue(m.isRelative(), "Length is a relative quantity (not absolute)");
     }
 
     /**
@@ -166,9 +165,9 @@ public class Matrix2x2Test
         assertEquals(Length.Unit.km, m.getDisplayUnit());
         // switch to meters
         m.setDisplayUnit(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit(), "display unit changed"),
-                () -> assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.si(), EPS, "SI unchanged"),
-                () -> assertEquals(1000.0, m.get(1, 1).si(), EPS, "value SI unaffected"));
+        assertEquals(Length.Unit.m, m.getDisplayUnit(), "display unit changed");
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.si(), EPS, "SI unchanged");
+        assertEquals(1000.0, m.get(0, 0).si(), EPS, "value SI unaffected");
         // back to km
         m.setDisplayUnit(Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
@@ -185,8 +184,8 @@ public class Matrix2x2Test
         Matrix2x2<Length, Length.Unit> m = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
         String s1 = m.toString();
         String s2 = m.toString(Length.Unit.km);
-        assertAll(() -> assertTrue(s1.contains("km"), "default toString includes display unit"),
-                () -> assertTrue(s2.contains("km"), "toString(withUnit) includes provided unit"));
+        assertTrue(s1.contains("km"), "default toString includes display unit");
+        assertTrue(s2.contains("km"), "toString(withUnit) includes provided unit");
     }
 
     // ------------------------------------------------------------------------------------
@@ -243,11 +242,12 @@ public class Matrix2x2Test
     {
         // Use [1, 2, 3, 4] m to give an unambiguous median = 2.5
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
-        assertAll(() -> assertEquals(2.5, m.mean().si(), EPS, "mean"),
-                () -> assertEquals(2.5, m.median().si(), EPS, "median (even-sized set)"),
-                () -> assertEquals(1.0, m.min().si(), EPS, "min"), () -> assertEquals(4.0, m.max().si(), EPS, "max"),
-                () -> assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max"),
-                () -> assertEquals(10.0, m.sum().si(), EPS, "sum"));
+        assertEquals(2.5, m.mean().si(), EPS, "mean");
+        assertEquals(2.5, m.median().si(), EPS, "median (even-sized set)");
+        assertEquals(1.0, m.min().si(), EPS, "min");
+        assertEquals(4.0, m.max().si(), EPS, "max");
+        assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max");
+        assertEquals(10.0, m.sum().si(), EPS, "sum");
     }
 
     // ------------------------------------------------------------------------------------
@@ -335,8 +335,10 @@ public class Matrix2x2Test
         // Multiply A * A^{-1} → should approximate identity; unit should reduce to unitless (not asserted here)
         Matrix2x2<SIQuantity, SIUnit> prod = a.multiply(inv);
         double[] p = prod.si();
-        assertAll(() -> assertEquals(1.0, p[0], 1e-9, "I(1,1)"), () -> assertEquals(0.0, p[1], 1e-9, "I(1,2)"),
-                () -> assertEquals(0.0, p[2], 1e-9, "I(2,1)"), () -> assertEquals(1.0, p[3], 1e-9, "I(2,2)"));
+        assertEquals(1.0, p[0], 1e-9, "I(1,1)");
+        assertEquals(0.0, p[1], 1e-9, "I(1,2)");
+        assertEquals(0.0, p[2], 1e-9, "I(2,1)");
+        assertEquals(1.0, p[3], 1e-9, "I(2,2)");
     }
 
     /**
@@ -390,7 +392,8 @@ public class Matrix2x2Test
         // Vector [5, 6]^T in km → SI = [5000, 6000]
         Vector2.Col<Length, Length.Unit> v = new Vector2.Col<>(5.0, 6.0, Length.Unit.km);
         Vector2.Col<SIQuantity, SIUnit> r = a.multiply(v); // [1*5000+2*6000, 3*5000+4*6000] = [17k, 39k]
-        assertAll(() -> assertEquals(17_000.0, r.si()[0], EPS), () -> assertEquals(39_000.0, r.si()[1], EPS));
+        assertEquals(17_000.0, r.si()[0], EPS);
+        assertEquals(39_000.0, r.si()[1], EPS);
     }
 
     /**
@@ -432,8 +435,8 @@ public class Matrix2x2Test
 
         // Success path: same SI dimension (Length)
         Matrix2x2<Length, Length.Unit> asMeters = mKm.as(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, asMeters.getDisplayUnit(), "display unit switched"),
-                () -> assertArrayEquals(mKm.si(), asMeters.si(), EPS, "SI storage unchanged"));
+        assertEquals(Length.Unit.m, asMeters.getDisplayUnit(), "display unit switched");
+        assertArrayEquals(mKm.si(), asMeters.si(), EPS, "SI storage unchanged");
 
         // Failure path: mismatched SI unit (use SIQuantity/SIUnit with 's' for seconds)
         SIUnit second = SIUnit.of("s");
@@ -456,15 +459,40 @@ public class Matrix2x2Test
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
 
         // Row/Column/Diagonal scalar arrays
-        Length[] row1 = m.getRowScalars(1);
-        Length[] col2 = m.getColumnScalars(2);
+        Length[] row0 = m.getRowScalars(0);
+        Length[] col1 = m.getColumnScalars(1);
         Length[] diag = m.getDiagonalScalars();
 
-        assertAll(() -> assertEquals(2, row1.length, "row length"), () -> assertEquals(2, col2.length, "column length"),
-                () -> assertEquals(2, diag.length, "diagonal length"), () -> assertEquals(1.0, row1[0].si(), EPS),
-                () -> assertEquals(2.0, row1[1].si(), EPS), () -> assertEquals(2.0, col2[0].si(), EPS),
-                () -> assertEquals(4.0, col2[1].si(), EPS), () -> assertEquals(1.0, diag[0].si(), EPS),
-                () -> assertEquals(4.0, diag[1].si(), EPS));
+        assertEquals(2, row0.length, "row length");
+        assertEquals(2, col1.length, "column length");
+        assertEquals(2, diag.length, "diagonal length");
+        assertEquals(1.0, row0[0].si(), EPS);
+        assertEquals(2.0, row0[1].si(), EPS);
+        assertEquals(2.0, col1[0].si(), EPS);
+        assertEquals(4.0, col1[1].si(), EPS);
+        assertEquals(1.0, diag[0].si(), EPS);
+        assertEquals(4.0, diag[1].si(), EPS);
+
+        // Row/Column/Diagonal scalar arrays
+        Length[] mrow1 = m.mgetRowScalars(1);
+        Length[] mcol2 = m.mgetColumnScalars(2);
+
+        assertEquals(2, mrow1.length, "row length");
+        assertEquals(2, mcol2.length, "column length");
+        assertEquals(1.0, mrow1[0].si(), EPS);
+        assertEquals(2.0, mrow1[1].si(), EPS);
+        assertEquals(2.0, mcol2[0].si(), EPS);
+        assertEquals(4.0, mcol2[1].si(), EPS);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowScalars(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnScalars(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnScalars(2));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowScalars(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnScalars(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnScalars(3));
     }
 
     /**
@@ -478,14 +506,87 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.cm); // different display unit
 
-        // The following calls are expected to return non-null vectors of appropriate type and unit.
-        // If not implemented, they should cause this test to fail.
-        assertAll(() -> assertNotNull(m.getRowVector(1), "getRow(1) must return a non-null vector"),
-                () -> assertNotNull(m.getColumnVector(2), "getColumn(2) must return a non-null vector"),
-                () -> assertNotNull(m.getDiagonalVector(), "getDiagonal() must return a non-null vector"));
+        // Row/Column/Diagonal Vectors
+        Vector2.Row<Length, Length.Unit> row0 = m.getRowVector(0);
+        Vector2.Col<Length, Length.Unit> col1 = m.getColumnVector(1);
+        Vector2.Col<Length, Length.Unit> diag = m.getDiagonalVector();
 
-        // Optional (if those vectors expose si() or value accessors, verify content)
-        // Here we only assert that the calls succeed and return non-null handles per spec.
+        assertEquals(2, row0.size(), "row size");
+        assertEquals(2, col1.size(), "column size");
+        assertEquals(2, diag.size(), "diagonal size");
+        assertEquals(1.0, row0.get(0).si(), EPS);
+        assertEquals(2.0, row0.get(1).si(), EPS);
+        assertEquals(2.0, col1.get(0).si(), EPS);
+        assertEquals(4.0, col1.get(1).si(), EPS);
+        assertEquals(1.0, diag.get(0).si(), EPS);
+        assertEquals(4.0, diag.get(1).si(), EPS);
+
+        // Row/Column/Diagonal scalar arrays
+        Vector2.Row<Length, Length.Unit> mrow1 = m.mgetRowVector(1);
+        Vector2.Col<Length, Length.Unit> mcol2 = m.mgetColumnVector(2);
+
+        assertEquals(2, mrow1.size(), "row length");
+        assertEquals(2, mcol2.size(), "column length");
+        assertEquals(1.0, mrow1.get(0).si(), EPS);
+        assertEquals(2.0, mrow1.get(1).si(), EPS);
+        assertEquals(2.0, mcol2.get(0).si(), EPS);
+        assertEquals(4.0, mcol2.get(1).si(), EPS);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowVector(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnVector(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnVector(2));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowVector(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnVector(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnVector(3));
+    }
+
+    /**
+     * Verify si array extraction helpers on {@link VectorMatrix}.
+     */
+    @Test
+    @DisplayName("getRowSi / getColumnSi / getDiagonalSi")
+    public void testSiArrayExtraction()
+    {
+        Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
+
+        // Row/Column/Diagonal scalar arrays
+        double[] row0 = m.getRowSi(0);
+        double[] col1 = m.getColumnSi(1);
+        double[] diag = m.getDiagonalSi();
+
+        assertEquals(2, row0.length, "row length");
+        assertEquals(2, col1.length, "column length");
+        assertEquals(2, diag.length, "diagonal length");
+        assertEquals(1.0, row0[0], EPS);
+        assertEquals(2.0, row0[1], EPS);
+        assertEquals(2.0, col1[0], EPS);
+        assertEquals(4.0, col1[1], EPS);
+        assertEquals(1.0, diag[0], EPS);
+        assertEquals(4.0, diag[1], EPS);
+
+        // Row/Column/Diagonal scalar arrays
+        double[] mrow1 = m.mgetRowSi(1);
+        double[] mcol2 = m.mgetColumnSi(2);
+
+        assertEquals(2, mrow1.length, "row length");
+        assertEquals(2, mcol2.length, "column length");
+        assertEquals(1.0, mrow1[0], EPS);
+        assertEquals(2.0, mrow1[1], EPS);
+        assertEquals(2.0, mcol2[0], EPS);
+        assertEquals(4.0, mcol2[1], EPS);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getRowSi(2));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnSi(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.getColumnSi(2));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetRowSi(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnSi(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mgetColumnSi(3));
     }
 
     // ------------------------------------------------------------------------------------
@@ -524,9 +625,42 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length, Length.Unit> m = Matrix2x2.of(new double[] {1.0, 200.0, 3.0, 400.0}, Length.Unit.cm);
         // SI values: [0.01, 2.0, 0.03, 4.0]
-        assertAll(() -> assertDoesNotThrow(() -> m.get(1, 1)), () -> assertDoesNotThrow(() -> m.get(2, 2)),
-                () -> assertEquals(0.01, m.get(1, 1).si(), EPS),
-                () -> assertEquals(4.0, m.get(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS));
+
+        assertDoesNotThrow(() -> m.get(0, 0));
+        assertDoesNotThrow(() -> m.get(1, 1));
+        assertEquals(0.01, m.get(0, 0).si(), EPS);
+        assertEquals(4.0, m.get(1, 1).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(2, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(0, 2));
+
+        assertDoesNotThrow(() -> m.si(0, 0));
+        assertDoesNotThrow(() -> m.si(1, 1));
+        assertEquals(0.01, m.si(0, 0), EPS);
+        assertEquals(4.0, m.si(1, 1), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> m.si(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.si(0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.si(2, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.si(0, 2));
+
+        assertDoesNotThrow(() -> m.mget(1, 1));
+        assertDoesNotThrow(() -> m.mget(2, 2));
+        assertEquals(0.01, m.mget(1, 1).si(), EPS);
+        assertEquals(4.0, m.mget(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mget(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mget(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mget(3, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mget(1, 3));
+
+        assertDoesNotThrow(() -> m.msi(1, 1));
+        assertDoesNotThrow(() -> m.msi(2, 2));
+        assertEquals(0.01, m.msi(1, 1), EPS);
+        assertEquals(4.0, m.msi(2, 2), EPS);
+        assertThrows(IndexOutOfBoundsException.class, () -> m.msi(0, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.msi(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.msi(3, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.msi(1, 3));
     }
 
     /**
@@ -539,10 +673,10 @@ public class Matrix2x2Test
         var d = Duration.of(2.0, "h");
         Matrix2x2<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(2, 1).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.get(2, 2).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.mget(2, 1).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.mget(2, 2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

@@ -1,6 +1,5 @@
 package org.djunits.vecmat.d3;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -97,10 +96,11 @@ public class Matrix3x3Test
 
         // Successful creation & intended SI conversion (values are in km → SI m)
         Matrix3x3<Length, Length.Unit> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
-        assertAll(() -> assertEquals(3, m.rows(), "rows"), () -> assertEquals(3, m.cols(), "cols"),
-                () -> assertEquals(Length.Unit.km, m.getDisplayUnit(), "display unit"),
-                () -> assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, m.si(), EPS,
-                        "values in km must be stored in SI (m)"));
+        assertEquals(3, m.rows(), "rows");
+        assertEquals(3, m.cols(), "cols");
+        assertEquals(Length.Unit.km, m.getDisplayUnit(), "display unit");
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, m.si(), EPS,
+                "values in km must be stored in SI (m)");
     }
 
     /**
@@ -131,7 +131,8 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> base = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
         double[] newSi = new double[] {9, 8, 7, 6, 5, 4, 3, 2, 1};
         Matrix3x3<Length, Length.Unit> inst = base.instantiateSi(newSi);
-        assertAll(() -> assertEquals(Length.Unit.km, inst.getDisplayUnit()), () -> assertArrayEquals(newSi, inst.si(), EPS));
+        assertEquals(Length.Unit.km, inst.getDisplayUnit());
+        assertArrayEquals(newSi, inst.si(), EPS);
     }
 
     // ------------------------------------------------------------------------------------
@@ -147,9 +148,13 @@ public class Matrix3x3Test
     public void testBasicShapeAndValue()
     {
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
-        assertAll(() -> assertEquals(3, m.rows()), () -> assertEquals(3, m.cols()),
-                () -> assertEquals(1.0, m.get(1, 1).si(), EPS),
-                () -> assertTrue(m.isRelative(), "Length is relative (not absolute)"));
+        assertEquals(3, m.rows());
+        assertEquals(3, m.cols());
+        assertEquals(1.0, m.get(0, 0).si(), EPS);
+        assertEquals(1.0, m.mget(1, 1).si(), EPS);
+        assertEquals(1.0, m.si(0, 0), EPS);
+        assertEquals(1.0, m.msi(1, 1), EPS);
+        assertTrue(m.isRelative(), "Length is relative (not absolute)");
     }
 
     /**
@@ -163,8 +168,8 @@ public class Matrix3x3Test
                 ofSi(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
         m.setDisplayUnit(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, m.getDisplayUnit()),
-                () -> assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, m.si(), EPS));
+        assertEquals(Length.Unit.m, m.getDisplayUnit());
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, m.si(), EPS);
         m.setDisplayUnit(Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
@@ -179,7 +184,8 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
         String s1 = m.toString();
         String s2 = m.toString(Length.Unit.km);
-        assertAll(() -> assertTrue(s1.contains("km")), () -> assertTrue(s2.contains("km")));
+        assertTrue(s1.contains("km"));
+        assertTrue(s2.contains("km"));
     }
 
     // ------------------------------------------------------------------------------------
@@ -234,11 +240,12 @@ public class Matrix3x3Test
     public void testStats()
     {
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
-        assertAll(() -> assertEquals(5.0, m.mean().si(), EPS, "mean"),
-                () -> assertEquals(5.0, m.median().si(), EPS, "median of 9 entries"),
-                () -> assertEquals(1.0, m.min().si(), EPS, "min"), () -> assertEquals(9.0, m.max().si(), EPS, "max"),
-                () -> assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max"),
-                () -> assertEquals(45.0, m.sum().si(), EPS, "sum"));
+        assertEquals(5.0, m.mean().si(), EPS, "mean");
+        assertEquals(5.0, m.median().si(), EPS, "median of 9 entries");
+        assertEquals(1.0, m.min().si(), EPS, "min");
+        assertEquals(9.0, m.max().si(), EPS, "max");
+        assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max");
+        assertEquals(45.0, m.sum().si(), EPS, "sum");
     }
 
     // ------------------------------------------------------------------------------------
@@ -270,17 +277,23 @@ public class Matrix3x3Test
         // A = [[1,2,3],[0,1,4],[5,6,0]]
         Matrix3x3<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 0, 1, 4, 5, 6, 0}, Length.Unit.m);
 
-        assertAll(() -> assertEquals(1.0, a.determinantScalar(), EPS, "det(A)=1"),
-                () -> assertEquals(1.0, a.determinant().si(), EPS, "det(A) as quantity"),
-                () -> assertEquals(1.0 + 1.0 + 0.0, a.trace().si(), EPS, "trace(A)=2"));
+        assertEquals(1.0, a.determinantScalar(), EPS, "det(A)=1");
+        assertEquals(1.0, a.determinant().si(), EPS, "det(A) as quantity");
+        assertEquals(1.0 + 1.0 + 0.0, a.trace().si(), EPS, "trace(A)=2");
 
         // Check A * adj(A) = det(A) * I = I
         Matrix3x3<SIQuantity, SIUnit> adj = a.adjugate();
         Matrix3x3<SIQuantity, SIUnit> prod = a.multiply(adj);
         double[] p = prod.si();
-        assertAll(() -> assertEquals(1.0, p[0], 1e-8), () -> assertEquals(0.0, p[1], 1e-8), () -> assertEquals(0.0, p[2], 1e-8),
-                () -> assertEquals(0.0, p[3], 1e-8), () -> assertEquals(1.0, p[4], 1e-8), () -> assertEquals(0.0, p[5], 1e-8),
-                () -> assertEquals(0.0, p[6], 1e-8), () -> assertEquals(0.0, p[7], 1e-8), () -> assertEquals(1.0, p[8], 1e-8));
+        assertEquals(1.0, p[0], 1e-8);
+        assertEquals(0.0, p[1], 1e-8);
+        assertEquals(0.0, p[2], 1e-8);
+        assertEquals(0.0, p[3], 1e-8);
+        assertEquals(1.0, p[4], 1e-8);
+        assertEquals(0.0, p[5], 1e-8);
+        assertEquals(0.0, p[6], 1e-8);
+        assertEquals(0.0, p[7], 1e-8);
+        assertEquals(1.0, p[8], 1e-8);
     }
 
     /**
@@ -334,9 +347,15 @@ public class Matrix3x3Test
         Matrix3x3<SIQuantity, SIUnit> prod = a.multiply(inv); // ≈ I
 
         double[] p = prod.si();
-        assertAll(() -> assertEquals(1.0, p[0], 1e-8), () -> assertEquals(0.0, p[1], 1e-8), () -> assertEquals(0.0, p[2], 1e-8),
-                () -> assertEquals(0.0, p[3], 1e-8), () -> assertEquals(1.0, p[4], 1e-8), () -> assertEquals(0.0, p[5], 1e-8),
-                () -> assertEquals(0.0, p[6], 1e-8), () -> assertEquals(0.0, p[7], 1e-8), () -> assertEquals(1.0, p[8], 1e-8));
+        assertEquals(1.0, p[0], 1e-8);
+        assertEquals(0.0, p[1], 1e-8);
+        assertEquals(0.0, p[2], 1e-8);
+        assertEquals(0.0, p[3], 1e-8);
+        assertEquals(1.0, p[4], 1e-8);
+        assertEquals(0.0, p[5], 1e-8);
+        assertEquals(0.0, p[6], 1e-8);
+        assertEquals(0.0, p[7], 1e-8);
+        assertEquals(1.0, p[8], 1e-8);
     }
 
     /**
@@ -382,8 +401,8 @@ public class Matrix3x3Test
 
         Vector3.Col<SIQuantity, SIUnit> r = a.multiply(v);
         // r = A·[1000,2000,3000]^T = [14000, 32000, 50000]
-        assertAll(() -> assertArrayEquals(new double[] {14_000, 32_000, 50_000}, r.si(), EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r.getDisplayUnit()));
+        assertArrayEquals(new double[] {14_000, 32_000, 50_000}, r.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r.getDisplayUnit());
     }
 
     /**
@@ -401,16 +420,12 @@ public class Matrix3x3Test
 
         Matrix3x3<SIQuantity, SIUnit> mul = a.multiplyElements(b);
         // element-wise multiply with km→ SI scaling
-        assertAll(
-                () -> assertArrayEquals(new double[] {2000, 8000, 2500, 40_000, 5_000, 320_000, 1000, 8000, 128_000}, mul.si(),
-                        EPS),
-                () -> assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit()));
+        assertArrayEquals(new double[] {2000, 8000, 2500, 40_000, 5_000, 320_000, 1000, 8000, 128_000}, mul.si(), EPS);
+        assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         Matrix3x3<SIQuantity, SIUnit> div = a.divideElements(b);
-        assertAll(
-                () -> assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025, 0.08, 0.005, 0.064, 0.032, 0.008}, div.si(),
-                        1e-15),
-                () -> assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit()));
+        assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025, 0.08, 0.005, 0.064, 0.032, 0.008}, div.si(), 1e-15);
+        assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
 
     // ------------------------------------------------------------------------------------
@@ -428,8 +443,8 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> mKm = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
 
         Matrix3x3<Length, Length.Unit> asMeters = mKm.as(Length.Unit.m);
-        assertAll(() -> assertEquals(Length.Unit.m, asMeters.getDisplayUnit(), "display unit switched"),
-                () -> assertArrayEquals(mKm.si(), asMeters.si(), EPS, "SI storage unchanged"));
+        assertEquals(Length.Unit.m, asMeters.getDisplayUnit(), "display unit switched");
+        assertArrayEquals(mKm.si(), asMeters.si(), EPS, "SI storage unchanged");
 
         SIUnit second = SIUnit.of("s");
         assertThrows(IllegalArgumentException.class, () -> mKm.as(second));
@@ -450,22 +465,68 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
 
         Length[][] scalars = m.getScalarGrid();
-        Length[] row2 = m.getRowScalars(2);
-        Length[] col3 = m.getColumnScalars(3);
+        Length[] row1 = m.getRowScalars(1);
+        Length[] col2 = m.getColumnScalars(2);
         Length[] diag = m.getDiagonalScalars();
 
-        assertAll(() -> assertEquals(3, scalars.length), () -> assertEquals(3, scalars[0].length),
-                () -> assertEquals(1.0, scalars[0][0].si(), EPS), () -> assertEquals(5.0, scalars[1][1].si(), EPS),
-                () -> assertEquals(9.0, scalars[2][2].si(), EPS),
+        assertEquals(3, scalars.length);
+        assertEquals(3, scalars[0].length);
+        assertEquals(1.0, scalars[0][0].si(), EPS);
+        assertEquals(5.0, scalars[1][1].si(), EPS);
+        assertEquals(9.0, scalars[2][2].si(), EPS);
+        assertEquals(3, row1.length);
+        assertEquals(4.0, row1[0].si(), EPS);
+        assertEquals(6.0, row1[2].si(), EPS);
+        assertEquals(3, col2.length);
+        assertEquals(3.0, col2[0].si(), EPS);
+        assertEquals(9.0, col2[2].si(), EPS);
+        assertEquals(3, diag.length);
+        assertEquals(1.0, diag[0].si(), EPS);
+        assertEquals(5.0, diag[1].si(), EPS);
+        assertEquals(9.0, diag[2].si(), EPS);
 
-                () -> assertEquals(3, row2.length), () -> assertEquals(4.0, row2[0].si(), EPS),
-                () -> assertEquals(6.0, row2[2].si(), EPS),
+        Length[] mrow2 = m.mgetRowScalars(2);
+        Length[] mcol3 = m.mgetColumnScalars(3);
+        assertEquals(3, mrow2.length);
+        assertEquals(4.0, mrow2[0].si(), EPS);
+        assertEquals(6.0, mrow2[2].si(), EPS);
+        assertEquals(3, mcol3.length);
+        assertEquals(3.0, mcol3[0].si(), EPS);
+        assertEquals(9.0, mcol3[2].si(), EPS);
+    }
 
-                () -> assertEquals(3, col3.length), () -> assertEquals(3.0, col3[0].si(), EPS),
-                () -> assertEquals(9.0, col3[2].si(), EPS),
+    /**
+     * Verify double array extraction helpers on {@link VectorMatrix}.
+     */
+    @Test
+    @DisplayName("getRowSi / getColumnSi / getDiagonalSi")
+    public void testSiArrayExtraction()
+    {
+        Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
 
-                () -> assertEquals(3, diag.length), () -> assertEquals(1.0, diag[0].si(), EPS),
-                () -> assertEquals(5.0, diag[1].si(), EPS), () -> assertEquals(9.0, diag[2].si(), EPS));
+        double[] row1 = m.getRowSi(1);
+        double[] col2 = m.getColumnSi(2);
+        double[] diag = m.getDiagonalSi();
+
+        assertEquals(3, row1.length);
+        assertEquals(4.0, row1[0], EPS);
+        assertEquals(6.0, row1[2], EPS);
+        assertEquals(3, col2.length);
+        assertEquals(3.0, col2[0], EPS);
+        assertEquals(9.0, col2[2], EPS);
+        assertEquals(3, diag.length);
+        assertEquals(1.0, diag[0], EPS);
+        assertEquals(5.0, diag[1], EPS);
+        assertEquals(9.0, diag[2], EPS);
+
+        double[] mrow2 = m.mgetRowSi(2);
+        double[] mcol3 = m.mgetColumnSi(3);
+        assertEquals(3, mrow2.length);
+        assertEquals(4.0, mrow2[0], EPS);
+        assertEquals(6.0, mrow2[2], EPS);
+        assertEquals(3, mcol3.length);
+        assertEquals(3.0, mcol3[0], EPS);
+        assertEquals(9.0, mcol3[2], EPS);
     }
 
     /**
@@ -476,11 +537,35 @@ public class Matrix3x3Test
     @DisplayName("getRow / getColumn / getDiagonal return expected vectors (spec)")
     public void testVectorExtractionSpec()
     {
-        Matrix3x3<Length, Length.Unit> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.cm);
+        Matrix3x3<Length, Length.Unit> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
 
-        assertAll(() -> assertNotNull(m.getRowVector(1), "getRow(1) non-null"),
-                () -> assertNotNull(m.getColumnVector(2), "getColumn(2) non-null"),
-                () -> assertNotNull(m.getDiagonalVector(), "getDiagonal() non-null"));
+        assertNotNull(m.getRowVector(1), "getRowVector(1) non-null");
+        assertNotNull(m.getColumnVector(2), "getColumnVector(2) non-null");
+        assertNotNull(m.getDiagonalVector(), "getDiagonalVector() non-null");
+
+        Vector3.Row<Length, Length.Unit> row1 = m.getRowVector(1);
+        Vector3.Col<Length, Length.Unit> col2 = m.getColumnVector(2);
+        Vector3.Col<Length, Length.Unit> diag = m.getDiagonalVector();
+
+        assertEquals(3, row1.size());
+        assertEquals(4.0, row1.get(0).si(), EPS);
+        assertEquals(6.0, row1.get(2).si(), EPS);
+        assertEquals(3, col2.size());
+        assertEquals(3.0, col2.get(0).si(), EPS);
+        assertEquals(9.0, col2.get(2).si(), EPS);
+        assertEquals(3, diag.size());
+        assertEquals(1.0, diag.get(0).si(), EPS);
+        assertEquals(5.0, diag.get(1).si(), EPS);
+        assertEquals(9.0, diag.get(2).si(), EPS);
+
+        Vector3.Row<Length, Length.Unit> mrow2 = m.mgetRowVector(2);
+        Vector3.Col<Length, Length.Unit> mcol3 = m.mgetColumnVector(3);
+        assertEquals(3, mrow2.size());
+        assertEquals(4.0, mrow2.get(0).si(), EPS);
+        assertEquals(6.0, mrow2.get(2).si(), EPS);
+        assertEquals(3, mcol3.size());
+        assertEquals(3.0, mcol3.get(0).si(), EPS);
+        assertEquals(9.0, mcol3.get(2).si(), EPS);
     }
 
     // ------------------------------------------------------------------------------------
@@ -498,10 +583,12 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> a2 = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
         Matrix3x3<Length, Length.Unit> b = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 10}, Length.Unit.m);
 
-        assertAll(() -> assertEquals(a1, a1, "reflexive"), () -> assertEquals(a1, a2, "equal contents"),
-                () -> assertEquals(a1.hashCode(), a2.hashCode(), "hashCode equal"),
-                () -> assertNotEquals(a1, b, "different contents"), () -> assertNotEquals(a1, null, "not equal to null"),
-                () -> assertNotEquals(a1, "other type", "not equal to other type"));
+        assertEquals(a1, a1, "reflexive");
+        assertEquals(a1, a2, "equal contents");
+        assertEquals(a1.hashCode(), a2.hashCode(), "hashCode equal");
+        assertNotEquals(a1, b, "different contents");
+        assertNotEquals(a1, null, "not equal to null");
+        assertNotEquals(a1, "other type", "not equal to other type");
     }
 
     // ------------------------------------------------------------------------------------
@@ -518,9 +605,27 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> m =
                 Matrix3x3.of(new double[] {1.0, 200.0, 3.0, 400.0, 5.0, 600.0, 7.0, 800.0, 9.0}, Length.Unit.cm);
         // SI values: [0.01, 2.0, 0.03, 4.0, 0.05, 6.0, 0.07, 8.0, 0.09]
-        assertAll(() -> assertDoesNotThrow(() -> m.get(1, 1)), () -> assertDoesNotThrow(() -> m.get(3, 3)),
-                () -> assertEquals(0.01, m.get(1, 1).si(), EPS),
-                () -> assertEquals(0.09, m.get(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS));
+        assertDoesNotThrow(() -> m.get(1, 1));
+        assertDoesNotThrow(() -> m.get(2, 2));
+        assertDoesNotThrow(() -> m.mget(1, 1));
+        assertDoesNotThrow(() -> m.mget(2, 2));
+        assertDoesNotThrow(() -> m.si(1, 1));
+        assertDoesNotThrow(() -> m.si(2, 2));
+        assertDoesNotThrow(() -> m.msi(1, 1));
+        assertDoesNotThrow(() -> m.msi(2, 2));
+        assertEquals(0.01, m.get(0, 0).si(), EPS);
+        assertEquals(0.09, m.get(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertEquals(0.01, m.mget(1, 1).si(), EPS);
+        assertEquals(0.09, m.mget(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS);
+        
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(-1, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.get(3, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mget(0, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.mget(4, 4));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.si(-1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.si(0, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.msi(1, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> m.msi(0, 2));
     }
 
     /**
@@ -534,10 +639,10 @@ public class Matrix3x3Test
         var d = Duration.of(2.0, "h");
         Matrix3x3<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
-        assertEquals(0.5, sr.get(1, 1).getInUnit(), 1E-6);
-        assertEquals(1.0, sr.get(1, 2).getInUnit(), 1E-6);
-        assertEquals(1.5, sr.get(1, 3).getInUnit(), 1E-6);
-        assertEquals(2.0, sr.get(2, 1).getInUnit(), 1E-6);
+        assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
+        assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
+        assertEquals(1.5, sr.mget(1, 3).getInUnit(), 1E-6);
+        assertEquals(2.0, sr.mget(2, 1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
     }
 

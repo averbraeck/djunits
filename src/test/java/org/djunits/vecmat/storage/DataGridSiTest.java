@@ -1,6 +1,5 @@
 package org.djunits.vecmat.storage;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -34,28 +33,44 @@ public class DataGridSiTest
         SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2, ind32, 3, 2);
         SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2, ind32, 3, 2);
 
-        assertAll(() -> assertEquals(dddd, dddd), () -> assertEquals(dddd, dfdf), () -> assertEquals(dddd, sddd),
-                () -> assertEquals(dddd, sfdf));
-        assertAll(() -> assertEquals(dfdf, dddd), () -> assertEquals(dfdf, dfdf), () -> assertEquals(dfdf, sddd),
-                () -> assertEquals(dfdf, sfdf));
-        assertAll(() -> assertEquals(sddd, dddd), () -> assertEquals(sddd, dfdf), () -> assertEquals(sddd, sddd),
-                () -> assertEquals(sddd, sfdf));
-        assertAll(() -> assertEquals(sfdf, dddd), () -> assertEquals(sfdf, dfdf), () -> assertEquals(sfdf, sddd),
-                () -> assertEquals(sfdf, sfdf));
+        assertEquals(dddd, dddd);
+        assertEquals(dddd, dfdf);
+        assertEquals(dddd, sddd);
+        assertEquals(dddd, sfdf);
+        assertEquals(dfdf, dddd);
+        assertEquals(dfdf, dfdf);
+        assertEquals(dfdf, sddd);
+        assertEquals(dfdf, sfdf);
+        assertEquals(sddd, dddd);
+        assertEquals(sddd, dfdf);
+        assertEquals(sddd, sddd);
+        assertEquals(sddd, sfdf);
+        assertEquals(sfdf, dddd);
+        assertEquals(sfdf, dfdf);
+        assertEquals(sfdf, sddd);
+        assertEquals(sfdf, sfdf);
 
         DenseDoubleDataSi dddd2 = new DenseDoubleDataSi(d3x2, 2, 3);
         DenseFloatDataSi dfdf2 = new DenseFloatDataSi(f3x2, 2, 3);
         SparseDoubleDataSi sddd2 = new SparseDoubleDataSi(d3x2, ind32, 2, 3);
         SparseFloatDataSi sfdf2 = new SparseFloatDataSi(f3x2, ind32, 2, 3);
 
-        assertAll(() -> assertNotEquals(dddd, dddd2), () -> assertNotEquals(dddd, dfdf2), () -> assertNotEquals(dddd, sddd2),
-                () -> assertNotEquals(dddd, sfdf2));
-        assertAll(() -> assertNotEquals(dfdf, dddd2), () -> assertNotEquals(dfdf, dfdf2), () -> assertNotEquals(dfdf, sddd2),
-                () -> assertNotEquals(dfdf, sfdf2));
-        assertAll(() -> assertNotEquals(sddd, dddd2), () -> assertNotEquals(sddd, dfdf2), () -> assertNotEquals(sddd, sddd2),
-                () -> assertNotEquals(sddd, sfdf2));
-        assertAll(() -> assertNotEquals(sfdf, dddd2), () -> assertNotEquals(sfdf, dfdf2), () -> assertNotEquals(sfdf, sddd2),
-                () -> assertNotEquals(sfdf, sfdf2));
+        assertNotEquals(dddd, dddd2);
+        assertNotEquals(dddd, dfdf2);
+        assertNotEquals(dddd, sddd2);
+        assertNotEquals(dddd, sfdf2);
+        assertNotEquals(dfdf, dddd2);
+        assertNotEquals(dfdf, dfdf2);
+        assertNotEquals(dfdf, sddd2);
+        assertNotEquals(dfdf, sfdf2);
+        assertNotEquals(sddd, dddd2);
+        assertNotEquals(sddd, dfdf2);
+        assertNotEquals(sddd, sddd2);
+        assertNotEquals(sddd, sfdf2);
+        assertNotEquals(sfdf, dddd2);
+        assertNotEquals(sfdf, dfdf2);
+        assertNotEquals(sfdf, sddd2);
+        assertNotEquals(sfdf, sfdf2);
 
         double[] d2x2 = new double[] {1, 2.0, -3.0, 4.0};
         float[] f2x2 = new float[] {1f, 2.0f, -3.0f, 4.0f};
@@ -66,23 +81,39 @@ public class DataGridSiTest
         SparseDoubleDataSi sddd22 = new SparseDoubleDataSi(d2x2, ind2x2, 2, 2);
         SparseFloatDataSi sfdf22 = new SparseFloatDataSi(f2x2, ind2x2, 2, 2);
 
-        assertAll(() -> assertNotEquals(dddd, dddd22), () -> assertNotEquals(dddd, dfdf22), () -> assertNotEquals(dddd, sddd22),
-                () -> assertNotEquals(dddd, sfdf22));
-        assertAll(() -> assertNotEquals(dfdf, dddd22), () -> assertNotEquals(dfdf, dfdf22), () -> assertNotEquals(dfdf, sddd22),
-                () -> assertNotEquals(dfdf, sfdf22));
-        assertAll(() -> assertNotEquals(sddd, dddd22), () -> assertNotEquals(sddd, dfdf22), () -> assertNotEquals(sddd, sddd22),
-                () -> assertNotEquals(sddd, sfdf22));
-        assertAll(() -> assertNotEquals(sfdf, dddd22), () -> assertNotEquals(sfdf, dfdf22), () -> assertNotEquals(sfdf, sddd22),
-                () -> assertNotEquals(sfdf, sfdf22));
+        assertNotEquals(dddd, dddd22);
+        assertNotEquals(dddd, dfdf22);
+        assertNotEquals(dddd, sddd22);
+        assertNotEquals(dddd, sfdf22);
+        assertNotEquals(dfdf, dddd22);
+        assertNotEquals(dfdf, dfdf22);
+        assertNotEquals(dfdf, sddd22);
+        assertNotEquals(dfdf, sfdf22);
+        assertNotEquals(sddd, dddd22);
+        assertNotEquals(sddd, dfdf22);
+        assertNotEquals(sddd, sddd22);
+        assertNotEquals(sddd, sfdf22);
+        assertNotEquals(sfdf, dddd22);
+        assertNotEquals(sfdf, dfdf22);
+        assertNotEquals(sfdf, sddd22);
+        assertNotEquals(sfdf, sfdf22);
 
-        assertAll(() -> assertNotEquals(dddd2, dddd22), () -> assertNotEquals(dddd2, dfdf22),
-                () -> assertNotEquals(dddd2, sddd22), () -> assertNotEquals(dddd2, sfdf22));
-        assertAll(() -> assertNotEquals(dfdf2, dddd22), () -> assertNotEquals(dfdf2, dfdf22),
-                () -> assertNotEquals(dfdf2, sddd22), () -> assertNotEquals(dfdf2, sfdf22));
-        assertAll(() -> assertNotEquals(sddd2, dddd22), () -> assertNotEquals(sddd2, dfdf22),
-                () -> assertNotEquals(sddd2, sddd22), () -> assertNotEquals(sddd2, sfdf22));
-        assertAll(() -> assertNotEquals(sfdf2, dddd22), () -> assertNotEquals(sfdf2, dfdf22),
-                () -> assertNotEquals(sfdf2, sddd22), () -> assertNotEquals(sfdf2, sfdf22));
+        assertNotEquals(dddd2, dddd22);
+        assertNotEquals(dddd2, dfdf22);
+        assertNotEquals(dddd2, sddd22);
+        assertNotEquals(dddd2, sfdf22);
+        assertNotEquals(dfdf2, dddd22);
+        assertNotEquals(dfdf2, dfdf22);
+        assertNotEquals(dfdf2, sddd22);
+        assertNotEquals(dfdf2, sfdf22);
+        assertNotEquals(sddd2, dddd22);
+        assertNotEquals(sddd2, dfdf22);
+        assertNotEquals(sddd2, sddd22);
+        assertNotEquals(sddd2, sfdf22);
+        assertNotEquals(sfdf2, dddd22);
+        assertNotEquals(sfdf2, dfdf22);
+        assertNotEquals(sfdf2, sddd22);
+        assertNotEquals(sfdf2, sfdf22);
 
         double[] d3x2hard = new double[] {1.0 / 3.0, Math.PI, -Math.E, Math.sin(5.1), 1E7, -1E-10};
         float[] f3x2hard = new float[] {(float) (1.0 / 3.0), (float) Math.PI, (float) (-Math.E), (float) Math.sin(5.1),
@@ -93,14 +124,22 @@ public class DataGridSiTest
         SparseDoubleDataSi sdddhard = new SparseDoubleDataSi(d3x2hard, ind32, 3, 2);
         SparseFloatDataSi sfdfhard = new SparseFloatDataSi(f3x2hard, ind32, 3, 2);
 
-        assertAll(() -> assertNotEquals(dddd, ddddhard), () -> assertNotEquals(dddd, dfdfhard),
-                () -> assertNotEquals(dddd, sdddhard), () -> assertNotEquals(dddd, sfdfhard));
-        assertAll(() -> assertNotEquals(dfdf, ddddhard), () -> assertNotEquals(dfdf, dfdfhard),
-                () -> assertNotEquals(dfdf, sdddhard), () -> assertNotEquals(dfdf, sfdfhard));
-        assertAll(() -> assertNotEquals(sddd, ddddhard), () -> assertNotEquals(sddd, dfdfhard),
-                () -> assertNotEquals(sddd, sdddhard), () -> assertNotEquals(sddd, sfdfhard));
-        assertAll(() -> assertNotEquals(sfdf, ddddhard), () -> assertNotEquals(sfdf, dfdfhard),
-                () -> assertNotEquals(sfdf, sdddhard), () -> assertNotEquals(sfdf, sfdfhard));
+        assertNotEquals(dddd, ddddhard);
+        assertNotEquals(dddd, dfdfhard);
+        assertNotEquals(dddd, sdddhard);
+        assertNotEquals(dddd, sfdfhard);
+        assertNotEquals(dfdf, ddddhard);
+        assertNotEquals(dfdf, dfdfhard);
+        assertNotEquals(dfdf, sdddhard);
+        assertNotEquals(dfdf, sfdfhard);
+        assertNotEquals(sddd, ddddhard);
+        assertNotEquals(sddd, dfdfhard);
+        assertNotEquals(sddd, sdddhard);
+        assertNotEquals(sddd, sfdfhard);
+        assertNotEquals(sfdf, ddddhard);
+        assertNotEquals(sfdf, dfdfhard);
+        assertNotEquals(sfdf, sdddhard);
+        assertNotEquals(sfdf, sfdfhard);
     }
 
     /**
@@ -118,33 +157,44 @@ public class DataGridSiTest
         SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2, ind32, 3, 2);
         SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2, ind32, 3, 2);
 
-        assertAll(() -> assertEquals(dddd.hashCode(), dddd.hashCode()), () -> assertEquals(dddd.hashCode(), dfdf.hashCode()),
-                () -> assertEquals(dddd.hashCode(), sddd.hashCode()), () -> assertEquals(dddd.hashCode(), sfdf.hashCode()));
-        assertAll(() -> assertEquals(dfdf.hashCode(), dddd.hashCode()), () -> assertEquals(dfdf.hashCode(), dfdf.hashCode()),
-                () -> assertEquals(dfdf.hashCode(), sddd.hashCode()), () -> assertEquals(dfdf.hashCode(), sfdf.hashCode()));
-        assertAll(() -> assertEquals(sddd.hashCode(), dddd.hashCode()), () -> assertEquals(sddd.hashCode(), dfdf.hashCode()),
-                () -> assertEquals(sddd.hashCode(), sddd.hashCode()), () -> assertEquals(sddd.hashCode(), sfdf.hashCode()));
-        assertAll(() -> assertEquals(sfdf.hashCode(), dddd.hashCode()), () -> assertEquals(sfdf.hashCode(), dfdf.hashCode()),
-                () -> assertEquals(sfdf.hashCode(), sddd.hashCode()), () -> assertEquals(sfdf.hashCode(), sfdf.hashCode()));
+        assertEquals(dddd.hashCode(), dddd.hashCode());
+        assertEquals(dddd.hashCode(), dfdf.hashCode());
+        assertEquals(dddd.hashCode(), sddd.hashCode());
+        assertEquals(dddd.hashCode(), sfdf.hashCode());
+        assertEquals(dfdf.hashCode(), dddd.hashCode());
+        assertEquals(dfdf.hashCode(), dfdf.hashCode());
+        assertEquals(dfdf.hashCode(), sddd.hashCode());
+        assertEquals(dfdf.hashCode(), sfdf.hashCode());
+        assertEquals(sddd.hashCode(), dddd.hashCode());
+        assertEquals(sddd.hashCode(), dfdf.hashCode());
+        assertEquals(sddd.hashCode(), sddd.hashCode());
+        assertEquals(sddd.hashCode(), sfdf.hashCode());
+        assertEquals(sfdf.hashCode(), dddd.hashCode());
+        assertEquals(sfdf.hashCode(), dfdf.hashCode());
+        assertEquals(sfdf.hashCode(), sddd.hashCode());
+        assertEquals(sfdf.hashCode(), sfdf.hashCode());
 
         DenseDoubleDataSi dddd2 = new DenseDoubleDataSi(d3x2, 2, 3);
         DenseFloatDataSi dfdf2 = new DenseFloatDataSi(f3x2, 2, 3);
         SparseDoubleDataSi sddd2 = new SparseDoubleDataSi(d3x2, ind32, 2, 3);
         SparseFloatDataSi sfdf2 = new SparseFloatDataSi(f3x2, ind32, 2, 3);
 
-        assertAll(() -> assertNotEquals(dddd, dddd2.hashCode()), () -> assertNotEquals(dddd, dfdf2.hashCode()),
-                () -> assertNotEquals(dddd, sddd2.hashCode()), () -> assertNotEquals(dddd, sfdf2.hashCode()));
-        assertAll(() -> assertNotEquals(dfdf.hashCode(), dddd2.hashCode()),
-                () -> assertNotEquals(dfdf.hashCode(), dfdf2.hashCode()),
-                () -> assertNotEquals(dfdf.hashCode(), sddd2.hashCode()),
-                () -> assertNotEquals(dfdf.hashCode(), sfdf2.hashCode()));
-        assertAll(() -> assertNotEquals(sddd.hashCode(), dddd2.hashCode()),
-                () -> assertNotEquals(sddd.hashCode(), dfdf2.hashCode()),
-                () -> assertNotEquals(sddd.hashCode(), sddd2.hashCode()),
-                () -> assertNotEquals(sddd.hashCode(), sfdf2.hashCode()));
-        assertAll(() -> assertNotEquals(sfdf.hashCode(), dddd2.hashCode()), () -> assertNotEquals(sfdf, dfdf2.hashCode()),
-                () -> assertNotEquals(sfdf.hashCode(), sddd2.hashCode()),
-                () -> assertNotEquals(sfdf.hashCode(), sfdf2.hashCode()));
+        assertNotEquals(dddd, dddd2.hashCode());
+        assertNotEquals(dddd, dfdf2.hashCode());
+        assertNotEquals(dddd, sddd2.hashCode());
+        assertNotEquals(dddd, sfdf2.hashCode());
+        assertNotEquals(dfdf.hashCode(), dddd2.hashCode());
+        assertNotEquals(dfdf.hashCode(), dfdf2.hashCode());
+        assertNotEquals(dfdf.hashCode(), sddd2.hashCode());
+        assertNotEquals(dfdf.hashCode(), sfdf2.hashCode());
+        assertNotEquals(sddd.hashCode(), dddd2.hashCode());
+        assertNotEquals(sddd.hashCode(), dfdf2.hashCode());
+        assertNotEquals(sddd.hashCode(), sddd2.hashCode());
+        assertNotEquals(sddd.hashCode(), sfdf2.hashCode());
+        assertNotEquals(sfdf.hashCode(), dddd2.hashCode());
+        assertNotEquals(sfdf, dfdf2.hashCode());
+        assertNotEquals(sfdf.hashCode(), sddd2.hashCode());
+        assertNotEquals(sfdf.hashCode(), sfdf2.hashCode());
 
         double[] d2x2 = new double[] {1, 2.0, -3.0, 4.0};
         float[] f2x2 = new float[] {1f, 2.0f, -3.0f, 4.0f};
@@ -155,35 +205,39 @@ public class DataGridSiTest
         SparseDoubleDataSi sddd22 = new SparseDoubleDataSi(d2x2, ind2x2, 2, 2);
         SparseFloatDataSi sfdf22 = new SparseFloatDataSi(f2x2, ind2x2, 2, 2);
 
-        assertAll(() -> assertNotEquals(dddd, dddd22), () -> assertNotEquals(dddd, dfdf22.hashCode()),
-                () -> assertNotEquals(dddd, sddd22.hashCode()), () -> assertNotEquals(dddd, sfdf22.hashCode()));
-        assertAll(() -> assertNotEquals(dfdf.hashCode(), dddd22.hashCode()),
-                () -> assertNotEquals(dfdf.hashCode(), dfdf22.hashCode()),
-                () -> assertNotEquals(dfdf.hashCode(), sddd22.hashCode()),
-                () -> assertNotEquals(dfdf.hashCode(), sfdf22.hashCode()));
-        assertAll(() -> assertNotEquals(sddd.hashCode(), dddd22.hashCode()),
-                () -> assertNotEquals(sddd.hashCode(), dfdf22.hashCode()),
-                () -> assertNotEquals(sddd.hashCode(), sddd22.hashCode()),
-                () -> assertNotEquals(sddd.hashCode(), sfdf22.hashCode()));
-        assertAll(() -> assertNotEquals(sfdf.hashCode(), dddd22.hashCode()), () -> assertNotEquals(sfdf, dfdf22.hashCode()),
-                () -> assertNotEquals(sfdf.hashCode(), sddd22.hashCode()), () -> assertNotEquals(sfdf, sfdf22.hashCode()));
+        assertNotEquals(dddd, dddd22);
+        assertNotEquals(dddd, dfdf22.hashCode());
+        assertNotEquals(dddd, sddd22.hashCode());
+        assertNotEquals(dddd, sfdf22.hashCode());
+        assertNotEquals(dfdf.hashCode(), dddd22.hashCode());
+        assertNotEquals(dfdf.hashCode(), dfdf22.hashCode());
+        assertNotEquals(dfdf.hashCode(), sddd22.hashCode());
+        assertNotEquals(dfdf.hashCode(), sfdf22.hashCode());
+        assertNotEquals(sddd.hashCode(), dddd22.hashCode());
+        assertNotEquals(sddd.hashCode(), dfdf22.hashCode());
+        assertNotEquals(sddd.hashCode(), sddd22.hashCode());
+        assertNotEquals(sddd.hashCode(), sfdf22.hashCode());
+        assertNotEquals(sfdf.hashCode(), dddd22.hashCode());
+        assertNotEquals(sfdf, dfdf22.hashCode());
+        assertNotEquals(sfdf.hashCode(), sddd22.hashCode());
+        assertNotEquals(sfdf, sfdf22.hashCode());
 
-        assertAll(() -> assertNotEquals(dddd2.hashCode(), dddd22.hashCode()),
-                () -> assertNotEquals(dddd2.hashCode(), dfdf22.hashCode()),
-                () -> assertNotEquals(dddd2.hashCode(), sddd22.hashCode()),
-                () -> assertNotEquals(dddd2.hashCode(), sfdf22.hashCode()));
-        assertAll(() -> assertNotEquals(dfdf2.hashCode(), dddd22.hashCode()),
-                () -> assertNotEquals(dfdf2.hashCode(), dfdf22.hashCode()),
-                () -> assertNotEquals(dfdf2.hashCode(), sddd22.hashCode()),
-                () -> assertNotEquals(dfdf2.hashCode(), sfdf22.hashCode()));
-        assertAll(() -> assertNotEquals(sddd2.hashCode(), dddd22.hashCode()),
-                () -> assertNotEquals(sddd2.hashCode(), dfdf22.hashCode()),
-                () -> assertNotEquals(sddd2.hashCode(), sddd22.hashCode()),
-                () -> assertNotEquals(sddd2.hashCode(), sfdf22.hashCode()));
-        assertAll(() -> assertNotEquals(sfdf2.hashCode(), dddd22.hashCode()),
-                () -> assertNotEquals(sfdf2.hashCode(), dfdf22.hashCode()),
-                () -> assertNotEquals(sfdf2.hashCode(), sddd22.hashCode()),
-                () -> assertNotEquals(sfdf2.hashCode(), sfdf22.hashCode()));
+        assertNotEquals(dddd2.hashCode(), dddd22.hashCode());
+        assertNotEquals(dddd2.hashCode(), dfdf22.hashCode());
+        assertNotEquals(dddd2.hashCode(), sddd22.hashCode());
+        assertNotEquals(dddd2.hashCode(), sfdf22.hashCode());
+        assertNotEquals(dfdf2.hashCode(), dddd22.hashCode());
+        assertNotEquals(dfdf2.hashCode(), dfdf22.hashCode());
+        assertNotEquals(dfdf2.hashCode(), sddd22.hashCode());
+        assertNotEquals(dfdf2.hashCode(), sfdf22.hashCode());
+        assertNotEquals(sddd2.hashCode(), dddd22.hashCode());
+        assertNotEquals(sddd2.hashCode(), dfdf22.hashCode());
+        assertNotEquals(sddd2.hashCode(), sddd22.hashCode());
+        assertNotEquals(sddd2.hashCode(), sfdf22.hashCode());
+        assertNotEquals(sfdf2.hashCode(), dddd22.hashCode());
+        assertNotEquals(sfdf2.hashCode(), dfdf22.hashCode());
+        assertNotEquals(sfdf2.hashCode(), sddd22.hashCode());
+        assertNotEquals(sfdf2.hashCode(), sfdf22.hashCode());
     }
 
     /**
@@ -252,14 +306,22 @@ public class DataGridSiTest
         SparseDoubleDataSi sddd = new SparseDoubleDataSi(d3x2s, ind0, 3, 2);
         SparseFloatDataSi sfdf = new SparseFloatDataSi(f3x2s, ind0, 3, 2);
 
-        assertAll(() -> assertEquals(dddd, dddd), () -> assertEquals(dddd, dfdf), () -> assertEquals(dddd, sddd),
-                () -> assertEquals(dddd, sfdf));
-        assertAll(() -> assertEquals(dfdf, dddd), () -> assertEquals(dfdf, dfdf), () -> assertEquals(dfdf, sddd),
-                () -> assertEquals(dfdf, sfdf));
-        assertAll(() -> assertEquals(sddd, dddd), () -> assertEquals(sddd, dfdf), () -> assertEquals(sddd, sddd),
-                () -> assertEquals(sddd, sfdf));
-        assertAll(() -> assertEquals(sfdf, dddd), () -> assertEquals(sfdf, dfdf), () -> assertEquals(sfdf, sddd),
-                () -> assertEquals(sfdf, sfdf));
+        assertEquals(dddd, dddd);
+        assertEquals(dddd, dfdf);
+        assertEquals(dddd, sddd);
+        assertEquals(dddd, sfdf);
+        assertEquals(dfdf, dddd);
+        assertEquals(dfdf, dfdf);
+        assertEquals(dfdf, sddd);
+        assertEquals(dfdf, sfdf);
+        assertEquals(sddd, dddd);
+        assertEquals(sddd, dfdf);
+        assertEquals(sddd, sddd);
+        assertEquals(sddd, sfdf);
+        assertEquals(sfdf, dddd);
+        assertEquals(sfdf, dfdf);
+        assertEquals(sfdf, sddd);
+        assertEquals(sfdf, sfdf);
 
         int[] ind2 = new int[] {0, 2};
         SparseDoubleDataSi sddd2 = new SparseDoubleDataSi(d3x2s, ind2, 3, 2);
