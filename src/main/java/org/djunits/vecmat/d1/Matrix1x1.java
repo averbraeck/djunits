@@ -169,6 +169,7 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix1x1<SIQuantity, SIUnit> multiply(final Matrix1x1<?, ?> otherMat)
     {
+        checkMultiply(otherMat);
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 1, 1, 1);
         return new Matrix1x1<SIQuantity, SIUnit>(resultData,
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
@@ -181,44 +182,48 @@ public class Matrix1x1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Vector1<SIQuantity, SIUnit> multiply(final Vector1<?, ?> otherVec)
     {
+        checkMultiply(otherVec);
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 1, 1);
         return new Vector1<SIQuantity, SIUnit>(resultData[0],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     /**
-     * Multiply this matrix with a column vector, resulting in a column vector.
-     * @param otherVec the column vector to multiply with
+     * Multiply this matrix with a row vector, resulting in a row vector.
+     * @param otherVec the row vector to multiply with
      * @return the resulting vector from the multiplication
      */
-    public Vector2.Col<SIQuantity, SIUnit> multiply(final Vector2.Col<?, ?> otherVec)
+    public Vector2.Row<SIQuantity, SIUnit> multiply(final Vector2.Row<?, ?> otherVec)
     {
-        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 2, 1);
-        return new Vector2.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
+        checkMultiply(otherVec);
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 1, 2);
+        return new Vector2.Row<SIQuantity, SIUnit>(resultData[0], resultData[1],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     /**
-     * Multiply this matrix with a column vector, resulting in a column vector.
-     * @param otherVec the column vector to multiply with
+     * Multiply this matrix with a row vector, resulting in a row vector.
+     * @param otherVec the row vector to multiply with
      * @return the resulting vector from the multiplication
      */
-    public Vector3.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> otherVec)
+    public Vector3.Row<SIQuantity, SIUnit> multiply(final Vector3.Row<?, ?> otherVec)
     {
-        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
-        return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
+        checkMultiply(otherVec);
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 1, 3);
+        return new Vector3.Row<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     /**
-     * Multiply this matrix with a column vector, resulting in a column vector.
-     * @param otherVec the column vector to multiply with
+     * Multiply this matrix with a row vector, resulting in a row vector.
+     * @param otherVec the row vector to multiply with
      * @return the resulting vector from the multiplication
      */
-    public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> otherVec)
+    public VectorN.Row<SIQuantity, SIUnit> multiply(final VectorN.Row<?, ?> otherVec)
     {
-        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), rows(), rows(), 1);
-        return VectorN.Col.of(resultData, getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+        checkMultiply(otherVec);
+        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 1, otherVec.cols());
+        return VectorN.Row.of(resultData, getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     @Override
