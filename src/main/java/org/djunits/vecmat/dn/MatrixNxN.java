@@ -187,7 +187,6 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     @Override
     public VectorN.Col<Q, U> getDiagonalVector() throws IllegalStateException
     {
-        Throw.when(rows() != cols(), IllegalStateException.class, "Matrix is not square");
         final int n = rows();
         final double[] data = new double[n];
         for (int i = 0; i < n; i++)
@@ -338,8 +337,8 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix1x1<Q, U> asMatrix1x1()
     {
-        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class,
-                "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
+        Throw.when(order() != 1, IllegalStateException.class, "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(),
+                cols());
         return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
@@ -350,8 +349,8 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix2x2<Q, U> asMatrix2x2()
     {
-        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
-                "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
+        Throw.when(order() != 2, IllegalStateException.class, "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(),
+                cols());
         return Matrix2x2.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
@@ -362,8 +361,8 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix3x3<Q, U> asMatrix3x3()
     {
-        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
-                "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
+        Throw.when(order() != 3, IllegalStateException.class, "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(),
+                cols());
         return Matrix3x3.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 

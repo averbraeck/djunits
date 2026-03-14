@@ -583,7 +583,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         public Vector1<Q, U> getColumnVector(final int col)
         {
             checkCol(col);
-            return new Vector1<Q, U>(si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q, U>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

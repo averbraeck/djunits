@@ -146,7 +146,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
     @Override
     public double si(final int row, final int col) throws IndexOutOfBoundsException
     {
-        return this.dataSi.get(row - 1, col - 1);
+        return this.dataSi.get(row, col);
     }
 
     @Override
@@ -329,7 +329,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public Vector1<Q, U> getRowVector(final int row)
         {
             checkRow(row);
-            return new Vector1<Q, U>(si(row, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q, U>(si(row, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -357,7 +357,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public double[] getRowSi(final int row)
         {
             checkRow(row);
-            return new double[] {si(row, 1)};
+            return new double[] {si(row, 0)};
         }
 
         @Override
@@ -635,7 +635,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public Vector1<Q, U> getColumnVector(final int col)
         {
             checkCol(col);
-            return new Vector1<Q, U>(si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q, U>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -656,7 +656,7 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         public double[] getColumnSi(final int col)
         {
             checkCol(col);
-            return new double[] {si(1, col)};
+            return new double[] {si(0, col)};
         }
 
         @Override

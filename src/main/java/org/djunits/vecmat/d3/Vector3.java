@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
@@ -383,7 +382,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> Vector3.Col<Q, U> of(final double xInUnit,
+        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector3.Col<Q, U> of(final double xInUnit,
                 final double yInUnit, final double zInUnit, final U displayUnit)
         {
             return new Vector3.Col<>(xInUnit, yInUnit, zInUnit, displayUnit);
@@ -418,7 +417,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             Throw.when(siNew.length != 3, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
                     siNew.length);
-            return new Vector3.Col<SIQuantity, SIUnit>(siNew[0], siNew[1], siNew[3], siUnit);
+            return new Vector3.Col<SIQuantity, SIUnit>(siNew[0], siNew[1], siNew[2], siUnit);
         }
 
         @Override
@@ -578,7 +577,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param <Q> the quantity type
          * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends AbstractUnit<U, Q>> Vector3.Row<Q, U> of(final double xInUnit,
+        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector3.Row<Q, U> of(final double xInUnit,
                 final double yInUnit, final double zInUnit, final U displayUnit)
         {
             return new Vector3.Row<>(xInUnit, yInUnit, zInUnit, displayUnit);
@@ -605,7 +604,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         @Override
         protected Vector3.Row<Q, U> instantiateSi(final double xSi, final double ySi, final double zSi)
         {
-            return new Vector3.Row<>(xSi, ySi, zSi, getDisplayUnit());
+            return new Vector3.Row<>(xSi, ySi, zSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -613,7 +612,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         {
             Throw.when(siNew.length != 3, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
                     siNew.length);
-            return new Vector3.Row<SIQuantity, SIUnit>(siNew[0], siNew[1], siNew[3], siUnit);
+            return new Vector3.Row<SIQuantity, SIUnit>(siNew[0], siNew[1], siNew[2], siUnit);
         }
 
         @Override

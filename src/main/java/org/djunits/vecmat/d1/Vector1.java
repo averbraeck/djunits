@@ -111,7 +111,8 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     @Override
     public double si(final int row, final int col) throws IndexOutOfBoundsException
     {
-        Throw.when(row != 0 || col != 0, IllegalArgumentException.class, "si(r, c) can only request si(0, 0) for a Vector1");
+        checkRow(row);
+        checkCol(col);
         return this.xSi;
     }
 

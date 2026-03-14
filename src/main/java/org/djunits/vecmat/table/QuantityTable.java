@@ -216,13 +216,13 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
         return this.dataSi.cols();
     }
 
+
+    // --------------------------------------- AS() FUNCTIONS ---------------------------------
+
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Objects.hash(this.dataSi);
-        return result;
+        return Objects.hash(this.dataSi);
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -233,15 +233,11 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
             return true;
         if (obj == null)
             return false;
-        if (!super.equals(obj))
-            return false;
         if (getClass() != obj.getClass())
             return false;
         QuantityTable<?, ?> other = (QuantityTable<?, ?>) obj;
         return Objects.equals(this.dataSi, other.dataSi);
     }
-
-    // --------------------------------------- AS() FUNCTIONS ---------------------------------
 
     /**
      * Return the QuantityTable 'as' a QuantityTable with a known quantity, using a unit to express the result in. Throw a
@@ -268,7 +264,7 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
      */
     public Matrix1x1<Q, U> asMatrix1x1()
     {
-        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class,
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class,
                 "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
         return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }

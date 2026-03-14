@@ -399,7 +399,7 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      */
     public Matrix1x1<Q, U> asMatrix1x1()
     {
-        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class,
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class,
                 "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
         return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
