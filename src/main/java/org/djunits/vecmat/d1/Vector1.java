@@ -62,6 +62,20 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
         return instantiateSi(siNew[0]);
     }
 
+    /**
+     * Create a Vector1 without needing generics.
+     * @param xInUnit the x-value expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @return a new Vector1 with a unit
+     * @param <Q> the quantity type
+     * @param <U> the unit type
+     */
+    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector1<Q, U> of(final double xInUnit,
+            final U displayUnit)
+    {
+        return new Vector1<>(xInUnit, displayUnit);
+    }
+
     @Override
     public int size()
     {
@@ -309,6 +323,24 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     public boolean isRelative()
     {
         return x().isRelative();
+    }
+
+    /**
+     * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime exception
+     * when the SI units of this vector and the target vector do not match.
+     * @param targetUnit the unit to convert the vector to
+     * @return a quantity typed in the target vector class
+     * @throws IllegalArgumentException when the units do not match
+     * @param <TQ> target quantity type
+     * @param <TU> target unit type
+     */
+    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector1<TQ, TU> as(final TU targetUnit)
+            throws IllegalArgumentException
+    {
+        Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
+                "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
+                getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
+        return new Vector1<TQ, TU>(xSi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     @Override
