@@ -50,7 +50,7 @@ The static definition of variable names for the units in the unit class also fol
 
 DJUNITS already defines quite a number of units that are ready to use, but this set can never be complete. Therefore, additional units can easily be instantiated and added for user code.
 
-Suppose, that a user would like to add the [Furlong](https://en.wikipedia.org/wiki/Furlong) (an old imperial length unit that is one eighth of a mile, or 660 feet), the [Fortnight](https://en.wikipedia.org/wiki/Fortnight) (a duration unit of 14 days), and a speed unit that indicates speed in Furlongs per Fortnight. All three should be relative units. Suppose that the user wants to make these three units available as public static constants in a utility class. The code to do so looks as follows:
+Suppose, that a user would like to add the [Furlong](https://en.wikipedia.org/wiki/Furlong) (an old imperial length unit that is one eighth of a mile, or 660 feet), the [Fortnight](https://en.wikipedia.org/wiki/Fortnight) (a duration unit of 14 days), and a speed unit that indicates speed in Furlongs per Fortnight. Suppose that the user wants to make these three units available as public static constants in a utility class. The code to do so looks as follows:
 
 ```java
 public static final Length.Unit fr = 
@@ -62,7 +62,7 @@ public static final Speed.Unit fr_fn =
     fr.getScale().toBaseValue(1.0) / fn.getScale().toBaseValue(1.0), UnitSystem.OTHER);
 ```
 
-The first two definitions use a constructor that define a unit in terms of an already existing unit using a factor. It is no problem that the Furlong is defined with respect to a foot (instead of the SI unit for length; the meter). The (combined) factor to the SI unit will be calculated once (at the time of construction of the `fr` unit) by the deriveLinear method of the `ft` unit. The `fr_fn` speed unit is also constructed using the `deriveUnit` method of SpeedUnit.SI. In this case the factor is computed from the scales of the just created length and duration units. Again, the factor to map Furlongs per Fortnight to and from the SI unit meters per second, will be automatically calculated once. These units can now be used in any piece of code, e.g.:
+The first two definitions use the `deriveUnit` method that define a unit in terms of an already existing unit using a linear factor. It is no problem that the Furlong is defined with respect to a foot (instead of the SI unit for length; the meter). The (combined) factor to the SI unit will be calculated once (at the time of construction of the `fr` unit) by the deriveLinear method onto the `ft` unit. The `fr_fn` speed unit is also constructed using the `deriveUnit` method of `Speed.Unit.SI`. In this case the factor is computed from the scales of the just created length and duration units. Again, the factor to map Furlongs per Fortnight to and from the SI unit meters per second, will be automatically calculated once. These units can now be used in any piece of code, e.g.:
 
 ```java
 Length oneThousandFurlong = new Length(1000.0, fr);
@@ -87,5 +87,5 @@ The program will print the following output:
 
 ## Defining a completely new Unit
 
-Of course it is also possible to define a completely new unit from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the <a href="../define_quantity/">define_quantity</a> section.
+Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the <a href="../define_quantity/">define_quantity</a> section.
 

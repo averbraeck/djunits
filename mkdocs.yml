@@ -31,11 +31,11 @@ nav:
   - Package structure: package_structure.md
   - Quantity: quantity.md
   - Absolute quantity: absolute_quantity.md
+  - Define quantity: define_quantity.md
   - Scale: scale.md
   - Unit System: unit_system.md
   - Unit: unit.md
   - SIQuantity: si_quantity.md
-  - Define quantity: define_quantity.md
   - Vector: vector.md
   - Matrix: matrice.md
   - Quantity Table: quantity_table.md
