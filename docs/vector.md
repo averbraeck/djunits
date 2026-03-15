@@ -30,3 +30,26 @@ The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` w
 
 Furthermore, a vector is `Additive`, which means that vectors of the same type, size, and quantity can be added to and subtracted from each other. Vectors also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods.
 
+
+## Example vector definition and storage
+
+The example below shows the instantiation and usage of a column vector with 5 elements `VectorN.Col`:
+
+```java
+VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
+    new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
+Duration duration = Duration.of(2.0, "h");
+VectorN.Col<Speed, Speed.Unit> sv1 = 
+    lv1.divideElements(duration).as(Speed.Unit.km_h);
+System.out.println("Length: " + lv1);
+System.out.println("Speed : " + sv1);
+```
+
+Executing the code results in:
+
+```
+Length: Col[10.0, 20.0, 60.0, 120.0, 400.0] km
+Speed : Col[5.0, 10.0, 30.0, 60.0, 200.0] km/h
+```
+
+The output shows that the vectors are column vectors, although they are printed row-wise. 
