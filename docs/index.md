@@ -1,4 +1,4 @@
-# Delft Java UNIT System
+# Delft Java UNIT System Version 6
 
 DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors at compile time 
 and some others at runtime.
@@ -26,6 +26,7 @@ In August 2015 it became obvious that the units and values classes developed for
 mature to be used in other projects.
 
 The main authors/contributors of the DJUNITS project are Alexander Verbraeck and Peter Knoppers.
+
 
 ## Absolute and Relative values
 
@@ -72,11 +73,11 @@ All quantities make sense as Relative values. The four quantities that also make
 table below.
 
 
-| Quantity | Absolute<br/>interpretation | Absolute class<br/>and Unit | Relative<br/>interpretation | Relative class<br/> and Unit |
+| Quantity    | Absolute interpretation | Absolute class<br/>and Unit | Relative interpretation | Relative class<br/> and Unit |
 | ----------- | ----------------------- | ----------------------------| ----------------------- | ---------------------------- |
 | Length      | Position                | Position<br/>PositionUnit   | Distance                | Length<br/>LengthUnit        |
-| Angle       | Direction<br/>or Slope  | Direction<br/>DirectionUnit | Angle (direction or<br/>slope difference) | Angle<br/>AngleUnit |
-| Temperature | Temperature             | AbsoluteTemperature<br/>AbsoluteTemperatureUnit | Temperature<br/>difference | Temperature<br/>TemperatureUnit |
+| Angle       | Direction or Slope      | Direction<br/>DirectionUnit | Angle (direction or slope difference) | Angle<br/>AngleUnit |
+| Temperature | Temperature             | AbsoluteTemperature<br/>AbsoluteTemperatureUnit | Temperature difference | Temperature<br/>TemperatureUnit |
 | Time        | Time (instant)          | Time<br/>TimeUnit           | Duration                | Duration<br/>DurationUnit    |
 
 The use of Absolute in relation to Temperature here may be confusing. In the table above, an absolute temperature is not 
@@ -128,18 +129,17 @@ This would create the following output:
 ```
 speed1:     30.0000000 mi/h
 speed2:     10.0000000 m/s
-difference: 3.41120000 m/s
 difference: 7.63063708 mi/h
+difference: 0.00211962 mi/s
 difference: 6.630842332613389 kt
 difference: 6.63084233 kt
-difference: 3.411199999999999 m/s (si)
 difference: 3.411199999999999 m/s (si)
 difference: 3.41120000 m/s (si)
 difference: 12.2803200 km/h
 ```
 
-When a class implements the interface UNITS (org.djunits.unit.UNITS), all defined units are available without the prefix XxxUnit. So, 
-in that case a Length can be defined as new Length(12.0, METER) instead of Length(12.0, LengthUnit.METER).
+It is possible to use units without the Quantity.Unit. The `of()` methods are helper methods to easily use a unit, e.g.,
+`Length.of(12.0, "m")` instead of `new Length(12.0, Length.Unit.m)`.
 
 
 ## Multiplication and Division
@@ -149,8 +149,8 @@ where the Java compiler can check the type of the result in the general case. Th
 multiplication and division operations with known result type. For instance
 
 ```java
-Speed speed = new Speed(50, SpeedUnit.KM_PER_HOUR);
-Duration duration = new Duration(0.5, DurationUnit.HOUR);
+Speed speed = new Speed(50, Speed.Unit.km_h);
+Duration duration = new Duration(0.5, Duration.Unit.h);
 Length distance = speed.multiplyBy(duration);
 Acceleration acc0 = speed.divideBy(duration);
 Area area = distance.multiplyBy(distance);
@@ -159,8 +159,8 @@ Volume vol = area.multiplyBy(distance);
 
 DJUNITS knows that the result of multiplication of a speed and a time is a distance. The value of distance is 2500 m.
 
-Although we're not entirely sure, we believe that there is never a need for multiplication or division with an Absolute operand. 
-It just does not make sense to multiply 23 September 2015, 3 PM (an absolute Time) by 2...
+There is never a need for multiplication or division with an Absolute operand. It just does not make sense to 
+multiply 23 September 2025, 3 PM (an absolute Time) by 2...
 
 
 ## Catch mistakes at compile time where possible
@@ -168,8 +168,8 @@ It just does not make sense to multiply 23 September 2015, 3 PM (an absolute Tim
 DJUNITS is designed to protect the programmer from easily made mistakes:
 
 ```java
-Speed speed = new Speed(12, SpeedUnit.KM_PER_HOUR);
-Length length = new Length(4, LengthUnit.MILE);
+Speed speed = new Speed(12, Speed.Unit.km_h);
+Length length = new Length(4, Length.Unit.mi);
 
 // Good:
 Duration howLongOK = length.divide(speed); 
@@ -178,25 +178,30 @@ Duration howLongOK = length.divide(speed);
 Duration howLongWrong = speed.divide(length); 
 
 // Does not compile; subtracting a length from a speed make no sense:
-Speed other = speed.minus(length); 
+Speed other = speed.subtract(length); 
 
 // Throws a UnitRuntimeException:
-Acceleration acceleration = speed.times(speed).asAcceleration(); 
+Acceleration acceleration = speed.multiply(speed).as(Acceleration.Unit.m_s2); 
 
 // OK:
-Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM)
-    .times(0.5)).asEnergy(); // OK
+Energy kineticEnergy = speed.multiply(speed).multiply(new Mass(3, Mass.Unit.kg)
+    .scaleBy(0.5)).as(Energy.Unit.J);
 ```
 
-The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like eclipse) such mistakes will be marked in by the java editor.
+The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like Eclipse) such mistakes will be marked in by the java editor.
 
-The before-last line multiplies a speed by another speed. The result of this operation is not something that DJUNITS supports directly. Such scalars can be cast to something DJUNITS does know of with an asXxx method. Whether that cast is permitted can only be checked at runtime and this example would fail with a UnitRuntimeException: cannot cast 11.1111111 m2/s2 to Acceleration.
+The before-last line multiplies a speed by another speed. The result of this operation is not something that DJUNITS supports directly. Such scalars can be cast to something DJUNITS does know of with an `as(TargetUnit)` method. Whether that cast is permitted can only be checked at runtime and this example would fail with:
 
-A correct example where DJUNITS does not know the unit of the result (thus requiring an asXXX() cast) is:
+```
+IllegalArgumentException: org.djunits.quantity.def.Quantity.as (804): 
+    Quantity.as(m/s2) called, but units do not match: m2/s2 <> m/s2
+```
+
+A correct example where DJUNITS does not know the unit of the result (thus requiring an `as(TargetUnit)` cast) is:
 
 ```java
-Energy kineticEnergy = speed.times(speed).times(new Mass(3, MassUnit.KILOGRAM)
-    .times(0.5)).asEnergy(); // OK
+Energy kineticEnergy = speed.multiply(speed).multiply(new Mass(3, Mass.Unit.kg)
+    .scaleBy(0.5)).as(Energy.Unit.J);
 System.out.println(kineticEnergy);
 ```
 
@@ -209,42 +214,186 @@ This would print:
 
 ## Scalars, Vectors and Matrices
 
-Simple values are referred to as scalars. DJUNITS also handles groups of values (these must all be of the same unit) as vectors or 
-matrices. Vectors and matrices come in four varieties:
+Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same unit) as vectors or 
+matrices. Efficient classes have been created for the 'small' vectors and matrices of size 1 to 3. The following vector and matrix classes exist:
 
-* Dense, Immutable
-* Dense, Mutable
-* Sparse, Immutable
-* Sparse, Mutable
+* `Vector1` for a vector with just one element
+* `Vector2.Row` and `Vector2.Col` for a row and column vector of size 2
+* `Vector3.Row` and `Vector3.Col` for a row and column vector of size 3
+* `VectorN.Row` and `VectorN.Col` for a row and column vector of any size
+* `Matrix1x1` for a square matrix of size 1 x 1
+* `Matrix2x2` for a square matrix of size 2 x 2
+* `Matrix3x3` for a square matrix of size 3 x 3
+* `MatrixNxN` for a square matrix of any size
+* `MatrixNxM` for a non-square or square matrix of any size
+
+The larger vectors and matrices (`VectorN`, `MatrixNxN`, `MatrixNxM`) come in four varieties:
+
+* Dense, Double
+* Dense, Float
+* Sparse, Double
+* Sparse, Float
 
 Dense vectors and matrices use arrays to store the values. Sparse vectors and matrices use an indexed structure to store only the 
 non-zero values. Numeric 0.0 values are not stored explicitly in Sparse vectors and matrices. Very large vectors and matrices with 
-lots of 0.0 values are more efficiently stored in Sparse organization.
+lots of 0.0 values are more efficiently stored using Sparse data storage.
 
-Immutable vectors and matrices do not provide methods to change any of their values. Mutable vectors and matrices have methods to 
-update their values. Changing values from or to zero in mutable sparse vectors or matrices is a slow operation.
+The Java double precision floating point value takes 8 bytes of memory, the float value takes 4 bytes. Both are available in DJUNITS
+for storage in `VectorN`, `MatrixNxN`, `MatrixNxM`. 
+
+Creating vectors and matrices is straightforward:
+
+```java
+System.out.println("\n\nMatrices");
+var mat = Matrix2x2.of(new double[][] {{1.0, 2.0}, {5.0, 4.0}}, Duration.Unit.s);
+System.out.println("matrix:\n" + mat);
+System.out.println("\nmatrix + matrix:\n" + mat.add(mat));
+System.out.println("\nmatrix + 1 day:\n" + mat.add(Duration.of(1.0, "day")));
+System.out.println("\ndeterminant: " + mat.determinant());
+```
+
+This prints:
+
+```
+Matrices
+matrix:
+[1.00000000, 2.00000000
+ 5.00000000, 4.00000000] s
+
+matrix + matrix:
+[2.00000000, 4.00000000
+ 10.0000000, 8.00000000] s
+
+matrix + 1 day:
+[86401.0000, 86402.0000
+ 86405.0000, 86404.0000] s
+
+determinant: -6.0000000 s2
+```
 
 
-## Doubles and Floats
+## Vector and Matrix calculations
 
-The Java double precision floating point value takes 8 bytes of memory, the float value takes 4 bytes. Both are available in DJUNITS. 
-The typed double values use no special prefix indicating their precision. So the scalar type that stores a speed as a double is named 
-Speed. Similarly, SpeedVector and SpeedMatrix store their values in double arrays. DJUNITS types that use Floats to store their (si) 
-values have class names prefixed with Float. The float speed scalar class is therefore FloatSpeed, and the equivalent vector and 
-matrix classes are FloatSpeedVector and FloatSpeedMatrix.
+All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard operations on the elements of a vector or matrix are also supported. In all cases, units of the reculting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
+
+The following example first shows a Hadamard operation (element-wise), followed by an algebraic matrix multiplication:
+
+```java
+VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
+Duration duration = Duration.of(2.0, "h");
+VectorN.Col<Speed, Speed.Unit> sv1 = lv1.divideElements(duration).as(Speed.Unit.km_h);
+System.out.println("Length: " + lv1);
+System.out.println("Speed : " + sv1);
+
+MatrixNxM<Length, Length.Unit> lm4x2 = MatrixNxM.of(new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
+MatrixNxM<Length, Length.Unit> lm2x4 = MatrixNxM.of(new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
+
+var mult44 = lm4x2.multiply(lm2x4).as(Area.Unit.m2);
+System.out.println("\nMatrix1:\n" + lm4x2);
+System.out.println("Matrix2:\n" + lm2x4);
+System.out.println("Multiplication:\n" + mult44);
+
+Matrix2x2<Area, Area.Unit> mult22 = lm4x2.multiply(lm2x4).asMatrix2x2().as(Area.Unit.a);
+System.out.println("\nMatrix1:\n" + lm2x4);
+System.out.println("Matrix2:\n" + lm4x2);
+System.out.println("Multiplication:\n" + mult22);
+```
+
+The last matrix is cast to a strongly typed `Matrix2x2<Area, Area.Unit>`, where values are expressed in are. The code results in the following output:
+
+```
+Length: Col[10.0, 20.0, 60.0, 120.0, 400.0] km
+Speed : Col[5.0, 10.0, 30.0, 60.0, 200.0] km/h
+
+Matrix1:
+[1.00000000, 2.00000000, 3.00000000, 4.00000000
+ 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
+Matrix2:
+[1.00000000, 2.00000000
+ 3.00000000, 4.00000000
+ 5.00000000, 6.00000000
+ 7.00000000, 8.00000000] m
+Multiplication:
+[50.0000000, 60.0000000
+ 114.000000, 140.000000] m2
+
+Matrix1:
+[1.00000000, 2.00000000
+ 3.00000000, 4.00000000
+ 5.00000000, 6.00000000
+ 7.00000000, 8.00000000] m
+Matrix2:
+[1.00000000, 2.00000000, 3.00000000, 4.00000000
+ 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
+Multiplication:
+[0.50000000, 0.60000000
+ 1.14000000, 1.40000000] a
+```
 
 
-## Extensions
+## QuantityTable
 
-Several extensions are under consideration:
+For those cases where a tabular storage of data is needed, but it is not necessary to carry out matrix or vector operations, the `QuantityTable` exists. It behaves like a `MatrixNxM` without the overhead of a matrix. Hadamard (element-wise) operations are allowed on the `QuantityTable`. 
 
-* Typed vectors and matrices, so a LengthMatrix can be multiplied with the inverse of a DurationMatrix (units in 1/s) to give a 
-  SpeedMatrix. This can be cell-cell multiplication (n x m matrix 'times' an n x m matrix yielding an n x m matrix) or real matrix 
-  multiplication (n x m matrix times an m x p matrix yielding an n x p matrix).
-* Adding complex scalars, vectors and matrices. With the code generator, it should be quite easy to ready DJUNITS for complex typed 
-  scalars, vectors, and matrices.
-* Adding BigDecimal scalars, vectors and matrices. With the code generator, it should be quite easy to ready DJUNITS for BigDecimal 
-  typed scalars, vectors, and matrices.
+
+## Localization
+
+DJUNITS has been designed with localization in mind. This means that quantities, units, vectors and matrices can print the unit information based on a resource bundle file for that country. On the input side, quantities can also be created using localized string representations, as the example below shows:
+
+```java
+System.out.println("\nLOCALIZATION US");
+Locale.setDefault(Locale.US);
+var speed = Speed.of(50.0, "km/h");
+System.out.println("Absorbed dose name: " + AbsorbedDose.ONE.getName());
+System.out.println("50 km/h = " + speed);
+System.out.println("Acceleration: " + Units.localizedQuantityName(Acceleration.Unit.class));
+
+System.out.println("\nLOCALIZATION NL");
+Locale.setDefault(Locale.forLanguageTag("nl"));
+System.out.println("Absorbed dose name: " + AbsorbedDose.ONE.getName());
+System.out.println("50 km/h = " + speed);
+System.out.println("Acceleration: " + Units.localizedQuantityName(Acceleration.Unit.class));
+
+var d3du = Duration.valueOf("3 dag");
+d3du.setDisplayUnit("u");
+System.out.println("3 dagen in uren: " + d3du);
+```
+
+This results in:
+
+```
+LOCALIZATION US
+Absorbed dose name: Absorbed dose
+50 km/h = 50.0000000 km/h
+Acceleration: Acceleration
+
+LOCALIZATION NL
+Absorbed dose name: Geabsorbeerde straling
+50 km/h = 50,0000000 km/u
+Acceleration: Versnelling
+3 dagen in uren: 72,0000000 u
+```
+
+The following localizations are currently bundled with DJUNITS: `en_US`, `de`, `en_GB`, `es`, `fr`, `it`, `ja`, `ko`, `nl`, `pt`, `zh_TW`, `zh`. 
+
+
+## Difference with previous versions
+
+DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. Version 6 is a completely new implementation of the code with the following notable differences:
+
+- The `Quantity` is now the central object from which all quantities inherit.
+- Unit classes are inner classes of the quantity, such as `Energy.Unit`.
+- The `SIQuantity` and `SIUnit` classes have been implemented as a normal quantity.
+- The `DimensionlessUnit` unit class has been renamed to `Unitless`.
+- Localization is built-in as a design guideline and not as an afterthought. 
+- Absolute quantities have been re-implemented using a `Reference` for the reference point. 
+- Operation names are streamlined across quantities, vectors and matrices, e.g., `add`, `subtract`, `multiply`, `divide`.
+- Vector and matrix classes use generics for definitions such as `Matrix3x3<Area, Area.Unit>`, and only allow correct operations.
+- Vector and matrix operations sich as trace, multiplication, and inverse are now fully supported with consistent unit calculations.
+- Hadamard operations have been added to vector and matrix calculations.
+- The `QuantityTable` has been added for storage of tabular quantity data.
+
+The manual of the latest **version 5** can be found at <a href="https://djunits.org/docs/5.4.2/manual/">https://djunits.org/docs/5.4.2/manual/</a>. 
 
 
 ## Documentations and test reports
