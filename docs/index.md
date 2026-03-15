@@ -1,52 +1,52 @@
 # Delft Java UNIT System Version 6
 
-DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors at compile time 
-and some others at runtime.
+DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors with the use 
+of quantities and units at compile time and some others at runtime.
 
-* DJUNITS performs automatic conversions between most commonly used units of the same type. E.g., conversion of distances from Miles 
+* DJUNITS performs automatic conversions between most commonly used units of the same type. E.g., conversion of distances from miles 
   to kilometers.
-* DJUNITS stores all values internally in the basic SI unit for that quantiry. The value can be converted to any (user-selectable) 
+* DJUNITS stores all values internally in the basic SI unit for that quantity. The value can be converted to any (user-selectable) 
   suitable unit for display.
-* DJUNITS distinguishes Absolute and Relative values to catch common errors at compile time,
+* DJUNITS distinguishes absolute and relative values to catch common errors at compile time,
 * DJUNITS ensures that quantities expressed in different (but compatible) units are correctly added together. E.g. a distance in 
-  Miles is correctly added to a distance in kilometers.
+  miles is correctly added to a distance in kilometers.
 * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
   (that may have another unit),
-* DJUNITS handles Scalars, Vectors and Matrices.
-* DJUNITS stores almost everything in immutable objects. Vectors and Matrices also come in a Mutable variant where the stored values 
-  can be modified one by one or all at once.
-* DJUNITS stores values as Float or Double values.
+* DJUNITS handles Scalars, Vectors and Matrices, as well as quantity tables.
+* DJUNITS stores everything in immutable objects. 
+* DJUNITS stores the data for vectors and matrices as float or double values, and using dense or sparse storage.
 
 
 ## Origin
 
-DJUNITS was developed at the Delft University of Technology as part of the Open Traffic Simulator project (started in 2014).
+DJUNITS was developed at Delft University of Technology as part of the Open Traffic Simulator project (started in 2014).
 
 In August 2015 it became obvious that the units and values classes developed for the Open Traffic Simulator were sufficiently 
-mature to be used in other projects.
+mature to be used in other projects. In 2026, a complete re-implementation of djunits version 6 took place.
 
 The main authors/contributors of the DJUNITS project are Alexander Verbraeck and Peter Knoppers.
 
 
 ## Absolute and Relative values
 
-Values in DJUNITS are either Absolute or Relative.
+Values in DJUNITS are either absolute or relative.
 
-An Absolute value is a value measured from a standard reference. For geographical directions North and East should be Absolute 
-values. Adding two absolute values together makes no sense. Subtracting one absolute value from another does make sense (and results 
-in a Relative value). Subtracting East from North should result in an angle of ±90° or ±π/2 (depending on the unit used to express 
-the result). An absolute unit needs reference to be useful. Values subtracted from each other need to know their reference to be 
-able to carry out the subtraction.
+An absolute value is a value measured from a standard reference. Examples are time with a reference point 1-1-1970 (UNIX epoch) or 
+a reference point 1-1-0000 (Gregorian calendar time). As an other example, geographical directions, a direction can use North and East 
+as reference points. Adding two absolute values together makes no sense. Subtracting one absolute value from another does make sense 
+(and results in a relative value). Subtracting East from North should result in an angle of ±90° or ±π/2 (depending on the unit used 
+to express the result). An absolute quantity always needs a reference to be useful. Values subtracted from each other need to know 
+their reference to be able to carry out the subtraction. Therefore, a reference is explicitly stored with an absolute quantity.
 
-A Relative value expresses the difference between two (Absolute or Relative) values. The angle in the example above is a Relative 
-value. Relative values can be added together and subtracted from each other (resulting in Relative values). Adding a Relative 
-value to an Absolute value results in an Absolute value. Subtracting a Relative value from an Absolute value also results in 
-an Absolute value.
+A relative value expresses the difference between two (absolute or relative) values. The angle in the example above is a relative 
+value. Relative values can be added together and subtracted from each other (resulting in relative values). Adding a relative 
+value to an absolute value results in an absolute value. Subtracting a relative value from an absolute value also results in 
+an absolute value.
 
-In the geographical example, directions are Absolute and angles are Relative. Similarly, when applied to lengths, positions are 
-Absolute and distances are Relative.
+In the geographical example, directions are absolute and angles are relative. Similarly, when applied to lengths, positions are 
+absolute and distances are relative.
 
-Generally, if adding a value to itself makes no sense, the value is Absolute; otherwise it is Relative.
+Generally, if adding a value to itself makes no sense, the value is absolute; otherwise it is relative.
 
 | Operation   | Operands              | Result      |
 | ----------- | --------------------- | ----------- |
@@ -69,24 +69,18 @@ Generally, if adding a value to itself makes no sense, the value is Absolute; ot
 
 Attempts to perform operations that are marked not allowed are caught at compile time.
 
-All quantities make sense as Relative values. The four quantities that also make sense as Absolute values are listed in the 
+All quantities make sense as relative values. The four quantities that also make sense as absolute values are listed in the 
 table below.
 
 
 | Quantity    | Absolute interpretation | Absolute class<br/>and Unit | Relative interpretation | Relative class<br/> and Unit |
 | ----------- | ----------------------- | ----------------------------| ----------------------- | ---------------------------- |
-| Length      | Position                | Position<br/>PositionUnit   | Distance                | Length<br/>LengthUnit        |
-| Angle       | Direction or Slope      | Direction<br/>DirectionUnit | Angle (direction or slope difference) | Angle<br/>AngleUnit |
-| Temperature | Temperature             | AbsoluteTemperature<br/>AbsoluteTemperatureUnit | Temperature difference | Temperature<br/>TemperatureUnit |
-| Time        | Time (instant)          | Time<br/>TimeUnit           | Duration                | Duration<br/>DurationUnit    |
+| Length      | Position                | Position<br/>Length.Unit   | Distance                | Length<br/>Length.Unit        |
+| Angle       | Direction or Slope      | Direction<br/>Angle.Unit | Angle (direction or slope difference) | Angle<br/>Angle.Unit |
+| Temperature | Temperature             | Temperature<br/>Temperature.Unit | Temperature difference | Temperature<br/>Temperature.Unit |
+| Time        | Time (instant)          | Time<br/>Duration.Unit           | Duration                | Duration<br/>Duration.Unit    |
 
-The use of Absolute in relation to Temperature here may be confusing. In the table above, an absolute temperature is not 
-necessarily expressed in Kelvin. E.g. the melting temperature of water at normal atmospheric pressure is an Absolute value 
-(it does not make sense to add this temperature to itself). In DJUNITS this value would internally be stored as 273.15 K, but 
-on display it may be converted (back) to Celsius and displayed as 0 °C. A temperature difference of 5 K (Kelvin) is a Relative, 
-even though Kelvin is often called absolute temperature.
-
-Dimensionless is a special relative unit in DJUNITS that has a unit of 1.
+`Dimensionless` is a special relative unit in DJUNITS that has a `Unitless` unit.
 
 
 ## Units
@@ -94,34 +88,31 @@ Dimensionless is a special relative unit in DJUNITS that has a unit of 1.
 DJUNITS has a large number of pre-defined units. Internally, all values are stored in SI-units or an equivalent standard unit. For scalar values, the field is called si and can be retrieved as it is a public (immutable) field. Alternatively, the getSI() method can be used. The internal storage in SI units allows addition and subtraction of values that have been initialized using different units. Formatting and expressing the unit can be done using any defined unit. The code below illustrates some of the features.
 
 ```java
-Speed speed1 = new Speed(30, SpeedUnit.MILE_PER_HOUR);
+Speed speed1 = new Speed(30, Speed.Unit.mi_h);
 System.out.println("speed1:     " + speed1);
-Speed speed2 = new Speed(10, SpeedUnit.METER_PER_SECOND);
+Speed speed2 = new Speed(10, Speed.Unit.m_s);
 System.out.println("speed2:     " + speed2);
-Speed diff = speed1.minus(speed2);
+Speed diff = speed1.subtract(speed2);
 
 // Default display unit will be SI unit for speed:
-System.out.println("difference: " + diff); 
+System.out.println("difference: " + diff);
 
 // Change default display unit; internal SI value is unaltered:
-diff.setDisplayUnit(SpeedUnit.MILE_PER_HOUR); 
+diff.setDisplayUnit(Speed.Unit.mi_s);
 System.out.println("difference: " + diff);
 
 // Works, but not mistake-safe:
-System.out.println("difference: " + diff.getInUnit(SpeedUnit.KNOT) + " kt"); 
+System.out.println("difference: " + diff.getInUnit(Speed.Unit.kt) + " kt");
 
 // Safer:
-System.out.println("difference: " + diff.toString(SpeedUnit.KNOT)); 
+System.out.println("difference: " + diff.toString(Speed.Unit.kt));
 
 // Programmer must be really sure that SI-unit is m/s:
-System.out.println("difference: " + diff.si + " m/s (si)"); 
-
-// Same as previous:
-System.out.println("difference: " + diff.getSI() + " m/s (si)"); 
+System.out.println("difference: " + diff.si() + " m/s (si)");
 
 // Safer:
-System.out.println("difference: " + diff.toString(SpeedUnit.SI) + " (si)"); 
-System.out.println("difference: " + diff.toString(SpeedUnit.KM_PER_HOUR));
+System.out.println("difference: " + diff.toString(Speed.Unit.SI) + " (si)");
+System.out.println("difference: " + diff.toString(Speed.Unit.km_h));
 ```
 
 This would create the following output:
@@ -144,23 +135,23 @@ It is possible to use units without the Quantity.Unit. The `of()` methods are he
 
 ## Multiplication and Division
 
-Multiplying or dividing physical quantities produces a result in a different physical unit. There is no general way (we could think of) 
-where the Java compiler can check the type of the result in the general case. Therefore DJUNITS has an extensive list of built-in 
-multiplication and division operations with known result type. For instance
+Multiplying or dividing physical quantities produces a result in a different physical unit. There is no general way where the Java 
+compiler can check the type of the result in the general case. Therefore DJUNITS has an extensive list of built-in multiplication 
+and division operations with known result type. For instance
 
 ```java
 Speed speed = new Speed(50, Speed.Unit.km_h);
 Duration duration = new Duration(0.5, Duration.Unit.h);
-Length distance = speed.multiplyBy(duration);
-Acceleration acc0 = speed.divideBy(duration);
-Area area = distance.multiplyBy(distance);
-Volume vol = area.multiplyBy(distance);
+Length distance = speed.multiply(duration);
+Acceleration acc = speed.divide(duration);
+Area area = distance.multiply(distance);
+Volume vol = area.multiply(distance);
 ```
 
-DJUNITS knows that the result of multiplication of a speed and a time is a distance. The value of distance is 2500 m.
+DJUNITS knows that the result of multiplication of a speed and a time is a distance. The value of the distance in the above case is 2500 m.
 
-There is never a need for multiplication or division with an Absolute operand. It just does not make sense to 
-multiply 23 September 2025, 3 PM (an absolute Time) by 2...
+There is never a need for multiplication or division with an absolute operand. It just does not make sense to multiply 
+23 September 2025, 3 PM (an absolute Time) by 2.
 
 
 ## Catch mistakes at compile time where possible
