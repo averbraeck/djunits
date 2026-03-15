@@ -29,14 +29,16 @@ nav:
   - Home: index.md
   - Maven use: maven_use.md
   - Package structure: package_structure.md
-  - Quantities: quantities.md
-  - Scales: scales.md
-  - Unit Systems: unit_systems.md
-  - Units: units.md
-  - Scalars: scalars.md
-  - Vectors: vectors.md
-  - Matrices: matrices.md
-  - Quantity Tables: quantity_tables.md
+  - Quantity: quantity.md
+  - Absolute quantity: absolute_quantity.md
+  - Scale: scale.md
+  - Unit System: unit_system.md
+  - Unit: unit.md
+  - SIQuantity: si_quantity.md
+  - Define quantity: define_quantity.md
+  - Vector: vector.md
+  - Matrix: matrice.md
+  - Quantity Table: quantity_table.md
   - Code generation: code_generation.md
   - Documentation v5: https://djunits.org/docs/5.4.2/manual/
   - DJUNITS documentation: https://djunits.org/docs/current/index.html

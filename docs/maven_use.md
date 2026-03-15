@@ -26,6 +26,7 @@ DJUNITS is directly dependent on the following libraries:
 * **djutils-base** for a number of common operations such as logging. djutils-base has a few dependencies itself.
 
 For testing, the following libraries are used:
+
 * **junit 5** for the unit test framework.
 * **djutils-test** for easy testing of exceptions, and access to the java code tree.
 
