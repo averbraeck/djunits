@@ -27,7 +27,7 @@ The String representation of units follows a strict naming convention:
 
 - Abbreviations are defined using the common usage of upper case and lower case; `K` for kelvin, `C` for coulomb, `Pa` for Pascal, and `Sv` for Sievert.
 - Upper and lower case are important. There is a `Length.Unit` `nm` (nanometer), and `NM` (Nautical Mile).
-- SI-prefixes (from quecto to Quetta) are used for most of the SI-derived units, so there is a `hm`, `&mu;K`, `ns`, `TW`, and `GeV`. 
+- SI-prefixes (from quecto to Quetta) are used for most of the SI-derived units, so there is a `hm`, &mu;K, `ns`, `TW`, and `GeV`. 
 - When the abbreviation is built from SI-units, the order is: rad, sr, kg, m, s, A, K, mol, cd; so `Power` is expressed in `kgm2/s3`.
 - When there are SI-units with powers, no additional signs such as `^` for the subscripts are used; `Speed` is expressed in `m/s2`.
 - When there are SI-units with positive and negative powers, a slash is used for division; `ElectricPotential` is expressed in `kgm2/s3A`.
@@ -41,7 +41,7 @@ The static definition of variable names for the units in the unit class also fol
 - The `.` `/`, `(`, `)`, and all other non-alphabetic and non-number symbols are replaced by an underscore: `km/h` for speed becomes `km_h` as the static constant name. The `Power` unit foot-pound force per hour (`ft.lbf/h`) is defined in Java as `ft_lbf_h`.
 - An underscore at the end of the variable is removed. The British Thermal Unit `BTU(ISO)` and `BTU(IT)` become `BTU_ISO` and `BTU_IT` as Java names; metric horsepower becomes `hp_M`. 
 - If there are two consecutive underscores, one is removed. 
-- Greek letters are written with their meaning. The &Omega; for ohm becomes `ohm`. Micro-ohm `&mu;&Omega;` becomes `muohm` for the variable name.
+- Greek letters are written with their meaning. The &Omega; for ohm becomes `ohm`. Micro-ohm &mu;&Omega; becomes `muohm` for the variable name.
 - The degree symbol is transformed to `deg` in the temperature unit definition. &deg;C becomes `degC` in Java.
 - The Angstrom is denoted with an `A` in Java. 
 
