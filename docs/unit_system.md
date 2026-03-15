@@ -19,8 +19,8 @@ The unit system serves no other purpose than being able to see whether two units
 
 The following unit systems are defined in DJUNITS:
 
-- CGS: centimeter-gram-second system
-- CGS-ESU: centimeter-gram-second system, electrostatic units
+- CGS: centimeter-gram-second system.
+- CGS-ESU: centimeter-gram-second system, electrostatic units.
 - CGS_EMU: centimeter-gram-second system, electromagnetic units.
 - IMPERIAL: Imperial system.
 - MTS: meter-tonne-second system.

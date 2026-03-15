@@ -66,6 +66,60 @@ Jerk jerk3 = new Jerk(4.0, JerkUnit.in_s3);
 Jerk jerk4 = Jerk.ofSi(5.0);
 ```
 
+## Building the new Unit for the Quantity
+
+The instructions below show how to create a new unit: the [Jerk](https://en.wikipedia.org/wiki/Jerk_(physics)). Jerk expresses change in acceleration per time unit.
+
+Every unit extends `Unit` with the defined unit as its generic; this ensures that the generic unit class will do proper housekeeping, including for user-defined units. Many units have a natural zero value and linear scales to convert from and to various non-SI units. These units extend the abstract `Unit` class that provides a number of constructors with an easy-to-use factor to create a linear scale with respect to the standard (SI) unit. Jerk should be a relative unit. The header of the user-defined unit for jerk, the rate of change of acceleration (meter per second<sup>3</sup>) is therefore:
+
+```java
+public class JerkUnit extends Unit<JerkUnit>
+```
+
+Usually, the unit(s) on which a unit is based are stored as part of the unit. In this case, a length unit and a duration unit. Furthermore, several standard units are defined, among which the SI constant, if possible:
+
+```java
+/** The base quantity, with "m/s3" as the SI signature. */
+public static final Quantity<JerkUnit> BASE = new Quantity<>("Jerk", "m/s3");
+
+/** The SI unit for jerk is m/s^3. */
+public static final JerkUnit SI =
+        new JerkUnit().build(new Unit.Builder<JerkUnit>()
+                 .setQuantity(BASE)
+                 .setId("m/s3")
+                 .setName("meter per second cubed")
+                 .setUnitSystem(UnitSystem.SI_DERIVED)
+                 .setSiPrefixes(SIPrefixes.NONE, 1.0)
+                 .setScale(IdentityScale.SCALE));
+
+/** Define some additional units for jerk. */
+public static final JerkUnit M_PER_S3 = SI;
+public static final JerkUnit CM_PER_S3 = 
+        SI.deriveLinear(factorLD("cm", "s"), "cm/s3", "centimeter per second cubed");
+public static final JerkUnit MM_PER_S3 = 
+        SI.deriveLinear(factorLD("mm", "s"), "mm/s3", "millimeter per second cubed");
+public static final JerkUnit FT_PER_S3 = 
+        SI.deriveLinear(factorLD("ft", "s"), "ft/s3", "foot per second cubed");
+public static final JerkUnit IN_PER_S3 = 
+        SI.deriveLinear(factorLD("in", "s"), "in/s3", "inch per second cubed");
+```
+
+Many of the static constructors of the standard units derive the unit in a linear way from the SI unit using the `deriveLinear(...)` method. The linear conversion factor that has to be used is calculated by the `private static double FactorLD(length, duration)` method that is shown below:
+
+```java
+private static double factorLD(final String length, final String duration)
+{
+    double l = LengthUnit.BASE.of(length).getScale().toStandardUnit(1.0);
+    double d = DurationUnit.BASE.of(duration).getScale().toStandardUnit(1.0);
+    return l / (d * d * d);
+}
+```
+
+No constructors are needed, nor anything else to start using the JerkUnit defined above. The arguments of `factorLD` are Strings. The `LD` part of the name hints that the first argument should be a Length and the second a Duration. Accidentally swapping the arguments would be a mistake that cannot be caught at compile time, but would be caught at runtime when the class is initialized and the code `LengthUnit.BASE.of(length)` fails to find a length unit named `s`.
+
+Although the JerkUnit can now be used, life for the programmer becomes much easier when classes for JerkScalar, JerkVector and JerkMatrix are created. This is explained in the next pages.
+
+
 ### Extra methods to implement
 
 Often, extra methods are implemented for common multiplications and divisions involving the just defined type and other types. E.g., when we multiply the `Jerk` by a (Relative) `Duration`, we get an `Acceleration`. If we divide it by an `Acceleration`, we get a `Frequency` (m/s<sup>3</sup> / m/s<sup>2</sup> = 1/s). Such additional methods can be defined as follows:
@@ -97,21 +151,4 @@ public static Jerk interpolate(final Jerk zero,
 
 The above interpolate method ensures that the result uses the unit of the first argument. When the first argument has been defined in \[ft/s3\], the result will also use that unit (when printed). The unit for the result is obtained with the code zero.getUnit() and that unit gets recorded in the result. When the result is printed it will be expressed in \[ft/s3\]. When the result is used as the first argument of another call to the interpolate method it will propagate to the result of that call. Note that although the math is _not_ done in SI units, regardless of the particular Jerk units of the arguments, the internally stored value is always in the standard (SI) unit, i.c., \[m/s3\].
 
-## Building a unit with absolute and relative subclasses
 
-Most units are always relative, and don't have an absolute version. Only four units have an absolute version. See the `Length` and `Position` classes, or the `Temperature` and `AbsoluteTemperature` classes for examples how absolute and relative units are linked to each other. If you find another unit that can be Absolute and we apparently missed it; please contact us.
-
-  
-## Scalar classes, relative class implementation
-
-The top half of this diagram contains only interfaces. Below that come abstract classes and along the bottom a small selection of the scalar classes of DJUNITS is shown.
- 
-![](images/scalar-rel.png)
-
-
-## Scalar classes, absolute class implementation
-
-The top half of this diagram contains only interfaces. Below that come abstract classes and along the bottom the scalar classes for Direction, Position, Angle and Length of DJUNITS are shown.
-
-![](images/scalar-abs.png)
- 
