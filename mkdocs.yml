@@ -37,7 +37,7 @@ nav:
   - Unit: unit.md
   - SIQuantity: si_quantity.md
   - Vector: vector.md
-  - Matrix: matrice.md
+  - Matrix: matrix.md
   - Quantity Table: quantity_table.md
   - Code generation: code_generation.md
   - Documentation v5: https://djunits.org/docs/5.4.2/manual/
