@@ -78,7 +78,7 @@ table below.
 | ----------- | ----------------------- | ----------------------------| ----------------------- | ---------------------------- |
 | Length      | Position                | Position<br/>Length.Unit   | Distance                | Length<br/>Length.Unit        |
 | Angle       | Direction or Slope      | Direction<br/>Angle.Unit | Angle (direction or slope difference) | Angle<br/>Angle.Unit |
-| Temperature | Temperature             | Temperature<br/>Temperature.Unit | Temperature difference | Temperature<br/>Temperature.Unit |
+| Temperature | Temperature             | Temperature<br/>Temperature.Unit | Temperature difference | TemperatureDifference<br/>Temperature.Unit |
 | Time        | Time (instant)          | Time<br/>Duration.Unit           | Duration                | Duration<br/>Duration.Unit    |
 
 `Dimensionless` is a special relative unit in DJUNITS that has a `Unitless` unit.
