@@ -1,7 +1,7 @@
-site_name: DJUNITS
+site_name: DJUNITS version 6
 site_url: https://djunits.org/
 site_favicon: images/favicon.png
-copyright: (c) 2015-2023 Delft University of Technology
+copyright: (c) 2015-2026 Delft University of Technology
 
 theme:
   name: material
