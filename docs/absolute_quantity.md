@@ -15,7 +15,7 @@ Absolute quantities therefore have three fields as compared to two fields for a 
 
 The above example results in a north-easterly direction, since `Angle` is defined clockwise. 
 
-The relation between relative ans absolute quantities is sketched in the class diagram below:
+The relation between relative and absolute quantities is sketched in the class diagram below:
 
 ![](images/absolute-quantity.png)
 

@@ -2,7 +2,7 @@
 
 A (physical) quantity is a property of a material or system that can be quantified by measurement. A physical quantity can be expressed as the combination of a value (magnitude) and a unit. For example, the physical **quantity** energy can be quantified as _x_ joule where _x_ is the **value** and joule is the **unit**.<sup>1</sup>
 
-Every quantity in DJUNITS needs a unit. One quantity can be expressed in multiple units. Typically the unit is defined as an inner class of the quantity class. As a standard the name `BASE`, or `SI` is used for the default unit and it should be public, static and final.
+Every quantity in DJUNITS needs a unit. One quantity can be expressed using multiple units. Typically the unit is defined as an inner class of the quantity class. As a standard the name `BASE`, or `SI` is used for the default unit and it should be public, static and final.
 
 A Quantity is a `Number` and can therefore be used in any piece of code where a `Number` is expected:
 
