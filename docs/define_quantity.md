@@ -1,6 +1,6 @@
-# Scalars
+# Defining a new Quantity type
 
-Scalar values are the foundation of DJUNITS. A scalar wraps a value (usually double precision floating point) and a unit. DJUNTIS contains class files for scalars of many unit types, but users can create scalars even for non-builtin unit types using the `SIScalar` class. Assume we have defined a JerkUnit with m/s<sup>3</sup> as the SI unit (see preceding page). We can then use it in a `Double` or `Float` `Scalar`, `Vector`, or `Matrix`:
+Scalar quantity types are the foundation of DJUNITS. A quantity wraps a value (double precision floating point) and a corresponding unit. DJUNTIS contains class files for many different quantity types, but users can create not-builtin quantity types using the `SIQuantity` class. Assume we have defined a JerkUnit with m/s<sup>3</sup> as the SI unit (see preceding page). We can then use it in a `Double` or `Float` `Scalar`, `Vector`, or `Matrix`:
 
 ```java
 SIScalar jerkScalar = new SIScalar(2.0, SIUnit.of("m/s3"));
@@ -21,7 +21,7 @@ JerkVector jerkVector =
 
 To create a jerk scalar that can be constructed from a value in, e.g. ft/s<sup>3</sup>, a JerkScalar class needs to be written.
 
-## Building a new Scalar class
+## Building a new Quantity class
 
 
 The next paragraphs show how to build a new Relative Scalar type. Building a new Scalar type that has an absolute and a relative subtype is unlikely to ever be required; we believe there are not other units that can be absolute, par the four that are already implemented in DJUNITS.
@@ -31,39 +31,29 @@ The next paragraphs show how to build a new Relative Scalar type. Building a new
 Several Abstract classes are available that simplify creating new `Scalar`, `Vector`, and `Matrix` classes. For the `Scalar` class, these are `DoubleScalarAbs` and `DoubleScalarRel`. The `DoubleScalarRel` class takes two generic arguments: the unit, and the name of the class itself. The 2nd parameter might seem strange, as the definition looks to be self-referential. The way it is used is that in the methods of the Abstract class, the generics argument is needed to specify the return type and argument type for various methods that are implemented in the abstract super class. So the first line of the new Jerk scalar class is:
 
 ```java
-public class Jerk extends DoubleScalarRel<JerkUnit, Jerk>
-```
-
-Java abstract classes cannot prescribe anything about constructors in the extending classes. Each scalar class file in DJUNITS should have two constructors, one that takes a double argument, and one that takes an instance of the scalar type that the class file defines; i.c. another Jerk scalar:
-
-```java
-public Jerk(final double value, final JerkUnit unit)
+public class Jerk extends Quantity<Jerk, JerkUnit>
 {
-    super(value, unit);
-}
+    public Jerk(final double value, final JerkUnit unit)
+    {
+        super(value, unit);
+    }
 
-public Jerk(final Jerk value)
-{
-    super(value);
+    @Override
+    public Jerk instantiate(final double siValue)
+    {
+        return new Jerk(siValue, JerkUnit.SI);
+    }
 }
 ```
 
-One method that needs to be implemented is the `instantiateRel` method, which is internally used in, for instance, the `plus()` method to create a new instance of `Jerk` after the addition.
+Each scalar class file in DJUNITS should have a constructor. The default one takes a double argument and a display unit. One method that needs to be implemented is the `instantiate` method, which is internally used in, for instance, the `add()` method to create a new instance of `Jerk` after the addition.
+
+A method that *can* be implemented is the `ofSi()` static method as a quick generator with the default unit.
 
 ```java
-@Override
-public final Jerk instantiateRel(final double value, final JerkUnit unit)
+public static Jerk ofSi(final double valueSi)
 {
-    return new Jerk(value, unit);
-}
-```
-
-A method that *can* be implemented is the `ofSI()` static method as a quick generator with the default unit.
-
-```java
-public static Jerk of(final double valueSI)
-{
-    return new Jerk(valueSI, JerkUnit.SI);
+    return new Jerk(valueSi, JerkUnit.SI);
 }
 ```
 
@@ -71,9 +61,9 @@ With this minimum amount of code (two constructors, and the instantiateRel metho
 
 ```java
 Jerk jerk1 = new Jerk(1.2, JerkUnit.SI);
-Jerk jerk2 = jerk1.times(2.0);
-Jerk jerk3 = new Jerk(4.0, JerkUnit.IN_PER_S3);
-Jerk jerk4 = Jerk.ofSI(5.0);
+Jerk jerk2 = jerk1.scaleBy(2.0);
+Jerk jerk3 = new Jerk(4.0, JerkUnit.in_s3);
+Jerk jerk4 = Jerk.ofSi(5.0);
 ```
 
 ### Extra methods to implement

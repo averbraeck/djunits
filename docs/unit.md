@@ -90,12 +90,3 @@ No constructors are needed, nor anything else to start using the JerkUnit define
 
 Although the JerkUnit can now be used, life for the programmer becomes much easier when classes for JerkScalar, JerkVector and JerkMatrix are created. This is explained in the next pages.
 
-<!-- TODO: THIS LINK NO LONGER WORKS <sup>Note: the amount of one Jerk is a foot per cubed second, and comes from several sources, e.g., [https://www.unc.edu/~rowlett/units/dictJ.html](https://www.unc.edu/~rowlett/units/dictJ.html).<br>-->
-Note: the above code is for instructional purposes and does not include documentation and JavaDoc. Never write code without it! </sup>
-
-
-## Classes for Quantity and Unit
-
-The second column in this diagram shows a (very incomplete) sample of the unit classes implemented in DJUNITS.
-
-![](images/unit-quantity-simple.png)

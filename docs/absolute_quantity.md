@@ -109,5 +109,5 @@ t2 in Celsius  = 0.00000000 °C (CELSIUS)
 ```
 
 Note that a Celsius temperature difference can be defined relative to 0 degrees Fahrenheit. Of course, this is typically not done;
-an absolute temperature in degrees Celsius will typically be defined relative to 0 &deg;C, and similarly, kelvin and degrees Fahrenheid
+an absolute temperature in degrees Celsius will typically be defined relative to 0 &deg;C, and similarly, kelvin and degrees Fahrenheit
 will be defined relative to their 'own' natural reference point. But it is not *necessary*. 
