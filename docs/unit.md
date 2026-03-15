@@ -87,5 +87,5 @@ The program will print the following output:
 
 ## Defining a completely new Unit
 
-Of course it is also possible to define a completely new unit from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the <a href="define_quantity.md">define_quantity</a> section.
+Of course it is also possible to define a completely new unit from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the <a href="../define_quantity/">define_quantity</a> section.
 
