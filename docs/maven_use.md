@@ -7,22 +7,27 @@ Maven is one of the easiest ways to include DJUNITS in a Java project. The Maven
   <dependency>
     <groupId>org.djunits</groupId>
     <artifactId>djunits</artifactId>
-    <version>5.1.3</version>
+    <version>6.0.0-alpha</version>
   </dependency>
   ... other dependencies of your project go here ...
 </dependencies>
 ```
 
-Of course, the version number (5.1.3 in the above example) needs to be replaced with the version that one wants to include in the project.
+Of course, the version number (6.0.0-alpha in the above example) needs to be replaced with the version that one wants to include in the project.
 
 Older versions of DJUNITS libraries are stored on a server at TU Delft at [https://djunits.org/maven](https://djunits.org/maven). If an older version is needed, a `<repositories>` tag can be added to the pom-file of the Maven project. For version 5.0.0 and higher, a `<repositories>` tag is not needed.
 
 
 ### Dependencies
 
-DJUNITS is directly dependent on the following package that has no further dependencies:
+DJUNITS is directly dependent on the following libraries:
 
-* **jakarta.annotation-api** for manipulating annotations using java versions later than Java-8
+* **jakarta.annotation-api** for manipulating annotations using java versions later than Java-8.
+* **djutils-base** for a number of common operations such as logging. djutils-base has a few dependencies itself.
+
+For testing, the following libraries are used:
+* **junit 5** for the unit test framework.
+* **djutils-test** for easy testing of exceptions, and access to the java code tree.
 
 If the DJUNITS library is used as a part of a Maven project, all dependencies will be automatically resolved, and the programmer / user does not have to worry about finding the libraries.
 

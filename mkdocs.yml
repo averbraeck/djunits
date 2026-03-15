@@ -36,6 +36,8 @@ nav:
   - Scalars: scalars.md
   - Vectors: vectors.md
   - Matrices: matrices.md
-  - Code Generation: code_generation.md
+  - Quantity Tables: quantity_tables.md
+  - Code generation: code_generation.md
+  - Documentation v5: https://djunits.org/docs/5.4.2/manual/
   - DJUNITS documentation: https://djunits.org/docs/current/index.html
   - DJUNITS API: https://djunits.org/docs/current/apidocs/index.html
