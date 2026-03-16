@@ -1138,8 +1138,12 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify (2x3) x (3x2) multiplication with a double-backed RHS matrix: - Numeric correctness via si() and si(r,c). - Unit
-     * composition via as(Area.Unit.*). - Result shape (2x2).
+     * Verify (2x3) x (3x2) multiplication with a double-backed RHS matrix:
+     * <ul>
+     * <li>Numeric correctness via si() and si(r,c).</li>
+     * <li>Unit composition via as(Area.Unit.*).</li>
+     * <li>Result shape (2x2).</li>
+     * </ul>
      */
     @Test
     @DisplayName("MatrixNxM.multiply(MatrixNxM): 2x3 x 3x2 with double-backed RHS")
@@ -1225,7 +1229,7 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * (Mx1) x (1x1) -&gt; (Mx1) MatrixNxM<SIQuantity, SIUnit>.
+     * (Mx1) x (1x1) -&gt; (Mx1) MatrixNxM&lt;SIQuantity, SIUni&gt;.
      */
     @Test
     @DisplayName("MatrixNxM.multiply(Vector1): happy path and bad dimension mismatch")
@@ -1256,7 +1260,7 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * (Mx2) x (2x1) -&gt; (Mx1) VectorN.Col<SIQuantity, SIUnit>.
+     * (Mx2) x (2x1) -&gt; (Mx1) VectorN.Col&lt;SIQuantity, SIUnit&gt;.
      */
     @Test
     @DisplayName("MatrixNxM.multiply(Vector2.Col): happy path and bad dimension mismatch")
@@ -1288,7 +1292,7 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * (Mx3) x (3x1) -&gt; (Mx1) VectorN.Col<SIQuantity, SIUnit>.
+     * (Mx3) x (3x1) -&gt; (Mx1) VectorN.Col&lt;SIQuantity, SIUnit&gt;.
      */
     @Test
     @DisplayName("MatrixNxM.multiply(Vector3.Col): happy path and bad dimension mismatch")
@@ -1321,7 +1325,7 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * (MxN) x (Nx1) -&gt; (Mx1) VectorN.Col<SIQuantity, SIUnit>.
+     * (MxN) x (Nx1) -&gt; (Mx1) VectorN.Col&lt;SIQuantity, SIUnit&gt;.
      */
     @Test
     @DisplayName("MatrixNxM.multiply(VectorN.Col): happy path and bad dimension mismatch")
