@@ -1,22 +1,68 @@
 # SIQuantity and SIUnit
 
+## SIQuantity
+
+The `SIQuantity` is a generic quantity that uses a configurable unit called `SIUnit`. The `SIUnit` defines a combination of the 8 used SI dimensions with any positive or negative power. Suppose that a program uses molar entropy, which has a unit of kg&middot;m<sup>2</sup>&middot;s<sup>-2</sup>&middot;K<sup>-1</sup>&middot;mol<sup>-1</sup>. We can define a whole new quantity for molar entropy, but we can also use it in any calculation as:
 
 ```java
-public static final Energy.Unit BASE = new Quantity<>("Energy", "kgm2/s2");
+var entropyWater = new SIQuantity(70.0, SIUnit.of("kg.m2.s-2.K-1.mol-1"));
+System.out.println(entropyWater);
 ```
 
-There are three constructors for a Quantity. All take a short descriptive identifier for the (physical) quantity as the first argument. The second argument identifies how base SI units must be combined to construct the unit of the new quantity. This is one of:
+This would print:
 
-* `String siString`: A String expression that combines SI base units into the unit of the new quantity, e.g., `kgm2/s2`, or `kgm2s-2` (which are equivalent).
-* `SIDimensions siDimensions`: An object that contains the coeffients for each of the SI base units; e.g., `new SIDimensions(0, 0, 1, 2, -2, 0, 0, 0, 0)` or `SIDimensions.of("kgm2/s2")`. The order of the parameters of that constructor with 7 parameters is: rad, sr, kg, m, s, A, K, mol, cd.
-* `byte[] siSignature`: A byte array with the coefficients for each of the SI base units (same order as above); e.g., `new byte[] {0, 0, 1, 2, -2, 0, 0, 0, 0}`.
+```
+70.0000000 kgm2/s2Kmol
+```
 
-Each newly constructed `Quantity` is automatically registered in the `Quantities` class which has methods to find an existing `Quantity`.
+We could also have specified it as: `new SIQuantity(70.0, SIUnit.of("kgm2/s2Kmol"));`. The `SIUnit.of()` method takes any integer power of `rad`, `sr`, `kg`, `m`, `s`, `A`, `K`, `mol`, and `cd` in the numerator and denominator. In this case, the SI unit is equivalent to a J/K&middot;mol. Suppose we multiply our molar entropy with 1 K and 1 mol, we should get an Energy of 70 J:
+
+```java
+Energy energy = entropyWater.multiply(TemperatureDifference.of(1.0, "K"))
+    .multiply(AmountOfSubstance.of(1.0, "mol")).as(Energy.Unit.J);
+System.out.println(energy);
+```
+
+This prints:
+
+```
+70.0000000 J
+```
+
+Note that this can only be done when the SI units of 'energy' (kgm2/s2) match the SI units of the results of our calculation (also kgm2/s2). When not, e.g. using `entropyWater.as(Energy.Unit.J)`, results in:
+
+```
+Exception in thread "main" java.lang.IllegalArgumentException: 
+org.djunits.quantity.def.Quantity.as (804): Quantity.as(J) called, 
+but units do not match: kgm2/s2Kmol <> kgm2/s2
+```
+
+As shown, the `SIQuantity` combined with the `SIUnit` as its unit can store any combination of positive or negative powers of SI base units (plus rad and sr). In DJUNITS, any multiplication or division of scalar, vector or matrix quantities that has not been predefined to result in a 'known' quantity type is expresses as an `SIQuantity`. When we multiply a `Duration` with a `Duration`, we get a quantity expressed in square seconds. DJUNITS does not have a ready type for that, so it expresses it as an `SIQuantity` with an `SIUnit` of `s2`. If later, we divide a `Length` by this quantity, we can cast the result to a known `Acceleration` quantity with `.as(Acceleration.Unit.km_h)` to express the result as an acceleration in km/h. 
 
 
-## SIDimensions
+## SIUnit
 
-DJUNITS treats radian (rad) and sterradian (sr) as first class base SI units in addition to the standard 7 (kg, m, s, A, K, mol, cd). The SIDimension class can parse, pretty-print, and manipulate the coefficients of any quantity. It is used to compute the coefficients of the unit of multiplication or division of scalars, vectors and matrices. If, for example, a Length is divided by a Duration, the coefficients of the Duration (0, 0, 0, 0, 0, 1, 0, 0, 0, 0) must be subtracted from those of the Length (0, 0, 0, 1, 0, 0, 0, 0, 0) , resulting in the coefficients for a Speed (0, 0, 0, 1, -1, 0, 0, 0, 0).
+Internally, the `SIUnit` stores the unit in an `int[9]`, which means that large exponents can be processed. This can be important in matrix calculations, where the exponents can (temporarily) become very high. Parsing order of the textual strings is very important: otherwise the `s` in `sr` can be mistaken for a `second`, and the `m` in `mol` can be mistaken for a `meter`. 
 
-!!! note "Fractional Coefficients"
-    SIDimensions is prepared for fractional coefficients, but this is not yet implemented.
+SIUnits can be instantiated using the dimensions in the following order:
+
+1. **angle** dimension of the angle (rad)
+2. **solidAngle** dimension of the solidAngle (sr)
+3. **mass** dimension of the mass (kg)
+4. **length** dimension of the length (m)
+5. **time** dimension of the time (s)
+6. **current** dimension of the current (A)
+7. **temperature** dimension of the temperature (K)
+8. **amountOfSubstance** dimension of the amount of substance (mol)
+9. **luminousIntensity** dimension of the luminous intensity (cd)
+
+Alternatively, an `int[9]` can be given to the constructor, or the `of(String)` method can be used. So, an acceleration in m/s2 could be defined as:
+
+```java
+SIUnit acc1 = new SIUnit(new int[] {0, 0, 0, 1, -2, 0, 0, 0, 0});
+SIUnit acc2 = new SIUnit(0, 0, 0, 1, -2, 0, 0, 0, 0);
+SIUnit acc3 = SIUnit.of("m/s2");
+```
+
+All three methods are equivalent and lead to the same unit. 
+
