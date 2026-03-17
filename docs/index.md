@@ -13,7 +13,7 @@ of quantities and units at compile time and some others at runtime.
 * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
   (that may have another unit),
 * DJUNITS handles Scalars, Vectors and Matrices, as well as quantity tables.
-* DJUNITS stores everything in immutable objects. 
+* DJUNITS stores everything in immutable objects, except for the display unit that can be changed. 
 * DJUNITS stores the data for vectors and matrices as float or double values, and using dense or sparse storage.
 
 
@@ -101,17 +101,11 @@ System.out.println("difference: " + diff);
 diff.setDisplayUnit(Speed.Unit.mi_s);
 System.out.println("difference: " + diff);
 
-// Works, but not mistake-safe:
-System.out.println("difference: " + diff.getInUnit(Speed.Unit.kt) + " kt");
+// Works, but error-prone and not localizable:
+System.out.println("error-prone " + diff.getInUnit(Speed.Unit.kt) + " kt");
 
-// Safer:
+// Safer, the unit is provided by the system and localizable:
 System.out.println("difference: " + diff.toString(Speed.Unit.kt));
-
-// Programmer must be really sure that SI-unit is m/s:
-System.out.println("difference: " + diff.si() + " m/s (si)");
-
-// Safer:
-System.out.println("difference: " + diff.toString(Speed.Unit.SI) + " (si)");
 System.out.println("difference: " + diff.toString(Speed.Unit.km_h));
 ```
 
@@ -122,10 +116,8 @@ speed1:     30.0000000 mi/h
 speed2:     10.0000000 m/s
 difference: 7.63063708 mi/h
 difference: 0.00211962 mi/s
-difference: 6.630842332613389 kt
+error-prone 6.630842332613389 kt
 difference: 6.63084233 kt
-difference: 3.411199999999999 m/s (si)
-difference: 3.41120000 m/s (si)
 difference: 12.2803200 km/h
 ```
 
@@ -179,7 +171,7 @@ Energy kineticEnergy = speed.multiply(speed).multiply(new Mass(3, Mass.Unit.kg)
     .scaleBy(0.5)).as(Energy.Unit.J);
 ```
 
-The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like Eclipse) such mistakes will be marked in by the java editor.
+The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like Eclipse) such mistakes will be flagged by the Java editor.
 
 The before-last line multiplies a speed by another speed. The result of this operation is not something that DJUNITS supports directly. Such scalars can be cast to something DJUNITS does know of with an `as(TargetUnit)` method. Whether that cast is permitted can only be checked at runtime and this example would fail with:
 
@@ -265,19 +257,23 @@ determinant: -6.0000000 s2
 
 ## Vector and Matrix calculations
 
-All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard operations on the elements of a vector or matrix are also supported. In all cases, units of the reculting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
+All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard operations on the elements of a vector or matrix are also supported. In all cases, units of the resulting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
 
 The following example first shows a Hadamard operation (element-wise), followed by an algebraic matrix multiplication:
 
 ```java
-VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
+VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
+    new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
 Duration duration = Duration.of(2.0, "h");
-VectorN.Col<Speed, Speed.Unit> sv1 = lv1.divideElements(duration).as(Speed.Unit.km_h);
+VectorN.Col<Speed, Speed.Unit> sv1 = 
+    lv1.divideElements(duration).as(Speed.Unit.km_h);
 System.out.println("Length: " + lv1);
 System.out.println("Speed : " + sv1);
 
-MatrixNxM<Length, Length.Unit> lm4x2 = MatrixNxM.of(new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
-MatrixNxM<Length, Length.Unit> lm2x4 = MatrixNxM.of(new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
+MatrixNxM<Length, Length.Unit> lm4x2 = MatrixNxM.of(
+    new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
+MatrixNxM<Length, Length.Unit> lm2x4 = MatrixNxM.of(
+    new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
 
 var mult44 = lm4x2.multiply(lm2x4).as(Area.Unit.m2);
 System.out.println("\nMatrix1:\n" + lm4x2);
