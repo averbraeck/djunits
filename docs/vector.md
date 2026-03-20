@@ -48,14 +48,13 @@ Several methods exist to get access to the entries of a `Vector`. When single en
 A `Vector` contains the following methods to obtain its values:
 
 - `double[] si()` returns the values of the vector in SI-units as a `double[]` array with the same length as the vector.
-- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the vector. For a row vector, an array `[1][vector.size()]` will be returned, and for a column vector, an array `[vector.size()][1]` will be returned. The quantities in the array will all have the same `displayUnit` as the `Vector`.
 - `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the `Vector`.
-- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column. Note that to use this method for a `Vector`, `row` has to be 0 for a row vector, and `col` has to be 0 for a column vector. 
-- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Vector`, `mRow` has to be 1 for a row vector, and `mCol` has to be 1 for a column vector. 
-- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. Note that to use this method for a `Vector`, `row` has to be 0 for a row vector, and `col` has to be 0 for a column vector. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
-- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Vector`, `mRow` has to be 1 for a row vector, and `mCol` has to be 1 for a column vector. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
+- `double si(int index)` returns the SI-value of the entry at the 0-based `index`. 
+- `double msi(int mIndex)` returns the SI-value of the entry at the 1-based `mIndex`. 
+- `Q get(int index)` returns the quantity representation of the entry at the 0-based `index`. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
+- `Q mget(int mIndex)` returns the quantity representation of the entry at the 1-based `mIndex`. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
 
-There are several more matrix methods implemented for the `Vector`, but they are not often used, such as `getRowVector(int row)` (which returns a copy of the vector for a row vector, and a `Vector1` for a column vector), `getColumnVector(int col)`, and similar methods for retrieving row and column quantities and SI-values, both with 0-based and 1-based row and column indexes. 
+There are several more matrix methods implemented for the `Vector`, but they are not often used, such as `getRowVector(int row)` (which returns a copy of the vector for a row vector, and a `Vector1` for a column vector), `getColumnVector(int col)`, `get(int row, int col)`, `si(int row, int col`), and several more methods for retrieving row and column quantities and SI-values, both with 0-based and 1-based row and column indexes. 
 
 
 ## Mathematical operations
@@ -70,11 +69,16 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q mean()` returns the mean quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
-- `Q mode()` returns the mode quantity value of the entries of the `Vector` as a strongly typed `Quantity`. For a vector, this returns the maximum value.
+- `Q mode()` returns the mode quantity value of the entries of the `Vector` as a strongly typed `Quantity`. For a vector, this returns the maximum quantity value of the entries.
 - `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle are averaged. 
 - `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
-- `V negate()` returns a `Vector` of the same type and size where all entries with value `v(i)` have been set to `-v(i)`. 
-- `V abs()` returns a `Vector` of the same type and size where all entries with value `v(i)` have been set to `|v(i)|`. 
+- `V negate()` returns a `Vector` of the same type and size where all entries with value `si(i)` have been set to `-si(i)`. 
+- `V abs()` returns a `Vector` of the same type and size where all entries with value `si(i)` have been set to `|si(i)|`. 
+- `Q normL1()` returns the L1-norm of the vector's entries, expressed as a quantity. The L1-norm is |x1| + |x2| + ... + |xn|.
+- `Q normL2()` returns the L2-norm of the vector's entries, expressed as a quantity. The L2-norm is sqrt(x1<sup>2</sup> + x2<sup>2</sup> + ... + xn<sup>2</sup>).
+- `Q normLp(int p)` returns the L<sup>p</sup>-norm of the vector's entries, expressed as a quantity. The L<sup>p</sup>-norm is (x1<sup>p</sup> + x2<sup>p</sup> + ... + xn<sup>p</sup>)<sup>(1/p)</sup>.
+- `Q normLinf()` returns the L&infin;-norm of this element, expressed as a quantity. The L&infin;-norm is max(|x1|, |x2|, ..., |xn|).
+- `Q norm()` returns the default norm for the vector's entries. The default is defined as the L2-norm.
 
 
 ## Example vector definition and storage
