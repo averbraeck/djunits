@@ -1,21 +1,21 @@
-# Absolute quantities
+# Absolute quantity
 
 An absolute quantity contains a value measured from a given reference point. Examples are time with a reference point 1-1-1970 (UNIX epoch) or 
 a reference point 1-1-0000 (Gregorian calendar time). As an other example, a geographical direction can be defined relative to North or East 
 as a reference point. Therefore, an absolute quantity is a quantity _relative to a defined reference point_. Every absolute quantity has its 
 own type of reference point: a `Time` has a `Time.Reference`, a `Position` has a `Position.Reference`. Multiple instances of
 reference points can be defined (such as `EAST` and `NORTH` in the `Direction` example). References can be defined relative to each other:
-`NORTH` is defined as having an `Angle` difference of &pi;/2 relative to the `EAST` reference point. 
+`NORTH` is defined as having an `Angle` difference of &pi;/2 rad relative to the `EAST` reference point. 
 
 Absolute quantities therefore have three fields as compared to two fields for a relative quantity:
 
 - the reference point of the correct type (e.g., `Direction.Reference.EAST`).
-- the relative value in SI or BASE units relative to the reference point (e.g., an `Angle` of &pi;/4).
+- the relative value in SI or BASE units relative to the reference point (e.g., an `Angle` of &pi;/4 rad).
 - the display unit to use (e.g., `Angle.Unit.deg`).
 
-The above example results in a north-easterly direction, since `Angle` is defined clockwise. 
+The above example results in a north-easterly direction, since a positive `Angle` is defined clockwise. 
 
-The relation between relative and absolute quantities is sketched in the class diagram below:
+The relation between (relative) quantities and absolute quantities is sketched in the class diagram below. Note that we denote a relative quantity in DJUNITS with the class name `Quantity`, without the 'relative' prefix.
 
 ![](images/absolute-quantity.png)
 

@@ -1,6 +1,6 @@
 # Quantity
 
-A (physical) quantity is a property of a material or system that can be quantified by measurement. A physical quantity can be expressed as the combination of a value (magnitude) and a unit. For example, the physical **quantity** energy can be quantified as _x_ joule where _x_ is the **value** and joule is the **unit**.<sup>1</sup>
+A (physical) quantity is a property of a material or system that can be quantified by measurement. A physical quantity can be expressed as the combination of a value (magnitude) and a unit. For example, the physical **quantity** energy can be quantified as `x joule` where `x` is the **value** and `joule` is the **unit**.<sup>1</sup>
 
 Every quantity in DJUNITS needs a unit. One quantity can be expressed using multiple units. Typically the unit is defined as an inner class of the quantity class. As a standard the name `BASE`, or `SI` is used for the default unit and it should be public, static and final.
 
@@ -76,7 +76,7 @@ Duration s = Duration.of(20.0, "s");
 var s2 = s.multiply(s);
 ```
 
-Here, `s2` will have an internal si-value of `400`, and a unit of `s^2`. The type will be `SIQuantity`. Suppose, we divide a length by this variable to obtain an acceleration. In that case the compiler does not know that the result will be an `Acceleration` quantity type. We can transform the result to an `Acceleration` with the `as` method. This method will give an error if the units do not compute:
+Here, `s2` will have an internal si-value of `400`, and a unit of `s^2`. The type will be `SIQuantity`. Suppose, we divide a length by this variable to obtain an acceleration. In that case the compiler does not know that the result will be an `Acceleration` quantity type. We can transform the result to an `Acceleration` with the `as` method. This method will give an error if the SI-unit is not of the correct type:
 
 ```
 var l = Length.of(10.0, "m");
