@@ -36,9 +36,90 @@ If a `MatrixNxM` is internally of a size congruent with a specific matrix or vec
 
 If matrix calculations result in a special matrix type, for example multiplying a 3x4 matrix by a 4x3 matrix resulting in a 3x3 matrix, the resulting `MatrixNxM` from the calculation can be obtained as a `Matrix3x3` using the method `asMatrix3x3()`. This allows it, for example, to be added to another `Matrix3x3`. 
 
+The `transpose()` method returns the transposed matrix, where rows and columns have been swapped. A transposed matrix has the same `displayUnit` as the original matrix.
+
 Furthermore, a matrix is `Additive`, which means that matrices of the same type, size, and quantity can be added to and subtracted from each other. Matrices also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods.
 
 Many of the matrix operations are delegated to the mathematics utility classes `ArrayMath` and `MatrixMath`, which can be found in the `org.djunits.util` package.
+
+
+## Obtaining values of matrix entries
+
+Several methods exist to get access to the entries of a `Matrix`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `matrix.rows()-1` and `col` ranges from `0` to `matrix.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` to `matrix.rows()` and `mCol` ranges from `1` to `matrix.cols`.
+
+A `Matrix` contains the following methods to obtain its values:
+
+### SI-based value methods
+
+- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the matrix. 
+- `double[] si()` returns the values of the matrix in SI-units as a row-major `double[]` array with the same length as the matrix. This means that for an n x m matrix (n rows, m columns), the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>].
+- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column. Note that to use this method for a `Matrix`, `row` has to be 0 for a row matrix, and `col` has to be 0 for a column matrix. 
+- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Matrix`, `mRow` has to be 1 for a row matrix, and `mCol` has to be 1 for a column matrix. 
+
+
+### Quantity-based value methods
+
+- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the matrix. For a row matrix, an array `[1][matrix.size()]` will be returned, and for a column matrix, an array `[matrix.size()][1]` will be returned. The quantities in the array will all have the same `displayUnit` as the `Matrix`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the `Matrix`.
+- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. Note that to use this method for a `Matrix`, `row` has to be 0 for a row matrix, and `col` has to be 0 for a column matrix. The returned `Quantity` will have the same `displayUnit` as the `Matrix`.
+- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Matrix`, `mRow` has to be 1 for a row matrix, and `mCol` has to be 1 for a column matrix. The returned `Quantity` will have the same `displayUnit` as the `Matrix`.
+
+
+### Retrieving matrix rows
+
+- `Vector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Row` of the same `Quantity`, and with the same `displayUnit`. 
+- `Vector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Row` of the same `Quantity`, and with the same `displayUnit`. 
+- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, with the same `displayUnit` as the original matrix. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
+- `double[] getRowSi(int row)` retrieves the matrix row at the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`, with the same `displayUnit` as the original matrix. 
+- `double[] mgetRowSi(int mRow)` retrieves the matrix row at the 1-based `mRow` as a double[] array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
+
+
+### Retrieving matrix columns
+
+- `Vector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Col` of the same `Quantity`, and with the same `displayUnit`. 
+- `Vector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Col` of the same `Quantity`, and with the same `displayUnit`. 
+- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, with the same `displayUnit` as the original matrix. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
+- `double[] getColumnSi(int col)` retrieves the matrix column at the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`, with the same `displayUnit` as the original matrix. 
+- `double[] mgetColumnSi(int mCol)` retrieves the matrix column at the 1-based `mCol` as a double[] array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
+
+
+## Mathematical operations for all matrices
+
+A `Matrix` implements several mathematical operations. The most important ones are:
+
+- `int rows()` returns the number of rows of the matrix.
+- `int cols()` returns the number of columns of the matrix.
+- `Q mean()` returns the mean quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
+- `Q min()` returns the minimum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
+- `Q max()` returns the maximum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
+- `Q mode()` returns the mode quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. For a matrix, this returns the maximum quantity value of the entries.
+- `Q median()` returns the median quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the matrix is even, the average of the two values that together make up the middle are averaged. 
+- `Q sum()` returns the sum of the entries of the `Matrix` as a strongly typed `Quantity`.
+- `M negate()` returns a `Matrix` of the same type and size where all entries with value `si(i,j)` have been set to `-si(i,j)`. 
+- `M abs()` returns a `Matrix` of the same type and size where all entries with value `si(i,j)` have been set to `|si(i,j)|`. 
+- `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the matrix.
+
+
+## Mathematical operations for square matrices
+
+Square matrices have a number of additional operations:
+
+- `int order()` returns the number of rows or columns of the square matrix.
+- `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal elements. It results in a quantity with the same `displayUnit` as the original matrix.
+- `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be U<sup>n</sup> where n is the order of the matrix, and U is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
+- `double determinantSi()` returns the SI-value of the determinant of the square matrix as a `double` value.
+- `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. The unit of the matrix is U<sup>-1</sup>. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.
+- `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as adj(M). The unit of adj(M) is U<sup>(n-1)</sup>.
+- `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to `sqrt(trace(A*.A))`. It results in a quantity with the same unit as the original matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
+- `Vector getDiagonalVector()` returns the quantities on the diagonal as a column vector of the same quantity and size as the square matrix. The `displayUnit` will be the same as that of the matrix.
+- `Q[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` of the quantities will be the same as that of the matrix.
+- `double[] getDiagonalSi()` returns the SI-values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.
+- `boolean isSymmetric()` returns whether the matrix is symmetric or not. A small tolerance of of 1.0E-12 times the largest absolute SI-quantity in the matrix is used to determine symmetry.
+- `boolean isSymmetric(final Q tolerance)` returns whether the matrix is symmetric or not, using a provided tolerance.
+- `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 1.0E-12 times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that A<sup>T</sup> = &minus;A, or a<sub>ij</sub>=&minus;a<sub>ji</sub> for all entries a<sub>ij</sub>.
+- `boolean isSymmetric(final Q tolerance)` returns whether the matrix is skew-symmetric or not, using a provided tolerance.
 
 
 ## Example matrix definition and usage

@@ -79,6 +79,7 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q normLp(int p)` returns the L<sup>p</sup>-norm of the vector's entries, expressed as a quantity. The L<sup>p</sup>-norm is (x1<sup>p</sup> + x2<sup>p</sup> + ... + xn<sup>p</sup>)<sup>(1/p)</sup>.
 - `Q normLinf()` returns the L&infin;-norm of this element, expressed as a quantity. The L&infin;-norm is max(|x1|, |x2|, ..., |xn|).
 - `Q norm()` returns the default norm for the vector's entries. The default is defined as the L2-norm.
+- `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the vector.
 
 
 ## Example vector definition and storage
