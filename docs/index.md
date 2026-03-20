@@ -371,7 +371,9 @@ The following localizations are currently bundled with DJUNITS: `en_US`, `de`, `
 DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. Version 6 is a completely new implementation of the code with the following notable differences:
 
 - The `Quantity` is now the central object from which all quantities inherit.
+- The method `getSI()` and the field `si` for a `Quantity` have been replaced by the method `si()`.
 - Unit classes are inner classes of the quantity, such as `Energy.Unit`.
+- Units use 'human readable' definitions, such as `Volume.Unit.m3` and `Length.Unit.km`. 
 - The `SIQuantity` and `SIUnit` classes have been implemented as a normal quantity.
 - The `DimensionlessUnit` unit class has been renamed to `Unitless`.
 - Localization is built-in as a design guideline and not as an afterthought. 

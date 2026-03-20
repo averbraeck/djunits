@@ -8,7 +8,7 @@ A `Scale` takes care of converting values as displayed for the user to and from 
 * The `IdentityScale` is a special case of a LinearScale where `toBaseValue(a) == a`.
 * The `GradeScale` is used to express grades and angles in percentages.
 
-The `Scale` interface prescribes that a scale shall implement these three methods:
+The `Scale` interface prescribes that a scale must implement these three methods:
 
 * `double toBaseValue(double value)` which takes a value in the user's unit and returns the corresponding base (usually SI) value.
 * `double fromBaseValue(double value)` which takes a value in the base (usually SI) unit and returns the corresponding value in the user's unit.
@@ -23,7 +23,7 @@ Optional methods to implement are:
 
 ## LinearScale
 
-The `LinearScale` is the most used one. It just contains a multiplication factor to transform a value the a value on the base or SI scale. So, a `Length.Unit` in miles is defined with a scale factor to the SI-unit of `Length`: meter. 
+The `LinearScale` is the most used one. It just contains a multiplication factor to transform a value to its corresponding value on the base or SI scale. So, a `Length.Unit` in miles is defined with a scale factor to the SI-unit of `Length`: meter. 
 
 In the `Length.Unit` class, this is done as follows:
 

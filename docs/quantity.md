@@ -1,17 +1,19 @@
-# Quantity
+# (Relative) Quantity
 
-A (physical) quantity is a property of a material or system that can be quantified by measurement. A physical quantity can be expressed as the combination of a value (magnitude) and a unit. For example, the physical **quantity** energy can be quantified as `x joule` where `x` is the **value** and `joule` is the **unit**.<sup>1</sup>
+A (physical) quantity is a property of a material or system that can be quantified by measurement. A physical quantity can be expressed as the combination of a value (magnitude) and a unit. For example, the physical **quantity** energy can be quantified as `x joule` where `x` is the **value** and `joule` is the **unit**.<sup>[1]</sup>
 
 Every quantity in DJUNITS needs a unit. One quantity can be expressed using multiple units. Typically the unit is defined as an inner class of the quantity class. As a standard the name `BASE`, or `SI` is used for the default unit and it should be public, static and final.
 
-A Quantity is a `Number` and can therefore be used in any piece of code where a `Number` is expected:
+A `Quantity` is a `Number` and can therefore be used in any piece of code where a `Number` is expected. When using the methods from `Number`, such as `doubleValue()`, the value is always returned in SI or BASE units. 
 
 ![](images/quantity.png)
+
+Note that next to the `Quantity`, which is relative, an `AbsoluteQuantity` exists. Absolute quantities are defined with respect to to a reference point, whereas relative quantities do not have a reference point. An `Angle` of 10 degrees is not fixed in space, whereas a `Direction` of 10 degrees relative to the 'NORTH' reference does represent a fixed direction in space. The same holds for `Temperature` versus `TemperatureDifference`, `Position` versus `Length`, and `Time` versus `Duration`. For more information about absolute quantities, see the [Absolute Quantity](absolute_quantity.md) page. 
 
 
 ## Constructing a quantity
 
-The constructor of a quantity like a `Duration` is straightforward: it takes a value and a unit, a value and a String representing a unit, or another duration:
+The constructor of a quantity like a `Duration` is straightforward: it takes a value and a unit, a value and a `String` representing a unit, or another duration:
 
 ```java
 Duration dur1 = new Duration(10.0, Duration.Unit.s);
@@ -45,7 +47,7 @@ Quantities are strongly typed, and many operations on quantities are possible. A
 
 ## Operations on the quantity
 
-(Relative) quantities can always be added to and subtracted from other relative quantities of the same type, independent of the unit. Relative quantities can also be scaled, negated, and the reciprocal of a quantity can be calculated. Some examples:
+(Relative) quantities can always be added to and subtracted from other relative quantities of the same type, independent of their unit. This means that a `Length` quantity defined in miles can be added to a `Length` quantity defined in kilometers, but a `Length` quantity cannot be added to a `Speed` quantity. Relative quantities can also be scaled, negated, and the reciprocal of a quantity can be calculated. Some examples:
 
 ```java
 Duration dur = Duration.of(0.5, "s");
@@ -76,7 +78,7 @@ Duration s = Duration.of(20.0, "s");
 var s2 = s.multiply(s);
 ```
 
-Here, `s2` will have an internal si-value of `400`, and a unit of `s^2`. The type will be `SIQuantity`. Suppose, we divide a length by this variable to obtain an acceleration. In that case the compiler does not know that the result will be an `Acceleration` quantity type. We can transform the result to an `Acceleration` with the `as` method. This method will give an error if the SI-unit is not of the correct type:
+Here, `s2` will have an internal si-value of `400`, and a unit of `s^2`. The type will be `SIQuantity`. Suppose, we divide a length by this variable to obtain an acceleration. In that case the compiler does not know that the result will be an `Acceleration` quantity. We can transform the result to an `Acceleration` with the `as` method. This method will give an error if the SI-unit is not of the correct type:
 
 ```
 var l = Length.of(10.0, "m");
@@ -102,4 +104,4 @@ Exception in thread "main" java.lang.IllegalArgumentException:
 
 
 <hr>
-<sup>1</sup>. See [https://en.wikipedia.org/wiki/Physical_quantity](https://en.wikipedia.org/wiki/Physical_quantity)
+<sup>[1]</sup>. See [https://en.wikipedia.org/wiki/Physical_quantity](https://en.wikipedia.org/wiki/Physical_quantity)

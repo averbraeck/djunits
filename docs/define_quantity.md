@@ -1,6 +1,6 @@
-# Defining a new Quantity type
+# Defining a new Quantity
 
-Scalar quantity types are the foundation of DJUNITS. A quantity wraps a value (double precision floating point) and a corresponding unit. DJUNTIS contains class files for many different quantity types, but users can create not-builtin quantity types using the `SIQuantity` class. The instructions below show how to create a new quantity: the [Jerk](https://en.wikipedia.org/wiki/Jerk_(physics)). Jerk expresses change in acceleration per time unit. The Jerk has m/s<sup>3</sup> as the SI unit.
+Scalar quantities are the foundation of DJUNITS. A quantity wraps a value (double precision floating point) and a corresponding unit. DJUNTIS contains class files for many different quantities, but users can create not-builtin quantities using the `SIQuantity` class. The instructions below show how to create a new quantity: the [Jerk](https://en.wikipedia.org/wiki/Jerk_(physics)). Jerk expresses change in acceleration per time unit. The Jerk has m/s<sup>3</sup> as the SI unit.
 
 To create a Jerk quantity that can be constructed from a value in, e.g. ft/s<sup>3</sup>, a `Jerk` class and `Jerk.Unit` class need to be written.
 
@@ -49,7 +49,9 @@ Every unit extends `AbstractUnit` (or at least implements `UnitInterface`) with 
 public static class Unit extends AbstractUnit<Jerk.Unit, Jerk>
 ```
 
-Usually, the unit(s) on which a unit is based are stored as part of the unit. In this case, a length unit and a duration unit. Furthermore, several standard units are defined, among which the SI constant, if possible:
+Typically, several standard units are defined, among which the SI unit, if it exists. The naming convention is to call the SI-unit `SI`, 
+and to call the standard unit `BASE` in case it does not relate to the SI system of units. Below, several units are defined, where constants from
+the `Length.Unit` class are used for some of the conversions:
 
 ```java
 /** The SI unit for jerk is m/s^3. */

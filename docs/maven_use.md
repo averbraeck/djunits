@@ -30,7 +30,7 @@ For testing, the following libraries are used:
 * **junit 5** for the unit test framework.
 * **djutils-test** for easy testing of exceptions, and access to the java code tree.
 
-If the DJUNITS library is used as a part of a Maven project, all dependencies will be automatically resolved, and the programmer / user does not have to worry about finding the libraries.
+If the DJUNITS library is used as part of a Maven project, all dependencies will be automatically resolved, and the programmer / user does not have to worry about finding the libraries.
 
 
 ### Git Location (version 5 and higher) and SVN location (until version 4)
