@@ -2,7 +2,7 @@
 
 ## SIQuantity
 
-The `SIQuantity` is a generic quantity that uses a configurable unit called `SIUnit`. The `SIUnit` defines a combination of the 8 used SI dimensions with any positive or negative power. Suppose that a program uses molar entropy (or molar heat capacity; see <a href="https://en.wikipedia.org/wiki/Molar_heat_capacity">https://en.wikipedia.org/wiki/Molar_heat_capacity</a>), which has a unit of kg&middot;m<sup>2</sup>&middot;s<sup>-2</sup>&middot;K<sup>-1</sup>&middot;mol<sup>-1</sup> or J/mol&middot;K. We can define a whole new quantity for molar entropy, but we can also use it in any calculation as:
+The `SIQuantity` is a generic quantity that uses a configurable unit called `SIUnit`. The `SIUnit` defines a combination of the 9 used SI dimensions with any positive or negative power. Suppose that a program uses molar entropy, also known as molar heat capacity; ([Wikipedia: Molar heat capacity](https://en.wikipedia.org/wiki/Molar_heat_capacity)), which has a unit of kg&middot;m<sup>2</sup>&middot;s<sup>-2</sup>&middot;K<sup>-1</sup>&middot;mol<sup>-1</sup> or J/mol&middot;K. We can define a whole new quantity for molar entropy, but we can also use it in any calculation as:
 
 ```java
 var entropyWater = new SIQuantity(70.0, SIUnit.of("kg.m2.s-2.K-1.mol-1"));

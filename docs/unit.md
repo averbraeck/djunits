@@ -38,11 +38,11 @@ The String representation of units follows a strict naming convention:
 The static definition of variable names for the units in the unit class also follows a strict naming convention:
 
 - The String representation is used as the starting point. All capitals and smaller case letters stay intact.
-- The &mu; sign for micro is replaced by `mu`. Microkelvin has `&mu;K` as String representation, and is defined in Java as `muK`.
+- The &mu; sign for micro is replaced by `mu`. Microkelvin has `μK` as String representation, and is defined in Java as `muK`.
 - The `.` `/`, `(`, `)`, and all other non-alphabetic and non-number symbols are replaced by an underscore: `km/h` for speed becomes `km_h` as the static constant name. The `Power` unit foot-pound force per hour (`ft.lbf/h`) is defined in Java as `ft_lbf_h`.
 - An underscore at the end of the variable is removed. The British Thermal Unit `BTU(ISO)` and `BTU(IT)` become `BTU_ISO` and `BTU_IT` as Java names; metric horsepower becomes `hp_M`. 
 - If there are two consecutive underscores, one is removed. 
-- Greek letters are written with their meaning. The &Omega; for ohm becomes `ohm`. Micro-ohm &mu;&Omega; becomes `muohm` for the variable name.
+- Greek letters are written with their name. The &Omega; for ohm becomes `ohm`. Micro-ohm &mu;&Omega; becomes `muohm` for the variable name.
 - The degree symbol is transformed to `deg` in the temperature unit definition. &deg;C becomes `degC` in Java.
 - The angstrom (&Aring;) is denoted with an `A` in Java. 
 
@@ -65,7 +65,7 @@ public static final Speed.Unit fr_fn =
     fr.getScale().toBaseValue(1.0) / fn.getScale().toBaseValue(1.0), UnitSystem.OTHER);
 ```
 
-The first two definitions use the `deriveUnit` method that define a unit in terms of an already existing unit using a linear factor. It is no problem that the Furlong is defined with respect to a foot (instead of the SI unit for length; the meter). The (combined) factor to the SI unit will be calculated once (at the time of construction of the `fr` unit) by the deriveLinear method onto the `ft` unit. The `fr_fn` speed unit is also constructed using the `deriveUnit` method of `Speed.Unit.SI`. In this case the factor is computed from the scales of the just created length and duration units. Again, the factor to map Furlongs per Fortnight to and from the SI unit meters per second, will be automatically calculated once. These units can now be used in any piece of code, e.g.:
+The first two definitions use the `deriveUnit` method that defines a unit in terms of an already existing unit using a linear factor. It is no problem that the Furlong is defined with respect to a foot (instead of the SI unit for length; the meter). The (combined) factor to the SI unit will be calculated once (at the time of construction of the `fr` unit) by the `deriveUnit` method onto the `ft` unit. The `fr_fn` speed unit is also constructed using the `deriveUnit` method of `Speed.Unit.SI`. In this case the factor is computed from the scales of the just created length and duration units. Again, the factor to map Furlongs per Fortnight to and from the SI unit meters per second, will be automatically calculated once. These units can now be used in any piece of code, e.g.:
 
 ```java
 Length oneThousandFurlong = new Length(1000.0, fr);
@@ -90,5 +90,5 @@ The program will print the following output:
 
 ## Defining a completely new Unit
 
-Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the <a href="../define_quantity/">define_quantity</a> section.
+Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the [Define quantity section](define_quantity).
 

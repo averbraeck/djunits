@@ -1,6 +1,8 @@
 # Matrix of quantities
 
-Vectors and Matrices are implemented in four different ways: Sparse or Dense data storage, combined with Double or Float precision, which gives four combinations. Sparse storage should be used for vectors or matrices that contain many zero values. Dense data storage would, in that case, store all the zeroes, whereas in a sparse storage only the numbers unequal to zero are stored, together with an index. As the index adds some overhead, sparse storage makes only sense when the number of zeroes is over 50% of the number of entries. 
+Vectors and Matrices are one-dimensional and two-dimensional mathematical data containers for `Quantity` values, where each instance of a `Vector` or `Matrix` contains values of one specific quantity. A `Vector` or `Matrix` has a `displayUnit` for the entire vector or matrix. Internally, vectors and matrices store all values in their SI or BASE unit, just like the `Quantity`. 
+
+Vectors and Matrices are implemented in four different ways: Sparse or Dense data storage, combined with Double or Float precision, which gives four combinations. Sparse storage should be used for vectors or matrices that contain many zero values. Dense data storage would, in that case, store all the zeros, whereas in a sparse storage only the numbers unequal to zero are stored, together with an index. As the index adds some overhead, sparse storage makes only sense when the number of zeros is over 50% of the number of entries. 
 
 
 ## Matrix types
@@ -9,7 +11,7 @@ Several implementations of matrices exist, which are shown in the UML class diag
 
 ![](images/matrix.png)
 
-As can be seen, the abstract class `Matrix` extends the abstract class `VectorMatrix`, which contains numerous methods for methods that are common to matrices, vectors and tables. Matrix multiplication is explicitly missing in the `VectorMatrix` class, since the `QuantityTable`, which extends `VectorMatrix`, does not implement matrix multiplication by design. The abstract `Matrix` class adds matrix multiplication to the `VectorMatrix` class. Square matrices as defined in the `SquareMatrix` abstract class contain additional methods that only make sense for square matrices, such as `determinant()`, `trace()`, `inverse()`, and `adjugate()`. 
+As can be seen, the abstract class `Matrix` extends the abstract class `VectorMatrix`, which contains numerous methods for operations that are common to matrices, vectors and tables. Matrix multiplication is explicitly missing in the `VectorMatrix` class, since the `QuantityTable`, which extends `VectorMatrix`, does not implement matrix multiplication by design. The abstract `Matrix` class adds matrix multiplication to the `VectorMatrix` class. Square matrices as defined in the `SquareMatrix` abstract class contain additional methods that only make sense for square matrices, such as `determinant()`, `trace()`, `inverse()`, and `adjugate()`. 
 
 The generic type of `Matrix` of any size is the `MatrixNxM`. This matrix can use sparse or dense storage, and be populated with single-precision `float` values or double precision `double` values. 
 
@@ -20,7 +22,7 @@ The generic type of `SquareMatrix` of any size is `MatrixNxN`. This matrix can a
 
 A `Matrix` implements the `Hadamard` interface for element-wise operations. These include:
 
-- `invertElements()`: Invert the matrix on an element-by-element basis (1/value), where the unit will also be inverted. The inversion of a `Duration` matrix will result in a matrix of the same type (1x1, 2x2, 3x3, NxN, NxM) and size (number of rows and columns), with a unit if `1/s`, corresponding to a `Frequency` matrix. 
+- `invertElements()`: Invert the matrix on an element-by-element basis (1/value), where the unit will also be inverted. The inversion of a `Duration` matrix will result in a matrix of the same type (1x1, 2x2, 3x3, NxN, NxM) and size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency` matrix. 
 - `multiplyElements(Matrix other)`: Multiply the elements of this matrix on an element-by-element basis with those of another matrix of the same type and size (but generally representing another quantity).
 - `divideElements(Matrix other)`: Divide the elements of this matrix on an element-by-element basis by those of another matrix of the same type and size (but generally representing another quantity).
 - `multiplyElements(Quantity<?, ?> quantity)`: Multiply the elements of this matrix on an element-by-element basis with the provided quantity.

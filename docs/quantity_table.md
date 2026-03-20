@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Quantity tables are 2-dimensional tables with quantity data of the same type. In a sense, it acts like a `MatrixNxM` without the ability to carry out matrix and vector calculations. Hadamard (element-wise) operations on quantity tables are supported.
+Quantity tables are 2-dimensional tables with quantity data of the same type. They can be regarded as generic data containers, suitable for data interfaces or method input types. In a sense, it acts like a `MatrixNxM` without the ability to carry out matrix and vector calculations. Hadamard (element-wise) operations on quantity tables are supported.
 
 The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, or sparse storage, where values are stored with an integer-based row-column index and a `double` or `float` value. Since the sparse storage involves quite some overhead, tables need to have a significant percentage of 0-values (40-50% or more) for using sparse storage to make sense. 
 
@@ -13,7 +13,7 @@ The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, o
 
 A `QuantityTable` implements the `Hadamard` interface for element-by-element operations. These include:
 
-- `invertElements()`: Invert each element of the table (1/value), where the unit will also be inverted. The inversion of a the elements of a `Duration` quantity table will result in a quantity table of the same size (number of rows and columns), with a unit if `1/s`, corresponding to a `Frequency`. 
+- `invertElements()`: Invert each element of the table (1/value), where the unit will also be inverted. The inversion of a the elements of a `Duration` quantity table will result in a quantity table of the same size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency`. 
 - `multiplyElements(QuantityTable other)`: Multiply all elements of this quantity table with those of another quantity table of the same size (but generally representing another quantity).
 - `divideElements(QuantityTable other)`: Divide all elements of this quantity table by those of another quantity table of the same size (but generally representing another quantity).
 - `multiplyElements(Quantity<?, ?> quantity)`: Multiply all elements of this quantity table with the provided quantity.
