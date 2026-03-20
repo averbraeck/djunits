@@ -30,9 +30,51 @@ A `Vector` implements the `Hadamard` interface for element-wise operations. Thes
 
 All Hadamard operations result in a new instance of the `Vector` with a new unit, but of the same type and with the same size.
 
-The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` will typically be a `VectorN.Row<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a Vector with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency, Frequency.Unit>` vector using the `as(Frequency.Unit.Hz)` method.
+The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` will typically be a `VectorN.Row<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a Vector with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency, Frequency.Unit>` vector using the `as(Frequency.Unit.Hz)` method. 
 
-Furthermore, a vector is `Additive`, which means that vectors of the same type, size, and quantity can be added to and subtracted from each other. Vectors also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods.
+If a `VectorN` is internally of a size congruent with a specific vector type, e.g. `Vector2.Row` or `Vector3.Col`, it can be obtained as such using methods such as `asVector2Row()` or `asVector3Col()`. Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the vector size with the desired vector type at runtime. All vectors, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method, and to a `MatrixNxM` with the `asMatrixNxM()` method.
+
+If vector-vector multiplication results in a special matrix type, for example multiplying a `Vector3.Col` by a `Vector3.Row` resulting in a 3x3 matrix, the resulting `MatrixNxM` from the calculation can be obtained as a `Matrix3x3` using the method `asMatrix3x3()`. This allows it, for example, to be added to another `Matrix3x3`. 
+
+The `Vector` class implements the `transpose()` operation, which transforms a row vector into a column vector and vice versa. The resulting vector will have the same outer class type as the original; the `transpose()` method on a `Vector2.Row` will result in a `Vector2.Col`. 
+
+Furthermore, a vector is `Additive`, which means that vectors of the same type, size, and quantity can be added to and subtracted from each other. It is also possible to `add` or `subtract` a fixed `Quantity` of the correct type to/from the vector. Vectors also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods. Since vectors are immutable, all these operations result in a new instance of a vector.
+
+
+## Obtaining values of vector entries
+
+Several methods exist to get access to the entries of a `Vector`. When single entries are retrieved, two versions of the methods exist: a version where the index is 0-based, and a version where the index is 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entries of a vector and matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(index)` method where `index` ranges from `0` to `vector.size()-1`, and an `msi(mIndex)` method where `mIndex` ranges from `1` to `vector.size()`. 
+
+A `Vector` contains the following methods to obtain its values:
+
+- `double[] si()` returns the values of the vector in SI-units as a `double[]` array with the same length as the vector.
+- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the vector. For a row vector, an array `[1][vector.size()]` will be returned, and for a column vector, an array `[vector.size()][1]` will be returned. The quantities in the array will all have the same `displayUnit` as the `Vector`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the `Vector`.
+- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column. Note that to use this method for a `Vector`, `row` has to be 0 for a row vector, and `col` has to be 0 for a column vector. 
+- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Vector`, `mRow` has to be 1 for a row vector, and `mCol` has to be 1 for a column vector. 
+- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. Note that to use this method for a `Vector`, `row` has to be 0 for a row vector, and `col` has to be 0 for a column vector. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
+- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Vector`, `mRow` has to be 1 for a row vector, and `mCol` has to be 1 for a column vector. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
+
+There are several more matrix methods implemented for the `Vector`, but they are not often used, such as `getRowVector(int row)` (which returns a copy of the vector for a row vector, and a `Vector1` for a column vector), `getColumnVector(int col)`, and similar methods for retrieving row and column quantities and SI-values, both with 0-based and 1-based row and column indexes. 
+
+
+## Mathematical operations
+
+A `Vector` implements several mathematical operations. The most important ones are:
+
+- `int rows()` returns the number of rows of the vector.
+- `int cols()` returns the number of columns of the vector.
+- `int size()` returns the size of the vector; the number of rows for a column vector, or the number of columns for a row vector.
+- `boolean isColumnVector()` returns whether this vector is a column vector.
+- `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector.
+- `Q mean()` returns the mean quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
+- `Q min()` returns the minimum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
+- `Q max()` returns the maximum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
+- `Q mode()` returns the mode quantity value of the entries of the `Vector` as a strongly typed `Quantity`. For a vector, this returns the maximum value.
+- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle are averaged. 
+- `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
+- `V negate()` returns a `Vector` of the same type and size where all entries with value `v(i)` have been set to `-v(i)`. 
+- `V abs()` returns a `Vector` of the same type and size where all entries with value `v(i)` have been set to `|v(i)|`. 
 
 
 ## Example vector definition and storage

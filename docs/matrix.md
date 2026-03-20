@@ -32,6 +32,10 @@ All Hadamard operations result in a new instance of the `Matrix` with a new unit
 
 The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a Matrix with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
+If a `MatrixNxM` is internally of a size congruent with a specific matrix or vector type, e.g. `Vector2.Row` or `Matrix3x3`, it can be obtained as such using methods such as `asVector2Row()` or `asMatrix3x3()`. The same holds for `MatrixNxN` that can be transformed to a strongly typed `Matrix1x1`, `Matrix2x2`, or `Matrix3x3` (or `MatrixNxM`). Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the matrix size with the desired matrix type at runtime. All matrices, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method.
+
+If matrix calculations result in a special matrix type, for example multiplying a 3x4 matrix by a 4x3 matrix resulting in a 3x3 matrix, the resulting `MatrixNxM` from the calculation can be obtained as a `Matrix3x3` using the method `asMatrix3x3()`. This allows it, for example, to be added to another `Matrix3x3`. 
+
 Furthermore, a matrix is `Additive`, which means that matrices of the same type, size, and quantity can be added to and subtracted from each other. Matrices also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods.
 
 Many of the matrix operations are delegated to the mathematics utility classes `ArrayMath` and `MatrixMath`, which can be found in the `org.djunits.util` package.
