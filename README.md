@@ -1,18 +1,18 @@
 # djunits version 6
 ## Delft Java UNIT System
 
-DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors with the use 
-of quantities and units at compile time and some others at runtime.
+DJUNITS is a set of Java classes that make life easier for scientific software writers, modelers, and anyone who uses quantities 
+in their code, by catching many common errors with the use of quantities and units at compile time and some others at runtime.
 
-* DJUNITS performs automatic conversions between most commonly used units of the same type. E.g., conversion of distances from miles 
+* DJUNITS performs automatic conversions between most commonly used units of the same quantity. E.g., conversion of distances from miles 
   to kilometers.
 * DJUNITS stores all values internally in the basic SI unit for that quantity. The value can be converted to any (user-selectable) 
   suitable unit for display.
-* DJUNITS distinguishes absolute and relative values to catch common errors at compile time,
-* DJUNITS ensures that quantities expressed in different (but compatible) units are correctly added together. E.g. a distance in 
+* DJUNITS distinguishes absolute and relative values to catch common errors at compile time.
+* DJUNITS ensures that values of the same quantity expressed in different units are correctly added together. E.g. a distance in 
   miles is correctly added to a distance in kilometers.
 * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
-  (that may have another unit),
+  (that may have another unit).
 * DJUNITS handles Scalars, Vectors and Matrices, as well as quantity tables.
 * DJUNITS stores everything in immutable objects, except for the display unit that can be changed. 
 * DJUNITS stores the data for vectors and matrices as float or double values, and using dense or sparse storage.
@@ -23,9 +23,9 @@ of quantities and units at compile time and some others at runtime.
 DJUNITS was developed at Delft University of Technology as part of the Open Traffic Simulator project (started in 2014).
 
 In August 2015 it became obvious that the units and values classes developed for the Open Traffic Simulator were sufficiently 
-mature to be used in other projects. In 2026, a complete re-implementation of djunits version 6 took place.
+mature to be used in other projects. In 2026, a complete re-implementation of djunits took place, culminating in djunits 6.
 
-The main authors/contributors of the DJUNITS project are Alexander Verbraeck and Peter Knoppers.
+The main authors/contributors of the DJUNITS project are Alexander Verbraeck, Peter Knoppers and Wouter Schakel.
 
 
 ## Absolute and Relative values
@@ -35,7 +35,7 @@ Values in DJUNITS are either absolute or relative.
 An absolute value is a value measured from a standard reference. Examples are time with a reference point 1-1-1970 (UNIX epoch) or 
 a reference point 1-1-0000 (Gregorian calendar time). As an other example, geographical directions, a direction can use North and East 
 as reference points. Adding two absolute values together makes no sense. Subtracting one absolute value from another does make sense 
-(and results in a relative value). Subtracting East from North should result in an angle of ±90° or ±π/2 (depending on the unit used 
+(and results in a relative value). Subtracting East from North should result in an angle of ±90° or ±π/2 rad (depending on the unit used 
 to express the result). An absolute quantity always needs a reference to be useful. Values subtracted from each other need to know 
 their reference to be able to carry out the subtraction. Therefore, a reference is explicitly stored with an absolute quantity.
 
@@ -55,18 +55,21 @@ Generally, if adding a value to itself makes no sense, the value is absolute; ot
 | + (plus) 	  | Absolute + Relative 	| Absolute    |
 | + (plus)    | Relative + Absolute	  | Absolute 	  | 
 | + (plus)    | Relative + Relative	  | Relative    |
-| - (minus)	  | Absolute - Absolute 	| Relative (corresponding quantity) |
+| - (minus)	  | Absolute - Absolute 	| Relative    |
 | - (minus)	  | Absolute - Relative 	| Absolute    |
 | - (minus)   | Relative - Absolute	  | Not allowed | 
 | - (minus)   | Relative - Relative	  | Relative    |
 | * (times) 	| Absolute * Absolute	  | Not allowed |
 | * (times) 	| Absolute * Relative	  | Not allowed |
 | * (times) 	| Relative * Absolute	  | Not allowed |
-| * (times) 	| Relative * Relative	  | Relative (different quantity) |
+| * (times) 	| Relative * Relative	  | Relative (see Note below) |
 | / (divide) 	| Absolute / Absolute	  | Not allowed |
 | / (divide) 	| Absolute / Relative	  | Not allowed |
 | / (divide) 	| Relative / Absolute	  | Not allowed |
-| / (divide) 	| Relative / Relative	  | Relative (different quantity) |
+| / (divide) 	| Relative / Relative	  | Relative (see Note below) |
+
+> [!NOTE]
+> Note that when multiplying two relative quantities, the resulting quantity is of a different type: the multiplication of two `Length` quantities results in an `Area` quantity. The same holds for division: dividing a `Length` quantity by a `Duration` quantity results in a `Speed` quantity.
 
 Attempts to perform operations that are marked not allowed are caught at compile time.
 
@@ -86,7 +89,7 @@ table below.
 
 ## Units
 
-DJUNITS has a large number of pre-defined units. Internally, all values are stored in SI-units or an equivalent standard unit. For scalar values, the field is called si and can be retrieved as it is a public (immutable) field. Alternatively, the getSI() method can be used. The internal storage in SI units allows addition and subtraction of values that have been initialized using different units. Formatting and expressing the unit can be done using any defined unit. The code below illustrates some of the features.
+DJUNITS has a large number of pre-defined units. Internally, all values are stored in SI-units or an equivalent standard unit. For scalar values, the field can be retrieved with the `si()` method. The internal storage in SI units allows addition and subtraction of values that have been initialized using different units. Formatting and expressing the unit can be done using any defined unit. The code below illustrates some of the features.
 
 ```java
 Speed speed1 = new Speed(30, Speed.Unit.mi_h);
@@ -128,9 +131,9 @@ It is possible to use units without the Quantity.Unit. The `of()` methods are he
 
 ## Multiplication and Division
 
-Multiplying or dividing physical quantities produces a result in a different physical unit. There is no general way where the Java 
-compiler can check the type of the result in the general case. Therefore DJUNITS has an extensive list of built-in multiplication 
-and division operations with known result type. For instance
+Multiplying or dividing physical quantities produces a result in a different physical unit. There is no generic way for the Java 
+compiler to check the type of the result. Therefore, DJUNITS has an extensive list of built-in multiplication 
+and division operations with known result type. For instance:
 
 ```java
 Speed speed = new Speed(50, Speed.Unit.km_h);
@@ -161,7 +164,7 @@ Duration howLongOK = length.divide(speed);
 // Does not compile; result would be a frequency:
 Duration howLongWrong = speed.divide(length); 
 
-// Does not compile; subtracting a length from a speed make no sense:
+// Does not compile; subtracting a length from a speed makes no sense:
 Speed other = speed.subtract(length); 
 
 // Throws a UnitRuntimeException:
@@ -172,7 +175,7 @@ Energy kineticEnergy = speed.multiply(speed).multiply(new Mass(3, Mass.Unit.kg)
     .scaleBy(0.5)).as(Energy.Unit.J);
 ```
 
-The mistakes on the lines with comments starting with Does not compile will be caught at compile time. In a development environment that continously checks for coding errors (like Eclipse) such mistakes will be flagged by the Java editor.
+The mistakes on the lines with comments starting with `Does not compile` will be caught at compile time. In a development environment that continuously checks for coding errors (like Eclipse) such mistakes will be flagged by the Java editor.
 
 The before-last line multiplies a speed by another speed. The result of this operation is not something that DJUNITS supports directly. Such scalars can be cast to something DJUNITS does know of with an `as(TargetUnit)` method. Whether that cast is permitted can only be checked at runtime and this example would fail with:
 
@@ -198,7 +201,7 @@ This would print:
 
 ## Scalars, Vectors and Matrices
 
-Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same unit) as vectors or 
+Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same unit) such as vectors or 
 matrices. Efficient classes have been created for the 'small' vectors and matrices of size 1 to 3. The following vector and matrix classes exist:
 
 * `Vector1` for a vector with just one element
@@ -258,9 +261,9 @@ determinant: -6.0000000 s2
 
 ## Vector and Matrix calculations
 
-All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard operations on the elements of a vector or matrix are also supported. In all cases, units of the resulting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
+All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard (element-wise) operations on the elements of a vector or matrix are also supported. In all cases, units of the resulting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
 
-The following example first shows a Hadamard operation (element-wise), followed by an algebraic matrix multiplication:
+The following example first shows a Hadamard operation, followed by an algebraic matrix multiplication:
 
 ```java
 VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
@@ -326,7 +329,7 @@ For those cases where a tabular storage of data is needed, but it is not necessa
 
 ## Localization
 
-DJUNITS has been designed with localization in mind. This means that quantities, units, vectors and matrices can print the unit information based on a resource bundle file for that country. On the input side, quantities can also be created using localized string representations, as the example below shows:
+DJUNITS has been designed with localization in mind. This means that quantities, units, vectors and matrices can print the unit information based on a resource bundle file for a localization. On the input side, quantities can also be created using localized string representations, as the example below shows:
 
 ```java
 System.out.println("\nLOCALIZATION US");
@@ -377,7 +380,7 @@ DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. 
 - Absolute quantities have been re-implemented using a `Reference` for the reference point. 
 - Operation names are streamlined across quantities, vectors and matrices, e.g., `add`, `subtract`, `multiply`, `divide`.
 - Vector and matrix classes use generics for definitions such as `Matrix3x3<Area, Area.Unit>`, and only allow correct operations.
-- Vector and matrix operations sich as trace, multiplication, and inverse are now fully supported with consistent unit calculations.
+- Vector and matrix operations such as trace, multiplication, and inverse are now fully supported with consistent unit calculations.
 - Hadamard operations have been added to vector and matrix calculations.
 - The `QuantityTable` has been added for storage of tabular quantity data.
 
