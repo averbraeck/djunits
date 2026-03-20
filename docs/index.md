@@ -67,8 +67,7 @@ Generally, if adding a value to itself makes no sense, the value is absolute; ot
 | / (divide)  | Relative / Absolute   | Not allowed |
 | / (divide)  | Relative / Relative   | Relative (see Note below) |
 
-> [!NOTE]
-> Note that when multiplying two relative quantities, the resulting quantity is of a different type: the multiplication of two `Length` quantities results in an `Area` quantity. The same holds for division: dividing a `Length` quantity by a `Duration` quantity results in a `Speed` quantity.
+> **Note** that when multiplying two relative quantities, the resulting quantity is of a different type: the multiplication of two `Length` quantities results in an `Area` quantity. The same holds for division: dividing a `Length` quantity by a `Duration` quantity results in a `Speed` quantity.
 
 Attempts to perform operations that are marked not allowed are caught at compile time.
 
