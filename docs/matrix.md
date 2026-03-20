@@ -112,7 +112,7 @@ Square matrices have a number of additional operations:
 - `double determinantSi()` returns the SI-value of the determinant of the square matrix as a `double` value.
 - `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. The unit of the matrix is U<sup>-1</sup>. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.
 - `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as adj(M). The unit of adj(M) is U<sup>(n-1)</sup>.
-- `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to `sqrt(trace(A*.A))`. It results in a quantity with the same unit as the original matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
+- `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to sqrt(trace(A*&middot;A)). It results in a quantity with the same unit as the original matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
 - `Vector getDiagonalVector()` returns the quantities on the diagonal as a column vector of the same quantity and size as the square matrix. The `displayUnit` will be the same as that of the matrix.
 - `Q[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` of the quantities will be the same as that of the matrix.
 - `double[] getDiagonalSi()` returns the SI-values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.
