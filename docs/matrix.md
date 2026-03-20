@@ -116,10 +116,10 @@ Square matrices have a number of additional operations:
 - `Vector getDiagonalVector()` returns the quantities on the diagonal as a column vector of the same quantity and size as the square matrix. The `displayUnit` will be the same as that of the matrix.
 - `Q[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` of the quantities will be the same as that of the matrix.
 - `double[] getDiagonalSi()` returns the SI-values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.
-- `boolean isSymmetric()` returns whether the matrix is symmetric or not. A small tolerance of of 1.0E-12 times the largest absolute SI-quantity in the matrix is used to determine symmetry.
+- `boolean isSymmetric()` returns whether the matrix is symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine symmetry.
 - `boolean isSymmetric(final Q tolerance)` returns whether the matrix is symmetric or not, using a provided tolerance.
-- `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 1.0E-12 times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that A<sup>T</sup> = &minus;A, or a<sub>ij</sub>=&minus;a<sub>ji</sub> for all entries a<sub>ij</sub>.
-- `boolean isSymmetric(final Q tolerance)` returns whether the matrix is skew-symmetric or not, using a provided tolerance.
+- `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that A<sup>T</sup> = &minus;A, or a<sub>ij</sub>=&minus;a<sub>ji</sub> for all entries a<sub>ij</sub>.
+- `boolean isSkewSymmetric(final Q tolerance)` returns whether the matrix is skew-symmetric or not, using a provided tolerance.
 
 
 ## Example matrix definition and usage
