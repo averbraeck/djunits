@@ -9,7 +9,7 @@ To create a Jerk quantity that can be constructed from a value in, e.g. ft/s<sup
 
 The next paragraphs show how to build a Quantity type called `Jerk`
 
-The `Quantity` abstract class can easily be extended for creating new scalar quantity classes. The minimal that is needed os the following definition:
+The `Quantity` abstract class can easily be extended for creating new scalar quantity classes. The minimal that is needed is the following definition:
 
 ```java
 public class Jerk extends Quantity<Jerk, Jerk.Unit>
@@ -39,7 +39,7 @@ public static Jerk ofSi(final double valueSi)
 ```
 
 
-## Building the new Unit for the Quantity
+## Building the new Unit for the Jerk Quantity
 
 The next part that needs to be created is a class for the Jerk unit. It can be defined as a separate class (`JerkUnit`) or as a static inner class within the `Jerk` class (`Jerk.Unit`). There is no difference in usage except for the 'period' between `Jerk` and `Unit`. Because quantity and its unit are so tightly intertwined, DJUNITS typically defines the units inside the corresponding quantity class.
 

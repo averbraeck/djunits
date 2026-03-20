@@ -14,12 +14,14 @@ The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, o
 A `QuantityTable` implements the `Hadamard` interface for element-by-element operations. These include:
 
 - `invertElements()`: Invert each element of the table (1/value), where the unit will also be inverted. The inversion of a the elements of a `Duration` quantity table will result in a quantity table of the same size (number of rows and columns), with a unit if `1/s`, corresponding to a `Frequency`. 
-- `multiplyElements(QuantityTable other)`: Multiply all elements of this quantity table with those of another quantity table of the same size (but often representing another quantity).
-- `divideElements(QuantityTable other)`: Divide all elements of this quantity table by those of another quantity table of the same size (but possibly representing another quantity).
+- `multiplyElements(QuantityTable other)`: Multiply all elements of this quantity table with those of another quantity table of the same size (but generally representing another quantity).
+- `divideElements(QuantityTable other)`: Divide all elements of this quantity table by those of another quantity table of the same size (but generally representing another quantity).
 - `multiplyElements(Quantity<?, ?> quantity)`: Multiply all elements of this quantity table with the provided quantity.
 - `divideElements(Quantity<?, ?> quantity)`: Divide all elements of this quantity table by those the provided quantity.
 
-The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a QuantityTable with a unit that is unknown on beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
+All Hadamard operations result in a new instance of the `QuantityTable` with a new unit, but of the same type and with the same size.
+
+The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a QuantityTable with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
 Furthermore, a quantity table is additive, which means that two tables of the same size and same quantity can be added to and subtracted from each other. Quantity tables also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods, scaling the elements of the quantity table by `factor`, respectively `1.0 / factor`.
 

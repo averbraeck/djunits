@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A `Scale` takes care of converting values as displayed for the user to and from the internal SI values.
+A `Scale` takes care of converting values as displayed for the user to and from the internal SI values. The method that converts a value in a given scale to the corresponding value in the base scale is called `toBaseValue(value)`. The method that converts a value expressed in the SI or base scale to the given scale is called `fromBaseValue(value)`. Both methods return a `double` representation of the value in the target scale.
 
 * A `LinearScale` is used for most units. A linear scale is a scale that is both additive and multiplicative. I.e. `toBaseValue(a * b + c) == a * toBaseValue(b) + toBaseValue(c)`.
 * The `IdentityScale` is a special case of a LinearScale where `toBaseValue(a) == a`.
