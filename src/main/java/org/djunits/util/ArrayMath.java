@@ -275,7 +275,7 @@ public final class ArrayMath
      * @return the number of non-zero elements in the array
      * @throws NullPointerException if {@code a} is null
      */
-    public static double nnz(final double[] a)
+    public static int nnz(final double[] a)
     {
         Throw.whenNull(a, "a");
         int n = 0;
