@@ -75,9 +75,9 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `V negate()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $-x_i$. 
 - `V abs()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $|x_i|$. 
 - `Q normL1()` returns the L1-norm of the vector's entries, expressed as a quantity. The L1-norm is defined as $L1=|x_1|+|x_2|+...+ |x_n|$.
-- `Q normL2()` returns the L2-norm of the vector's entries, expressed as a quantity. The L2-norm is defined as $L2=\sqrt{x_1^2+x_2^2+...+x_n^2)}$.
+- `Q normL2()` returns the L2-norm of the vector's entries, expressed as a quantity. The L2-norm is defined as $L2=\sqrt(x_1^2+x_2^2+...+x_n^2)$.
 - `Q normLp(int p)` returns the L<sub>p</sub>-norm of the vector's entries, expressed as a quantity. The L<sub>p</sub>-norm is defined as $L_p={(x_1^p+x_2^p+...+x_n^p)}^{(1/p)}$
-- `Q normLinf()` returns the L<sub>&infin;</sub>-norm of this element, expressed as a quantity. <br>The L<sub>&infin;</sub>-norm is defined as $L_{\infty}=max(|x_1|,|x_2|,...,|x_n|)$.
+- `Q normLinf()` returns the L<sub>&infin;</sub>-norm of this element, expressed as a quantity. The L<sub>&infin;</sub>-norm is defined as $L_{\infty}=max(|x_1|,|x_2|,...,|x_n|)$.
 - `Q norm()` returns the default norm for the vector's entries. The default is defined as the L2-norm.
 - `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the vector.
 
