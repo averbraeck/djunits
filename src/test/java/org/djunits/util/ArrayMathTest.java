@@ -200,6 +200,17 @@ public class ArrayMathTest
         assertThrows(NullPointerException.class, () -> ArrayMath.reciprocal(null));
     }
 
+    /**
+     * Verifies {@link ArrayMath#nnz(double[])} including checking NaN, -0.0 and Infinity.
+     */
+    @Test
+    void nnzFunctional()
+    {
+        double[] a = {2.0, -4.0, 0.0, Double.POSITIVE_INFINITY, Double.NaN, -0.0};
+        assertEquals(4, ArrayMath.nnz(a));
+        assertThrows(NullPointerException.class, () -> ArrayMath.nnz(null));
+    }
+
     // ------------------------------------------------------------------------------------
     // Procedural (into-buffer) operations
     // ------------------------------------------------------------------------------------
