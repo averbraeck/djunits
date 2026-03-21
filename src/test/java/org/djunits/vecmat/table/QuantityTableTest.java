@@ -159,7 +159,7 @@ public class QuantityTableTest
         QuantityTable<Length, Length.Unit> q =
                 new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 4, 5}, 2, 2), Length.Unit.m);
 
-        QuantityTable<?, ?> inv = q.invertElements();
+        QuantityTable<?, ?> inv = q.invertEntries();
         double[] expected = new double[] {1.0, 1.0 / 2.0, 1.0 / 4.0, 1.0 / 5.0};
 
         assertArrayEquals(expected, inv.si(), 1e-12);
@@ -183,7 +183,7 @@ public class QuantityTableTest
         QuantityTable<Length, Length.Unit> b =
                 new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 20, 30, 40}, 2, 2), Length.Unit.m);
 
-        QuantityTable<?, ?> result = a.multiplyElements(b);
+        QuantityTable<?, ?> result = a.multiplyEntries(b);
 
         assertArrayEquals(new double[] {10, 40, 90, 160}, result.si(), 1e-12);
     }
@@ -205,7 +205,7 @@ public class QuantityTableTest
         QuantityTable<Length, Length.Unit> b =
                 new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 5, 2, 1}, 2, 2), Length.Unit.m);
 
-        QuantityTable<?, ?> result = a.divideElements(b);
+        QuantityTable<?, ?> result = a.divideEntries(b);
 
         assertArrayEquals(new double[] {10, 10, 10, 10}, result.si(), 1e-12);
     }
@@ -861,13 +861,13 @@ public class QuantityTableTest
         QuantityTable<Length, Length.Unit> r =
                 QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        QuantityTable<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        QuantityTable<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(1, 3).getInUnit(), 1E-6);
         assertEquals(2.0, sr.mget(2, 1).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
 }

@@ -348,13 +348,13 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> b =
                 MatrixNxN.of(new double[] {1, 2, 0.5, 4, 0.25, 8, 0.125, 0.5, 4, 2, 6, 3, 0.5, 1, 0.25, 0.125}, Length.Unit.km);
 
-        MatrixNxN<SIQuantity, SIUnit> inv = a.invertElements();
+        MatrixNxN<SIQuantity, SIUnit> inv = a.invertEntries();
         assertEquals(0.5, inv.si()[0], EPS);
 
-        MatrixNxN<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        MatrixNxN<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
-        MatrixNxN<SIQuantity, SIUnit> div = a.divideElements(b);
+        MatrixNxN<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
 
@@ -557,13 +557,13 @@ public class MatrixNxNTest
         MatrixNxN<Length, Length.Unit> r =
                 MatrixNxN.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        MatrixNxN<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        MatrixNxN<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(1, 3).getInUnit(), 1E-6);
         assertEquals(2.0, sr.mget(2, 1).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
     // ------------------------------------------------------------------------------------

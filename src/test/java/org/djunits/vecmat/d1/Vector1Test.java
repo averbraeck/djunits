@@ -310,17 +310,17 @@ public class Vector1Test
         Vector1<Length, Length.Unit> b = vec(2.0, Length.Unit.km); // SI: 2000
 
         // invert
-        Vector1<SIQuantity, SIUnit> inv = a.invertElements();
+        Vector1<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5}, inv.si(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit should be inverted");
 
         // elementwise multiply → SI: [2*2000] = [4000]; unit: m ⊕ km
-        Vector1<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        Vector1<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {4000.0}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         // elementwise divide → SI: [2/2000] = [0.001]; unit: m ⊖ km
-        Vector1<SIQuantity, SIUnit> div = a.divideElements(b);
+        Vector1<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.001}, div.si(), EPS);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -529,9 +529,9 @@ public class Vector1Test
     {
         Vector1<Length, Length.Unit> r = vec(1.0, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        Vector1<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        Vector1<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 }

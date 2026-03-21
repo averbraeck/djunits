@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  * <li>Normed: norm(), normL1(), normL2(), normLp(p), normLinf()</li>
  * <li>Orientation &amp; shape: rows(), cols(), isColumnVector()</li>
  * <li>Transposition Row&lt;↔&gt;Col</li>
- * <li>Hadamard operations (invertElements, multiplyElements, divideElements) + unit composition</li>
+ * <li>Hadamard operations (invertEntries, multiplyEntries, divideEntries) + unit composition</li>
  * <li>Linear algebra: Row⋅Col, Col⋅Row, Row⋅Matrix3x3</li>
  * <li>as(targetUnit) positive and negative branches</li>
  * <li>equals, hashCode, toString, setDisplayUnit, isRelative</li>
@@ -465,15 +465,15 @@ public class Vector3Test
         Vector3.Col<Length, Length.Unit> a = col(2.0, 4.0, 8.0, Length.Unit.m); // 2, 4, 8
         Vector3.Col<Length, Length.Unit> b = col(1.0, 2.0, 3.0, Length.Unit.km); // 1000, 2000, 3000
 
-        var inv = a.invertElements();
+        var inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.125}, inv.si(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit());
 
-        var mul = a.multiplyElements(b);
+        var mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0, 24000.0}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
-        var div = a.divideElements(b);
+        var div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.0026666666666666666}, div.si(), 1e-15);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -486,15 +486,15 @@ public class Vector3Test
         Vector3.Row<Length, Length.Unit> a = row(2.0, 4.0, 8.0, Length.Unit.m);
         Vector3.Row<Length, Length.Unit> b = row(1.0, 2.0, 3.0, Length.Unit.km);
 
-        var inv = a.invertElements();
+        var inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.125}, inv.si(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit());
 
-        var mul = a.multiplyElements(b);
+        var mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0, 24000.0}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
-        var div = a.divideElements(b);
+        var div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.0026666666666666666}, div.si(), 1e-15);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -1026,20 +1026,20 @@ public class Vector3Test
     {
         Vector3.Col<Length, Length.Unit> r = col(1.0, 2.0, 3.0, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        Vector3.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        Vector3.Col<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(3).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
 
         Vector3.Row<Length, Length.Unit> c = row(1.0, 2.0, 3.0, Length.Unit.km);
-        Vector3.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
+        Vector3.Row<Speed, Speed.Unit> sc = c.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
         assertEquals(0.5, sc.get(0).getInUnit(), 1E-6);
         assertEquals(1.0, sc.get(1).getInUnit(), 1E-6);
         assertEquals(1.5, sr.get(2).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> c.divideEntries(d).as(Area.Unit.m2));
     }
 
 }

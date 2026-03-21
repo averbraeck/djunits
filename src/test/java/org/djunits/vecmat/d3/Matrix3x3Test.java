@@ -431,15 +431,15 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> a = Matrix3x3.of(new double[] {2, 4, 5, 10, 20, 40, 8, 16, 32}, Length.Unit.m);
         Matrix3x3<Length, Length.Unit> b = Matrix3x3.of(new double[] {1, 2, 0.5, 4, 0.25, 8, 0.125, 0.5, 4}, Length.Unit.km);
 
-        Matrix3x3<SIQuantity, SIUnit> inv = a.invertElements();
+        Matrix3x3<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1, 0.05, 0.025, 0.125, 0.0625, 0.03125}, inv.si(), EPS);
 
-        Matrix3x3<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        Matrix3x3<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         // element-wise multiply with km→ SI scaling
         assertArrayEquals(new double[] {2000, 8000, 2500, 40_000, 5_000, 320_000, 1000, 8000, 128_000}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
-        Matrix3x3<SIQuantity, SIUnit> div = a.divideElements(b);
+        Matrix3x3<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025, 0.08, 0.005, 0.064, 0.032, 0.008}, div.si(), 1e-15);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -653,13 +653,13 @@ public class Matrix3x3Test
         Matrix3x3<Length, Length.Unit> r =
                 Matrix3x3.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        Matrix3x3<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        Matrix3x3<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(1, 3).getInUnit(), 1E-6);
         assertEquals(2.0, sr.mget(2, 1).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
 }

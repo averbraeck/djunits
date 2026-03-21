@@ -436,15 +436,15 @@ public class Matrix1x1Test
         var b = new Matrix1x1<Length, Length.Unit>(new double[] {4}, Length.Unit.km);
 
         // invert: reciprocal per element
-        Matrix1x1<SIQuantity, SIUnit> inv = a.invertElements();
+        Matrix1x1<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5}, inv.si(), EPS);
 
         // element-wise multiply: [2*4000]
-        Matrix1x1<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        Matrix1x1<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {8000.0}, mul.si(), EPS);
 
         // element-wise divide: [2/4000]
-        Matrix1x1<SIQuantity, SIUnit> div = a.divideElements(b);
+        Matrix1x1<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.0005}, div.si(), EPS);
     }
 
@@ -679,10 +679,10 @@ public class Matrix1x1Test
     {
         Matrix1x1<Length, Length.Unit> r = Matrix1x1.of(new double[] {8.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        Matrix1x1<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        Matrix1x1<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(4.0, sr.mget(1, 1).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
 }

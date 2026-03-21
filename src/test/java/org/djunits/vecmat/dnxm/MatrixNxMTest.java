@@ -218,14 +218,14 @@ public class MatrixNxMTest
         MatrixNxM<Length, Length.Unit> a = ofSi(new double[] {2, 4, 5, 10, 20, 40}, 2, 3, Length.Unit.m);
         MatrixNxM<Length, Length.Unit> b = MatrixNxM.of(new double[] {1, 2, 0.5, 4, 0.25, 8}, 2, 3, Length.Unit.km);
 
-        MatrixNxM<SIQuantity, SIUnit> inv = a.invertElements();
+        MatrixNxM<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1, 0.05, 0.025}, inv.si(), EPS);
 
-        MatrixNxM<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        MatrixNxM<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
         assertArrayEquals(new double[] {2000, 8000, 2500, 40_000, 5_000, 320_000}, mul.si(), EPS);
 
-        MatrixNxM<SIQuantity, SIUnit> div = a.divideElements(b);
+        MatrixNxM<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025, 0.08, 0.005}, div.si(), EPS);
     }
@@ -513,13 +513,13 @@ public class MatrixNxMTest
     {
         MatrixNxM<Length, Length.Unit> r = MatrixNxM.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        MatrixNxM<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        MatrixNxM<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(2, 1).getInUnit(), 1E-6);
         assertEquals(2.0, sr.mget(2, 2).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
     // ------------------------------------------------------------------------------------

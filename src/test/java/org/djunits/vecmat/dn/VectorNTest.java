@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
  * <li>Vector algebra: {@code add/subtract(Q)}, {@code add/subtract(V)}, {@code negate()}, {@code abs()},
  * {@code scaleBy(double)}</li>
  * <li>Norms: {@code norm()}, {@code normL1()}, {@code normL2()}, {@code normLp(int)}, {@code normLinf()}</li>
- * <li>Hadamard operations: {@code invertElements()}, {@code multiplyElements(V)}, {@code divideElements(V)} with unit
+ * <li>Hadamard operations: {@code invertEntries()}, {@code multiplyEntries(V)}, {@code divideEntries(V)} with unit
  * composition</li>
  * <li>Statistics: {@code min()}, {@code max()}, {@code mean()}, {@code median()}, {@code mode()}, {@code sum()}</li>
  * </ul>
@@ -490,8 +490,8 @@ public final class VectorNTest
     // =====================================================================================
 
     /**
-     * Verify element-wise Hadamard operations on a {@link VectorN.Row}: {@code invertElements()}, {@code multiplyElements(V)},
-     * {@code divideElements(V)} and validate result-unit composition via {@link SIUnit#add(SIUnit, SIUnit)} and
+     * Verify element-wise Hadamard operations on a {@link VectorN.Row}: {@code invertEntries()}, {@code multiplyEntries(V)},
+     * {@code divideEntries(V)} and validate result-unit composition via {@link SIUnit#add(SIUnit, SIUnit)} and
      * {@link SIUnit#subtract(SIUnit, SIUnit)}.
      */
     @Test
@@ -501,22 +501,22 @@ public final class VectorNTest
         final VectorN.Row<Length, Length.Unit> a = row(new double[] {2, 4, 5, 10}, Length.Unit.m);
         final VectorN.Row<Length, Length.Unit> b = row(new double[] {1, 2, 0.5, 4}, Length.Unit.km); // SI: 1000,2000,500,4000
 
-        final VectorN.Row<SIQuantity, SIUnit> inv = a.invertElements();
+        final VectorN.Row<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1}, inv.si(), EPS, "invert");
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit invert");
 
-        final VectorN.Row<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        final VectorN.Row<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0, 2500.0, 40_000.0}, mul.si(), EPS, "multiply");
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit(), "unit add");
 
-        final VectorN.Row<SIQuantity, SIUnit> div = a.divideElements(b);
+        final VectorN.Row<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025}, div.si(), EPS, "divide");
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit(), "unit subtract");
     }
 
     /**
-     * Verify element-wise Hadamard operations on a {@link VectorN.Col}: {@code invertElements()}, {@code multiplyElements(V)},
-     * {@code divideElements(V)} and validate result-unit composition.
+     * Verify element-wise Hadamard operations on a {@link VectorN.Col}: {@code invertEntries()}, {@code multiplyEntries(V)},
+     * {@code divideEntries(V)} and validate result-unit composition.
      */
     @Test
     @DisplayName("Hadamard: invert/multiply/divide + unit composition (Col)")
@@ -525,15 +525,15 @@ public final class VectorNTest
         final VectorN.Col<Length, Length.Unit> a = col(new double[] {2, 4, 5, 10}, Length.Unit.m);
         final VectorN.Col<Length, Length.Unit> b = col(new double[] {1, 2, 0.5, 4}, Length.Unit.km);
 
-        final VectorN.Col<SIQuantity, SIUnit> inv = a.invertElements();
+        final VectorN.Col<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1}, inv.si(), EPS, "invert");
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit invert");
 
-        final VectorN.Col<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        final VectorN.Col<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0, 2500.0, 40_000.0}, mul.si(), EPS, "multiply");
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit(), "unit add");
 
-        final VectorN.Col<SIQuantity, SIUnit> div = a.divideElements(b);
+        final VectorN.Col<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025}, div.si(), EPS, "divide");
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit(), "unit subtract");
     }
@@ -1085,20 +1085,20 @@ public final class VectorNTest
     {
         VectorN.Col<Length, Length.Unit> r = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        VectorN.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        VectorN.Col<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(3).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
 
         VectorN.Row<Length, Length.Unit> c = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
-        VectorN.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
+        VectorN.Row<Speed, Speed.Unit> sc = c.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
         assertEquals(0.5, sc.get(0).getInUnit(), 1E-6);
         assertEquals(1.0, sc.get(1).getInUnit(), 1E-6);
         assertEquals(1.5, sr.get(2).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> c.divideEntries(d).as(Area.Unit.m2));
     }
 
 }

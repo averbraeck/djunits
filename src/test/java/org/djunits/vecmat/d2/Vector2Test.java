@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  * <li>Normed: norm(), normL1(), normL2(), normLp(p), normLinf()</li>
  * <li>Orientation &amp; shape: rows(), cols(), isColumnVector()</li>
  * <li>Transposition Row&lt;&rarr;&gt;Col</li>
- * <li>Hadamard operations (invertElements, multiplyElements, divideElements)</li>
+ * <li>Hadamard operations (invertEntries, multiplyEntries, divideEntries)</li>
  * <li>Linear algebra products: Row⋅Col, Col⋅Row, Row⋅Matrix2x2</li>
  * <li>as(targetUnit) positive and negative branches</li>
  * <li>equals, hashCode, toString</li>
@@ -443,24 +443,24 @@ public class Vector2Test
      * x().siUnit() instead of the vector's display unit, the test will fail (by design) for Column vector.
      */
     @Test
-    @DisplayName("Hadamard: invertElements / multiplyElements / divideElements + unit composition, Col")
+    @DisplayName("Hadamard: invertEntries / multiplyEntries / divideEntries + unit composition, Col")
     public void testHadamardCol()
     {
         Vector2.Col<Length, Length.Unit> a = col(2.0, 4.0, Length.Unit.m); // SI: 2, 4
         Vector2.Col<Length, Length.Unit> b = col(1.0, 2.0, Length.Unit.km); // SI: 1000, 2000
 
         // invert
-        Vector2.Col<SIQuantity, SIUnit> inv = a.invertElements();
+        Vector2.Col<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25}, inv.si(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit should be inverted");
 
         // elementwise multiply → SI: [2*1000, 4*2000] = [2000, 8000]; unit: m ⊕ km
-        Vector2.Col<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        Vector2.Col<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         // elementwise divide → SI: [2/1000, 4/2000] = [0.002, 0.002]; unit: m ⊖ km
-        Vector2.Col<SIQuantity, SIUnit> div = a.divideElements(b);
+        Vector2.Col<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002}, div.si(), EPS);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -470,24 +470,24 @@ public class Vector2Test
      * x().siUnit() instead of the vector's display unit, the test will fail (by design) for Row vector.
      */
     @Test
-    @DisplayName("Hadamard: invertElements / multiplyElements / divideElements + unit composition, Row")
+    @DisplayName("Hadamard: invertEntries / multiplyEntries / divideEntries + unit composition, Row")
     public void testHadamardRow()
     {
         Vector2.Row<Length, Length.Unit> a = row(2.0, 4.0, Length.Unit.m); // SI: 2, 4
         Vector2.Row<Length, Length.Unit> b = row(1.0, 2.0, Length.Unit.km); // SI: 1000, 2000
 
         // invert
-        Vector2.Row<SIQuantity, SIUnit> inv = a.invertElements();
+        Vector2.Row<SIQuantity, SIUnit> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25}, inv.si(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit should be inverted");
 
         // elementwise multiply → SI: [2*1000, 4*2000] = [2000, 8000]; unit: m ⊕ km
-        Vector2.Row<SIQuantity, SIUnit> mul = a.multiplyElements(b);
+        Vector2.Row<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         // elementwise divide → SI: [2/1000, 4/2000] = [0.002, 0.002]; unit: m ⊖ km
-        Vector2.Row<SIQuantity, SIUnit> div = a.divideElements(b);
+        Vector2.Row<SIQuantity, SIUnit> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002}, div.si(), EPS);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -1011,17 +1011,17 @@ public class Vector2Test
     {
         Vector2.Col<Length, Length.Unit> r = col(1.0, 2.0, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        Vector2.Col<Speed, Speed.Unit> sr = r.divideElements(d).as(Speed.Unit.km_h);
+        Vector2.Col<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> r.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
 
         Vector2.Row<Length, Length.Unit> c = row(1.0, 2.0, Length.Unit.km);
-        Vector2.Row<Speed, Speed.Unit> sc = c.divideElements(d).as(Speed.Unit.km_h);
+        Vector2.Row<Speed, Speed.Unit> sc = c.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
         assertEquals(0.5, sc.mget(1).getInUnit(), 1E-6);
         assertEquals(1.0, sc.mget(2).getInUnit(), 1E-6);
-        assertThrows(IllegalArgumentException.class, () -> c.divideElements(d).as(Area.Unit.m2));
+        assertThrows(IllegalArgumentException.class, () -> c.divideEntries(d).as(Area.Unit.m2));
     }
 }
