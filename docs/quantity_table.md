@@ -21,7 +21,7 @@ A `QuantityTable` implements the `Hadamard` interface for element-by-element ope
 
 All Hadamard operations result in a new instance of a `QuantityTable` with a new unit, but with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
+The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` using the `as(Frequency.Unit.Hz)` method. Note that the resulting `QuantityTable<Frequency, Frequency.Unit>` is a new instance of the table, and the original `QuantityTable` remains unchanged.
 
 The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the original matrix.
 
