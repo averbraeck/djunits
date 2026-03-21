@@ -261,10 +261,10 @@ public class Vector1Test
     }
 
     /**
-     * Verify statistics: min, max, mean, median, mode, sum.
+     * Verify statistics: min, max, mean, median, sum.
      */
     @Test
-    @DisplayName("Statistics: min/max/mean/median/mode/sum")
+    @DisplayName("Statistics: min/max/mean/median/sum")
     public void testStatistics()
     {
         Vector1<Length, Length.Unit> v = vec(3.0, Length.Unit.m);
@@ -272,7 +272,6 @@ public class Vector1Test
         assertEquals(3.0, v.max().si(), EPS);
         assertEquals(3.0, v.mean().si(), EPS);
         assertEquals(3.0, v.median().si(), EPS, "median of 2-point set = mean");
-        assertEquals(3.0, v.mode().si(), EPS, "mode defaults to max");
         assertEquals(3.0, v.sum().si(), EPS);
     }
 

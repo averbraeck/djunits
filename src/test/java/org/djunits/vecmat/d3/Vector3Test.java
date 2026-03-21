@@ -376,13 +376,13 @@ public class Vector3Test
     }
 
     /**
-     * Verify statistics for a Row vector: min, max, mean, median, mode, and sum.
+     * Verify statistics for a Row vector: min, max, mean, median, and sum.
      * <p>
      * Uses unsorted input to ensure {@code median()} is order-independent. All assertions are checked against SI values, since
      * the vector stores SI internally and {@code Q.si()} returns the SI magnitude.
      */
     @Test
-    @DisplayName("Statistics: min/max/mean/median/mode/sum (Row)")
+    @DisplayName("Statistics: min/max/mean/median/sum (Row)")
     public void testStatisticsRow()
     {
         // Unsorted values in meters: [1, 3, 2] → SI: [1, 3, 2]
@@ -393,25 +393,23 @@ public class Vector3Test
         double expectedMax = 3.0;
         double expectedMean = (1.0 + 3.0 + 2.0) / 3.0; // = 2.0
         double expectedMedian = 2.0; // middle of {1,2,3}
-        double expectedMode = expectedMax; // default mode() returns max()
         double expectedSum = 6.0;
 
         assertEquals(expectedMin, v.min().si(), EPS, "min");
         assertEquals(expectedMax, v.max().si(), EPS, "max");
         assertEquals(expectedMean, v.mean().si(), EPS, "mean");
         assertEquals(expectedMedian, v.median().si(), EPS, "median");
-        assertEquals(expectedMode, v.mode().si(), EPS, "mode defaults to max");
         assertEquals(expectedSum, v.sum().si(), EPS, "sum");
     }
 
     /**
-     * Verify statistics for a Col vector: min, max, mean, median, mode, and sum.
+     * Verify statistics for a Col vector: min, max, mean, median, and sum.
      * <p>
      * Values are provided in kilometers to exercise unit conversion, but assertions are made on SI values (meters). Input is
      * deliberately unsorted to verify {@code median()}.
      */
     @Test
-    @DisplayName("Statistics: min/max/mean/median/mode/sum (Col)")
+    @DisplayName("Statistics: min/max/mean/median/sum (Col)")
     public void testStatisticsCol()
     {
         // Unsorted values in kilometers: [0.5, 2.0, 1.5] → SI (m): [500, 2000, 1500]
@@ -426,13 +424,11 @@ public class Vector3Test
         double expectedSum = s1 + s2 + s3; // 4000.0
         double expectedMean = expectedSum / 3.0; // 1333.333...
         double expectedMedian = 1500.0; // middle of {500,1500,2000}
-        double expectedMode = expectedMax; // default mode() returns max()
 
         assertEquals(expectedMin, v.min().si(), EPS, "min");
         assertEquals(expectedMax, v.max().si(), EPS, "max");
         assertEquals(expectedMean, v.mean().si(), EPS, "mean");
         assertEquals(expectedMedian, v.median().si(), EPS, "median");
-        assertEquals(expectedMode, v.mode().si(), EPS, "mode defaults to max");
         assertEquals(expectedSum, v.sum().si(), EPS, "sum");
     }
 

@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
  * <li>Norms: {@code norm()}, {@code normL1()}, {@code normL2()}, {@code normLp(int)}, {@code normLinf()}</li>
  * <li>Hadamard operations: {@code invertEntries()}, {@code multiplyEntries(V)}, {@code divideEntries(V)} with unit
  * composition</li>
- * <li>Statistics: {@code min()}, {@code max()}, {@code mean()}, {@code median()}, {@code mode()}, {@code sum()}</li>
+ * <li>Statistics: {@code min()}, {@code max()}, {@code mean()}, {@code median()}, {@code sum()}</li>
  * </ul>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -561,15 +561,15 @@ public final class VectorNTest
     }
 
     // =====================================================================================
-    // Statistics: min/max/mean/median/mode/sum
+    // Statistics: min/max/mean/median/sum
     // =====================================================================================
 
     /**
-     * Verify {@code min}, {@code max}, {@code mean}, {@code median}, {@code mode}, and {@code sum} on an unsorted odd-length
+     * Verify {@code min}, {@code max}, {@code mean}, {@code median}, and {@code sum} on an unsorted odd-length
      * {@link VectorN.Row} input (to avoid even-median ambiguity).
      */
     @Test
-    @DisplayName("Statistics: min/max/mean/median/mode/sum (Row)")
+    @DisplayName("Statistics: min/max/mean/median/sum (Row)")
     public void testStatisticsRow()
     {
         final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 4, 2, 5, 3}, Length.Unit.m);
@@ -577,16 +577,15 @@ public final class VectorNTest
         assertEquals(5.0, r.max().si(), EPS, "max");
         assertEquals(3.0, r.mean().si(), EPS, "mean");
         assertEquals(3.0, r.median().si(), EPS, "median");
-        assertEquals(5.0, r.mode().si(), EPS, "mode defaults to max");
         assertEquals(15.0, r.sum().si(), EPS, "sum");
     }
 
     /**
-     * Verify {@code min}, {@code max}, {@code mean}, {@code median}, {@code mode}, and {@code sum} on a {@link VectorN.Col}
+     * Verify {@code min}, {@code max}, {@code mean}, {@code median}, and {@code sum} on a {@link VectorN.Col}
      * with inputs in kilometers; assertions are made against SI values in meters.
      */
     @Test
-    @DisplayName("Statistics: min/max/mean/median/mode/sum (Col)")
+    @DisplayName("Statistics: min/max/mean/median/sum (Col)")
     public void testStatisticsCol()
     {
         // km → SI(m): [200, 1000, 500, 1500, 800]
@@ -609,7 +608,6 @@ public final class VectorNTest
         assertEquals(max, c.max().si(), EPS, "max");
         assertEquals(mean, c.mean().si(), EPS, "mean");
         assertEquals(median, c.median().si(), EPS, "median");
-        assertEquals(max, c.mode().si(), EPS, "mode defaults to max");
         assertEquals(sum, c.sum().si(), EPS, "sum");
     }
 

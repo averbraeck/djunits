@@ -213,7 +213,6 @@ public class MatrixNxMTest
         assertEquals(3.5, a.median().si(), EPS);
         assertEquals(1.0, a.min().si(), EPS);
         assertEquals(6.0, a.max().si(), EPS);
-        assertEquals(a.max().si(), a.mode().si(), EPS);
         assertEquals(21.0, a.sum().si(), EPS);
     }
 

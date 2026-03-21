@@ -212,7 +212,7 @@ public class Matrix3x3Test
     }
 
     // ------------------------------------------------------------------------------------
-    // VectorMatrixOps defaults via Matrix3x3: add/subtract (Q & VM), negate, abs, scaleBy, mean/median/min/max/mode/sum
+    // VectorMatrixOps defaults via Matrix3x3: add/subtract (Q & VM), negate, abs, scaleBy, mean/median/min/max/sum
     // ------------------------------------------------------------------------------------
 
     /**
@@ -256,10 +256,10 @@ public class Matrix3x3Test
     }
 
     /**
-     * Verify {@code mean}, {@code median}, {@code min}, {@code max}, {@code mode}, and {@code sum}.
+     * Verify {@code mean}, {@code median}, {@code min}, {@code max}, and {@code sum}.
      */
     @Test
-    @DisplayName("mean / median / min / max / mode / sum")
+    @DisplayName("mean / median / min / max / sum")
     public void testStats()
     {
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
@@ -267,7 +267,6 @@ public class Matrix3x3Test
         assertEquals(5.0, m.median().si(), EPS, "median of 9 entries");
         assertEquals(1.0, m.min().si(), EPS, "min");
         assertEquals(9.0, m.max().si(), EPS, "max");
-        assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max");
         assertEquals(45.0, m.sum().si(), EPS, "sum");
     }
 

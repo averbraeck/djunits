@@ -210,7 +210,7 @@ public class Matrix1x1Test
     }
 
     // ------------------------------------------------------------------------------------
-    // MatrixOps defaults: add/subtract (Q and VM), negate, abs, scaleBy, mean/median/min/max/mode/sum
+    // MatrixOps defaults: add/subtract (Q and VM), negate, abs, scaleBy, mean/median/min/max/sum
     // ------------------------------------------------------------------------------------
 
     /**
@@ -255,10 +255,10 @@ public class Matrix1x1Test
     }
 
     /**
-     * Verify {@code mean}, {@code median}, {@code min}, {@code max}, {@code mode}, and {@code sum}.
+     * Verify {@code mean}, {@code median}, {@code min}, {@code max}, and {@code sum}.
      */
     @Test
-    @DisplayName("mean / median / min / max / mode / sum")
+    @DisplayName("mean / median / min / max / sum")
     public void testStats()
     {
         Matrix1x1<Length, Length.Unit> m = ofSi(2.5, Length.Unit.m);
@@ -266,7 +266,6 @@ public class Matrix1x1Test
         assertEquals(2.5, m.median().si(), EPS, "median (even-sized set)");
         assertEquals(2.5, m.min().si(), EPS, "min");
         assertEquals(2.5, m.max().si(), EPS, "max");
-        assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max");
         assertEquals(2.5, m.sum().si(), EPS, "sum");
     }
 

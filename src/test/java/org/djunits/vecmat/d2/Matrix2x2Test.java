@@ -211,7 +211,7 @@ public class Matrix2x2Test
     }
 
     // ------------------------------------------------------------------------------------
-    // MatrixOps defaults: add/subtract (Q and VM), negate, abs, scaleBy, mean/median/min/max/mode/sum
+    // MatrixOps defaults: add/subtract (Q and VM), negate, abs, scaleBy, mean/median/min/max/sum
     // ------------------------------------------------------------------------------------
 
     /**
@@ -256,10 +256,10 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@code mean}, {@code median}, {@code min}, {@code max}, {@code mode}, and {@code sum}.
+     * Verify {@code mean}, {@code median}, {@code min}, {@code max}, and {@code sum}.
      */
     @Test
-    @DisplayName("mean / median / min / max / mode / sum")
+    @DisplayName("mean / median / min / max / sum")
     public void testStats()
     {
         // Use [1, 2, 3, 4] m to give an unambiguous median = 2.5
@@ -268,7 +268,6 @@ public class Matrix2x2Test
         assertEquals(2.5, m.median().si(), EPS, "median (even-sized set)");
         assertEquals(1.0, m.min().si(), EPS, "min");
         assertEquals(4.0, m.max().si(), EPS, "max");
-        assertEquals(m.max().si(), m.mode().si(), EPS, "mode defaults to max");
         assertEquals(10.0, m.sum().si(), EPS, "sum");
     }
 
