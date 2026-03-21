@@ -235,7 +235,7 @@ public class DenseFloatDataSiTest
         DenseFloatDataSi d = new DenseFloatDataSi(raw, 2, 3);
 
         // zero and -zero count as zero, NaN and infinities count as non-zero
-        assertEquals(4, d.cardinality());
+        assertEquals(4, d.nonZeroCount());
     }
 
     // ---------------------------------------------------------------------------

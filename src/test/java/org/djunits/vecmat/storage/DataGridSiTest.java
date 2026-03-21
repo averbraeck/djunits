@@ -399,7 +399,7 @@ public class DataGridSiTest
 
         for (var dg : dgArray)
         {
-            assertEquals(2, dg.cardinality());
+            assertEquals(2, dg.nonZeroCount());
         }
     }
 

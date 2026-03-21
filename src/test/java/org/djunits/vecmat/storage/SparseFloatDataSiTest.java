@@ -490,11 +490,11 @@ public class SparseFloatDataSiTest
     {
         // dense2x3 has 4 non-zero values
         SparseFloatDataSi d = new SparseFloatDataSi(dense2x3(), 2, 3);
-        assertEquals(4, d.cardinality());
+        assertEquals(4, d.nonZeroCount());
 
         // explicit 0.0 value in the data -- cardinality should not count it
         SparseFloatDataSi d0 = new SparseFloatDataSi(new float[] {1.0f, 0.0f}, new int[] {1, 3}, 3, 2);
-        assertEquals(1, d0.cardinality());
+        assertEquals(1, d0.nonZeroCount());
     }
 
     // ----------------------------------------------------------------------

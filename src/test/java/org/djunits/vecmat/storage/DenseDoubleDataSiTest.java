@@ -201,7 +201,7 @@ public class DenseDoubleDataSiTest
     }
 
     /**
-     * Verify {@link DenseDoubleDataSi#cardinality()} semantics: counts non-zero entries (treats +/-0.0 as zero; counts NaN and
+     * Verify {@link DenseDoubleDataSi#nonZeroCount()} semantics: counts non-zero entries (treats +/-0.0 as zero; counts NaN and
      * infinities as non-zero).
      */
     @Test
@@ -212,7 +212,7 @@ public class DenseDoubleDataSiTest
         DenseDoubleDataSi d = new DenseDoubleDataSi(payload, 2, 3);
 
         // 0.0 -> zero, -0.0 -> zero, 1.0 -> non-zero, -2.0 -> non-zero, NaN -> non-zero, +inf -> non-zero
-        assertEquals(4, d.cardinality(), "cardinality should count non-zeros incl. NaN and infinities");
+        assertEquals(4, d.nonZeroCount(), "cardinality should count non-zeros incl. NaN and infinities");
     }
 
     /**
