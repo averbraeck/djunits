@@ -396,7 +396,7 @@ public class SparseDoubleDataSi implements DataGridSi<SparseDoubleDataSi>
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public int cardinality()
+    public int nonZeroCount()
     {
         int result = 0;
         for (int i = 0; i < this.sparseData.length; i++)

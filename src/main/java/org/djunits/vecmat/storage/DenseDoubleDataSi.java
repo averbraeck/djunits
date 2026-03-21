@@ -152,7 +152,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public int cardinality()
+    public int nonZeroCount()
     {
         int result = 0;
         for (int i = 0; i < this.data.length; i++)

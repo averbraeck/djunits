@@ -54,7 +54,17 @@ public interface DataGridSi<D extends DataGridSi<D>>
      * -0.0 as zero). NaN and infinite values are counted as non-zero.
      * @return the number of non-zero cells
      */
-    int cardinality();
+    int nonZeroCount();
+
+    /**
+     * Compute and return the number of non-zero cells in this indexed value. Counts entries that are not exactly 0.0 (including
+     * -0.0 as zero). NaN and infinite values are counted as non-zero.
+     * @return the number of non-zero cells
+     */
+    default int nnz()
+    {
+        return nonZeroCount();
+    }
 
     /**
      * Instantiate a new version of the DataGrid object with the given data and the same number of rows and columns.
