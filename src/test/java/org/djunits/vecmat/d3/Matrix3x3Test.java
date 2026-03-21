@@ -293,7 +293,7 @@ public class Matrix3x3Test
         // A = [[1,2,3],[0,1,4],[5,6,0]]
         Matrix3x3<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 0, 1, 4, 5, 6, 0}, Length.Unit.m);
 
-        assertEquals(1.0, a.determinantScalar(), EPS, "det(A)=1");
+        assertEquals(1.0, a.determinantSi(), EPS, "det(A)=1");
         assertEquals(1.0, a.determinant().si(), EPS, "det(A) as quantity");
         assertEquals(1.0 + 1.0 + 0.0, a.trace().si(), EPS, "trace(A)=2");
 

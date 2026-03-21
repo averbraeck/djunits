@@ -292,7 +292,7 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
         // det = a*d - b*c = 1*4 - 2*3 = -2
-        assertEquals(-2.0, m.determinantScalar(), EPS, "determinantScalar");
+        assertEquals(-2.0, m.determinantSi(), EPS, "determinantScalar");
         assertEquals(-2.0, m.determinant().si(), EPS, "determinant quantity SI value");
         // trace = a + d = 1 + 4 = 5
         assertEquals(5.0, m.trace().si(), EPS, "trace");

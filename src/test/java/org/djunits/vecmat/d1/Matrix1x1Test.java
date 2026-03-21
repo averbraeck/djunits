@@ -293,7 +293,7 @@ public class Matrix1x1Test
     {
         Matrix1x1<Length, Length.Unit> m = ofSi(2.0, Length.Unit.m);
         // det = 2
-        assertEquals(2, m.determinantScalar(), EPS, "determinantScalar");
+        assertEquals(2, m.determinantSi(), EPS, "determinantScalar");
         assertEquals(2.0, m.determinant().si(), EPS, "determinant quantity SI value");
         // trace = a = 2
         assertEquals(2.0, m.trace().si(), EPS, "trace");

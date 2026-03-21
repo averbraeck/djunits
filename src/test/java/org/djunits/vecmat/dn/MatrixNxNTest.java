@@ -270,7 +270,7 @@ public class MatrixNxNTest
         assertArrayEquals(new double[] {1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16}, t.si(), EPS);
         assertEquals(m.getDisplayUnit(), t.getDisplayUnit());
 
-        assertEquals(0.0, m.determinantScalar(), EPS); // singular
+        assertEquals(0.0, m.determinantSi(), EPS); // singular
         assertEquals(34.0, m.trace().si(), EPS); // 1+6+11+16
 
         double sumSqr = 0.0;
