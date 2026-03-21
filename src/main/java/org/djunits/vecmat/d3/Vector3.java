@@ -477,21 +477,21 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector3.Col<SIQuantity, SIUnit> invertElements()
+        public Vector3.Col<SIQuantity, SIUnit> invertEntries()
         {
             return new Vector3.Col<SIQuantity, SIUnit>(1.0 / xSi(), 1.0 / ySi(), 1.0 / zSi(),
                     getDisplayUnit().siUnit().invert());
         }
 
         @Override
-        public Vector3.Col<SIQuantity, SIUnit> multiplyElements(final Vector3.Col<?, ?> other)
+        public Vector3.Col<SIQuantity, SIUnit> multiplyEntries(final Vector3.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector3.Col<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), zSi() * other.zSi(), siUnit);
         }
 
         @Override
-        public Vector3.Col<SIQuantity, SIUnit> divideElements(final Vector3.Col<?, ?> other)
+        public Vector3.Col<SIQuantity, SIUnit> divideEntries(final Vector3.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector3.Col<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), zSi() / other.zSi(), siUnit);
@@ -511,7 +511,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector3.Col<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        public Vector3.Col<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new Vector3.Col<SIQuantity, SIUnit>(xSi() * quantity.si(), ySi() * quantity.si(), zSi() * quantity.si(),
@@ -672,21 +672,21 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector3.Row<SIQuantity, SIUnit> invertElements()
+        public Vector3.Row<SIQuantity, SIUnit> invertEntries()
         {
             return new Vector3.Row<SIQuantity, SIUnit>(1.0 / xSi(), 1.0 / ySi(), 1.0 / zSi(),
                     getDisplayUnit().siUnit().invert());
         }
 
         @Override
-        public Vector3.Row<SIQuantity, SIUnit> multiplyElements(final Vector3.Row<?, ?> other)
+        public Vector3.Row<SIQuantity, SIUnit> multiplyEntries(final Vector3.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector3.Row<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), zSi() * other.zSi(), siUnit);
         }
 
         @Override
-        public Vector3.Row<SIQuantity, SIUnit> divideElements(final Vector3.Row<?, ?> other)
+        public Vector3.Row<SIQuantity, SIUnit> divideEntries(final Vector3.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector3.Row<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), zSi() / other.zSi(), siUnit);
@@ -717,7 +717,7 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector3.Row<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        public Vector3.Row<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new Vector3.Row<SIQuantity, SIUnit>(xSi() * quantity.si(), ySi() * quantity.si(), zSi() * quantity.si(),

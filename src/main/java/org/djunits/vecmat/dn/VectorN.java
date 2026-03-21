@@ -393,14 +393,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Col<SIQuantity, SIUnit> invertElements()
+        public VectorN.Col<SIQuantity, SIUnit> invertEntries()
         {
             SIUnit siUnit = getDisplayUnit().siUnit().invert();
             return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
         }
 
         @Override
-        public VectorN.Col<SIQuantity, SIUnit> multiplyElements(final VectorN.Col<?, ?> other)
+        public VectorN.Col<SIQuantity, SIUnit> multiplyEntries(final VectorN.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())),
@@ -408,14 +408,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Col<SIQuantity, SIUnit> divideElements(final VectorN.Col<?, ?> other)
+        public VectorN.Col<SIQuantity, SIUnit> divideEntries(final VectorN.Col<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
         }
 
         @Override
-        public VectorN.Col<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        public VectorN.Col<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new VectorN.Col<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),
@@ -679,14 +679,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Row<SIQuantity, SIUnit> invertElements()
+        public VectorN.Row<SIQuantity, SIUnit> invertEntries()
         {
             SIUnit siUnit = getDisplayUnit().siUnit().invert();
             return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
         }
 
         @Override
-        public VectorN.Row<SIQuantity, SIUnit> multiplyElements(final VectorN.Row<?, ?> other)
+        public VectorN.Row<SIQuantity, SIUnit> multiplyEntries(final VectorN.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())),
@@ -694,14 +694,14 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public VectorN.Row<SIQuantity, SIUnit> divideElements(final VectorN.Row<?, ?> other)
+        public VectorN.Row<SIQuantity, SIUnit> divideEntries(final VectorN.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
         }
 
         @Override
-        public VectorN.Row<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        public VectorN.Row<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new VectorN.Row<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())),

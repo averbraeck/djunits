@@ -456,7 +456,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Col<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        public Vector2.Col<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return Vector2.Col.of(xSi() * quantity.si(), ySi() * quantity.si(), siUnit);
@@ -614,20 +614,20 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> invertElements()
+        public Vector2.Row<SIQuantity, SIUnit> invertEntries()
         {
             return new Vector2.Row<SIQuantity, SIUnit>(1.0 / xSi(), 1.0 / ySi(), getDisplayUnit().siUnit().invert());
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> multiplyElements(final Vector2.Row<?, ?> other)
+        public Vector2.Row<SIQuantity, SIUnit> multiplyEntries(final Vector2.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector2.Row<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), siUnit);
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> divideElements(final Vector2.Row<?, ?> other)
+        public Vector2.Row<SIQuantity, SIUnit> divideEntries(final Vector2.Row<?, ?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
             return new Vector2.Row<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), siUnit);
@@ -658,7 +658,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+        public Vector2.Row<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return Vector2.Row.of(xSi() * quantity.si(), ySi() * quantity.si(), siUnit);

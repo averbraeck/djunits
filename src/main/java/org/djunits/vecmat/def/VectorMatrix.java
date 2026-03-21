@@ -475,27 +475,27 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     @Override
-    public SI invertElements()
+    public SI invertEntries()
     {
         return (SI) instantiateSi(ArrayMath.reciprocal(si()), getDisplayUnit().siUnit().invert());
     }
 
     @Override
-    public SI multiplyElements(final H other)
+    public SI multiplyEntries(final H other)
     {
         return (SI) instantiateSi(ArrayMath.multiply(si(), other.si()),
                 getDisplayUnit().siUnit().plus(other.getDisplayUnit().siUnit()));
     }
 
     @Override
-    public SI divideElements(final H other)
+    public SI divideEntries(final H other)
     {
         return (SI) instantiateSi(ArrayMath.divide(si(), other.si()),
                 getDisplayUnit().siUnit().minus(other.getDisplayUnit().siUnit()));
     }
 
     @Override
-    public SI multiplyElements(final Quantity<?, ?> quantity)
+    public SI multiplyEntries(final Quantity<?, ?> quantity)
     {
         return (SI) instantiateSi(ArrayMath.scaleBy(si(), quantity.si()),
                 getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));

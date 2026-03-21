@@ -227,28 +227,28 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> invertElements()
+    public MatrixNxN<SIQuantity, SIUnit> invertEntries()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> multiplyElements(final MatrixNxN<?, ?> other)
+    public MatrixNxN<SIQuantity, SIUnit> multiplyEntries(final MatrixNxN<?, ?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> divideElements(final MatrixNxN<?, ?> other)
+    public MatrixNxN<SIQuantity, SIUnit> divideEntries(final MatrixNxN<?, ?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> multiplyElements(final Quantity<?, ?> quantity)
+    public MatrixNxN<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
         return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
