@@ -9,7 +9,7 @@ The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, o
 ![](images/quantity_table.png)
 
 
-## Quantity Table operations
+## Quantity table operations
 
 A `QuantityTable` implements the `Hadamard` interface for element-by-element operations. These include:
 
@@ -23,10 +23,71 @@ All Hadamard operations result in a new instance of the `QuantityTable` with a n
 
 The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a QuantityTable with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
+The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the original matrix.
+
 Furthermore, a quantity table is additive, which means that two tables of the same size and same quantity can be added to and subtracted from each other. Quantity tables also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods, scaling the elements of the quantity table by `factor`, respectively `1.0 / factor`.
 
 
-## Transforming the QuantityTable
+## Obtaining values of quantity table entries
+
+Several methods exist to get access to the entries of a `QuantityTable`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `table.rows()-1` and `col` ranges from `0` to `table.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` to `table.rows()` and `mCol` ranges from `1` to `table.cols`.
+
+A `QuantityTable` contains the following methods to obtain its values:
+
+### SI-based value methods
+
+- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the quantity table. 
+- `double[] si()` returns the values of the quantity table in SI-units as a row-major `double[]` array with the same length as the quantity table. This means that for a quantity table with n rows and m columns, the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>].
+- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column.
+- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. 
+
+
+### Quantity-based value methods
+
+- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
+- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the original `QuantityTable`.
+- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the original `QuantityTable`.
+
+
+### Retrieving quantity table rows
+
+- `VectorN.Row getRowVector(int row)` retrieves the quantity table row at the 0-based `row` as a row-vector with the same `displayUnit`. 
+- `VectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit`. 
+- `Q[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI-values. 
+- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI-values. 
+
+
+### Retrieving quantity table columns
+
+- `VectorN.Col getColumnVector(int col)` retrieves the quantity table column at the 0-based `col` as a column-vector with the same `displayUnit`. 
+- `VectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit`. 
+- `Q[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
+- `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI-values. 
+- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI-values.
+
+
+## Mathematical operations for `QuantityTable`
+
+A `QuantityTable` implements several mathematical operations. The most important ones are:
+
+- `int rows()` returns the number of rows of the quantity table.
+- `int cols()` returns the number of columns of the quantity table.
+- `Q mean()` returns the mean quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
+- `Q min()` returns the minimum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
+- `Q max()` returns the maximum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
+- `Q mode()` returns the mode quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. For a quantity table, this returns the maximum quantity value of the entries.
+- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle are averaged. 
+- `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
+- `M negate()` returns a `QuantityTable` of the same type and size where all entries x<sub>ij</sub> have been set to &minus;x<sub>ij</sub>. 
+- `M abs()` returns a `QuantityTable` of the same type and size where all entries x<sub>i</sub> have been set to |x<sub>i</sub>|. 
+- `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the quantity table.
+
+
+## Transforming the `QuantityTable`
 
 `QuantityTable` objects do not implement matrix operations such as determinant, matrix multiplication, etc. If a `QuantityTable` at some point needs to be used for matrix operations, the `asVector` and `asMatrix` methods can transform the `QuantityTable` into a `Matrix` or column or row `Vector` of any of the types. For this, the `QuantityTable` implements the `asMatrix1x1()`, `asMatrix2x2()`, `asMatrix3x3()`, `asMatrixNxN()`, `asMatrixNxM()`, `asVector1()`, `asVector2Row()`, `asVector2Col()`, `asVector3Row()`, `asVector3Col()`, `asVectorNRow()`, and `asVectorNCol()` methods. These methods will check the consistency of the quantity table size with the desired vector or matrix type at runtime. After the transformation, the resulting vector or matrix is available for algebra operations.
 
