@@ -48,13 +48,13 @@ Several methods exist to get access to the entries of a `Vector`. When single en
 A `Vector` contains the following methods to obtain its values:
 
 - `double[] si()` returns the values of the vector in SI-units as a `double[]` array with the same length as the vector.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the `Vector`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the original `Vector`.
 - `double si(int index)` returns the SI-value of the entry at the 0-based `index`. 
 - `double msi(int mIndex)` returns the SI-value of the entry at the 1-based `mIndex`. 
 - `Q get(int index)` returns the quantity representation of the entry at the 0-based `index`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
 - `Q mget(int mIndex)` returns the quantity representation of the entry at the 1-based `mIndex`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
 
-There are several more matrix methods implemented for the `Vector`, but they are not often used, such as `getRowVector(int row)` (which returns a copy of the vector for a row vector, and a `Vector1` for a column vector), `getColumnVector(int col)`, `get(int row, int col)`, `si(int row, int col`), and several more methods for retrieving row and column quantities and SI-values, both with 0-based and 1-based row and column indexes. 
+All `Matrix` methods are also implemented for the `Vector`, where a `Vector` is seen as a 1xM or Nx1 matrix. These methods are not often used, however. If necessary, one can use these methods such as `get(int row, int col)`, `si(int row, int col`), and several more methods for retrieving row and column quantities and SI-values, both with 0-based and 1-based row and column indexes. 
 
 
 ## Mathematical operations

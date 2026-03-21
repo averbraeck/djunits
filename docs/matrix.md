@@ -53,36 +53,36 @@ A `Matrix` contains the following methods to obtain its values:
 
 - `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the matrix. 
 - `double[] si()` returns the values of the matrix in SI-units as a row-major `double[]` array with the same length as the matrix. This means that for an n x m matrix (n rows, m columns), the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>].
-- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column. Note that to use this method for a `Matrix`, `row` has to be 0 for a row matrix, and `col` has to be 0 for a column matrix. 
-- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Matrix`, `mRow` has to be 1 for a row matrix, and `mCol` has to be 1 for a column matrix. 
+- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column.
+- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. 
 
 
 ### Quantity-based value methods
 
-- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the matrix. For a row matrix, an array `[1][matrix.size()]` will be returned, and for a column matrix, an array `[matrix.size()][1]` will be returned. The quantities in the array will all have the same `displayUnit` as the `Matrix`.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the `Matrix`.
-- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. Note that to use this method for a `Matrix`, `row` has to be 0 for a row matrix, and `col` has to be 0 for a column matrix. The returned `Quantity` will have the same `displayUnit` as the `Matrix`.
-- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. Note that to use this method for a `Matrix`, `mRow` has to be 1 for a row matrix, and `mCol` has to be 1 for a column matrix. The returned `Quantity` will have the same `displayUnit` as the `Matrix`.
+- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
+- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the original `Matrix`.
+- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the original `Matrix`.
 
 
 ### Retrieving matrix rows
 
 - `Vector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Row` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Row` of the same `Quantity`, and with the same `displayUnit`. 
-- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, with the same `displayUnit` as the original matrix. 
-- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
-- `double[] getRowSi(int row)` retrieves the matrix row at the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`, with the same `displayUnit` as the original matrix. 
-- `double[] mgetRowSi(int mRow)` retrieves the matrix row at the 1-based `mRow` as a double[] array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
+- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `double[] getRowSi(int row)` retrieves the SI-values of the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
+- `double[] mgetRowSi(int mRow)` retrieves the SI-values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. 
 
 
 ### Retrieving matrix columns
 
 - `Vector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Col` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Col` of the same `Quantity`, and with the same `displayUnit`. 
-- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, with the same `displayUnit` as the original matrix. 
-- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
-- `double[] getColumnSi(int col)` retrieves the matrix column at the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`, with the same `displayUnit` as the original matrix. 
-- `double[] mgetColumnSi(int mCol)` retrieves the matrix column at the 1-based `mCol` as a double[] array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`, with the same `displayUnit` as the original matrix. 
+- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `double[] getColumnSi(int col)` retrieves the SI-values of the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
+- `double[] mgetColumnSi(int mCol)` retrieves the SI-values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. 
 
 
 ## Mathematical operations for all matrices
