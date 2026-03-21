@@ -72,8 +72,8 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q mode()` returns the mode quantity value of the entries of the `Vector` as a strongly typed `Quantity`. For a vector, this returns the maximum quantity value of the entries.
 - `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
-- `V negate()` returns a `Vector` of the same type and size where all entries x<sub>i</sub> have been set to &minus;x<sub>i</sub>. 
-- `V abs()` returns a `Vector` of the same type and size where all entries x<sub>i</sub> have been set to |x<sub>i</sub>|. 
+- `V negate()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $-x_i$. 
+- `V abs()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $|x_i|$. 
 - `Q normL1()` returns the L1-norm of the vector's entries, expressed as a quantity. <br>The L1-norm is |x<sub>1</sub>| + |x<sub>2</sub>| + ... + |x<sub>n</sub>|.
 - `Q normL2()` returns the L2-norm of the vector's entries, expressed as a quantity. <br>The L2-norm is sqrt(x<sub>1</sub><sup>2</sup> + x<sub>2</sub><sup>2</sup> + ... + x<sub>n</sub><sup>2</sup>).
 - `Q normLp(int p)` returns the L<sub>p</sub>-norm of the vector's entries, expressed as a quantity. <br>The L<sub>p</sub>-norm is (x<sub>1</sub><sup>p</sup> + x<sub>2</sub><sup>p</sup> + ... + x<sub>n</sub><sup>p</sup>)<sup>(1/p)</sup>.
