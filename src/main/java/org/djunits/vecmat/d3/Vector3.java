@@ -181,6 +181,15 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
+    public int nonZeroCount()
+    {
+        int n = this.xSi == 0.0 ? 0 : 1;
+        n += this.ySi == 0.0 ? 0 : 1;
+        n += this.zSi == 0.0 ? 0 : 1;
+        return n;
+    }
+
+    @Override
     public V scaleBy(final double factor)
     {
         return instantiateSi(this.xSi * factor, this.ySi * factor, this.zSi * factor);

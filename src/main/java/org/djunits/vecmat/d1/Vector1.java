@@ -95,6 +95,12 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     }
 
     @Override
+    public int nonZeroCount()
+    {
+        return this.xSi == 0.0 ? 0 : 1;
+    }
+
+    @Override
     public Vector1<Q, U> transpose()
     {
         return instantiateSi(this.xSi);

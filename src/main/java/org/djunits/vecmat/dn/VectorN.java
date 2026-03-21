@@ -150,6 +150,12 @@ public abstract class VectorN<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
+    public int nonZeroCount()
+    {
+        return this.dataSi.nonZeroCount();
+    }
+
+    @Override
     public int hashCode()
     {
         return Objects.hash(this.dataSi);

@@ -141,6 +141,12 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         return this.dataSi.cols();
     }
 
+    @Override
+    public int nonZeroCount()
+    {
+        return this.dataSi.nonZeroCount();
+    }
+
     /**
      * Return the data grid in SI units.
      * @return the data grid in SI units

@@ -216,6 +216,11 @@ public class QuantityTable<Q extends Quantity<Q, U>, U extends UnitInterface<U, 
         return this.dataSi.cols();
     }
 
+    @Override
+    public int nonZeroCount()
+    {
+        return this.dataSi.nonZeroCount();
+    }
 
     // --------------------------------------- AS() FUNCTIONS ---------------------------------
 

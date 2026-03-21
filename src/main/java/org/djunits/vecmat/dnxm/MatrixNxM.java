@@ -219,6 +219,12 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
+    public int nonZeroCount()
+    {
+        return this.dataSi.nonZeroCount();
+    }
+
+    @Override
     public int hashCode()
     {
         return Objects.hash(this.dataSi);

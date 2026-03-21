@@ -125,6 +125,14 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         return this.ySi;
     }
 
+    @Override
+    public int nonZeroCount()
+    {
+        int n = this.xSi == 0.0 ? 0 : 1;
+        n += this.ySi == 0.0 ? 0 : 1;
+        return n;
+    }
+
     /**
      * Return the contents of the vector as an array.
      * @return the contents of the vector as an array

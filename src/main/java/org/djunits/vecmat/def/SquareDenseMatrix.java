@@ -6,6 +6,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.util.ArrayMath;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -78,6 +79,12 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
     public int cols()
     {
         return this.order;
+    }
+
+    @Override
+    public int nonZeroCount()
+    {
+        return ArrayMath.nnz(this.dataSi);
     }
 
     @Override
