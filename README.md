@@ -203,7 +203,7 @@ This would print:
 Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same unit) such as vectors or 
 matrices. Efficient classes have been created for the 'small' vectors and matrices of size 1 to 3. The following vector and matrix classes exist:
 
-* `Vector1` for a vector with just one element
+* `Vector1` for a vector with just one entry
 * `Vector2.Row` and `Vector2.Col` for a row and column vector of size 2
 * `Vector3.Row` and `Vector3.Col` for a row and column vector of size 3
 * `VectorN.Row` and `VectorN.Col` for a row and column vector of any size
@@ -260,7 +260,7 @@ determinant: -6.0000000 s2
 
 ## Vector and Matrix calculations
 
-All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard (element-wise) operations on the elements of a vector or matrix are also supported. In all cases, units of the resulting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
+All standard vector and matrix operations are available, such as row and column extraction, calculation of determinant, inverse, and adjugate, transposing of vectors and matrices, matrix-matrix multiplication, matrix-vector multiplication, vector-vector multiplication, matrix-quantity multiplication, and vector-quantity multiplication. Hadamard (entry-by-entry) operations on the entries of a vector or matrix are also supported. In all cases, units of the resulting vector or matrix are calculated. This means that if we multiply a `Length` matrix with a `Length` matrix, we get a resulting matrix of quantity `Area` with an `Area.Unit` as its unit.
 
 The following example first shows a Hadamard operation, followed by an algebraic matrix multiplication:
 
@@ -269,7 +269,7 @@ VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
     new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
 Duration duration = Duration.of(2.0, "h");
 VectorN.Col<Speed, Speed.Unit> sv1 = 
-    lv1.divideElements(duration).as(Speed.Unit.km_h);
+    lv1.divideEntries(duration).as(Speed.Unit.km_h);
 System.out.println("Length: " + lv1);
 System.out.println("Speed : " + sv1);
 
@@ -289,7 +289,7 @@ System.out.println("Matrix2:\n" + lm4x2);
 System.out.println("Multiplication:\n" + mult22);
 ```
 
-The last matrix is cast to a strongly typed `Matrix2x2<Area, Area.Unit>`, where values are expressed in are. The code results in the following output:
+The last matrix is cast to a strongly typed `Matrix2x2<Area, Area.Unit>`, where values are expressed in `are`. The code results in the following output:
 
 ```
 Length: Col[10.0, 20.0, 60.0, 120.0, 400.0] km
@@ -323,7 +323,7 @@ Multiplication:
 
 ## QuantityTable
 
-For those cases where a tabular storage of data is needed, but it is not necessary to carry out matrix or vector operations, the `QuantityTable` exists. It behaves like a `MatrixNxM` without the overhead of a matrix. Hadamard (element-wise) operations are allowed on the `QuantityTable`. 
+For those cases where a tabular storage of data is needed, but it is not necessary to carry out matrix or vector operations, the `QuantityTable` exists. It behaves like a `MatrixNxM` without the overhead of a matrix. Hadamard (entry-by-entry) operations are allowed on the `QuantityTable`. 
 
 
 ## Localization

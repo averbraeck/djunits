@@ -20,17 +20,17 @@ The generic type of `Vector` of any size is the `VectorN` class. This vector can
 
 ## Vector operations
 
-A `Vector` implements the `Hadamard` interface for element-wise operations. These include:
+A `Vector` implements the `Hadamard` interface for entry-by-entry operations. These include:
 
-- `invertElements()`: Invert the vector on an element-by-element basis (1/value), where the unit will also be inverted. The inversion of a `Duration` vector will result in a vector of the same type (row/column) and size, with a unit of `1/s`, corresponding to a `Frequency`. 
-- `multiplyElements(Vector other)`: Multiply the elements of this vector on an element-by-element basis with those of another vector of the same type and size (but generally containing values of another quantity).
-- `divideElements(Vector other)`: Divide the elements of this vector on an element-by-element basis by those of another vector of the same type and size (but generally containing values of another quantity).
-- `multiplyElements(Quantity<?, ?> quantity)`: Multiply the elements of this vector on an element-by-element basis with the provided quantity.
-- `divideElements(Quantity<?, ?> quantity)`: Divide the elements of this vector on an element-by-element basis by the provided quantity.
+- `invertEntries()`: Invert the vector on an entry-by-entry basis (1/value), where the unit will also be inverted. The inversion of a `Duration` vector will result in a vector of the same type (row/column) and size, with a unit of `1/s`, corresponding to a `Frequency`. 
+- `multiplyEntries(Vector other)`: Multiply the entries of this vector on an entry-by-entry basis with those of another vector of the same type and size (but generally containing values of another quantity).
+- `divideEntries(Vector other)`: Divide the entries of this vector on an entry-by-entry basis by those of another vector of the same type and size (but generally containing values of another quantity).
+- `multiplyEntries(Quantity<?, ?> quantity)`: Multiply the entries of this vector on an entry-by-entry basis with the provided quantity.
+- `divideEntries(Quantity<?, ?> quantity)`: Divide the entries of this vector on an entry-by-entry basis by the provided quantity.
 
 All Hadamard operations result in a new instance of the `Vector` with a new unit, but of the same type (`Vector2.Col`, `Vector3.Row`, `VectorN.Col`, etc.) and with the same size.
 
-The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` will typically be a `VectorN.Row<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Vector` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency, Frequency.Unit>` vector using the `as(Frequency.Unit.Hz)` method. 
+The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` will typically be a `VectorN.Row<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Vector` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency, Frequency.Unit>` vector using the `as(Frequency.Unit.Hz)` method. 
 
 If a `VectorN` is internally of a size congruent with a specific vector type, e.g. `Vector2.Row` or `Vector3.Col`, it can be obtained as such using methods such as `asVector2Row()` or `asVector3Col()`. Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the vector size with the desired vector type at runtime. All vectors, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method, and to a `MatrixNxM` with the `asMatrixNxM()` method.
 
@@ -53,10 +53,10 @@ The generic methods of a `Vector` are:
 - `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Vector` only stores relative quantities.
 - `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Vector` only stores relative quantities.
 - `transpose()` returns a new `Vector` where the rows and columns are swapped.
-- `v1.add(v2)` returns a new `Vector` where all elements of `v2` have been added to the corresponding elements of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
-- `v1.subtract(v2)` returns a new `Vector` where all elements of `v2` have been subtracted from the corresponding elements of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
-- `v.scaleBy(double factor)` returns a new `Vector` where all elements of `v` have been scaled by `factor`. The `displayUnit` remains unchanged.
-- `v.divideBy(double factor)` returns a new `Vector` where all elements of `v` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
+- `v1.add(v2)` returns a new `Vector` where all entries of `v2` have been added to the corresponding entries of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
+- `v1.subtract(v2)` returns a new `Vector` where all entries of `v2` have been subtracted from the corresponding entries of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
+- `v.scaleBy(double factor)` returns a new `Vector` where all entries of `v` have been scaled by `factor`. The `displayUnit` remains unchanged.
+- `v.divideBy(double factor)` returns a new `Vector` where all entries of `v` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
 
 
 ## Obtaining values of vector entries
@@ -84,28 +84,28 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q mean()` returns the mean quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
-- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
+- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
 - `V negate()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $-x_i$. 
 - `V abs()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $|x_i|$. 
 - `Q normL1()` returns the L1-norm of the vector's entries, expressed as a quantity. The L1-norm is defined as $L1=|x_1|+|x_2|+...+ |x_n|$.
 - `Q normL2()` returns the L2-norm of the vector's entries, expressed as a quantity. The L2-norm is defined as $L2=\sqrt(x_1^2+x_2^2+...+x_n^2)$.
 - `Q normLp(int p)` returns the L<sub>p</sub>-norm of the vector's entries, expressed as a quantity. The L<sub>p</sub>-norm is defined as $L_p={(x_1^p+x_2^p+...+x_n^p)}^{(1/p)}$
-- `Q normLinf()` returns the L<sub>&infin;</sub>-norm of this element, expressed as a quantity. The L<sub>&infin;</sub>-norm is defined as $L_{\infty}=max(|x_1|,|x_2|,...,|x_n|)$.
-- `Q norm()` returns the default norm for the vector's entries. The default is defined as the L2-norm.
+- `Q normLinf()` returns the L<sub>&infin;</sub>-norm of this vector's entries, expressed as a quantity. The L<sub>&infin;</sub>-norm is defined as $L_{\infty}=max(|x_1|,|x_2|,...,|x_n|)$.
+- `Q norm()` returns the default norm for the vector's entries. The default norm is defined as the L2-norm.
 - `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the vector.
 
 
 ## Example vector definition and storage
 
-The example below shows the instantiation and usage of a column vector with 5 elements `VectorN.Col`:
+The example below shows the instantiation and usage of a column vector with 5 entries `VectorN.Col`:
 
 ```java
 VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
     new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
 Duration duration = Duration.of(2.0, "h");
 VectorN.Col<Speed, Speed.Unit> sv1 = 
-    lv1.divideElements(duration).as(Speed.Unit.km_h);
+    lv1.divideEntries(duration).as(Speed.Unit.km_h);
 System.out.println("Length: " + lv1);
 System.out.println("Speed : " + sv1);
 ```

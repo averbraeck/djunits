@@ -166,7 +166,7 @@ jerk3 expressed in Jerk.Unit.SI    : 0.10160000 m/s3
 jerk3 expressed in Jerk.Unit.ft_s3 : 0.33333333 ft/s3
 ```
 
-The usage of the newly defined quantity also includes vectors, matrices and quantity tables, without adding one extra line of code. The example below uses the `Jerk` in a 2x2 matrix, that is multiplied in an element-wise way by a `Duration` to get an `Acceleration` matrix if size 2x2:
+The usage of the newly defined quantity also includes vectors, matrices and quantity tables, without adding one extra line of code. The example below uses the `Jerk` in a 2x2 matrix, that is multiplied in an entry-by-entry way by a `Duration` to get an `Acceleration` matrix of size 2x2:
 
 ```java
 double[][] jmd = new double[][] {{1, 2}, {3, 4}};
@@ -175,7 +175,7 @@ System.out.println("\nJerk matrix:\n" + jerkMatrix2);
 
 Duration d = Duration.of(3.0, "s");
 Matrix2x2<Acceleration, Acceleration.Unit> mAcc = 
-    jerkMatrix2.multiplyElements(d).as(Acceleration.Unit.ft_s2);
+    jerkMatrix2.multiplyEntries(d).as(Acceleration.Unit.ft_s2);
 System.out.println("Acceleration matrix:\n" + mAcc);
 ```
 

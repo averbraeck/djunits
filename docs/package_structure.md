@@ -24,7 +24,7 @@ DJUNITS is divided into a number of packages:
 
 * **org.djunits.vecmat.def** contains the interfaces and abstract class definitions for vectors, matrices and quantity tables. Specific abstract classes for square matrices and square dense matrices are available.
 
-* **org.djunits.vecmat.operations** contains the operation interfaces for vectors, matrices and quantity tables. Examples are `Hadamard` for element-wise operations, `Normed` to calculate different vector norms, and `VectorTransposable` to transpose column vectors into row vectors and vice versa.
+* **org.djunits.vecmat.operations** contains the operation interfaces for vectors, matrices and quantity tables. Examples are `Hadamard` for entry-by-entry operations, `Normed` to calculate different vector norms, and `VectorTransposable` to transpose column vectors into row vectors and vice versa.
 
 * **org.djunits.vecmat.storage** contains the interfaces and implementations of dense and sparse storage for larger vectors, matrices and quantity tables. It is possible to store data in double precision (`double`) or single precision (`float`).
 

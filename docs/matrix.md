@@ -20,17 +20,17 @@ The generic type of `SquareMatrix` of any size is `MatrixNxN`. This matrix can a
 
 ## Matrix operations
 
-A `Matrix` implements the `Hadamard` interface for element-wise operations. These include:
+A `Matrix` implements the `Hadamard` interface for entry-by-entry operations. These include:
 
-- `invertElements()`: Invert the matrix on an element-by-element basis (1/value), where the unit will also be inverted. The inversion of a `Duration` matrix will result in a matrix of the same type (1x1, 2x2, 3x3, NxN, NxM) and size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency` matrix. 
-- `multiplyElements(Matrix other)`: Multiply the elements of this matrix on an element-by-element basis with those of another matrix of the same type and size (but generally containing values of another quantity).
-- `divideElements(Matrix other)`: Divide the elements of this matrix on an element-by-element basis by those of another matrix of the same type and size (but generally containing values of another quantity).
-- `multiplyElements(Quantity<?, ?> quantity)`: Multiply the elements of this matrix on an element-by-element basis with the provided quantity.
-- `divideElements(Quantity<?, ?> quantity)`: Divide the elements of this matrix on an element-by-element basis by the provided quantity.
+- `invertEntries()`: Invert the matrix on an entry-by-entry basis (1/value), where the unit will also be inverted. The inversion of a `Duration` matrix will result in a matrix of the same type (1x1, 2x2, 3x3, NxN, NxM) and size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency` matrix. 
+- `multiplyEntries(Matrix other)`: Multiply the entries of this matrix on an entry-by-entry basis with those of another matrix of the same type and size (but generally containing values of another quantity).
+- `divideEntries(Matrix other)`: Divide the entries of this matrix on an entry-by-entry basis by those of another matrix of the same type and size (but generally containing values of another quantity).
+- `multiplyEntries(Quantity<?, ?> quantity)`: Multiply the entries of this matrix on an entry-by-entry basis with the provided quantity.
+- `divideEntries(Quantity<?, ?> quantity)`: Divide the entries of this matrix on an entry-by-entry basis by the provided quantity.
 
 All Hadamard operations result in a new instance of the `Matrix` with a new unit, but of the same type (`Matrix2x2`, `MatrixNxM`, etc.) and with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Matrix` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
+The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Matrix` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
 If a `MatrixNxM` is internally of a size congruent with a specific matrix or vector type, e.g. `Vector2.Row` or `Matrix3x3`, it can be obtained as such using methods such as `asVector2Row()` or `asMatrix3x3()`. The same holds for `MatrixNxN` that can be transformed to a strongly typed `Matrix1x1`, `Matrix2x2`, or `Matrix3x3` (or `MatrixNxM`). Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the matrix size with the desired matrix type at runtime. All matrices, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method.
 
@@ -50,10 +50,10 @@ The generic methods of a `Matrix` are:
 - `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Matrix` only stores relative quantities.
 - `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Matrix` only stores relative quantities.
 - `transpose()` returns a new `Matrix` where the rows and columns are swapped.
-- `mx1.add(mx2)` returns a new `Matrix` where all elements of `mx2` have been added to the corresponding elements of `mx1`. The `displayUnit` is taken from `mx1`. The number of rows and columns of `mx1` and `mx2` have to be equal, of course.
-- `mx1.subtract(mx2)` returns a new `Matrix` where all elements of `mx2` have been subtracted from the corresponding elements of `mx1`. The `displayUnit` is taken from `mx1`. The number of rows and columns of `mx1` and `mx2` have to be equal, of course.
-- `mx.scaleBy(double factor)` returns a new `Matrix` where all elements of `mx` have been scaled by `factor`. The `displayUnit` remains unchanged.
-- `mx.divideBy(double factor)` returns a new `Matrix` where all elements of `mx` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
+- `mx1.add(mx2)` returns a new `Matrix` where all entries of `mx2` have been added to the corresponding entries of `mx1`. The `displayUnit` is taken from `mx1`. The number of rows and columns of `mx1` and `mx2` have to be equal, of course.
+- `mx1.subtract(mx2)` returns a new `Matrix` where all entries of `mx2` have been subtracted from the corresponding entries of `mx1`. The `displayUnit` is taken from `mx1`. The number of rows and columns of `mx1` and `mx2` have to be equal, of course.
+- `mx.scaleBy(double factor)` returns a new `Matrix` where all entries of `mx` have been scaled by `factor`. The `displayUnit` remains unchanged.
+- `mx.divideBy(double factor)` returns a new `Matrix` where all entries of `mx` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
 
 Many of the matrix operations are delegated to the mathematics utility classes `ArrayMath` and `MatrixMath`, which can be found in the `org.djunits.util` package.
 
@@ -109,7 +109,7 @@ A `Matrix` implements several mathematical operations. The most important ones a
 - `Q mean()` returns the mean quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
-- `Q median()` returns the median quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
+- `Q median()` returns the median quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `M negate()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
 - `M abs()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
@@ -121,7 +121,7 @@ A `Matrix` implements several mathematical operations. The most important ones a
 Square matrices have a number of additional operations:
 
 - `int order()` returns the number of rows or columns of the square matrix.
-- `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal elements. It results in a quantity with the same `displayUnit` as the original matrix.
+- `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal entries. It results in a quantity with the same `displayUnit` as the original matrix.
 - `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be $U^n$ where $n$ is the order of the matrix, and $U$ is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
 - `double determinantSi()` returns the SI-value of the determinant of the square matrix as a `double` value.
 - `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. When the unit of the original matrix is $U$, the unit of of the inverse matrix is $U^{-1}$. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.

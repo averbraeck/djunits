@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Quantity tables are 2-dimensional tables with quantity data of the same type. They can be regarded as generic data containers, suitable for data interfaces or method input types. In a sense, it acts like a `MatrixNxM` without the ability to carry out matrix and vector calculations. Hadamard (element-wise) operations on quantity tables are supported.
+Quantity tables are 2-dimensional tables with quantity data of the same type. They can be regarded as generic data containers, suitable for data interfaces or method input types. In a sense, it acts like a `MatrixNxM` without the ability to carry out matrix and vector calculations. Hadamard (entry-by-entry) operations on quantity tables are supported.
 
 The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, or sparse storage, where values are stored with an integer-based row-column index and a `double` or `float` value. Since the sparse storage involves quite some overhead, tables need to have a significant percentage of 0-values (40-50% or more) for using sparse storage to make sense. 
 
@@ -11,21 +11,21 @@ The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, o
 
 ## Quantity table operations
 
-A `QuantityTable` implements the `Hadamard` interface for element-by-element operations. These include:
+A `QuantityTable` implements the `Hadamard` interface for entry-by-entry operations. These include:
 
-- `invertElements()`: Invert each element of the table (1/value), where the unit will also be inverted. The inversion of a the elements of a `Duration` quantity table will result in a quantity table of the same size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency`. 
-- `multiplyElements(QuantityTable other)`: Multiply all elements of this quantity table with those of another quantity table of the same size (but generally containing values of another quantity).
-- `divideElements(QuantityTable other)`: Divide all elements of this quantity table by those of another quantity table of the same size (but generally containing values of another quantity).
-- `multiplyElements(Quantity<?, ?> quantity)`: Multiply all elements of this quantity table with the provided quantity.
-- `divideElements(Quantity<?, ?> quantity)`: Divide all elements of this quantity table by the provided quantity.
+- `invertEntries()`: Invert each entry of the table (1/value), where the unit will also be inverted. The inversion of a the entries of a `Duration` quantity table will result in a quantity table of the same size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency`. 
+- `multiplyEntries(QuantityTable other)`: Multiply all entries of this quantity table with those of another quantity table of the same size (but generally containing values of another quantity).
+- `divideEntries(QuantityTable other)`: Divide all entries of this quantity table by those of another quantity table of the same size (but generally containing values of another quantity).
+- `multiplyEntries(Quantity<?, ?> quantity)`: Multiply all entries of this quantity table with the provided quantity.
+- `divideEntries(Quantity<?, ?> quantity)`: Divide all entries of this quantity table by the provided quantity.
 
 All Hadamard operations result in a new instance of a `QuantityTable` with a new unit, but with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` using the `as(Frequency.Unit.Hz)` method. Note that the resulting `QuantityTable<Frequency, Frequency.Unit>` is a new instance of the table, and the original `QuantityTable` remains unchanged.
+The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` using the `as(Frequency.Unit.Hz)` method. Note that the resulting `QuantityTable<Frequency, Frequency.Unit>` is a new instance of the table, and the original `QuantityTable` remains unchanged.
 
 The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the original matrix.
 
-Furthermore, a quantity table is additive, which means that two tables of the same size and same quantity can be added to and subtracted from each other. Quantity tables also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods, scaling the elements of the quantity table by `factor`, respectively `1.0 / factor`.
+Furthermore, a quantity table is additive, which means that two tables of the same size and same quantity can be added to and subtracted from each other. Quantity tables also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods, scaling the entries of the quantity table by `factor`, respectively `1.0 / factor`.
 
 The generic methods of a `QuantityTable` are:
 
@@ -37,10 +37,10 @@ The generic methods of a `QuantityTable` are:
 - `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `QuantityTable` only stores relative quantities.
 - `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `QuantityTable` only stores relative quantities.
 - `transpose()` returns a new `QuantityTable` where the rows and columns are swapped.
-- `qt1.add(qt2)` returns a new `QuantityTable` where all elements of `qt2` have been added to the corresponding elements of `qt1`. The `displayUnit` is taken from `qt1`. The number of rows and columns of `qt1` and `qt2` have to be equal, of course.
-- `qt1.subtract(qt2)` returns a new `QuantityTable` where all elements of `qt2` have been subtracted from the corresponding elements of `qt1`. The `displayUnit` is taken from `qt1`. The number of rows and columns of `qt1` and `qt2` have to be equal, of course.
-- `qt.scaleBy(double factor)` returns a new `QuantityTable` where all elements of `qt` have been scaled by `factor`. The `displayUnit` remains unchanged.
-- `qt.divideBy(double factor)` returns a new `QuantityTable` where all elements of `qt` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
+- `qt1.add(qt2)` returns a new `QuantityTable` where all entries of `qt2` have been added to the corresponding entries of `qt1`. The `displayUnit` is taken from `qt1`. The number of rows and columns of `qt1` and `qt2` have to be equal, of course.
+- `qt1.subtract(qt2)` returns a new `QuantityTable` where all entries of `qt2` have been subtracted from the corresponding entries of `qt1`. The `displayUnit` is taken from `qt1`. The number of rows and columns of `qt1` and `qt2` have to be equal, of course.
+- `qt.scaleBy(double factor)` returns a new `QuantityTable` where all entries of `qt` have been scaled by `factor`. The `displayUnit` remains unchanged.
+- `qt.divideBy(double factor)` returns a new `QuantityTable` where all entries of `qt` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
 
 
 ## Obtaining values of quantity table entries
@@ -95,7 +95,7 @@ A `QuantityTable` implements several mathematical operations. The most important
 - `Q mean()` returns the mean quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
-- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
+- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `M negate()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
 - `M abs()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
