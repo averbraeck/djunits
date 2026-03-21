@@ -82,4 +82,10 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
         return new MatrixNxM<SIQuantity, SIUnit>(new DenseFloatDataSi(result, rows(), matrix.cols()), siUnit);
     }
 
+    /**
+     * Return a transposed matrix, where rows and columns have been swapped. The reason for the 'broad' return type is the fact
+     * that Vector extends Matrix, and Vector transposal swaps row vectors to column vectors and vice versa.
+     * @return a transposed matrix, where rows and columns have been swapped
+     */
+    public abstract Matrix<Q, U, ?, ?, ?> transpose();
 }
