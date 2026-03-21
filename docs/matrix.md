@@ -23,12 +23,12 @@ The generic type of `SquareMatrix` of any size is `MatrixNxN`. This matrix can a
 A `Matrix` implements the `Hadamard` interface for element-wise operations. These include:
 
 - `invertElements()`: Invert the matrix on an element-by-element basis (1/value), where the unit will also be inverted. The inversion of a `Duration` matrix will result in a matrix of the same type (1x1, 2x2, 3x3, NxN, NxM) and size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency` matrix. 
-- `multiplyElements(Matrix other)`: Multiply the elements of this matrix on an element-by-element basis with those of another matrix of the same type and size (but generally representing another quantity).
-- `divideElements(Matrix other)`: Divide the elements of this matrix on an element-by-element basis by those of another matrix of the same type and size (but generally representing another quantity).
+- `multiplyElements(Matrix other)`: Multiply the elements of this matrix on an element-by-element basis with those of another matrix of the same type and size (but generally containing values of another quantity).
+- `divideElements(Matrix other)`: Divide the elements of this matrix on an element-by-element basis by those of another matrix of the same type and size (but generally containing values of another quantity).
 - `multiplyElements(Quantity<?, ?> quantity)`: Multiply the elements of this matrix on an element-by-element basis with the provided quantity.
-- `divideElements(Quantity<?, ?> quantity)`: Divide the elements of this matrix on an element-by-element basis by those the provided quantity.
+- `divideElements(Quantity<?, ?> quantity)`: Divide the elements of this matrix on an element-by-element basis by the provided quantity.
 
-All Hadamard operations result in a new instance of the `Matrix` with a new unit, but of the same type and with the same size.
+All Hadamard operations result in a new instance of the `Matrix` with a new unit, but of the same type (`Matrix2x2`, `MatrixNxM`, etc.) and with the same number of rows and columns.
 
 The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a Matrix with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
@@ -40,12 +40,29 @@ The `transpose()` method returns the transposed matrix, where rows and columns h
 
 Furthermore, a matrix is `Additive`, which means that matrices of the same type, size, and quantity can be added to and subtracted from each other. Matrices also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods.
 
+The generic methods of a `Matrix` are:
+
+- `int rows()` returns the number of rows of the matrix.
+- `int cols()` returns the number of columns of the matrix.
+- `getDisplayUnit()` returns the display unit of the entire `Matrix`.
+- `setDisplayUnit(unit)` sets a new display unit for the entire `Matrix` based on a strongly typed `unit`.
+- `setDisplayUnit(string)` sets a new display unit for the entire `Matrix` based on a `String` representation of the unit.
+- `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Matrix` only stores relative quantities.
+- `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Matrix` only stores relative quantities.
+- `transpose()` returns a new `Matrix` where the rows and columns are swapped.
+- `mx1.add(mx2)` returns a new `Matrix` where all elements of `mx2` have been added to the corresponding elements of `mx1`. The `displayUnit` is taken from `mx1`. The number of rows and columns of `mx1` and `mx2` have to be equal, of course.
+- `mx1.subtract(mx2)` returns a new `Matrix` where all elements of `mx2` have been subtracted from the corresponding elements of `mx1`. The `displayUnit` is taken from `mx1`. The number of rows and columns of `mx1` and `mx2` have to be equal, of course.
+- `mx.scaleBy(double factor)` returns a new `Matrix` where all elements of `mx` have been scaled by `factor`. The `displayUnit` remains unchanged.
+- `mx.divideBy(double factor)` returns a new `Matrix` where all elements of `mx` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
+
 Many of the matrix operations are delegated to the mathematics utility classes `ArrayMath` and `MatrixMath`, which can be found in the `org.djunits.util` package.
 
 
 ## Obtaining values of matrix entries
 
-Several methods exist to get access to the entries of a `Matrix`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `matrix.rows()-1` and `col` ranges from `0` to `matrix.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` to `matrix.rows()` and `mCol` ranges from `1` to `matrix.cols`.
+Several methods exist to get access to the entries of a `Matrix`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `matrix.rows()-1` and `col` ranges from `0` to `matrix.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` up to and including `matrix.rows()` and `mCol` ranges from `1` up to and including `matrix.cols`.
+
+Quantity-based value methods return a value `Q` that is consistent with the quantity stored in the `Matrix`. Suppose `mx` is a `Matrix3x3<Mass, Mass.Unit>`. The result of the operation `mx.mget(1,3)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
 
 A `Matrix` contains the following methods to obtain its values:
 
@@ -70,9 +87,9 @@ A `Matrix` contains the following methods to obtain its values:
 - `Vector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Row` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Row` of the same `Quantity`, and with the same `displayUnit`. 
 - `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
-- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the SI-values of the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
-- `double[] mgetRowSi(int mRow)` retrieves the SI-values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. 
+- `double[] mgetRowSi(int mRow)` retrieves the SI-values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
 
 ### Retrieving matrix columns
@@ -80,21 +97,18 @@ A `Matrix` contains the following methods to obtain its values:
 - `Vector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Col` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Col` of the same `Quantity`, and with the same `displayUnit`. 
 - `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
-- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the SI-values of the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
-- `double[] mgetColumnSi(int mCol)` retrieves the SI-values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. 
+- `double[] mgetColumnSi(int mCol)` retrieves the SI-values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
 
 ## Mathematical operations for all matrices
 
 A `Matrix` implements several mathematical operations. The most important ones are:
 
-- `int rows()` returns the number of rows of the matrix.
-- `int cols()` returns the number of columns of the matrix.
 - `Q mean()` returns the mean quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
-- `Q mode()` returns the mode quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. For a matrix, this returns the maximum quantity value of the entries.
 - `Q median()` returns the median quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `M negate()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
@@ -102,7 +116,7 @@ A `Matrix` implements several mathematical operations. The most important ones a
 - `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the matrix.
 
 
-## Mathematical operations for square matrices
+## Extra operations for square matrices
 
 Square matrices have a number of additional operations:
 
@@ -127,47 +141,49 @@ Square matrices have a number of additional operations:
 The example below shows the instantiation and usage of a `MatrixNxM`:
 
 ```java
-MatrixNxM<Length, Length.Unit> lm4x2 = 
-    MatrixNxM.of(new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
-MatrixNxM<Length, Length.Unit> lm2x4 = 
-    MatrixNxM.of(new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
+MatrixNxM<Length, Length.Unit> lm2x4 = MatrixNxM.of(
+  new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
+MatrixNxM<Length, Length.Unit> lm4x2 = MatrixNxM.of(
+  new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
 
 var mult44 = lm4x2.multiply(lm2x4).as(Area.Unit.m2);
-System.out.println("\nMatrix1:\n" + lm4x2);
-System.out.println("Matrix2:\n" + lm2x4);
-System.out.println("Multiplication:\n" + mult44);
+System.out.println("\nMatrix1 (4x2):\n" + lm4x2);
+System.out.println("Matrix2 (2x4):\n" + lm2x4);
+System.out.println("Multiplication (4x4):\n" + mult44);
 
 Matrix2x2<Area, Area.Unit> mult22 = 
-    lm4x2.multiply(lm2x4).asMatrix2x2().as(Area.Unit.a);
-System.out.println("\nMatrix1:\n" + lm2x4);
-System.out.println("Matrix2:\n" + lm4x2);
-System.out.println("Multiplication:\n" + mult22);
+  lm2x4.multiply(lm4x2).asMatrix2x2().as(Area.Unit.a);
+System.out.println("\nMatrix1 (2x4):\n" + lm2x4);
+System.out.println("Matrix2 (4x2):\n" + lm4x2);
+System.out.println("Multiplication (2x2):\n" + mult22);
 ```
 
 The above code prints the following:
 
 ```
-Matrix1:
-[1.00000000, 2.00000000, 3.00000000, 4.00000000
- 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
-Matrix2:
+Matrix1 (4x2):
 [1.00000000, 2.00000000
  3.00000000, 4.00000000
  5.00000000, 6.00000000
  7.00000000, 8.00000000] m
-Multiplication:
-[50.0000000, 60.0000000
- 114.000000, 140.000000] m2
+Matrix2 (2x4):
+[1.00000000, 2.00000000, 3.00000000, 4.00000000
+ 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
+Multiplication (4x4):
+[11.0000000, 14.0000000, 17.0000000, 20.0000000
+ 23.0000000, 30.0000000, 37.0000000, 44.0000000
+ 35.0000000, 46.0000000, 57.0000000, 68.0000000
+ 47.0000000, 62.0000000, 77.0000000, 92.0000000] m2
 
-Matrix1:
+Matrix1 (2x4):
+[1.00000000, 2.00000000, 3.00000000, 4.00000000
+ 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
+Matrix2 (4x2):
 [1.00000000, 2.00000000
  3.00000000, 4.00000000
  5.00000000, 6.00000000
  7.00000000, 8.00000000] m
-Matrix2:
-[1.00000000, 2.00000000, 3.00000000, 4.00000000
- 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
-Multiplication:
+Multiplication (2x2):
 [0.50000000, 0.60000000
  1.14000000, 1.40000000] a
 ```

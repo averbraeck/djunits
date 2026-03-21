@@ -23,12 +23,12 @@ The generic type of `Vector` of any size is the `VectorN` class. This vector can
 A `Vector` implements the `Hadamard` interface for element-wise operations. These include:
 
 - `invertElements()`: Invert the vector on an element-by-element basis (1/value), where the unit will also be inverted. The inversion of a `Duration` vector will result in a vector of the same type (row/column) and size, with a unit of `1/s`, corresponding to a `Frequency`. 
-- `multiplyElements(Vector other)`: Multiply the elements of this vector on an element-by-element basis with those of another vector of the same type and size (but generally representing another quantity).
-- `divideElements(Vector other)`: Divide the elements of this vector on an element-by-element basis by those of another vector of the same type and size (but generally representing another quantity).
+- `multiplyElements(Vector other)`: Multiply the elements of this vector on an element-by-element basis with those of another vector of the same type and size (but generally containing values of another quantity).
+- `divideElements(Vector other)`: Divide the elements of this vector on an element-by-element basis by those of another vector of the same type and size (but generally containing values of another quantity).
 - `multiplyElements(Quantity<?, ?> quantity)`: Multiply the elements of this vector on an element-by-element basis with the provided quantity.
-- `divideElements(Quantity<?, ?> quantity)`: Divide the elements of this vector on an element-by-element basis by those the provided quantity.
+- `divideElements(Quantity<?, ?> quantity)`: Divide the elements of this vector on an element-by-element basis by the provided quantity.
 
-All Hadamard operations result in a new instance of the `Vector` with a new unit, but of the same type and with the same size.
+All Hadamard operations result in a new instance of the `Vector` with a new unit, but of the same type (`Vector2.Col`, `Vector3.Row`, `VectorN.Col`, etc.) and with the same size.
 
 The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` will typically be a `VectorN.Row<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a Vector with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency, Frequency.Unit>` vector using the `as(Frequency.Unit.Hz)` method. 
 
@@ -40,10 +40,30 @@ The `Vector` class implements the `transpose()` operation, which transforms a ro
 
 Furthermore, a vector is `Additive`, which means that vectors of the same type, size, and quantity can be added to and subtracted from each other. It is also possible to `add` or `subtract` a fixed `Quantity` of the correct type to/from the vector. Vectors also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods. Since vectors are immutable, all these operations result in a new instance of a vector.
 
+The generic methods of a `Vector` are:
+
+- `int rows()` returns the number of rows of the vector.
+- `int cols()` returns the number of columns of the vector.
+- `int size()` returns the size of the vector; the number of rows for a column vector, or the number of columns for a row vector.
+- `boolean isColumnVector()` returns whether this vector is a column vector.
+- `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector.
+- `getDisplayUnit()` returns the display unit of the entire `Vector`.
+- `setDisplayUnit(unit)` sets a new display unit for the entire `Vector` based on a strongly typed `unit`.
+- `setDisplayUnit(string)` sets a new display unit for the entire `Vector` based on a `String` representation of the unit.
+- `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Vector` only stores relative quantities.
+- `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Vector` only stores relative quantities.
+- `transpose()` returns a new `Vector` where the rows and columns are swapped.
+- `v1.add(v2)` returns a new `Vector` where all elements of `v2` have been added to the corresponding elements of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
+- `v1.subtract(v2)` returns a new `Vector` where all elements of `v2` have been subtracted from the corresponding elements of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
+- `v.scaleBy(double factor)` returns a new `Vector` where all elements of `v` have been scaled by `factor`. The `displayUnit` remains unchanged.
+- `v.divideBy(double factor)` returns a new `Vector` where all elements of `v` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
+
 
 ## Obtaining values of vector entries
 
-Several methods exist to get access to the entries of a `Vector`. When single entries are retrieved, two versions of the methods exist: a version where the index is 0-based, and a version where the index is 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entries of a vector start with v<sub>1</sub> and not v<sub>0</sub> and the entries of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(index)` method where `index` ranges from `0` to `vector.size()-1`, and an `msi(mIndex)` method where `mIndex` ranges from `1` to `vector.size()`. 
+Several methods exist to get access to the entries of a `Vector`. When single entries are retrieved, two versions of the methods exist: a version where the index is 0-based, and a version where the index is 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entries of a vector start with v<sub>1</sub> and not v<sub>0</sub> and the entries of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(index)` method where `index` ranges from `0` to `vector.size()-1`, and an `msi(mIndex)` method where `mIndex` ranges from `1` up to and including `vector.size()`. 
+
+Quantity-based methods return a value `Q` that is consistent with the quantity stored in the `Vector`. Suppose `v` is a `Vector3.Row<Mass, Mass.Unit>`. The result of the operation `v.mget(1)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
 
 A `Vector` contains the following methods to obtain its values:
 
@@ -61,15 +81,9 @@ All `Matrix` methods are also implemented for the `Vector`, where a `Vector` is 
 
 A `Vector` implements several mathematical operations. The most important ones are:
 
-- `int rows()` returns the number of rows of the vector.
-- `int cols()` returns the number of columns of the vector.
-- `int size()` returns the size of the vector; the number of rows for a column vector, or the number of columns for a row vector.
-- `boolean isColumnVector()` returns whether this vector is a column vector.
-- `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector.
 - `Q mean()` returns the mean quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
-- `Q mode()` returns the mode quantity value of the entries of the `Vector` as a strongly typed `Quantity`. For a vector, this returns the maximum quantity value of the entries.
 - `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
 - `V negate()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $-x_i$. 

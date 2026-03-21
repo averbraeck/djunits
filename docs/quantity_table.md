@@ -14,12 +14,12 @@ The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, o
 A `QuantityTable` implements the `Hadamard` interface for element-by-element operations. These include:
 
 - `invertElements()`: Invert each element of the table (1/value), where the unit will also be inverted. The inversion of a the elements of a `Duration` quantity table will result in a quantity table of the same size (number of rows and columns), with a unit of `1/s`, corresponding to a `Frequency`. 
-- `multiplyElements(QuantityTable other)`: Multiply all elements of this quantity table with those of another quantity table of the same size (but generally representing another quantity).
-- `divideElements(QuantityTable other)`: Divide all elements of this quantity table by those of another quantity table of the same size (but generally representing another quantity).
+- `multiplyElements(QuantityTable other)`: Multiply all elements of this quantity table with those of another quantity table of the same size (but generally containing values of another quantity).
+- `divideElements(QuantityTable other)`: Divide all elements of this quantity table by those of another quantity table of the same size (but generally containing values of another quantity).
 - `multiplyElements(Quantity<?, ?> quantity)`: Multiply all elements of this quantity table with the provided quantity.
-- `divideElements(Quantity<?, ?> quantity)`: Divide all elements of this quantity table by those the provided quantity.
+- `divideElements(Quantity<?, ?> quantity)`: Divide all elements of this quantity table by the provided quantity.
 
-All Hadamard operations result in a new instance of the `QuantityTable` with a new unit, but of the same type and with the same size.
+All Hadamard operations result in a new instance of a `QuantityTable` with a new unit, but with the same number of rows and columns.
 
 The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a QuantityTable with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
@@ -27,10 +27,28 @@ The `transpose()` method returns the transposed quantity table, where rows and c
 
 Furthermore, a quantity table is additive, which means that two tables of the same size and same quantity can be added to and subtracted from each other. Quantity tables also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods, scaling the elements of the quantity table by `factor`, respectively `1.0 / factor`.
 
+The generic methods of a `QuantityTable` are:
+
+- `int rows()` returns the number of rows of the quantity table.
+- `int cols()` returns the number of columns of the quantity table.
+- `getDisplayUnit()` returns the display unit of the entire `QuantityTable`.
+- `setDisplayUnit(unit)` sets a new display unit for the entire `QuantityTable` based on a strongly typed `unit`.
+- `setDisplayUnit(string)` sets a new display unit for the entire `QuantityTable` based on a `String` representation of the unit.
+- `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `QuantityTable` only stores relative quantities.
+- `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `QuantityTable` only stores relative quantities.
+- `transpose()` returns a new `QuantityTable` where the rows and columns are swapped.
+- `qt1.add(qt2)` returns a new `QuantityTable` where all elements of `qt2` have been added to the corresponding elements of `qt1`. The `displayUnit` is taken from `qt1`. The number of rows and columns of `qt1` and `qt2` have to be equal, of course.
+- `qt1.subtract(qt2)` returns a new `QuantityTable` where all elements of `qt2` have been subtracted from the corresponding elements of `qt1`. The `displayUnit` is taken from `qt1`. The number of rows and columns of `qt1` and `qt2` have to be equal, of course.
+- `qt.scaleBy(double factor)` returns a new `QuantityTable` where all elements of `qt` have been scaled by `factor`. The `displayUnit` remains unchanged.
+- `qt.divideBy(double factor)` returns a new `QuantityTable` where all elements of `qt` have been scaled by `1.0/factor`. The `displayUnit` remains unchanged.
+
 
 ## Obtaining values of quantity table entries
 
-Several methods exist to get access to the entries of a `QuantityTable`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `table.rows()-1` and `col` ranges from `0` to `table.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` to `table.rows()` and `mCol` ranges from `1` to `table.cols`.
+Several methods exist to get access to the entries of a `QuantityTable`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `table.rows()-1` and `col` ranges from `0` to `table.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` up to and including `table.rows()` and `mCol` ranges from `1` up to and including `table.cols`.
+
+Quantity-based value methods return a value `Q` that is consistent with the quantity stored in the `QuantityTable`. Suppose `qt` is a `QuantityTable<Mass, Mass.Unit>`. The result of the operation `qt.get(1,3)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
+
 
 A `QuantityTable` contains the following methods to obtain its values:
 
@@ -55,9 +73,9 @@ A `QuantityTable` contains the following methods to obtain its values:
 - `VectorN.Row getRowVector(int row)` retrieves the quantity table row at the 0-based `row` as a row-vector with the same `displayUnit`. 
 - `VectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit`. 
 - `Q[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
-- `Q[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI-values. 
-- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI-values. 
+- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI-values. Note that the resulting `double[]` array is 0-based.
 
 
 ### Retrieving quantity table columns
@@ -65,21 +83,18 @@ A `QuantityTable` contains the following methods to obtain its values:
 - `VectorN.Col getColumnVector(int col)` retrieves the quantity table column at the 0-based `col` as a column-vector with the same `displayUnit`. 
 - `VectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit`. 
 - `Q[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
-- `Q[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. Note that the resulting `Q[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI-values. 
-- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI-values.
+- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI-values. Note that the resulting `double[]` array is 0-based.
 
 
 ## Mathematical operations for `QuantityTable`
 
 A `QuantityTable` implements several mathematical operations. The most important ones are:
 
-- `int rows()` returns the number of rows of the quantity table.
-- `int cols()` returns the number of columns of the quantity table.
 - `Q mean()` returns the mean quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
-- `Q mode()` returns the mode quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. For a quantity table, this returns the maximum quantity value of the entries.
 - `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `M negate()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
