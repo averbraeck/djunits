@@ -21,7 +21,7 @@ A `QuantityTable` implements the `Hadamard` interface for element-by-element ope
 
 All Hadamard operations result in a new instance of a `QuantityTable` with a new unit, but with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a QuantityTable with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
+The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
 The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the original matrix.
 
@@ -63,7 +63,7 @@ A `QuantityTable` contains the following methods to obtain its values:
 ### Quantity-based value methods
 
 - `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed row-major quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
 - `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the original `QuantityTable`.
 - `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the original `QuantityTable`.
 

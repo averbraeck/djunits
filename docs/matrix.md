@@ -2,7 +2,7 @@
 
 Vectors and Matrices are one-dimensional and two-dimensional mathematical data containers for `Quantity` values, where each instance of a `Vector` or `Matrix` contains values of one specific quantity. A `Vector` or `Matrix` has a `displayUnit` for the entire vector or matrix. Internally, vectors and matrices store all values in their SI or BASE unit, just like the `Quantity`. 
 
-Vectors and Matrices are implemented in four different ways: Sparse or Dense data storage, combined with Double or Float precision, which gives four combinations. Sparse storage should be used for vectors or matrices that contain many zero values. Dense data storage would, in that case, store all the zeros, whereas in a sparse storage only the numbers unequal to zero are stored, together with an index. As the index adds some overhead, sparse storage makes only sense when the number of zeros is over 50% of the number of entries. 
+Vectors and Matrices are implemented in four different ways: Sparse or Dense data storage, combined with Double or Float precision, which gives four combinations. Sparse storage should be used for vectors or matrices that contain many zero values. Dense data storage would, in that case, store all the zeros, whereas in a sparse storage only the numbers unequal to zero are stored, together with an index. As the index adds some overhead, sparse storage only makes sense when the number of zeros is over 50% of the number of entries. 
 
 
 ## Matrix types
@@ -30,7 +30,7 @@ A `Matrix` implements the `Hadamard` interface for element-wise operations. Thes
 
 All Hadamard operations result in a new instance of the `Matrix` with a new unit, but of the same type (`Matrix2x2`, `MatrixNxM`, etc.) and with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a Matrix with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
+The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Matrix` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertElements` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
 
 If a `MatrixNxM` is internally of a size congruent with a specific matrix or vector type, e.g. `Vector2.Row` or `Matrix3x3`, it can be obtained as such using methods such as `asVector2Row()` or `asMatrix3x3()`. The same holds for `MatrixNxN` that can be transformed to a strongly typed `Matrix1x1`, `Matrix2x2`, or `Matrix3x3` (or `MatrixNxM`). Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the matrix size with the desired matrix type at runtime. All matrices, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method.
 
@@ -77,7 +77,7 @@ A `Matrix` contains the following methods to obtain its values:
 ### Quantity-based value methods
 
 - `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed row-major quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
 - `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the original `Matrix`.
 - `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the original `Matrix`.
 
