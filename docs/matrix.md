@@ -108,7 +108,7 @@ Square matrices have a number of additional operations:
 
 - `int order()` returns the number of rows or columns of the square matrix.
 - `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal elements. It results in a quantity with the same `displayUnit` as the original matrix.
-- `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be U<sup>n</sup> where n is the order of the matrix, and U is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
+- `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be $U^n$ where $n$ is the order of the matrix, and $U$ is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
 - `double determinantSi()` returns the SI-value of the determinant of the square matrix as a `double` value.
 - `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. When the unit of the original matrix is $U$, the unit of of the inverse matrix is $U^{-1}$. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.
 - `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as $adj(M)$. When the unit of the original matrix is $U$, the unit of $adj(M)$ is $U^{(n-1)}$. The adjugate of a square matrix $A$ is the matrix $\mathrm{adj}(A)$ satisfying $A \cdot \mathrm{adj}(A) = \det(A) \cdot I$.
