@@ -266,12 +266,6 @@ public abstract class Vector3<Q extends Quantity<Q, U>, U extends UnitInterface<
     }
 
     @Override
-    public Q mode()
-    {
-        return max();
-    }
-
-    @Override
     public Q median()
     {
         return getDisplayUnit().ofSi(Math2.median(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());

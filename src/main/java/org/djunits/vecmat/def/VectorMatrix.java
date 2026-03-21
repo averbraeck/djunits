@@ -376,15 +376,6 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the largest value of the entries of the vector or matrix.
-     * @return the largest value of the entries of the vector or matrix
-     */
-    public Q mode()
-    {
-        return max();
-    }
-
-    /**
      * Return the median value of the entries of the vector or matrix.
      * @return the median value of the entries of the vector or matrix
      */

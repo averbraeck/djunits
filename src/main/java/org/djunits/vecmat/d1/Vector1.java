@@ -297,12 +297,6 @@ public class Vector1<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> ex
     }
 
     @Override
-    public Q mode()
-    {
-        return max();
-    }
-
-    @Override
     public Q median()
     {
         return mean();
