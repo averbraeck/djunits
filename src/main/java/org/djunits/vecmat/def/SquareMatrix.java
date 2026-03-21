@@ -71,7 +71,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * Return the determinant of the square matrix as a scalar in SI or BASE units.
      * @return the determinant of the square matrix as a scalar in SI or BASE units
      */
-    public double determinantScalar()
+    public double determinantSi()
     {
         return MatrixMath.determinant(si(), order());
     }
@@ -89,7 +89,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
             newDim[i] = order() * (int) siu.siDimensions()[i];
         }
         SIUnit detSIUnit = new SIUnit(newDim);
-        return new SIQuantity(determinantScalar(), detSIUnit);
+        return new SIQuantity(determinantSi(), detSIUnit);
     }
 
     /**
