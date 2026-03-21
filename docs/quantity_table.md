@@ -82,8 +82,8 @@ A `QuantityTable` implements several mathematical operations. The most important
 - `Q mode()` returns the mode quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. For a quantity table, this returns the maximum quantity value of the entries.
 - `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
-- `M negate()` returns a `QuantityTable` of the same type and size where all entries x<sub>ij</sub> have been set to &minus;x<sub>ij</sub>. 
-- `M abs()` returns a `QuantityTable` of the same type and size where all entries x<sub>i</sub> have been set to |x<sub>i</sub>|. 
+- `M negate()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
+- `M abs()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
 - `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the quantity table.
 
 
