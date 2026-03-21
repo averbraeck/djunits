@@ -224,6 +224,26 @@ public class MatrixNxM<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         return this.dataSi.nonZeroCount();
     }
 
+    /**
+     * Return the transposed square matrix. A transposed matrix has the same unit as the original one.
+     * @return the transposed square matrix
+     */
+    @Override
+    @SuppressWarnings("checkstyle:needbraces")
+    public MatrixNxM<Q, U> transpose()
+    {
+        double[] data = si();
+        double[] newSi = new double[data.length];
+        int rows = rows();
+        int cols = cols();
+        final U displayUnit = getDisplayUnit();
+        final U baseUnit = displayUnit.getBaseUnit();
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                newSi[c * rows + r] = data[r * cols + c];
+        return new MatrixNxM<Q, U>(this.dataSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
+    }
+
     @Override
     public int hashCode()
     {
