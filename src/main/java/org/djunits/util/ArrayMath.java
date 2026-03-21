@@ -269,6 +269,23 @@ public final class ArrayMath
         return out;
     }
 
+    /**
+     * Returns the number of non-zero elements in the array.
+     * @param a the array; must be non-null
+     * @return the number of non-zero elements in the array
+     * @throws NullPointerException if {@code a} is null
+     */
+    public static double nnz(final double[] a)
+    {
+        Throw.whenNull(a, "a");
+        int n = 0;
+        for (double d : a)
+        {
+            n += d == 0.0 ? 0 : 1;
+        }
+        return n;
+    }
+
     // ---------------------------------------------------------------------
     // Procedural (into) variants — write into caller-provided buffer
     // ---------------------------------------------------------------------
