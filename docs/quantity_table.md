@@ -80,7 +80,7 @@ A `QuantityTable` implements several mathematical operations. The most important
 - `Q min()` returns the minimum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q mode()` returns the mode quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. For a quantity table, this returns the maximum quantity value of the entries.
-- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle are averaged. 
+- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `M negate()` returns a `QuantityTable` of the same type and size where all entries x<sub>ij</sub> have been set to &minus;x<sub>ij</sub>. 
 - `M abs()` returns a `QuantityTable` of the same type and size where all entries x<sub>i</sub> have been set to |x<sub>i</sub>|. 
@@ -91,6 +91,6 @@ A `QuantityTable` implements several mathematical operations. The most important
 
 `QuantityTable` objects do not implement matrix operations such as determinant, matrix multiplication, etc. If a `QuantityTable` at some point needs to be used for matrix operations, the `asVector` and `asMatrix` methods can transform the `QuantityTable` into a `Matrix` or column or row `Vector` of any of the types. For this, the `QuantityTable` implements the `asMatrix1x1()`, `asMatrix2x2()`, `asMatrix3x3()`, `asMatrixNxN()`, `asMatrixNxM()`, `asVector1()`, `asVector2Row()`, `asVector2Col()`, `asVector3Row()`, `asVector3Col()`, `asVectorNRow()`, and `asVectorNCol()` methods. These methods will check the consistency of the quantity table size with the desired vector or matrix type at runtime. After the transformation, the resulting vector or matrix is available for algebra operations.
 
-Reversely, the `Matrix` or column or row `Vector` classes can all be turned _into_ a `QuantityTable` with the `asQuantityTable()` method. 
+Reversely, `Matrix` or column or row `Vector` instances can all be turned _into_ a `QuantityTable` with the `asQuantityTable()` method. 
 
  

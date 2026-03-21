@@ -70,7 +70,7 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q min()` returns the minimum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q mode()` returns the mode quantity value of the entries of the `Vector` as a strongly typed `Quantity`. For a vector, this returns the maximum quantity value of the entries.
-- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle are averaged. 
+- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle element when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
 - `V negate()` returns a `Vector` of the same type and size where all entries x<sub>i</sub> have been set to &minus;x<sub>i</sub>. 
 - `V abs()` returns a `Vector` of the same type and size where all entries x<sub>i</sub> have been set to |x<sub>i</sub>|. 
