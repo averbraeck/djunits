@@ -349,8 +349,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the mean value of the elements of the vector or matrix.
-     * @return the mean value of the elements of the vector or matrix
+     * Return the mean value of the entries of the vector or matrix.
+     * @return the mean value of the entries of the vector or matrix
      */
     public Q mean()
     {
@@ -358,8 +358,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the minimum value of the elements of the vector or matrix.
-     * @return the minimum value of the elements of the vector or matrix
+     * Return the minimum value of the entries of the vector or matrix.
+     * @return the minimum value of the entries of the vector or matrix
      */
     public Q min()
     {
@@ -367,8 +367,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the maximum value of the elements of the vector or matrix.
-     * @return the maximum value of the elements of the vector or matrix
+     * Return the maximum value of the entries of the vector or matrix.
+     * @return the maximum value of the entries of the vector or matrix
      */
     public Q max()
     {
@@ -376,8 +376,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the largest value of the elements of the vector or matrix.
-     * @return the largest value of the elements of the vector or matrix
+     * Return the largest value of the entries of the vector or matrix.
+     * @return the largest value of the entries of the vector or matrix
      */
     public Q mode()
     {
@@ -385,8 +385,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the median value of the elements of the vector or matrix.
-     * @return the median value of the elements of the vector or matrix
+     * Return the median value of the entries of the vector or matrix.
+     * @return the median value of the entries of the vector or matrix
      */
     public Q median()
     {
@@ -394,8 +394,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Return the sum of the values of the elements of the vector or matrix.
-     * @return the sum of the values of the elements of the vector or matrix
+     * Return the sum of the values of the entries of the vector or matrix.
+     * @return the sum of the values of the entries of the vector or matrix
      */
     public Q sum()
     {
@@ -405,7 +405,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     /**
      * Return the a vector or matrix with entries that contain the sum of the element and the increment.
      * @param increment the quantity by which to increase the values of the vector or matrix
-     * @return a vector or matrix with elements that are incremented by the given quantity
+     * @return a vector or matrix with entries that are incremented by the given quantity
      */
     public VM add(final Q increment)
     {
@@ -415,7 +415,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     /**
      * Return the a vector or matrix with entries that contain the value minus the decrement.
      * @param decrement the quantity by which to decrease the values of the vector or matrix
-     * @return a vector or matrix with elements that are decremented by the given quantity
+     * @return a vector or matrix with entries that are decremented by the given quantity
      */
     public VM subtract(final Q decrement)
     {
@@ -453,10 +453,27 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Multiply the elements of this vector, matrix or table by the given quantity. This is actually a Hadamard operation, but
+     * Return the number of non-zero entries in the vector, matrix or table. Note that NaN and Infinity count as a non-zero
+     * element. The value -0.0 counts as 0.0.
+     * @return the number of non-zero entries in the vector, matrix or table
+     */
+    public abstract int nonZeroCount();
+    
+    /**
+     * Return the number of non-zero entries in the vector, matrix or table. Note that NaN and Infinity count as a non-zero
+     * element. The value -0.0 counts as 0.0. the acronym 'nnz' stands for 'number of non-zero entries'.
+     * @return the number of non-zero entries in the vector, matrix or table
+     */
+    public int nnz()
+    {
+        return nonZeroCount();
+    }
+
+    /**
+     * Multiply the entries of this vector, matrix or table by the given quantity. This is actually a Hadamard operation, but
      * since it is equivalent to a scaleBy operation, it is included in this interface.
      * @param quantity the scalar quantity to multiply by
-     * @return a vector, matrix or table where the elements have been multiplied by the given quantity
+     * @return a vector, matrix or table where the entries have been multiplied by the given quantity
      */
     public VM multiplyElements(final Dimensionless quantity)
     {
@@ -464,10 +481,10 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     /**
-     * Multiply the elements of this vector, matrix or table by the given quantity. This is actually a Hadamard operation, but
+     * Multiply the entries of this vector, matrix or table by the given quantity. This is actually a Hadamard operation, but
      * since it is equivalent to a scaleBy operation, it is included in this interface.
      * @param quantity the scalar quantity to multiply by
-     * @return a vector, matrix or table where the elements have been multiplied by the given quantity
+     * @return a vector, matrix or table where the entries have been multiplied by the given quantity
      */
     public VM divideElements(final Dimensionless quantity)
     {
