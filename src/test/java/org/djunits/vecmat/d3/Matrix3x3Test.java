@@ -171,6 +171,13 @@ public class Matrix3x3Test
         assertEquals(1.0, m.si(0, 0), EPS);
         assertEquals(1.0, m.msi(1, 1), EPS);
         assertTrue(m.isRelative(), "Length is relative (not absolute)");
+
+        assertEquals(9, m.nnz());
+        Matrix3x3<Length, Length.Unit> m0 = ofSi(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0}, Length.Unit.m);
+        assertEquals(0, m0.nnz());
+        Matrix3x3<Length, Length.Unit> m6 =
+                ofSi(new double[] {-1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, 8, 9}, Length.Unit.m);
+        assertEquals(6, m6.nnz());
     }
 
     /**

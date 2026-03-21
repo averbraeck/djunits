@@ -251,6 +251,28 @@ public final class VectorNTest
     // =====================================================================================
 
     /**
+     * Verify {@link VectorN.Row#nnz()} and {@link VectorN.Col#nnz()}.
+     */
+    @Test
+    @DisplayName("test nnz()")
+    public void testNnz()
+    {
+        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 2, 3, 4}, Length.Unit.m);
+        final VectorN.Col<Length, Length.Unit> c = col(new double[] {5, 6, 7, 8}, Length.Unit.m);
+        assertEquals(4, c.nnz());
+        assertEquals(4, r.nnz());
+        assertEquals(4, c.dataSi.nnz());
+        assertEquals(4, r.dataSi.nnz());
+        
+        VectorN.Row<Length, Length.Unit> r0 = row(new double[] {0.0, 0.0, 0.0}, Length.Unit.m);
+        VectorN.Col<Length, Length.Unit> c0 = col(new double[] {0.0, 0.0, 0.0}, Length.Unit.m);
+        assertEquals(0, r0.nnz());
+        assertEquals(0, c0.nnz());
+        assertEquals(0, c0.dataSi.nnz());
+        assertEquals(0, r0.dataSi.nnz());
+    }
+    
+    /**
      * Verify {@link VectorN.Row#get(int)} and {@link VectorN.Col#get(int)} with valid and invalid indices; this test ensures
      * the index addressing follows the intended semantics: a row vector reads from {@code (0, index-1)}, a column vector from
      * {@code (index-1, 0)}.

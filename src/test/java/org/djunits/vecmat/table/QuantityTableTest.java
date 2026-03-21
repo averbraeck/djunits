@@ -870,4 +870,23 @@ public class QuantityTableTest
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
+    /**
+     * Verify {@link QuantityTable#nnz()} and {@link QuantityTable#nnz()}.
+     */
+    @Test
+    @DisplayName("test nnz()")
+    public void testNnz()
+    {
+        QuantityTable<Length, Length.Unit> qt =
+                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
+        assertEquals(6, qt.nnz());
+        assertEquals(6, qt.nonZeroCount());
+        assertEquals(6, qt.getDataGrid().nnz());
+        assertEquals(6, qt.getDataGrid().nonZeroCount());
+
+        QuantityTable<Length, Length.Unit> qt0 = QuantityTable.of(new double[] {0, 0, 0, 0, 0, 0}, 2, 3, Length.Unit.km);
+        assertEquals(0, qt0.nnz());
+        assertEquals(0, qt0.getDataGrid().nnz());
+    }
+
 }

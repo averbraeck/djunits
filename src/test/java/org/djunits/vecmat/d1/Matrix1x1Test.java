@@ -170,6 +170,9 @@ public class Matrix1x1Test
         assertEquals(1, m.cols(), "cols");
         assertEquals(1.0, m.get(0, 0).si(), EPS, "(1,1) in SI");
         assertTrue(m.isRelative(), "Length is a relative quantity (not absolute)");
+        assertEquals(1, m.nnz());
+        Matrix1x1<Length, Length.Unit> m0 = ofSi(0.0, Length.Unit.m);
+        assertEquals(0, m0.nnz());
     }
 
     /**

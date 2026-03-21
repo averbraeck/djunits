@@ -322,6 +322,13 @@ public class Vector3Test
         assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
         assertArrayEquals(c.si(), ct.si(), EPS);
         assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
+        
+        assertEquals(3, c.nnz());
+        assertEquals(3, r.nnz());
+        Vector3.Row<Length, Length.Unit> r0 = row(0.0, 0.0, 0.0, Length.Unit.m);
+        Vector3.Col<Length, Length.Unit> c0 = col(0.0, 0.0, 0.0, Length.Unit.m);
+        assertEquals(0, r0.nnz());
+        assertEquals(0, c0.nnz());
     }
 
     // -----------------------------------------------------------------------------------------------------------------

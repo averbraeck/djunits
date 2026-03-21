@@ -152,6 +152,13 @@ public class MatrixNxMTest
         assertEquals(2, a32.cols());
         assertEquals(1.0, a32.get(0, 0).si(), EPS);
         assertTrue(a32.isRelative());
+
+        assertEquals(6, a32.nnz());
+        MatrixNxM<Length, Length.Unit> m0 = ofSi(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 3, Length.Unit.m);
+        assertEquals(0, m0.nnz());
+        MatrixNxM<Length, Length.Unit> m6 =
+                ofSi(new double[] {-1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, 8, 9}, 3, 3, Length.Unit.m);
+        assertEquals(6, m6.nnz());
     }
 
     /** setDisplayUnit only affects presentation; SI unchanged. */

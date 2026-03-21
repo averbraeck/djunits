@@ -225,6 +225,10 @@ public class Vector1Test
         Vector1<Length, Length.Unit> vt = v.transpose();
         assertArrayEquals(v.si(), vt.si(), EPS, "Transpose preserves SI");
         assertEquals(v.getDisplayUnit(), vt.getDisplayUnit());
+        
+        assertEquals(1, v.nnz());
+        Vector1<Length, Length.Unit> v0 = vec(0.0, Length.Unit.m);
+        assertEquals(0, v0.nnz());
     }
 
     // -----------------------------------------------------------------------------------------------------------------

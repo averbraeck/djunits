@@ -168,6 +168,12 @@ public class Matrix2x2Test
         assertEquals(2, m.cols(), "cols");
         assertEquals(1.0, m.get(0, 0).si(), EPS, "(1,1) in SI");
         assertTrue(m.isRelative(), "Length is a relative quantity (not absolute)");
+
+        assertEquals(4, m.nnz());
+        Matrix2x2<Length, Length.Unit> m0 = ofSi(new double[] {0.0, 0.0, 0.0, 0.0}, Length.Unit.m);
+        assertEquals(0, m0.nnz());
+        Matrix2x2<Length, Length.Unit> m2 = ofSi(new double[] {-0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0}, Length.Unit.m);
+        assertEquals(2, m2.nnz());
     }
 
     /**

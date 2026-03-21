@@ -185,6 +185,14 @@ public class MatrixNxNTest
         assertEquals(4, m.cols());
         assertEquals(1.0, m.get(0, 0).si(), EPS);
         assertTrue(m.isRelative());
+
+        assertEquals(16, m.nnz());
+        MatrixNxN<Length, Length.Unit> m0 = ofSi4(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Length.Unit.m);
+        assertEquals(0, m0.nnz());
+        MatrixNxN<Length, Length.Unit> m6 =
+                ofSi4(new double[] {0, 0, 0, 0, -1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, -8, 90, 0, 0, 0},
+                        Length.Unit.m);
+        assertEquals(6, m6.nnz());
     }
 
     /**

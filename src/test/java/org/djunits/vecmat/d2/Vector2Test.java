@@ -323,6 +323,13 @@ public class Vector2Test
         assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
         assertArrayEquals(c.si(), ct.si(), EPS, "Col→Row preserves SI");
         assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
+        
+        assertEquals(2, c.nnz());
+        assertEquals(2, r.nnz());
+        Vector2.Row<Length, Length.Unit> r0 = row(0.0, 0.0, Length.Unit.m);
+        Vector2.Col<Length, Length.Unit> c0 = col(0.0, 0.0, Length.Unit.m);
+        assertEquals(0, r0.nnz());
+        assertEquals(0, c0.nnz());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
