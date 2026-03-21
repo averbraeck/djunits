@@ -23,6 +23,8 @@ import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djunits.vecmat.storage.DenseFloatDataSi;
+import org.djunits.vecmat.storage.SparseDoubleDataSi;
+import org.djunits.vecmat.storage.SparseFloatDataSi;
 import org.djunits.vecmat.table.QuantityTable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -1356,6 +1358,123 @@ public class MatrixNxMTest
         // Bad path: mismatch cols(left)=3 with vector length=2
         MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(vN));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // transpose(): Dense/Sparse × (Double/Float) backings
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify transpose() for a DenseDoubleDataSi-backed rectangular matrix (2x3 → 3x2):
+     * - Row-major mapping: [a11,a12,a13,a21,a22,a23] → [a11,a21,a12,a22,a13,a23].
+     * - Shape swap rows↔cols.
+     * - Display unit preserved.
+     * - Double transpose returns original SI values.
+     */
+    @Test
+    @DisplayName("transpose(): DenseDoubleDataSi 2x3 → 3x2, unit preserved, T(T(A))=A")
+    public void testTransposeDenseDouble()
+    {
+        // A (2x3) in km (SI values chosen directly for clarity)
+        double[] si = {1, 2, 3, 4, 5, 6};
+        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new DenseDoubleDataSi(si, 2, 3), Length.Unit.km);
+        assertEquals(2, a.rows());
+        assertEquals(3, a.cols());
+
+        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        assertEquals(3, t.rows());
+        assertEquals(2, t.cols());
+        assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
+        assertArrayEquals(new double[] {1, 4, 2, 5, 3, 6}, t.si(), EPS, "Row-major remapping failed.");
+
+        // Double transpose should restore the original SI ordering
+        MatrixNxM<Length, Length.Unit> tt = t.transpose();
+        assertEquals(a.rows(), tt.rows());
+        assertEquals(a.cols(), tt.cols());
+        assertArrayEquals(a.si(), tt.si(), EPS, "Double transpose must restore original SI data.");
+    }
+
+    /**
+     * Verify transpose() for a DenseFloatDataSi-backed rectangular matrix (2x3 → 3x2):
+     * - Correct element remapping in row-major order.
+     * - Shape swap rows↔cols.
+     * - Display unit preserved.
+     */
+    @Test
+    @DisplayName("transpose(): DenseFloatDataSi 2x3 → 3x2, unit preserved")
+    public void testTransposeDenseFloat()
+    {
+        // A (2x3) in meters, float-backed storage
+        float[] sfi = new float[] {1f, 2f, 3f, 4f, 5f, 6f};
+        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new DenseFloatDataSi(sfi, 2, 3), Length.Unit.m);
+        assertEquals(2, a.rows());
+        assertEquals(3, a.cols());
+
+        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        assertEquals(3, t.rows());
+        assertEquals(2, t.cols());
+        assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
+        assertArrayEquals(new double[] {1, 4, 2, 5, 3, 6}, t.si(), EPS, "Row-major remapping failed.");
+    }
+
+    /**
+     * Verify transpose() for a SparseDoubleDataSi-backed rectangular matrix (2x3 → 3x2) containing zeros:
+     * - Correct element remapping in row-major order.
+     * - Shape swap rows↔cols.
+     * - nnz (non-zero count) preserved (zeros remain zeros after transpose).
+     */
+    @Test
+    @DisplayName("transpose(): SparseDoubleDataSi with zeros, 2x3 → 3x2, nnz preserved")
+    public void testTransposeSparseDouble()
+    {
+        // A (2x3) with explicit zeros to exercise sparsity:
+        // [1, 0, 0
+        //  4, 0, 6]
+        double[] si = {1, 0, 0, 4, 0, 6};
+        MatrixNxM<Length, Length.Unit> a =
+                new MatrixNxM<>(new SparseDoubleDataSi(si, 2, 3), Length.Unit.m);
+        assertEquals(2, a.rows());
+        assertEquals(3, a.cols());
+        assertEquals(3, a.nnz(), "Three non-zeros expected in source.");
+
+        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        assertEquals(3, t.rows());
+        assertEquals(2, t.cols());
+        assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
+        // Transposed layout (3x2):
+        // [1, 4
+        //  0, 0
+        //  0, 6]
+        assertArrayEquals(new double[] {1, 4, 0, 0, 0, 6}, t.si(), EPS, "Row-major remapping failed.");
+        assertEquals(3, t.nnz(), "nnz must be preserved after transpose.");
+    }
+
+    /**
+     * Verify transpose() for a SparseFloatDataSi-backed rectangular matrix (2x3 → 3x2) containing zeros:
+     * - Correct element remapping in row-major order.
+     * - Shape swap rows↔cols.
+     * - nnz preserved (zeros remain zeros).
+     */
+    @Test
+    @DisplayName("transpose(): SparseFloatDataSi with zeros, 2x3 → 3x2, nnz preserved")
+    public void testTransposeSparseFloat()
+    {
+        // A (2x3) with zeros, float-backed storage:
+        // [1, 0, 0
+        //  4, 0, 6]
+        float[] sfi = new float[] {1f, 0f, 0f, 4f, 0f, 6f};
+        MatrixNxM<Length, Length.Unit> a =
+                new MatrixNxM<>(new SparseFloatDataSi(sfi, 2, 3), Length.Unit.m);
+        assertEquals(2, a.rows());
+        assertEquals(3, a.cols());
+        assertEquals(3, a.nnz(), "Three non-zeros expected in source.");
+
+        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        assertEquals(3, t.rows());
+        assertEquals(2, t.cols());
+        assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
+        assertArrayEquals(new double[] {1, 4, 0, 0, 0, 6}, t.si(), EPS, "Row-major remapping failed.");
+        assertEquals(3, t.nnz(), "nnz must be preserved after transpose.");
     }
 
 }
