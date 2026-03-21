@@ -111,14 +111,14 @@ Square matrices have a number of additional operations:
 - `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be U<sup>n</sup> where n is the order of the matrix, and U is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
 - `double determinantSi()` returns the SI-value of the determinant of the square matrix as a `double` value.
 - `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. When the unit of the original matrix is $U$, the unit of of the inverse matrix is $U^{-1}$. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.
-- `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as $adj(M)$. When the unit of the original matrix is $U$, the unit of $adj(M)$ is $U^{(n-1)}$. The adjugate of a square matrix \(A\) is the matrix $\(\mathrm{adj}(A)\) satisfying \(A \cdot \mathrm{adj}(A) = \det(A)\,I\)$.
+- `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as $adj(M)$. When the unit of the original matrix is $U$, the unit of $adj(M)$ is $U^{(n-1)}$. The adjugate of a square matrix \(A\) is the matrix $\(\mathrm{adj}(A)\) $satisfying $A \cdot \mathrm{adj}(A) = \det(A)\,I\$.
 - `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to $\sqrt(\mathrm{trace}(A^*\cdot A))$. It results in a quantity with the same unit as the original matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
 - `Vector getDiagonalVector()` returns the quantities on the diagonal as a column vector of the same quantity and size as the square matrix. The `displayUnit` will be the same as that of the matrix.
 - `Q[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` of the quantities will be the same as that of the matrix.
 - `double[] getDiagonalSi()` returns the SI-values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.
 - `boolean isSymmetric()` returns whether the matrix is symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine symmetry.
 - `boolean isSymmetric(final Q tolerance)` returns whether the matrix is symmetric or not, using a provided tolerance.
-- `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that $A^T=-A$, or $a_{ij}=-a_{ji}$ for all entries $a_{ij}}.
+- `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that $A^T=-A$, or $a_{ij}=-a_{ji}$ for all entries $a_{ij}}$.
 - `boolean isSkewSymmetric(final Q tolerance)` returns whether the matrix is skew-symmetric or not, using a provided tolerance.
 
 
