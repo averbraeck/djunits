@@ -1,41 +1,40 @@
                    --------------------------------
                    DJUNITS - Delft Java UNIT System
                    --------------------------------
-                   Version 5.1, May, 2024
+                   Version 6, March 2026
                    --------------------------------
                    
 DJUNITS - Delft Java UNIT System
 
-	DJUNITS is a set of Java classes that make life easy for scientific software writers by catching many common errors at compile time.
+	DJUNITS is a set of Java classes that make life easier for scientific software writers, modelers, 
+	and anyone who uses quantities in their code, by catching many common errors with the use of quantities 
+	and units at compile time and some others at runtime.
 
-    * DJUNITS performs automatic conversions between most commonly used units of the same type. 
-      E.g. conversion of distances from miles to kilometers.
+    * DJUNITS performs automatic conversions between most commonly used units of the same quantity. 
+      E.g., conversion of distances from miles to kilometers.
 
-    * DJUNITS stores all values internally in the basic SI unit for that value. 
+    * DJUNITS stores all values internally in the basic SI unit for that quantity. 
       The value can be converted to any (user-selectable) suitable unit for display.
 
-    * DJUNITS distinguishes Absolute and Relative values to catch common errors at compile time,
+    * DJUNITS distinguishes absolute and relative values to catch common errors at compile time.
 
-    * DJUNITS ensures that a quantities expressed in different (but compatible) units are correctly added together. 
-      E.g. a distance in Miles is correctly added to a distance in kilometers.
+    * DJUNITS ensures that values of the same quantity expressed in different units are correctly added together. 
+      E.g. a distance in miles is correctly added to a distance in kilometers.
 
-    * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
-      (that may have another unit).
+    * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, 
+      or divided by another value (that may have another unit).
 
-    * DJUNITS can create and carry out operations with new SI types such as s2/m2 using SIDimensions. 
+    * DJUNITS handles Scalars, Vectors and Matrices, as well as quantity tables.
 
-    * DJUNITS handles Scalars, Vectors and Matrices.
+    * DJUNITS stores everything in immutable objects, except for the display unit that can be changed. 
 
-    * DJUNITS stores almost everything in immutable objects. Vectors and Matrices also come in a Mutable variant 
-      where the stored values can be modified one by one or all at once.
-
-    * DJUNITS stores values as Float or Double values.
+    * DJUNITS stores the data for vectors and matrices as float or double values, and using dense or sparse storage.
     
     []
     
 ==========
 
-	The demo project has a number of examples using DJUNITS.
+	The djunits-demo project has a number of examples for using DJUNITS.
 
 ==========
 
