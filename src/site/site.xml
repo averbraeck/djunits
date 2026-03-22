@@ -26,7 +26,7 @@
       <item name="Test JavaDocs" href="testapidocs/index.html" target="_blank" />
       <item name="Test Xref" href="xref-test/index.html" target="_blank" />
       <item name="Checkstyle" href="checkstyle.html" />
-      <item name="Surefire report" href="surefire-report.html" />
+      <item name="Surefire report" href="surefire.html" />
       <item name="JaCoCo" href="jacoco/index.html" target="_blank" />
       <item name="Tag List" href="taglist.html" />
       <item name="SpotBugs" href="spotbugs.html" />
