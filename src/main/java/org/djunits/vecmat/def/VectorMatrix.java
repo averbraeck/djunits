@@ -147,7 +147,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
 
     /**
      * Return the vector or matrix as a 2D array of scalars.
-     * @return a new Q[rows()][cols()] array; entry [i-1][j-1] contains get(i, j).
+     * @return a new Q[rows()][cols()] array; entry [i][j] contains get(i, j).
      */
     @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
     public Q[][] getScalarGrid()
@@ -163,6 +163,24 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
             for (int j = 0; j < cols(); j++)
             {
                 out[i][j] = get(i, j);
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Return the vector or matrix as a 2D array of double SI values.
+     * @return a new double[rows()][cols()] array; entry [i][j] contains si(i, j).
+     */
+    public double[][] getSiGrid()
+    {
+        // Allocate a double[rows()][cols()] array and fill it.
+        final double[][] out = (double[][]) Array.newInstance(double.class, rows(), cols());
+        for (int i = 0; i < rows(); i++)
+        {
+            for (int j = 0; j < cols(); j++)
+            {
+                out[i][j] = si(i, j);
             }
         }
         return out;
