@@ -481,6 +481,29 @@ public class Matrix1x1Test
     // ------------------------------------------------------------------------------------
 
     /**
+     * Verify grid extraction helpers on {@link VectorMatrix}.
+     */
+    @Test
+    @DisplayName("getScalarGrid / getSiGrid")
+    public void testGridExtraction()
+    {
+        Matrix1x1<Length, Length.Unit> m = ofSi(4000.0, Length.Unit.km); // in SI
+
+        Length[][] scalars = m.getScalarGrid();
+        double[][] sigrid = m.getSiGrid();
+
+        assertEquals(1, scalars.length);
+        assertEquals(1, scalars[0].length);
+        assertEquals(4.0, scalars[0][0].getInUnit(), EPS);
+        assertEquals(4000.0, scalars[0][0].si(), EPS);
+        assertEquals(Length.Unit.km, scalars[0][0].getDisplayUnit());
+
+        assertEquals(1, sigrid.length);
+        assertEquals(1, sigrid[0].length);
+        assertEquals(4000.0, sigrid[0][0], EPS);
+    }
+
+    /**
      * Verify scalar array extraction helpers on {@link VectorMatrix}.
      */
     @Test

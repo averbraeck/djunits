@@ -395,12 +395,33 @@ public class MatrixNxNTest
     {
         MatrixNxN<Length, Length.Unit> m =
                 ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length, Length.Unit> mhm =
+                ofSi4(new double[] {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160}, Length.Unit.hm);
 
         Length[][] q = m.getScalarGrid();
         assertEquals(4, q.length);
         assertEquals(4, q[0].length);
         assertEquals(1.0, q[0][0].si(), EPS);
         assertEquals(16.0, q[3][3].si(), EPS);
+        Length[][] qhm = mhm.getScalarGrid();
+        assertEquals(4, qhm.length);
+        assertEquals(4, qhm[3].length);
+        assertEquals(10.0, qhm[0][0].si(), EPS);
+        assertEquals(160.0, qhm[3][3].si(), EPS);
+        assertEquals(Length.Unit.hm, qhm[2][2].getDisplayUnit());
+
+        double[][] sigrid = m.getSiGrid();
+        double[][] sihm = mhm.getSiGrid();
+        assertEquals(4, sigrid.length);
+        assertEquals(4, sigrid[0].length);
+        assertEquals(4, sigrid[1].length);
+        assertEquals(4, sigrid[2].length);
+        assertEquals(1.0, sigrid[0][0], EPS);
+        assertEquals(6.0, sigrid[1][1], EPS);
+        assertEquals(16.0, sigrid[3][3], EPS);
+        assertEquals(10.0, sihm[0][0], EPS);
+        assertEquals(60.0, sihm[1][1], EPS);
+        assertEquals(160.0, sihm[3][3], EPS);
 
         Length[] row2 = m.getRowScalars(2);
         Length[] col3 = m.getColumnScalars(3);

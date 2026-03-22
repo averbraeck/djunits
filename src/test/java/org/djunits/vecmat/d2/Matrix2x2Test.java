@@ -471,6 +471,36 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
+     * Verify grid extraction helpers on {@link VectorMatrix}.
+     */
+    @Test
+    @DisplayName("getScalarGrid / getSiGrid")
+    public void testGridExtraction()
+    {
+        // Note: in SI units
+        Matrix2x2<Length, Length.Unit> m = ofSi(new double[] {1000, 2000, 3000, 4000}, Length.Unit.km);
+
+        Length[][] scalars = m.getScalarGrid();
+        double[][] sigrid = m.getSiGrid();
+
+        assertEquals(2, scalars.length);
+        assertEquals(2, scalars[0].length);
+        assertEquals(2, scalars[1].length);
+        assertEquals(1.0, scalars[0][0].getInUnit(), EPS);
+        assertEquals(1000.0, scalars[0][0].si(), EPS);
+        assertEquals(2000.0, scalars[0][1].si(), EPS);
+        assertEquals(4000.0, scalars[1][1].si(), EPS);
+        assertEquals(Length.Unit.km, scalars[0][0].getDisplayUnit());
+
+        assertEquals(2, sigrid.length);
+        assertEquals(2, sigrid[0].length);
+        assertEquals(2, sigrid[1].length);
+        assertEquals(1000.0, sigrid[0][0], EPS);
+        assertEquals(3000.0, sigrid[1][0], EPS);
+        assertEquals(4000.0, sigrid[1][1], EPS);
+    }
+
+    /**
      * Verify scalar array extraction helpers on {@link VectorMatrix}.
      */
     @Test

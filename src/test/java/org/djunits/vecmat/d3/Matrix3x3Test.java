@@ -481,12 +481,13 @@ public class Matrix3x3Test
      * Verify scalar array extraction helpers on {@link VectorMatrix}.
      */
     @Test
-    @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
+    @DisplayName("getScalarGrid / getSiGrid / getRowScalars / getColumnScalars / getDiagonalScalars")
     public void testScalarExtraction()
     {
         Matrix3x3<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
 
         Length[][] scalars = m.getScalarGrid();
+        double[][] sigrid = m.getSiGrid();
         Length[] row1 = m.getRowScalars(1);
         Length[] col2 = m.getColumnScalars(2);
         Length[] diag = m.getDiagonalScalars();
@@ -496,12 +497,23 @@ public class Matrix3x3Test
         assertEquals(1.0, scalars[0][0].si(), EPS);
         assertEquals(5.0, scalars[1][1].si(), EPS);
         assertEquals(9.0, scalars[2][2].si(), EPS);
+
+        assertEquals(3, sigrid.length);
+        assertEquals(3, sigrid[0].length);
+        assertEquals(3, sigrid[1].length);
+        assertEquals(3, sigrid[2].length);
+        assertEquals(1.0, sigrid[0][0], EPS);
+        assertEquals(5.0, sigrid[1][1], EPS);
+        assertEquals(9.0, sigrid[2][2], EPS);
+
         assertEquals(3, row1.length);
         assertEquals(4.0, row1[0].si(), EPS);
         assertEquals(6.0, row1[2].si(), EPS);
+        
         assertEquals(3, col2.length);
         assertEquals(3.0, col2[0].si(), EPS);
         assertEquals(9.0, col2[2].si(), EPS);
+        
         assertEquals(3, diag.length);
         assertEquals(1.0, diag[0].si(), EPS);
         assertEquals(5.0, diag[1].si(), EPS);

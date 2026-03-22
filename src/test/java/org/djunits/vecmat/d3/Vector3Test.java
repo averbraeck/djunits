@@ -19,6 +19,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d1.Vector1;
+import org.djunits.vecmat.def.VectorMatrix;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -136,9 +137,8 @@ public class Vector3Test
         assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, csiVectorOf.si(), EPS, "si array used as-is");
         assertEquals(20.0, csiVectorOf.get(0, 0).si(), EPS);
-        
-        assertThrows(IllegalArgumentException.class,
-                () -> c.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
+
+        assertThrows(IllegalArgumentException.class, () -> c.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
     }
 
     /** Verify instantiateSi(double[]) enforces length=3 and delegates (Row). */
@@ -151,7 +151,7 @@ public class Vector3Test
         Vector3.Row<Length, Length.Unit> s = r.instantiateSi(new double[] {10.0, 20.0, 30.0});
         assertArrayEquals(new double[] {10.0, 20.0, 30.0}, s.si(), EPS);
         assertEquals(r.getDisplayUnit(), s.getDisplayUnit());
-        
+
         double[] newSi = {20, 30, 40};
         Vector3.Row<SIQuantity, SIUnit> rsiVector = r.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", rsiVector.getDisplayUnit().toString(true, false), "display unit retained");
@@ -162,9 +162,8 @@ public class Vector3Test
         assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, rsiVectorOf.si(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVectorOf.get(0, 0).si(), EPS);
-        
-        assertThrows(IllegalArgumentException.class,
-                () -> r.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
+
+        assertThrows(IllegalArgumentException.class, () -> r.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -322,7 +321,7 @@ public class Vector3Test
         assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
         assertArrayEquals(c.si(), ct.si(), EPS);
         assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
-        
+
         assertEquals(3, c.nnz());
         assertEquals(3, r.nnz());
         Vector3.Row<Length, Length.Unit> r0 = row(0.0, 0.0, 0.0, Length.Unit.m);
@@ -575,6 +574,35 @@ public class Vector3Test
     // ------------------------------------------------------------------------------------
 
     /**
+     * Verify scalar array extraction helpers on {@link VectorMatrix}.
+     */
+    @Test
+    @DisplayName("getScalarGrid / getSiGrid for Vector3.Col")
+    public void testCol3GridExtraction()
+    {
+        // Column vector: [x; y; z] = [5 km; 6 km; 7 km] -> SI = [5000; 6000; 7000] m
+        Vector3.Col<Length, Length.Unit> v = col(5.0, 6.0, 7.0, Length.Unit.km);
+
+        Length[][] scalars = v.getScalarGrid();
+        double[][] sigrid = v.getSiGrid();
+
+        assertEquals(3, scalars.length);
+        assertEquals(1, scalars[0].length);
+        assertEquals(5000.0, scalars[0][0].si(), EPS);
+        assertEquals(6000.0, scalars[1][0].si(), EPS);
+        assertEquals(7000.0, scalars[2][0].si(), EPS);
+        assertEquals(Length.Unit.km, scalars[0][0].getDisplayUnit());
+
+        assertEquals(3, sigrid.length);
+        assertEquals(1, sigrid[0].length);
+        assertEquals(1, sigrid[1].length);
+        assertEquals(1, sigrid[2].length);
+        assertEquals(5000.0, sigrid[0][0], EPS);
+        assertEquals(6000.0, sigrid[1][0], EPS);
+        assertEquals(7000.0, sigrid[2][0], EPS);
+    }
+
+    /**
      * Verify scalar array extraction helpers on a {@link Vector3.Col} (3x1) and their 1-based variants.
      * <p>
      * Uses kilometers as display unit to verify correct SI conversion.
@@ -783,6 +811,33 @@ public class Vector3Test
     // ------------------------------------------------------------------------------------
     // Vector3.Row — getScalars / getRowScalars / getColumnScalars (incl. 1-based)
     // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify scalar array extraction helpers on {@link VectorMatrix}.
+     */
+    @Test
+    @DisplayName("getScalarGrid / getSiGrid for Vector3.Row")
+    public void testRow3GridExtraction()
+    {
+        // Row vector: [x, y, z] = [3 cm, 4 cm, 5 cm] -> SI = [0.03, 0.04, 0.05] m
+        Vector3.Row<Length, Length.Unit> v = row(3.0, 4.0, 5.0, Length.Unit.cm);
+
+        Length[][] scalars = v.getScalarGrid();
+        double[][] sigrid = v.getSiGrid();
+
+        assertEquals(1, scalars.length);
+        assertEquals(3, scalars[0].length);
+        assertEquals(0.03, scalars[0][0].si(), EPS);
+        assertEquals(0.04, scalars[0][1].si(), EPS);
+        assertEquals(0.05, scalars[0][2].si(), EPS);
+        assertEquals(Length.Unit.cm, scalars[0][0].getDisplayUnit());
+
+        assertEquals(1, sigrid.length);
+        assertEquals(3, sigrid[0].length);
+        assertEquals(0.03, sigrid[0][0], EPS);
+        assertEquals(0.04, sigrid[0][1], EPS);
+        assertEquals(0.05, sigrid[0][2], EPS);
+    }
 
     /**
      * Verify scalar array extraction helpers on a {@link Vector3.Row} (1x3) and their 1-based variants.

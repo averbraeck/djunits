@@ -24,6 +24,7 @@ import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
+import org.djunits.vecmat.storage.SparseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -738,11 +739,32 @@ public class QuantityTableTest
     {
         QuantityTable<Length, Length.Unit> m =
                 new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2), Length.Unit.m);
+        QuantityTable<Length, Length.Unit> mhm =
+                new QuantityTable<>(new SparseDoubleDataSi(new double[] {10, 0, 30, 0, 50, 0}, 3, 2), Length.Unit.hm);
         Length[][] scalars = m.getScalarGrid();
         assertEquals(3, scalars.length);
         assertEquals(2, scalars[0].length);
         assertEquals(1.0, scalars[0][0].si(), EPS);
         assertEquals(6.0, scalars[2][1].si(), EPS);
+        Length[][] qhm = mhm.getScalarGrid();
+        assertEquals(3, qhm.length);
+        assertEquals(2, qhm[1].length);
+        assertEquals(10.0, qhm[0][0].si(), EPS);
+        assertEquals(0.0, qhm[2][1].si(), EPS);
+        assertEquals(Length.Unit.hm, qhm[1][1].getDisplayUnit());
+
+        double[][] sigrid = m.getSiGrid();
+        double[][] sihm = mhm.getSiGrid();
+        assertEquals(3, sigrid.length);
+        assertEquals(2, sigrid[0].length);
+        assertEquals(2, sigrid[1].length);
+        assertEquals(2, sigrid[2].length);
+        assertEquals(1.0, sigrid[0][0], EPS);
+        assertEquals(4.0, sigrid[1][1], EPS);
+        assertEquals(10.0, sihm[0][0], EPS);
+        assertEquals(0.0, sihm[1][1], EPS);
+        assertEquals(50.0, sihm[2][0], EPS);
+        assertEquals(0.0, sihm[2][1], EPS);
 
         Length[] row1 = m.getRowScalars(1);
         Length[] col1 = m.getColumnScalars(1);

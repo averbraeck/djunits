@@ -385,11 +385,29 @@ public class MatrixNxMTest
     public void testScalarExtraction()
     {
         MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length, Length.Unit> mhm = ofSi(new double[] {10, 20, 30, 40, 50, 60}, 3, 2, Length.Unit.hm);
         Length[][] scalars = m.getScalarGrid();
         assertEquals(3, scalars.length);
         assertEquals(2, scalars[0].length);
         assertEquals(1.0, scalars[0][0].si(), EPS);
         assertEquals(6.0, scalars[2][1].si(), EPS);
+        Length[][] qhm = mhm.getScalarGrid();
+        assertEquals(3, qhm.length);
+        assertEquals(2, qhm[1].length);
+        assertEquals(10.0, qhm[0][0].si(), EPS);
+        assertEquals(60.0, qhm[2][1].si(), EPS);
+        assertEquals(Length.Unit.hm, qhm[1][1].getDisplayUnit());
+
+        double[][] sigrid = m.getSiGrid();
+        double[][] sihm = mhm.getSiGrid();
+        assertEquals(3, sigrid.length);
+        assertEquals(2, sigrid[0].length);
+        assertEquals(2, sigrid[1].length);
+        assertEquals(1.0, sigrid[0][0], EPS);
+        assertEquals(4.0, sigrid[1][1], EPS);
+        assertEquals(10.0, sihm[0][0], EPS);
+        assertEquals(40.0, sihm[1][1], EPS);
+        assertEquals(60.0, sihm[2][1], EPS);
 
         Length[] row1 = m.getRowScalars(1);
         Length[] col1 = m.getColumnScalars(1);
@@ -1365,11 +1383,9 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify transpose() for a DenseDoubleDataSi-backed rectangular matrix (2x3 → 3x2):
-     * - Row-major mapping: [a11,a12,a13,a21,a22,a23] → [a11,a21,a12,a22,a13,a23].
-     * - Shape swap rows↔cols.
-     * - Display unit preserved.
-     * - Double transpose returns original SI values.
+     * Verify transpose() for a DenseDoubleDataSi-backed rectangular matrix (2x3 → 3x2): - Row-major mapping:
+     * [a11,a12,a13,a21,a22,a23] → [a11,a21,a12,a22,a13,a23]. - Shape swap rows↔cols. - Display unit preserved. - Double
+     * transpose returns original SI values.
      */
     @Test
     @DisplayName("transpose(): DenseDoubleDataSi 2x3 → 3x2, unit preserved, T(T(A))=A")
@@ -1395,10 +1411,8 @@ public class MatrixNxMTest
     }
 
     /**
-     * Verify transpose() for a DenseFloatDataSi-backed rectangular matrix (2x3 → 3x2):
-     * - Correct element remapping in row-major order.
-     * - Shape swap rows↔cols.
-     * - Display unit preserved.
+     * Verify transpose() for a DenseFloatDataSi-backed rectangular matrix (2x3 → 3x2): - Correct element remapping in row-major
+     * order. - Shape swap rows↔cols. - Display unit preserved.
      */
     @Test
     @DisplayName("transpose(): DenseFloatDataSi 2x3 → 3x2, unit preserved")
@@ -1418,10 +1432,9 @@ public class MatrixNxMTest
     }
 
     /**
-     * Verify transpose() for a SparseDoubleDataSi-backed rectangular matrix (2x3 → 3x2) containing zeros:
-     * - Correct element remapping in row-major order.
-     * - Shape swap rows↔cols.
-     * - nnz (non-zero count) preserved (zeros remain zeros after transpose).
+     * Verify transpose() for a SparseDoubleDataSi-backed rectangular matrix (2x3 → 3x2) containing zeros: - Correct element
+     * remapping in row-major order. - Shape swap rows↔cols. - nnz (non-zero count) preserved (zeros remain zeros after
+     * transpose).
      */
     @Test
     @DisplayName("transpose(): SparseDoubleDataSi with zeros, 2x3 → 3x2, nnz preserved")
@@ -1429,10 +1442,9 @@ public class MatrixNxMTest
     {
         // A (2x3) with explicit zeros to exercise sparsity:
         // [1, 0, 0
-        //  4, 0, 6]
+        // 4, 0, 6]
         double[] si = {1, 0, 0, 4, 0, 6};
-        MatrixNxM<Length, Length.Unit> a =
-                new MatrixNxM<>(new SparseDoubleDataSi(si, 2, 3), Length.Unit.m);
+        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new SparseDoubleDataSi(si, 2, 3), Length.Unit.m);
         assertEquals(2, a.rows());
         assertEquals(3, a.cols());
         assertEquals(3, a.nnz(), "Three non-zeros expected in source.");
@@ -1443,17 +1455,15 @@ public class MatrixNxMTest
         assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
         // Transposed layout (3x2):
         // [1, 4
-        //  0, 0
-        //  0, 6]
+        // 0, 0
+        // 0, 6]
         assertArrayEquals(new double[] {1, 4, 0, 0, 0, 6}, t.si(), EPS, "Row-major remapping failed.");
         assertEquals(3, t.nnz(), "nnz must be preserved after transpose.");
     }
 
     /**
-     * Verify transpose() for a SparseFloatDataSi-backed rectangular matrix (2x3 → 3x2) containing zeros:
-     * - Correct element remapping in row-major order.
-     * - Shape swap rows↔cols.
-     * - nnz preserved (zeros remain zeros).
+     * Verify transpose() for a SparseFloatDataSi-backed rectangular matrix (2x3 → 3x2) containing zeros: - Correct element
+     * remapping in row-major order. - Shape swap rows↔cols. - nnz preserved (zeros remain zeros).
      */
     @Test
     @DisplayName("transpose(): SparseFloatDataSi with zeros, 2x3 → 3x2, nnz preserved")
@@ -1461,10 +1471,9 @@ public class MatrixNxMTest
     {
         // A (2x3) with zeros, float-backed storage:
         // [1, 0, 0
-        //  4, 0, 6]
+        // 4, 0, 6]
         float[] sfi = new float[] {1f, 0f, 0f, 4f, 0f, 6f};
-        MatrixNxM<Length, Length.Unit> a =
-                new MatrixNxM<>(new SparseFloatDataSi(sfi, 2, 3), Length.Unit.m);
+        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new SparseFloatDataSi(sfi, 2, 3), Length.Unit.m);
         assertEquals(2, a.rows());
         assertEquals(3, a.cols());
         assertEquals(3, a.nnz(), "Three non-zeros expected in source.");
