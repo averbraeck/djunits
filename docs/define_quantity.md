@@ -12,7 +12,7 @@ The next paragraphs show how to build a Quantity type called `Jerk`
 The `Quantity` abstract class can easily be extended for creating new scalar quantity classes. The minimal that is needed is the following definition:
 
 ```java
-public class Jerk extends Quantity<Jerk, Jerk.Unit>
+public class Jerk extends Quantity<Jerk>
 {
     public Jerk(final double value, final Jerk.Unit unit)
     {
@@ -169,12 +169,11 @@ jerk3 expressed in Jerk.Unit.ft_s3 : 0.33333333 ft/s3
 The usage of the newly defined quantity also includes vectors, matrices and quantity tables, without adding one extra line of code. The example below uses the `Jerk` in a 2x2 matrix, that is multiplied in an entry-by-entry way by a `Duration` to get an `Acceleration` matrix of size 2x2:
 
 ```java
-double[][] jmd = new double[][] {{1, 2}, {3, 4}};
-Matrix2x2<Jerk, Jerk.Unit> jerkMatrix2 = Matrix2x2.of(jmd, Jerk.Unit.in_s3);
+double[][] jmd = new double[][] {{1, 2}, {3, 4}};<Jerk> jerkMatrix2 = Matrix2x2.of(jmd, Jerk.Unit.in_s3);
 System.out.println("\nJerk matrix:\n" + jerkMatrix2);
 
 Duration d = Duration.of(3.0, "s");
-Matrix2x2<Acceleration, Acceleration.Unit> mAcc = 
+Matrix2x2<Acceleration> mAcc = 
     jerkMatrix2.multiplyEntries(d).as(Acceleration.Unit.ft_s2);
 System.out.println("Acceleration matrix:\n" + mAcc);
 ```

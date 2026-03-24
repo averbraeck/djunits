@@ -265,17 +265,17 @@ All standard vector and matrix operations are available, such as row and column 
 The following example first shows a Hadamard operation, followed by an algebraic matrix multiplication:
 
 ```java
-VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
+VectorN.Col<Length> lv1 = VectorN.Col.of(
     new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
 Duration duration = Duration.of(2.0, "h");
-VectorN.Col<Speed, Speed.Unit> sv1 = 
+VectorN.Col<Speed> sv1 = 
     lv1.divideEntries(duration).as(Speed.Unit.km_h);
 System.out.println("Length: " + lv1);
 System.out.println("Speed : " + sv1);
 
-MatrixNxM<Length, Length.Unit> lm4x2 = MatrixNxM.of(
+MatrixNxM<Length> lm4x2 = MatrixNxM.of(
     new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
-MatrixNxM<Length, Length.Unit> lm2x4 = MatrixNxM.of(
+MatrixNxM<Length> lm2x4 = MatrixNxM.of(
     new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
 
 var mult44 = lm4x2.multiply(lm2x4).as(Area.Unit.m2);
@@ -283,13 +283,13 @@ System.out.println("\nMatrix1:\n" + lm4x2);
 System.out.println("Matrix2:\n" + lm2x4);
 System.out.println("Multiplication:\n" + mult44);
 
-Matrix2x2<Area, Area.Unit> mult22 = lm4x2.multiply(lm2x4).asMatrix2x2().as(Area.Unit.a);
+Matrix2x2<Area> mult22 = lm4x2.multiply(lm2x4).asMatrix2x2().as(Area.Unit.a);
 System.out.println("\nMatrix1:\n" + lm2x4);
 System.out.println("Matrix2:\n" + lm4x2);
 System.out.println("Multiplication:\n" + mult22);
 ```
 
-The last matrix is cast to a strongly typed `Matrix2x2<Area, Area.Unit>`, where values are expressed in `are`. The code results in the following output:
+The last matrix is cast to a strongly typed `Matrix2x2<Area>`, where values are expressed in `are`. The code results in the following output:
 
 ```
 Length: Col[10.0, 20.0, 60.0, 120.0, 400.0] km
@@ -380,7 +380,7 @@ DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. 
 - Localization is built-in as a design guideline and not as an afterthought. 
 - Absolute quantities have been re-implemented using a `Reference` for the reference point. 
 - Operation names are streamlined across quantities, vectors and matrices, e.g., `add`, `subtract`, `multiply`, `divide`.
-- Vector and matrix classes use generics for definitions such as `Matrix3x3<Area, Area.Unit>`, and only allow correct operations.
+- Vector and matrix classes use generics for definitions such as `Matrix3x3<Area>`, and only allow correct operations.
 - Vector and matrix operations such as trace, multiplication, and inverse are now fully supported with consistent unit calculations.
 - Hadamard operations have been added to vector and matrix calculations.
 - The `QuantityTable` has been added for storage of tabular quantity data.

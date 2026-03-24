@@ -21,7 +21,7 @@ A `QuantityTable` implements the `Hadamard` interface for entry-by-entry operati
 
 All Hadamard operations result in a new instance of a `QuantityTable` with a new unit, but with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `QuantityTable<Duration, Duration.Unit>` will typically be a `QuantityTable<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency, Frequency.Unit>` using the `as(Frequency.Unit.Hz)` method. Note that the resulting `QuantityTable<Frequency, Frequency.Unit>` is a new instance of the table, and the original `QuantityTable` remains unchanged.
+The result of a Hadamard operation on, e.g. a `QuantityTable<Duration>` will typically be a `QuantityTable<SIQuantity>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency>` using the `as(Frequency.Unit.Hz)` method. Note that the resulting `QuantityTable<Frequency>` is a new instance of the table, and the original `QuantityTable` remains unchanged.
 
 The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the original matrix.
 
@@ -47,7 +47,7 @@ The generic methods of a `QuantityTable` are:
 
 Several methods exist to get access to the entries of a `QuantityTable`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `table.rows()-1` and `col` ranges from `0` to `table.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` up to and including `table.rows()` and `mCol` ranges from `1` up to and including `table.cols`.
 
-Quantity-based value methods return a value `Q` that is consistent with the quantity stored in the `QuantityTable`. Suppose `qt` is a `QuantityTable<Mass, Mass.Unit>`. The result of the operation `qt.get(1,3)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
+Quantity-based value methods return a value `Q` that is consistent with the quantity stored in the `QuantityTable`. Suppose `qt` is a `QuantityTable<Mass>`. The result of the operation `qt.get(1,3)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
 
 
 A `QuantityTable` contains the following methods to obtain its values:

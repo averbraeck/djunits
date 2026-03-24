@@ -15,7 +15,7 @@ As can be seen, the abstract class `Matrix` extends the abstract class `VectorMa
 
 The generic type of `Matrix` of any size is the `MatrixNxM`. This matrix can use sparse or dense storage, and be populated with single-precision `float` values or double precision `double` values. 
 
-The generic type of `SquareMatrix` of any size is `MatrixNxN`. This matrix can also use sparse or dense storage, and store `float` values or `double` values. For efficiency reasons, since the `MatrixNxN` carries quite some overhead for the flexible data storage, separate classes are defined for `Matrix1x1`, `Matrix2x2`, and `Matrix3x3`. Data inside these matrices is stored in a dense `double[]` array that uses row-major indexing.
+The generic type of `SquareMatrix` of any size is `MatrixNxN`. This matrix can also use sparse or dense storage, and store `float` values or `double` values. For efficiency reasons, since the `MatrixNxN` carries some overhead for the flexible data storage, separate classes are defined for `Matrix1x1`, `Matrix2x2`, and `Matrix3x3`. Data inside these matrices is stored in a dense `double[]` array that uses row-major indexing.
 
 
 ## Matrix operations
@@ -30,7 +30,7 @@ A `Matrix` implements the `Hadamard` interface for entry-by-entry operations. Th
 
 All Hadamard operations result in a new instance of the `Matrix` with a new unit, but of the same type (`Matrix2x2`, `MatrixNxM`, etc.) and with the same number of rows and columns.
 
-The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed, Speed.Unit>` will typically be a `MatrixNxM<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Matrix` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency, Frequency.Unit>` matrix using the `as(Frequency.Unit.Hz)` method.
+The result of a Hadamard operation on, e.g. a `MatrixNxM<Speed>` will typically be a `MatrixNxM<SIQuantity>` since the inverse operation, multiplication or division will result in a `Matrix` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` matrix, the resulting matrix can be transformed into a proper `MatrixNxM<Frequency>` matrix using the `as(Frequency.Unit.Hz)` method.
 
 If a `MatrixNxM` is internally of a size congruent with a specific matrix or vector type, e.g. `Vector2.Row` or `Matrix3x3`, it can be obtained as such using methods such as `asVector2Row()` or `asMatrix3x3()`. The same holds for `MatrixNxN` that can be transformed to a strongly typed `Matrix1x1`, `Matrix2x2`, or `Matrix3x3` (or `MatrixNxM`). Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the matrix size with the desired matrix type at runtime. All matrices, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method.
 
@@ -62,7 +62,7 @@ Many of the matrix operations are delegated to the mathematics utility classes `
 
 Several methods exist to get access to the entries of a `Matrix`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `matrix.rows()-1` and `col` ranges from `0` to `matrix.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` up to and including `matrix.rows()` and `mCol` ranges from `1` up to and including `matrix.cols`.
 
-Quantity-based value methods return a value `Q` that is consistent with the quantity stored in the `Matrix`. Suppose `mx` is a `Matrix3x3<Mass, Mass.Unit>`. The result of the operation `mx.mget(1,3)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
+Quantity-based value methods return a value `Q` that is consistent with the quantity stored in the `Matrix`. Suppose `mx` is a `Matrix3x3<Mass>`. The result of the operation `mx.mget(1,3)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
 
 A `Matrix` contains the following methods to obtain its values:
 
@@ -86,8 +86,8 @@ A `Matrix` contains the following methods to obtain its values:
 
 - `Vector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Row` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Row` of the same `Quantity`, and with the same `displayUnit`. 
-- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
-- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
+- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the SI-values of the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
 - `double[] mgetRowSi(int mRow)` retrieves the SI-values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
@@ -96,8 +96,8 @@ A `Matrix` contains the following methods to obtain its values:
 
 - `Vector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Col` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Col` of the same `Quantity`, and with the same `displayUnit`. 
-- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length, Length.Unit>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
-- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area, Area.Unit>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
+- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the SI-values of the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
 - `double[] mgetColumnSi(int mCol)` retrieves the SI-values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
@@ -141,9 +141,9 @@ Square matrices have a number of additional operations:
 The example below shows the instantiation and usage of a `MatrixNxM`:
 
 ```java
-MatrixNxM<Length, Length.Unit> lm2x4 = MatrixNxM.of(
+MatrixNxM<Length> lm2x4 = MatrixNxM.of(
   new double[][] {{1, 2, 3, 4}, {5, 6, 7, 8}}, Length.Unit.m);
-MatrixNxM<Length, Length.Unit> lm4x2 = MatrixNxM.of(
+MatrixNxM<Length> lm4x2 = MatrixNxM.of(
   new double[][] {{1, 2}, {3, 4}, {5, 6}, {7, 8}}, Length.Unit.m);
 
 var mult44 = lm4x2.multiply(lm2x4).as(Area.Unit.m2);
@@ -151,7 +151,7 @@ System.out.println("\nMatrix1 (4x2):\n" + lm4x2);
 System.out.println("Matrix2 (2x4):\n" + lm2x4);
 System.out.println("Multiplication (4x4):\n" + mult44);
 
-Matrix2x2<Area, Area.Unit> mult22 = 
+Matrix2x2<Area> mult22 = 
   lm2x4.multiply(lm4x2).asMatrix2x2().as(Area.Unit.a);
 System.out.println("\nMatrix1 (2x4):\n" + lm2x4);
 System.out.println("Matrix2 (4x2):\n" + lm4x2);

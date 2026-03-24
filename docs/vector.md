@@ -15,7 +15,7 @@ Vectors can be defined as row vectors or as column vectors. The difference is es
 
 As can be seen, the abstract class `Vector` extends the abstract class `Matrix`, where a row vector is a matrix with dimensions 1 x N, and a column vector is a matrix with dimensions N x 1. 
 
-The generic type of `Vector` of any size is the `VectorN` class. This vector can use sparse or dense storage, and be populated with single-precision `float` values or double precision `double` values. For efficiency reasons, since the `VectorN` carries quite some overhead for the flexible data storage, separate classes are defined for `Vector1` (no distinction between row and column version), `Vector2` and `Vector3`, both with a `Row` and `Col` extension. 
+The generic type of `Vector` of any size is the `VectorN` class. This vector can use sparse or dense storage, and be populated with single-precision `float` values or double precision `double` values. For efficiency reasons, since the `VectorN` carries some overhead for the flexible data storage, separate classes are defined for `Vector1` (no distinction between row and column version), `Vector2` and `Vector3`, both with a `Row` and `Col` extension. 
 
 
 ## Vector operations
@@ -30,7 +30,7 @@ A `Vector` implements the `Hadamard` interface for entry-by-entry operations. Th
 
 All Hadamard operations result in a new instance of the `Vector` with a new unit, but of the same type (`Vector2.Col`, `Vector3.Row`, `VectorN.Col`, etc.) and with the same size.
 
-The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed, Speed.Unit>` will typically be a `VectorN.Row<SIQuantity, SIUnit>` since the inverse operation, multiplication or division will result in a `Vector` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency, Frequency.Unit>` vector using the `as(Frequency.Unit.Hz)` method. 
+The result of a Hadamard operation on, e.g. a `VectorN.Row<Speed>` will typically be a `VectorN.Row<SIQuantity>` since the inverse operation, multiplication or division will result in a `Vector` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` vector, the resulting vector can be transformed into a proper `VectorN.Row<Frequency>` vector using the `as(Frequency.Unit.Hz)` method. 
 
 If a `VectorN` is internally of a size congruent with a specific vector type, e.g. `Vector2.Row` or `Vector3.Col`, it can be obtained as such using methods such as `asVector2Row()` or `asVector3Col()`. Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the vector size with the desired vector type at runtime. All vectors, irrespective of their size, can be transformed to a `QuantityTable` using the `asQuantityTable()` method, and to a `MatrixNxM` with the `asMatrixNxM()` method.
 
@@ -63,7 +63,7 @@ The generic methods of a `Vector` are:
 
 Several methods exist to get access to the entries of a `Vector`. When single entries are retrieved, two versions of the methods exist: a version where the index is 0-based, and a version where the index is 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entries of a vector start with v<sub>1</sub> and not v<sub>0</sub> and the entries of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(index)` method where `index` ranges from `0` to `vector.size()-1`, and an `msi(mIndex)` method where `mIndex` ranges from `1` up to and including `vector.size()`. 
 
-Quantity-based methods return a value `Q` that is consistent with the quantity stored in the `Vector`. Suppose `v` is a `Vector3.Row<Mass, Mass.Unit>`. The result of the operation `v.mget(1)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
+Quantity-based methods return a value `Q` that is consistent with the quantity stored in the `Vector`. Suppose `v` is a `Vector3.Row<Mass>`. The result of the operation `v.mget(1)` will then be a strongly typed `Mass` quantity. The letter `Q` in the methods below indicates that strongly typed quantity such as `Mass`.
 
 A `Vector` contains the following methods to obtain its values:
 
@@ -101,10 +101,10 @@ A `Vector` implements several mathematical operations. The most important ones a
 The example below shows the instantiation and usage of a column vector with 5 entries `VectorN.Col`:
 
 ```java
-VectorN.Col<Length, Length.Unit> lv1 = VectorN.Col.of(
+VectorN.Col<Length> lv1 = VectorN.Col.of(
     new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
 Duration duration = Duration.of(2.0, "h");
-VectorN.Col<Speed, Speed.Unit> sv1 = 
+VectorN.Col<Speed> sv1 = 
     lv1.divideEntries(duration).as(Speed.Unit.km_h);
 System.out.println("Length: " + lv1);
 System.out.println("Speed : " + sv1);
