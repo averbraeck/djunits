@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Length extends Quantity<Length, Length.Unit>
+public class Length extends Quantity<Length>
 {
     /** Constant with value zero. */
     public static final Length ZERO = Length.ofSi(0.0);

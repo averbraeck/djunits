@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Frequency extends Quantity<Frequency, Frequency.Unit>
+public class Frequency extends Quantity<Frequency>
 {
     /** Constant with value zero. */
     public static final Frequency ZERO = Frequency.ofSi(0.0);

@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class AngularAcceleration extends Quantity<AngularAcceleration, AngularAcceleration.Unit>
+public class AngularAcceleration extends Quantity<AngularAcceleration>
 {
     /** Constant with value zero. */
     public static final AngularAcceleration ZERO = AngularAcceleration.ofSi(0.0);

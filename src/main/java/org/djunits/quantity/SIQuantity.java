@@ -16,7 +16,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class SIQuantity extends Quantity<SIQuantity, SIUnit>
+public class SIQuantity extends Quantity<SIQuantity>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -54,6 +54,12 @@ public class SIQuantity extends Quantity<SIQuantity, SIUnit>
     public SIQuantity instantiate(final double si)
     {
         return new SIQuantity(si, getDisplayUnit());
+    }
+
+    @Override
+    public SIUnit getDisplayUnit()
+    {
+        return (SIUnit) super.getDisplayUnit();
     }
 
     @Override

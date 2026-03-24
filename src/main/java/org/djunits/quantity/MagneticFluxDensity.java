@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class MagneticFluxDensity extends Quantity<MagneticFluxDensity, MagneticFluxDensity.Unit>
+public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
 {
     /** Constant with value zero. */
     public static final MagneticFluxDensity ZERO = MagneticFluxDensity.ofSi(0.0);

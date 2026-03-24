@@ -15,7 +15,7 @@ import org.djunits.unit.si.SIUnit;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class TemperatureDifference extends Quantity<TemperatureDifference, Temperature.Unit>
+public class TemperatureDifference extends Quantity<TemperatureDifference>
 {
     /** Constant with value zero. */
     public static final TemperatureDifference ZERO = TemperatureDifference.ofSi(0.0);

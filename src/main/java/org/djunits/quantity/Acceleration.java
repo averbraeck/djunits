@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Acceleration extends Quantity<Acceleration, Acceleration.Unit>
+public class Acceleration extends Quantity<Acceleration>
 {
     /** Constant with value zero. */
     public static final Acceleration ZERO = Acceleration.ofSi(0.0);

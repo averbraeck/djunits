@@ -19,7 +19,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Speed extends Quantity<Speed, Speed.Unit>
+public class Speed extends Quantity<Speed>
 {
     /** Constant with value zero. */
     public static final Speed ZERO = Speed.ofSi(0.0);

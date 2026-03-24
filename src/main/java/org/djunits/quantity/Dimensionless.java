@@ -13,7 +13,7 @@ import org.djunits.unit.si.SIUnit;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Dimensionless extends Quantity<Dimensionless, Unitless>
+public class Dimensionless extends Quantity<Dimensionless>
 {
     /** Constant with value zero. */
     public static final Dimensionless ZERO = Dimensionless.ofSi(0.0);

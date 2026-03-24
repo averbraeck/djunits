@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class SolidAngle extends Quantity<SolidAngle, SolidAngle.Unit>
+public class SolidAngle extends Quantity<SolidAngle>
 {
     /** Constant with value zero. */
     public static final SolidAngle ZERO = SolidAngle.ofSi(0.0);

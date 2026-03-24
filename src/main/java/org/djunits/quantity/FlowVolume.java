@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class FlowVolume extends Quantity<FlowVolume, FlowVolume.Unit>
+public class FlowVolume extends Quantity<FlowVolume>
 {
     /** Constant with value zero. */
     public static final FlowVolume ZERO = FlowVolume.ofSi(0.0);

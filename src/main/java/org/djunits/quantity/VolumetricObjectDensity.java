@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity, VolumetricObjectDensity.Unit>
+public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
 {
     /** Constant with value zero. */
     public static final VolumetricObjectDensity ZERO = VolumetricObjectDensity.ofSi(0.0);

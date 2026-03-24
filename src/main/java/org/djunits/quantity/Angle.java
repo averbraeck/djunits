@@ -20,7 +20,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Angle extends Quantity<Angle, Angle.Unit>
+public class Angle extends Quantity<Angle>
 {
     /** Constant with value zero radians. */
     public static final Angle ZERO = Angle.ofSi(0.0);

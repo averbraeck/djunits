@@ -18,7 +18,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Area extends Quantity<Area, Area.Unit>
+public class Area extends Quantity<Area>
 {
     /** Constant with value zero. */
     public static final Area ZERO = Area.ofSi(0.0);

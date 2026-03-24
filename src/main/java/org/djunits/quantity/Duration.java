@@ -20,7 +20,7 @@ import org.djunits.unit.system.UnitSystem;
  * @author Alexander Verbraeck
  */
 
-public class Duration extends Quantity<Duration, Duration.Unit>
+public class Duration extends Quantity<Duration>
 {
     /** Constant with value zero. */
     public static final Duration ZERO = Duration.ofSi(0.0);

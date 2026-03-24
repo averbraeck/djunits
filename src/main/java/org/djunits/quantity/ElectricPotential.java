@@ -19,7 +19,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class ElectricPotential extends Quantity<ElectricPotential, ElectricPotential.Unit>
+public class ElectricPotential extends Quantity<ElectricPotential>
 {
     /** Constant with value zero. */
     public static final ElectricPotential ZERO = ElectricPotential.ofSi(0.0);
