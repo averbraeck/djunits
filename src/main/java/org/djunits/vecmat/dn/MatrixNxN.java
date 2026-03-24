@@ -26,10 +26,9 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  */
-public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
-        extends SquareMatrix<Q, U, MatrixNxN<Q, U>, MatrixNxN<SIQuantity, SIUnit>, MatrixNxN<?, ?>>
+public class MatrixNxN<Q extends Quantity<Q>>
+        extends SquareMatrix<Q, MatrixNxN<Q>, MatrixNxN<SIQuantity>, MatrixNxN<?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -43,7 +42,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    public MatrixNxN(final DataGridSi<?> dataSi, final U displayUnit)
+    public MatrixNxN(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
         Throw.whenNull(dataSi, "dataSi");
@@ -56,13 +55,13 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param valueArrayInUnit the matrix values {a11, a12, ..., aN1, aN32, ..., aNN} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      * @return a new MatrixNxN with a unit
      * @throws IllegalArgumentException when the number of entries in the valueArray is not a perfect square
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxN<Q, U> of(final double[] valueArrayInUnit,
-            final U displayUnit)
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[] valueArrayInUnit,
+            final UnitInterface<?, Q> displayUnit)
     {
         Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -78,7 +77,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         double[] aSi = new double[valueArrayInUnit.length];
         for (int i = 0; i < valueArrayInUnit.length; i++)
             aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
-        return new MatrixNxN<Q, U>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
+        return new MatrixNxN<Q>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
     }
 
     /**
@@ -86,14 +85,14 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param valueGridInUnit the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      * @return a new MatrixNxN with a unit
      * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
      *             equal to the number of rows
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> MatrixNxN<Q, U> of(final double[][] valueGridInUnit,
-            final U displayUnit)
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[][] valueGridInUnit,
+            final UnitInterface<?, Q> displayUnit)
     {
         Throw.whenNull(valueGridInUnit, "valueGridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -107,13 +106,13 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
             for (int c = 0; c < n; c++)
                 aSi[n * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
         }
-        return new MatrixNxN<Q, U>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
+        return new MatrixNxN<Q>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
     }
 
     @Override
-    public MatrixNxN<Q, U> instantiateSi(final double[] siNew)
+    public MatrixNxN<Q> instantiateSi(final double[] siNew)
     {
-        return new MatrixNxN<Q, U>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
+        return new MatrixNxN<Q>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -157,41 +156,41 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+    public MatrixNxN<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
     {
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(siNew), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(siNew), siUnit);
     }
 
     @Override
-    public VectorN.Row<Q, U> getRowVector(final int row)
+    public VectorN.Row<Q> getRowVector(final int row)
     {
         checkRow(row);
         return VectorN.Row.ofSi(this.dataSi.getRowArray(row), getDisplayUnit());
     }
 
     @Override
-    public VectorN.Row<Q, U> mgetRowVector(final int mRow)
+    public VectorN.Row<Q> mgetRowVector(final int mRow)
     {
         mcheckRow(mRow);
         return VectorN.Row.ofSi(this.dataSi.getRowArray(mRow - 1), getDisplayUnit());
     }
 
     @Override
-    public VectorN.Col<Q, U> getColumnVector(final int col)
+    public VectorN.Col<Q> getColumnVector(final int col)
     {
         checkCol(col);
         return VectorN.Col.ofSi(this.dataSi.getColArray(col), getDisplayUnit());
     }
 
     @Override
-    public VectorN.Col<Q, U> mgetColumnVector(final int mCol)
+    public VectorN.Col<Q> mgetColumnVector(final int mCol)
     {
         mcheckCol(mCol);
         return VectorN.Col.ofSi(this.dataSi.getColArray(mCol - 1), getDisplayUnit());
     }
 
     @Override
-    public VectorN.Col<Q, U> getDiagonalVector() throws IllegalStateException
+    public VectorN.Col<Q> getDiagonalVector() throws IllegalStateException
     {
         final int n = rows();
         final double[] data = new double[n];
@@ -218,46 +217,46 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
+    public MatrixNxN<SIQuantity> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), order());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(invData), getDisplayUnit().siUnit().invert());
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(invData), getDisplayUnit().siUnit().invert());
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> adjugate()
+    public MatrixNxN<SIQuantity> adjugate()
     {
         double[] invData = MatrixMath.adjugate(si(), order());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(invData),
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(invData),
                 getDisplayUnit().siUnit().pow(order() - 1));
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> invertEntries()
+    public MatrixNxN<SIQuantity> invertEntries()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> multiplyEntries(final MatrixNxN<?, ?> other)
+    public MatrixNxN<SIQuantity> multiplyEntries(final MatrixNxN<?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> divideEntries(final MatrixNxN<?, ?> other)
+    public MatrixNxN<SIQuantity> divideEntries(final MatrixNxN<?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
     }
 
     @Override
-    public MatrixNxN<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
+    public MatrixNxN<SIQuantity> multiplyEntries(final Quantity<?> quantity)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
     }
 
     @Override
@@ -276,7 +275,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
             return false;
         if (getClass() != obj.getClass())
             return false;
-        MatrixNxN<?, ?> other = (MatrixNxN<?, ?>) obj;
+        MatrixNxN<?> other = (MatrixNxN<?>) obj;
         return Objects.equals(this.dataSi, other.dataSi);
     }
 
@@ -290,13 +289,13 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param otherMat the right-hand matrix to multiply with
      * @return the product matrix with the correct SI unit
      */
-    public MatrixNxN<SIQuantity, SIUnit> multiply(final MatrixNxN<?, ?> otherMat)
+    public MatrixNxN<SIQuantity> multiply(final MatrixNxN<?> otherMat)
     {
         checkMultiply(otherMat);
         final int n = order();
         final double[] resultData = MatrixMath.multiply(si(), otherMat.si(), n, n, n);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity, SIUnit>(this.dataSi.instantiateNew(resultData), resultUnit);
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(resultData), resultUnit);
     }
 
     /**
@@ -308,7 +307,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @return the resulting column vector from the multiplication
      * @throws IllegalArgumentException if the vector size does not equal {@code order()}
      */
-    public VectorN.Col<SIQuantity, SIUnit> multiply(final VectorN.Col<?, ?> otherVec)
+    public VectorN.Col<SIQuantity> multiply(final VectorN.Col<?> otherVec)
     {
         checkMultiply(otherVec);
         final int n = order();
@@ -323,17 +322,16 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * The SI units of this matrix and the target unit must match; otherwise an {@link IllegalArgumentException} is thrown. The
      * returned matrix shares the SI values but has the specified display unit.
      * @param <TQ> target quantity type
-     * @param <TU> target unit type
      * @param targetUnit the unit to convert the matrix to
      * @return a matrix typed in the target quantity with the specified display unit
      * @throws IllegalArgumentException when the units do not match
      */
-    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> MatrixNxN<TQ, TU> as(final TU targetUnit)
+    public <TQ extends Quantity<TQ>> MatrixNxN<TQ> as(final UnitInterface<?, TQ> targetUnit)
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxN<TQ, TU>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new MatrixNxN<TQ>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**
@@ -341,7 +339,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @return a {@code Matrix1x1} with identical SI data and display unit
      * @throws IllegalStateException if this matrix is not 1 x 1
      */
-    public Matrix1x1<Q, U> asMatrix1x1()
+    public Matrix1x1<Q> asMatrix1x1()
     {
         Throw.when(order() != 1, IllegalStateException.class, "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(),
                 cols());
@@ -353,7 +351,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @return a {@code Matrix2x2} with identical SI data and display unit
      * @throws IllegalStateException if this matrix is not 2 x 2
      */
-    public Matrix2x2<Q, U> asMatrix2x2()
+    public Matrix2x2<Q> asMatrix2x2()
     {
         Throw.when(order() != 2, IllegalStateException.class, "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(),
                 cols());
@@ -365,7 +363,7 @@ public class MatrixNxN<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @return a {@code Matrix3x3} with identical SI data and display unit
      * @throws IllegalStateException if this matrix is not 3 x 3
      */
-    public Matrix3x3<Q, U> asMatrix3x3()
+    public Matrix3x3<Q> asMatrix3x3()
     {
         Throw.when(order() != 3, IllegalStateException.class, "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(),
                 cols());

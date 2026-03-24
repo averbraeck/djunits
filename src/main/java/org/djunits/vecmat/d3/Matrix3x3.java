@@ -19,10 +19,9 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  */
-public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
-        extends SquareDenseMatrix<Q, U, Matrix3x3<Q, U>, Matrix3x3<SIQuantity, SIUnit>, Matrix3x3<?, ?>>
+public class Matrix3x3<Q extends Quantity<Q>>
+        extends SquareDenseMatrix<Q, Matrix3x3<Q>, Matrix3x3<SIQuantity>, Matrix3x3<?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -32,7 +31,7 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param arrayInUnit the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the display unit
      * @param displayUnit the display unit to use
      */
-    protected Matrix3x3(final double[] arrayInUnit, final U displayUnit)
+    protected Matrix3x3(final double[] arrayInUnit, final UnitInterface<?, Q> displayUnit)
     {
         super(arrayInUnit, displayUnit, 3);
     }
@@ -44,18 +43,18 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param arrayInUnit the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      * @return a new Matrix3x3 with a unit
      * @throws IllegalArgumentException when valueArray does not contain 3x3 = 9 values
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[] arrayInUnit,
-            final U displayUnit)
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[] arrayInUnit,
+            final UnitInterface<?, Q> displayUnit)
     {
         Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
         Throw.when(arrayInUnit.length != 9, IllegalArgumentException.class, "Length of array != 9 but %d", arrayInUnit.length);
-        return new Matrix3x3<Q, U>(arrayInUnit, displayUnit);
+        return new Matrix3x3<Q>(arrayInUnit, displayUnit);
     }
 
     /**
@@ -63,12 +62,12 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param gridInUnit the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      * @return a new Matrix3x3 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Matrix3x3<Q, U> of(final double[][] gridInUnit,
-            final U displayUnit)
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[][] gridInUnit,
+            final UnitInterface<?, Q> displayUnit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -79,93 +78,93 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
         for (int r = 0; r < 3; r++)
             for (int c = 0; c < 3; c++)
                 aInUnit[3 * r + c] = gridInUnit[r][c];
-        return new Matrix3x3<Q, U>(aInUnit, displayUnit);
+        return new Matrix3x3<Q>(aInUnit, displayUnit);
     }
 
     @Override
-    public Matrix3x3<Q, U> instantiateSi(final double[] siNew)
+    public Matrix3x3<Q> instantiateSi(final double[] siNew)
     {
-        return new Matrix3x3<Q, U>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Matrix3x3<Q>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+    public Matrix3x3<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
     {
-        return new Matrix3x3<SIQuantity, SIUnit>(siNew, siUnit);
+        return new Matrix3x3<SIQuantity>(siNew, siUnit);
     }
 
     @Override
-    public Vector3.Row<Q, U> getRowVector(final int row)
+    public Vector3.Row<Q> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector3.Row<Q, U>(si(row, 0), si(row, 1), si(row, 2), getDisplayUnit().getBaseUnit())
+        return new Vector3.Row<Q>(si(row, 0), si(row, 1), si(row, 2), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
-    public Vector3.Row<Q, U> mgetRowVector(final int mRow)
+    public Vector3.Row<Q> mgetRowVector(final int mRow)
     {
         mcheckRow(mRow);
-        return new Vector3.Row<Q, U>(msi(mRow, 1), msi(mRow, 2), msi(mRow, 3), getDisplayUnit().getBaseUnit())
+        return new Vector3.Row<Q>(msi(mRow, 1), msi(mRow, 2), msi(mRow, 3), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
-    public Vector3.Col<Q, U> getColumnVector(final int col)
+    public Vector3.Col<Q> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector3.Col<Q, U>(si(0, col), si(1, col), si(2, col), getDisplayUnit().getBaseUnit())
+        return new Vector3.Col<Q>(si(0, col), si(1, col), si(2, col), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
-    public Vector3.Col<Q, U> mgetColumnVector(final int mCol)
+    public Vector3.Col<Q> mgetColumnVector(final int mCol)
     {
         mcheckCol(mCol);
-        return new Vector3.Col<Q, U>(msi(1, mCol), msi(2, mCol), msi(3, mCol), getDisplayUnit().getBaseUnit())
+        return new Vector3.Col<Q>(msi(1, mCol), msi(2, mCol), msi(3, mCol), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
-    public Vector3.Col<Q, U> getDiagonalVector() throws IllegalStateException
+    public Vector3.Col<Q> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector3.Col<Q, U>(si(0, 0), si(1, 1), si(2, 2), getDisplayUnit().getBaseUnit())
+        return new Vector3.Col<Q>(si(0, 0), si(1, 1), si(2, 2), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> inverse() throws NonInvertibleMatrixException
+    public Matrix3x3<SIQuantity> inverse() throws NonInvertibleMatrixException
     {
         double[] invData = MatrixMath.inverse(si(), 3);
-        return new Matrix3x3<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().invert());
+        return new Matrix3x3<SIQuantity>(invData, getDisplayUnit().siUnit().invert());
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> adjugate()
+    public Matrix3x3<SIQuantity> adjugate()
     {
         double[] invData = MatrixMath.adjugate(si(), 3);
-        return new Matrix3x3<SIQuantity, SIUnit>(invData, getDisplayUnit().siUnit().pow(order() - 1));
+        return new Matrix3x3<SIQuantity>(invData, getDisplayUnit().siUnit().pow(order() - 1));
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> invertEntries()
+    public Matrix3x3<SIQuantity> invertEntries()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new Matrix3x3<SIQuantity, SIUnit>(ArrayMath.reciprocal(si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.reciprocal(si()), siUnit);
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> multiplyEntries(final Matrix3x3<?, ?> other)
+    public Matrix3x3<SIQuantity> multiplyEntries(final Matrix3x3<?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new Matrix3x3<SIQuantity, SIUnit>(ArrayMath.multiply(si(), other.si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.multiply(si(), other.si()), siUnit);
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> divideEntries(final Matrix3x3<?, ?> other)
+    public Matrix3x3<SIQuantity> divideEntries(final Matrix3x3<?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new Matrix3x3<SIQuantity, SIUnit>(ArrayMath.divide(si(), other.si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.divide(si(), other.si()), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
@@ -175,11 +174,11 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param otherMat the matrix to multiply with.
      * @return the matrix from the multiplication with the correct unit
      */
-    public Matrix3x3<SIQuantity, SIUnit> multiply(final Matrix3x3<?, ?> otherMat)
+    public Matrix3x3<SIQuantity> multiply(final Matrix3x3<?> otherMat)
     {
         checkMultiply(otherMat);
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 3, 3, 3);
-        return new Matrix3x3<SIQuantity, SIUnit>(resultData,
+        return new Matrix3x3<SIQuantity>(resultData,
                 getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
@@ -188,19 +187,19 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @param otherVec the column vector to multiply with
      * @return the resulting vector from the multiplication
      */
-    public Vector3.Col<SIQuantity, SIUnit> multiply(final Vector3.Col<?, ?> otherVec)
+    public Vector3.Col<SIQuantity> multiply(final Vector3.Col<?> otherVec)
     {
         checkMultiply(otherVec);
         double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
-        return new Vector3.Col<SIQuantity, SIUnit>(resultData[0], resultData[1], resultData[2],
+        return new Vector3.Col<SIQuantity>(resultData[0], resultData[1], resultData[2],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
 
     @Override
-    public Matrix3x3<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
+    public Matrix3x3<SIQuantity> multiplyEntries(final Quantity<?> quantity)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-        return new Matrix3x3<SIQuantity, SIUnit>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
     }
 
     /**
@@ -210,15 +209,14 @@ public class Matrix3x3<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
      * @return a matrix typed in the target matrix class
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
-     * @param <TU> target unit type
      */
-    public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Matrix3x3<TQ, TU> as(final TU targetUnit)
+    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final UnitInterface<?, TQ> targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix3x3<TQ, TU>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new Matrix3x3<TQ>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
 }

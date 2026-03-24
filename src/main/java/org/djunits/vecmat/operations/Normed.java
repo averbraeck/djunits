@@ -1,7 +1,6 @@
 package org.djunits.vecmat.operations;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
 
 /**
  * Normed calculates a norm of an element, expressed as a quantity.
@@ -11,9 +10,8 @@ import org.djunits.unit.UnitInterface;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  */
-public interface Normed<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
+public interface Normed<Q extends Quantity<Q>>
 {
     /**
      * Return the norm of this element, expressed as a quantity. The standard norm is the L2-norm.

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -98,10 +97,10 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
      * @param data the data in row-major format
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> DenseFloatDataSi(final Q[][] data)
+    public <Q extends Quantity<Q>> DenseFloatDataSi(final Q[][] data)
     {
         Throw.whenNull(data, "data");
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");

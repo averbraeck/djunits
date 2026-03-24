@@ -24,13 +24,12 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  * @param <V> the vector type (Row or Col)
  * @param <SI> the vector type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic vector type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, V extends Vector2<Q, U, V, SI, H>,
-        SI extends Vector2<SIQuantity, SIUnit, SI, ?, ?>, H extends Vector2<?, ?, ?, ?, ?>> extends Vector<Q, U, V, SI, H>
+public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI, H>, SI extends Vector2<SIQuantity, SI, ?, ?>,
+        H extends Vector2<?, ?, ?, ?>> extends Vector<Q, V, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -47,7 +46,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
      * @param yInUnit the y-value expressed in the given unit
      * @param displayUnit the display unit to use
      */
-    protected Vector2(final double xInUnit, final double yInUnit, final U displayUnit)
+    protected Vector2(final double xInUnit, final double yInUnit, final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
         this.xSi = displayUnit.toBaseValue(xInUnit);
@@ -83,7 +82,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
     public Iterator<Q> iterator()
     {
         final double[] si = new double[] {this.xSi, this.ySi};
-        final U frozenDisplayUnit = getDisplayUnit(); // capture once
+        final UnitInterface<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
     }
 
@@ -288,13 +287,13 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Vector2<?, ?, ?, ?, ?> other = (Vector2<?, ?, ?, ?, ?>) obj;
+        Vector2<?, ?, ?, ?> other = (Vector2<?, ?, ?, ?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi)
                 && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi);
     }
 
     @Override
-    public String toString(final U withUnit)
+    public String toString(final UnitInterface<?, Q> withUnit)
     {
         var s = new StringBuilder();
         s.append(isColumnVector() ? "Col" : "Row");
@@ -322,10 +321,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
-     * @param <U> the unit type
      */
-    public static class Col<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
-            extends Vector2<Q, U, Col<Q, U>, Col<SIQuantity, SIUnit>, Col<?, ?>> implements VectorTransposable<Row<Q, U>>
+    public static class Col<Q extends Quantity<Q>> extends Vector2<Q, Col<Q>, Col<SIQuantity>, Col<?>>
+            implements VectorTransposable<Row<Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -336,7 +334,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param yInUnit the y-value expressed in the given display unit
          * @param displayUnit the display unit to use
          */
-        public Col(final double xInUnit, final double yInUnit, final U displayUnit)
+        public Col(final double xInUnit, final double yInUnit, final UnitInterface<?, Q> displayUnit)
         {
             super(xInUnit, yInUnit, displayUnit);
         }
@@ -348,10 +346,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param displayUnit the display unit to use
          * @return a new Vector2 with a unit
          * @param <Q> the quantity type
-         * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2.Col<Q, U> of(final double xInUnit,
-                final double yInUnit, final U displayUnit)
+        public static <Q extends Quantity<Q>> Vector2.Col<Q> of(final double xInUnit, final double yInUnit,
+                final UnitInterface<?, Q> displayUnit)
         {
             return new Vector2.Col<>(xInUnit, yInUnit, displayUnit);
         }
@@ -375,17 +372,17 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        protected Vector2.Col<Q, U> instantiateSi(final double xSi, final double ySi)
+        protected Vector2.Col<Q> instantiateSi(final double xSi, final double ySi)
         {
             return new Vector2.Col<>(xSi, ySi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector2.Col<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+        public Vector2.Col<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
         {
             Throw.when(siNew.length != 2, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
                     siNew.length);
-            return new Vector2.Col<SIQuantity, SIUnit>(siNew[0], siNew[1], siUnit);
+            return new Vector2.Col<SIQuantity>(siNew[0], siNew[1], siUnit);
         }
 
         @Override
@@ -397,28 +394,28 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector1<Q, U> getRowVector(final int row)
+        public Vector1<Q> getRowVector(final int row)
         {
             checkRow(row);
-            return new Vector1<Q, U>(si(row, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q>(si(row, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector1<Q, U> mgetRowVector(final int mRow)
+        public Vector1<Q> mgetRowVector(final int mRow)
         {
             mcheckRow(mRow);
-            return new Vector1<Q, U>(msi(mRow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q>(msi(mRow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector2.Col<Q, U> getColumnVector(final int col)
+        public Vector2.Col<Q> getColumnVector(final int col)
         {
             checkCol(col);
             return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector2.Col<Q, U> mgetColumnVector(final int mCol)
+        public Vector2.Col<Q> mgetColumnVector(final int mCol)
         {
             mcheckCol(mCol);
             return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
@@ -439,9 +436,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Row<Q, U> transpose()
+        public Vector2.Row<Q> transpose()
         {
-            return new Vector2.Row<Q, U>(xSi(), ySi(), getDisplayUnit());
+            return new Vector2.Row<Q>(xSi(), ySi(), getDisplayUnit());
         }
 
         /**
@@ -449,16 +446,15 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param otherVec the row vector to multiply with
          * @return the resulting matrix from the multiplication
          */
-        public Matrix2x2<SIQuantity, SIUnit> multiply(final Vector2.Row<?, ?> otherVec)
+        public Matrix2x2<SIQuantity> multiply(final Vector2.Row<?> otherVec)
         {
             checkMultiply(otherVec);
             double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 1, 2);
-            return new Matrix2x2<SIQuantity, SIUnit>(resultData,
-                    getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
+            return new Matrix2x2<SIQuantity>(resultData, getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
         }
 
         @Override
-        public Vector2.Col<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
+        public Vector2.Col<SIQuantity> multiplyEntries(final Quantity<?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return Vector2.Col.of(xSi() * quantity.si(), ySi() * quantity.si(), siUnit);
@@ -471,15 +467,14 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @return a quantity typed in the target vector class
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
-         * @param <TU> target unit type
          */
-        public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2.Col<TQ, TU> as(final TU targetUnit)
+        public <TQ extends Quantity<TQ>> Vector2.Col<TQ> as(final UnitInterface<?, TQ> targetUnit)
                 throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new Vector2.Col<TQ, TU>(xSi(), ySi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+            return new Vector2.Col<TQ>(xSi(), ySi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
     }
@@ -493,10 +488,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
      * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
-     * @param <U> the unit type
      */
-    public static class Row<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>>
-            extends Vector2<Q, U, Row<Q, U>, Row<SIQuantity, SIUnit>, Row<?, ?>> implements VectorTransposable<Col<Q, U>>
+    public static class Row<Q extends Quantity<Q>> extends Vector2<Q, Row<Q>, Row<SIQuantity>, Row<?>>
+            implements VectorTransposable<Col<Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -507,7 +501,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param yInUnit the y-value expressed in the given unit
          * @param displayUnit the display unit to use
          */
-        public Row(final double xInUnit, final double yInUnit, final U displayUnit)
+        public Row(final double xInUnit, final double yInUnit, final UnitInterface<?, Q> displayUnit)
         {
             super(xInUnit, yInUnit, displayUnit);
         }
@@ -519,10 +513,9 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param displayUnit the display unit to use
          * @return a new Vector2 with a unit
          * @param <Q> the quantity type
-         * @param <U> the unit type
          */
-        public static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Vector2.Row<Q, U> of(final double xInUnit,
-                final double yInUnit, final U displayUnit)
+        public static <Q extends Quantity<Q>> Vector2.Row<Q> of(final double xInUnit, final double yInUnit,
+                final UnitInterface<?, Q> displayUnit)
         {
             return new Vector2.Row<>(xInUnit, yInUnit, displayUnit);
         }
@@ -546,17 +539,17 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        protected Vector2.Row<Q, U> instantiateSi(final double xSi, final double ySi)
+        protected Vector2.Row<Q> instantiateSi(final double xSi, final double ySi)
         {
             return new Vector2.Row<>(xSi, ySi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> instantiateSi(final double[] siNew, final SIUnit siUnit)
+        public Vector2.Row<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
         {
             Throw.when(siNew.length != 2, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
                     siNew.length);
-            return new Vector2.Row<SIQuantity, SIUnit>(siNew[0], siNew[1], siUnit);
+            return new Vector2.Row<SIQuantity>(siNew[0], siNew[1], siUnit);
         }
 
         @Override
@@ -568,31 +561,31 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Row<Q, U> getRowVector(final int row)
+        public Vector2.Row<Q> getRowVector(final int row)
         {
             checkRow(row);
             return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector2.Row<Q, U> mgetRowVector(final int mRow)
+        public Vector2.Row<Q> mgetRowVector(final int mRow)
         {
             mcheckRow(mRow);
             return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector1<Q, U> getColumnVector(final int col)
+        public Vector1<Q> getColumnVector(final int col)
         {
             checkCol(col);
-            return new Vector1<Q, U>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public Vector1<Q, U> mgetColumnVector(final int mCol)
+        public Vector1<Q> mgetColumnVector(final int mCol)
         {
             mcheckCol(mCol);
-            return new Vector1<Q, U>(msi(1, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q>(msi(1, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -610,29 +603,29 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
         }
 
         @Override
-        public Vector2.Col<Q, U> transpose()
+        public Vector2.Col<Q> transpose()
         {
-            return new Vector2.Col<Q, U>(xSi(), ySi(), getDisplayUnit());
+            return new Vector2.Col<Q>(xSi(), ySi(), getDisplayUnit());
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> invertEntries()
+        public Vector2.Row<SIQuantity> invertEntries()
         {
-            return new Vector2.Row<SIQuantity, SIUnit>(1.0 / xSi(), 1.0 / ySi(), getDisplayUnit().siUnit().invert());
+            return new Vector2.Row<SIQuantity>(1.0 / xSi(), 1.0 / ySi(), getDisplayUnit().siUnit().invert());
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> multiplyEntries(final Vector2.Row<?, ?> other)
+        public Vector2.Row<SIQuantity> multiplyEntries(final Vector2.Row<?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new Vector2.Row<SIQuantity, SIUnit>(xSi() * other.xSi(), ySi() * other.ySi(), siUnit);
+            return new Vector2.Row<SIQuantity>(xSi() * other.xSi(), ySi() * other.ySi(), siUnit);
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> divideEntries(final Vector2.Row<?, ?> other)
+        public Vector2.Row<SIQuantity> divideEntries(final Vector2.Row<?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new Vector2.Row<SIQuantity, SIUnit>(xSi() / other.xSi(), ySi() / other.ySi(), siUnit);
+            return new Vector2.Row<SIQuantity>(xSi() / other.xSi(), ySi() / other.ySi(), siUnit);
         }
 
         /**
@@ -640,7 +633,7 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param otherVec the column vector to multiply with
          * @return the resulting matrix from the multiplication
          */
-        public SIQuantity multiply(final Vector2.Col<?, ?> otherVec)
+        public SIQuantity multiply(final Vector2.Col<?> otherVec)
         {
             double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 2, 1);
             return new SIQuantity(resultData[0], getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
@@ -651,16 +644,16 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @param otherMat the matrix to multiply with
          * @return the resulting column vector from the multiplication
          */
-        public Vector2.Col<SIQuantity, SIUnit> multiply(final Matrix2x2<?, ?> otherMat)
+        public Vector2.Col<SIQuantity> multiply(final Matrix2x2<?> otherMat)
         {
             checkMultiply(otherMat);
             double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 1, 2, 2);
-            return new Vector2.Col<SIQuantity, SIUnit>(resultData[0], resultData[1],
+            return new Vector2.Col<SIQuantity>(resultData[0], resultData[1],
                     getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
         }
 
         @Override
-        public Vector2.Row<SIQuantity, SIUnit> multiplyEntries(final Quantity<?, ?> quantity)
+        public Vector2.Row<SIQuantity> multiplyEntries(final Quantity<?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return Vector2.Row.of(xSi() * quantity.si(), ySi() * quantity.si(), siUnit);
@@ -673,15 +666,14 @@ public abstract class Vector2<Q extends Quantity<Q, U>, U extends UnitInterface<
          * @return a quantity typed in the target vector class
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
-         * @param <TU> target unit type
          */
-        public <TQ extends Quantity<TQ, TU>, TU extends UnitInterface<TU, TQ>> Vector2.Row<TQ, TU> as(final TU targetUnit)
+        public <TQ extends Quantity<TQ>> Vector2.Row<TQ> as(final UnitInterface<?, TQ> targetUnit)
                 throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new Vector2.Row<TQ, TU>(xSi(), ySi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+            return new Vector2.Row<TQ>(xSi(), ySi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
         }
 
     }

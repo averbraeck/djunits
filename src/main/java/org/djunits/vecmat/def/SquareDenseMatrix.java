@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djutils.exceptions.Throw;
 
@@ -18,14 +17,13 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  * @param <M> the 'SELF' square dense matrix type
  * @param <SI> the square dense matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic square dense matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-        M extends SquareDenseMatrix<Q, U, M, SI, H>, SI extends SquareDenseMatrix<SIQuantity, SIUnit, SI, ?, ?>,
-        H extends SquareDenseMatrix<?, ?, ?, ?, ?>> extends SquareMatrix<Q, U, M, SI, H>
+public abstract class SquareDenseMatrix<Q extends Quantity<Q>,
+        M extends SquareDenseMatrix<Q, M, SI, H>, SI extends SquareDenseMatrix<SIQuantity, SI, ?, ?>,
+        H extends SquareDenseMatrix<?, ?, ?, ?>> extends SquareMatrix<Q, M, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -42,7 +40,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
      * @param displayUnit the display unit to use
      * @param order the order of the square matrix (number of rows/columns)
      */
-    protected SquareDenseMatrix(final double[] dataInUnit, final U displayUnit, final int order)
+    protected SquareDenseMatrix(final double[] dataInUnit, final UnitInterface<?, Q> displayUnit, final int order)
     {
         super(displayUnit);
         Throw.when(dataInUnit.length != order * order, IllegalArgumentException.class,
@@ -130,7 +128,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q, U>, U extends Unit
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SquareDenseMatrix<?, ?, ?, ?, ?> other = (SquareDenseMatrix<?, ?, ?, ?, ?>) obj;
+        SquareDenseMatrix<?, ?, ?, ?> other = (SquareDenseMatrix<?, ?, ?, ?>) obj;
         return Arrays.equals(this.dataSi, other.dataSi);
     }
 

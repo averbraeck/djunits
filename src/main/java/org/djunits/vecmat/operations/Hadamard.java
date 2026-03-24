@@ -41,14 +41,14 @@ public interface Hadamard<VM, SI>
      * @param quantity the scalar quantity to multiply by
      * @return a new vector, matrix or table where the entries have been multiplied by the given quantity
      */
-    SI multiplyEntries(Quantity<?, ?> quantity);
+    SI multiplyEntries(Quantity<?> quantity);
 
     /**
      * Divide the entries of this vector, matrix or table by the given quantity.
      * @param quantity the scalar quantity to divide by
      * @return a new vector, matrix or table where the entries have been divided by the given quantity
      */
-    default SI divideEntries(final Quantity<?, ?> quantity)
+    default SI divideEntries(final Quantity<?> quantity)
     {
         return multiplyEntries(quantity.reciprocal());
     }

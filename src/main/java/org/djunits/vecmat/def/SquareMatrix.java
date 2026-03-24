@@ -21,14 +21,13 @@ import org.djunits.vecmat.NonInvertibleMatrixException;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  * @param <M> the 'SELF' square matrix type
  * @param <SI> the square matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic square matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-        M extends SquareMatrix<Q, U, M, SI, H>, SI extends SquareMatrix<SIQuantity, SIUnit, SI, ?, ?>,
-        H extends SquareMatrix<?, ?, ?, ?, ?>> extends Matrix<Q, U, M, SI, H>
+public abstract class SquareMatrix<Q extends Quantity<Q>,
+        M extends SquareMatrix<Q, M, SI, H>, SI extends SquareMatrix<SIQuantity, SI, ?, ?>,
+        H extends SquareMatrix<?, ?, ?, ?>> extends Matrix<Q, M, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -37,7 +36,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * Create a new square matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public SquareMatrix(final U displayUnit)
+    public SquareMatrix(final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
     }
@@ -55,6 +54,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * Return the transposed square matrix. A transposed matrix has the same unit as the original one.
      * @return the transposed square matrix
      */
+    @Override
     @SuppressWarnings("checkstyle:needbraces")
     public M transpose()
     {
@@ -96,7 +96,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * Retrieve the main diagonal of the matrix as a column vector.
      * @return the main diagonal as a Vector
      */
-    public abstract Vector<Q, U, ?, ?, ?> getDiagonalVector();
+    public abstract Vector<Q, ?, ?, ?> getDiagonalVector();
 
     /**
      * Retrieve the main diagonal of the matrix as an array of scalars.

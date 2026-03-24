@@ -18,13 +18,12 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  * @param <M> the 'SELF' matrix type
  * @param <SI> the matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>, M extends Matrix<Q, U, M, SI, H>,
-        SI extends Matrix<SIQuantity, SIUnit, SI, ?, ?>, H extends Matrix<?, ?, ?, ?, ?>> extends VectorMatrix<Q, U, M, SI, H>
+public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H>,
+        SI extends Matrix<SIQuantity, SI, ?, ?>, H extends Matrix<?, ?, ?, ?>> extends VectorMatrix<Q, M, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -33,7 +32,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * Create a new matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public Matrix(final U displayUnit)
+    public Matrix(final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
     }
@@ -43,7 +42,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * @param matrix the other matrix
      * @throws IllegalArgumentException when this.cols() != other.rows()
      */
-    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
+    protected void checkMultiply(final Matrix<?, ?, ?, ?> matrix)
     {
         Throw.whenNull(matrix, "matrix");
         Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
@@ -55,7 +54,7 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * @param vector the other matrix
      * @throws IllegalArgumentException when this.cols() != other.rows()
      */
-    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
+    protected void checkMultiply(final Vector<?, ?, ?, ?> vector)
     {
         Throw.whenNull(vector, "matrix");
         Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
@@ -70,16 +69,16 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * @throws IllegalArgumentException when the number of columns of this matrix does not equal the number of rows of the
      *             matrix or vector to multiply with
      */
-    public MatrixNxM<SIQuantity, SIUnit> multiply(final MatrixNxM<?, ?> matrix)
+    public MatrixNxM<SIQuantity> multiply(final MatrixNxM<?> matrix)
     {
         checkMultiply(matrix);
         double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         if (matrix.getDataGrid().isDouble())
         {
-            return new MatrixNxM<SIQuantity, SIUnit>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
+            return new MatrixNxM<SIQuantity>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
         }
-        return new MatrixNxM<SIQuantity, SIUnit>(new DenseFloatDataSi(result, rows(), matrix.cols()), siUnit);
+        return new MatrixNxM<SIQuantity>(new DenseFloatDataSi(result, rows(), matrix.cols()), siUnit);
     }
 
     /**
@@ -87,5 +86,5 @@ public abstract class Matrix<Q extends Quantity<Q, U>, U extends UnitInterface<U
      * that Vector extends Matrix, and Vector transposal swaps row vectors to column vectors and vice versa.
      * @return a transposed matrix, where rows and columns have been swapped
      */
-    public abstract Matrix<Q, U, ?, ?, ?> transpose();
+    public abstract Matrix<Q, ?, ?, ?> transpose();
 }

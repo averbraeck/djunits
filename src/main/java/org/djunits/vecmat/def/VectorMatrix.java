@@ -27,40 +27,39 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
- * @param <U> the unit type
  * @param <VM> the 'SELF' vector or matrix type
  * @param <SI> the vector or matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic vector or matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
-        VM extends VectorMatrix<Q, U, VM, SI, H>, SI extends VectorMatrix<SIQuantity, SIUnit, SI, ?, ?>,
-        H extends VectorMatrix<?, ?, ?, ?, ?>> implements Value<U, VM>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
+public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatrix<Q, VM, SI, H>,
+        SI extends VectorMatrix<SIQuantity, SI, ?, ?>, H extends VectorMatrix<?, ?, ?, ?>>
+        implements Value<VM, Q>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
 {
     /** */
     private static final long serialVersionUID = 600L;
 
     /** The display unit. */
-    private U displayUnit;
+    private UnitInterface<?, Q> displayUnit;
 
     /**
      * Create a new vector or matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public VectorMatrix(final U displayUnit)
+    public VectorMatrix(final UnitInterface<?, Q> displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         this.displayUnit = displayUnit;
     }
 
     @Override
-    public U getDisplayUnit()
+    public UnitInterface<?, Q> getDisplayUnit()
     {
         return this.displayUnit;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public VM setDisplayUnit(final U newUnit)
+    public VM setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         Throw.whenNull(this.displayUnit, "displayUnit");
         this.displayUnit = newUnit;
@@ -192,7 +191,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @param row the row number to retrieve (0-based)
      * @return a row vector with the data at the given row
      */
-    public abstract Vector<Q, U, ?, ?, ?> getRowVector(int row);
+    public abstract Vector<Q, ?, ?, ?> getRowVector(int row);
 
     /**
      * Return a quantity row (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -200,7 +199,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @param mRow the row number to retrieve (1-based)
      * @return a row vector with the data at the given row
      */
-    public abstract Vector<Q, U, ?, ?, ?> mgetRowVector(int mRow);
+    public abstract Vector<Q, ?, ?, ?> mgetRowVector(int mRow);
 
     /**
      * Return a quantity column (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -208,7 +207,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @param col the column number to retrieve (0-based)
      * @return a column vector with the data at the given column
      */
-    public abstract Vector<Q, U, ?, ?, ?> getColumnVector(int col);
+    public abstract Vector<Q, ?, ?, ?> getColumnVector(int col);
 
     /**
      * Return a quantity column (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -216,7 +215,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @param mCol the column number to retrieve (1-based)
      * @return a column vector with the data at the given column
      */
-    public abstract Vector<Q, U, ?, ?, ?> mgetColumnVector(int mCol);
+    public abstract Vector<Q, ?, ?, ?> mgetColumnVector(int mCol);
 
     /**
      * Return an array with SI-values for the given row (0-based) from the vector or matrix.
@@ -467,7 +466,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * @return the number of non-zero entries in the vector, matrix or table
      */
     public abstract int nonZeroCount();
-    
+
     /**
      * Return the number of non-zero entries in the vector, matrix or table. Note that NaN and Infinity count as a non-zero
      * element. The value -0.0 counts as 0.0. the acronym 'nnz' stands for 'number of non-zero entries'.
@@ -521,7 +520,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
     }
 
     @Override
-    public SI multiplyEntries(final Quantity<?, ?> quantity)
+    public SI multiplyEntries(final Quantity<?> quantity)
     {
         return (SI) instantiateSi(ArrayMath.scaleBy(si(), quantity.si()),
                 getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));
@@ -531,9 +530,9 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * Convert this vector or matrix to a {@link MatrixNxM}.
      * @return a {@code MatrixNxN} with identical SI data and display unit
      */
-    public MatrixNxM<Q, U> asMatrixNxM()
+    public MatrixNxM<Q> asMatrixNxM()
     {
-        return new MatrixNxM<Q, U>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+        return new MatrixNxM<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -541,15 +540,15 @@ public abstract class VectorMatrix<Q extends Quantity<Q, U>, U extends UnitInter
      * Convert this vector or matrix to a {@link QuantityTable}.
      * @return a {@code QuantityTable} with identical SI data and display unit
      */
-    public QuantityTable<Q, U> asQuantityTable()
+    public QuantityTable<Q> asQuantityTable()
     {
-        return new QuantityTable<Q, U>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+        return new QuantityTable<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public String toString(final U withUnit)
+    public String toString(final UnitInterface<?, Q> withUnit)
     {
         var s = new StringBuilder();
         for (int r = 0; r < rows(); r++)

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Objects;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -146,10 +145,10 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      *             or columns is not positive, or when indexes is not in strictly increasing order
      * @throws IndexOutOfBoundsException when one of the entries in indexes is out of bounds
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[] sparseData,
+    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[] sparseData,
             final int[] indexes, final int rows, final int cols)
     {
         Throw.whenNull(sparseData, "sparseData");
@@ -175,9 +174,9 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[] denseData, final int rows,
+    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[] denseData, final int rows,
             final int cols)
     {
         Throw.whenNull(denseData, "denseData");
@@ -195,10 +194,10 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @param denseData the data in row-major format as a double[][]
      * @throws IllegalArgumentException when the data matrix is ragged
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(final Q[][] denseData)
+    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[][] denseData)
     {
         Throw.whenNull(denseData, "denseData");
         Throw.when(denseData.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
@@ -218,11 +217,11 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @param cols the number of columns
      * @throws IndexOutOfBoundsException when a row or column index of an element is out of bounds
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> SparseFloatDataSi(
-            final Collection<FloatSparseValue<Q, U>> indexedData, final int rows, final int cols)
+    public <Q extends Quantity<Q>> SparseFloatDataSi(
+            final Collection<FloatSparseValue<Q>> indexedData, final int rows, final int cols)
     {
         Throw.whenNull(indexedData, "indexedData");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
@@ -370,10 +369,10 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * Store sparse data[] and indexes[].
      * @param denseData the dense data in row-major format
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> void storeSparse(final Q[] denseData)
+    public <Q extends Quantity<Q>> void storeSparse(final Q[] denseData)
     {
         int nonzero = 0;
         for (int i = 0; i < denseData.length; i++)
@@ -395,10 +394,10 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * Store sparse data[] and indexes[].
      * @param denseData the dense data in row-major format
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> void storeSparse(final Q[][] denseData)
+    public <Q extends Quantity<Q>> void storeSparse(final Q[][] denseData)
     {
         int nonzero = 0;
         for (int i = 0; i < denseData.length; i++)

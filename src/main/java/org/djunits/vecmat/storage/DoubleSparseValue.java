@@ -13,9 +13,8 @@ import org.djutils.exceptions.Throw;
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * @author Alexander Verbraeck
  * @param <Q> the quantity type of the value
- * @param <U> the unit type of the value
  */
-public class DoubleSparseValue<Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> implements Serializable
+public class DoubleSparseValue<Q extends Quantity<Q>> implements Serializable
 {
     /** */
     private static final long serialVersionUID = 20191018L;
@@ -45,9 +44,9 @@ public class DoubleSparseValue<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param value the scalar to check
      * @return the untouched scalar value
      * @param <Q> the quantity type
-     * @param <U> the unit type
+
      */
-    private static <Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>> Q checkNull(final Q value)
+    private static <Q extends Quantity<Q>> Q checkNull(final Q value)
     {
         Throw.whenNull(value, "value may not be null");
         return value;
@@ -60,7 +59,7 @@ public class DoubleSparseValue<Q extends Quantity<Q, U>, U extends UnitInterface
      * @param valueInUnit the value in the given unit of the data point in the matrix
      * @param unit the unit of the value
      */
-    public DoubleSparseValue(final int row, final int column, final double valueInUnit, final U unit)
+    public DoubleSparseValue(final int row, final int column, final double valueInUnit, final UnitInterface<?, Q> unit)
     {
         this(row, column, unit.toBaseValue(valueInUnit));
     }
