@@ -99,7 +99,7 @@ public final class Units
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      * @param <U> the unit type
      */
-    public static <U extends UnitInterface<U, ?>> U resolve(final Class<U> unitClass, final String abbreviation)
+    public static <U extends UnitInterface<?, ?>> U resolve(final Class<U> unitClass, final String abbreviation)
             throws UnitRuntimeException
     {
         Throw.whenNull(unitClass, "unitClass");

@@ -13,10 +13,10 @@ import org.djunits.unit.system.UnitSystem;
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
- * @param <U> the unit type
+ * @param <U> The unit type
  * @param <Q> the quantity type
  */
-public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity<Q, U>>
+public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity<Q>>
 {
     /**
      * Return the id, which is the main abbreviation, of the unit.
