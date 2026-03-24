@@ -64,7 +64,7 @@ public class Vector1Test
      * @param unit the display unit
      * @return a Vector1&lt;Length, Length.Unit&gt;
      */
-    private static Vector1<Length, Length.Unit> vec(final double xInUnit, final Length.Unit unit)
+    private static Vector1<Length> vec(final double xInUnit, final Length.Unit unit)
     {
         return new Vector1<>(xInUnit, unit);
     }
@@ -81,12 +81,12 @@ public class Vector1Test
     public void testConstructorAndSiStorage()
     {
         // 5 km → SI = 5000 m for vec
-        Vector1<Length, Length.Unit> v = vec(5.0, Length.Unit.km);
+        Vector1<Length> v = vec(5.0, Length.Unit.km);
         assertArrayEquals(new double[] {5000.0}, v.si(), EPS);
         assertEquals(Length.Unit.km, v.getDisplayUnit(), "display unit preserved");
 
         // Factory .of for vec
-        Vector1<Length, Length.Unit> cf = Vector1.of(1.2, Length.Unit.m);
+        Vector1<Length> cf = Vector1.of(1.2, Length.Unit.m);
         assertArrayEquals(new double[] {1.2}, cf.si(), EPS);
     }
 
@@ -97,21 +97,21 @@ public class Vector1Test
     @DisplayName("instantiateSi(double[]) enforces length=1 and delegates")
     public void testInstantiateSiArray()
     {
-        Vector1<Length, Length.Unit> v1 = vec(1.0, Length.Unit.m);
+        Vector1<Length> v1 = vec(1.0, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> v1.instantiateSi(new double[] {1.0, 2.0}),
                 "Wrong length must throw");
         double[] newSi = new double[] {20.0};
-        Vector1<Length, Length.Unit> r2 = v1.instantiateSi(newSi);
+        Vector1<Length> r2 = v1.instantiateSi(newSi);
         assertArrayEquals(new double[] {20.0}, r2.si(), EPS);
         assertEquals(v1.getDisplayUnit(), r2.getDisplayUnit(), "display unit copied by instantiate path");
 
-        Vector1<SIQuantity, SIUnit> siVector = v1.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siVector.getDisplayUnit().toString(true, false), "display unit retained");
+        Vector1<SIQuantity> siVector = v1.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, siVector.si(), EPS, "si array used as-is");
         assertEquals(20.0, siVector.get(0, 0).si(), EPS);
 
-        Vector1<SIQuantity, SIUnit> siVectorOf = Vector1.of(20.0, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
+        Vector1<SIQuantity> siVectorOf = Vector1.of(20.0, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, siVectorOf.si(), EPS, "si array used as-is");
         assertEquals(20.0, siVectorOf.get(0, 0).si(), EPS);
         
@@ -130,7 +130,7 @@ public class Vector1Test
     @DisplayName("size, x/y (Q), xSi, si() copy, and get(index)")
     public void testAccessorsAndIndexing()
     {
-        Vector1<Length, Length.Unit> v = vec(0.5, Length.Unit.cm); // SI: 0.005
+        Vector1<Length> v = vec(0.5, Length.Unit.cm); // SI: 0.005
         assertEquals(1, v.size(), "size is 1");
         assertEquals(0.005, v.xSi(), EPS);
         assertEquals(0.5, v.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "x() returns Length with display unit");
@@ -182,7 +182,7 @@ public class Vector1Test
     @DisplayName("iterator() yields Q in display unit, in order x")
     public void testIterator()
     {
-        Vector1<Length, Length.Unit> v = vec(2.0, Length.Unit.km); // SI: 1000, 2000
+        Vector1<Length> v = vec(2.0, Length.Unit.km); // SI: 1000, 2000
         Iterator<Length> itCol = v.iterator();
         assertTrue(itCol.hasNext());
         Length firstCol = itCol.next();
@@ -199,7 +199,7 @@ public class Vector1Test
     @DisplayName("getScalarArray() returns Q[] with x")
     public void testGetScalarArray()
     {
-        Vector1<Length, Length.Unit> v = vec(3.0, Length.Unit.m);
+        Vector1<Length> v = vec(3.0, Length.Unit.m);
         Length[] arrRow = v.getScalarArray();
         assertEquals(1, arrRow.length);
         assertInstanceOf(Length.class, arrRow[0]);
@@ -217,17 +217,17 @@ public class Vector1Test
     @DisplayName("rows/cols/isColumnVector and transpose()")
     public void testShapeAndTranspose()
     {
-        Vector1<Length, Length.Unit> v = vec(2.0, Length.Unit.m);
+        Vector1<Length> v = vec(2.0, Length.Unit.m);
         assertEquals(1, v.rows());
         assertEquals(1, v.cols());
         assertTrue(v.isColumnVector());
 
-        Vector1<Length, Length.Unit> vt = v.transpose();
+        Vector1<Length> vt = v.transpose();
         assertArrayEquals(v.si(), vt.si(), EPS, "Transpose preserves SI");
         assertEquals(v.getDisplayUnit(), vt.getDisplayUnit());
         
         assertEquals(1, v.nnz());
-        Vector1<Length, Length.Unit> v0 = vec(0.0, Length.Unit.m);
+        Vector1<Length> v0 = vec(0.0, Length.Unit.m);
         assertEquals(0, v0.nnz());
     }
 
@@ -242,8 +242,8 @@ public class Vector1Test
     @DisplayName("VectorMatrixOps: add/subtract (Q & V), negate, abs, scaleBy")
     public void testBasicAlgebraRow()
     {
-        Vector1<Length, Length.Unit> a = vec(1.0, Length.Unit.m); // SI: 1
-        Vector1<Length, Length.Unit> b = vec(0.5, Length.Unit.m); // SI: 0.5
+        Vector1<Length> a = vec(1.0, Length.Unit.m); // SI: 1
+        Vector1<Length> b = vec(0.5, Length.Unit.m); // SI: 0.5
         Length inc = Length.of(2.0, "m"); // +2 m
 
         // V ± V
@@ -267,7 +267,7 @@ public class Vector1Test
     @DisplayName("Statistics: min/max/mean/median/sum")
     public void testStatistics()
     {
-        Vector1<Length, Length.Unit> v = vec(3.0, Length.Unit.m);
+        Vector1<Length> v = vec(3.0, Length.Unit.m);
         assertEquals(3.0, v.min().si(), EPS);
         assertEquals(3.0, v.max().si(), EPS);
         assertEquals(3.0, v.mean().si(), EPS);
@@ -289,7 +289,7 @@ public class Vector1Test
     @DisplayName("Normed: norm(), normL1(), normL2(), normLp(p), normLinf()")
     public void testNorms()
     {
-        Vector1<Length, Length.Unit> v = vec(-4.0, Length.Unit.m);
+        Vector1<Length> v = vec(-4.0, Length.Unit.m);
         assertEquals(v.normL2().si(), v.norm().si(), EPS, "norm() delegates to normL2()");
         assertEquals(4.0, v.normL1().si(), EPS, "L1 = |4| = 4");
         assertEquals(4.0, v.normL2().si(), EPS);
@@ -309,21 +309,21 @@ public class Vector1Test
     @DisplayName("Hadamard: invertElements / multiplyElements / divideElements + unit composition, Col")
     public void testHadamardCol()
     {
-        Vector1<Length, Length.Unit> a = vec(2.0, Length.Unit.m); // SI: 2
-        Vector1<Length, Length.Unit> b = vec(2.0, Length.Unit.km); // SI: 2000
+        Vector1<Length> a = vec(2.0, Length.Unit.m); // SI: 2
+        Vector1<Length> b = vec(2.0, Length.Unit.km); // SI: 2000
 
         // invert
-        Vector1<SIQuantity, SIUnit> inv = a.invertEntries();
+        Vector1<SIQuantity> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5}, inv.si(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit should be inverted");
 
         // elementwise multiply → SI: [2*2000] = [4000]; unit: m ⊕ km
-        Vector1<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
+        Vector1<SIQuantity> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {4000.0}, mul.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         // elementwise divide → SI: [2/2000] = [0.001]; unit: m ⊖ km
-        Vector1<SIQuantity, SIUnit> div = a.divideEntries(b);
+        Vector1<SIQuantity> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.001}, div.si(), EPS);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
@@ -339,8 +339,8 @@ public class Vector1Test
     @DisplayName("as(targetUnit) success for m↔km and failure for mismatched SI unit")
     public void testAs()
     {
-        Vector1<Length, Length.Unit> v = vec(1.0, Length.Unit.km);
-        Vector1<Length, Length.Unit> asMetersCol = v.as(Length.Unit.m);
+        Vector1<Length> v = vec(1.0, Length.Unit.km);
+        Vector1<Length> asMetersCol = v.as(Length.Unit.m);
         assertEquals(Length.Unit.m, asMetersCol.getDisplayUnit());
         assertArrayEquals(v.si(), asMetersCol.si(), EPS, "SI storage must be unchanged");
 
@@ -362,7 +362,7 @@ public class Vector1Test
     @DisplayName("getScalars / getRowScalars / getColumnScalars")
     public void testScalarExtraction()
     {
-        Vector1<Length, Length.Unit> m = vec(2.0, Length.Unit.m);
+        Vector1<Length> m = vec(2.0, Length.Unit.m);
 
         // Row/Column scalar arrays
         Length[] row0 = m.getRowScalars(0);
@@ -402,11 +402,11 @@ public class Vector1Test
     @DisplayName("getRowVector / getColumnVector return the expected vectors (spec)")
     public void testVectorExtractionSpec()
     {
-        Vector1<Length, Length.Unit> m = vec(2.0, Length.Unit.cm); // different display unit
+        Vector1<Length> m = vec(2.0, Length.Unit.cm); // different display unit
 
         // Row/Column Vectors 0-based
-        Vector1<Length, Length.Unit> row0 = m.getRowVector(0);
-        Vector1<Length, Length.Unit> col1 = m.getColumnVector(0);
+        Vector1<Length> row0 = m.getRowVector(0);
+        Vector1<Length> col1 = m.getColumnVector(0);
 
         assertEquals(1, row0.size(), "row size");
         assertEquals(1, col1.size(), "column size");
@@ -414,8 +414,8 @@ public class Vector1Test
         assertEquals(0.02, col1.get(0).si(), EPS);
 
         // Row/Column Vectors 1-based
-        Vector1<Length, Length.Unit> mRow1 = m.mgetRowVector(1);
-        Vector1<Length, Length.Unit> mCol2 = m.mgetColumnVector(1);
+        Vector1<Length> mRow1 = m.mgetRowVector(1);
+        Vector1<Length> mCol2 = m.mgetColumnVector(1);
 
         assertEquals(1, mRow1.size(), "row length");
         assertEquals(1, mCol2.size(), "column length");
@@ -440,7 +440,7 @@ public class Vector1Test
     @DisplayName("getRowSi / getColumnSi")
     public void testSiArrayExtraction()
     {
-        Vector1<Length, Length.Unit> m = vec(2.0, Length.Unit.m);
+        Vector1<Length> m = vec(2.0, Length.Unit.m);
 
         // Row/Column double si arrays 0-based
         double[] row0 = m.getRowSi(0);
@@ -482,9 +482,9 @@ public class Vector1Test
     @DisplayName("equals/hashCode and type sensitivity")
     public void testEqualsHashCode()
     {
-        Vector1<Length, Length.Unit> r1 = vec(1000.0, Length.Unit.m);
-        Vector1<Length, Length.Unit> r2 = vec(1.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
-        Vector1<Length, Length.Unit> r3 = vec(3000.0, Length.Unit.m);
+        Vector1<Length> r1 = vec(1000.0, Length.Unit.m);
+        Vector1<Length> r2 = vec(1.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
+        Vector1<Length> r3 = vec(3000.0, Length.Unit.m);
 
         assertEquals(r1, r1, "reflexive");
         assertEquals(r1.hashCode(), r1.hashCode(), "hash stable");
@@ -502,7 +502,7 @@ public class Vector1Test
     @DisplayName("toString() and toString(unit)")
     public void testToString()
     {
-        Vector1<Length, Length.Unit> c = vec(1.0, Length.Unit.km);
+        Vector1<Length> c = vec(1.0, Length.Unit.km);
         String s1C = c.toString();
         String s2C = c.toString(Length.Unit.m);
         assertTrue(s1C.startsWith("["), "orientation tag");
@@ -517,8 +517,8 @@ public class Vector1Test
     @DisplayName("setDisplayUnit() fluent and isRelative()")
     public void testFluentAndRelative()
     {
-        Vector1<Length, Length.Unit> r = vec(1.0, Length.Unit.km);
-        Vector1<Length, Length.Unit> returnedR = r.setDisplayUnit(Length.Unit.m);
+        Vector1<Length> r = vec(1.0, Length.Unit.km);
+        Vector1<Length> returnedR = r.setDisplayUnit(Length.Unit.m);
         assertEquals(Length.Unit.m, r.getDisplayUnit());
         assertEquals(r, returnedR, "fluent returns this");
         assertTrue(r.isRelative(), "Length is a relative quantity");
@@ -530,9 +530,9 @@ public class Vector1Test
     @Test
     public void testMultiplyScalarAs()
     {
-        Vector1<Length, Length.Unit> r = vec(1.0, Length.Unit.km);
+        Vector1<Length> r = vec(1.0, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        Vector1<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
+        Vector1<Speed> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));

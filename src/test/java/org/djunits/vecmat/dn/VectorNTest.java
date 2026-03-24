@@ -71,7 +71,7 @@ public final class VectorNTest
      * @param unit the display unit to use; never {@code null}
      * @return a newly constructed {@link VectorN.Col} with SI storage and the specified display unit
      */
-    private static VectorN.Col<Length, Length.Unit> col(final double[] inUnit, final Length.Unit unit)
+    private static VectorN.Col<Length> col(final double[] inUnit, final Length.Unit unit)
     {
         final double[] si = new double[inUnit.length];
         for (int i = 0; i < inUnit.length; i++)
@@ -90,7 +90,7 @@ public final class VectorNTest
      * @param unit the display unit to use; never {@code null}
      * @return a newly constructed {@link VectorN.Row} with SI storage and the specified display unit
      */
-    private static VectorN.Row<Length, Length.Unit> row(final double[] inUnit, final Length.Unit unit)
+    private static VectorN.Row<Length> row(final double[] inUnit, final Length.Unit unit)
     {
         final double[] si = new double[inUnit.length];
         for (int i = 0; i < inUnit.length; i++)
@@ -112,7 +112,7 @@ public final class VectorNTest
     @DisplayName("Constructor SI storage & shape (Col)")
     public void testConstructorAndShapeCol()
     {
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {1, 2, 3}, Length.Unit.km);
+        final VectorN.Col<Length> c = col(new double[] {1, 2, 3}, Length.Unit.km);
         assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, c.si(), EPS, "SI storage");
         assertEquals(3, c.size(), "size");
         assertEquals(3, c.rows(), "rows");
@@ -132,7 +132,7 @@ public final class VectorNTest
     @DisplayName("Constructor SI storage & shape (Row)")
     public void testConstructorAndShapeRow()
     {
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {10, 200, 3}, Length.Unit.cm);
+        final VectorN.Row<Length> r = row(new double[] {10, 200, 3}, Length.Unit.cm);
         assertArrayEquals(new double[] {0.10, 2.0, 0.03}, r.si(), EPS, "SI storage");
         assertEquals(3, r.size(), "size");
         assertEquals(1, r.rows(), "rows");
@@ -149,20 +149,20 @@ public final class VectorNTest
     @DisplayName("instantiateSi(double[]) enforces length=3 and delegates (Col)")
     public void testInstantiateSiArrayCol()
     {
-        VectorN.Col<Length, Length.Unit> c = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
+        VectorN.Col<Length> c = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> c.instantiateSi(new double[] {1.0, 2.0}), "Wrong length must throw");
-        VectorN.Col<Length, Length.Unit> d = c.instantiateSi(new double[] {10.0, 20.0, 30.0});
+        VectorN.Col<Length> d = c.instantiateSi(new double[] {10.0, 20.0, 30.0});
         assertArrayEquals(new double[] {10.0, 20.0, 30.0}, d.si(), EPS);
         assertEquals(c.getDisplayUnit(), d.getDisplayUnit());
 
         double[] newSi = {20, 30, 40};
-        VectorN.Col<SIQuantity, SIUnit> csiVector = c.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", csiVector.getDisplayUnit().toString(true, false), "display unit retained");
+        VectorN.Col<SIQuantity> csiVector = c.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", csiVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, csiVector.si(), EPS, "si array used as-is");
         assertEquals(20.0, csiVector.get(0, 0).si(), EPS);
 
-        VectorN.Col<SIQuantity, SIUnit> csiVectorOf = VectorN.Col.of(new double[] {20.0, 30.0, 40.0}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
+        VectorN.Col<SIQuantity> csiVectorOf = VectorN.Col.of(new double[] {20.0, 30.0, 40.0}, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, csiVectorOf.si(), EPS, "si array used as-is");
         assertEquals(20.0, csiVectorOf.get(0, 0).si(), EPS);
 
@@ -174,20 +174,20 @@ public final class VectorNTest
     @DisplayName("instantiateSi(double[]) enforces length=3 and delegates (Row)")
     public void testInstantiateSiArrayRow()
     {
-        VectorN.Row<Length, Length.Unit> r = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
+        VectorN.Row<Length> r = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> r.instantiateSi(new double[] {1.0, 2.0}), "Wrong length must throw");
-        VectorN.Row<Length, Length.Unit> s = r.instantiateSi(new double[] {10.0, 20.0, 30.0});
+        VectorN.Row<Length> s = r.instantiateSi(new double[] {10.0, 20.0, 30.0});
         assertArrayEquals(new double[] {10.0, 20.0, 30.0}, s.si(), EPS);
         assertEquals(r.getDisplayUnit(), s.getDisplayUnit());
 
         double[] newSi = {20, 30, 40};
-        VectorN.Row<SIQuantity, SIUnit> rsiVector = r.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", rsiVector.getDisplayUnit().toString(true, false), "display unit retained");
+        VectorN.Row<SIQuantity> rsiVector = r.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", rsiVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, rsiVector.si(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVector.get(0, 0).si(), EPS);
 
-        VectorN.Row<SIQuantity, SIUnit> rsiVectorOf = VectorN.Row.of(new double[] {20.0, 30.0, 40.0}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().toString(true, false), "display unit retained");
+        VectorN.Row<SIQuantity> rsiVectorOf = VectorN.Row.of(new double[] {20.0, 30.0, 40.0}, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, rsiVectorOf.si(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVectorOf.get(0, 0).si(), EPS);
 
@@ -257,15 +257,15 @@ public final class VectorNTest
     @DisplayName("test nnz()")
     public void testNnz()
     {
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 2, 3, 4}, Length.Unit.m);
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {5, 6, 7, 8}, Length.Unit.m);
+        final VectorN.Row<Length> r = row(new double[] {1, 2, 3, 4}, Length.Unit.m);
+        final VectorN.Col<Length> c = col(new double[] {5, 6, 7, 8}, Length.Unit.m);
         assertEquals(4, c.nnz());
         assertEquals(4, r.nnz());
         assertEquals(4, c.dataSi.nnz());
         assertEquals(4, r.dataSi.nnz());
         
-        VectorN.Row<Length, Length.Unit> r0 = row(new double[] {0.0, 0.0, 0.0}, Length.Unit.m);
-        VectorN.Col<Length, Length.Unit> c0 = col(new double[] {0.0, 0.0, 0.0}, Length.Unit.m);
+        VectorN.Row<Length> r0 = row(new double[] {0.0, 0.0, 0.0}, Length.Unit.m);
+        VectorN.Col<Length> c0 = col(new double[] {0.0, 0.0, 0.0}, Length.Unit.m);
         assertEquals(0, r0.nnz());
         assertEquals(0, c0.nnz());
         assertEquals(0, c0.dataSi.nnz());
@@ -281,8 +281,8 @@ public final class VectorNTest
     @DisplayName("get(index), addressing semantics (Row & Col)")
     public void testIndexing()
     {
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 2, 3, 4}, Length.Unit.m);
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {5, 6, 7, 8}, Length.Unit.m);
+        final VectorN.Row<Length> r = row(new double[] {1, 2, 3, 4}, Length.Unit.m);
+        final VectorN.Col<Length> c = col(new double[] {5, 6, 7, 8}, Length.Unit.m);
 
         // Valid indices
         assertEquals(1.0, r.get(0).si(), EPS, "row get(0)");
@@ -367,7 +367,7 @@ public final class VectorNTest
     @DisplayName("iterator() yields Q in display unit, in natural order")
     public void testIterator()
     {
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 2, 3}, Length.Unit.km); // SI: 1000, 2000, 3000
+        final VectorN.Row<Length> r = row(new double[] {1, 2, 3}, Length.Unit.km); // SI: 1000, 2000, 3000
         final Iterator<Length> it = r.iterator();
 
         final Length a = it.next();
@@ -390,7 +390,7 @@ public final class VectorNTest
     @DisplayName("getScalarArray() returns Q[] with correct order and types")
     public void testGetScalarArray()
     {
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {3, 4, 5}, Length.Unit.m);
+        final VectorN.Col<Length> c = col(new double[] {3, 4, 5}, Length.Unit.m);
         final Length[] arr = c.getScalarArray();
         assertEquals(3, arr.length, "length");
         assertInstanceOf(Length.class, arr[0], "arr[0] type");
@@ -414,8 +414,8 @@ public final class VectorNTest
     @DisplayName("setDisplayUnit() is fluent; toString contains orientation & unit")
     public void testFluentAndToString()
     {
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 2, 3}, Length.Unit.m);
-        final VectorN.Row<Length, Length.Unit> ret = r.setDisplayUnit(Length.Unit.km);
+        final VectorN.Row<Length> r = row(new double[] {1, 2, 3}, Length.Unit.m);
+        final VectorN.Row<Length> ret = r.setDisplayUnit(Length.Unit.km);
         final String s1 = r.toString();
         final String s2 = r.toString(Length.Unit.m);
 
@@ -424,8 +424,8 @@ public final class VectorNTest
         assertTrue(s1.contains("km"), "unit in default toString");
         assertTrue(s2.contains("m"), "unit in toString(withUnit)");
 
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {1, 2, 3}, Length.Unit.m);
-        final VectorN.Col<Length, Length.Unit> retc = c.setDisplayUnit(Length.Unit.km);
+        final VectorN.Col<Length> c = col(new double[] {1, 2, 3}, Length.Unit.m);
+        final VectorN.Col<Length> retc = c.setDisplayUnit(Length.Unit.km);
         final String sc = c.toString();
 
         assertEquals(c, retc, "fluent");
@@ -445,8 +445,8 @@ public final class VectorNTest
     @DisplayName("Vector algebra (Row)")
     public void testAlgebraRow()
     {
-        final VectorN.Row<Length, Length.Unit> a = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
-        final VectorN.Row<Length, Length.Unit> b = row(new double[] {0.5, 3, -1, 2}, Length.Unit.m);
+        final VectorN.Row<Length> a = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Row<Length> b = row(new double[] {0.5, 3, -1, 2}, Length.Unit.m);
         final Length inc = Length.of(2.0, "m");
 
         assertArrayEquals(new double[] {1.5, 1.0, 2.0, -2.0}, a.add(b).si(), EPS, "a+b");
@@ -466,8 +466,8 @@ public final class VectorNTest
     @DisplayName("Vector algebra (Col)")
     public void testAlgebraCol()
     {
-        final VectorN.Col<Length, Length.Unit> a = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
-        final VectorN.Col<Length, Length.Unit> b = col(new double[] {0.5, 3, -1, 2}, Length.Unit.m);
+        final VectorN.Col<Length> a = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Col<Length> b = col(new double[] {0.5, 3, -1, 2}, Length.Unit.m);
         final Length inc = Length.of(2.0, "m");
 
         assertArrayEquals(new double[] {1.5, 1.0, 2.0, -2.0}, a.add(b).si(), EPS, "a+b");
@@ -492,7 +492,7 @@ public final class VectorNTest
     public void testNorms()
     {
         // Row: |1|+|−2|+|3|+|−4|=10 ; L2 = sqrt(30) ; Lp(3)=(1+8+27+64)^(1/3) ; Linf=4
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Row<Length> r = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
         assertEquals(r.normL2().si(), r.norm().si(), EPS, "norm == normL2");
         assertEquals(10.0, r.normL1().si(), EPS, "L1");
         assertEquals(Math.sqrt(30.0), r.normL2().si(), EPS, "L2");
@@ -500,7 +500,7 @@ public final class VectorNTest
         assertEquals(4.0, r.normLinf().si(), EPS, "Linf");
 
         // Col: [3,4,0,0] → L1=7 ; L2=5 ; Linf=4
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {3, 4, 0, 0}, Length.Unit.m);
+        final VectorN.Col<Length> c = col(new double[] {3, 4, 0, 0}, Length.Unit.m);
         assertEquals(c.normL2().si(), c.norm().si(), EPS, "norm == normL2");
         assertEquals(7.0, c.normL1().si(), EPS, "L1");
         assertEquals(5.0, c.normL2().si(), EPS, "L2");
@@ -520,18 +520,18 @@ public final class VectorNTest
     @DisplayName("Hadamard: invert/multiply/divide + unit composition (Row)")
     public void testHadamardRow()
     {
-        final VectorN.Row<Length, Length.Unit> a = row(new double[] {2, 4, 5, 10}, Length.Unit.m);
-        final VectorN.Row<Length, Length.Unit> b = row(new double[] {1, 2, 0.5, 4}, Length.Unit.km); // SI: 1000,2000,500,4000
+        final VectorN.Row<Length> a = row(new double[] {2, 4, 5, 10}, Length.Unit.m);
+        final VectorN.Row<Length> b = row(new double[] {1, 2, 0.5, 4}, Length.Unit.km); // SI: 1000,2000,500,4000
 
-        final VectorN.Row<SIQuantity, SIUnit> inv = a.invertEntries();
+        final VectorN.Row<SIQuantity> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1}, inv.si(), EPS, "invert");
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit invert");
 
-        final VectorN.Row<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
+        final VectorN.Row<SIQuantity> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0, 2500.0, 40_000.0}, mul.si(), EPS, "multiply");
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit(), "unit add");
 
-        final VectorN.Row<SIQuantity, SIUnit> div = a.divideEntries(b);
+        final VectorN.Row<SIQuantity> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025}, div.si(), EPS, "divide");
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit(), "unit subtract");
     }
@@ -544,18 +544,18 @@ public final class VectorNTest
     @DisplayName("Hadamard: invert/multiply/divide + unit composition (Col)")
     public void testHadamardCol()
     {
-        final VectorN.Col<Length, Length.Unit> a = col(new double[] {2, 4, 5, 10}, Length.Unit.m);
-        final VectorN.Col<Length, Length.Unit> b = col(new double[] {1, 2, 0.5, 4}, Length.Unit.km);
+        final VectorN.Col<Length> a = col(new double[] {2, 4, 5, 10}, Length.Unit.m);
+        final VectorN.Col<Length> b = col(new double[] {1, 2, 0.5, 4}, Length.Unit.km);
 
-        final VectorN.Col<SIQuantity, SIUnit> inv = a.invertEntries();
+        final VectorN.Col<SIQuantity> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1}, inv.si(), EPS, "invert");
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit(), "unit invert");
 
-        final VectorN.Col<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
+        final VectorN.Col<SIQuantity> mul = a.multiplyEntries(b);
         assertArrayEquals(new double[] {2000.0, 8000.0, 2500.0, 40_000.0}, mul.si(), EPS, "multiply");
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit(), "unit add");
 
-        final VectorN.Col<SIQuantity, SIUnit> div = a.divideEntries(b);
+        final VectorN.Col<SIQuantity> div = a.divideEntries(b);
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025}, div.si(), EPS, "divide");
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit(), "unit subtract");
     }
@@ -572,7 +572,7 @@ public final class VectorNTest
     @DisplayName("Statistics: min/max/mean/median/sum (Row)")
     public void testStatisticsRow()
     {
-        final VectorN.Row<Length, Length.Unit> r = row(new double[] {1, 4, 2, 5, 3}, Length.Unit.m);
+        final VectorN.Row<Length> r = row(new double[] {1, 4, 2, 5, 3}, Length.Unit.m);
         assertEquals(1.0, r.min().si(), EPS, "min");
         assertEquals(5.0, r.max().si(), EPS, "max");
         assertEquals(3.0, r.mean().si(), EPS, "mean");
@@ -589,7 +589,7 @@ public final class VectorNTest
     public void testStatisticsCol()
     {
         // km → SI(m): [200, 1000, 500, 1500, 800]
-        final VectorN.Col<Length, Length.Unit> c = col(new double[] {0.2, 1.0, 0.5, 1.5, 0.8}, Length.Unit.km);
+        final VectorN.Col<Length> c = col(new double[] {0.2, 1.0, 0.5, 1.5, 0.8}, Length.Unit.km);
         final double[] si = new double[] {200.0, 1000.0, 500.0, 1500.0, 800.0};
 
         double sum = 0.0;
@@ -625,7 +625,7 @@ public final class VectorNTest
     public void testColNScalarExtraction()
     {
         // Column vector: [x; y; z; w] = [5 km; 6 km; 7 km; 8 km] -> SI = [5000; 6000; 7000; 8000] m
-        VectorN.Col<Length, Length.Unit> v = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
+        VectorN.Col<Length> v = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
 
         // 0-based rows -> each row has length 1
         Length[] row0 = v.getRowScalars(0);
@@ -681,31 +681,31 @@ public final class VectorNTest
     public void testColNVectorExtractionSpec()
     {
         // Column vector: [5 km; 6 km; 7 km; 8 km] -> SI = [5000; 6000; 7000; 8000] m
-        VectorN.Col<Length, Length.Unit> v = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
+        VectorN.Col<Length> v = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
 
         // 0-based rows -> Vector1
-        Vector1<Length, Length.Unit> row0 = v.getRowVector(0);
-        Vector1<Length, Length.Unit> row3 = v.getRowVector(3);
+        Vector1<Length> row0 = v.getRowVector(0);
+        Vector1<Length> row3 = v.getRowVector(3);
         assertEquals(1, row0.size());
         assertEquals(1, row3.size());
         assertEquals(5000.0, row0.get(0).si(), EPS);
         assertEquals(8000.0, row3.get(0).si(), EPS);
 
         // 0-based column 0 -> full VectorN.Col
-        VectorN.Col<Length, Length.Unit> fullCol0 = v.getColumnVector(0);
+        VectorN.Col<Length> fullCol0 = v.getColumnVector(0);
         assertEquals(4, fullCol0.size());
         assertEquals(5000.0, fullCol0.get(0).si(), EPS);
         assertEquals(8000.0, fullCol0.get(3).si(), EPS);
 
         // 1-based
-        Vector1<Length, Length.Unit> mRow1 = v.mgetRowVector(1);
-        Vector1<Length, Length.Unit> mRow4 = v.mgetRowVector(4);
+        Vector1<Length> mRow1 = v.mgetRowVector(1);
+        Vector1<Length> mRow4 = v.mgetRowVector(4);
         assertEquals(1, mRow1.size());
         assertEquals(1, mRow4.size());
         assertEquals(5000.0, mRow1.get(0).si(), EPS);
         assertEquals(8000.0, mRow4.get(0).si(), EPS);
 
-        VectorN.Col<Length, Length.Unit> mFullCol1 = v.mgetColumnVector(1);
+        VectorN.Col<Length> mFullCol1 = v.mgetColumnVector(1);
         assertEquals(4, mFullCol1.size());
         assertEquals(5000.0, mFullCol1.get(0).si(), EPS);
         assertEquals(8000.0, mFullCol1.get(3).si(), EPS);
@@ -736,7 +736,7 @@ public final class VectorNTest
     public void testColNSiArrayExtractionAndSiAt()
     {
         // Column vector: [5 km; 6 km; 7 km; 8 km] -> SI = [5000; 6000; 7000; 8000] m
-        VectorN.Col<Length, Length.Unit> v = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
+        VectorN.Col<Length> v = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
 
         // 0-based SI arrays
         double[] row0 = v.getRowSi(0);
@@ -809,7 +809,7 @@ public final class VectorNTest
     public void testRowNScalarExtraction()
     {
         // Row vector: [x, y, z, w] = [3 cm, 4 cm, 5 cm, 6 cm] -> SI = [0.03, 0.04, 0.05, 0.06] m
-        VectorN.Row<Length, Length.Unit> v = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
+        VectorN.Row<Length> v = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
 
         // 0-based: row 0 -> length 4
         Length[] row0 = v.getRowScalars(0);
@@ -864,26 +864,26 @@ public final class VectorNTest
     public void testRowNVectorExtractionSpec()
     {
         // Row vector: [3 cm, 4 cm, 5 cm, 6 cm] -> SI = [0.03, 0.04, 0.05, 0.06] m
-        VectorN.Row<Length, Length.Unit> v = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
+        VectorN.Row<Length> v = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
 
         // 0-based: full row -> VectorN.Row
-        VectorN.Row<Length, Length.Unit> fullRow0 = v.getRowVector(0);
+        VectorN.Row<Length> fullRow0 = v.getRowVector(0);
         assertEquals(4, fullRow0.size());
         assertEquals(0.03, fullRow0.get(0).si(), EPS);
         assertEquals(0.06, fullRow0.get(3).si(), EPS);
 
         // 0-based: columns -> Vector1
-        Vector1<Length, Length.Unit> c0 = v.getColumnVector(0);
-        Vector1<Length, Length.Unit> c3 = v.getColumnVector(3);
+        Vector1<Length> c0 = v.getColumnVector(0);
+        Vector1<Length> c3 = v.getColumnVector(3);
         assertEquals(1, c0.size());
         assertEquals(1, c3.size());
         assertEquals(0.03, c0.get(0).si(), EPS);
         assertEquals(0.06, c3.get(0).si(), EPS);
 
         // 1-based
-        VectorN.Row<Length, Length.Unit> mFullRow1 = v.mgetRowVector(1);
-        Vector1<Length, Length.Unit> mC1 = v.mgetColumnVector(1);
-        Vector1<Length, Length.Unit> mC4 = v.mgetColumnVector(4);
+        VectorN.Row<Length> mFullRow1 = v.mgetRowVector(1);
+        Vector1<Length> mC1 = v.mgetColumnVector(1);
+        Vector1<Length> mC4 = v.mgetColumnVector(4);
         assertEquals(4, mFullRow1.size());
         assertEquals(1, mC1.size());
         assertEquals(1, mC4.size());
@@ -918,7 +918,7 @@ public final class VectorNTest
     public void testRowNSiArrayExtractionAndSiAt()
     {
         // Row vector: [3 cm, 4 cm, 5 cm, 6 cm] -> SI = [0.03, 0.04, 0.05, 0.06] m
-        VectorN.Row<Length, Length.Unit> v = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
+        VectorN.Row<Length> v = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
 
         // 0-based SI arrays
         double[] row0 = v.getRowSi(0);
@@ -996,23 +996,23 @@ public final class VectorNTest
         // ----------------------------
 
         // 1x1 -> asVector1 (legal)
-        VectorN.Col<Length, Length.Unit> c1 = col(new double[] {5.5}, Length.Unit.km); // 5.5 km -> 5500 m
-        Vector1<Length, Length.Unit> c1As1 = c1.asVector1();
+        VectorN.Col<Length> c1 = col(new double[] {5.5}, Length.Unit.km); // 5.5 km -> 5500 m
+        Vector1<Length> c1As1 = c1.asVector1();
         assertEquals(1, c1As1.size());
         assertEquals(5500.0, c1As1.get(0).si(), EPS);
         assertEquals(Length.Unit.km, c1As1.getDisplayUnit());
 
         // 2x1 -> asVector2Col (legal)
-        VectorN.Col<Length, Length.Unit> c2 = col(new double[] {5.0, 6.0}, Length.Unit.km); // -> [5000, 6000] m
-        Vector2.Col<Length, Length.Unit> c2As2 = c2.asVector2Col();
+        VectorN.Col<Length> c2 = col(new double[] {5.0, 6.0}, Length.Unit.km); // -> [5000, 6000] m
+        Vector2.Col<Length> c2As2 = c2.asVector2Col();
         assertEquals(2, c2As2.size());
         assertEquals(5000.0, c2As2.get(0).si(), EPS);
         assertEquals(6000.0, c2As2.get(1).si(), EPS);
         assertEquals(Length.Unit.km, c2As2.getDisplayUnit());
 
         // 3x1 -> asVector3Col (legal)
-        VectorN.Col<Length, Length.Unit> c3 = col(new double[] {5.0, 6.0, 7.0}, Length.Unit.km); // -> [5000, 6000, 7000] m
-        Vector3.Col<Length, Length.Unit> c3As3 = c3.asVector3Col();
+        VectorN.Col<Length> c3 = col(new double[] {5.0, 6.0, 7.0}, Length.Unit.km); // -> [5000, 6000, 7000] m
+        Vector3.Col<Length> c3As3 = c3.asVector3Col();
         assertEquals(3, c3As3.size());
         assertEquals(5000.0, c3As3.get(0).si(), EPS);
         assertEquals(6000.0, c3As3.get(1).si(), EPS);
@@ -1020,7 +1020,7 @@ public final class VectorNTest
         assertEquals(Length.Unit.km, c3As3.getDisplayUnit());
 
         // Illegal shapes for COL: 4x1 should fail for all 3 methods
-        VectorN.Col<Length, Length.Unit> c4 = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
+        VectorN.Col<Length> c4 = col(new double[] {5.0, 6.0, 7.0, 8.0}, Length.Unit.km);
         assertThrows(IllegalStateException.class, () -> c4.asVector1());
         assertThrows(IllegalStateException.class, () -> c4.asVector2Col());
         assertThrows(IllegalStateException.class, () -> c4.asVector3Col());
@@ -1030,23 +1030,23 @@ public final class VectorNTest
         // ----------------------------
 
         // 1x1 -> asVector1 (legal)
-        VectorN.Row<Length, Length.Unit> r1 = row(new double[] {3.0}, Length.Unit.cm); // 3 cm -> 0.03 m
-        Vector1<Length, Length.Unit> r1as1 = r1.asVector1();
+        VectorN.Row<Length> r1 = row(new double[] {3.0}, Length.Unit.cm); // 3 cm -> 0.03 m
+        Vector1<Length> r1as1 = r1.asVector1();
         assertEquals(1, r1as1.size());
         assertEquals(0.03, r1as1.get(0).si(), EPS);
         assertEquals(Length.Unit.cm, r1as1.getDisplayUnit());
 
         // 1x2 -> asVector2Row (legal)
-        VectorN.Row<Length, Length.Unit> r2 = row(new double[] {3.0, 4.0}, Length.Unit.cm); // -> [0.03, 0.04] m
-        Vector2.Row<Length, Length.Unit> r2As2 = r2.asVector2Row();
+        VectorN.Row<Length> r2 = row(new double[] {3.0, 4.0}, Length.Unit.cm); // -> [0.03, 0.04] m
+        Vector2.Row<Length> r2As2 = r2.asVector2Row();
         assertEquals(2, r2As2.size());
         assertEquals(0.03, r2As2.get(0).si(), EPS);
         assertEquals(0.04, r2As2.get(1).si(), EPS);
         assertEquals(Length.Unit.cm, r2As2.getDisplayUnit());
 
         // 1x3 -> asVector3Row (legal)
-        VectorN.Row<Length, Length.Unit> r3 = row(new double[] {3.0, 4.0, 5.0}, Length.Unit.cm); // -> [0.03, 0.04, 0.05] m
-        Vector3.Row<Length, Length.Unit> r3As3 = r3.asVector3Row();
+        VectorN.Row<Length> r3 = row(new double[] {3.0, 4.0, 5.0}, Length.Unit.cm); // -> [0.03, 0.04, 0.05] m
+        Vector3.Row<Length> r3As3 = r3.asVector3Row();
         assertEquals(3, r3As3.size());
         assertEquals(0.03, r3As3.get(0).si(), EPS);
         assertEquals(0.04, r3As3.get(1).si(), EPS);
@@ -1054,7 +1054,7 @@ public final class VectorNTest
         assertEquals(Length.Unit.cm, r3As3.getDisplayUnit());
 
         // Illegal shapes for ROW: 1x4 should fail for all 3 methods
-        VectorN.Row<Length, Length.Unit> r4 = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
+        VectorN.Row<Length> r4 = row(new double[] {3.0, 4.0, 5.0, 6.0}, Length.Unit.cm);
         assertThrows(IllegalStateException.class, () -> r4.asVector1());
         assertThrows(IllegalStateException.class, () -> r4.asVector2Row());
         assertThrows(IllegalStateException.class, () -> r4.asVector3Row());
@@ -1067,10 +1067,10 @@ public final class VectorNTest
     @DisplayName("Equals and hashCode")
     public void testEqualsHashCode()
     {
-        final VectorN.Col<Length, Length.Unit> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
-        final VectorN.Col<Length, Length.Unit> ad = col(new double[] {10, -20, 30, -40}, Length.Unit.dm);
-        final VectorN.Col<Length, Length.Unit> ae = col(new double[] {1, -2, 3, 4}, Length.Unit.m);
-        final VectorN.Row<Length, Length.Unit> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Col<Length> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Col<Length> ad = col(new double[] {10, -20, 30, -40}, Length.Unit.dm);
+        final VectorN.Col<Length> ae = col(new double[] {1, -2, 3, 4}, Length.Unit.m);
+        final VectorN.Row<Length> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
 
         assertEquals(ac, ac);
         assertEquals(ac, ad);
@@ -1090,8 +1090,8 @@ public final class VectorNTest
     @DisplayName("Transpose")
     public void testTranspose()
     {
-        final VectorN.Col<Length, Length.Unit> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
-        final VectorN.Row<Length, Length.Unit> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Col<Length> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Row<Length> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
 
         assertEquals(ac, ar.transpose());
         assertEquals(ar, ac.transpose());
@@ -1103,17 +1103,17 @@ public final class VectorNTest
     @Test
     public void testMultiplyScalarAs()
     {
-        VectorN.Col<Length, Length.Unit> r = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
+        VectorN.Col<Length> r = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        VectorN.Col<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
+        VectorN.Col<Speed> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(2).getInUnit(), 1E-6);
         assertEquals(1.5, sr.mget(3).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
 
-        VectorN.Row<Length, Length.Unit> c = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
-        VectorN.Row<Speed, Speed.Unit> sc = c.divideEntries(d).as(Speed.Unit.km_h);
+        VectorN.Row<Length> c = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
+        VectorN.Row<Speed> sc = c.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sc.getDisplayUnit());
         assertEquals(0.5, sc.get(0).getInUnit(), 1E-6);
         assertEquals(1.0, sc.get(1).getInUnit(), 1E-6);

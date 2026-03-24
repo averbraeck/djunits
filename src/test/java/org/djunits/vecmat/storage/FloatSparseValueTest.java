@@ -33,7 +33,7 @@ public class FloatSparseValueTest
 
         assertThrows(IllegalArgumentException.class, () -> new FloatSparseValue<>(0, -1, Length.ofSi(1)));
 
-        FloatSparseValue<Length, Length.Unit> v = new FloatSparseValue<>(2, 3, new Length(2.0, Length.Unit.km)); // 2000 m
+        FloatSparseValue<Length> v = new FloatSparseValue<>(2, 3, new Length(2.0, Length.Unit.km)); // 2000 m
         assertEquals(2, v.getRow());
         assertEquals(3, v.getColumn());
         assertEquals(2000f, v.si(), 1e-6);
@@ -46,7 +46,7 @@ public class FloatSparseValueTest
     @DisplayName("ctor(row,col,valueInUnit,unit): conversion to SI")
     public void testCtorValueUnit()
     {
-        FloatSparseValue<Length, Length.Unit> v = new FloatSparseValue<>(1, 2, 3.0f, Length.Unit.km); // 3000 m
+        FloatSparseValue<Length> v = new FloatSparseValue<>(1, 2, 3.0f, Length.Unit.km); // 3000 m
         assertEquals(3000f, v.si(), 1e-6);
     }
 
@@ -60,7 +60,7 @@ public class FloatSparseValueTest
         assertThrows(IllegalArgumentException.class, () -> new FloatSparseValue<>(-1, 0, 5f));
         assertThrows(IllegalArgumentException.class, () -> new FloatSparseValue<>(0, -1, 5f));
 
-        FloatSparseValue<Length, Length.Unit> v = new FloatSparseValue<>(3, 4, 7.5f);
+        FloatSparseValue<Length> v = new FloatSparseValue<>(3, 4, 7.5f);
         assertEquals(3, v.getRow());
         assertEquals(4, v.getColumn());
         assertEquals(7.5f, v.si(), 1e-6);
@@ -73,7 +73,7 @@ public class FloatSparseValueTest
     @DisplayName("toString(): contains row/column/value")
     public void testToString()
     {
-        FloatSparseValue<Length, Length.Unit> v = new FloatSparseValue<>(1, 2, 3.14f);
+        FloatSparseValue<Length> v = new FloatSparseValue<>(1, 2, 3.14f);
         String s = v.toString();
         assertTrue(s.contains("row=1"));
         assertTrue(s.contains("column=2"));

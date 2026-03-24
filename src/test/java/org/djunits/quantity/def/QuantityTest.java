@@ -625,7 +625,7 @@ public class QuantityTest
     /**
      * Quantity class for test.
      */
-    static class ExampleQuantityAQxyz extends Quantity<ExampleQuantityAQxyz, ExampleQuantityAQxyz.Unit>
+    static class ExampleQuantityAQxyz extends Quantity<ExampleQuantityAQxyz>
     {
         /** */
         private static final long serialVersionUID = 1L;

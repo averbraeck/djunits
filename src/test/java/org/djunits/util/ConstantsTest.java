@@ -81,7 +81,7 @@ public class ConstantsTest
         {
             actual = siq.siUnit();
         }
-        else if (q instanceof org.djunits.quantity.def.Quantity<?, ?> qq)
+        else if (q instanceof org.djunits.quantity.def.Quantity<?> qq)
         {
             actual = qq.siUnit();
         }

@@ -151,7 +151,7 @@ public class SparseFloatDataSiTest
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatDataSi(lengthArray4, 2, -1));
 
         // DoubleSparseValue constructor
-        List<FloatSparseValue<Length, Length.Unit>> svl = new ArrayList<>();
+        List<FloatSparseValue<Length>> svl = new ArrayList<>();
         svl.add(new FloatSparseValue<>(0, 0, 1.0f));
         svl.add(new FloatSparseValue<>(0, 1, 2.0f));
         svl.add(new FloatSparseValue<>(1, 1, 4.0f));
@@ -362,7 +362,7 @@ public class SparseFloatDataSiTest
         Length v2 = new Length(2, Length.Unit.km);
         Length v3 = new Length(3, Length.Unit.cm);
 
-        Collection<FloatSparseValue<Length, Length.Unit>> col = new ArrayList<>();
+        Collection<FloatSparseValue<Length>> col = new ArrayList<>();
         col.add(new FloatSparseValue<>(0, 0, v1));
         col.add(new FloatSparseValue<>(1, 1, v2));
         col.add(new FloatSparseValue<>(1, 2, v3));

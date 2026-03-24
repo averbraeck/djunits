@@ -255,7 +255,7 @@ final class UnitTest
     /**
      * Minimal Jerk quantity to exercise {@link AbstractUnit} extensibility inside the test.
      */
-    static final class Jerk extends Quantity<Jerk, Jerk.Unit>
+    static final class Jerk extends Quantity<Jerk>
     {
         /** */
         private static final long serialVersionUID = 1L;
@@ -523,7 +523,7 @@ final class UnitTest
      * A minimal test-local quantity representing a "per mass" value (unit: 1/kg), used to verify correct behavior of
      * <b>per-kilo</b> SI-prefix generation on {@link AbstractUnit}.
      */
-    static final class PerMass extends Quantity<PerMass, PerMass.Unit>
+    static final class PerMass extends Quantity<PerMass>
     {
         /** */
         private static final long serialVersionUID = 1L;

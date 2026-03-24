@@ -119,7 +119,7 @@ public class SparseDoubleDataSiTest
         assertThrows(IllegalArgumentException.class, () -> new SparseDoubleDataSi(lengthArray4, 2, -1));
 
         // DoubleSparseValue constructor
-        List<DoubleSparseValue<Length, Length.Unit>> svl = new ArrayList<>();
+        List<DoubleSparseValue<Length>> svl = new ArrayList<>();
         svl.add(new DoubleSparseValue<>(0, 0, 1.0));
         svl.add(new DoubleSparseValue<>(0, 1, 2.0));
         svl.add(new DoubleSparseValue<>(1, 1, 4.0));
@@ -295,7 +295,7 @@ public class SparseDoubleDataSiTest
         Length v2 = new Length(2.0, Length.Unit.km);
         Length v3 = new Length(3.0, Length.Unit.cm);
 
-        Collection<DoubleSparseValue<Length, Length.Unit>> col = new ArrayList<>();
+        Collection<DoubleSparseValue<Length>> col = new ArrayList<>();
         col.add(new DoubleSparseValue<>(0, 0, v1));
         col.add(new DoubleSparseValue<>(1, 1, v2));
         col.add(new DoubleSparseValue<>(1, 2, v3));

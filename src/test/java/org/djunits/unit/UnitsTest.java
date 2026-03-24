@@ -224,7 +224,6 @@ public class UnitsTest
     /**
      * Test register/unregister and retrieving localication for unknown quantities.
      */
-    @SuppressWarnings("unchecked")
     @Test
     public void testRegisterUnregister()
     {
@@ -365,7 +364,7 @@ public class UnitsTest
     };
 
     /** Quantity Q. */
-    static class Q extends Quantity<Q, QUnit>
+    static class Q extends Quantity<Q>
     {
         /** */
         private static final long serialVersionUID = 1L;

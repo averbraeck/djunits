@@ -35,7 +35,7 @@ public class DoubleSparseValueTest
         assertThrows(IllegalArgumentException.class, () -> new DoubleSparseValue<>(0, -1, Length.ofSi(1)));
 
         // Happy path
-        DoubleSparseValue<Length, Length.Unit> v = new DoubleSparseValue<>(2, 3, new Length(2.0, Length.Unit.km)); // 2000 m
+        DoubleSparseValue<Length> v = new DoubleSparseValue<>(2, 3, new Length(2.0, Length.Unit.km)); // 2000 m
         assertEquals(2, v.getRow());
         assertEquals(3, v.getColumn());
         assertEquals(2000.0, v.si(), 1e-12);
@@ -48,7 +48,7 @@ public class DoubleSparseValueTest
     @DisplayName("ctor(row,col,valueInUnit,unit): conversion to SI")
     public void testCtorValueUnit()
     {
-        DoubleSparseValue<Length, Length.Unit> v = new DoubleSparseValue<>(1, 2, 3.0, Length.Unit.km); // 3000 m
+        DoubleSparseValue<Length> v = new DoubleSparseValue<>(1, 2, 3.0, Length.Unit.km); // 3000 m
         assertEquals(3000.0, v.si(), 1e-12);
     }
 
@@ -62,7 +62,7 @@ public class DoubleSparseValueTest
         assertThrows(IllegalArgumentException.class, () -> new DoubleSparseValue<>(-1, 0, 5.0));
         assertThrows(IllegalArgumentException.class, () -> new DoubleSparseValue<>(0, -2, 5.0));
 
-        DoubleSparseValue<Length, Length.Unit> v = new DoubleSparseValue<>(3, 4, 7.5);
+        DoubleSparseValue<Length> v = new DoubleSparseValue<>(3, 4, 7.5);
         assertEquals(3, v.getRow());
         assertEquals(4, v.getColumn());
         assertEquals(7.5, v.si(), 1e-12);
@@ -75,7 +75,7 @@ public class DoubleSparseValueTest
     @DisplayName("toString(): contains row/column/value")
     public void testToString()
     {
-        DoubleSparseValue<Length, Length.Unit> v = new DoubleSparseValue<>(1, 2, 3.14);
+        DoubleSparseValue<Length> v = new DoubleSparseValue<>(1, 2, 3.14);
         String s = v.toString();
         assertTrue(s.contains("row=1"));
         assertTrue(s.contains("column=2"));

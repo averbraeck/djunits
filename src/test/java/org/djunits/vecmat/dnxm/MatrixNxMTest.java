@@ -52,7 +52,7 @@ public class MatrixNxMTest
      * @param unit display unit
      * @return matrix
      */
-    private static MatrixNxM<Length, Length.Unit> ofSi(final double[] si, final int rows, final int cols,
+    private static MatrixNxM<Length> ofSi(final double[] si, final int rows, final int cols,
             final Length.Unit unit)
     {
         final double[] inUnit = new double[si.length];
@@ -79,7 +79,7 @@ public class MatrixNxMTest
         assertThrows(IllegalArgumentException.class, () -> MatrixNxM.of(new double[6], 3, 0, Length.Unit.m));
 
         // 3x2 in km → SI
-        MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
+        MatrixNxM<Length> m = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
         assertEquals(3, m.rows());
         assertEquals(2, m.cols());
@@ -96,7 +96,7 @@ public class MatrixNxMTest
         assertThrows(IllegalArgumentException.class, () -> MatrixNxM.of(new double[][] {{}, {1}}, Length.Unit.m));
 
         // 2x3 in km
-        MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.km);
+        MatrixNxM<Length> m = MatrixNxM.of(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.km);
         assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
         assertEquals(2, m.rows());
         assertEquals(3, m.cols());
@@ -108,7 +108,7 @@ public class MatrixNxMTest
     public void testFactoryQuantityGrid()
     {
         Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
-        MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(q, Length.Unit.m);
+        MatrixNxM<Length> m = MatrixNxM.of(q, Length.Unit.m);
         assertArrayEquals(new double[] {1000.0, 200.0}, m.si(), EPS);
         assertEquals(1, m.rows());
         assertEquals(2, m.cols());
@@ -119,19 +119,19 @@ public class MatrixNxMTest
     @DisplayName("instantiateSi: preserve display unit, adopt SI")
     public void testInstantiateSi()
     {
-        MatrixNxM<Length, Length.Unit> base = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
+        MatrixNxM<Length> base = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         double[] newSi = new double[] {6, 5, 4, 3, 2, 1};
-        MatrixNxM<Length, Length.Unit> inst = base.instantiateSi(newSi);
+        MatrixNxM<Length> inst = base.instantiateSi(newSi);
         assertEquals(base.getDisplayUnit(), inst.getDisplayUnit());
         assertArrayEquals(new double[] {6, 5, 4, 3, 2, 1}, inst.si(), EPS);
 
-        MatrixNxM<SIQuantity, SIUnit> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().toString(true, false), "display unit retained");
+        MatrixNxM<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrix.si(), EPS, "si array used as-is");
         assertEquals(6.0, siMatrix.get(0, 0).si(), EPS);
 
-        MatrixNxM<SIQuantity, SIUnit> siMatrixOf = MatrixNxM.of(new double[][] {{6, 5, 4}, {3, 2, 1}}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().toString(true, false), "display unit retained");
+        MatrixNxM<SIQuantity> siMatrixOf = MatrixNxM.of(new double[][] {{6, 5, 4}, {3, 2, 1}}, SIUnit.of("kgm/s2K"));
+        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrixOf.si(), EPS, "si array used as-is");
         assertEquals(6.0, siMatrixOf.get(0, 0).si(), EPS);
 
@@ -149,16 +149,16 @@ public class MatrixNxMTest
     @DisplayName("rows/cols/value/isRelative")
     public void testShapeAndValue()
     {
-        MatrixNxM<Length, Length.Unit> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
         assertEquals(3, a32.rows());
         assertEquals(2, a32.cols());
         assertEquals(1.0, a32.get(0, 0).si(), EPS);
         assertTrue(a32.isRelative());
 
         assertEquals(6, a32.nnz());
-        MatrixNxM<Length, Length.Unit> m0 = ofSi(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 3, Length.Unit.m);
+        MatrixNxM<Length> m0 = ofSi(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0}, 3, 3, Length.Unit.m);
         assertEquals(0, m0.nnz());
-        MatrixNxM<Length, Length.Unit> m6 =
+        MatrixNxM<Length> m6 =
                 ofSi(new double[] {-1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, 8, 9}, 3, 3, Length.Unit.m);
         assertEquals(6, m6.nnz());
     }
@@ -168,7 +168,7 @@ public class MatrixNxMTest
     @DisplayName("setDisplayUnit() only changes presentation")
     public void testSetDisplayUnit()
     {
-        MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1000, 2000, 3000, 4000}, 2, 2, Length.Unit.km);
+        MatrixNxM<Length> m = ofSi(new double[] {1000, 2000, 3000, 4000}, 2, 2, Length.Unit.km);
         m.setDisplayUnit(Length.Unit.m);
         assertEquals(Length.Unit.m, m.getDisplayUnit());
         assertEquals(1000.0, m.get(0, 0).si(), EPS);
@@ -181,7 +181,7 @@ public class MatrixNxMTest
     @DisplayName("toString()/toString(unit)")
     public void testToString()
     {
-        MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
+        MatrixNxM<Length> m = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         assertTrue(m.toString().contains("km"));
         assertTrue(m.toString(Length.Unit.m).contains("m"));
     }
@@ -195,8 +195,8 @@ public class MatrixNxMTest
     @DisplayName("add/sub (Q & VM), negate/abs/scaleBy, stats")
     public void testAlgebraAndStats()
     {
-        MatrixNxM<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> b = ofSi(new double[] {6, 5, 4, 3, 2, 1}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> b = ofSi(new double[] {6, 5, 4, 3, 2, 1}, 2, 3, Length.Unit.m);
         Length inc = Length.ofSi(2.0);
 
         assertArrayEquals(new double[] {7, 7, 7, 7, 7, 7}, a.add(b).si(), EPS);
@@ -223,17 +223,17 @@ public class MatrixNxMTest
     @DisplayName("Hadamard: invert/multiply/divide + unit composition")
     public void testHadamard()
     {
-        MatrixNxM<Length, Length.Unit> a = ofSi(new double[] {2, 4, 5, 10, 20, 40}, 2, 3, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> b = MatrixNxM.of(new double[] {1, 2, 0.5, 4, 0.25, 8}, 2, 3, Length.Unit.km);
+        MatrixNxM<Length> a = ofSi(new double[] {2, 4, 5, 10, 20, 40}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> b = MatrixNxM.of(new double[] {1, 2, 0.5, 4, 0.25, 8}, 2, 3, Length.Unit.km);
 
-        MatrixNxM<SIQuantity, SIUnit> inv = a.invertEntries();
+        MatrixNxM<SIQuantity> inv = a.invertEntries();
         assertArrayEquals(new double[] {0.5, 0.25, 0.2, 0.1, 0.05, 0.025}, inv.si(), EPS);
 
-        MatrixNxM<SIQuantity, SIUnit> mul = a.multiplyEntries(b);
+        MatrixNxM<SIQuantity> mul = a.multiplyEntries(b);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
         assertArrayEquals(new double[] {2000, 8000, 2500, 40_000, 5_000, 320_000}, mul.si(), EPS);
 
-        MatrixNxM<SIQuantity, SIUnit> div = a.divideEntries(b);
+        MatrixNxM<SIQuantity> div = a.divideEntries(b);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
         assertArrayEquals(new double[] {0.002, 0.002, 0.01, 0.0025, 0.08, 0.005}, div.si(), EPS);
     }
@@ -248,11 +248,11 @@ public class MatrixNxMTest
     public void testMultiplyGeneral()
     {
         // A(3x2) in m
-        MatrixNxM<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
         // B(2x3) in km (display) ⇒ SI = x1000
-        MatrixNxM<Length, Length.Unit> b = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.km);
+        MatrixNxM<Length> b = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.km);
 
-        MatrixNxM<SIQuantity, SIUnit> c = a.multiply(b);
+        MatrixNxM<SIQuantity> c = a.multiply(b);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), c.getDisplayUnit());
 
         // Expected SI: A·(1000·B') = 1000·(A·B')
@@ -266,15 +266,15 @@ public class MatrixNxMTest
     public void testMultiply2x2And3x3()
     {
         // A(3x2) and 2x2
-        MatrixNxM<Length, Length.Unit> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        Matrix2x2<Length, Length.Unit> b22 = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
-        MatrixNxM<SIQuantity, SIUnit> r32 = a32.multiply(b22);
+        MatrixNxM<Length> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        Matrix2x2<Length> b22 = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
+        MatrixNxM<SIQuantity> r32 = a32.multiply(b22);
         assertArrayEquals(new double[] {7000, 10000, 15000, 22000, 23000, 34000}, r32.si(), EPS);
 
         // A(2x3) and 3x3
-        MatrixNxM<Length, Length.Unit> a23 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
-        Matrix3x3<Length, Length.Unit> b33 = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
-        MatrixNxM<SIQuantity, SIUnit> r23 = a23.multiply(b33);
+        MatrixNxM<Length> a23 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
+        Matrix3x3<Length> b33 = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
+        MatrixNxM<SIQuantity> r23 = a23.multiply(b33);
         // A·B' = [[30,36,42],[66,81,96]] then x1000
         assertArrayEquals(new double[] {30_000, 36_000, 42_000, 66_000, 81_000, 96_000}, r23.si(), EPS);
     }
@@ -284,23 +284,23 @@ public class MatrixNxMTest
     @DisplayName("A·v: size 2, size 3, and size N")
     public void testMultiplyVector()
     {
-        MatrixNxM<Length, Length.Unit> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        Vector2.Col<Length, Length.Unit> v2 = new Vector2.Col<>(1.0, 2.0, Length.Unit.km); // SI [1000,2000]
-        VectorN.Col<SIQuantity, SIUnit> r2 = a32.multiply(v2);
+        MatrixNxM<Length> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        Vector2.Col<Length> v2 = new Vector2.Col<>(1.0, 2.0, Length.Unit.km); // SI [1000,2000]
+        VectorN.Col<SIQuantity> r2 = a32.multiply(v2);
         assertEquals(3, r2.size());
         assertArrayEquals(new double[] {5000, 11000, 17000}, r2.si(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r2.getDisplayUnit());
 
-        MatrixNxM<Length, Length.Unit> a23 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
-        Vector3.Col<Length, Length.Unit> v3 = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.km); // [1k,2k,3k]
-        VectorN.Col<SIQuantity, SIUnit> r3 = a23.multiply(v3);
+        MatrixNxM<Length> a23 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
+        Vector3.Col<Length> v3 = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.km); // [1k,2k,3k]
+        VectorN.Col<SIQuantity> r3 = a23.multiply(v3);
         assertEquals(2, r3.size());
         assertArrayEquals(new double[] {14000, 32000}, r3.si(), EPS);
 
         // General VectorN.Col (size = cols)
-        VectorN.Col<Length, Length.Unit> vN =
+        VectorN.Col<Length> vN =
                 VectorN.Col.ofSi(new DenseDoubleDataSi(new double[] {1000, 2000}, 2, 1), Length.Unit.km);
-        VectorN.Col<SIQuantity, SIUnit> rN = a32.multiply(vN);
+        VectorN.Col<SIQuantity> rN = a32.multiply(vN);
         assertArrayEquals(new double[] {5000, 11000, 17000}, rN.si(), EPS);
     }
 
@@ -313,8 +313,8 @@ public class MatrixNxMTest
     @DisplayName("as(targetUnit) success/failure")
     public void testAsTargetUnit()
     {
-        MatrixNxM<Length, Length.Unit> m = MatrixNxM.of(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.km);
-        MatrixNxM<Length, Length.Unit> asM = m.as(Length.Unit.m);
+        MatrixNxM<Length> m = MatrixNxM.of(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.km);
+        MatrixNxM<Length> asM = m.as(Length.Unit.m);
         assertEquals(Length.Unit.m, asM.getDisplayUnit());
         assertArrayEquals(m.si(), asM.si(), EPS);
         SIUnit s = SIUnit.of("s");
@@ -326,15 +326,15 @@ public class MatrixNxMTest
     @DisplayName("asMatrix2x2 / asMatrix3x3 / asMatrixNxN")
     public void testAsMatrixConversions()
     {
-        MatrixNxM<Length, Length.Unit> m22 = ofSi(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.m);
-        Matrix2x2<Length, Length.Unit> mm22 = m22.asMatrix2x2();
+        MatrixNxM<Length> m22 = ofSi(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.m);
+        Matrix2x2<Length> mm22 = m22.asMatrix2x2();
         assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, mm22.si(), EPS);
 
-        MatrixNxM<Length, Length.Unit> m33 = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3, Length.Unit.m);
-        Matrix3x3<Length, Length.Unit> mm33 = m33.asMatrix3x3();
+        MatrixNxM<Length> m33 = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3, Length.Unit.m);
+        Matrix3x3<Length> mm33 = m33.asMatrix3x3();
         assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, mm33.si(), EPS);
 
-        MatrixNxN<Length, Length.Unit> mxn = m33.asMatrixNxN();
+        MatrixNxN<Length> mxn = m33.asMatrixNxN();
         assertEquals(3, mxn.rows());
     }
 
@@ -344,32 +344,32 @@ public class MatrixNxMTest
     public void testAsVectorConversions()
     {
         // Col
-        MatrixNxM<Length, Length.Unit> c21 = ofSi(new double[] {1000, 2000}, 2, 1, Length.Unit.km);
-        Vector2.Col<Length, Length.Unit> vc2 = c21.asVector2Col();
+        MatrixNxM<Length> c21 = ofSi(new double[] {1000, 2000}, 2, 1, Length.Unit.km);
+        Vector2.Col<Length> vc2 = c21.asVector2Col();
         assertEquals(2, vc2.size());
         assertArrayEquals(new double[] {1000, 2000}, vc2.si(), EPS);
 
-        MatrixNxM<Length, Length.Unit> c31 = ofSi(new double[] {1, 2, 3}, 3, 1, Length.Unit.m);
-        Vector3.Col<Length, Length.Unit> vc3 = c31.asVector3Col();
+        MatrixNxM<Length> c31 = ofSi(new double[] {1, 2, 3}, 3, 1, Length.Unit.m);
+        Vector3.Col<Length> vc3 = c31.asVector3Col();
         assertArrayEquals(new double[] {1, 2, 3}, vc3.si(), EPS);
 
-        VectorN.Col<Length, Length.Unit> vcn = c31.asVectorNCol();
+        VectorN.Col<Length> vcn = c31.asVectorNCol();
         assertEquals(3, vcn.size());
 
         // Row
-        MatrixNxM<Length, Length.Unit> r12 = ofSi(new double[] {1000, 2000}, 1, 2, Length.Unit.km);
-        Vector2.Row<Length, Length.Unit> vr2 = r12.asVector2Row();
+        MatrixNxM<Length> r12 = ofSi(new double[] {1000, 2000}, 1, 2, Length.Unit.km);
+        Vector2.Row<Length> vr2 = r12.asVector2Row();
         assertArrayEquals(new double[] {1000, 2000}, vr2.si(), EPS);
 
-        MatrixNxM<Length, Length.Unit> r13 = ofSi(new double[] {1, 2, 3}, 1, 3, Length.Unit.m);
-        Vector3.Row<Length, Length.Unit> vr3 = r13.asVector3Row();
+        MatrixNxM<Length> r13 = ofSi(new double[] {1, 2, 3}, 1, 3, Length.Unit.m);
+        Vector3.Row<Length> vr3 = r13.asVector3Row();
         assertArrayEquals(new double[] {1, 2, 3}, vr3.si(), EPS);
 
-        VectorN.Row<Length, Length.Unit> vrn = r13.asVectorNRow();
+        VectorN.Row<Length> vrn = r13.asVectorNRow();
         assertEquals(3, vrn.size());
 
         // Negative shape checks
-        MatrixNxM<Length, Length.Unit> bad = ofSi(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.m);
+        MatrixNxM<Length> bad = ofSi(new double[] {1, 2, 3, 4}, 2, 2, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> bad.asVector2Col());
         assertThrows(IllegalStateException.class, () -> bad.asVector3Row());
         assertThrows(IllegalStateException.class, () -> bad.asVectorNRow()); // rows()!=1
@@ -384,8 +384,8 @@ public class MatrixNxMTest
     @DisplayName("getScalars / getRowScalars / getColumnScalars")
     public void testScalarExtraction()
     {
-        MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> mhm = ofSi(new double[] {10, 20, 30, 40, 50, 60}, 3, 2, Length.Unit.hm);
+        MatrixNxM<Length> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> mhm = ofSi(new double[] {10, 20, 30, 40, 50, 60}, 3, 2, Length.Unit.hm);
         Length[][] scalars = m.getScalarGrid();
         assertEquals(3, scalars.length);
         assertEquals(2, scalars[0].length);
@@ -443,15 +443,15 @@ public class MatrixNxMTest
     @DisplayName("getRowVector / getColumnVector")
     public void testVectorExtraction()
     {
-        MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
         Length[][] scalars = m.getScalarGrid();
         assertEquals(3, scalars.length);
         assertEquals(2, scalars[0].length);
         assertEquals(1.0, scalars[0][0].si(), EPS);
         assertEquals(6.0, scalars[2][1].si(), EPS);
 
-        VectorN.Row<Length, Length.Unit> row1 = m.getRowVector(1);
-        VectorN.Col<Length, Length.Unit> col1 = m.getColumnVector(1);
+        VectorN.Row<Length> row1 = m.getRowVector(1);
+        VectorN.Col<Length> col1 = m.getColumnVector(1);
         assertEquals(2, row1.size());
         assertEquals(3.0, row1.get(0).si(), EPS);
         assertEquals(4.0, row1.get(1).si(), EPS);
@@ -459,8 +459,8 @@ public class MatrixNxMTest
         assertEquals(2.0, col1.get(0).si(), EPS);
         assertEquals(6.0, col1.get(2).si(), EPS);
 
-        VectorN.Row<Length, Length.Unit> mRow2 = m.mgetRowVector(2);
-        VectorN.Col<Length, Length.Unit> mCol2 = m.mgetColumnVector(2);
+        VectorN.Row<Length> mRow2 = m.mgetRowVector(2);
+        VectorN.Col<Length> mCol2 = m.mgetColumnVector(2);
         assertEquals(2, mRow2.size());
         assertEquals(3.0, mRow2.get(0).si(), EPS);
         assertEquals(4.0, mRow2.get(1).si(), EPS);
@@ -484,7 +484,7 @@ public class MatrixNxMTest
     @DisplayName("getRowSi / getColumnSi")
     public void testSiArrayExtraction()
     {
-        MatrixNxM<Length, Length.Unit> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> m = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
 
         double[] row1 = m.getRowSi(1);
         double[] col1 = m.getColumnSi(1);
@@ -520,9 +520,9 @@ public class MatrixNxMTest
     @DisplayName("equals / hashCode")
     public void testEqualsHash()
     {
-        MatrixNxM<Length, Length.Unit> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> b = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> c = ofSi(new double[] {1, 2, 3, 4, 5, 7}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> a = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> b = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> c = ofSi(new double[] {1, 2, 3, 4, 5, 7}, 3, 2, Length.Unit.m);
         assertEquals(a, a);
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
@@ -537,9 +537,9 @@ public class MatrixNxMTest
     @Test
     public void testMultiplyScalarAs()
     {
-        MatrixNxM<Length, Length.Unit> r = MatrixNxM.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.km);
+        MatrixNxM<Length> r = MatrixNxM.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.km);
         var d = Duration.of(2.0, "h");
-        MatrixNxM<Speed, Speed.Unit> sr = r.divideEntries(d).as(Speed.Unit.km_h);
+        MatrixNxM<Speed> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
         assertEquals(0.5, sr.mget(1, 1).getInUnit(), 1E-6);
         assertEquals(1.0, sr.mget(1, 2).getInUnit(), 1E-6);
@@ -566,18 +566,18 @@ public class MatrixNxMTest
         // asVector1 (requires 1x1)
         // ----------------------------
 
-        MatrixNxM<Length, Length.Unit> m11cm = ofSi(new double[] {0.03}, 1, 1, Length.Unit.cm); // 3 cm -> 0.03 m
+        MatrixNxM<Length> m11cm = ofSi(new double[] {0.03}, 1, 1, Length.Unit.cm); // 3 cm -> 0.03 m
         assertEquals(Length.Unit.cm, m11cm.getDisplayUnit());
         assertEquals(1, m11cm.si().length);
         assertEquals(0.03, m11cm.si()[0], EPS);
-        Vector1<Length, Length.Unit> v1cm = m11cm.asVector1();
+        Vector1<Length> v1cm = m11cm.asVector1();
         assertEquals(1, v1cm.size());
         assertEquals(0.03, v1cm.get(0).si(), EPS);
         assertEquals(Length.Unit.cm, v1cm.getDisplayUnit());
 
         // row mismatch (2x1) and col mismatch (1x2)
-        MatrixNxM<Length, Length.Unit> m21km = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km);
-        MatrixNxM<Length, Length.Unit> m12cm = ofSi(new double[] {0.03, 0.04}, 1, 2, Length.Unit.cm);
+        MatrixNxM<Length> m21km = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km);
+        MatrixNxM<Length> m12cm = ofSi(new double[] {0.03, 0.04}, 1, 2, Length.Unit.cm);
         assertThrows(IllegalStateException.class, () -> m21km.asVector1());
         assertThrows(IllegalStateException.class, () -> m12cm.asVector1());
 
@@ -585,48 +585,48 @@ public class MatrixNxMTest
         // asVector2Col (requires 2x1)
         // ----------------------------
 
-        MatrixNxM<Length, Length.Unit> m21ok = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km); // [5 km; 6 km]
+        MatrixNxM<Length> m21ok = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km); // [5 km; 6 km]
         assertEquals(Length.Unit.km, m21ok.getDisplayUnit());
         assertEquals(2, m21ok.si().length);
         assertEquals(5000.0, m21ok.si()[0], EPS);
         assertEquals(6000.0, m21ok.si()[1], EPS);
-        Vector2.Col<Length, Length.Unit> v2col = m21ok.asVector2Col();
+        Vector2.Col<Length> v2col = m21ok.asVector2Col();
         assertEquals(2, v2col.size());
         assertEquals(5000.0, v2col.get(0).si(), EPS);
         assertEquals(6000.0, v2col.get(1).si(), EPS);
         assertEquals(Length.Unit.km, v2col.getDisplayUnit());
 
         // row mismatch (1x1) and col mismatch (2x2)
-        MatrixNxM<Length, Length.Unit> m11km = ofSi(new double[] {7000.0}, 1, 1, Length.Unit.km);
-        MatrixNxM<Length, Length.Unit> m22km = ofSi(new double[] {5000.0, 6000.0, 7000.0, 8000.0}, 2, 2, Length.Unit.km);
+        MatrixNxM<Length> m11km = ofSi(new double[] {7000.0}, 1, 1, Length.Unit.km);
+        MatrixNxM<Length> m22km = ofSi(new double[] {5000.0, 6000.0, 7000.0, 8000.0}, 2, 2, Length.Unit.km);
         assertThrows(IllegalStateException.class, () -> m11km.asVector2Col());
         assertThrows(IllegalStateException.class, () -> m22km.asVector2Col());
 
         // ----------------------------
         // asVector2Row (requires 1x2)
         // ----------------------------
-        MatrixNxM<Length, Length.Unit> m12ok = ofSi(new double[] {0.03, 0.04}, 1, 2, Length.Unit.cm); // [3 cm, 4 cm]
+        MatrixNxM<Length> m12ok = ofSi(new double[] {0.03, 0.04}, 1, 2, Length.Unit.cm); // [3 cm, 4 cm]
         assertEquals(Length.Unit.cm, m12ok.getDisplayUnit());
         assertEquals(2, m12ok.si().length);
         assertEquals(0.03, m12ok.si()[0], EPS);
         assertEquals(0.04, m12ok.si()[1], EPS);
-        Vector2.Row<Length, Length.Unit> v2row = m12ok.asVector2Row();
+        Vector2.Row<Length> v2row = m12ok.asVector2Row();
         assertEquals(2, v2row.size());
         assertEquals(0.03, v2row.get(0).si(), EPS);
         assertEquals(0.04, v2row.get(1).si(), EPS);
         assertEquals(Length.Unit.cm, v2row.getDisplayUnit());
 
         // row mismatch (2x2) and col mismatch (1x1)
-        MatrixNxM<Length, Length.Unit> m22cm = ofSi(new double[] {0.01, 0.02, 0.03, 0.04}, 2, 2, Length.Unit.cm);
-        MatrixNxM<Length, Length.Unit> m11cm2 = ofSi(new double[] {0.05}, 1, 1, Length.Unit.cm);
+        MatrixNxM<Length> m22cm = ofSi(new double[] {0.01, 0.02, 0.03, 0.04}, 2, 2, Length.Unit.cm);
+        MatrixNxM<Length> m11cm2 = ofSi(new double[] {0.05}, 1, 1, Length.Unit.cm);
         assertThrows(IllegalStateException.class, () -> m22cm.asVector2Row());
         assertThrows(IllegalStateException.class, () -> m11cm2.asVector2Row());
 
         // ----------------------------
         // asVector3Col (requires 3x1)
         // ----------------------------
-        MatrixNxM<Length, Length.Unit> m31ok = ofSi(new double[] {5000.0, 6000.0, 7000.0}, 3, 1, Length.Unit.km);
-        Vector3.Col<Length, Length.Unit> v3col = m31ok.asVector3Col();
+        MatrixNxM<Length> m31ok = ofSi(new double[] {5000.0, 6000.0, 7000.0}, 3, 1, Length.Unit.km);
+        Vector3.Col<Length> v3col = m31ok.asVector3Col();
         assertEquals(3, v3col.size());
         assertEquals(5000.0, v3col.get(0).si(), EPS);
         assertEquals(6000.0, v3col.get(1).si(), EPS);
@@ -634,8 +634,8 @@ public class MatrixNxMTest
         assertEquals(Length.Unit.km, v3col.getDisplayUnit());
 
         // row mismatch (2x1) and col mismatch (3x2)
-        MatrixNxM<Length, Length.Unit> m21bad = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km);
-        MatrixNxM<Length, Length.Unit> m32bad =
+        MatrixNxM<Length> m21bad = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km);
+        MatrixNxM<Length> m32bad =
                 ofSi(new double[] {5000.0, 1.0, 6000.0, 2.0, 7000.0, 3.0}, 3, 2, Length.Unit.km);
         assertThrows(IllegalStateException.class, () -> m21bad.asVector3Col());
         assertThrows(IllegalStateException.class, () -> m32bad.asVector3Col());
@@ -643,8 +643,8 @@ public class MatrixNxMTest
         // ----------------------------
         // asVector3Row (requires 1x3)
         // ----------------------------
-        MatrixNxM<Length, Length.Unit> m13ok = ofSi(new double[] {0.03, 0.04, 0.05}, 1, 3, Length.Unit.cm);
-        Vector3.Row<Length, Length.Unit> v3row = m13ok.asVector3Row();
+        MatrixNxM<Length> m13ok = ofSi(new double[] {0.03, 0.04, 0.05}, 1, 3, Length.Unit.cm);
+        Vector3.Row<Length> v3row = m13ok.asVector3Row();
         assertEquals(3, v3row.size());
         assertEquals(0.03, v3row.get(0).si(), EPS);
         assertEquals(0.04, v3row.get(1).si(), EPS);
@@ -652,8 +652,8 @@ public class MatrixNxMTest
         assertEquals(Length.Unit.cm, v3row.getDisplayUnit());
 
         // row mismatch (2x3) and col mismatch (1x2)
-        MatrixNxM<Length, Length.Unit> m23bad = ofSi(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, 2, 3, Length.Unit.cm);
-        MatrixNxM<Length, Length.Unit> m12bad = ofSi(new double[] {0.07, 0.08}, 1, 2, Length.Unit.cm);
+        MatrixNxM<Length> m23bad = ofSi(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, 2, 3, Length.Unit.cm);
+        MatrixNxM<Length> m12bad = ofSi(new double[] {0.07, 0.08}, 1, 2, Length.Unit.cm);
         assertThrows(IllegalStateException.class, () -> m23bad.asVector3Row());
         assertThrows(IllegalStateException.class, () -> m12bad.asVector3Row());
     }
@@ -675,13 +675,13 @@ public class MatrixNxMTest
         // ------------------------------------------------------------------------------------
 
         // Happy path: 1x1, using km to verify SI-preservation (5 km -> 5000 m).
-        MatrixNxM<Length, Length.Unit> m1x1km = ofSi(new double[] {5000.0}, 1, 1, Length.Unit.km);
+        MatrixNxM<Length> m1x1km = ofSi(new double[] {5000.0}, 1, 1, Length.Unit.km);
         assertEquals(Length.Unit.km, m1x1km.getDisplayUnit());
         assertEquals(1, m1x1km.si().length);
         assertEquals(5000.0, m1x1km.si()[0], EPS);
         assertEquals(5000.0, m1x1km.si(0, 0), EPS);
 
-        Matrix1x1<Length, Length.Unit> fixed1x1 = m1x1km.asMatrix1x1();
+        Matrix1x1<Length> fixed1x1 = m1x1km.asMatrix1x1();
         assertEquals(Length.Unit.km, fixed1x1.getDisplayUnit());
         assertEquals(5000.0, fixed1x1.si(0, 0), EPS);
         double[] si11 = fixed1x1.si();
@@ -689,19 +689,19 @@ public class MatrixNxMTest
         assertEquals(5000.0, si11[0], EPS);
 
         // Bad path: row mismatch (2x1).
-        MatrixNxM<Length, Length.Unit> m2x1km = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km);
+        MatrixNxM<Length> m2x1km = ofSi(new double[] {5000.0, 6000.0}, 2, 1, Length.Unit.km);
         assertThrows(IllegalStateException.class, () -> m2x1km.asMatrix1x1());
 
         // Bad path: column mismatch (1x2).
-        MatrixNxM<Length, Length.Unit> m1x2km = ofSi(new double[] {5000.0, 6000.0}, 1, 2, Length.Unit.km);
+        MatrixNxM<Length> m1x2km = ofSi(new double[] {5000.0, 6000.0}, 1, 2, Length.Unit.km);
         assertThrows(IllegalStateException.class, () -> m1x2km.asMatrix1x1());
 
         // ----------------------------
         // asMatrix2x2 (requires 2x2)
         // ----------------------------
 
-        MatrixNxM<Length, Length.Unit> m22ok = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
-        Matrix2x2<Length, Length.Unit> m22fixed = m22ok.asMatrix2x2();
+        MatrixNxM<Length> m22ok = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
+        Matrix2x2<Length> m22fixed = m22ok.asMatrix2x2();
         assertEquals(Length.Unit.m, m22fixed.getDisplayUnit());
         assertEquals(1.0, m22fixed.si(0, 0), EPS);
         assertEquals(2.0, m22fixed.si(0, 1), EPS);
@@ -715,8 +715,8 @@ public class MatrixNxMTest
         assertEquals(4.0, m22si[3], EPS);
 
         // row mismatch (1x2) and col mismatch (2x3)
-        MatrixNxM<Length, Length.Unit> m12mat = ofSi(new double[] {9.0, 10.0}, 1, 2, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> m23mat = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> m12mat = ofSi(new double[] {9.0, 10.0}, 1, 2, Length.Unit.m);
+        MatrixNxM<Length> m23mat = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m12mat.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> m23mat.asMatrix2x2());
 
@@ -724,9 +724,9 @@ public class MatrixNxMTest
         // asMatrix3x3 (requires 3x3)
         // ----------------------------
 
-        MatrixNxM<Length, Length.Unit> m33ok =
+        MatrixNxM<Length> m33ok =
                 ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, 3, 3, Length.Unit.m);
-        Matrix3x3<Length, Length.Unit> m33fixed = m33ok.asMatrix3x3();
+        Matrix3x3<Length> m33fixed = m33ok.asMatrix3x3();
         assertEquals(Length.Unit.m, m33fixed.getDisplayUnit());
         assertEquals(1.0, m33fixed.si(0, 0), EPS);
         assertEquals(2.0, m33fixed.si(0, 1), EPS);
@@ -750,8 +750,8 @@ public class MatrixNxMTest
         assertEquals(9.0, m33si[8], EPS);
 
         // row mismatch (2x3) and col mismatch (3x2)
-        MatrixNxM<Length, Length.Unit> m23badMat = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
-        MatrixNxM<Length, Length.Unit> m32badMat = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> m23badMat = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> m32badMat = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m23badMat.asMatrix3x3());
         assertThrows(IllegalStateException.class, () -> m32badMat.asMatrix3x3());
     }
@@ -769,8 +769,8 @@ public class MatrixNxMTest
         // ----------------------------
 
         double[] newSi = new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
-        MatrixNxM<Length, Length.Unit> m23ok = ofSi(newSi, 3, 2, Length.Unit.km);
-        QuantityTable<Length, Length.Unit> q23fixed = m23ok.asQuantityTable();
+        MatrixNxM<Length> m23ok = ofSi(newSi, 3, 2, Length.Unit.km);
+        QuantityTable<Length> q23fixed = m23ok.asQuantityTable();
         assertEquals(Length.Unit.km, q23fixed.getDisplayUnit());
         assertEquals(q23fixed.cols(), m23ok.cols());
         assertEquals(q23fixed.rows(), m23ok.rows());
@@ -801,13 +801,13 @@ public class MatrixNxMTest
         // ----------------------------
         // Happy path: 1x1 (using cm)
         // ----------------------------
-        MatrixNxM<Length, Length.Unit> m11cm = ofSi(new double[] {0.03}, 1, 1, Length.Unit.cm); // 3 cm -> 0.03 m
+        MatrixNxM<Length> m11cm = ofSi(new double[] {0.03}, 1, 1, Length.Unit.cm); // 3 cm -> 0.03 m
         assertEquals(Length.Unit.cm, m11cm.getDisplayUnit());
         assertEquals(1, m11cm.si().length);
         assertEquals(0.03, m11cm.si()[0], EPS);
         assertEquals(0.03, m11cm.si(0, 0), EPS);
 
-        MatrixNxN<Length, Length.Unit> n11 = m11cm.asMatrixNxN();
+        MatrixNxN<Length> n11 = m11cm.asMatrixNxN();
         assertEquals(Length.Unit.cm, n11.getDisplayUnit());
         double[] si11 = n11.si();
         assertEquals(1, si11.length);
@@ -820,7 +820,7 @@ public class MatrixNxMTest
         double[] si44 = new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0, 7000.0, 8000.0, 9000.0, 10000.0, 11000.0,
                 12000.0, 13000.0, 14000.0, 15000.0, 16000.0}; // these are SI meters; with display unit km they should be shown
                                                               // as km but si() stays meters
-        MatrixNxM<Length, Length.Unit> m44km = ofSi(si44, 4, 4, Length.Unit.km);
+        MatrixNxM<Length> m44km = ofSi(si44, 4, 4, Length.Unit.km);
         assertEquals(Length.Unit.km, m44km.getDisplayUnit());
         assertEquals(16, m44km.si().length);
         assertEquals(1000.0, m44km.si()[0], EPS);
@@ -830,7 +830,7 @@ public class MatrixNxMTest
         assertEquals(13000.0, m44km.si(3, 0), EPS);
         assertEquals(16000.0, m44km.si(3, 3), EPS);
 
-        MatrixNxN<Length, Length.Unit> n44 = m44km.asMatrixNxN();
+        MatrixNxN<Length> n44 = m44km.asMatrixNxN();
         assertEquals(Length.Unit.km, n44.getDisplayUnit());
 
         double[] si44Out = n44.si();
@@ -862,11 +862,11 @@ public class MatrixNxMTest
         // ----------------------------
 
         // 2x3 (row-mismatch branch of "rows != cols")
-        MatrixNxM<Length, Length.Unit> m23m = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> m23m = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m23m.asMatrixNxN());
 
         // 3x2 (column-mismatch branch of "rows != cols")
-        MatrixNxM<Length, Length.Unit> m32m = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
+        MatrixNxM<Length> m32m = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m32m.asMatrixNxN());
     }
 
@@ -887,7 +887,7 @@ public class MatrixNxMTest
     public void testAsVectorNCol()
     {
         // Happy path: 4x1 using km (values in SI meters: 5,6,7,8 km -> 5000..8000 m)
-        MatrixNxM<Length, Length.Unit> m41km = ofSi(new double[] {5000.0, 6000.0, 7000.0, 8000.0}, 4, 1, Length.Unit.km);
+        MatrixNxM<Length> m41km = ofSi(new double[] {5000.0, 6000.0, 7000.0, 8000.0}, 4, 1, Length.Unit.km);
 
         assertEquals(Length.Unit.km, m41km.getDisplayUnit());
         assertEquals(4, m41km.si().length);
@@ -896,7 +896,7 @@ public class MatrixNxMTest
         assertEquals(5000.0, m41km.si(0, 0), EPS);
         assertEquals(8000.0, m41km.si(3, 0), EPS);
 
-        VectorN.Col<Length, Length.Unit> vCol = m41km.asVectorNCol();
+        VectorN.Col<Length> vCol = m41km.asVectorNCol();
         assertEquals(4, vCol.size());
         assertEquals(Length.Unit.km, vCol.getDisplayUnit());
         assertEquals(5000.0, vCol.get(0).si(), EPS);
@@ -908,14 +908,14 @@ public class MatrixNxMTest
         assertEquals(8000.0, vColSi[3], EPS);
 
         // Edge happy path: 1x1 also yields a VectorN.Col of length 1
-        MatrixNxM<Length, Length.Unit> m11km = ofSi(new double[] {1234.0}, 1, 1, Length.Unit.km);
-        VectorN.Col<Length, Length.Unit> vCol1 = m11km.asVectorNCol();
+        MatrixNxM<Length> m11km = ofSi(new double[] {1234.0}, 1, 1, Length.Unit.km);
+        VectorN.Col<Length> vCol1 = m11km.asVectorNCol();
         assertEquals(1, vCol1.size());
         assertEquals(Length.Unit.km, vCol1.getDisplayUnit());
         assertEquals(1234.0, vCol1.get(0).si(), EPS);
 
         // Bad path: Nx2 must throw (cols() != 1)
-        MatrixNxM<Length, Length.Unit> m42km =
+        MatrixNxM<Length> m42km =
                 ofSi(new double[] {5000.0, 6000.0, 7000.0, 8000.0, 9000.0, 10000.0, 11000.0, 12000.0}, 4, 2, Length.Unit.km);
         assertThrows(IllegalStateException.class, () -> m42km.asVectorNCol());
     }
@@ -937,7 +937,7 @@ public class MatrixNxMTest
     public void testAsVectorNRow()
     {
         // Happy path: 1x4 using cm (values in SI meters: 3,4,5,6 cm -> 0.03..0.06 m)
-        MatrixNxM<Length, Length.Unit> m14cm = ofSi(new double[] {0.03, 0.04, 0.05, 0.06}, 1, 4, Length.Unit.cm);
+        MatrixNxM<Length> m14cm = ofSi(new double[] {0.03, 0.04, 0.05, 0.06}, 1, 4, Length.Unit.cm);
 
         assertEquals(Length.Unit.cm, m14cm.getDisplayUnit());
         assertEquals(4, m14cm.si().length);
@@ -946,7 +946,7 @@ public class MatrixNxMTest
         assertEquals(0.03, m14cm.si(0, 0), EPS);
         assertEquals(0.06, m14cm.si(0, 3), EPS);
 
-        VectorN.Row<Length, Length.Unit> vRow = m14cm.asVectorNRow();
+        VectorN.Row<Length> vRow = m14cm.asVectorNRow();
         assertEquals(4, vRow.size());
         assertEquals(Length.Unit.cm, vRow.getDisplayUnit());
         assertEquals(0.03, vRow.get(0).si(), EPS);
@@ -958,14 +958,14 @@ public class MatrixNxMTest
         assertEquals(0.06, vRowSi[3], EPS);
 
         // Edge happy path: 1x1 also yields a VectorN.Row of length 1
-        MatrixNxM<Length, Length.Unit> m11cm = ofSi(new double[] {0.001}, 1, 1, Length.Unit.cm);
-        VectorN.Row<Length, Length.Unit> vRow1 = m11cm.asVectorNRow();
+        MatrixNxM<Length> m11cm = ofSi(new double[] {0.001}, 1, 1, Length.Unit.cm);
+        VectorN.Row<Length> vRow1 = m11cm.asVectorNRow();
         assertEquals(1, vRow1.size());
         assertEquals(Length.Unit.cm, vRow1.getDisplayUnit());
         assertEquals(0.001, vRow1.get(0).si(), EPS);
 
         // Bad path: 2xN must throw (rows() != 1)
-        MatrixNxM<Length, Length.Unit> m24cm =
+        MatrixNxM<Length> m24cm =
                 ofSi(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08}, 2, 4, Length.Unit.cm);
         assertThrows(IllegalStateException.class, () -> m24cm.asVectorNRow());
     }
@@ -983,12 +983,12 @@ public class MatrixNxMTest
     public void testMultiplyMatrix1x1()
     {
         // Left: 3x1 in km -> [1000, 2000, 3000] m
-        MatrixNxM<Length, Length.Unit> left = ofSi(new double[] {1000.0, 2000.0, 3000.0}, 3, 1, Length.Unit.km);
+        MatrixNxM<Length> left = ofSi(new double[] {1000.0, 2000.0, 3000.0}, 3, 1, Length.Unit.km);
 
         // Right: 1x1 in m -> [4] m
-        Matrix1x1<Length, Length.Unit> right = Matrix1x1.of(new double[] {4.0}, Length.Unit.m);
+        Matrix1x1<Length> right = Matrix1x1.of(new double[] {4.0}, Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prod = left.multiply(right);
+        MatrixNxM<SIQuantity> prod = left.multiply(right);
         assertEquals(3, prod.rows());
         assertEquals(1, prod.cols());
 
@@ -1002,18 +1002,18 @@ public class MatrixNxMTest
         assertEquals(12000.0, prod.si(2, 0), EPS);
 
         // Unit composition check: Length × Length -> Area
-        MatrixNxM<Area, Area.Unit> areaM2 = prod.as(Area.Unit.m2);
+        MatrixNxM<Area> areaM2 = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, areaM2.getDisplayUnit());
         assertEquals(4000.0, areaM2.si(0, 0), EPS);
         assertEquals(12000.0, areaM2.si(2, 0), EPS);
 
-        MatrixNxM<Area, Area.Unit> areaKm2 = prod.as(Area.Unit.km2);
+        MatrixNxM<Area> areaKm2 = prod.as(Area.Unit.km2);
         assertEquals(Area.Unit.km2, areaKm2.getDisplayUnit());
         assertEquals(4000.0, areaKm2.si(0, 0), EPS); // SI stays meters^2
         assertEquals(12000.0, areaKm2.si(2, 0), EPS);
 
         // Bad path: left must have cols == 1
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(right));
     }
 
@@ -1029,12 +1029,12 @@ public class MatrixNxMTest
     public void testMultiplyMatrix2x2()
     {
         // Left: 2x2, km; choose identity*1000 for easy checking (SI)
-        MatrixNxM<Length, Length.Unit> left = ofSi(new double[] {1000.0, 0.0, 0.0, 1000.0}, 2, 2, Length.Unit.km);
+        MatrixNxM<Length> left = ofSi(new double[] {1000.0, 0.0, 0.0, 1000.0}, 2, 2, Length.Unit.km);
 
         // Right: 2x2, m
-        Matrix2x2<Length, Length.Unit> right = Matrix2x2.of(new double[] {2.0, 3.0, 4.0, 5.0}, Length.Unit.m);
+        Matrix2x2<Length> right = Matrix2x2.of(new double[] {2.0, 3.0, 4.0, 5.0}, Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prod = left.multiply(right);
+        MatrixNxM<SIQuantity> prod = left.multiply(right);
         assertEquals(2, prod.rows());
         assertEquals(2, prod.cols());
 
@@ -1044,13 +1044,13 @@ public class MatrixNxMTest
         assertEquals(4000.0, prod.si(1, 0), EPS);
         assertEquals(5000.0, prod.si(1, 1), EPS);
 
-        MatrixNxM<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        MatrixNxM<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
         assertEquals(2000.0, area.si(0, 0), EPS);
         assertEquals(5000.0, area.si(1, 1), EPS);
 
         // Bad path: left must have cols == 2
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0}, 3, 1, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0}, 3, 1, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(right));
     }
 
@@ -1066,14 +1066,14 @@ public class MatrixNxMTest
     public void testMultiplyMatrix3x3()
     {
         // Left: 2x3 in km (SI easy)
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 2, 3, Length.Unit.km);
 
         // Right: 3x3 in m
-        Matrix3x3<Length, Length.Unit> right =
+        Matrix3x3<Length> right =
                 Matrix3x3.of(new double[] {1.0, 0.0, 1.0, 0.0, 2.0, 0.0, 1.0, 0.0, 1.0}, Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prod = left.multiply(right);
+        MatrixNxM<SIQuantity> prod = left.multiply(right);
         assertEquals(2, prod.rows());
         assertEquals(3, prod.cols());
 
@@ -1087,11 +1087,11 @@ public class MatrixNxMTest
         assertEquals(10000.0, prod.si(1, 1), EPS);
         assertEquals(10000.0, prod.si(1, 2), EPS);
 
-        MatrixNxM<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        MatrixNxM<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
 
         // Bad path: left must have cols == 3
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(right));
     }
 
@@ -1108,13 +1108,13 @@ public class MatrixNxMTest
     public void testMultiplyMatrixNxNDoubleAndFloatBranches()
     {
         // Left: 3x2 (km)
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 3, 2, Length.Unit.km);
 
         // ---- Double-backed NxN (2x2 in m) -> should go through DenseDoubleDataSi branch
-        MatrixNxN<Length, Length.Unit> rhsDouble = MatrixNxN.of(new double[] {2.0, 1.0, 0.0, 3.0}, Length.Unit.m);
+        MatrixNxN<Length> rhsDouble = MatrixNxN.of(new double[] {2.0, 1.0, 0.0, 3.0}, Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prodDouble = left.multiply(rhsDouble);
+        MatrixNxM<SIQuantity> prodDouble = left.multiply(rhsDouble);
         assertEquals(3, prodDouble.rows());
         assertEquals(2, prodDouble.cols());
 
@@ -1131,10 +1131,10 @@ public class MatrixNxMTest
 
         // ---- Float-backed NxN (2x2) -> should go through DenseFloatDataSi branch
         // If your API uses a specialized factory, replace with it (e.g., MatrixNxN.of(float[], unit) or ofSi(float[], unit)).
-        MatrixNxN<Length, Length.Unit> rhsFloat =
+        MatrixNxN<Length> rhsFloat =
                 new MatrixNxN<>(new DenseFloatDataSi(new float[] {1.0f, 4.0f, 2.0f, 3.0f}, 2, 2), Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prodFloat = left.multiply(rhsFloat);
+        MatrixNxM<SIQuantity> prodFloat = left.multiply(rhsFloat);
         assertEquals(3, prodFloat.rows());
         assertEquals(2, prodFloat.cols());
 
@@ -1149,13 +1149,13 @@ public class MatrixNxMTest
         assertEquals(38000.0, prodFloat.si(2, 1), EPS);
 
         // Unit composition sanity via as(Area.Unit.m2)
-        MatrixNxM<Area, Area.Unit> area = prodDouble.as(Area.Unit.m2);
+        MatrixNxM<Area> area = prodDouble.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
         assertEquals(2000.0, area.si(0, 0), EPS);
 
         // Bad path: mismatch cols(left) vs rows(rhs)
         // cols=3
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(rhsDouble)); // rhs is 2x2
     }
 
@@ -1176,14 +1176,14 @@ public class MatrixNxMTest
     public void testMultiplyNxMWithNxMDoubleRhs()
     {
         // Left: 2x3 (km), SI values in meters for easy checking: [[1000,2000,3000],[4000,5000,6000]]
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 2, 3, Length.Unit.km);
 
         // Right: 3x2 (m), double-backed storage using DenseDoubleDataSi
         double[] rhsSi = new double[] {7.0, 8.0, 9.0, 10.0, 11.0, 12.0};
-        MatrixNxM<Length, Length.Unit> right = new MatrixNxM<>(new DenseDoubleDataSi(rhsSi, 3, 2), Length.Unit.m);
+        MatrixNxM<Length> right = new MatrixNxM<>(new DenseDoubleDataSi(rhsSi, 3, 2), Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prod = left.multiply(right);
+        MatrixNxM<SIQuantity> prod = left.multiply(right);
         assertEquals(2, prod.rows());
         assertEquals(2, prod.cols());
 
@@ -1201,12 +1201,12 @@ public class MatrixNxMTest
         assertEquals(154000.0, si[3], EPS);
 
         // Unit composition: Length × Length -> Area; conversion preserves SI
-        MatrixNxM<Area, Area.Unit> areaM2 = prod.as(Area.Unit.m2);
+        MatrixNxM<Area> areaM2 = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, areaM2.getDisplayUnit());
         assertEquals(58000.0, areaM2.si(0, 0), EPS);
         assertEquals(154000.0, areaM2.si(1, 1), EPS);
 
-        MatrixNxM<Area, Area.Unit> areaKm2 = prod.as(Area.Unit.km2);
+        MatrixNxM<Area> areaKm2 = prod.as(Area.Unit.km2);
         assertEquals(Area.Unit.km2, areaKm2.getDisplayUnit());
         assertEquals(58000.0, areaKm2.si(0, 0), EPS);
         assertEquals(154000.0, areaKm2.si(1, 1), EPS);
@@ -1224,14 +1224,14 @@ public class MatrixNxMTest
     public void testMultiplyNxMWithNxMFloatRhs()
     {
         // Left: 2x3 (km), SI values [[1000,2000,3000],[4000,5000,6000]]
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 2, 3, Length.Unit.km);
 
         // Right: 3x2 (m), float-backed storage using DenseFloatDataSi
         float[] rhsSi = new float[] {1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f};
-        MatrixNxM<Length, Length.Unit> right = new MatrixNxM<>(new DenseFloatDataSi(rhsSi, 3, 2), Length.Unit.m);
+        MatrixNxM<Length> right = new MatrixNxM<>(new DenseFloatDataSi(rhsSi, 3, 2), Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prod = left.multiply(right);
+        MatrixNxM<SIQuantity> prod = left.multiply(right);
         assertEquals(2, prod.rows());
         assertEquals(2, prod.cols());
 
@@ -1244,7 +1244,7 @@ public class MatrixNxMTest
         assertEquals(11000.0, prod.si(1, 1), EPS);
 
         // Unit composition check via Area
-        MatrixNxM<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        MatrixNxM<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
         assertEquals(4000.0, area.si(0, 0), EPS);
         assertEquals(11000.0, area.si(1, 1), EPS);
@@ -1262,22 +1262,22 @@ public class MatrixNxMTest
     public void testMultiplyVector1()
     {
         // Left: 2x1, km -> [1000, 2000] m
-        MatrixNxM<Length, Length.Unit> left = ofSi(new double[] {1000.0, 2000.0}, 2, 1, Length.Unit.km);
+        MatrixNxM<Length> left = ofSi(new double[] {1000.0, 2000.0}, 2, 1, Length.Unit.km);
 
         // Vector1: [4 m]
-        Vector1<Length, Length.Unit> v = new Vector1<>(4.0, Length.Unit.m);
+        Vector1<Length> v = new Vector1<>(4.0, Length.Unit.m);
 
-        MatrixNxM<SIQuantity, SIUnit> prod = left.multiply(v);
+        MatrixNxM<SIQuantity> prod = left.multiply(v);
         assertEquals(2, prod.rows());
         assertEquals(1, prod.cols());
         assertEquals(4000.0, prod.si(0, 0), EPS);
         assertEquals(8000.0, prod.si(1, 0), EPS);
 
-        MatrixNxM<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        MatrixNxM<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
 
         // Bad path: left must have cols == 1
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(v));
     }
 
@@ -1293,23 +1293,23 @@ public class MatrixNxMTest
     public void testMultiplyVector2Col()
     {
         // Left: 3x2, km
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 3, 2, Length.Unit.km);
 
         // Right vector: [2 m; 3 m]
-        Vector2.Col<Length, Length.Unit> v2 = new Vector2.Col<>(2.0, 3.0, Length.Unit.m);
+        Vector2.Col<Length> v2 = new Vector2.Col<>(2.0, 3.0, Length.Unit.m);
 
-        VectorN.Col<SIQuantity, SIUnit> prod = left.multiply(v2);
+        VectorN.Col<SIQuantity> prod = left.multiply(v2);
         assertEquals(3, prod.size());
         assertEquals(8000.0, prod.get(0).si(), EPS); // 1000*2 + 2000*3
         assertEquals(18000.0, prod.get(1).si(), EPS); // 3000*2 + 4000*3
         assertEquals(28000.0, prod.get(2).si(), EPS); // 5000*2 + 6000*3
 
-        VectorN.Col<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        VectorN.Col<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
 
         // Bad path: left must have cols == 2
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(v2));
     }
 
@@ -1325,24 +1325,24 @@ public class MatrixNxMTest
     public void testMultiplyVector3Col()
     {
         // Left: 2x3, km
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 2, 3, Length.Unit.km);
 
         // Right vector: [1 m; 2 m; 3 m]
-        Vector3.Col<Length, Length.Unit> v3 = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.m);
+        Vector3.Col<Length> v3 = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.m);
 
-        VectorN.Col<SIQuantity, SIUnit> prod = left.multiply(v3);
+        VectorN.Col<SIQuantity> prod = left.multiply(v3);
         assertEquals(2, prod.size());
         // Row0: 1000*1 + 2000*2 + 3000*3 = 1000 + 4000 + 9000 = 14000
         assertEquals(14000.0, prod.get(0).si(), EPS);
         // Row1: 4000*1 + 5000*2 + 6000*3 = 4000 + 10000 + 18000 = 32000
         assertEquals(32000.0, prod.get(1).si(), EPS);
 
-        VectorN.Col<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        VectorN.Col<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
 
         // Bad path: left must have cols == 3
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(v3));
     }
 
@@ -1358,23 +1358,23 @@ public class MatrixNxMTest
     public void testMultiplyVectorNCol()
     {
         // Left: 3x2, km
-        MatrixNxM<Length, Length.Unit> left =
+        MatrixNxM<Length> left =
                 ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 3, 2, Length.Unit.km);
 
         // Right: VectorN.Col length 2 in m (use SI factory if available)
-        VectorN.Col<Length, Length.Unit> vN = VectorN.Col.of(new double[] {2.0, 3.0}, Length.Unit.m);
+        VectorN.Col<Length> vN = VectorN.Col.of(new double[] {2.0, 3.0}, Length.Unit.m);
 
-        VectorN.Col<SIQuantity, SIUnit> prod = left.multiply(vN);
+        VectorN.Col<SIQuantity> prod = left.multiply(vN);
         assertEquals(3, prod.size());
         assertEquals(8000.0, prod.get(0).si(), EPS);
         assertEquals(18000.0, prod.get(1).si(), EPS);
         assertEquals(28000.0, prod.get(2).si(), EPS);
 
-        VectorN.Col<Area, Area.Unit> area = prod.as(Area.Unit.m2);
+        VectorN.Col<Area> area = prod.as(Area.Unit.m2);
         assertEquals(Area.Unit.m2, area.getDisplayUnit());
 
         // Bad path: mismatch cols(left)=3 with vector length=2
-        MatrixNxM<Length, Length.Unit> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        MatrixNxM<Length> badLeft = ofSi(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> badLeft.multiply(vN));
     }
 
@@ -1393,18 +1393,18 @@ public class MatrixNxMTest
     {
         // A (2x3) in km (SI values chosen directly for clarity)
         double[] si = {1, 2, 3, 4, 5, 6};
-        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new DenseDoubleDataSi(si, 2, 3), Length.Unit.km);
+        MatrixNxM<Length> a = new MatrixNxM<>(new DenseDoubleDataSi(si, 2, 3), Length.Unit.km);
         assertEquals(2, a.rows());
         assertEquals(3, a.cols());
 
-        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        MatrixNxM<Length> t = a.transpose();
         assertEquals(3, t.rows());
         assertEquals(2, t.cols());
         assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
         assertArrayEquals(new double[] {1, 4, 2, 5, 3, 6}, t.si(), EPS, "Row-major remapping failed.");
 
         // Double transpose should restore the original SI ordering
-        MatrixNxM<Length, Length.Unit> tt = t.transpose();
+        MatrixNxM<Length> tt = t.transpose();
         assertEquals(a.rows(), tt.rows());
         assertEquals(a.cols(), tt.cols());
         assertArrayEquals(a.si(), tt.si(), EPS, "Double transpose must restore original SI data.");
@@ -1420,11 +1420,11 @@ public class MatrixNxMTest
     {
         // A (2x3) in meters, float-backed storage
         float[] sfi = new float[] {1f, 2f, 3f, 4f, 5f, 6f};
-        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new DenseFloatDataSi(sfi, 2, 3), Length.Unit.m);
+        MatrixNxM<Length> a = new MatrixNxM<>(new DenseFloatDataSi(sfi, 2, 3), Length.Unit.m);
         assertEquals(2, a.rows());
         assertEquals(3, a.cols());
 
-        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        MatrixNxM<Length> t = a.transpose();
         assertEquals(3, t.rows());
         assertEquals(2, t.cols());
         assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
@@ -1444,12 +1444,12 @@ public class MatrixNxMTest
         // [1, 0, 0
         // 4, 0, 6]
         double[] si = {1, 0, 0, 4, 0, 6};
-        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new SparseDoubleDataSi(si, 2, 3), Length.Unit.m);
+        MatrixNxM<Length> a = new MatrixNxM<>(new SparseDoubleDataSi(si, 2, 3), Length.Unit.m);
         assertEquals(2, a.rows());
         assertEquals(3, a.cols());
         assertEquals(3, a.nnz(), "Three non-zeros expected in source.");
 
-        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        MatrixNxM<Length> t = a.transpose();
         assertEquals(3, t.rows());
         assertEquals(2, t.cols());
         assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
@@ -1473,12 +1473,12 @@ public class MatrixNxMTest
         // [1, 0, 0
         // 4, 0, 6]
         float[] sfi = new float[] {1f, 0f, 0f, 4f, 0f, 6f};
-        MatrixNxM<Length, Length.Unit> a = new MatrixNxM<>(new SparseFloatDataSi(sfi, 2, 3), Length.Unit.m);
+        MatrixNxM<Length> a = new MatrixNxM<>(new SparseFloatDataSi(sfi, 2, 3), Length.Unit.m);
         assertEquals(2, a.rows());
         assertEquals(3, a.cols());
         assertEquals(3, a.nnz(), "Three non-zeros expected in source.");
 
-        MatrixNxM<Length, Length.Unit> t = a.transpose();
+        MatrixNxM<Length> t = a.transpose();
         assertEquals(3, t.rows());
         assertEquals(2, t.cols());
         assertEquals(a.getDisplayUnit(), t.getDisplayUnit(), "Display unit must be preserved.");
