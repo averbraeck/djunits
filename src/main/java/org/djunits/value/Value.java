@@ -2,6 +2,7 @@ package org.djunits.value;
 
 import java.io.Serializable;
 
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
@@ -19,23 +20,23 @@ import org.djunits.unit.Units;
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>.
  * @author Alexander Verbraeck
  * @author Peter Knoppers
- * @param <U> the unit type
- * @param <SELF> the 'own' type for fluent design
+ * @param <V> the 'own' type for fluent design
+ * @param <Q> the quantity
  */
-public interface Value<U extends UnitInterface<U, ?>, SELF extends Value<U, SELF>> extends Serializable
+public interface Value<V extends Value<V, Q>, Q extends Quantity<Q>> extends Serializable
 {
     /**
      * Retrieve the unit of this Value.
      * @return the unit of this Value
      */
-    U getDisplayUnit();
+    UnitInterface<?, Q> getDisplayUnit();
 
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnit the new display unit of this value
      * @return 'this' for fluent design
      */
-    SELF setDisplayUnit(U newUnit);
+    V setDisplayUnit(UnitInterface<?, Q> newUnit);
 
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
@@ -43,10 +44,10 @@ public interface Value<U extends UnitInterface<U, ?>, SELF extends Value<U, SELF
      * @return 'this' for fluent design
      * @throws UnitRuntimeException when the unit did not exist, or the abbreviation was not registered
      */
-    default SELF setDisplayUnit(final String newUnitString)
+    default V setDisplayUnit(final String newUnitString)
     {
         @SuppressWarnings("unchecked")
-        U newUnit = (U) Units.resolve(getDisplayUnit().getClass(), newUnitString);
+        UnitInterface<?, Q> newUnit = (UnitInterface<?, Q>) Units.resolve(getDisplayUnit().getClass(), newUnitString);
         return setDisplayUnit(newUnit);
     }
 
@@ -77,6 +78,6 @@ public interface Value<U extends UnitInterface<U, ?>, SELF extends Value<U, SELF
      * @param displayUnit the unit into which the values are converted for display
      * @return a String with the value contents expressed in the specified unit
      */
-    String toString(U displayUnit);
+    String toString(UnitInterface<?, Q> displayUnit);
 
 }
