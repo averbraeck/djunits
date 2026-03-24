@@ -124,6 +124,12 @@ public class Torque extends Quantity<Torque>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Torque.Unit getDisplayUnit()
+    {
+        return (Torque.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Torque and Torque, which results in a Dimensionless quantity.
      * @param v quantity

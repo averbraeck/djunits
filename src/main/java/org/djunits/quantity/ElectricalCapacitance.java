@@ -124,6 +124,12 @@ public class ElectricalCapacitance extends Quantity<ElectricalCapacitance>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricalCapacitance.Unit getDisplayUnit()
+    {
+        return (ElectricalCapacitance.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricalCapacitance and ElectricalCapacitance, which results in a Dimensionless quantity.
      * @param v quantity

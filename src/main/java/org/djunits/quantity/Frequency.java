@@ -124,6 +124,12 @@ public class Frequency extends Quantity<Frequency>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Frequency.Unit getDisplayUnit()
+    {
+        return (Frequency.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Frequency and Frequency, which results in a Dimensionless quantity.
      * @param v quantity

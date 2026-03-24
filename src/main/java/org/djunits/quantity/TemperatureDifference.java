@@ -121,6 +121,12 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Temperature.Unit getDisplayUnit()
+    {
+        return (Temperature.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Add an absolute temperature to this temperature difference, and return a new absolute temperature. The unit of the return
      * value will be the unit of this temperature difference, and the reference point of the return value will be the reference

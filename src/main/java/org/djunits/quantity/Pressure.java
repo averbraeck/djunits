@@ -124,6 +124,12 @@ public class Pressure extends Quantity<Pressure>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Pressure.Unit getDisplayUnit()
+    {
+        return (Pressure.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Pressure and Pressure, which results in a Dimensionless quantity.
      * @param v quantity

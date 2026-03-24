@@ -125,6 +125,12 @@ public class ElectricalConductance extends Quantity<ElectricalConductance>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricalConductance.Unit getDisplayUnit()
+    {
+        return (ElectricalConductance.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricalConductance and ElectricalConductance, which results in a Dimensionless quantity.
      * @param v quantity

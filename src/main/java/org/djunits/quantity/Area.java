@@ -124,6 +124,12 @@ public class Area extends Quantity<Area>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Area.Unit getDisplayUnit()
+    {
+        return (Area.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Area and Area, which results in a Dimensionless scalar.
      * @param v scalar

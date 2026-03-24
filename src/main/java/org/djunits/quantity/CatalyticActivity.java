@@ -125,6 +125,12 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public CatalyticActivity.Unit getDisplayUnit()
+    {
+        return (CatalyticActivity.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of CatalyticActivity and CatalyticActivity, which results in a Dimensionless quantity.
      * @param v quantity

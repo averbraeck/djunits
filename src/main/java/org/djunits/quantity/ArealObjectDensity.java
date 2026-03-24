@@ -124,6 +124,12 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ArealObjectDensity.Unit getDisplayUnit()
+    {
+        return (ArealObjectDensity.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Divides this areal object density by another areal object density to yield a dimensionless ratio.
      * <p>

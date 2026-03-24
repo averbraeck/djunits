@@ -124,6 +124,12 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public AngularAcceleration.Unit getDisplayUnit()
+    {
+        return (AngularAcceleration.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of AngularAcceleration and AngularAcceleration, which results in a Dimensionless scalar.
      * @param v scalar

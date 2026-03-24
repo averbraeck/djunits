@@ -124,6 +124,12 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public AmountOfSubstance.Unit getDisplayUnit()
+    {
+        return (AmountOfSubstance.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of AmountOfSubstance and AmountOfSubstance, which results in a Dimensionless scalar.
      * @param v scalar

@@ -124,6 +124,12 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricCurrent.Unit getDisplayUnit()
+    {
+        return (ElectricCurrent.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricCurrent and ElectricCurrent, which results in a Dimensionless quantity.
      * @param v quantity

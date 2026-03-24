@@ -124,6 +124,12 @@ public class FlowVolume extends Quantity<FlowVolume>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public FlowVolume.Unit getDisplayUnit()
+    {
+        return (FlowVolume.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of FlowVolume and FlowVolume, which results in a Dimensionless quantity.
      * @param v quantity

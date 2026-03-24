@@ -124,6 +124,12 @@ public class LuminousFlux extends Quantity<LuminousFlux>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public LuminousFlux.Unit getDisplayUnit()
+    {
+        return (LuminousFlux.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of LuminousFlux and LuminousFlux, which results in a Dimensionless quantity.
      * @param v quantity

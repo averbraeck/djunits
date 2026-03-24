@@ -125,6 +125,12 @@ public class Speed extends Quantity<Speed>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Speed.Unit getDisplayUnit()
+    {
+        return (Speed.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Speed and Speed, which results in a Dimensionless scalar.
      * @param v scalar

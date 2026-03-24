@@ -126,6 +126,12 @@ public class Duration extends Quantity<Duration>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Duration.Unit getDisplayUnit()
+    {
+        return (Duration.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Add an (absolute) time to this duration, and return a time. The unit of the return value will be the unit of this
      * duration, and the reference of the return value will be the reference belonging to the given time. <code>R.add(A)</code>

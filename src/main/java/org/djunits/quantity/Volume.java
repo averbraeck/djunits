@@ -124,6 +124,12 @@ public class Volume extends Quantity<Volume>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Volume.Unit getDisplayUnit()
+    {
+        return (Volume.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Volume and Volume, which results in a Dimensionless scalar.
      * @param v scalar

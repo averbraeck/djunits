@@ -124,6 +124,12 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public LinearObjectDensity.Unit getDisplayUnit()
+    {
+        return (LinearObjectDensity.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of LinearObjectDensity and LinearObjectDensity, which results in a Dimensionless quantity.
      * @param v quantity

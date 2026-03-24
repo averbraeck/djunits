@@ -124,6 +124,12 @@ public class Power extends Quantity<Power>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Power.Unit getDisplayUnit()
+    {
+        return (Power.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Power and Power, which results in a Dimensionless quantity.
      * @param v quantity

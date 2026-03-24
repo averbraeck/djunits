@@ -124,6 +124,12 @@ public class Mass extends Quantity<Mass>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Mass.Unit getDisplayUnit()
+    {
+        return (Mass.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Mass and Mass, which results in a Dimensionless quantity.
      * @param v quantity

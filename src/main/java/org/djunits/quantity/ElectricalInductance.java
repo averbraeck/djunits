@@ -124,6 +124,12 @@ public class ElectricalInductance extends Quantity<ElectricalInductance>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricalInductance.Unit getDisplayUnit()
+    {
+        return (ElectricalInductance.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricalInductance and ElectricalInductance, which results in a Dimensionless quantity.
      * @param v quantity

@@ -124,6 +124,12 @@ public class MagneticFlux extends Quantity<MagneticFlux>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public MagneticFlux.Unit getDisplayUnit()
+    {
+        return (MagneticFlux.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of MagneticFlux and MagneticFlux, which results in a Dimensionless quantity.
      * @param v quantity

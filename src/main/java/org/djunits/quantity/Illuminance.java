@@ -124,6 +124,12 @@ public class Illuminance extends Quantity<Illuminance>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Illuminance.Unit getDisplayUnit()
+    {
+        return (Illuminance.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Illuminance and Illuminance, which results in a Dimensionless quantity.
      * @param v quantity

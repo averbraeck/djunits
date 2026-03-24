@@ -124,6 +124,12 @@ public class FlowMass extends Quantity<FlowMass>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public FlowMass.Unit getDisplayUnit()
+    {
+        return (FlowMass.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of FlowMass and FlowMass, which results in a Dimensionless quantity.
      * @param v quantity

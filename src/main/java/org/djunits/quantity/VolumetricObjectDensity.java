@@ -124,6 +124,12 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public VolumetricObjectDensity.Unit getDisplayUnit()
+    {
+        return (VolumetricObjectDensity.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Multiplies this volumetric object density by a volume to yield a dimensionless count.
      * <p>

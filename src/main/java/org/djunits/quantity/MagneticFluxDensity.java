@@ -124,6 +124,12 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public MagneticFluxDensity.Unit getDisplayUnit()
+    {
+        return (MagneticFluxDensity.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of MagneticFluxDensity and MagneticFluxDensity, which results in a Dimensionless quantity.
      * @param v quantity

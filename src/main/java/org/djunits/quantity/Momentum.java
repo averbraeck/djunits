@@ -124,6 +124,12 @@ public class Momentum extends Quantity<Momentum>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Momentum.Unit getDisplayUnit()
+    {
+        return (Momentum.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Momentum and Momentum, which results in a Dimensionless quantity.
      * @param v quantity

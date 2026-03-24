@@ -125,6 +125,12 @@ public class ElectricPotential extends Quantity<ElectricPotential>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricPotential.Unit getDisplayUnit()
+    {
+        return (ElectricPotential.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricPotential and ElectricPotential, which results in a Dimensionless quantity.
      * @param v quantity

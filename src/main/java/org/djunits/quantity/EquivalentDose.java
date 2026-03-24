@@ -124,6 +124,12 @@ public class EquivalentDose extends Quantity<EquivalentDose>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public EquivalentDose.Unit getDisplayUnit()
+    {
+        return (EquivalentDose.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of EquivalentDose and EquivalentDose, which results in a Dimensionless quantity.
      * @param v quantity

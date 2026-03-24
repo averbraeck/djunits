@@ -124,6 +124,12 @@ public class SolidAngle extends Quantity<SolidAngle>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public SolidAngle.Unit getDisplayUnit()
+    {
+        return (SolidAngle.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of SolidAngle and SolidAngle, which results in a Dimensionless quantity.
      * @param v quantity

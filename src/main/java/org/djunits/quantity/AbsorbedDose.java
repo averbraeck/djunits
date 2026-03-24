@@ -124,6 +124,12 @@ public class AbsorbedDose extends Quantity<AbsorbedDose>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public AbsorbedDose.Unit getDisplayUnit()
+    {
+        return (AbsorbedDose.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of AbsorbedDose and AbsorbedDose, which results in a Dimensionless quantity.
      * @param v quantity

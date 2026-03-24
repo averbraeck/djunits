@@ -125,6 +125,12 @@ public class ElectricCharge extends Quantity<ElectricCharge>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricCharge.Unit getDisplayUnit()
+    {
+        return (ElectricCharge.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricCharge and ElectricCharge, which results in a Dimensionless quantity.
      * @param v quantity

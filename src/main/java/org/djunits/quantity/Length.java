@@ -124,6 +124,12 @@ public class Length extends Quantity<Length>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Length.Unit getDisplayUnit()
+    {
+        return (Length.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Add an (absolute) position to this length, and return a position. The unit of the return value will be the unit of this
      * length, and the reference of the return value will be the reference belonging to the given position.

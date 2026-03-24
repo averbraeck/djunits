@@ -138,6 +138,12 @@ public class Angle extends Quantity<Angle>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Angle.Unit getDisplayUnit()
+    {
+        return (Angle.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Add an (absolute) direction to this angle, and return a direction. The unit of the return value will be the unit of this
      * angle, and the reference of the return value will be the reference belonging to the given direction.

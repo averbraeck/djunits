@@ -124,6 +124,12 @@ public class RadioActivity extends Quantity<RadioActivity>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public RadioActivity.Unit getDisplayUnit()
+    {
+        return (RadioActivity.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of RadioActivity and RadioActivity, which results in a Dimensionless quantity.
      * @param v quantity

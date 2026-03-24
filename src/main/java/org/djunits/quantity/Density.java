@@ -124,6 +124,12 @@ public class Density extends Quantity<Density>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Density.Unit getDisplayUnit()
+    {
+        return (Density.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Density and Density, which results in a Dimensionless quantity.
      * @param v quantity

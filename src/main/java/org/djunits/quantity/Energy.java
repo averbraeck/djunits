@@ -124,6 +124,12 @@ public class Energy extends Quantity<Energy>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Energy.Unit getDisplayUnit()
+    {
+        return (Energy.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Energy and Energy, which results in a Dimensionless quantity.
      * @param v quantity

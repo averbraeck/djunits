@@ -126,6 +126,12 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public ElectricalResistance.Unit getDisplayUnit()
+    {
+        return (ElectricalResistance.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of ElectricalResistance and ElectricalResistance, which results in a Dimensionless quantity.
      * @param v quantity

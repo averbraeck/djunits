@@ -119,6 +119,12 @@ public class Dimensionless extends Quantity<Dimensionless>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Unitless getDisplayUnit()
+    {
+        return (Unitless) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Dimensionless and Dimensionless, which results in a Dimensionless quantity.
      * @param v quantity

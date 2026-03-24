@@ -124,6 +124,12 @@ public class Force extends Quantity<Force>
         return Quantity.of(value, unitString, ZERO);
     }
 
+    @Override
+    public Force.Unit getDisplayUnit()
+    {
+        return (Force.Unit) super.getDisplayUnit();
+    }
+
     /**
      * Calculate the division of Force and Force, which results in a Dimensionless quantity.
      * @param v quantity
