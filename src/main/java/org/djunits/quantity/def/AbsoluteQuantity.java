@@ -24,8 +24,8 @@ import org.djutils.exceptions.Throw;
  * @param <U> the (shared) unit type
  * @param <R> the reference type to use for the absolute quantity
  */
-public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>,
-        U extends UnitInterface<U, Q>, R extends AbstractReference<R, Q>> extends Number implements Value<U, A>, Comparable<A>
+public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>,
+        U extends UnitInterface<U, Q>, R extends AbstractReference<R, Q>> extends Number implements Value<A, Q>, Comparable<A>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -54,14 +54,14 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
     /**********************************************************************************/
 
     @Override
-    public U getDisplayUnit()
+    public UnitInterface<?, Q> getDisplayUnit()
     {
         return this.quantity.getDisplayUnit();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public A setDisplayUnit(final U newUnit)
+    public A setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         this.quantity.setDisplayUnit(newUnit);
         return (A) this;
@@ -81,7 +81,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @param targetUnit the unit to convert the relative quantity value into
      * @return the value of the relative quantity in the target unit
      */
-    public final double getInUnit(final U targetUnit)
+    public final double getInUnit(final UnitInterface<?, Q> targetUnit)
     {
         return targetUnit.getScale().fromBaseValue(si());
     }
@@ -372,10 +372,10 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @throws NullPointerException when the text argument is null
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A valueOf(final String text, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsoluteQuantity: example is null");
@@ -412,10 +412,10 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @throws NullPointerException when the unitString argument is null
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A of(final double value, final String unitString, final A example,
                     final R reference)
     {
@@ -516,7 +516,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      */
     @Override
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final U displayUnit)
+    public String toString(final UnitInterface<?, Q> displayUnit)
     {
         return toString(displayUnit, false, true);
     }
@@ -540,7 +540,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return printable string with the value contents
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final U displayUnit, final boolean verbose, final boolean withUnit)
+    public String toString(final UnitInterface<?, Q> displayUnit, final boolean verbose, final boolean withUnit)
     {
         StringBuffer buf = new StringBuffer();
         if (verbose)
@@ -599,7 +599,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return a String with the value with the default textual representation of the provided unit attached.
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toTextualString(final U displayUnit)
+    public String toTextualString(final UnitInterface<?, Q> displayUnit)
     {
         return format(getInUnit()) + " " + displayUnit.getTextualAbbreviation();
     }
@@ -621,7 +621,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return a String with the value with the default display representation of the provided unit attached.
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toDisplayString(final U displayUnit)
+    public String toDisplayString(final UnitInterface<?, Q> displayUnit)
     {
         return format(getInUnit(displayUnit)) + " " + displayUnit.getDisplayAbbreviation();
     }
@@ -675,11 +675,11 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return a Quantity at the given ratio between 0 and 1
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A interpolate(final A zero, final A one, final double ratio)
     {
         Throw.when(!zero.getReference().equals(one.getReference()), IllegalArgumentException.class,
@@ -700,12 +700,12 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return the maximum value of more than two quantities
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A max(final A quantity1, final A... quantities)
     {
         A maxA = quantity1;
@@ -729,12 +729,12 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return the minimum value of more than two quantities
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A min(final A quantity1, final A... quantities)
     {
         A minA = quantity1;
@@ -758,12 +758,12 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return the sum of the quantities
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A sum(final A quantity1, final A... quantities)
     {
         double sum = quantity1.si();
@@ -785,12 +785,12 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, U, R>, Q
      * @return the mean of the quantities
      * @param <A> the absolute quantity type
      * @param <Q> the relative quantity type
-     * @param <U> the unit type
+     * @param <U> the (shared) unit type
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q, U>, U extends UnitInterface<U, Q>,
+    public static <A extends AbsoluteQuantity<A, Q, U, R>, Q extends Quantity<Q>, U extends UnitInterface<U, Q>,
             R extends AbstractReference<R, Q>> A mean(final A quantity1, final A... quantities)
     {
         // the possible exception is thrown by sum()

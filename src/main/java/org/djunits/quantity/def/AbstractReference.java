@@ -17,7 +17,7 @@ import org.djutils.exceptions.Throw;
  * @param <R> the reference type itself
  * @param <Q> the relative quantity for the offset
  */
-public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q extends Quantity<Q, ?>> implements Identifiable
+public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q extends Quantity<Q>> implements Identifiable
 {
     /**
      * Master registry: per concrete Reference subclass we keep a map of id to reference. This prevents name collisions between
