@@ -240,11 +240,6 @@ class TemperatureTest
         Temperature t5 = new Temperature(5.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
         assertTrue(t5.gt0());
         assertFalse(t5.lt0());
-
-        assertEquals(5, t5.intValue());
-        assertEquals(5L, t5.longValue());
-        assertEquals(5.0f, t5.floatValue(), 1E-12);
-        assertEquals(5.0, t5.doubleValue(), 1E-12);
     }
 
     // =========================================================================

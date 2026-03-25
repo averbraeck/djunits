@@ -231,11 +231,6 @@ class PositionTest
         Position p5 = new Position(5.0, Length.Unit.m, rz);
         assertTrue(p5.gt0());
         assertFalse(p5.lt0());
-
-        assertEquals(5, p5.intValue());
-        assertEquals(5L, p5.longValue());
-        assertEquals(5.0f, p5.floatValue(), 1E-12);
-        assertEquals(5.0, p5.doubleValue(), 1E-12);
         
         // clean up
         Position.Reference.get("RZ").unregister();

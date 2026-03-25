@@ -188,19 +188,6 @@ public class AbsoluteQuantityTest
         assertEquals(1.5, p.getInUnit(Length.Unit.km), 1e-12);
     }
 
-    /**
-     * Verifies that {@link Number}-derived conversions reflect the SI value semantics for {@link AbsoluteQuantity}.
-     */
-    @Test
-    void numberConversions()
-    {
-        Position p = pos(2.49, this.refA, Length.Unit.m);
-        assertEquals(2.49, p.doubleValue(), 1e-12);
-        assertEquals(2, p.intValue());
-        assertEquals(2L, p.longValue());
-        assertEquals(2.49f, p.floatValue(), 1e-6f);
-    }
-
     // ----------------------------------------------------------------------
     // Comparisons and zero helpers (with reference equality checks)
     // ----------------------------------------------------------------------
@@ -604,7 +591,7 @@ public class AbsoluteQuantityTest
      * Absolute quantity class for test.
      */
     static class AbsoluteExampleQuantityAQxyz
-            extends AbsoluteQuantity<AbsoluteExampleQuantityAQxyz, Length, Length.Unit, Position.Reference>
+            extends AbsoluteQuantity<AbsoluteExampleQuantityAQxyz, Length, Position.Reference>
     {
         /** */
         private static final long serialVersionUID = 1L;
