@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.d1.Matrix1x1;
@@ -46,7 +46,7 @@ public class MatrixNxM<Q extends Quantity<Q>>
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    public MatrixNxM(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
+    public MatrixNxM(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
         Throw.whenNull(dataSi, "dataSi");
@@ -67,7 +67,7 @@ public class MatrixNxM<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[] valueArrayInUnit,
-            final int rows, final int cols, final UnitInterface<?, Q> displayUnit)
+            final int rows, final int cols, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -94,7 +94,7 @@ public class MatrixNxM<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[][] valueGridInUnit,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueGridInUnit, "valueGridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -126,7 +126,7 @@ public class MatrixNxM<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final Q[][] quantityGrid,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         return new MatrixNxM<Q>(new DenseDoubleDataSi(quantityGrid), displayUnit);
     }
@@ -235,8 +235,8 @@ public class MatrixNxM<Q extends Quantity<Q>>
         double[] newSi = new double[data.length];
         int rows = rows();
         int cols = cols();
-        final UnitInterface<?, Q> displayUnit = getDisplayUnit();
-        final UnitInterface<?, Q> baseUnit = displayUnit.getBaseUnit();
+        final Unit<?, Q> displayUnit = getDisplayUnit();
+        final Unit<?, Q> baseUnit = displayUnit.getBaseUnit();
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
                 newSi[c * rows + r] = data[r * cols + c];
@@ -407,7 +407,7 @@ public class MatrixNxM<Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> MatrixNxM<TQ> as(final UnitInterface<?, TQ> targetUnit)
+    public <TQ extends Quantity<TQ>> MatrixNxM<TQ> as(final Unit<?, TQ> targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,

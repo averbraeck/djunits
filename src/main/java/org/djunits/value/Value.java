@@ -3,7 +3,7 @@ package org.djunits.value;
 import java.io.Serializable;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
 
@@ -29,14 +29,14 @@ public interface Value<V extends Value<V, Q>, Q extends Quantity<Q>> extends Ser
      * Retrieve the unit of this Value.
      * @return the unit of this Value
      */
-    UnitInterface<?, Q> getDisplayUnit();
+    Unit<?, Q> getDisplayUnit();
 
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
      * @param newUnit the new display unit of this value
      * @return 'this' for fluent design
      */
-    V setDisplayUnit(UnitInterface<?, Q> newUnit);
+    V setDisplayUnit(Unit<?, Q> newUnit);
 
     /**
      * Set a new display unit for the value. Internally, the value will not changed since it is stored in a base unit.
@@ -47,7 +47,7 @@ public interface Value<V extends Value<V, Q>, Q extends Quantity<Q>> extends Ser
     default V setDisplayUnit(final String newUnitString)
     {
         @SuppressWarnings("unchecked")
-        UnitInterface<?, Q> newUnit = (UnitInterface<?, Q>) Units.resolve(getDisplayUnit().getClass(), newUnitString);
+        Unit<?, Q> newUnit = (Unit<?, Q>) Units.resolve(getDisplayUnit().getClass(), newUnitString);
         return setDisplayUnit(newUnit);
     }
 
@@ -78,6 +78,6 @@ public interface Value<V extends Value<V, Q>, Q extends Quantity<Q>> extends Ser
      * @param displayUnit the unit into which the values are converted for display
      * @return a String with the value contents expressed in the specified unit
      */
-    String toString(UnitInterface<?, Q> displayUnit);
+    String toString(Unit<?, Q> displayUnit);
 
 }

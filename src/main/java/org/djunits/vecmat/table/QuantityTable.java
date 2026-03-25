@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d1.Matrix1x1;
 import org.djunits.vecmat.d1.Vector1;
@@ -44,7 +44,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @param dataSi the data of the matrix, in SI unit.
      * @param displayUnit the display unit to use
      */
-    public QuantityTable(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
+    public QuantityTable(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
         Throw.whenNull(dataSi, "dataSi");
@@ -65,7 +65,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> QuantityTable<Q> of(
-            final double[] valueArrayInUnit, final int rows, final int cols, final UnitInterface<?, Q> displayUnit)
+            final double[] valueArrayInUnit, final int rows, final int cols, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -92,7 +92,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>,
-            U extends UnitInterface<U, Q>> QuantityTable<Q> of(final double[][] valueGridInUnit, final UnitInterface<?, Q> displayUnit)
+            U extends Unit<U, Q>> QuantityTable<Q> of(final double[][] valueGridInUnit, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueGridInUnit, "valueGridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -124,7 +124,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[][] quantityGrid,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         return new QuantityTable<Q>(new DenseDoubleDataSi(quantityGrid), displayUnit);
     }
@@ -251,7 +251,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> QuantityTable<TQ> as(final UnitInterface<?, TQ> targetUnit)
+    public <TQ extends Quantity<TQ>> QuantityTable<TQ> as(final Unit<?, TQ> targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,

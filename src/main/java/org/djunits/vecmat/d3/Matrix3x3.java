@@ -2,7 +2,7 @@ package org.djunits.vecmat.d3;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
@@ -31,7 +31,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
      * @param arrayInUnit the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the display unit
      * @param displayUnit the display unit to use
      */
-    protected Matrix3x3(final double[] arrayInUnit, final UnitInterface<?, Q> displayUnit)
+    protected Matrix3x3(final double[] arrayInUnit, final Unit<?, Q> displayUnit)
     {
         super(arrayInUnit, displayUnit, 3);
     }
@@ -49,7 +49,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[] arrayInUnit,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -67,7 +67,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[][] gridInUnit,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -210,7 +210,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final UnitInterface<?, TQ> targetUnit)
+    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final Unit<?, TQ> targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,

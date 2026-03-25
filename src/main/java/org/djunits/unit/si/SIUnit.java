@@ -3,7 +3,7 @@ package org.djunits.unit.si;
 import java.util.Arrays;
 
 import org.djunits.quantity.SIQuantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.Scale;
@@ -18,7 +18,7 @@ import org.djutils.exceptions.Throw;
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
  * @author Alexander Verbraeck
  */
-public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
+public class SIUnit implements Unit<SIUnit, SIQuantity>
 {
     /** The (currently) 9 dimensions we take into account: rad, sr, kg, m, s, A, K, mol, cd. */
     public static final int NUMBER_DIMENSIONS = 9;

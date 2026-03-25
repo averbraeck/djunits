@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.util.ArrayMath;
 import org.djutils.exceptions.Throw;
 
@@ -40,7 +40,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q>,
      * @param displayUnit the display unit to use
      * @param order the order of the square matrix (number of rows/columns)
      */
-    protected SquareDenseMatrix(final double[] dataInUnit, final UnitInterface<?, Q> displayUnit, final int order)
+    protected SquareDenseMatrix(final double[] dataInUnit, final Unit<?, Q> displayUnit, final int order)
     {
         super(displayUnit);
         Throw.when(dataInUnit.length != order * order, IllegalArgumentException.class,

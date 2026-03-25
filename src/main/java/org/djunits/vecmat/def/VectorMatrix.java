@@ -6,7 +6,7 @@ import org.djunits.formatter.Format;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.Math2;
@@ -39,27 +39,27 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     private static final long serialVersionUID = 600L;
 
     /** The display unit. */
-    private UnitInterface<?, Q> displayUnit;
+    private Unit<?, Q> displayUnit;
 
     /**
      * Create a new vector or matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public VectorMatrix(final UnitInterface<?, Q> displayUnit)
+    public VectorMatrix(final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         this.displayUnit = displayUnit;
     }
 
     @Override
-    public UnitInterface<?, Q> getDisplayUnit()
+    public Unit<?, Q> getDisplayUnit()
     {
         return this.displayUnit;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public VM setDisplayUnit(final UnitInterface<?, Q> newUnit)
+    public VM setDisplayUnit(final Unit<?, Q> newUnit)
     {
         Throw.whenNull(this.displayUnit, "displayUnit");
         this.displayUnit = newUnit;
@@ -548,7 +548,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public String toString(final UnitInterface<?, Q> withUnit)
+    public String toString(final Unit<?, Q> withUnit)
     {
         var s = new StringBuilder();
         for (int r = 0; r < rows(); r++)

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
@@ -42,7 +42,7 @@ public class MatrixNxN<Q extends Quantity<Q>>
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    public MatrixNxN(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
+    public MatrixNxN(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
         Throw.whenNull(dataSi, "dataSi");
@@ -61,7 +61,7 @@ public class MatrixNxN<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[] valueArrayInUnit,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -92,7 +92,7 @@ public class MatrixNxN<Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[][] valueGridInUnit,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueGridInUnit, "valueGridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -326,7 +326,7 @@ public class MatrixNxN<Q extends Quantity<Q>>
      * @return a matrix typed in the target quantity with the specified display unit
      * @throws IllegalArgumentException when the units do not match
      */
-    public <TQ extends Quantity<TQ>> MatrixNxN<TQ> as(final UnitInterface<?, TQ> targetUnit)
+    public <TQ extends Quantity<TQ>> MatrixNxN<TQ> as(final Unit<?, TQ> targetUnit)
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,

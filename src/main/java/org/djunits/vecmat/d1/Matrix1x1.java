@@ -2,7 +2,7 @@ package org.djunits.vecmat.d1;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.MatrixMath;
@@ -33,7 +33,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @param arrayInUnit the matrix values {a11} expressed in the displayUnit
      * @param displayUnit the display unit to use
      */
-    protected Matrix1x1(final double[] arrayInUnit, final UnitInterface<?, Q> displayUnit)
+    protected Matrix1x1(final double[] arrayInUnit, final Unit<?, Q> displayUnit)
     {
         super(arrayInUnit, displayUnit, 1);
     }
@@ -48,7 +48,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      * @throws IllegalArgumentException when valueArray does not contain 1x1 = 1 value
      */
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[] arrayInUnit, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[] arrayInUnit, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(arrayInUnit, "arrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -64,7 +64,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[][] gridInUnit, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[][] gridInUnit, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -234,7 +234,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Matrix1x1<TQ> as(final UnitInterface<?, TQ> targetUnit)
+    public <TQ extends Quantity<TQ>> Matrix1x1<TQ> as(final Unit<?, TQ> targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,

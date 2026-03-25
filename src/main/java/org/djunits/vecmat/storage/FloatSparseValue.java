@@ -3,7 +3,7 @@ package org.djunits.vecmat.storage;
 import java.io.Serializable;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -59,7 +59,7 @@ public class FloatSparseValue<Q extends Quantity<Q>> implements Serializable
      * @param valueInUnit the value in the given unit of the data point in the matrix
      * @param unit the unit of the value
      */
-    public FloatSparseValue(final int row, final int column, final float valueInUnit, final UnitInterface<?, Q> unit)
+    public FloatSparseValue(final int row, final int column, final float valueInUnit, final Unit<?, Q> unit)
     {
         this(row, column, (float) unit.toBaseValue(valueInUnit));
     }

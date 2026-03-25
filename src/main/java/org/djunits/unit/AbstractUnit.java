@@ -25,7 +25,7 @@ import org.djutils.exceptions.Throw;
  * @param <U> the unit type
  * @param <Q> the quantity type belonging to this unit
  */
-public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quantity<Q>> implements UnitInterface<U, Q>
+public abstract class AbstractUnit<U extends Unit<U, Q>, Q extends Quantity<Q>> implements Unit<U, Q>
 {
     /** The textual abbreviation of the unit, which is also the id. */
     private final String textualAbbreviation;

@@ -16,7 +16,7 @@ import org.djunits.unit.system.UnitSystem;
  * @param <U> The unit type
  * @param <Q> the quantity type
  */
-public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity<Q>>
+public interface Unit<U extends Unit<U, Q>, Q extends Quantity<Q>>
 {
     /**
      * Return the id, which is the main abbreviation, of the unit.

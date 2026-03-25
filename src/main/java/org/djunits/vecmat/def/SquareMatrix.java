@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.Math2;
 import org.djunits.util.MatrixMath;
@@ -36,7 +36,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      * Create a new square matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public SquareMatrix(final UnitInterface<?, Q> displayUnit)
+    public SquareMatrix(final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
     }

@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import org.djunits.formatter.Format;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.value.Value;
@@ -53,14 +53,14 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
     /**********************************************************************************/
 
     @Override
-    public UnitInterface<?, Q> getDisplayUnit()
+    public Unit<?, Q> getDisplayUnit()
     {
         return this.quantity.getDisplayUnit();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public A setDisplayUnit(final UnitInterface<?, Q> newUnit)
+    public A setDisplayUnit(final Unit<?, Q> newUnit)
     {
         this.quantity.setDisplayUnit(newUnit);
         return (A) this;
@@ -80,7 +80,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @param targetUnit the unit to convert the relative quantity value into
      * @return the value of the relative quantity in the target unit
      */
-    public final double getInUnit(final UnitInterface<?, Q> targetUnit)
+    public final double getInUnit(final Unit<?, Q> targetUnit)
     {
         return targetUnit.getScale().fromBaseValue(si());
     }
@@ -363,7 +363,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             @SuppressWarnings("unchecked")
-            UnitInterface<?, Q> unit = (UnitInterface<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+            Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
             Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity %s", unitString,
                     quantityClass);
             return example.instantiate(example.getQuantity().instantiate(d, unit), reference);
@@ -398,7 +398,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
                 quantityClass);
         Throw.whenNull(reference, "Error parsing AbsoluteQuantity: reference is null");
         @SuppressWarnings("unchecked")
-        UnitInterface<?, Q> unit = (UnitInterface<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+        Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
         return example.instantiate(example.getQuantity().instantiate(value, unit), reference);
     }
@@ -488,7 +488,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      */
     @Override
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final UnitInterface<?, Q> displayUnit)
+    public String toString(final Unit<?, Q> displayUnit)
     {
         return toString(displayUnit, false, true);
     }
@@ -512,7 +512,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @return printable string with the value contents
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final UnitInterface<?, Q> displayUnit, final boolean verbose, final boolean withUnit)
+    public String toString(final Unit<?, Q> displayUnit, final boolean verbose, final boolean withUnit)
     {
         StringBuffer buf = new StringBuffer();
         if (verbose)
@@ -571,7 +571,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @return a String with the value with the default textual representation of the provided unit attached.
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toTextualString(final UnitInterface<?, Q> displayUnit)
+    public String toTextualString(final Unit<?, Q> displayUnit)
     {
         return format(getInUnit()) + " " + displayUnit.getTextualAbbreviation();
     }
@@ -593,7 +593,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @return a String with the value with the default display representation of the provided unit attached.
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toDisplayString(final UnitInterface<?, Q> displayUnit)
+    public String toDisplayString(final Unit<?, Q> displayUnit)
     {
         return format(getInUnit(displayUnit)) + " " + displayUnit.getDisplayAbbreviation();
     }

@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.vecmat.operations.Normed;
 
 /**
@@ -30,7 +30,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
      * Create a new Vector with a unit, as an extension of Matrix.
      * @param displayUnit the display unit to use
      */
-    public Vector(final UnitInterface<?, Q> displayUnit)
+    public Vector(final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
     }

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.def.Vector;
 import org.djunits.vecmat.operations.VectorTransposable;
@@ -37,7 +37,7 @@ public class Vector1<Q extends Quantity<Q>> extends
      * @param xInUnit the x-value expressed in the given unit
      * @param displayUnit the display unit to use
      */
-    public Vector1(final double xInUnit, final UnitInterface<?, Q> displayUnit)
+    public Vector1(final double xInUnit, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
         this.xSi = displayUnit.toBaseValue(xInUnit);
@@ -70,7 +70,7 @@ public class Vector1<Q extends Quantity<Q>> extends
 
      */
     public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit,
-            final UnitInterface<?, Q> displayUnit)
+            final Unit<?, Q> displayUnit)
     {
         return new Vector1<>(xInUnit, displayUnit);
     }
@@ -180,7 +180,7 @@ public class Vector1<Q extends Quantity<Q>> extends
     public Iterator<Q> iterator()
     {
         final double[] si = new double[] {this.xSi};
-        final UnitInterface<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
+        final Unit<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
     }
 
@@ -333,7 +333,7 @@ public class Vector1<Q extends Quantity<Q>> extends
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Vector1<TQ> as(final UnitInterface<?, TQ> targetUnit)
+    public <TQ extends Quantity<TQ>> Vector1<TQ> as(final Unit<?, TQ> targetUnit)
             throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
@@ -363,7 +363,7 @@ public class Vector1<Q extends Quantity<Q>> extends
     }
 
     @Override
-    public String toString(final UnitInterface<?, Q> withUnit)
+    public String toString(final Unit<?, Q> withUnit)
     {
         var s = new StringBuilder();
         s.append("[");
