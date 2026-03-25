@@ -140,8 +140,10 @@ public class QuantityTest
     {
         Length l = new Length(1.5, Length.Unit.km); // 1500 m
         assertClose(1500.0, l.si());
+        assertClose(1500.0, l.si);
         l.setDisplayUnit(Length.Unit.m);
         assertClose(1500.0, l.si());
+        assertClose(1500.0, l.si);
     }
 
     // ----------------------------------------------------------------------
@@ -333,6 +335,7 @@ public class QuantityTest
         Length ex = Length.ZERO;
         Length a = Quantity.of(2.0, "km", ex);
         assertClose(2000.0, a.si());
+        assertClose(2000.0, a.si);
         assertThrows(NullPointerException.class, () -> Quantity.of(1.0, null, ex));
         assertThrows(NullPointerException.class, () -> Quantity.of(1.0, "m", null));
         assertThrows(IllegalArgumentException.class, () -> Quantity.of(1.0, "", ex));
@@ -353,11 +356,13 @@ public class QuantityTest
         // Empty unit token after trimming -> accepted for Unitless
         Dimensionless a = Quantity.valueOf("2.5", example);
         assertEquals(2.5, a.si(), 1e-12);
+        assertEquals(2.5, a.si, 1e-12);
         assertTrue(a.getDisplayUnit() instanceof Unitless);
 
         // Whitespace-only suffix -> accepted for Unitless
         Dimensionless b = Quantity.valueOf("3.75   \t", example);
         assertEquals(3.75, b.si(), 1e-12);
+        assertEquals(3.75, b.si, 1e-12);
         assertTrue(b.getDisplayUnit() instanceof Unitless);
 
         // Unknown, non-empty unit -> still fails
@@ -456,6 +461,7 @@ public class QuantityTest
         Length b = m(1000).setDisplayUnit(Length.Unit.m);
         Length mid = Quantity.interpolate(a, b, 0.25);
         assertClose(250.0, mid.si());
+        assertClose(250.0, mid.si);
         assertSame(Length.Unit.m, mid.getDisplayUnit());
 
         assertThrows(IllegalArgumentException.class, () -> Quantity.interpolate(a, b, -0.1));
@@ -487,10 +493,12 @@ public class QuantityTest
         Length c = m(3);
         Length sum = Quantity.sum(a, b, c);
         assertClose(6.0, sum.si());
+        assertClose(6.0, sum.si);
         assertSame(a.getDisplayUnit(), sum.getDisplayUnit());
 
         Length mean = Quantity.mean(a, b, c);
         assertClose(2.0, mean.si());
+        assertClose(2.0, mean.si);
         assertSame(a.getDisplayUnit(), mean.getDisplayUnit());
     }
 
@@ -503,13 +511,16 @@ public class QuantityTest
         Length a = m(-1).setDisplayUnit(Length.Unit.cm);
         Length aa = a.abs();
         assertClose(1.0, aa.si());
+        assertClose(1.0, aa.si);
         assertSame(a.getDisplayUnit(), aa.getDisplayUnit());
 
         Length one = m(1).setDisplayUnit(Length.Unit.cm);
         Length none = one.negate();
         Length na = a.negate();
         assertClose(1.0, na.si());
+        assertClose(1.0, na.si);
         assertClose(-1.0, none.si());
+        assertClose(-1.0, none.si);
         assertSame(one.getDisplayUnit(), none.getDisplayUnit());
         assertSame(a.getDisplayUnit(), na.getDisplayUnit());
     }
@@ -530,23 +541,29 @@ public class QuantityTest
 
         Area prod = a.multiply(b);
         assertClose(12.0, prod.si());
+        assertClose(12.0, prod.si);
 
         SIQuantity prod2 = Quantity.product(a, b);
         assertClose(12.0, prod2.si());
+        assertClose(12.0, prod2.si);
         assertEquals("m2", prod2.siUnit().toString(true, false));
 
         SIQuantity prod3 = Quantity.product(a, b, a);
         assertClose(36.0, prod3.si());
+        assertClose(36.0, prod3.si);
         assertEquals("m3", prod3.siUnit().toString(true, false));
         Volume v3 = prod3.as(Volume.Unit.m3);
         assertEquals(36.0, v3.si());
+        assertEquals(36.0, v3.si);
         assertThrows(IllegalArgumentException.class, () -> prod3.as(Area.Unit.m2));
 
         Dimensionless quot = a.divide(b);
         assertClose(0.75, quot.si());
+        assertClose(0.75, quot.si);
 
         var inv = a.reciprocal(); // LinearObjectDensity
         assertClose(1.0 / 3.0, inv.si());
+        assertClose(1.0 / 3.0, inv.si);
     }
 
     // ----------------------------------------------------------------------
@@ -563,6 +580,7 @@ public class QuantityTest
         Length l = m(1234.0);
         Length km = l.as(Length.Unit.km);
         assertClose(1234.0, km.si());
+        assertClose(1234.0, km.si);
         assertSame(Length.Unit.km, km.getDisplayUnit());
         assertEquals(Length.class, km.getClass());
     }
