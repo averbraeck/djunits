@@ -8,7 +8,7 @@ DJUNITS is divided into a number of packages:
 
 * **org.djunits.quantity.def** The abstract definitions of `Quantity` and `AbsoluteQuantity`. The class `AbstractReference` provides the reference point for an `AbsoluteQuantity`.
      
-* **org.djunits.unit** Here, the unit definitions are stored. The most important classes and interfaces are `UnitInterface` to define a unit, and `AbstractUnit` as a generic superclass for all units. The `Unitless` unit for the `Dimensionless` quantity is also stored here.
+* **org.djunits.unit** Here, the unit definitions are stored. The most important classes and interfaces are `Unit` to define a unit, and `AbstractUnit` as a generic superclass for all units. The `Unitless` unit for the `Dimensionless` quantity is also stored here.
 
 * **org.djunits.unit.scale** defines the scales that can be used for a unit. Scales perform conversions of externally used values expressed in various units to and from the internally used SI values. Examples are the `LinearScale` that is used in most units, and the `GradeScale` that is used in percentage angles. The `IdentityScale` is used for SI-units. The `Scale` implements two important methods: a method to convert values to the standard unit of that type (e.g. from degree Fahrenheit to Kelvin) and a method to convert values from the standard unit of that type to the given type (e.g. from Kelvin to degree Fahrenheit).
 

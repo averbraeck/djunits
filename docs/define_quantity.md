@@ -43,7 +43,7 @@ public static Jerk ofSi(final double valueSi)
 
 The next part that needs to be created is a class for the Jerk unit. It can be defined as a separate class (`JerkUnit`) or as a static inner class within the `Jerk` class (`Jerk.Unit`). There is no difference in usage except for the 'period' between `Jerk` and `Unit`. Because quantity and its unit are so tightly intertwined, DJUNITS typically defines the units inside the corresponding quantity class.
 
-Every unit extends `AbstractUnit` (or at least implements `UnitInterface`) with the defined unit as its generic; this ensures that the generic unit class will do proper housekeeping, including for user-defined units. Many units have a natural zero value and linear scales to convert from and to various non-SI units. These units extend the `AbstractUnit` class that provides a number of constructors with an easy-to-use factor to create a linear scale with respect to the standard (SI) unit. The class definition of `Jerk.Unit`, the rate of change of acceleration (meter per second<sup>3</sup>) is therefore:
+Every unit extends `AbstractUnit` (or at least implements `Unit`) with the defined unit as its generic; this ensures that the generic unit class will do proper housekeeping, including for user-defined units. Many units have a natural zero value and linear scales to convert from and to various non-SI units. These units extend the `AbstractUnit` class that provides a number of constructors with an easy-to-use factor to create a linear scale with respect to the standard (SI) unit. The class definition of `Jerk.Unit`, the rate of change of acceleration (meter per second<sup>3</sup>) is therefore:
 
 ```java
 public static class Unit extends AbstractUnit<Jerk.Unit, Jerk>
