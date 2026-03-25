@@ -127,7 +127,7 @@ public class Time extends AbsoluteQuantity<Time, Duration, Time.Reference>
      * The reference class to define a reference point for the time. Note that built-in time references are independent; DJUNITS
      * does not embed calendar calculations.
      */
-    public static final class Reference extends AbstractReference<Reference, Duration>
+    public static final class Reference extends AbstractReference<Reference, Time, Duration>
     {
         /** Gregorian. */
         public static final Reference GREGORIAN = new Reference("GREGORIAN", "Gregorian time origin (1-1-0000)");
@@ -190,6 +190,12 @@ public class Time extends AbsoluteQuantity<Time, Duration, Time.Reference>
         public static Reference get(final String id)
         {
             return AbstractReference.get(Time.Reference.class, id);
+        }
+
+        @Override
+        public Time instantiate(final Duration duration)
+        {
+            return new Time(duration, this);
         }
     }
 }

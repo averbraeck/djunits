@@ -199,7 +199,7 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
     /**
      * The reference class to define a reference point for the absolute temperature.
      */
-    public static final class Reference extends AbstractReference<Reference, TemperatureDifference>
+    public static final class Reference extends AbstractReference<Reference, Temperature, TemperatureDifference>
     {
         /** Kelvin. */
         public static final Reference KELVIN =
@@ -256,6 +256,12 @@ public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDiffer
         public static Reference get(final String id)
         {
             return AbstractReference.get(Temperature.Reference.class, id);
+        }
+
+        @Override
+        public Temperature instantiate(final TemperatureDifference temperatureDifference)
+        {
+            return new Temperature(temperatureDifference, this);
         }
     }
 

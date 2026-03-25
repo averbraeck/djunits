@@ -126,7 +126,7 @@ public class Position extends AbsoluteQuantity<Position, Length, Position.Refere
      * The reference class to define a reference point for the position. No references have been defined yet, since there is no
      * "natural" origin for a position that we can include here. User-defined origins van be easily added and used.
      */
-    public static final class Reference extends AbstractReference<Reference, Length>
+    public static final class Reference extends AbstractReference<Reference, Position, Length>
     {
         /**
          * Define a new reference point for the position.
@@ -180,6 +180,12 @@ public class Position extends AbsoluteQuantity<Position, Length, Position.Refere
         public static Reference get(final String id)
         {
             return AbstractReference.get(Position.Reference.class, id);
+        }
+        
+        @Override
+        public Position instantiate(final Length length)
+        {
+            return new Position(length, this);
         }
     }
 }

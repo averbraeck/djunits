@@ -127,7 +127,7 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Reference>
     /**
      * The reference class to define a reference point for the direction.
      */
-    public static final class Reference extends AbstractReference<Reference, Angle>
+    public static final class Reference extends AbstractReference<Reference, Direction, Angle>
     {
         /** East is zero. */
         public static final Reference EAST = new Reference("EAST", "East = 0 degrees (counter-clockwise)", Angle.ZERO, null);
@@ -190,6 +190,12 @@ public class Direction extends AbsoluteQuantity<Direction, Angle, Reference>
         public static Reference get(final String id)
         {
             return AbstractReference.get(Direction.Reference.class, id);
+        }
+
+        @Override
+        public Direction instantiate(final Angle angle)
+        {
+            return new Direction(angle, this);
         }
     }
 }
