@@ -36,7 +36,8 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     private static final long serialVersionUID = 600L;
 
     /** The si value. */
-    private final double si;
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    public final double si;
 
     /** The display unit. */
     private Unit<?, Q> displayUnit;
@@ -402,8 +403,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @throws NullPointerException when the unitString argument is null
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Q of(final double value, final String unitString,
-            final Q example)
+    public static <Q extends Quantity<Q>> Q of(final double value, final String unitString, final Q example)
     {
         Throw.whenNull(example, "Error parsing Quantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -613,8 +613,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @return a Quantity at the given ratio between 0 and 1
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Q interpolate(final Q zero, final Q one,
-            final double ratio)
+    public static <Q extends Quantity<Q>> Q interpolate(final Q zero, final Q one, final double ratio)
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
@@ -787,8 +786,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> TQ as(final Unit<?, TQ> targetUnit)
-            throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> TQ as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit, siUnit().getDisplayAbbreviation(),
