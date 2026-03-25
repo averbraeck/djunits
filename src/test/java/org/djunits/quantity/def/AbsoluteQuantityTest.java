@@ -3,6 +3,7 @@ package org.djunits.quantity.def;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,8 +12,12 @@ import java.util.Locale;
 
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Position;
-import org.djunits.quantity.Position.Reference;
+import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.scale.IdentityScale;
+import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIUnit;
+import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,10 +53,10 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <strong>Reference registry hygiene:</strong> Each created {@link org.djunits.quantity.Position.Reference} is
  * {@link AbstractReference#unregister() unregistered} in {@link #cleanup()} to avoid cross-test pollution of the static
- * per-class registry.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * per-class registry. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All
+ * rights reserved. See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The
+ * DJUNITS project is distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style
+ * license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class AbsoluteQuantityTest
@@ -149,8 +154,8 @@ public class AbsoluteQuantityTest
 
     /**
      * Verifies that {@link AbsoluteQuantity#getDisplayUnit()} and
-     * {@link AbsoluteQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate correctly to the inner relative quantity
-     * and that the setter is fluent.
+     * {@link AbsoluteQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate correctly to the inner relative quantity and that
+     * the setter is fluent.
      */
     @Test
     void displayUnitAccessors()
@@ -565,33 +570,113 @@ public class AbsoluteQuantityTest
      * the "no internal uppercase" path. If you want to also cover the branch that inserts spaces for internal capitals for
      * absolute quantities, add a trivial test-only subclass, e.g., {@code TestPositionAbsolute extends Position}, and assert
      * that {@code new TestPositionAbsolute(...).getName()} becomes {@code "Test position absolute"}.
-         * <p>
+     * <p>
      * <strong>Expected:</strong> {@code new Position(...).getName()} yields {@code "Position"}.
-         */
+     */
     @Test
     void getNameFormatsPrettyForAbsoluteQuantity()
     {
         // Any instance suffices; the value/reference do not influence getName().
-        Position.Reference ref = new Position.Reference("R0", "ref 0");
-        Position pos = Position.ofSi(0.0, ref).setDisplayUnit(Length.Unit.m);
+        Position.Reference pr = new Position.Reference("pr", "position reference");
+        Position pos = new Position(Length.ONE, pr);
 
-        // For "Position" (only first char uppercase), no spaces are inserted; the result should be identical.
-        assertEquals("Position", pos.getName(), "Position should remain 'Position' without extra spaces");
+        // For "Position", no spaces should be inserted.
+        assertEquals("Position", pos.getName(), "Position should remain Position");
 
         // AbsoluteQuantity name with capitals
-        var aq = new AbsoluteExampleQuantityAQxyz(Length.ONE, ref);
+        assertNull(AbstractReference.get(AbsoluteExampleQuantityAQxyz.Reference.class, "xyz"));
+        assertFalse(AbstractReference.containsId(RelativeExampleQuantityAQxyz.class, "xyz"));
+        assertEquals(0, AbstractReference.snapshotMap(AbsoluteExampleQuantityAQxyz.Reference.class).size());
+        AbsoluteExampleQuantityAQxyz.Reference ref =
+                new AbsoluteExampleQuantityAQxyz.Reference("R0", "ref 0", RelativeExampleQuantityAQxyz.ZERO, null);
+        var aq = new AbsoluteExampleQuantityAQxyz(RelativeExampleQuantityAQxyz.ONE, ref);
         assertEquals("Absolute example quantity a qxyz", aq.getName(), "Quantity name: camel case should result in spaces");
-        assertEquals("m", aq.siUnit().toString(true, false));
 
         // Clean up the test-created reference registry entry to avoid cross-test pollution.
-        assertTrue(ref.unregister(), "Reference should be unregistered to keep the registry clean for other tests");
+        assertTrue(pr.unregister(), "Reference pr should be unregistered to keep the registry clean for other tests");
+        assertTrue(ref.unregister(), "Reference ref should be unregistered to keep the registry clean for other tests");
+        assertFalse(ref.unregister(), "Reference ref was unregistered already");
+    }
+
+    /**
+     * Relative quantity class for test.
+     */
+    static class RelativeExampleQuantityAQxyz extends Quantity<RelativeExampleQuantityAQxyz>
+    {
+        /** */
+        private static final long serialVersionUID = 1L;
+
+        /** ZERO. */
+        static final RelativeExampleQuantityAQxyz ZERO = new RelativeExampleQuantityAQxyz(0.0, Unit.BASE);
+
+        /** ONE. */
+        static final RelativeExampleQuantityAQxyz ONE = new RelativeExampleQuantityAQxyz(1.0, Unit.BASE);
+
+        /**
+         * @param value the value
+         * @param displayUnit the unit
+         */
+        RelativeExampleQuantityAQxyz(final double value, final RelativeExampleQuantityAQxyz.Unit displayUnit)
+        {
+            super(value, displayUnit);
+        }
+
+        @Override
+        public RelativeExampleQuantityAQxyz instantiate(final double siValue)
+        {
+            return null;
+        }
+
+        /** The unit. */
+        static class Unit extends AbstractUnit<Unit, RelativeExampleQuantityAQxyz>
+        {
+            /** BASE. */
+            static final Unit BASE = new Unit("BASE", "BASE", IdentityScale.SCALE, UnitSystem.OTHER);
+
+            /**
+             * @param textualAbbreviation abb
+             * @param name name
+             * @param scale scale
+             * @param unitSystem system
+             */
+            Unit(final String textualAbbreviation, final String name, final Scale scale, final UnitSystem unitSystem)
+            {
+                super(textualAbbreviation, name, scale, unitSystem);
+            }
+
+            @Override
+            public SIUnit siUnit()
+            {
+                return null;
+            }
+
+            @Override
+            public Unit getBaseUnit()
+            {
+                return null;
+            }
+
+            @Override
+            public RelativeExampleQuantityAQxyz ofSi(final double si)
+            {
+                return null;
+            }
+
+            @Override
+            public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                    final double scaleFactor, final UnitSystem unitSystem)
+            {
+                return null;
+            }
+        }
+
     }
 
     /**
      * Absolute quantity class for test.
      */
-    static class AbsoluteExampleQuantityAQxyz
-            extends AbsoluteQuantity<AbsoluteExampleQuantityAQxyz, Length, Position.Reference>
+    static class AbsoluteExampleQuantityAQxyz extends
+            AbsoluteQuantity<AbsoluteExampleQuantityAQxyz, RelativeExampleQuantityAQxyz, AbsoluteExampleQuantityAQxyz.Reference>
     {
         /** */
         private static final long serialVersionUID = 1L;
@@ -600,33 +685,60 @@ public class AbsoluteQuantityTest
          * @param quantity length
          * @param reference position reference
          */
-        AbsoluteExampleQuantityAQxyz(final Length quantity, final Reference reference)
+        AbsoluteExampleQuantityAQxyz(final RelativeExampleQuantityAQxyz quantity, final Reference reference)
         {
             super(quantity, reference);
         }
 
         @Override
-        public AbsoluteExampleQuantityAQxyz instantiate(final Length quantity, final Reference reference)
+        public AbsoluteExampleQuantityAQxyz instantiate(final RelativeExampleQuantityAQxyz quantity, final Reference reference)
         {
             return null;
         }
 
         @Override
-        public Length subtract(final AbsoluteExampleQuantityAQxyz other)
+        public RelativeExampleQuantityAQxyz subtract(final AbsoluteExampleQuantityAQxyz other)
         {
             return null;
         }
 
         @Override
-        public AbsoluteExampleQuantityAQxyz add(final Length other)
+        public AbsoluteExampleQuantityAQxyz add(final RelativeExampleQuantityAQxyz other)
         {
             return null;
         }
 
         @Override
-        public AbsoluteExampleQuantityAQxyz subtract(final Length other)
+        public AbsoluteExampleQuantityAQxyz subtract(final RelativeExampleQuantityAQxyz other)
         {
             return null;
+        }
+
+        /** The reference class. */
+        static class Reference extends AbstractReference<Reference, AbsoluteExampleQuantityAQxyz, RelativeExampleQuantityAQxyz>
+        {
+            /** REF. */
+            static final Reference REF = new Reference("REF", "REF", RelativeExampleQuantityAQxyz.ZERO, null);
+
+            /**
+             * @param id id
+             * @param name name
+             * @param offset offset
+             * @param offsetReference ref
+             */
+            Reference(final String id, final String name, final RelativeExampleQuantityAQxyz offset,
+                    final Reference offsetReference)
+            {
+                super(id, name, offset, offsetReference);
+            }
+
+            @Override
+            public AbsoluteExampleQuantityAQxyz instantiate(final RelativeExampleQuantityAQxyz quantity)
+            {
+                return new AbsoluteExampleQuantityAQxyz(quantity, this);
+            }
+            
+            
         }
     }
 }

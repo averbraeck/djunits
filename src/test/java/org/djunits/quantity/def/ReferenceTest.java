@@ -22,10 +22,10 @@ import org.junit.jupiter.api.Test;
  * within a class, and snapshot behavior of the returned reference map.
  * <p>
  * The tests use Position.Reference (and a small check with Time.Reference) to validate the per-class registry and collision
- * handling of AbstractReference.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * handling of AbstractReference. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the
+ * Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 class ReferenceTest
@@ -112,7 +112,7 @@ class ReferenceTest
         assertNotNull(ref);
 
         // The instance method returns the map for THIS subclass
-        Map<String, AbstractReference<?, ?>> snap = ref.getReferenceMap();
+        Map<String, AbstractReference<?, ?, ?>> snap = ref.getReferenceMap();
         assertTrue(snap.containsKey(id));
 
         // Mutate snapshot and verify it does not affect the registry
@@ -179,11 +179,6 @@ class ReferenceTest
 
         assertTrue(Position.Reference.containsId(Position.Reference.class, "C_POS"));
         assertFalse(Position.Reference.containsId(Position.Reference.class, "X_POS"));
-        
-        assertFalse(EmptyReference.containsId(EmptyReference.class, "X_REF"));
-        assertEquals(0, EmptyReference.snapshotMap(EmptyReference.class).size());
-        assertNull(EmptyReference.get(EmptyReference.class, "X_REF"));
-        
         assertEquals("A_POS", a.toString());
 
         // clean up
@@ -191,22 +186,5 @@ class ReferenceTest
         Position.Reference.get("B_POS").unregister();
         Position.Reference.get("C_POS").unregister();
     }
-    
-    /**
-     * Empty reference class.
-     */
-    static class EmptyReference extends AbstractReference<EmptyReference, Length>
-    {
-        /**
-         * @param id id
-         * @param name name
-         * @param offset offset
-         * @param offsetReference offset reference
-         */
-        EmptyReference(final String id, final String name, final Length offset, final EmptyReference offsetReference)
-        {
-            super(id, name, offset, offsetReference);
-        }
-        
-    }
+
 }
