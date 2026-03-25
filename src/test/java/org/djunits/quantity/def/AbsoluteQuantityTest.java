@@ -149,7 +149,7 @@ public class AbsoluteQuantityTest
 
     /**
      * Verifies that {@link AbsoluteQuantity#getDisplayUnit()} and
-     * {@link AbsoluteQuantity#setDisplayUnit(org.djunits.unit.UnitInterface)} delegate correctly to the inner relative quantity
+     * {@link AbsoluteQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate correctly to the inner relative quantity
      * and that the setter is fluent.
      */
     @Test
@@ -178,7 +178,7 @@ public class AbsoluteQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsoluteQuantity#getInUnit()} and {@link AbsoluteQuantity#getInUnit(org.djunits.unit.UnitInterface)}.
+     * Verifies {@link AbsoluteQuantity#getInUnit()} and {@link AbsoluteQuantity#getInUnit(org.djunits.unit.Unit)}.
      */
     @Test
     void getInUnitVariants()

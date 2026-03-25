@@ -99,9 +99,9 @@ public class LocaleFilesTest
      * @param <U> A generic unit type to use in the method
      */
     @Test
-    public <U extends UnitInterface<U, ?>> void testLocalizedAbbreviationsResolveForAllLocales()
+    public <U extends Unit<U, ?>> void testLocalizedAbbreviationsResolveForAllLocales()
     {
-        Map<String, Map<String, UnitInterface<?, ?>>> usMap = Units.registeredUnits();
+        Map<String, Map<String, Unit<?, ?>>> usMap = Units.registeredUnits();
         assertNotNull(usMap);
         Locale originalDefault = Locale.getDefault();
 
@@ -139,7 +139,7 @@ public class LocaleFilesTest
                         continue;
                     }
 
-                    UnitInterface<?, ?> expectedUnit = usMap.get(quantity).get(unitKey);
+                    Unit<?, ?> expectedUnit = usMap.get(quantity).get(unitKey);
                     assertNotNull(expectedUnit);
 
                     String localizedToken = bundle.getString(key);

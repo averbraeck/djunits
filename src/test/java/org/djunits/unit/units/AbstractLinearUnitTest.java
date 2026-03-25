@@ -2,7 +2,7 @@ package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 
 /**
  * Test for AbstractLinearUnit. <p>
@@ -12,7 +12,7 @@ import org.djunits.unit.UnitInterface;
  * @author Alexander Verbraeck
  * @param <U> Make the test specific for this sub class of Unit
  */
-public abstract class AbstractLinearUnitTest<U extends UnitInterface<U, ?>> extends AbstractUnitTest<U>
+public abstract class AbstractLinearUnitTest<U extends Unit<U, ?>> extends AbstractUnitTest<U>
 {
     /**
      * Verify one length conversion factor to standard unit and the localization of the name and abbreviation.

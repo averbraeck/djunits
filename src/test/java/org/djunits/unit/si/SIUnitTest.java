@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  * These tests validate construction (array and 9-arg), parsing of SI-dimension strings (including tricky cases for {@code sr}
  * vs {@code s} and {@code mol} vs {@code m}), exponent algebra ({@link SIUnit#plus(SIUnit)}, {@link SIUnit#minus(SIUnit)},
  * {@link SIUnit#invert()}, {@link SIUnit#pow(int)}), formatting variants (plain/with separator/with power marker and HTML),
- * immutability around rendering, {@link SIUnit#siAbbreviations()} defensive copies, {@link org.djunits.unit.UnitInterface}
+ * immutability around rendering, {@link SIUnit#siAbbreviations()} defensive copies, {@link org.djunits.unit.Unit}
  * getters, and a smoke test for {@link SIUnit#ofSi(double)}. <br>
  * Fractional dimensionality is intentionally <em>not</em> tested here (feature removed / not in production).
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -312,7 +312,7 @@ public final class SIUnitTest
     }
 
     /**
-     * Verifies {@link org.djunits.unit.UnitInterface} getters exposed by {@link SIUnit}.
+     * Verifies {@link org.djunits.unit.Unit} getters exposed by {@link SIUnit}.
      */
     @Test
     @DisplayName("UnitInterface getters: consistent values")

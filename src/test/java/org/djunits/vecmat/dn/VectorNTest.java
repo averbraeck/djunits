@@ -406,8 +406,8 @@ public final class VectorNTest
     // =====================================================================================
 
     /**
-     * Verify that {@link VectorN#setDisplayUnit(org.djunits.unit.UnitInterface)} returns {@code this} for fluent usage and that
-     * {@link VectorN#toString()} and {@link VectorN#toString(org.djunits.unit.UnitInterface)} contain correct orientation and
+     * Verify that {@link VectorN#setDisplayUnit(org.djunits.unit.Unit)} returns {@code this} for fluent usage and that
+     * {@link VectorN#toString()} and {@link VectorN#toString(org.djunits.unit.Unit)} contain correct orientation and
      * unit abbreviation.
      */
     @Test

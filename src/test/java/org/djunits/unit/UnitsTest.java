@@ -39,7 +39,7 @@ public class UnitsTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public <U extends UnitInterface<U, ?>> void testResolveUsLocaleParsing()
+    public <U extends Unit<U, ?>> void testResolveUsLocaleParsing()
     {
         Locale original = Locale.getDefault();
         try
@@ -47,19 +47,19 @@ public class UnitsTest
             Locale.setDefault(Locale.US);
 
             // Known US abbreviations should resolve without error.
-            UnitInterface<?, ?> kmh = Units.resolve(Speed.Unit.class, "km/h");
+            Unit<?, ?> kmh = Units.resolve(Speed.Unit.class, "km/h");
             assertNotNull(kmh);
             assertEquals("km/h", kmh.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> mih = Units.resolve(Speed.Unit.class, "mi/h");
+            Unit<?, ?> mih = Units.resolve(Speed.Unit.class, "mi/h");
             assertNotNull(mih);
             assertEquals("mi/h", mih.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> kt = Units.resolve(Speed.Unit.class, "kt");
+            Unit<?, ?> kt = Units.resolve(Speed.Unit.class, "kt");
             assertNotNull(kt);
             assertEquals("kt", kt.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> cm = Units.resolve(Length.Unit.class, "cm");
+            Unit<?, ?> cm = Units.resolve(Length.Unit.class, "cm");
             assertNotNull(cm);
             assertEquals("cm", cm.getStoredTextualAbbreviation());
 
@@ -90,7 +90,7 @@ public class UnitsTest
             Locale.setDefault(Locale.FRANCE);
             // assertDoesNotThrow(Units::readTranslateMap); // ensure translate map is refreshed
 
-            UnitInterface<?, ?> rpmFr = Units.resolve(Frequency.Unit.class, "tr/min");
+            Unit<?, ?> rpmFr = Units.resolve(Frequency.Unit.class, "tr/min");
             assertNotNull(rpmFr);
             // The underlying US-stored key is "rpm"; stored abbreviation should be US key.
             assertEquals("rpm", rpmFr.getStoredTextualAbbreviation());
@@ -192,13 +192,13 @@ public class UnitsTest
     @Test
     public void testRegisteredUnitsSafeTopLevelCopy()
     {
-        Map<String, Map<String, UnitInterface<?, ?>>> snapshot = Units.registeredUnits();
+        Map<String, Map<String, Unit<?, ?>>> snapshot = Units.registeredUnits();
         assertNotNull(snapshot);
         assertNotEquals(0, snapshot.size());
 
         // Mutate the top-level map and verify internal state continues to resolve known entries.
         snapshot.put("BogusQuantity", new LinkedHashMap<>());
-        UnitInterface<?, ?> meter = Units.resolve(Length.Unit.class, "m");
+        Unit<?, ?> meter = Units.resolve(Length.Unit.class, "m");
         assertNotNull(meter);
     }
 
@@ -243,7 +243,7 @@ public class UnitsTest
 
         QUnit qu = new QUnit();
         Units.register(qu);
-        assertNotNull(Units.localizedQuantityName((Class<? extends UnitInterface<?, ?>>) QUnit.class));
+        assertNotNull(Units.localizedQuantityName((Class<? extends Unit<?, ?>>) QUnit.class));
         assertNotNull(Units.localizedUnitName(Locale.US, "UnitsTest.QUnit", "xx"));
         assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
         assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
@@ -258,7 +258,7 @@ public class UnitsTest
 
     /** UnitInterface class that does not register itself. */
     @SuppressWarnings("rawtypes")
-    static class NoRegisterUnit implements UnitInterface
+    static class NoRegisterUnit implements Unit
     {
         @Override
         public String getId()
@@ -285,7 +285,7 @@ public class UnitsTest
         }
 
         @Override
-        public UnitInterface getBaseUnit()
+        public Unit getBaseUnit()
         {
             return null;
         }
@@ -327,25 +327,25 @@ public class UnitsTest
         }
 
         @Override
-        public UnitInterface setSiPrefix(final SIPrefix siPrefix)
+        public Unit setSiPrefix(final SIPrefix siPrefix)
         {
             return null;
         }
 
         @Override
-        public UnitInterface setSiPrefix(final String prefix)
+        public Unit setSiPrefix(final String prefix)
         {
             return null;
         }
 
         @Override
-        public UnitInterface setSiPrefixKilo(final String prefix)
+        public Unit setSiPrefixKilo(final String prefix)
         {
             return null;
         }
 
         @Override
-        public UnitInterface setSiPrefixPer(final String prefix)
+        public Unit setSiPrefixPer(final String prefix)
         {
             return null;
         }
@@ -386,7 +386,7 @@ public class UnitsTest
     }
 
     /** UnitInterface Length class that does not register itself. */
-    static class QUnit implements UnitInterface<QUnit, Q>
+    static class QUnit implements Unit<QUnit, Q>
     {
         /** */
         public static final QUnit DEFAULT = new QUnit();

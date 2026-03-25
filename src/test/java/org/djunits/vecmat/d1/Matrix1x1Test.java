@@ -14,7 +14,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.d2.Vector2;
@@ -77,7 +77,7 @@ public class Matrix1x1Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix1x1#of(double[], UnitInterface)} rejects nulls and wrong sizes, and converts using the display unit.
+     * Verify {@link Matrix1x1#of(double[], Unit)} rejects nulls and wrong sizes, and converts using the display unit.
      */
     @Test
     @DisplayName("Factory of(double[]) — nulls, length check, and SI conversion")
@@ -103,7 +103,7 @@ public class Matrix1x1Test
     }
 
     /**
-     * Verify {@link Matrix1x1#of(double[][], UnitInterface)} validation and SI conversion.
+     * Verify {@link Matrix1x1#of(double[][], Unit)} validation and SI conversion.
      */
     @Test
     @DisplayName("Factory of(double[][]) — nulls, 1x1 shape, and SI conversion")
@@ -176,7 +176,7 @@ public class Matrix1x1Test
     }
 
     /**
-     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
+     * Verify that {@link VectorMatrix#setDisplayUnit(Unit)} only affects presentation and not SI storage.
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -195,7 +195,7 @@ public class Matrix1x1Test
     }
 
     /**
-     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)} for coverage. We assert the unit
+     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(Unit)} for coverage. We assert the unit
      * abbreviation is present; we do not depend on exact formatting of numbers.
      */
     @Test
@@ -455,7 +455,7 @@ public class Matrix1x1Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix1x1#as(UnitInterface)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
+     * Verify {@link Matrix1x1#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
      * (e.g., length ↔ time).
      */
     @Test

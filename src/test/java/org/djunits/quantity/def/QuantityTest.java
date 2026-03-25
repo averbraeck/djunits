@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  * {@link Quantity#mean(Quantity, Quantity[])}</li>
  * <li>Arithmetic producing {@link SIQuantity}: {@link Quantity#multiply(Quantity)}, {@link Quantity#divide(Quantity)},
  * {@link Quantity#reciprocal()}</li>
- * <li>Conversion to a known quantity via {@link Quantity#as(org.djunits.unit.UnitInterface)}</li>
+ * <li>Conversion to a known quantity via {@link Quantity#as(org.djunits.unit.Unit)}</li>
  * <li>{@code equals}/{@code hashCode} contract</li>
  * <li>Special branch in {@link Quantity#valueOf(String, Quantity)} for {@link Unitless} (empty unit string accepted), exercised
  * using {@link Dimensionless}</li>
@@ -119,7 +119,7 @@ public class QuantityTest
     }
 
     /**
-     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.UnitInterface)}
+     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)}
      * round-trip correctly and that the setter is fluent (returns {@code this}).
      */
     @Test
@@ -171,7 +171,7 @@ public class QuantityTest
     }
 
     /**
-     * Verifies {@link Quantity#getInUnit(org.djunits.unit.UnitInterface)} for explicit target units.
+     * Verifies {@link Quantity#getInUnit(org.djunits.unit.Unit)} for explicit target units.
      */
     @Test
     void getInUnitExplicitTarget()
@@ -554,7 +554,7 @@ public class QuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link Quantity#as(org.djunits.unit.UnitInterface)} converts to a correctly typed quantity while preserving the
+     * Verifies {@link Quantity#as(org.djunits.unit.Unit)} converts to a correctly typed quantity while preserving the
      * SI value and replacing the display unit with the requested unit.
      */
     @Test

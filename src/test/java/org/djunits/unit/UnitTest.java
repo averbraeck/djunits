@@ -22,11 +22,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link UnitInterface}, {@link AbstractUnit}, and representative concrete units.
+ * Tests for {@link Unit}, {@link AbstractUnit}, and representative concrete units.
  * <p>
  * The goal is to validate the shared unit contracts:
  * <ul>
- * <li>Public getters and default conversion methods of {@link UnitInterface}.</li>
+ * <li>Public getters and default conversion methods of {@link Unit}.</li>
  * <li>Construction guards, equality/hashCode/toString, SI-prefix generation, and derivation in {@link AbstractUnit}.</li>
  * <li>Integration with existing concrete units ({@link org.djunits.quantity.Length.Unit},
  * {@link org.djunits.quantity.Mass.Unit}, {@link org.djunits.quantity.Frequency.Unit}).</li>
@@ -46,7 +46,7 @@ final class UnitTest
      */
 
     /**
-     * Verify {@link UnitInterface#toBaseValue(double)} and {@link UnitInterface#fromBaseValue(double)} forward to the
+     * Verify {@link Unit#toBaseValue(double)} and {@link Unit#fromBaseValue(double)} forward to the
      * underlying {@link Scale} and work for base and derived units.
      */
     @Test
@@ -54,23 +54,23 @@ final class UnitTest
     void testUnitInterfaceDefaultConversions()
     {
         // Base (meter): identity conversion
-        UnitInterface<?, ?> m = Length.Unit.m;
+        Unit<?, ?> m = Length.Unit.m;
         assertEquals(25.0, m.toBaseValue(25.0), 0.0);
         assertEquals(25.0, m.fromBaseValue(25.0), 0.0);
 
         // Derived (kilometer): factor 1000
-        UnitInterface<?, ?> km = Length.Unit.km;
+        Unit<?, ?> km = Length.Unit.km;
         assertEquals(2500.0, km.toBaseValue(2.5), 1e-12);
         assertEquals(2.5, km.fromBaseValue(2500.0), 1e-12);
 
         // Frequency derived: MHz
-        UnitInterface<?, ?> mhz = Frequency.Unit.MHz;
+        Unit<?, ?> mhz = Frequency.Unit.MHz;
         assertEquals(3.2e6, mhz.toBaseValue(3.2), 1e-6);
         assertEquals(3.2, mhz.fromBaseValue(3.2e6), 1e-12);
     }
 
     /**
-     * Verify {@link UnitInterface#quantityInUnit(double)} constructs a quantity with correct SI value and display unit.
+     * Verify {@link Unit#quantityInUnit(double)} constructs a quantity with correct SI value and display unit.
      */
     @Test
     @DisplayName("UnitInterface.quantityInUnit: SI value and display unit are set")
@@ -217,8 +217,8 @@ final class UnitTest
      */
 
     /**
-     * Verify {@link UnitInterface#setSiPrefix(SIPrefix)}, {@link UnitInterface#setSiPrefix(String)},
-     * {@link UnitInterface#setSiPrefixKilo(String)}, and {@link UnitInterface#setSiPrefixPer(String)} on a fresh, test-only
+     * Verify {@link Unit#setSiPrefix(SIPrefix)}, {@link Unit#setSiPrefix(String)},
+     * {@link Unit#setSiPrefixKilo(String)}, and {@link Unit#setSiPrefixPer(String)} on a fresh, test-only
      * unit instance (to avoid mutating shared singletons).
      */
     @Test
@@ -460,7 +460,7 @@ final class UnitTest
      */
 
     /**
-     * Smoke-tests that {@link UnitInterface#ofSi(double)} on concrete units produces the right quantity type and SI value.
+     * Smoke-tests that {@link Unit#ofSi(double)} on concrete units produces the right quantity type and SI value.
      */
     @Test
     @DisplayName("UnitInterface.ofSi: concrete units produce correct quantity type/SI value")

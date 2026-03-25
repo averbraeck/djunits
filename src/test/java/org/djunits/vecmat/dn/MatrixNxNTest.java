@@ -13,7 +13,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
-import org.djunits.unit.UnitInterface;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.d1.Matrix1x1;
@@ -77,7 +77,7 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link MatrixNxN#of(double[], UnitInterface)} rejects nulls, wrong lengths, and converts to SI.
+     * Verify {@link MatrixNxN#of(double[], Unit)} rejects nulls, wrong lengths, and converts to SI.
      */
     @Test
     @DisplayName("of(double[],U): nulls, length, SI conversion")
@@ -99,7 +99,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} checks 4x4 shape and converts to SI.
+     * Verify {@link MatrixNxN#of(double[][], Unit)} checks 4x4 shape and converts to SI.
      */
     @Test
     @DisplayName("of(double[][],U): shape & SI conversion")
@@ -196,7 +196,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
+     * Verify that {@link VectorMatrix#setDisplayUnit(Unit)} only affects presentation (not SI storage).
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -212,7 +212,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(UnitInterface)} include unit abbreviation.
+     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(Unit)} include unit abbreviation.
      */
     @Test
     @DisplayName("toString()/toString(unit) include unit")
@@ -370,7 +370,7 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link MatrixNxN#as(UnitInterface)} success (m↔km) and failure (dimension mismatch).
+     * Verify {@link MatrixNxN#as(Unit)} success (m↔km) and failure (dimension mismatch).
      */
     @Test
     @DisplayName("as(targetUnit) success/failure")

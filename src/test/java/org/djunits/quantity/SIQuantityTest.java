@@ -242,7 +242,7 @@ public class SIQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies fluent {@link Quantity#setDisplayUnit(org.djunits.unit.UnitInterface)} returns {@code this} and that
+     * Verifies fluent {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)} returns {@code this} and that
      * equals/hashCode include both SI bits and the display unit.
      */
     @Test
