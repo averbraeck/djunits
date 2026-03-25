@@ -15,16 +15,18 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <R> the reference type itself
- * @param <Q> the relative quantity for the offset
+ * @param <A> the absolute quantity type for generics instantiation
+ * @param <Q> the relative quantity type for the offset
  */
-public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q extends Quantity<Q>> implements Identifiable
+public abstract class AbstractReference<R extends AbstractReference<R, A, Q>, A extends AbsoluteQuantity<A, Q, R>,
+        Q extends Quantity<Q>> implements Identifiable
 {
     /**
      * Master registry: per concrete Reference subclass we keep a map of id to reference. This prevents name collisions between
      * different absolute quantities.
      */
     @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected static final Map<Class<?>, Map<String, AbstractReference<?, ?>>> REFERENCES = new LinkedHashMap<>();
+    protected static final Map<Class<?>, Map<String, AbstractReference<?, ?, ?>>> REFERENCES = new LinkedHashMap<>();
 
     /** The id. */
     private final String id;
@@ -60,7 +62,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
 
         // Register in the per-class map for THIS concrete Reference subclass.
         final Class<?> refClass = getClass();
-        final Map<String, AbstractReference<?, ?>> map = mapFor(refClass);
+        final Map<String, AbstractReference<?, ?, ?>> map = mapFor(refClass);
 
         Throw.when(map.containsKey(id), IllegalArgumentException.class, "Reference id '%s' already registered for %s", id,
                 refClass.getSimpleName());
@@ -73,7 +75,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
      * @param referenceClass the reference class to look up
      * @return the existing or new reference map for the the Reference subclass
      */
-    protected static Map<String, AbstractReference<?, ?>> mapFor(final Class<?> referenceClass)
+    protected static Map<String, AbstractReference<?, ?, ?>> mapFor(final Class<?> referenceClass)
     {
         return REFERENCES.computeIfAbsent(referenceClass, k -> new LinkedHashMap<>());
     }
@@ -86,9 +88,9 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
      * @param <R> the reference subclass type
      */
     @SuppressWarnings("unchecked")
-    public static <R extends AbstractReference<R, ?>> R get(final Class<R> referenceClass, final String id)
+    public static <R extends AbstractReference<R, ?, ?>> R get(final Class<R> referenceClass, final String id)
     {
-        final Map<String, AbstractReference<?, ?>> map = REFERENCES.get(referenceClass);
+        final Map<String, AbstractReference<?, ?, ?>> map = REFERENCES.get(referenceClass);
         if (map == null)
         {
             return null;
@@ -104,7 +106,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
      */
     public static boolean containsId(final Class<?> referenceClass, final String id)
     {
-        final Map<String, AbstractReference<?, ?>> map = REFERENCES.get(referenceClass);
+        final Map<String, AbstractReference<?, ?, ?>> map = REFERENCES.get(referenceClass);
         return map != null && map.containsKey(id);
     }
 
@@ -113,9 +115,9 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
      * @param referenceClass the reference subclass to retrieve
      * @return a safe copy of the reference map
      */
-    public static Map<String, AbstractReference<?, ?>> snapshotMap(final Class<?> referenceClass)
+    public static Map<String, AbstractReference<?, ?, ?>> snapshotMap(final Class<?> referenceClass)
     {
-        final Map<String, AbstractReference<?, ?>> map = REFERENCES.get(referenceClass);
+        final Map<String, AbstractReference<?, ?, ?>> map = REFERENCES.get(referenceClass);
         return map == null ? Map.of() : new LinkedHashMap<>(map);
     }
 
@@ -123,7 +125,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
      * Return a safe copy of the static reference map for this Reference subclass.
      * @return a safe copy of the static reference map for this subclass
      */
-    public Map<String, AbstractReference<?, ?>> getReferenceMap()
+    public Map<String, AbstractReference<?, ?, ?>> getReferenceMap()
     {
         return snapshotMap(getClass());
     }
@@ -135,7 +137,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
      */
     public boolean unregister()
     {
-        final Map<String, AbstractReference<?, ?>> map = mapFor(getClass());
+        final Map<String, AbstractReference<?, ?, ?>> map = mapFor(getClass());
         synchronized (map)
         {
             // remove(key, value): only remove if the map still points at *this* instance
@@ -143,6 +145,13 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
         }
     }
 
+    /**
+     * Return a strongly typed absolute quantity belonging to this reference.
+     * @param quantity the relative quantity that indicates the 'distance' to this reference point 
+     * @return a strongly typed absolute quantity belonging to this reference
+     */
+    public abstract A instantiate(Q quantity);
+    
     /**
      * Return the offset w.r.t. the offset reference, or zero when the offset is not defined.
      * @return the offset expressed in the relative quantity
@@ -189,7 +198,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, Q>, Q ext
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractReference<?, ?> other = (AbstractReference<?, ?>) obj;
+        AbstractReference<?, ?, ?> other = (AbstractReference<?, ?, ?>) obj;
         return Objects.equals(this.id, other.id);
     }
 
