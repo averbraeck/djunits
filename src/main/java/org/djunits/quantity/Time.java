@@ -15,7 +15,7 @@ import org.djunits.unit.si.SIUnit;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Time extends AbsoluteQuantity<Time, Duration, Duration.Unit, Time.Reference>
+public class Time extends AbsoluteQuantity<Time, Duration, Time.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;

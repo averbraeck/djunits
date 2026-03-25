@@ -20,7 +20,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDifference, Temperature.Unit, Temperature.Reference>
+public class Temperature extends AbsoluteQuantity<Temperature, TemperatureDifference, Temperature.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
