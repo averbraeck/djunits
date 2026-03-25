@@ -24,7 +24,7 @@ import org.djutils.exceptions.Throw;
  * @param <R> the reference type to use for the absolute quantity
  */
 public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
-        R extends AbstractReference<R, Q>> extends Number implements Value<A, Q>, Comparable<A>
+        R extends AbstractReference<R, Q>> implements Value<A, Q>, Comparable<A>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -163,32 +163,8 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
     public abstract A instantiate(Q quantity, R reference);
 
     /**********************************************************************************/
-    /********************************* NUMBER METHODS *********************************/
+    /******************************* COMPARISON METHODS *******************************/
     /**********************************************************************************/
-
-    @Override
-    public double doubleValue()
-    {
-        return si();
-    }
-
-    @Override
-    public int intValue()
-    {
-        return (int) Math.round(si());
-    }
-
-    @Override
-    public long longValue()
-    {
-        return Math.round(si());
-    }
-
-    @Override
-    public float floatValue()
-    {
-        return (float) si();
-    }
 
     /**
      * Test if this Quantity is less than another Quantity.
