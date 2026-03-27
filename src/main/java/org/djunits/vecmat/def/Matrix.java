@@ -21,9 +21,11 @@ import org.djutils.exceptions.Throw;
  * @param <M> the 'SELF' matrix type
  * @param <SI> the matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic matrix type with generics &lt;?, ?&lt; for Hadamard operations
+ * @param <MT> the type of the transposed version of the matrix
  */
-public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H>,
-        SI extends Matrix<SIQuantity, SI, ?, ?>, H extends Matrix<?, ?, ?, ?>> extends VectorMatrix<Q, M, SI, H>
+public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H, MT>,
+        SI extends Matrix<SIQuantity, SI, ?, ?, ?>, H extends Matrix<?, ?, ?, ?, ?>,
+        MT extends Matrix<Q, MT, ?, ?, M>> extends VectorMatrix<Q, M, SI, H, MT>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -42,7 +44,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @param matrix the other matrix
      * @throws IllegalArgumentException when this.cols() != other.rows()
      */
-    protected void checkMultiply(final Matrix<?, ?, ?, ?> matrix)
+    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
     {
         Throw.whenNull(matrix, "matrix");
         Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
@@ -54,7 +56,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @param vector the other matrix
      * @throws IllegalArgumentException when this.cols() != other.rows()
      */
-    protected void checkMultiply(final Vector<?, ?, ?, ?> vector)
+    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
     {
         Throw.whenNull(vector, "matrix");
         Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
@@ -81,10 +83,4 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
         return new MatrixNxM<SIQuantity>(new DenseFloatDataSi(result, rows(), matrix.cols()), siUnit);
     }
 
-    /**
-     * Return a transposed matrix, where rows and columns have been swapped. The reason for the 'broad' return type is the fact
-     * that Vector extends Matrix, and Vector transposal swaps row vectors to column vectors and vice versa.
-     * @return a transposed matrix, where rows and columns have been swapped
-     */
-    public abstract Matrix<Q, ?, ?, ?> transpose();
 }

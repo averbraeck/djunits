@@ -27,7 +27,7 @@ import org.djunits.vecmat.NonInvertibleMatrixException;
  */
 public abstract class SquareMatrix<Q extends Quantity<Q>,
         M extends SquareMatrix<Q, M, SI, H>, SI extends SquareMatrix<SIQuantity, SI, ?, ?>,
-        H extends SquareMatrix<?, ?, ?, ?>> extends Matrix<Q, M, SI, H>
+        H extends SquareMatrix<?, ?, ?, ?>> extends Matrix<Q, M, SI, H, M>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -96,7 +96,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      * Retrieve the main diagonal of the matrix as a column vector.
      * @return the main diagonal as a Vector
      */
-    public abstract Vector<Q, ?, ?, ?> getDiagonalVector();
+    public abstract Vector<Q, ?, ?, ?, ?> getDiagonalVector();
 
     /**
      * Retrieve the main diagonal of the matrix as an array of scalars.

@@ -30,10 +30,11 @@ import org.djutils.exceptions.Throw;
  * @param <VM> the 'SELF' vector or matrix type
  * @param <SI> the vector or matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic vector or matrix type with generics &lt;?, ?&lt; for Hadamard operations
+ * @param <VMT> the type of the transposed version of the vector or matrix
  */
-public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatrix<Q, VM, SI, H>,
-        SI extends VectorMatrix<SIQuantity, SI, ?, ?>, H extends VectorMatrix<?, ?, ?, ?>>
-        implements Value<VM, Q>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
+public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatrix<Q, VM, SI, H, VMT>,
+        SI extends VectorMatrix<SIQuantity, SI, ?, ?, ?>, H extends VectorMatrix<?, ?, ?, ?, ?>,
+        VMT extends VectorMatrix<Q, VMT, ?, ?, VM>> implements Value<VM, Q>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -191,7 +192,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      * @param row the row number to retrieve (0-based)
      * @return a row vector with the data at the given row
      */
-    public abstract Vector<Q, ?, ?, ?> getRowVector(int row);
+    public abstract Vector<Q, ?, ?, ?, ?> getRowVector(int row);
 
     /**
      * Return a quantity row (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -199,7 +200,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      * @param mRow the row number to retrieve (1-based)
      * @return a row vector with the data at the given row
      */
-    public abstract Vector<Q, ?, ?, ?> mgetRowVector(int mRow);
+    public abstract Vector<Q, ?, ?, ?, ?> mgetRowVector(int mRow);
 
     /**
      * Return a quantity column (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -207,7 +208,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      * @param col the column number to retrieve (0-based)
      * @return a column vector with the data at the given column
      */
-    public abstract Vector<Q, ?, ?, ?> getColumnVector(int col);
+    public abstract Vector<Q, ?, ?, ?, ?> getColumnVector(int col);
 
     /**
      * Return a quantity column (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
@@ -215,7 +216,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      * @param mCol the column number to retrieve (1-based)
      * @return a column vector with the data at the given column
      */
-    public abstract Vector<Q, ?, ?, ?> mgetColumnVector(int mCol);
+    public abstract Vector<Q, ?, ?, ?, ?> mgetColumnVector(int mCol);
 
     /**
      * Return an array with SI-values for the given row (0-based) from the vector or matrix.
@@ -252,6 +253,12 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
         mcheckCol(mCol);
         return getColumnSi(mCol - 1);
     }
+
+    /**
+     * Return a transposed vector or matrix, where rows and columns have been swapped.
+     * @return a transposed vector or matrix, where rows and columns have been swapped
+     */
+    public abstract VMT transpose();
 
     @Override
     public boolean isRelative()
