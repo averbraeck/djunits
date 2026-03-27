@@ -6,7 +6,7 @@ Quantity tables are 2-dimensional tables with quantity data of the same type. Th
 
 The `QuantityTable` supports dense storage in a `double[]` or `float[]` array, or sparse storage, where values are stored with an integer-based row-column index and a `double` or `float` value. Since the sparse storage involves quite some overhead, tables need to have a significant percentage of 0-values (40-50% or more) for using sparse storage to make sense. 
 
-![](images/quantity_table.png)
+![](images/quantity-table.png)
 
 
 ## Quantity table operations
