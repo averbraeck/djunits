@@ -15,7 +15,6 @@ import org.djunits.vecmat.d1.Vector1;
 import org.djunits.vecmat.d2.Vector2;
 import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.def.Vector;
-import org.djunits.vecmat.operations.VectorTransposable;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
@@ -31,9 +30,11 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Row or Col)
  * @param <SI> the vector type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic vector type with generics &lt;?, ?&lt; for Hadamard operations
+ * @param <VT> the type of the transposed version of the vector
  */
-public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI, H>, SI extends VectorN<SIQuantity, SI, ?, ?>,
-        H extends VectorN<?, ?, ?, ?>> extends Vector<Q, V, SI, H>
+public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI, H, VT>,
+        SI extends VectorN<SIQuantity, SI, ?, ?, ?>, H extends VectorN<?, ?, ?, ?, ?>, VT extends VectorN<Q, VT, ?, ?, V>>
+        extends Vector<Q, V, SI, H, VT>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -170,7 +171,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             return false;
         if (getClass() != obj.getClass())
             return false;
-        VectorN<?, ?, ?, ?> other = (VectorN<?, ?, ?, ?>) obj;
+        VectorN<?, ?, ?, ?, ?> other = (VectorN<?, ?, ?, ?, ?>) obj;
         return Objects.equals(this.dataSi, other.dataSi);
     }
 
@@ -207,8 +208,8 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      */
-    public static class Col<Q extends Quantity<Q>> extends VectorN<Q, Col<Q>, VectorN.Col<SIQuantity>, VectorN.Col<?>>
-            implements VectorTransposable<Row<Q>>
+    public static class Col<Q extends Quantity<Q>>
+            extends VectorN<Q, Col<Q>, VectorN.Col<SIQuantity>, VectorN.Col<?>, VectorN.Row<Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -236,8 +237,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          *             is initialized with more than one row
          * @return a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data
          */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi,
-                final Unit<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
         {
             return new VectorN.Col<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
         }
@@ -423,8 +423,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> VectorN.Col<TQ> as(final Unit<?, TQ> targetUnit)
-                throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> VectorN.Col<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
@@ -481,8 +480,8 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      */
-    public static class Row<Q extends Quantity<Q>> extends VectorN<Q, Row<Q>, VectorN.Row<SIQuantity>, VectorN.Row<?>>
-            implements VectorTransposable<Col<Q>>
+    public static class Row<Q extends Quantity<Q>>
+            extends VectorN<Q, Row<Q>, VectorN.Row<SIQuantity>, VectorN.Row<?>, VectorN.Col<Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -509,8 +508,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          *             is initialized with more than one row
          * @return a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data
          */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi,
-                final Unit<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
         {
             return new VectorN.Row<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
         }
@@ -695,8 +693,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> VectorN.Row<TQ> as(final Unit<?, TQ> targetUnit)
-                throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> VectorN.Row<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
