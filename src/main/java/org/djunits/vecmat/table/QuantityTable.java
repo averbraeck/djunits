@@ -30,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  */
 public class QuantityTable<Q extends Quantity<Q>>
-        extends VectorMatrix<Q, QuantityTable<Q>, QuantityTable<SIQuantity>, QuantityTable<?>>
+        extends VectorMatrix<Q, QuantityTable<Q>, QuantityTable<SIQuantity>, QuantityTable<?>, QuantityTable<Q>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -56,7 +56,6 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @param valueArrayInUnit the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
-
      * @param rows the number of rows in the valueArray
      * @param cols the number of columns in the valueArray
      * @return a new NxM QuantityTable with a unit
@@ -64,8 +63,8 @@ public class QuantityTable<Q extends Quantity<Q>>
      *             equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> QuantityTable<Q> of(
-            final double[] valueArrayInUnit, final int rows, final int cols, final Unit<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final double[] valueArrayInUnit, final int rows, final int cols,
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -85,14 +84,14 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, aN2, aNM}} expressed in the display unit
      * @param displayUnit the display unit to use
      * @param <Q> the quantity type
-
+     * @param <U> the unit type
      * @return a new NxM QuantityTable with a unit
      * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
      *             equal to the number of columns in another row
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>,
-            U extends Unit<U, Q>> QuantityTable<Q> of(final double[][] valueGridInUnit, final Unit<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>, U extends Unit<U, Q>> QuantityTable<Q> of(final double[][] valueGridInUnit,
+            final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(valueGridInUnit, "valueGridInUnit");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -117,14 +116,12 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @param quantityGrid the matrix values {{a11, a12, ..., a1M}, {aN2, ..., aNM}}, each with their own unit
      * @param displayUnit the display unit to use for the resulting matrix
      * @param <Q> the quantity type
-
      * @return a new NxM QuantityTable with a unit
      * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in quantityGrid is not
      *             equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[][] quantityGrid,
-            final Unit<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[][] quantityGrid, final Unit<?, Q> displayUnit)
     {
         return new QuantityTable<Q>(new DenseDoubleDataSi(quantityGrid), displayUnit);
     }
@@ -221,6 +218,26 @@ public class QuantityTable<Q extends Quantity<Q>>
         return this.dataSi.nonZeroCount();
     }
 
+    /**
+     * Return the transposed quantity table. A transposed quantity table has the same unit as the original one.
+     * @return the transposed quantity table
+     */
+    @Override
+    @SuppressWarnings("checkstyle:needbraces")
+    public QuantityTable<Q> transpose()
+    {
+        double[] data = si();
+        double[] newSi = new double[data.length];
+        int rows = rows();
+        int cols = cols();
+        final Unit<?, Q> displayUnit = getDisplayUnit();
+        final Unit<?, Q> baseUnit = displayUnit.getBaseUnit();
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                newSi[c * rows + r] = data[r * cols + c];
+        return new QuantityTable<Q>(this.dataSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
+    }
+
     // --------------------------------------- AS() FUNCTIONS ---------------------------------
 
     @Override
@@ -251,8 +268,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> QuantityTable<TQ> as(final Unit<?, TQ> targetUnit)
-            throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> QuantityTable<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
@@ -342,8 +358,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
         final double[] data = si();
-        return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -378,8 +393,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
         final double[] data = si();
-        return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     /**
