@@ -10,7 +10,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.def.Vector;
-import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -23,8 +22,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  */
-public class Vector1<Q extends Quantity<Q>> extends
-        Vector<Q, Vector1<Q>, Vector1<SIQuantity>, Vector1<?>> implements VectorTransposable<Vector1<Q>>
+public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector1<SIQuantity>, Vector1<?>, Vector1<Q>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -67,10 +65,8 @@ public class Vector1<Q extends Quantity<Q>> extends
      * @param displayUnit the display unit to use
      * @return a new Vector1 with a unit
      * @param <Q> the quantity type
-
      */
-    public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit,
-            final Unit<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit, final Unit<?, Q> displayUnit)
     {
         return new Vector1<>(xInUnit, displayUnit);
     }
@@ -333,8 +329,7 @@ public class Vector1<Q extends Quantity<Q>> extends
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Vector1<TQ> as(final Unit<?, TQ> targetUnit)
-            throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> Vector1<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,

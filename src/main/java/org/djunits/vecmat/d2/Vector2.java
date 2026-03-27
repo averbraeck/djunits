@@ -12,7 +12,6 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.d1.Vector1;
 import org.djunits.vecmat.def.Vector;
-import org.djunits.vecmat.operations.VectorTransposable;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -27,9 +26,11 @@ import org.djutils.exceptions.Throw;
  * @param <V> the vector type (Row or Col)
  * @param <SI> the vector type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic vector type with generics &lt;?, ?&lt; for Hadamard operations
+ * @param <VT> the type of the transposed version of the vector
  */
-public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI, H>, SI extends Vector2<SIQuantity, SI, ?, ?>,
-        H extends Vector2<?, ?, ?, ?>> extends Vector<Q, V, SI, H>
+public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI, H, VT>,
+        SI extends Vector2<SIQuantity, SI, ?, ?, ?>, H extends Vector2<?, ?, ?, ?, ?>, VT extends Vector2<Q, VT, ?, ?, V>>
+        extends Vector<Q, V, SI, H, VT>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -287,7 +288,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Vector2<?, ?, ?, ?> other = (Vector2<?, ?, ?, ?>) obj;
+        Vector2<?, ?, ?, ?, ?> other = (Vector2<?, ?, ?, ?, ?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi)
                 && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi);
     }
@@ -322,8 +323,8 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      */
-    public static class Col<Q extends Quantity<Q>> extends Vector2<Q, Col<Q>, Col<SIQuantity>, Col<?>>
-            implements VectorTransposable<Row<Q>>
+    public static class Col<Q extends Quantity<Q>>
+            extends Vector2<Q, Vector2.Col<Q>, Vector2.Col<SIQuantity>, Vector2.Col<?>, Vector2.Row<Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -468,8 +469,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> Vector2.Col<TQ> as(final Unit<?, TQ> targetUnit)
-                throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> Vector2.Col<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
@@ -489,8 +489,8 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      */
-    public static class Row<Q extends Quantity<Q>> extends Vector2<Q, Row<Q>, Row<SIQuantity>, Row<?>>
-            implements VectorTransposable<Col<Q>>
+    public static class Row<Q extends Quantity<Q>>
+            extends Vector2<Q, Vector2.Row<Q>, Vector2.Row<SIQuantity>, Vector2.Row<?>, Vector2.Col<Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -667,8 +667,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> Vector2.Row<TQ> as(final Unit<?, TQ> targetUnit)
-                throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> Vector2.Row<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
