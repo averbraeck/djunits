@@ -8,7 +8,6 @@ import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djunits.vecmat.storage.DenseFloatDataSi;
-import org.djutils.exceptions.Throw;
 
 /**
  * Matrix contains a number of standard operations on matrices of relative quantities.
@@ -24,8 +23,8 @@ import org.djutils.exceptions.Throw;
  * @param <MT> the type of the transposed version of the matrix
  */
 public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H, MT>,
-        SI extends Matrix<SIQuantity, SI, ?, ?, ?>, H extends Matrix<?, ?, ?, ?, ?>,
-        MT extends Matrix<Q, MT, ?, ?, M>> extends VectorMatrix<Q, M, SI, H, MT>
+        SI extends Matrix<SIQuantity, SI, ?, ?, ?>, H extends Matrix<?, ?, ?, ?, ?>, MT extends Matrix<Q, MT, ?, ?, M>>
+        extends VectorMatrix<Q, M, SI, H, MT>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -37,30 +36,6 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
     public Matrix(final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
-    }
-
-    /**
-     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
-     * @param matrix the other matrix
-     * @throws IllegalArgumentException when this.cols() != other.rows()
-     */
-    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
-    {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != matrix.rows (%d)", cols(), matrix.rows());
-    }
-
-    /**
-     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
-     * @param vector the other matrix
-     * @throws IllegalArgumentException when this.cols() != other.rows()
-     */
-    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
-    {
-        Throw.whenNull(vector, "matrix");
-        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
-                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != vector.rows (%d)", cols(), vector.rows());
     }
 
     /**

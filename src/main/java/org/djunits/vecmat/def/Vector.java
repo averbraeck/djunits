@@ -8,8 +8,7 @@ import org.djunits.unit.Unit;
 import org.djunits.vecmat.operations.Normed;
 
 /**
- * Vector contains the contract for Vector classes. In addition, Vector classes can implement other interfaces as well, such as
- * VectorTransposable.
+ * Vector contains the contract for Vector classes that contain relative quantity values.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -23,7 +22,7 @@ import org.djunits.vecmat.operations.Normed;
  */
 public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H, VT>,
         SI extends Vector<SIQuantity, SI, ?, ?, ?>, H extends Vector<?, ?, ?, ?, ?>, VT extends Vector<Q, VT, ?, ?, V>>
-        extends Matrix<Q, V, SI, H, VT> implements Iterable<Q>, Normed<Q>
+        extends VectorMatrix<Q, V, SI, H, VT> implements Iterable<Q>, Normed<Q>
 {
     /** */
     private static final long serialVersionUID = 600L;

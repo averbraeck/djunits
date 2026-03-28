@@ -62,7 +62,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     @Override
     public VM setDisplayUnit(final Unit<?, Q> newUnit)
     {
-        Throw.whenNull(this.displayUnit, "displayUnit");
+        Throw.whenNull(newUnit, "newUnit");
         this.displayUnit = newUnit;
         return (VM) this;
     }
@@ -305,6 +305,30 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     protected void mcheckCol(final int mCol)
     {
         Throw.when(mCol < 1 || mCol > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", mCol, cols());
+    }
+
+    /**
+     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
+     * @param matrix the other matrix
+     * @throws IllegalArgumentException when this.cols() != other.rows()
+     */
+    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
+    {
+        Throw.whenNull(matrix, "matrix");
+        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
+                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != matrix.rows (%d)", cols(), matrix.rows());
+    }
+
+    /**
+     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
+     * @param vector the other matrix
+     * @throws IllegalArgumentException when this.cols() != other.rows()
+     */
+    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
+    {
+        Throw.whenNull(vector, "matrix");
+        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
+                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != vector.rows (%d)", cols(), vector.rows());
     }
 
     /**
