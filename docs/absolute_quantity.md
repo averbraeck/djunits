@@ -15,7 +15,7 @@ Absolute quantities therefore have three fields as compared to two fields for a 
 
 The above example results in a north-easterly direction, since a positive `Angle` is defined clockwise. 
 
-The relation between (relative) quantities and absolute quantities is sketched in the class diagram below. Note that we denote a relative quantity in DJUNITS with the class name `Quantity`, without the 'relative' prefix.
+The relation between (relative) quantities and absolute quantities is sketched in the class diagram below. Note that whereas the absolute quantities are inherited from the `AbsQuantity` class, we inherit a relative quantity in DJUNITS from the class `Quantity`, without a 'relative' prefix.
 
 ![](images/absolute-quantity.png)
 
