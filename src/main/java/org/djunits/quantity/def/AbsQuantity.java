@@ -12,7 +12,7 @@ import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * AbsoluteQuantity is an abstract class that stores the basic information about a absolute quantity. An absolute quantity wraps
+ * AbsQuantity is an abstract class that stores the basic information about a absolute quantity. An absolute quantity wraps
  * a relative Quantity and has a reference point that acts as an origin or zero point.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -23,7 +23,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the relative quantity type
  * @param <R> the reference type to use for the absolute quantity
  */
-public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
         R extends AbstractReference<R, A, Q>> implements Value<A, Q>, Comparable<A>
 {
     /** */
@@ -40,7 +40,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @param quantity the relative quantity that indicates the 'distance' to the reference point
      * @param reference the reference point
      */
-    public AbsoluteQuantity(final Q quantity, final R reference)
+    public AbsQuantity(final Q quantity, final R reference)
     {
         Throw.whenNull(quantity, "quantity");
         Throw.whenNull(reference, "reference");
@@ -327,7 +327,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbsoluteQuantity<?, ?, ?> other = (AbsoluteQuantity<?, ?, ?>) obj;
+        AbsQuantity<?, ?, ?> other = (AbsQuantity<?, ?, ?>) obj;
         return Objects.equals(this.quantity, other.quantity) && Objects.equals(this.reference, other.reference);
     }
 
@@ -349,14 +349,14 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends AbstractReference<R, A, Q>> A valueOf(final String text, final A example, final R reference)
     {
-        Throw.whenNull(example, "Error parsing AbsoluteQuantity: example is null");
+        Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
-        Throw.whenNull(text, "Error parsing AbsoluteQuantity: text to parse is null");
+        Throw.whenNull(text, "Error parsing AbsQuantity: text to parse is null");
         Throw.when(text.length() == 0, IllegalArgumentException.class, "Error parsing %s: empty text to parse", quantityClass);
-        Throw.whenNull(reference, "Error parsing AbsoluteQuantity: reference is null");
+        Throw.whenNull(reference, "Error parsing AbsQuantity: reference is null");
         try
         {
             NumberParser numberParser = new NumberParser().lenient().trailing();
@@ -388,15 +388,15 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>, R extends AbstractReference<R, A, Q>> A of(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends AbstractReference<R, A, Q>> A of(
             final double value, final String unitString, final A example, final R reference)
     {
-        Throw.whenNull(example, "Error parsing AbsoluteQuantity: example is null");
+        Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
         Throw.whenNull(unitString, "Error parsing %s: unitString is null", quantityClass);
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing %s: empty unitString",
                 quantityClass);
-        Throw.whenNull(reference, "Error parsing AbsoluteQuantity: reference is null");
+        Throw.whenNull(reference, "Error parsing AbsQuantity: reference is null");
         @SuppressWarnings("unchecked")
         Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
@@ -650,7 +650,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends AbstractReference<R, A, Q>> A interpolate(final A zero, final A one, final double ratio)
     {
         Throw.when(!zero.getReference().equals(one.getReference()), IllegalArgumentException.class,
@@ -675,7 +675,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends AbstractReference<R, A, Q>> A max(final A quantity1, final A... quantities)
     {
         A maxA = quantity1;
@@ -703,7 +703,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends AbstractReference<R, A, Q>> A min(final A quantity1, final A... quantities)
     {
         A minA = quantity1;
@@ -731,7 +731,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends AbstractReference<R, A, Q>> A sum(final A quantity1, final A... quantities)
     {
         double sum = quantity1.si();
@@ -757,7 +757,7 @@ public abstract class AbsoluteQuantity<A extends AbsoluteQuantity<A, Q, R>, Q ex
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsoluteQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends AbstractReference<R, A, Q>> A mean(final A quantity1, final A... quantities)
     {
         // the possible exception is thrown by sum()
