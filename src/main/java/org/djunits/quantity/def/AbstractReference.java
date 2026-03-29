@@ -18,7 +18,7 @@ import org.djutils.exceptions.Throw;
  * @param <A> the absolute quantity type for generics instantiation
  * @param <Q> the relative quantity type for the offset
  */
-public abstract class AbstractReference<R extends AbstractReference<R, A, Q>, A extends AbsoluteQuantity<A, Q, R>,
+public abstract class AbstractReference<R extends AbstractReference<R, A, Q>, A extends AbsQuantity<A, Q, R>,
         Q extends Quantity<Q>> implements Identifiable
 {
     /**
