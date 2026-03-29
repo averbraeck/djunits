@@ -12,7 +12,7 @@ import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d2.Vector2;
 import org.djunits.vecmat.d3.Matrix3x3;
 import org.djunits.vecmat.d3.Vector3;
-import org.djunits.vecmat.def.VectorMatrix;
+import org.djunits.vecmat.def.Table;
 import org.djunits.vecmat.dn.MatrixNxN;
 import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.storage.DataGridSi;
@@ -30,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  */
 public class QuantityTable<Q extends Quantity<Q>>
-        extends VectorMatrix<Q, QuantityTable<Q>, QuantityTable<SIQuantity>, QuantityTable<?>, QuantityTable<Q>>
+        extends Table<Q, QuantityTable<Q>, QuantityTable<SIQuantity>, QuantityTable<?>, QuantityTable<Q>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -238,7 +238,7 @@ public class QuantityTable<Q extends Quantity<Q>>
         return new QuantityTable<Q>(this.dataSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
     }
 
-    // --------------------------------------- AS() FUNCTIONS ---------------------------------
+    // --------------------------------------- EQUALS AND HASHCODE ---------------------------------
 
     @Override
     public int hashCode()
@@ -259,6 +259,8 @@ public class QuantityTable<Q extends Quantity<Q>>
         QuantityTable<?> other = (QuantityTable<?>) obj;
         return Objects.equals(this.dataSi, other.dataSi);
     }
+
+    // --------------------------------------- AS() FUNCTIONS ---------------------------------
 
     /**
      * Return the QuantityTable 'as' a QuantityTable with a known quantity, using a unit to express the result in. Throw a

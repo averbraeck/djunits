@@ -110,59 +110,9 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     }
 
     @Override
-    public double si(final int row, final int col) throws IndexOutOfBoundsException
-    {
-        checkRow(row);
-        checkCol(col);
-        return this.xSi;
-    }
-
-    @Override
     public boolean isColumnVector()
     {
         return true;
-    }
-
-    @Override
-    public Vector1<Q> getRowVector(final int row)
-    {
-        checkRow(row);
-        return new Vector1<Q>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Vector1<Q> mgetRowVector(final int mRow)
-    {
-        mcheckRow(mRow);
-        return new Vector1<Q>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Vector1<Q> getColumnVector(final int col)
-    {
-        checkCol(col);
-        return new Vector1<Q>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public Vector1<Q> mgetColumnVector(final int mCol)
-    {
-        mcheckCol(mCol);
-        return new Vector1<Q>(this.xSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-    }
-
-    @Override
-    public double[] getRowSi(final int row)
-    {
-        checkRow(row);
-        return new double[] {this.xSi};
-    }
-
-    @Override
-    public double[] getColumnSi(final int col)
-    {
-        checkCol(col);
-        return new double[] {this.xSi};
     }
 
     @Override

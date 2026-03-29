@@ -24,7 +24,7 @@ import org.djunits.vecmat.storage.DenseFloatDataSi;
  */
 public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H, MT>,
         SI extends Matrix<SIQuantity, SI, ?, ?, ?>, H extends Matrix<?, ?, ?, ?, ?>, MT extends Matrix<Q, MT, ?, ?, M>>
-        extends VectorMatrix<Q, M, SI, H, MT>
+        extends Table<Q, M, SI, H, MT>
 {
     /** */
     private static final long serialVersionUID = 600L;

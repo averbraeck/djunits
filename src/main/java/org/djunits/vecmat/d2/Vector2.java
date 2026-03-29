@@ -10,7 +10,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.MatrixMath;
-import org.djunits.vecmat.d1.Vector1;
 import org.djunits.vecmat.def.Vector;
 import org.djutils.exceptions.Throw;
 
@@ -387,56 +386,6 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         }
 
         @Override
-        public double si(final int row, final int col) throws IndexOutOfBoundsException
-        {
-            checkRow(row);
-            checkCol(col);
-            return row == 0 ? xSi() : ySi();
-        }
-
-        @Override
-        public Vector1<Q> getRowVector(final int row)
-        {
-            checkRow(row);
-            return new Vector1<Q>(si(row, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector1<Q> mgetRowVector(final int mRow)
-        {
-            mcheckRow(mRow);
-            return new Vector1<Q>(msi(mRow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector2.Col<Q> getColumnVector(final int col)
-        {
-            checkCol(col);
-            return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector2.Col<Q> mgetColumnVector(final int mCol)
-        {
-            mcheckCol(mCol);
-            return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public double[] getRowSi(final int row)
-        {
-            checkRow(row);
-            return new double[] {si(row, 0)};
-        }
-
-        @Override
-        public double[] getColumnSi(final int col)
-        {
-            checkCol(col);
-            return new double[] {xSi(), ySi()};
-        }
-
-        @Override
         public Vector2.Row<Q> transpose()
         {
             return new Vector2.Row<Q>(xSi(), ySi(), getDisplayUnit());
@@ -550,56 +499,6 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.when(siNew.length != 2, IllegalArgumentException.class, "Size of new data for Vector2 != 2, but %d",
                     siNew.length);
             return new Vector2.Row<SIQuantity>(siNew[0], siNew[1], siUnit);
-        }
-
-        @Override
-        public double si(final int row, final int col) throws IndexOutOfBoundsException
-        {
-            checkRow(row);
-            checkCol(col);
-            return col == 0 ? xSi() : ySi();
-        }
-
-        @Override
-        public Vector2.Row<Q> getRowVector(final int row)
-        {
-            checkRow(row);
-            return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector2.Row<Q> mgetRowVector(final int mRow)
-        {
-            mcheckRow(mRow);
-            return instantiateSi(xSi(), ySi()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector1<Q> getColumnVector(final int col)
-        {
-            checkCol(col);
-            return new Vector1<Q>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector1<Q> mgetColumnVector(final int mCol)
-        {
-            mcheckCol(mCol);
-            return new Vector1<Q>(msi(1, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public double[] getRowSi(final int row)
-        {
-            checkRow(row);
-            return new double[] {xSi(), ySi()};
-        }
-
-        @Override
-        public double[] getColumnSi(final int col)
-        {
-            checkCol(col);
-            return new double[] {si(0, col)};
         }
 
         @Override

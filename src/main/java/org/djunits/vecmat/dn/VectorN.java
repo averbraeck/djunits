@@ -144,12 +144,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     }
 
     @Override
-    public double si(final int row, final int col) throws IndexOutOfBoundsException
-    {
-        return this.dataSi.get(row, col);
-    }
-
-    @Override
     public int nonZeroCount()
     {
         return this.dataSi.nonZeroCount();
@@ -317,48 +311,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Col<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
         {
             return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(siNew), siUnit);
-        }
-
-        @Override
-        public Vector1<Q> getRowVector(final int row)
-        {
-            checkRow(row);
-            return new Vector1<Q>(si(row, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector1<Q> mgetRowVector(final int mRow)
-        {
-            mcheckRow(mRow);
-            return new Vector1<Q>(msi(mRow, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public VectorN.Col<Q> getColumnVector(final int col)
-        {
-            checkCol(col);
-            return new VectorN.Col<Q>(this.dataSi.copy(), getDisplayUnit());
-        }
-
-        @Override
-        public VectorN.Col<Q> mgetColumnVector(final int mCol)
-        {
-            mcheckCol(mCol);
-            return new VectorN.Col<Q>(this.dataSi.copy(), getDisplayUnit());
-        }
-
-        @Override
-        public double[] getRowSi(final int row)
-        {
-            checkRow(row);
-            return new double[] {si(row, 0)};
-        }
-
-        @Override
-        public double[] getColumnSi(final int col)
-        {
-            checkCol(col);
-            return this.dataSi.getColArray(col);
         }
 
         @Override
@@ -593,48 +545,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Row<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
         {
             return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(siNew), siUnit);
-        }
-
-        @Override
-        public VectorN.Row<Q> getRowVector(final int row)
-        {
-            checkRow(row);
-            return new VectorN.Row<Q>(this.dataSi.copy(), getDisplayUnit());
-        }
-
-        @Override
-        public VectorN.Row<Q> mgetRowVector(final int mRow)
-        {
-            mcheckRow(mRow);
-            return new VectorN.Row<Q>(this.dataSi.copy(), getDisplayUnit());
-        }
-
-        @Override
-        public Vector1<Q> getColumnVector(final int col)
-        {
-            checkCol(col);
-            return new Vector1<Q>(si(0, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public Vector1<Q> mgetColumnVector(final int mCol)
-        {
-            mcheckCol(mCol);
-            return new Vector1<Q>(msi(1, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        @Override
-        public double[] getRowSi(final int row)
-        {
-            checkRow(row);
-            return this.dataSi.getRowArray(row);
-        }
-
-        @Override
-        public double[] getColumnSi(final int col)
-        {
-            checkCol(col);
-            return new double[] {si(0, col)};
         }
 
         @Override

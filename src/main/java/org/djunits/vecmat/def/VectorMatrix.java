@@ -1,8 +1,5 @@
 package org.djunits.vecmat.def;
 
-import java.lang.reflect.Array;
-
-import org.djunits.formatter.Format;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
@@ -101,160 +98,6 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     public abstract double[] si();
 
     /**
-     * Return the si-value at position (row, col), where both row and col are 0-based values.
-     * @param row the row (0-based)
-     * @param col the column (0-based)
-     * @return the si-value at position (row, col)
-     * @throws IndexOutOfBoundsException when row or col &lt; 0 or larger than number of rows/columns - 1.
-     */
-    public abstract double si(int row, int col) throws IndexOutOfBoundsException;
-
-    /**
-     * Return the si-value at position (row, col), where both row and col are 1-based values.
-     * @param mRow the row (1-based)
-     * @param mCol the column (1-based)
-     * @return the si-value at position (row, col)
-     * @throws IndexOutOfBoundsException when row or col &lt; 1 or larger than number of rows/columns.
-     */
-    public double msi(final int mRow, final int mCol) throws IndexOutOfBoundsException
-    {
-        return si(mRow - 1, mCol - 1);
-    }
-
-    /**
-     * Return the quantity at position (row, col), where both row and col are 0-based values.
-     * @param row the row (0-based)
-     * @param col the column (0-based)
-     * @return the quantity at position (row, col)
-     * @throws IndexOutOfBoundsException when row or col &lt; 0 or larger than number of rows/columns - 1.
-     */
-    public Q get(final int row, final int col) throws IndexOutOfBoundsException
-    {
-        return getDisplayUnit().ofSi(si(row, col)).setDisplayUnit(getDisplayUnit());
-    }
-
-    /**
-     * Return the quantity at position (row, col), where both row and col are 1-based values.
-     * @param mRow the row (1-based)
-     * @param mCol the column (1-based)
-     * @return the quantity at position (row, col)
-     * @throws IndexOutOfBoundsException when row or col &lt; 1 or larger than number of rows/columns.
-     */
-    public Q mget(final int mRow, final int mCol) throws IndexOutOfBoundsException
-    {
-        return getDisplayUnit().ofSi(msi(mRow, mCol)).setDisplayUnit(getDisplayUnit());
-    }
-
-    /**
-     * Return the vector or matrix as a 2D array of scalars.
-     * @return a new Q[rows()][cols()] array; entry [i][j] contains get(i, j).
-     */
-    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
-    public Q[][] getScalarGrid()
-    {
-        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 0.
-        final Q first = get(0, 0);
-        final Class<?> qClass = first.getClass();
-
-        // Allocate a Q[rows()][cols()] array and fill it.
-        final Q[][] out = (Q[][]) Array.newInstance(qClass, rows(), cols());
-        for (int i = 0; i < rows(); i++)
-        {
-            for (int j = 0; j < cols(); j++)
-            {
-                out[i][j] = get(i, j);
-            }
-        }
-        return out;
-    }
-
-    /**
-     * Return the vector or matrix as a 2D array of double SI values.
-     * @return a new double[rows()][cols()] array; entry [i][j] contains si(i, j).
-     */
-    public double[][] getSiGrid()
-    {
-        // Allocate a double[rows()][cols()] array and fill it.
-        final double[][] out = (double[][]) Array.newInstance(double.class, rows(), cols());
-        for (int i = 0; i < rows(); i++)
-        {
-            for (int j = 0; j < cols(); j++)
-            {
-                out[i][j] = si(i, j);
-            }
-        }
-        return out;
-    }
-
-    /**
-     * Return a quantity row (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
-     * the implementing class.
-     * @param row the row number to retrieve (0-based)
-     * @return a row vector with the data at the given row
-     */
-    public abstract Vector<Q, ?, ?, ?, ?> getRowVector(int row);
-
-    /**
-     * Return a quantity row (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
-     * the implementing class.
-     * @param mRow the row number to retrieve (1-based)
-     * @return a row vector with the data at the given row
-     */
-    public abstract Vector<Q, ?, ?, ?, ?> mgetRowVector(int mRow);
-
-    /**
-     * Return a quantity column (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
-     * the implementing class.
-     * @param col the column number to retrieve (0-based)
-     * @return a column vector with the data at the given column
-     */
-    public abstract Vector<Q, ?, ?, ?, ?> getColumnVector(int col);
-
-    /**
-     * Return a quantity column (1-based) from the vector or matrix. Note that the specific vector to return can be tightened by
-     * the implementing class.
-     * @param mCol the column number to retrieve (1-based)
-     * @return a column vector with the data at the given column
-     */
-    public abstract Vector<Q, ?, ?, ?, ?> mgetColumnVector(int mCol);
-
-    /**
-     * Return an array with SI-values for the given row (0-based) from the vector or matrix.
-     * @param row the row number to retrieve (0-based)
-     * @return an array with SI-values with the data at the given row
-     */
-    public abstract double[] getRowSi(int row);
-
-    /**
-     * Return an array with SI-values for the given row (1-based) from the vector or matrix.
-     * @param mRow the row number to retrieve (1-based)
-     * @return an array with SI-values with the data at the given row
-     */
-    public double[] mgetRowSi(final int mRow)
-    {
-        mcheckRow(mRow);
-        return getRowSi(mRow - 1);
-    }
-
-    /**
-     * Return an array with SI-values for the given column (0-based) from the vector or matrix.
-     * @param col the column number to retrieve (0-based)
-     * @return an array with SI-values with the data at the given column
-     */
-    public abstract double[] getColumnSi(int col);
-
-    /**
-     * Return an array with SI-values for the given column (1-based) from the vector or matrix.
-     * @param mCol the column number to retrieve (1-based)
-     * @return an array with SI-values with the data at the given column
-     */
-    public double[] mgetColumnSi(final int mCol)
-    {
-        mcheckCol(mCol);
-        return getColumnSi(mCol - 1);
-    }
-
-    /**
      * Return a transposed vector or matrix, where rows and columns have been swapped.
      * @return a transposed vector or matrix, where rows and columns have been swapped
      */
@@ -263,137 +106,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     @Override
     public boolean isRelative()
     {
-        return get(0, 0).isRelative();
-    }
-
-    /**
-     * Check if the 0-based row is within bounds.
-     * @param row the 0-based row to check
-     * @throws IndexOutOfBoundsException when row is out of bounds
-     */
-    protected void checkRow(final int row)
-    {
-        Throw.when(row < 0 || row >= rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [0..%d]", row, rows() - 1);
-    }
-
-    /**
-     * Check if the 0-based column is within bounds.
-     * @param col the 0-based column to check
-     * @throws IndexOutOfBoundsException when column is out of bounds
-     */
-    protected void checkCol(final int col)
-    {
-        Throw.when(col < 0 || col >= cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [0..%d]", col,
-                cols() - 1);
-    }
-
-    /**
-     * Check if the 1-based row is within bounds.
-     * @param mRow the 1-based row to check
-     * @throws IndexOutOfBoundsException when row is out of bounds
-     */
-    protected void mcheckRow(final int mRow)
-    {
-        Throw.when(mRow < 1 || mRow > rows(), IndexOutOfBoundsException.class, "Row %d out of bounds [1..%d]", mRow, rows());
-    }
-
-    /**
-     * Check if the 1-based column is within bounds.
-     * @param mCol the 1-based column to check
-     * @throws IndexOutOfBoundsException when column is out of bounds
-     */
-    protected void mcheckCol(final int mCol)
-    {
-        Throw.when(mCol < 1 || mCol > cols(), IndexOutOfBoundsException.class, "Column %d out of bounds [1..%d]", mCol, cols());
-    }
-
-    /**
-     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
-     * @param matrix the other matrix
-     * @throws IllegalArgumentException when this.cols() != other.rows()
-     */
-    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
-    {
-        Throw.whenNull(matrix, "matrix");
-        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
-                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != matrix.rows (%d)", cols(), matrix.rows());
-    }
-
-    /**
-     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
-     * @param vector the other matrix
-     * @throws IllegalArgumentException when this.cols() != other.rows()
-     */
-    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
-    {
-        Throw.whenNull(vector, "matrix");
-        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
-                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != vector.rows (%d)", cols(), vector.rows());
-    }
-
-    /**
-     * Retrieve a row (0-based) from the matrix as an array of scalars.
-     * @param row row of the values to retrieve (0-based)
-     * @return the row as a Scalar array
-     * @throws IndexOutOfBoundsException in case row is out of bounds
-     */
-    @SuppressWarnings("unchecked")
-    public Q[] getRowScalars(final int row) throws IndexOutOfBoundsException
-    {
-        checkRow(row);
-
-        // Build a Q[] of length cols() using the runtime class of the first element
-        Q first = get(row, 0);
-        Q[] out = (Q[]) Array.newInstance(first.getClass(), cols());
-        for (int c = 0; c < cols(); c++)
-        {
-            out[c] = get(row, c);
-        }
-        return out;
-    }
-
-    /**
-     * Retrieve a row (1-based) from the matrix as an array of scalars.
-     * @param mRow row of the values to retrieve (1-based)
-     * @return the row as a Scalar array
-     * @throws IndexOutOfBoundsException in case row is out of bounds
-     */
-    public Q[] mgetRowScalars(final int mRow) throws IndexOutOfBoundsException
-    {
-        mcheckRow(mRow);
-        return getRowScalars(mRow - 1);
-    }
-
-    /**
-     * Retrieve a column (0-based) from the matrix as an array of scalars.
-     * @param col column of the values to retrieve (0-based)
-     * @return the column as a Scalar array
-     * @throws IndexOutOfBoundsException in case column is out of bounds
-     */
-    @SuppressWarnings("unchecked")
-    public Q[] getColumnScalars(final int col) throws IndexOutOfBoundsException
-    {
-        checkCol(col);
-
-        Q first = get(0, col);
-        Q[] out = (Q[]) Array.newInstance(first.getClass(), rows());
-        for (int r = 0; r < rows(); r++)
-        {
-            out[r] = get(r, col);
-        }
-        return out;
-    }
-
-    /**
-     * Retrieve a column (1-based) from the matrix as an array of scalars.
-     * @param mCol column of the values to retrieve (1-based)
-     * @return the column as a Scalar array
-     * @throws IndexOutOfBoundsException in case column is out of bounds
-     */
-    public Q[] mgetColumnScalars(final int mCol) throws IndexOutOfBoundsException
-    {
-        mcheckCol(mCol);
-        return getColumnScalars(mCol - 1);
+        return getDisplayUnit().ofSi(0.0).isRelative();
     }
 
     /**
@@ -577,30 +290,30 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
                 .setDisplayUnit(getDisplayUnit());
     }
 
-    @SuppressWarnings("checkstyle:needbraces")
-    @Override
-    public String toString(final Unit<?, Q> withUnit)
+    // ------------------------------------ HELPER METHODS ------------------------------------
+
+    /**
+     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
+     * @param matrix the other matrix
+     * @throws IllegalArgumentException when this.cols() != other.rows()
+     */
+    protected void checkMultiply(final Matrix<?, ?, ?, ?, ?> matrix)
     {
-        var s = new StringBuilder();
-        for (int r = 0; r < rows(); r++)
-        {
-            s.append(r == 0 ? "[" : "\n ");
-            for (int c = 0; c < cols(); c++)
-            {
-                if (c > 0)
-                    s.append(", ");
-                s.append(Format.format(withUnit.fromBaseValue(si(r, c))));
-            }
-        }
-        s.append("] ");
-        s.append(withUnit.getDisplayAbbreviation());
-        return s.toString();
+        Throw.whenNull(matrix, "matrix");
+        Throw.when(cols() != matrix.rows(), IllegalArgumentException.class,
+                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != matrix.rows (%d)", cols(), matrix.rows());
     }
 
-    @Override
-    public String toString()
+    /**
+     * Check if the multiplication with the other matrix is valid. A valid matrix multiplication is (M x N) x (N x P).
+     * @param vector the other matrix
+     * @throws IllegalArgumentException when this.cols() != other.rows()
+     */
+    protected void checkMultiply(final Vector<?, ?, ?, ?, ?> vector)
     {
-        return toString(getDisplayUnit());
+        Throw.whenNull(vector, "matrix");
+        Throw.when(cols() != vector.rows(), IllegalArgumentException.class,
+                "Matrix multiplication (M x N) x (N x P): this.cols (%d) != vector.rows (%d)", cols(), vector.rows());
     }
 
 }
