@@ -17,6 +17,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
+import org.djunits.vecmat.def.Matrix;
 import org.djunits.vecmat.def.SquareDenseMatrix;
 import org.djunits.vecmat.def.SquareMatrix;
 import org.djunits.vecmat.def.VectorMatrix;
@@ -139,8 +140,7 @@ public class Matrix2x2Test
         assertArrayEquals(newSi, siMatrix.si(), EPS, "si array used as-is");
         assertEquals(10.0, siMatrix.get(0, 0).si(), EPS);
 
-        Matrix2x2<SIQuantity> siMatrixOf =
-                Matrix2x2.of(new double[][] {{10.0, 20.0}, {30.0, 40.0}}, SIUnit.of("kgm/s2K"));
+        Matrix2x2<SIQuantity> siMatrixOf = Matrix2x2.of(new double[][] {{10.0, 20.0}, {30.0, 40.0}}, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrixOf.si(), EPS, "si array used as-is");
         assertEquals(10.0, siMatrixOf.get(0, 0).si(), EPS);
@@ -156,7 +156,7 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link Matrix#get(int, int)}, and relative/absolute
      * flag.
      */
     @Test
@@ -445,8 +445,8 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix2x2#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
-     * (e.g., length ↔ time).
+     * Verify {@link Matrix2x2#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch (e.g.,
+     * length ↔ time).
      */
     @Test
     @DisplayName("as(targetUnit) success (m↔km) and failure (length↔time)")

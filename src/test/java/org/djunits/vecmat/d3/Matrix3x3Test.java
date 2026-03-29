@@ -17,6 +17,7 @@ import org.djunits.quantity.Speed;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
+import org.djunits.vecmat.def.Matrix;
 import org.djunits.vecmat.def.SquareDenseMatrix;
 import org.djunits.vecmat.def.SquareMatrix;
 import org.djunits.vecmat.def.VectorMatrix;
@@ -57,9 +58,9 @@ public class Matrix3x3Test
     private static final double EPS = 1.0E-12;
 
     /**
-     * Helper that builds a {@code Matrix3x3<Length>} from SI values with a given display unit. Values in
-     * {@code si} are interpreted as SI (meters) and the display unit is only for presentation. Internally, conversion happens
-     * by passing display values to {@code of(...)}.
+     * Helper that builds a {@code Matrix3x3<Length>} from SI values with a given display unit. Values in {@code si} are
+     * interpreted as SI (meters) and the display unit is only for presentation. Internally, conversion happens by passing
+     * display values to {@code of(...)}.
      * @param si a flat 9-element array of SI (meter) values in row-major order [a11, a12, a13, a21, a22, a23, a31, a32, a33]
      * @param displayUnit the display unit to assign to the matrix
      * @return a new matrix instance
@@ -139,8 +140,7 @@ public class Matrix3x3Test
         assertArrayEquals(newSi, siMatrix.si(), EPS, "si array used as-is");
         assertEquals(9.0, siMatrix.get(0, 0).si(), EPS);
 
-        Matrix3x3<SIQuantity> siMatrixOf =
-                Matrix3x3.of(new double[][] {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, SIUnit.of("kgm/s2K"));
+        Matrix3x3<SIQuantity> siMatrixOf = Matrix3x3.of(new double[][] {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrixOf.si(), EPS, "si array used as-is");
         assertEquals(9.0, siMatrixOf.get(0, 0).si(), EPS);
@@ -156,7 +156,7 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link Matrix#get(int, int)}, and relative/absolute
      * flag.
      */
     @Test
@@ -187,8 +187,7 @@ public class Matrix3x3Test
     @DisplayName("setDisplayUnit() only changes presentation")
     public void testSetDisplayUnit()
     {
-        Matrix3x3<Length> m =
-                ofSi(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, Length.Unit.km);
+        Matrix3x3<Length> m = ofSi(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, Length.Unit.km);
         assertEquals(Length.Unit.km, m.getDisplayUnit());
         m.setDisplayUnit(Length.Unit.m);
         assertEquals(Length.Unit.m, m.getDisplayUnit());
@@ -455,8 +454,8 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix3x3#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
-     * (e.g., length ↔ time).
+     * Verify {@link Matrix3x3#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch (e.g.,
+     * length ↔ time).
      */
     @Test
     @DisplayName("as(targetUnit) success (m↔km) and failure (length↔time)")
@@ -509,11 +508,11 @@ public class Matrix3x3Test
         assertEquals(3, row1.length);
         assertEquals(4.0, row1[0].si(), EPS);
         assertEquals(6.0, row1[2].si(), EPS);
-        
+
         assertEquals(3, col2.length);
         assertEquals(3.0, col2[0].si(), EPS);
         assertEquals(9.0, col2[2].si(), EPS);
-        
+
         assertEquals(3, diag.length);
         assertEquals(1.0, diag[0].si(), EPS);
         assertEquals(5.0, diag[1].si(), EPS);
@@ -636,8 +635,7 @@ public class Matrix3x3Test
     @DisplayName("Indexing within bounds and value retrieval")
     public void testIndexingAndValues()
     {
-        Matrix3x3<Length> m =
-                Matrix3x3.of(new double[] {1.0, 200.0, 3.0, 400.0, 5.0, 600.0, 7.0, 800.0, 9.0}, Length.Unit.cm);
+        Matrix3x3<Length> m = Matrix3x3.of(new double[] {1.0, 200.0, 3.0, 400.0, 5.0, 600.0, 7.0, 800.0, 9.0}, Length.Unit.cm);
         // SI values: [0.01, 2.0, 0.03, 4.0, 0.05, 6.0, 0.07, 8.0, 0.09]
         assertDoesNotThrow(() -> m.get(1, 1));
         assertDoesNotThrow(() -> m.get(2, 2));
@@ -668,8 +666,7 @@ public class Matrix3x3Test
     @Test
     public void testMultiplyScalarAs()
     {
-        Matrix3x3<Length> r =
-                Matrix3x3.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
+        Matrix3x3<Length> r = Matrix3x3.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
         Matrix3x3<Speed> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());

@@ -158,8 +158,7 @@ public class Matrix1x1Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)} and relative/absolute
-     * flag.
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, and relative/absolute flag.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
@@ -455,8 +454,8 @@ public class Matrix1x1Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix1x1#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
-     * (e.g., length ↔ time).
+     * Verify {@link Matrix1x1#as(Unit)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch (e.g.,
+     * length ↔ time).
      */
     @Test
     @DisplayName("as(targetUnit) success (m↔km) and failure (length↔time)")

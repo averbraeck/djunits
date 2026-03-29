@@ -19,6 +19,7 @@ import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.d1.Matrix1x1;
 import org.djunits.vecmat.d2.Matrix2x2;
 import org.djunits.vecmat.d3.Matrix3x3;
+import org.djunits.vecmat.def.Matrix;
 import org.djunits.vecmat.def.VectorMatrix;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
@@ -172,15 +173,14 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link VectorMatrix#get(int, int)}, and
+     * Verify {@link VectorMatrix#rows()}, {@link VectorMatrix#cols()}, {@link Matrix#get(int, int)}, and
      * {@link VectorMatrix#isRelative()}.
      */
     @Test
     @DisplayName("rows/cols/value/isRelative")
     public void testShapeAndValue()
     {
-        MatrixNxN<Length> m =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> m = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
         assertEquals(4, m.rows());
         assertEquals(4, m.cols());
         assertEquals(1.0, m.get(0, 0).si(), EPS);
@@ -202,8 +202,8 @@ public class MatrixNxNTest
     @DisplayName("setDisplayUnit() only changes presentation")
     public void testSetDisplayUnit()
     {
-        MatrixNxN<Length> m = ofSi4(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
-                11000, 12000, 13000, 14000, 15000, 16000}, Length.Unit.km);
+        MatrixNxN<Length> m = ofSi4(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000,
+                13000, 14000, 15000, 16000}, Length.Unit.km);
         m.setDisplayUnit(Length.Unit.m);
         assertEquals(Length.Unit.m, m.getDisplayUnit());
         assertEquals(1000.0, m.get(0, 0).si(), EPS);
@@ -235,10 +235,8 @@ public class MatrixNxNTest
     @DisplayName("add/sub (Q & VM), negate/abs/scaleBy, stats")
     public void testAlgebraAndStats()
     {
-        MatrixNxN<Length> a =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
-        MatrixNxN<Length> b =
-                ofSi4(new double[] {16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, Length.Unit.m);
+        MatrixNxN<Length> a = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> b = ofSi4(new double[] {16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, Length.Unit.m);
         Length inc = Length.ofSi(2.0);
 
         assertArrayEquals(new double[] {17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17}, a.add(b).si(), EPS);
@@ -270,8 +268,7 @@ public class MatrixNxNTest
     @DisplayName("transpose, determinant/trace/Frobenius, symmetry")
     public void testSquareOps()
     {
-        MatrixNxN<Length> m =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> m = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
 
         MatrixNxN<Length> t = m.transpose();
         assertArrayEquals(new double[] {1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16}, t.si(), EPS);
@@ -287,8 +284,7 @@ public class MatrixNxNTest
         }
         assertEquals(Math.sqrt(sumSqr), m.normFrobenius().si(), EPS);
 
-        MatrixNxN<Length> sym =
-                ofSi4(new double[] {1, 2, 3, 4, 2, 5, 6, 7, 3, 6, 8, 9, 4, 7, 9, 10}, Length.Unit.m);
+        MatrixNxN<Length> sym = ofSi4(new double[] {1, 2, 3, 4, 2, 5, 6, 7, 3, 6, 8, 9, 4, 7, 9, 10}, Length.Unit.m);
         assertTrue(sym.isSymmetric());
         assertFalse(sym.isSkewSymmetric());
     }
@@ -304,12 +300,10 @@ public class MatrixNxNTest
     @DisplayName("inverse(): singular throws; adjugate() exists")
     public void testInverseAdjugate()
     {
-        MatrixNxN<Length> singular =
-                ofSi4(new double[] {1, 2, 3, 4, 2, 4, 6, 8, 3, 6, 9, 12, 4, 8, 12, 16}, Length.Unit.m);
+        MatrixNxN<Length> singular = ofSi4(new double[] {1, 2, 3, 4, 2, 4, 6, 8, 3, 6, 9, 12, 4, 8, 12, 16}, Length.Unit.m);
         assertThrows(NonInvertibleMatrixException.class, singular::inverse);
 
-        MatrixNxN<Length> diag =
-                ofSi4(new double[] {2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4, 0, 0, 0, 0, 5}, Length.Unit.m);
+        MatrixNxN<Length> diag = ofSi4(new double[] {2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4, 0, 0, 0, 0, 5}, Length.Unit.m);
         assertDoesNotThrow(diag::inverse);
         assertEquals(4, diag.adjugate().rows());
     }
@@ -322,8 +316,7 @@ public class MatrixNxNTest
     public void testMultiply()
     {
         MatrixNxN<Length> a = ofSi4(new double[] {1, 2, 3, 4, 0, 1, 0, 0, 0, 0, 1, 0, 5, 6, 7, 8}, Length.Unit.m);
-        MatrixNxN<Length> b =
-                MatrixNxN.of(new double[] {1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4}, Length.Unit.km);
+        MatrixNxN<Length> b = MatrixNxN.of(new double[] {1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4}, Length.Unit.km);
 
         MatrixNxN<SIQuantity> c = a.multiply(b);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), c.getDisplayUnit());
@@ -350,8 +343,7 @@ public class MatrixNxNTest
     @DisplayName("Hadamard: invert/multiply/divide + unit composition")
     public void testHadamard()
     {
-        MatrixNxN<Length> a =
-                ofSi4(new double[] {2, 4, 5, 10, 20, 40, 8, 16, 32, 64, 3, 6, 12, 24, 48, 96}, Length.Unit.m);
+        MatrixNxN<Length> a = ofSi4(new double[] {2, 4, 5, 10, 20, 40, 8, 16, 32, 64, 3, 6, 12, 24, 48, 96}, Length.Unit.m);
         MatrixNxN<Length> b =
                 MatrixNxN.of(new double[] {1, 2, 0.5, 4, 0.25, 8, 0.125, 0.5, 4, 2, 6, 3, 0.5, 1, 0.25, 0.125}, Length.Unit.km);
 
@@ -393,8 +385,7 @@ public class MatrixNxNTest
     @DisplayName("getScalars / getRowScalars / getColumnScalars / getDiagonalScalars")
     public void testScalarExtraction()
     {
-        MatrixNxN<Length> m =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> m = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
         MatrixNxN<Length> mhm =
                 ofSi4(new double[] {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160}, Length.Unit.hm);
 
@@ -463,8 +454,7 @@ public class MatrixNxNTest
     @DisplayName("getRowSi / getColumnSi / getDiagonalSi")
     public void testSiArrayExtraction()
     {
-        MatrixNxN<Length> m =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> m = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
 
         Length[][] q = m.getScalarGrid();
         assertEquals(4, q.length);
@@ -512,8 +502,7 @@ public class MatrixNxNTest
     @DisplayName("getRowVector / getColumnVector / getDiagonalVector")
     public void testVectorExtraction()
     {
-        MatrixNxN<Length> m =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> m = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
 
         Length[][] q = m.getScalarGrid();
         assertEquals(4, q.length);
@@ -561,12 +550,9 @@ public class MatrixNxNTest
     @DisplayName("equals / hashCode")
     public void testEqualsHash()
     {
-        MatrixNxN<Length> a1 =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
-        MatrixNxN<Length> a2 =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
-        MatrixNxN<Length> b =
-                ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17}, Length.Unit.m);
+        MatrixNxN<Length> a1 = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> a2 = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.m);
+        MatrixNxN<Length> b = ofSi4(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17}, Length.Unit.m);
 
         assertEquals(a1, a1);
         assertEquals(a1, a2);
@@ -582,8 +568,7 @@ public class MatrixNxNTest
     @Test
     public void testMultiplyScalarAs()
     {
-        MatrixNxN<Length> r =
-                MatrixNxN.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
+        MatrixNxN<Length> r = MatrixNxN.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, Length.Unit.km);
         var d = Duration.of(2.0, "h");
         MatrixNxN<Speed> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
