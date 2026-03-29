@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsoluteQuantity;
+import org.djunits.quantity.def.AbsQuantity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  * <li>Reference creation, lookup, and simple offset chaining</li>
  * <li>Arithmetic operations: subtract(Position), add(Length), subtract(Length)</li>
  * <li>Display-unit propagation rules</li>
- * <li>Inherited operations from AbsoluteQuantity: comparisons, zero checks, interpolate, sum, mean, min, max</li>
+ * <li>Inherited operations from AbsQuantity: comparisons, zero checks, interpolate, sum, mean, min, max</li>
  * </ul>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -241,7 +241,7 @@ class PositionTest
     // =================================================================
 
     /**
-     * Test the static operations inherited from AbsoluteQuantity: interpolate, min, max, sum, and mean.
+     * Test the static operations inherited from AbsQuantity: interpolate, min, max, sum, and mean.
      */
     @Test
     void testStaticOperations()
@@ -253,22 +253,22 @@ class PositionTest
         Position b = new Position(20.0, Length.Unit.m, rs);
         Position c = new Position(30.0, Length.Unit.m, rs);
 
-        assertEquals(c, AbsoluteQuantity.max(a, b, c));
-        assertEquals(a, AbsoluteQuantity.min(a, b, c));
+        assertEquals(c, AbsQuantity.max(a, b, c));
+        assertEquals(a, AbsQuantity.min(a, b, c));
 
-        Position sum = AbsoluteQuantity.sum(a, b, c);
+        Position sum = AbsQuantity.sum(a, b, c);
         assertEquals(60.0, sum.si(), 1E-12);
 
-        Position mean = AbsoluteQuantity.mean(a, b, c);
+        Position mean = AbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
-        Position mid = AbsoluteQuantity.interpolate(a, c, 0.5);
+        Position mid = AbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
         // mismatched references in static ops must throw
         Position.Reference.add("RS2", "Ref S2");
         Position d = new Position(5.0, Length.Unit.m, Position.Reference.get("RS2"));
-        assertThrows(IllegalArgumentException.class, () -> AbsoluteQuantity.sum(a, d));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, d));
         
         // clean up
         Position.Reference.get("RS").unregister();

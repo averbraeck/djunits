@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsoluteQuantity;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -247,7 +247,7 @@ class TemperatureTest
     // =========================================================================
 
     /**
-     * Test the aggregate static operations defined in AbsoluteQuantity: max, min, sum, mean, and interpolate. Also test
+     * Test the aggregate static operations defined in AbsQuantity: max, min, sum, mean, and interpolate. Also test
      * reference mismatch errors.
      */
     @Test
@@ -257,20 +257,20 @@ class TemperatureTest
         Temperature b = new Temperature(20.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
         Temperature c = new Temperature(30.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
 
-        assertEquals(c, AbsoluteQuantity.max(a, b, c));
-        assertEquals(a, AbsoluteQuantity.min(a, b, c));
+        assertEquals(c, AbsQuantity.max(a, b, c));
+        assertEquals(a, AbsQuantity.min(a, b, c));
 
-        Temperature sum = AbsoluteQuantity.sum(a, b, c);
+        Temperature sum = AbsQuantity.sum(a, b, c);
         assertEquals(60.0, sum.si(), 1E-12);
 
-        Temperature mean = AbsoluteQuantity.mean(a, b, c);
+        Temperature mean = AbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
-        Temperature mid = AbsoluteQuantity.interpolate(a, c, 0.5);
+        Temperature mid = AbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
         Temperature d = new Temperature(5.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
-        assertThrows(IllegalArgumentException.class, () -> AbsoluteQuantity.sum(a, d));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, d));
     }
 
     /**

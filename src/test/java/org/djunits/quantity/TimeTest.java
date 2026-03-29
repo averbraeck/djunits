@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsoluteQuantity;
+import org.djunits.quantity.def.AbsQuantity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
  * <li>Reference creation, lookup, and simple offset transformations</li>
  * <li>Arithmetic operations: subtract(Time), add(Duration), subtract(Duration)</li>
  * <li>Display-unit propagation rules</li>
- * <li>Inherited operations from AbsoluteQuantity: comparisons, zero checks, interpolate, sum, mean, min, max</li>
+ * <li>Inherited operations from AbsQuantity: comparisons, zero checks, interpolate, sum, mean, min, max</li>
  * </ul>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -239,7 +239,7 @@ class TimeTest
     // =================================================================
 
     /**
-     * Test the static operations inherited from AbsoluteQuantity: interpolate, min, max, sum, and mean, using the same
+     * Test the static operations inherited from AbsQuantity: interpolate, min, max, sum, and mean, using the same
      * reference. Mixed references should throw.
      */
     @Test
@@ -249,20 +249,20 @@ class TimeTest
         Time b = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX);
         Time c = new Time(30.0, Duration.Unit.s, Time.Reference.UNIX);
 
-        assertEquals(c, AbsoluteQuantity.max(a, b, c));
-        assertEquals(a, AbsoluteQuantity.min(a, b, c));
+        assertEquals(c, AbsQuantity.max(a, b, c));
+        assertEquals(a, AbsQuantity.min(a, b, c));
 
-        Time sum = AbsoluteQuantity.sum(a, b, c);
+        Time sum = AbsQuantity.sum(a, b, c);
         assertEquals(60.0, sum.si(), 1E-12);
 
-        Time mean = AbsoluteQuantity.mean(a, b, c);
+        Time mean = AbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
-        Time mid = AbsoluteQuantity.interpolate(a, c, 0.5);
+        Time mid = AbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
         // Mixed references → should throw
         Time d = new Time(5.0, Duration.Unit.s, Time.Reference.GPS);
-        assertThrows(IllegalArgumentException.class, () -> AbsoluteQuantity.sum(a, d));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, d));
     }
 }

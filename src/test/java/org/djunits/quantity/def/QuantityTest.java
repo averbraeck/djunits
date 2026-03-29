@@ -627,7 +627,7 @@ public class QuantityTest
         Length length = new Length(1.0, Length.Unit.m);
         assertEquals("Length", length.getName(), "Length should remain 'Length' without extra spaces");
 
-        // AbsoluteQuantity name with capitals
+        // AbsQuantity name with capitals
         var q = new ExampleQuantityAQxyz(3.0, ExampleQuantityAQxyz.Unit.DEFAULT);
         assertEquals("Example quantity a qxyz", q.getName(), "Quantity name: camel case should result in spaces");
         assertEquals("m", q.siUnit().toString(true, false));
