@@ -24,7 +24,7 @@ import org.djutils.exceptions.Throw;
  * @param <R> the reference type to use for the absolute quantity
  */
 public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-        R extends AbstractReference<R, A, Q>> implements Value<A, Q>, Comparable<A>
+        R extends Reference<R, A, Q>> implements Value<A, Q>, Comparable<A>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -350,7 +350,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param <R> the reference type to use for the absolute quantity
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends AbstractReference<R, A, Q>> A valueOf(final String text, final A example, final R reference)
+            R extends Reference<R, A, Q>> A valueOf(final String text, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -388,7 +388,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends AbstractReference<R, A, Q>> A of(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
             final double value, final String unitString, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
@@ -651,7 +651,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends AbstractReference<R, A, Q>> A interpolate(final A zero, final A one, final double ratio)
+            R extends Reference<R, A, Q>> A interpolate(final A zero, final A one, final double ratio)
     {
         Throw.when(!zero.getReference().equals(one.getReference()), IllegalArgumentException.class,
                 "inperpolate operation not applicable to quantities with a different reference: %s <> %s",
@@ -676,7 +676,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      */
     @SafeVarargs
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends AbstractReference<R, A, Q>> A max(final A quantity1, final A... quantities)
+            R extends Reference<R, A, Q>> A max(final A quantity1, final A... quantities)
     {
         A maxA = quantity1;
         for (A absq : quantities)
@@ -704,7 +704,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      */
     @SafeVarargs
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends AbstractReference<R, A, Q>> A min(final A quantity1, final A... quantities)
+            R extends Reference<R, A, Q>> A min(final A quantity1, final A... quantities)
     {
         A minA = quantity1;
         for (A absq : quantities)
@@ -732,7 +732,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      */
     @SafeVarargs
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends AbstractReference<R, A, Q>> A sum(final A quantity1, final A... quantities)
+            R extends Reference<R, A, Q>> A sum(final A quantity1, final A... quantities)
     {
         double sum = quantity1.si();
         for (A absq : quantities)
@@ -758,7 +758,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      */
     @SafeVarargs
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends AbstractReference<R, A, Q>> A mean(final A quantity1, final A... quantities)
+            R extends Reference<R, A, Q>> A mean(final A quantity1, final A... quantities)
     {
         // the possible exception is thrown by sum()
         int n = 1 + quantities.length;
