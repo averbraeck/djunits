@@ -20,8 +20,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  */
-public class Matrix2x2<Q extends Quantity<Q>>
-        extends SquareDenseMatrix<Q, Matrix2x2<Q>, Matrix2x2<SIQuantity>, Matrix2x2<?>>
+public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matrix2x2<Q>, Matrix2x2<SIQuantity>, Matrix2x2<?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -34,46 +33,6 @@ public class Matrix2x2<Q extends Quantity<Q>>
     protected Matrix2x2(final double[] arrayInUnit, final Unit<?, Q> displayUnit)
     {
         super(arrayInUnit, displayUnit, 2);
-    }
-
-    /**
-     * Create a new Matrix2x2 with a unit, based on a 1-dimensional array.
-     * <p>
-     * <strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
-     * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-
-     * @return a new Matrix2x2 with a unit
-     * @throws IllegalArgumentException when valueArray does not contain 2x2 = 4 values
-     */
-    public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final double[] arrayInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(arrayInUnit, "arrayInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(arrayInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d", arrayInUnit.length);
-        return new Matrix2x2<Q>(arrayInUnit, displayUnit);
-    }
-
-    /**
-     * Create a new Matrix2x2 with a unit, based on a 2-dimensional grid.
-     * @param gridInUnit the matrix values {{a11, a12}, {a21, a22}} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-
-     * @return a new Matrix2x2 with a unit
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final double[][] gridInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(gridInUnit, "gridInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(gridInUnit.length != 2 || gridInUnit[0].length != 2 || gridInUnit[1].length != 2,
-                IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
-        return new Matrix2x2<Q>(new double[] {gridInUnit[0][0], gridInUnit[0][1], gridInUnit[1][0], gridInUnit[1][1]},
-                displayUnit);
     }
 
     @Override
@@ -99,8 +58,7 @@ public class Matrix2x2<Q extends Quantity<Q>>
     public Vector2.Row<Q> mgetRowVector(final int mRow)
     {
         mcheckRow(mRow);
-        return new Vector2.Row<Q>(msi(mRow, 1), msi(mRow, 2), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector2.Row<Q>(msi(mRow, 1), msi(mRow, 2), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -114,8 +72,7 @@ public class Matrix2x2<Q extends Quantity<Q>>
     public Vector2.Col<Q> mgetColumnVector(final int mCol)
     {
         mcheckCol(mCol);
-        return new Vector2.Col<Q>(msi(1, mCol), msi(2, mCol), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector2.Col<Q>(msi(1, mCol), msi(2, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
@@ -159,7 +116,7 @@ public class Matrix2x2<Q extends Quantity<Q>>
         return new Matrix2x2<SIQuantity>(ArrayMath.divide(si(), other.si()), siUnit);
     }
 
-    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
+    // ------------------------------ MATRIX MULTIPLICATION -------------------------------------
 
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.
@@ -170,8 +127,7 @@ public class Matrix2x2<Q extends Quantity<Q>>
     {
         checkMultiply(otherMat);
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 2, 2, 2);
-        return new Matrix2x2<SIQuantity>(resultData,
-                getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+        return new Matrix2x2<SIQuantity>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
     /**
@@ -194,6 +150,138 @@ public class Matrix2x2<Q extends Quantity<Q>>
         return new Matrix2x2<SIQuantity>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
     }
 
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create a new Matrix2x2 with a unit, based on a , based on a row-major array with values in the given unit.
+     * @param dataInUnit the matrix values {a11, a12, a21, a22} expressed in the unit
+     * @param unit the unit of the data, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new Matrix2x2 with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain 2x2 = 4 values
+     */
+    public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        Throw.whenNull(unit, "unit");
+        Throw.when(dataInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d", dataInUnit.length);
+        return new Matrix2x2<Q>(dataInUnit, unit);
+    }
+
+    /**
+     * Create a Matrix2x2 without needing generics, based on a row-major array with SI-values.
+     * @param dataSi the matrix values {a11, a12, a21, a22} as an array using SI units
+     * @param displayUnit the display unit to use
+     * @return a new Matrix2x2 with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataSi does not contain 2x2 = 4 values
+     */
+    public static <Q extends Quantity<Q>> Matrix2x2<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(dataSi, "dataSi");
+        Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(dataSi.length != 4, IllegalArgumentException.class, "Length of dataSi != 4 but %d", dataSi.length);
+        return new Matrix2x2<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+    }
+
+    /**
+     * Create a Matrix2x2 without needing generics, based on a row-major array of quantities. The unit is taken from the first
+     * quantity in the array.
+     * @param data the matrix values {a11, a12, a21, a22} expressed as an array of quantities
+     * @return a new Matrix2x2 with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when data does not contain 2x2 = 4 quantities
+     */
+    public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final Q[] data)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(data.length != 4, IllegalArgumentException.class, "Length of data != 4 but %d", data.length);
+        double[] dataSi = new double[4];
+        for (int i = 0; i < 4; i++)
+        {
+            dataSi[i] = data[i].si();
+        }
+        return new Matrix2x2<>(dataSi, data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
+    }
+
+    /**
+     * Create a new Matrix2x2 with a unit, based on a 2-dimensional grid with SI-values.
+     * @param gridSi the matrix values {{a11, a12}, {a21, a22}} expressed in the SI or base unit
+     * @param displayUnit the unit of the data, which will also be used as the display unit
+     * @param <Q> the quantity type
+     * @return a new Matrix2x2 with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain 2x2 = 4 values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> Matrix2x2<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(gridSi, "gridSi");
+        Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(gridSi.length != 2 || gridSi[0].length != 2 || gridSi[1].length != 2, IllegalArgumentException.class,
+                "grid is not a 2x2 array");
+        double[] dataSi = new double[4];
+        for (int r = 0; r < 2; r++)
+        {
+            for (int c = 0; c < 2; c++)
+            {
+                dataSi[r * 2 + c] = gridSi[r][c];
+            }
+        }
+        return new Matrix2x2<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+    }
+
+    /**
+     * Create a new Matrix2x2 with a unit, based on a 2-dimensional grid with values in the given unit.
+     * @param gridInUnit the matrix values {{a11, a12}, {a21, a22}} expressed in the unit
+     * @param unit the unit of the values, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new Matrix2x2 with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain 2x2 = 4 values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final double[][] gridInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(gridInUnit, "gridInUnit");
+        Throw.whenNull(unit, "unit");
+        Throw.when(gridInUnit.length != 2 || gridInUnit[0].length != 2 || gridInUnit[1].length != 2,
+                IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
+        double[] dataInUnit = new double[4];
+        for (int r = 0; r < 2; r++)
+        {
+            for (int c = 0; c < 2; c++)
+            {
+                dataInUnit[r * 2 + c] = gridInUnit[r][c];
+            }
+        }
+        return new Matrix2x2<>(dataInUnit, unit);
+    }
+
+    /**
+     * Create a Matrix2x2 without needing generics, based on a 2-dimensional grid of quantities. The unit is taken from the
+     * first quantity in the grid.
+     * @param grid the matrix values {{a11, a12}, {a21, a22}} expressed as a 2-dimensional array of quantities
+     * @return a new Matrix2x2 with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataInUnit does not contain 2x2 = 4 quantities
+     */
+    public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final Q[][] grid)
+    {
+        Throw.whenNull(grid, "grid");
+        Throw.when(grid.length != 2 || grid[0].length != 2 || grid[1].length != 2, IllegalArgumentException.class,
+                "grid is not a 2x2 array");
+        double[] dataSi = new double[4];
+        for (int r = 0; r < 2; r++)
+        {
+            for (int c = 0; c < 2; c++)
+            {
+                dataSi[r * 2 + c] = grid[r][c].si();
+            }
+        }
+        return new Matrix2x2<>(dataSi, grid[0][0].getDisplayUnit().getBaseUnit()).setDisplayUnit(grid[0][0].getDisplayUnit());
+    }
+
+    // ------------------------------------------ AS METHODS ------------------------------------------
+
     /**
      * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception
      * when the SI units of this vector and the target vector do not match.
@@ -202,8 +290,7 @@ public class Matrix2x2<Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Matrix2x2<TQ> as(final Unit<?, TQ> targetUnit)
-            throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> Matrix2x2<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix2x2.as(%s) called, but units do not match: %s <> %s", targetUnit,

@@ -51,81 +51,6 @@ public class QuantityTable<Q extends Quantity<Q>>
         this.dataSi = dataSi;
     }
 
-    /**
-     * Create a new NxM QuantityTable with a unit, based on a 1-dimensional double array.
-     * @param valueArrayInUnit the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-     * @param rows the number of rows in the valueArray
-     * @param cols the number of columns in the valueArray
-     * @return a new NxM QuantityTable with a unit
-     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in valueArray is not
-     *             equal to rows*cols
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final double[] valueArrayInUnit, final int rows, final int cols,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(rows <= 0, IllegalArgumentException.class, "rows <= 0");
-        Throw.when(cols <= 0, IllegalArgumentException.class, "cols <= 0");
-        Throw.when(rows * cols != valueArrayInUnit.length, IllegalArgumentException.class,
-                "valueArrayInUnit does not contain the correct number of entries (%d x %d != %d)", rows, cols,
-                valueArrayInUnit.length);
-        double[] aSi = new double[rows * cols];
-        for (int i = 0; i < valueArrayInUnit.length; i++)
-            aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
-        return new QuantityTable<Q>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
-    }
-
-    /**
-     * Create a new NxM QuantityTable with a unit, based on a 2-dimensional double grid.
-     * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, aN2, aNM}} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-     * @param <U> the unit type
-     * @return a new NxM QuantityTable with a unit
-     * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
-     *             equal to the number of columns in another row
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>, U extends Unit<U, Q>> QuantityTable<Q> of(final double[][] valueGridInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(valueGridInUnit, "valueGridInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        int rows = valueGridInUnit.length;
-        Throw.when(rows == 0, IllegalArgumentException.class, "valueGridInUnit has 0 rows");
-        int cols = valueGridInUnit[0].length;
-        Throw.when(cols == 0, IllegalArgumentException.class, "row 0 in valueGridInUnit has 0 columns");
-        double[] aSi = new double[rows * cols];
-        for (int r = 0; r < rows; r++)
-        {
-            Throw.when(valueGridInUnit[r].length != cols, IllegalArgumentException.class,
-                    "valueGridInUnit is not a NxM array; row %d has a length of %d, not %d", r, valueGridInUnit[r].length,
-                    cols);
-            for (int c = 0; c < cols; c++)
-                aSi[cols * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
-        }
-        return new QuantityTable<Q>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
-    }
-
-    /**
-     * Create a new NxM QuantityTable with a unit, based on a 2-dimensional quantity grid.
-     * @param quantityGrid the matrix values {{a11, a12, ..., a1M}, {aN2, ..., aNM}}, each with their own unit
-     * @param displayUnit the display unit to use for the resulting matrix
-     * @param <Q> the quantity type
-     * @return a new NxM QuantityTable with a unit
-     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in quantityGrid is not
-     *             equal to rows*cols
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[][] quantityGrid, final Unit<?, Q> displayUnit)
-    {
-        return new QuantityTable<Q>(new DenseDoubleDataSi(quantityGrid), displayUnit);
-    }
-
     @Override
     public QuantityTable<Q> instantiateSi(final double[] siNew)
     {
@@ -260,7 +185,104 @@ public class QuantityTable<Q extends Quantity<Q>>
         return Objects.equals(this.dataSi, other.dataSi);
     }
 
-    // --------------------------------------- AS() FUNCTIONS ---------------------------------
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create a new QuantityTable with a unit, based on a row-major array with values in the given unit.
+     * @param dataInUnit the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed in the unit
+     * @param unit the unit of the data, also used as the display unit
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @param <Q> the quantity type
+     * @return a new QuantityTable with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final double[] dataInUnit, final Unit<?, Q> unit, final int rows,
+            final int cols)
+    {
+        return new QuantityTable<Q>(DenseDoubleDataSi.of(dataInUnit, unit, rows, cols), unit);
+    }
+
+    /**
+     * Create a QuantityTable without needing generics, based on a row-major array with SI-values.
+     * @param dataSi the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} as an array using SI units
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @param displayUnit the display unit to use
+     * @return a new QuantityTable with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataSi does not contain a square number of values
+     */
+    public static <Q extends Quantity<Q>> QuantityTable<Q> ofSi(final double[] dataSi, final int rows, final int cols,
+            final Unit<?, Q> displayUnit)
+    {
+        return new QuantityTable<Q>(DenseDoubleDataSi.ofSi(dataSi, rows, cols), displayUnit);
+    }
+
+    /**
+     * Create a QuantityTable without needing generics, based on a row-major array of quantities. The unit is taken from the
+     * first quantity in the array.
+     * @param data the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed as an array of quantities
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a new QuantityTable with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when data does not contain a square number of quantities
+     */
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[] data, final int rows, final int cols)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(data.length == 0, IllegalArgumentException.class, "data.length = 0");
+        return new QuantityTable<Q>(DenseDoubleDataSi.of(data, rows, cols), data[0].getDisplayUnit());
+    }
+
+    /**
+     * Create a new QuantityTable with a unit, based on a 2-dimensional grid with SI-values.
+     * @param gridSi the table values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed in the SI or base unit
+     * @param displayUnit the unit of the data, which will also be used as the display unit
+     * @param <Q> the quantity type
+     * @return a new QuantityTable with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> QuantityTable<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(displayUnit, "displayUnit");
+        return new QuantityTable<>(DenseDoubleDataSi.ofSi(gridSi), displayUnit);
+    }
+
+    /**
+     * Create a new QuantityTable with a unit, based on a 2-dimensional grid with values in the given unit.
+     * @param gridInUnit the table values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed in the unit
+     * @param unit the unit of the values, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new QuantityTable with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final double[][] gridInUnit, final Unit<?, Q> unit)
+    {
+        return new QuantityTable<>(DenseDoubleDataSi.of(gridInUnit, unit), unit);
+    }
+
+    /**
+     * Create a QuantityTable without needing generics, based on a 2-dimensional grid of quantities. The unit is taken from the
+     * first quantity in the grid.
+     * @param grid the table values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed as a 2-dimensional array of
+     *            quantities
+     * @return a new QuantityTable with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of quantities
+     */
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[][] grid)
+    {
+        Throw.whenNull(grid, "grid");
+        Throw.when(grid.length == 0 || grid[0].length == 0, IllegalArgumentException.class,
+                "grid.length = 0 or grid[0].length = 0");
+        return new QuantityTable<>(DenseDoubleDataSi.of(grid), grid[0][0].getDisplayUnit());
+    }
+
+    // ------------------------------------------------- AS() METHODS -------------------------------------------------
 
     /**
      * Return the QuantityTable 'as' a QuantityTable with a known quantity, using a unit to express the result in. Throw a

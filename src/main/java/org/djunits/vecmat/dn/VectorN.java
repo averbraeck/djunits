@@ -222,84 +222,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
                     "Column vector initialized with more than one column");
         }
 
-        /**
-         * Create a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data.
-         * @param <Q> the quantity type
-         * @param dataSi the data of the vector, in SI unit.
-         * @param displayUnit the display unit to use
-         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
-         *             is initialized with more than one row
-         * @return a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data
-         */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
-        {
-            return new VectorN.Col<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
-        }
-
-        /**
-         * Create a new column VectorN with a unit, based on a double[] array that contains SI data.
-         * @param <Q> the quantity type
-         * @param dataSi the data of the vector, in SI unit.
-         * @param displayUnit the display unit to use
-         * @return a new column VectorN with a unit, based on a double[] array that contains SI data
-         */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
-        {
-            return new VectorN.Col<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit.getBaseUnit())
-                    .setDisplayUnit(displayUnit);
-        }
-
-        /**
-         * Create a new column VectorN with a unit, based on a double[] array that contains data in the given unit.
-         * @param <Q> the quantity type
-         * @param data the data of the vector, in the given unit.
-         * @param unit the unit of the data
-         * @return a new column VectorN with a unit, based on a double[] array expressed in the given unit
-         */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final double[] data, final Unit<?, Q> unit)
-        {
-            double[] dataSi = new double[data.length];
-            for (int i = 0; i < data.length; i++)
-            {
-                dataSi[i] = unit.toBaseValue(data[i]);
-            }
-            return ofSi(dataSi, unit);
-        }
-
-        /**
-         * Create a new column VectorN with a unit, based on a quantity array that contains data.
-         * @param <Q> the quantity type
-         * @param data the data of the vector, in the given unit.
-         * @param displayUnit the display unit of the vector
-         * @return a new column VectorN with a display unit, based on a quantity array
-         */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final Q[] data, final Unit<?, Q> displayUnit)
-        {
-            double[] dataSi = new double[data.length];
-            for (int i = 0; i < data.length; i++)
-            {
-                dataSi[i] = data[i].si();
-            }
-            return ofSi(dataSi, displayUnit);
-        }
-
-        /**
-         * Create a new column VectorN with a unit, based on a quantity list that contains data.
-         * @param <Q> the quantity type
-         * @param data the data of the vector, in the given unit.
-         * @param displayUnit the display unit of the vector
-         * @return a new column VectorN with a display unit, based on a quantity list
-         */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final List<Q> data, final Unit<?, Q> displayUnit)
-        {
-            double[] dataSi = new double[data.size()];
-            for (int i = 0; i < data.size(); i++)
-            {
-                dataSi[i] = data.get(i).si();
-            }
-            return ofSi(dataSi, displayUnit);
-        }
-
         @Override
         public VectorN.Col<Q> instantiateSi(final double[] data)
         {
@@ -365,6 +287,92 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
         }
+
+        // ------------------------------------------ OF METHODS ------------------------------------------
+
+        /**
+         * Create a new column VectorN with a unit, based on a double[] array that contains data in the given unit.
+         * @param dataInUnit the data of the vector, in the given unit.
+         * @param unit the unit of the data
+         * @return a new column VectorN with a unit, based on a double[] array expressed in the given unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+        {
+            double[] dataSi = new double[dataInUnit.length];
+            for (int i = 0; i < dataInUnit.length; i++)
+            {
+                dataSi[i] = unit.toBaseValue(dataInUnit[i]);
+            }
+            return ofSi(dataSi, unit);
+        }
+
+        /**
+         * Create a new column VectorN with a unit, based on a double[] array that contains SI data.
+         * @param dataSi the data of the vector, in SI unit.
+         * @param displayUnit the display unit to use
+         * @return a new column VectorN with a unit, based on a double[] array that contains SI data
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+        {
+            return new VectorN.Col<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit.getBaseUnit())
+                    .setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a new column VectorN with a unit, based on a quantity array that contains data. The display unit will be taken
+         * from the first quantity in the array.
+         * @param data the data of the vector, in the given unit.
+         * @return a new column VectorN with a display unit, based on a quantity array
+         * @throws IllegalArgumentException when data array length is less than 1
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final Q[] data)
+        {
+            Throw.when(data.length < 1, IllegalArgumentException.class, "data array length < 1");
+            double[] dataSi = new double[data.length];
+            for (int i = 0; i < data.length; i++)
+            {
+                dataSi[i] = data[i].si();
+            }
+            return ofSi(dataSi, data[0].getDisplayUnit());
+        }
+
+        /**
+         * Create a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data.
+         * @param dataSi the data of the vector, in SI unit.
+         * @param displayUnit the display unit to use
+         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
+         *             is initialized with more than one row
+         * @return a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+        {
+            return new VectorN.Col<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a new column VectorN with a unit, based on a quantity list that contains data. The display unit will be taken
+         * from the first quantity in the list.
+         * @param data the data of the vector, in the given unit.
+         * @return a new column VectorN with a display unit, based on a quantity list
+         * @throws IllegalArgumentException when data size is less than 1
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final List<Q> data)
+        {
+            Throw.when(data.size() < 1, IllegalArgumentException.class, "data.size < 1");
+            double[] dataSi = new double[data.size()];
+            for (int i = 0; i < data.size(); i++)
+            {
+                dataSi[i] = data.get(i).si();
+            }
+            return ofSi(dataSi, data.get(0).getDisplayUnit());
+        }
+
+        // ------------------------------------------ AS METHODS ------------------------------------------
 
         /**
          * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
@@ -451,84 +459,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             Throw.when(dataSi.rows() != 1, IllegalArgumentException.class, "Row vector initialized with more than one row");
         }
 
-        /**
-         * Create a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data.
-         * @param <Q> the quantity type
-         * @param dataSi the data of the vector, in SI unit.
-         * @param displayUnit the display unit to use
-         * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
-         *             is initialized with more than one row
-         * @return a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data
-         */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
-        {
-            return new VectorN.Row<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
-        }
-
-        /**
-         * Create a new row VectorN with a unit, based on a double[] array that contains SI data.
-         * @param <Q> the quantity type
-         * @param dataSi the data of the vector, in SI unit.
-         * @param displayUnit the display unit to use
-         * @return a new row VectorN with a unit, based on a double[] array that contains SI data
-         */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
-        {
-            return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), 1, dataSi.length), displayUnit.getBaseUnit())
-                    .setDisplayUnit(displayUnit);
-        }
-
-        /**
-         * Create a new row VectorN with a unit, based on a double[] array that contains data in the given unit.
-         * @param <Q> the quantity type
-         * @param data the data of the vector, in the given unit.
-         * @param unit the unit of the data
-         * @return a new row VectorN with a unit, based on a double[] array expressed in the given unit
-         */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final double[] data, final Unit<?, Q> unit)
-        {
-            double[] dataSi = new double[data.length];
-            for (int i = 0; i < data.length; i++)
-            {
-                dataSi[i] = unit.toBaseValue(data[i]);
-            }
-            return ofSi(dataSi, unit);
-        }
-
-        /**
-         * Create a new row VectorN with a unit, based on a quantity array that contains data.
-         * @param <Q> the quantity type
-         * @param data the data of the vector, in the given unit.
-         * @param displayUnit the display unit of the vector
-         * @return a new row VectorN with a display unit, based on a quantity array
-         */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final Q[] data, final Unit<?, Q> displayUnit)
-        {
-            double[] dataSi = new double[data.length];
-            for (int i = 0; i < data.length; i++)
-            {
-                dataSi[i] = data[i].si();
-            }
-            return ofSi(dataSi, displayUnit);
-        }
-
-        /**
-         * Create a new row VectorN with a unit, based on a quantity list that contains data.
-         * @param <Q> the quantity type
-         * @param data the data of the vector, in the given unit.
-         * @param displayUnit the display unit of the vector
-         * @return a new row VectorN with a display unit, based on a quantity list
-         */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final List<Q> data, final Unit<?, Q> displayUnit)
-        {
-            double[] dataSi = new double[data.size()];
-            for (int i = 0; i < data.size(); i++)
-            {
-                dataSi[i] = data.get(i).si();
-            }
-            return ofSi(dataSi, displayUnit);
-        }
-
         @Override
         public boolean isColumnVector()
         {
@@ -593,6 +523,92 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
         }
+
+        // ------------------------------------------ OF METHODS ------------------------------------------
+
+        /**
+         * Create a new row VectorN with a unit, based on a double[] array that contains data in the given unit.
+         * @param dataInUnit the data of the vector, in the given unit.
+         * @param unit the unit of the data
+         * @return a new row VectorN with a unit, based on a double[] array expressed in the given unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+        {
+            double[] dataSi = new double[dataInUnit.length];
+            for (int i = 0; i < dataInUnit.length; i++)
+            {
+                dataSi[i] = unit.toBaseValue(dataInUnit[i]);
+            }
+            return ofSi(dataSi, unit);
+        }
+
+        /**
+         * Create a new row VectorN with a unit, based on a double[] array that contains SI data.
+         * @param dataSi the data of the vector, in SI unit.
+         * @param displayUnit the display unit to use
+         * @return a new row VectorN with a unit, based on a double[] array that contains SI data
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+        {
+            return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit.getBaseUnit())
+                    .setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a new row VectorN with a unit, based on a quantity array that contains data. The display unit will be taken
+         * from the first quantity in the array.
+         * @param data the data of the vector, in the given unit.
+         * @return a new row VectorN with a display unit, based on a quantity array
+         * @throws IllegalArgumentException when data array length is less than 1
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final Q[] data)
+        {
+            Throw.when(data.length < 1, IllegalArgumentException.class, "data array length < 1");
+            double[] dataSi = new double[data.length];
+            for (int i = 0; i < data.length; i++)
+            {
+                dataSi[i] = data[i].si();
+            }
+            return ofSi(dataSi, data[0].getDisplayUnit());
+        }
+
+        /**
+         * Create a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data.
+         * @param dataSi the data of the vector, in SI unit.
+         * @param displayUnit the display unit to use
+         * @throws IllegalArgumentException when the number of rows or rows does not have a positive value or when the vector is
+         *             initialized with more than one row
+         * @return a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+        {
+            return new VectorN.Row<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a new row VectorN with a unit, based on a quantity list that contains data. The display unit will be taken
+         * from the first quantity in the list.
+         * @param data the data of the vector, in the given unit.
+         * @return a new row VectorN with a display unit, based on a quantity list
+         * @throws IllegalArgumentException when data size is less than 1
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final List<Q> data)
+        {
+            Throw.when(data.size() < 1, IllegalArgumentException.class, "data.size < 1");
+            double[] dataSi = new double[data.size()];
+            for (int i = 0; i < data.size(); i++)
+            {
+                dataSi[i] = data.get(i).si();
+            }
+            return ofSi(dataSi, data.get(0).getDisplayUnit());
+        }
+
+        // ------------------------------------------ AS METHODS ------------------------------------------
 
         /**
          * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime

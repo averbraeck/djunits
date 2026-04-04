@@ -36,51 +36,6 @@ public class Matrix3x3<Q extends Quantity<Q>>
         super(arrayInUnit, displayUnit, 3);
     }
 
-    /**
-     * Create a new Matrix3x3 with a unit, based on a 1-dimensional array.
-     * <p>
-     * <strong>Implementation Note:</strong> the condition is also checked by super() but the fail fast approach is used here
-     * @param arrayInUnit the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-
-     * @return a new Matrix3x3 with a unit
-     * @throws IllegalArgumentException when valueArray does not contain 3x3 = 9 values
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[] arrayInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(arrayInUnit, "arrayInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(arrayInUnit.length != 9, IllegalArgumentException.class, "Length of array != 9 but %d", arrayInUnit.length);
-        return new Matrix3x3<Q>(arrayInUnit, displayUnit);
-    }
-
-    /**
-     * Create a new Matrix3x3 with a unit, based on a 2-dimensional grid.
-     * @param gridInUnit the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-
-     * @return a new Matrix3x3 with a unit
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[][] gridInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(gridInUnit, "gridInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        double[] aInUnit = new double[9];
-        Throw.when(
-                gridInUnit.length != 3 || gridInUnit[0].length != 3 || gridInUnit[1].length != 3 || gridInUnit[2].length != 3,
-                IllegalArgumentException.class, "gridInUnit is not a 3x3 array");
-        for (int r = 0; r < 3; r++)
-            for (int c = 0; c < 3; c++)
-                aInUnit[3 * r + c] = gridInUnit[r][c];
-        return new Matrix3x3<Q>(aInUnit, displayUnit);
-    }
-
     @Override
     public Matrix3x3<Q> instantiateSi(final double[] siNew)
     {
@@ -167,7 +122,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
         return new Matrix3x3<SIQuantity>(ArrayMath.divide(si(), other.si()), siUnit);
     }
 
-    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
+    // ------------------------------ MATRIX MULTIPLICATION -----------------------------------
 
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.
@@ -201,6 +156,138 @@ public class Matrix3x3<Q extends Quantity<Q>>
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
         return new Matrix3x3<SIQuantity>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
     }
+
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create a new Matrix3x3 with a unit, based on a row-major array with values in the given unit.
+     * @param dataInUnit the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed in the unit
+     * @param unit the unit of the data, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new Matrix3x3 with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 values
+     */
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        Throw.whenNull(unit, "unit");
+        Throw.when(dataInUnit.length != 9, IllegalArgumentException.class, "Length of array != 9 but %d", dataInUnit.length);
+        return new Matrix3x3<Q>(dataInUnit, unit);
+    }
+
+    /**
+     * Create a Matrix3x3 without needing generics, based on a row-major array with SI-values.
+     * @param dataSi the matrix values {a11, a12, 13, ..., a31, a32, a33} as an array using SI units
+     * @param displayUnit the display unit to use
+     * @return a new Matrix3x3 with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataSi does not contain 3x3 = 9 values
+     */
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(dataSi, "dataSi");
+        Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(dataSi.length != 9, IllegalArgumentException.class, "Length of dataSi != 9 but %d", dataSi.length);
+        return new Matrix3x3<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+    }
+
+    /**
+     * Create a Matrix3x3 without needing generics, based on a row-major array of quantities. The unit is taken from the first
+     * quantity in the array.
+     * @param data the matrix values {a11, a12, 13, ..., a31, a32, a33} expressed as an array of quantities
+     * @return a new Matrix3x3 with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when data does not contain 3x3 = 9 quantities
+     */
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final Q[] data)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(data.length != 9, IllegalArgumentException.class, "Length of data != 9 but %d", data.length);
+        double[] dataSi = new double[9];
+        for (int i = 0; i < 9; i++)
+        {
+            dataSi[i] = data[i].si();
+        }
+        return new Matrix3x3<>(dataSi, data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
+    }
+
+    /**
+     * Create a new Matrix3x3 with a unit, based on a 2-dimensional grid with SI-values.
+     * @param gridSi the matrix values {{a11, a12, 13}, ..., {a31, a32, a33}} expressed in the SI or base unit
+     * @param displayUnit the unit of the data, which will also be used as the display unit
+     * @param <Q> the quantity type
+     * @return a new Matrix3x3 with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(gridSi, "gridSi");
+        Throw.whenNull(displayUnit, "displayUnit");
+        Throw.when(gridSi.length != 3 || gridSi[0].length != 3 || gridSi[1].length != 3, IllegalArgumentException.class,
+                "grid is not a 3x3 array");
+        double[] dataSi = new double[9];
+        for (int r = 0; r < 3; r++)
+        {
+            for (int c = 0; c < 3; c++)
+            {
+                dataSi[r * 3 + c] = gridSi[r][c];
+            }
+        }
+        return new Matrix3x3<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+    }
+
+    /**
+     * Create a new Matrix3x3 with a unit, based on a 2-dimensional grid with values in the given unit.
+     * @param gridInUnit the matrix values {{a11, a12, 13}, ..., {a31, a32, a33}} expressed in the unit
+     * @param unit the unit of the values, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new Matrix3x3 with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[][] gridInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(gridInUnit, "gridInUnit");
+        Throw.whenNull(unit, "unit");
+        Throw.when(gridInUnit.length != 3 || gridInUnit[0].length != 3 || gridInUnit[1].length != 3,
+                IllegalArgumentException.class, "gridInUnit is not a 3x3 array");
+        double[] dataInUnit = new double[9];
+        for (int r = 0; r < 3; r++)
+        {
+            for (int c = 0; c < 3; c++)
+            {
+                dataInUnit[r * 3 + c] = gridInUnit[r][c];
+            }
+        }
+        return new Matrix3x3<>(dataInUnit, unit);
+    }
+
+    /**
+     * Create a Matrix3x3 without needing generics, based on a 2-dimensional grid of quantities. The unit is taken from the
+     * first quantity in the grid.
+     * @param grid the matrix values {{a11, a12, 13}, ..., {a31, a32, a33}} expressed as a 2-dimensional array of quantities
+     * @return a new Matrix3x3 with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 quantities
+     */
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final Q[][] grid)
+    {
+        Throw.whenNull(grid, "grid");
+        Throw.when(grid.length != 3 || grid[0].length != 3 || grid[1].length != 3, IllegalArgumentException.class,
+                "grid is not a 3x3 array");
+        double[] dataSi = new double[9];
+        for (int r = 0; r < 3; r++)
+        {
+            for (int c = 0; c < 3; c++)
+            {
+                dataSi[r * 3 + c] = grid[r][c].si();
+            }
+        }
+        return new Matrix3x3<>(dataSi, grid[0][0].getDisplayUnit().getBaseUnit()).setDisplayUnit(grid[0][0].getDisplayUnit());
+    }
+
+    // ------------------------------------------ AS METHODS ------------------------------------------
 
     /**
      * Return the matrix 'as' a matrix with a known quantity, using a unit to express the result in. Throw a Runtime exception

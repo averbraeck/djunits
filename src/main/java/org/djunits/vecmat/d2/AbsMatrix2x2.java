@@ -3,6 +3,7 @@ package org.djunits.vecmat.d2;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsSquareMatrix;
 
 /**
@@ -67,5 +68,39 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     {
         return new AbsVector2.Col<>(getRelativeVecMat().getDiagonalVector(), getReference());
     }
+
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Return a new 2x2 matrix with the given SI or BASE values for the relative vector or matrix.
+     * @param dataSi a row-major array with SI values relative to the reference point
+     * @param displayUnit the display unit to use for the matrix
+     * @param reference the reference point for the relative SI values
+     * @return a new matrix with the provided SI or BASE values
+     * @param <A> the absolute quantity type
+     * @param <Q> the corresponding relative quantity type
+     */
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> AbsMatrix2x2<A, Q> ofSi(final double[] dataSi,
+            final Unit<?, Q> displayUnit, final AbstractReference<?, A, Q> reference)
+    {
+        return of(Matrix2x2.ofSi(dataSi, displayUnit), reference);
+    }
+
+    /**
+     * Return a new 2x2 matrix with the given SI or BASE values for the relative vector or matrix.
+     * @param relativeMatrix the underlying relative matrix with SI values relative to the reference point
+     * @param reference the reference point for the relative SI values
+     * @return a new matrix with the provided SI or BASE values
+     * @param <A> the absolute quantity type
+     * @param <Q> the corresponding relative quantity type
+     */
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> AbsMatrix2x2<A, Q> of(
+            final Matrix2x2<Q> relativeMatrix, final AbstractReference<?, A, Q> reference)
+    {
+        return new AbsMatrix2x2<>(relativeMatrix, reference);
+    }
+    
+    // ------------------------------------------ AS METHODS ------------------------------------------
+
 
 }

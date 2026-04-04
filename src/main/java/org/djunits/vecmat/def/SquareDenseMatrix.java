@@ -21,9 +21,9 @@ import org.djutils.exceptions.Throw;
  * @param <SI> the square dense matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic square dense matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class SquareDenseMatrix<Q extends Quantity<Q>,
-        M extends SquareDenseMatrix<Q, M, SI, H>, SI extends SquareDenseMatrix<SIQuantity, SI, ?, ?>,
-        H extends SquareDenseMatrix<?, ?, ?, ?>> extends SquareMatrix<Q, M, SI, H>
+public abstract class SquareDenseMatrix<Q extends Quantity<Q>, M extends SquareDenseMatrix<Q, M, SI, H>,
+        SI extends SquareDenseMatrix<SIQuantity, SI, ?, ?>, H extends SquareDenseMatrix<?, ?, ?, ?>>
+        extends SquareMatrix<Q, M, SI, H>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -36,19 +36,19 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q>,
 
     /**
      * Create a new SquareDenseMatrix with a unit.
-     * @param dataInUnit the matrix values {a11, a12, ..., a21, a22, ...} expressed in the display unit
-     * @param displayUnit the display unit to use
+     * @param dataInUnit the matrix values {a11, a12, ..., a21, a22, ...} expressed in the unit
+     * @param unit the unit to use
      * @param order the order of the square matrix (number of rows/columns)
      */
-    protected SquareDenseMatrix(final double[] dataInUnit, final Unit<?, Q> displayUnit, final int order)
+    protected SquareDenseMatrix(final double[] dataInUnit, final Unit<?, Q> unit, final int order)
     {
-        super(displayUnit);
+        super(unit);
         Throw.when(dataInUnit.length != order * order, IllegalArgumentException.class,
                 "SquareDenseMatrix initialized with %d values instead of %d", dataInUnit.length, order * order);
         this.dataSi = new double[dataInUnit.length];
         for (int i = 0; i < this.dataSi.length; i++)
         {
-            this.dataSi[i] = displayUnit.toBaseValue(dataInUnit[i]);
+            this.dataSi[i] = unit.toBaseValue(dataInUnit[i]);
         }
         this.order = order;
     }

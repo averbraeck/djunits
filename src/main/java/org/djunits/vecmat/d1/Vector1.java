@@ -59,18 +59,6 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
         return instantiateSi(siNew[0]);
     }
 
-    /**
-     * Create a Vector1 without needing generics.
-     * @param xInUnit the x-value expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @return a new Vector1 with a unit
-     * @param <Q> the quantity type
-     */
-    public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit, final Unit<?, Q> displayUnit)
-    {
-        return new Vector1<>(xInUnit, displayUnit);
-    }
-
     @Override
     public int size()
     {
@@ -271,6 +259,76 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
         return x().isRelative();
     }
 
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create a Vector1 without needing generics.
+     * @param xInUnit the x-value expressed in the unit
+     * @param unit the unit of the data, which will also be used as the display unit
+     * @return a new Vector1 with a unit
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit, final Unit<?, Q> unit)
+    {
+        return new Vector1<>(xInUnit, unit);
+    }
+
+    /**
+     * Create a Vector1 without needing generics.
+     * @param data the x-value expressed as a quantity
+     * @return a new Vector1 with a unit
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final Q data)
+    {
+        Throw.whenNull(data, "data");
+        return new Vector1<>(data.si(), data.getDisplayUnit().getBaseUnit()).setDisplayUnit(data.getDisplayUnit());
+    }
+
+    /**
+     * Create a Vector1 without needing generics.
+     * @param dataInUnit the x-value expressed as an array in the display unit
+     * @param unit the unit of the data, which will also be used as the display unit
+     * @return a new Vector1 with a unit
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        Throw.when(dataInUnit.length != 1, IllegalArgumentException.class, "Length of dataInUnit != 1 but %d",
+                dataInUnit.length);
+        return new Vector1<>(dataInUnit[0], unit);
+    }
+
+    /**
+     * Create a Vector1 without needing generics.
+     * @param dataSi the x-value expressed as an array in the SI units
+     * @param displayUnit the display unit to use
+     * @return a new Vector1 with a unit
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(dataSi, "dataSi");
+        Throw.when(dataSi.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", dataSi.length);
+        return new Vector1<>(dataSi[0], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+    }
+
+    /**
+     * Create a Vector1 without needing generics.
+     * @param data the x-value expressed as an array of quantities
+     * @return a new Vector1 with a unit
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final Q[] data)
+    {
+        Throw.whenNull(data, "dataSi");
+        Throw.when(data.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", data.length);
+        return new Vector1<>(data[0].si(), data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
+    }
+
+    // ------------------------------------------ AS METHODS ------------------------------------------
+
     /**
      * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime exception
      * when the SI units of this vector and the target vector do not match.
@@ -286,6 +344,8 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new Vector1<TQ>(xSi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
+
+    // ---------------------------------- HASHCODE, EQUALS, TOSTRING ----------------------------------
 
     @Override
     public int hashCode()

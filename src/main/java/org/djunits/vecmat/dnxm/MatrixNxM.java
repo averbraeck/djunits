@@ -80,51 +80,6 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         return new MatrixNxM<Q>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
     }
 
-    /**
-     * Create a new MatrixNxM with a unit, based on a 2-dimensional double grid.
-     * @param valueGridInUnit the matrix values {{a11, a12, a1M}, ..., {aN1, aN2, aNM}} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-     * @return a new MatrixNxM with a unit
-     * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
-     *             equal to the number of columns in another row
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[][] valueGridInUnit, final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(valueGridInUnit, "valueGridInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        int rows = valueGridInUnit.length;
-        Throw.when(rows == 0, IllegalArgumentException.class, "valueGridInUnit has 0 rows");
-        int cols = valueGridInUnit[0].length;
-        Throw.when(cols == 0, IllegalArgumentException.class, "row 0 in valueGridInUnit has 0 columns");
-        double[] aSi = new double[rows * cols];
-        for (int r = 0; r < rows; r++)
-        {
-            Throw.when(valueGridInUnit[r].length != cols, IllegalArgumentException.class,
-                    "valueGridInUnit is not a NxM array; row %d has a length of %d, not %d", r, valueGridInUnit[r].length,
-                    cols);
-            for (int c = 0; c < cols; c++)
-                aSi[cols * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
-        }
-        return new MatrixNxM<Q>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
-    }
-
-    /**
-     * Create a new MatrixNxM with a unit, based on a 2-dimensional quantity grid.
-     * @param quantityGrid the matrix values {{a11, a12, ..., a1M}, {aN2, ..., aNM}}, each with their own unit
-     * @param displayUnit the display unit to use for the resulting matrix
-     * @param <Q> the quantity type
-     * @return a new MatrixNxM with a unit
-     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in quantityGrid is not
-     *             equal to rows*cols
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final Q[][] quantityGrid, final Unit<?, Q> displayUnit)
-    {
-        return new MatrixNxM<Q>(new DenseDoubleDataSi(quantityGrid), displayUnit);
-    }
-
     @Override
     public MatrixNxM<Q> instantiateSi(final double[] siNew)
     {
@@ -389,6 +344,103 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
+    }
+
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create a new MatrixNxM with a unit, based on a row-major array with values in the given unit.
+     * @param dataInUnit the matrix values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed in the unit
+     * @param unit the unit of the data, also used as the display unit
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @param <Q> the quantity type
+     * @return a new MatrixNxM with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[] dataInUnit, final Unit<?, Q> unit, final int rows,
+            final int cols)
+    {
+        return new MatrixNxM<Q>(DenseDoubleDataSi.of(dataInUnit, unit, rows, cols), unit);
+    }
+
+    /**
+     * Create a MatrixNxM without needing generics, based on a row-major array with SI-values.
+     * @param dataSi the matrix values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} as an array using SI units
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @param displayUnit the display unit to use
+     * @return a new MatrixNxM with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataSi does not contain a square number of values
+     */
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> ofSi(final double[] dataSi, final int rows, final int cols,
+            final Unit<?, Q> displayUnit)
+    {
+        return new MatrixNxM<Q>(DenseDoubleDataSi.ofSi(dataSi, rows, cols), displayUnit);
+    }
+
+    /**
+     * Create a MatrixNxM without needing generics, based on a row-major array of quantities. The unit is taken from the first
+     * quantity in the array.
+     * @param data the matrix values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed as an array of quantities
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a new MatrixNxM with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when data does not contain a square number of quantities
+     */
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final Q[] data, final int rows, final int cols)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(data.length == 0, IllegalArgumentException.class, "data.length = 0");
+        return new MatrixNxM<Q>(DenseDoubleDataSi.of(data, rows, cols), data[0].getDisplayUnit());
+    }
+
+    /**
+     * Create a new MatrixNxM with a unit, based on a 2-dimensional grid with SI-values.
+     * @param gridSi the matrix values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed in the SI or base unit
+     * @param displayUnit the unit of the data, which will also be used as the display unit
+     * @param <Q> the quantity type
+     * @return a new MatrixNxM with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(displayUnit, "displayUnit");
+        return new MatrixNxM<>(DenseDoubleDataSi.ofSi(gridSi), displayUnit);
+    }
+
+    /**
+     * Create a new MatrixNxM with a unit, based on a 2-dimensional grid with values in the given unit.
+     * @param gridInUnit the matrix values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed in the unit
+     * @param unit the unit of the values, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new MatrixNxM with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[][] gridInUnit, final Unit<?, Q> unit)
+    {
+        return new MatrixNxM<>(DenseDoubleDataSi.of(gridInUnit, unit), unit);
+    }
+
+    /**
+     * Create a MatrixNxM without needing generics, based on a 2-dimensional grid of quantities. The unit is taken from the
+     * first quantity in the grid.
+     * @param grid the matrix values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed as a 2-dimensional array of
+     *            quantities
+     * @return a new MatrixNxM with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of quantities
+     */
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final Q[][] grid)
+    {
+        Throw.whenNull(grid, "grid");
+        Throw.when(grid.length == 0 || grid[0].length == 0, IllegalArgumentException.class,
+                "grid.length = 0 or grid[0].length = 0");
+        return new MatrixNxM<>(DenseDoubleDataSi.of(grid), grid[0][0].getDisplayUnit());
     }
 
     // ------------------------------------------------- AS() METHODS -------------------------------------------------

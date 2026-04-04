@@ -373,21 +373,6 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
             super(xInUnit, yInUnit, zInUnit, displayUnit);
         }
 
-        /**
-         * Create a Vector3 column vector without needing generics.
-         * @param xInUnit the x-value expressed in the display unit
-         * @param yInUnit the y-value expressed in the display unit
-         * @param zInUnit the z-value expressed in the display unit
-         * @param displayUnit the display unit to use
-         * @return a new Vector3 with a unit
-         * @param <Q> the quantity type
-         */
-        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final double xInUnit, final double yInUnit,
-                final double zInUnit, final Unit<?, Q> displayUnit)
-        {
-            return new Vector3.Col<>(xInUnit, yInUnit, zInUnit, displayUnit);
-        }
-
         @Override
         public boolean isColumnVector()
         {
@@ -465,6 +450,86 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
             return new Vector3.Col<SIQuantity>(xSi() * quantity.si(), ySi() * quantity.si(), zSi() * quantity.si(), siUnit);
         }
 
+        // ------------------------------------------ OF METHODS ------------------------------------------
+
+        /**
+         * Create a Vector3.Col without needing generics.
+         * @param xInUnit the x-value expressed in the unit
+         * @param yInUnit the y-value expressed in the unit
+         * @param zInUnit the z-value expressed in the unit
+         * @param unit the unit of the data, which will also be used as the display unit
+         * @return a new Vector3.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final double xInUnit, final double yInUnit,
+                final double zInUnit, final Unit<?, Q> unit)
+        {
+            return new Vector3.Col<>(xInUnit, yInUnit, zInUnit, unit);
+        }
+
+        /**
+         * Create a Vector3.Col without needing generics. The display unit will be taken from the x-quantity.
+         * @param x the x-value expressed as a quantity
+         * @param y the y-value expressed as a quantity
+         * @param z the z-value expressed as a quantity
+         * @return a new Vector3.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final Q x, final Q y, final Q z)
+        {
+            Throw.whenNull(x, "x");
+            Throw.whenNull(y, "y");
+            Throw.whenNull(z, "z");
+            return new Vector3.Col<>(x.si(), y.si(), z.si(), x.getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(x.getDisplayUnit());
+        }
+
+        /**
+         * Create a Vector3.Col without needing generics.
+         * @param dataInUnit the vector entries expressed as an array in the display unit
+         * @param unit the unit of the data, which will also be used as the display unit
+         * @return a new Vector3.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+        {
+            Throw.whenNull(dataInUnit, "dataInUnit");
+            Throw.when(dataInUnit.length != 3, IllegalArgumentException.class, "Length of dataInUnit != 3 but %d",
+                    dataInUnit.length);
+            return new Vector3.Col<>(dataInUnit[0], dataInUnit[1], dataInUnit[2], unit);
+        }
+
+        /**
+         * Create a Vector3.Col without needing generics.
+         * @param dataSi the vector entries expressed as an array in the SI units
+         * @param displayUnit the display unit to use
+         * @return a new Vector3.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+        {
+            Throw.whenNull(dataSi, "dataSi");
+            Throw.whenNull(displayUnit, "displayUnit");
+            Throw.when(dataSi.length != 3, IllegalArgumentException.class, "Length of dataSi != 3 but %d", dataSi.length);
+            return new Vector3.Col<>(dataSi[0], dataSi[1], dataSi[2], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a Vector3.Col without needing generics. The display unit will be taken from the first quantity in the array.
+         * @param data the vector entries expressed as an array of quantities
+         * @return a new Vector3.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final Q[] data)
+        {
+            Throw.whenNull(data, "dataSi");
+            Throw.when(data.length != 3, IllegalArgumentException.class, "Length of dataSi != 3 but %d", data.length);
+            return new Vector3.Col<>(data[0].si(), data[1].si(), data[2].si(), data[0].getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(data[0].getDisplayUnit());
+        }
+
+        // ------------------------------------------ AS METHODS ------------------------------------------
+
         /**
          * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime
          * exception when the SI units of this vector and the target vector do not match.
@@ -509,21 +574,6 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         public Row(final double xSi, final double ySi, final double zSi, final Unit<?, Q> displayUnit)
         {
             super(xSi, ySi, zSi, displayUnit);
-        }
-
-        /**
-         * Create a Vector3 row vector without needing generics.
-         * @param xInUnit the x-value expressed in the display unit
-         * @param yInUnit the y-value expressed in the display unit
-         * @param zInUnit the z-value expressed in the display unit
-         * @param displayUnit the display unit to use
-         * @return a new Vector3 with a unit
-         * @param <Q> the quantity type
-         */
-        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final double xInUnit, final double yInUnit,
-                final double zInUnit, final Unit<?, Q> displayUnit)
-        {
-            return new Vector3.Row<>(xInUnit, yInUnit, zInUnit, displayUnit);
         }
 
         @Override
@@ -614,6 +664,86 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
             return new Vector3.Row<SIQuantity>(xSi() * quantity.si(), ySi() * quantity.si(), zSi() * quantity.si(), siUnit);
         }
+
+        // ------------------------------------------ OF METHODS ------------------------------------------
+
+        /**
+         * Create a Vector3.Row without needing generics.
+         * @param xInUnit the x-value expressed in the unit
+         * @param yInUnit the y-value expressed in the unit
+         * @param zInUnit the z-value expressed in the unit
+         * @param unit the unit of the data, which will also be used as the display unit
+         * @return a new Vector3.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final double xInUnit, final double yInUnit,
+                final double zInUnit, final Unit<?, Q> unit)
+        {
+            return new Vector3.Row<>(xInUnit, yInUnit, zInUnit, unit);
+        }
+
+        /**
+         * Create a Vector3.Row without needing generics. The display unit will be taken from the x-quantity.
+         * @param x the x-value expressed as a quantity
+         * @param y the y-value expressed as a quantity
+         * @param z the z-value expressed as a quantity
+         * @return a new Vector3.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final Q x, final Q y, final Q z)
+        {
+            Throw.whenNull(x, "x");
+            Throw.whenNull(y, "y");
+            Throw.whenNull(z, "z");
+            return new Vector3.Row<>(x.si(), y.si(), z.si(), x.getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(x.getDisplayUnit());
+        }
+
+        /**
+         * Create a Vector3.Row without needing generics.
+         * @param dataInUnit the vector entries expressed as an array in the display unit
+         * @param unit the unit of the data, which will also be used as the display unit
+         * @return a new Vector3.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+        {
+            Throw.whenNull(dataInUnit, "dataInUnit");
+            Throw.when(dataInUnit.length != 3, IllegalArgumentException.class, "Length of dataInUnit != 3 but %d",
+                    dataInUnit.length);
+            return new Vector3.Row<>(dataInUnit[0], dataInUnit[1], dataInUnit[2], unit);
+        }
+
+        /**
+         * Create a Vector3.Row without needing generics.
+         * @param dataSi the vector entries expressed as an array in the SI units
+         * @param displayUnit the display unit to use
+         * @return a new Vector3.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+        {
+            Throw.whenNull(dataSi, "dataSi");
+            Throw.whenNull(displayUnit, "displayUnit");
+            Throw.when(dataSi.length != 3, IllegalArgumentException.class, "Length of dataSi != 3 but %d", dataSi.length);
+            return new Vector3.Row<>(dataSi[0], dataSi[1], dataSi[2], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a Vector3.Row without needing generics. The display unit will be taken from the first quantity in the array.
+         * @param data the vector entries expressed as an array of quantities
+         * @return a new Vector3.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final Q[] data)
+        {
+            Throw.whenNull(data, "dataSi");
+            Throw.when(data.length != 3, IllegalArgumentException.class, "Length of dataSi != 3 but %d", data.length);
+            return new Vector3.Row<>(data[0].si(), data[1].si(), data[2].si(), data[0].getDisplayUnit().getBaseUnit())
+                    .setDisplayUnit(data[0].getDisplayUnit());
+        }
+
+        // ------------------------------------------ AS METHODS ------------------------------------------
 
         /**
          * Return the vector 'as' a vector with a known quantity, using a unit to express the result in. Throw a Runtime

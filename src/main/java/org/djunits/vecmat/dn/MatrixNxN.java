@@ -27,8 +27,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  */
-public class MatrixNxN<Q extends Quantity<Q>>
-        extends SquareMatrix<Q, MatrixNxN<Q>, MatrixNxN<SIQuantity>, MatrixNxN<?>>
+public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<Q>, MatrixNxN<SIQuantity>, MatrixNxN<?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -48,65 +47,6 @@ public class MatrixNxN<Q extends Quantity<Q>>
         Throw.whenNull(dataSi, "dataSi");
         Throw.when(dataSi.rows() != dataSi.cols(), IllegalArgumentException.class, "Data for the NxN matrix is not square");
         this.dataSi = dataSi;
-    }
-
-    /**
-     * Create a new MatrixNxN with a unit, based on a 1-dimensional array.
-     * @param valueArrayInUnit the matrix values {a11, a12, ..., aN1, aN32, ..., aNN} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-
-     * @return a new MatrixNxN with a unit
-     * @throws IllegalArgumentException when the number of entries in the valueArray is not a perfect square
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[] valueArrayInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        int len = valueArrayInUnit.length;
-        // This check works for any (positive) int. The largest perfect square fitting in an int is 46340^2 = 2,147,395,600,
-        // slightly below Integer.MAX_VALUE = 2,147,483,647. All integers up to that value have square roots <= 46340, which
-        // easily fit in the IEEE 754 double mantissa (53 bits), so perfect squares have exact square roots in double.
-        // Therefore, (int) Math.sqrt(n) is guaranteed correct for any 32-bit integer when checking perfect squares. The
-        // complexity of this check is O(1).
-        int n = (int) Math.sqrt(len);
-        Throw.when(len != n * n, IllegalArgumentException.class,
-                "valueArrayInUnit does not contain a square number of entries (%d)", len);
-        double[] aSi = new double[valueArrayInUnit.length];
-        for (int i = 0; i < valueArrayInUnit.length; i++)
-            aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
-        return new MatrixNxN<Q>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
-    }
-
-    /**
-     * Create a new MatrixNxN with a unit, based on a 2-dimensional grid.
-     * @param valueGridInUnit the matrix values {{a11, a12, a13}, ..., {a31, a32, a33}} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-
-     * @return a new MatrixNxN with a unit
-     * @throws IllegalArgumentException when valueGrid has 0 rows, or when the number of columns for one of the rows is not
-     *             equal to the number of rows
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[][] valueGridInUnit,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(valueGridInUnit, "valueGridInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        int n = valueGridInUnit.length;
-        Throw.when(n == 0, IllegalArgumentException.class, "valueGridInUnit has 0 rows");
-        double[] aSi = new double[n * n];
-        for (int r = 0; r < valueGridInUnit.length; r++)
-        {
-            Throw.when(valueGridInUnit[r].length != n, IllegalArgumentException.class,
-                    "valueGridInUnit is not a NxN array; row %d has a length of %d, not %d", r, valueGridInUnit[r].length, n);
-            for (int c = 0; c < n; c++)
-                aSi[n * r + c] = displayUnit.toBaseValue(valueGridInUnit[r][c]);
-        }
-        return new MatrixNxN<Q>(new DenseDoubleDataSi(aSi, n, n), displayUnit);
     }
 
     @Override
@@ -227,8 +167,7 @@ public class MatrixNxN<Q extends Quantity<Q>>
     public MatrixNxN<SIQuantity> adjugate()
     {
         double[] invData = MatrixMath.adjugate(si(), order());
-        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(invData),
-                getDisplayUnit().siUnit().pow(order() - 1));
+        return new MatrixNxN<SIQuantity>(this.dataSi.instantiateNew(invData), getDisplayUnit().siUnit().pow(order() - 1));
     }
 
     @Override
@@ -279,7 +218,7 @@ public class MatrixNxN<Q extends Quantity<Q>>
         return Objects.equals(this.dataSi, other.dataSi);
     }
 
-    // ------------------------------ MATRIX MULTIPLICATION AND AS() --------------------------
+    // ------------------------------ MATRIX MULTIPLICATION ----------------------------------
 
     /**
      * Multiply this matrix with another matrix using matrix multiplication and return the result.
@@ -315,6 +254,116 @@ public class MatrixNxN<Q extends Quantity<Q>>
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
         return VectorN.Col.ofSi(resultData, resultUnit);
     }
+
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Check if the length if the row-major matrix is a square.
+     * @param length of the array to check
+     * @return square root of the length
+     * @throws IllegalArgumentException when length is not a square
+     */
+    protected static int checkSquare(final int length)
+    {
+        int n = (int) Math.sqrt(length);
+        Throw.when(length != n * n, IllegalArgumentException.class,
+                "dataInUnit does not contain a square number of entries (%d)", length);
+        return n;
+    }
+
+    /**
+     * Create a new MatrixNxN with a unit, based on a row-major array with values in the given unit.
+     * @param dataInUnit the matrix values {a11, a12, 13, ..., aN1, aN2, ..., aNN} expressed in the unit
+     * @param unit the unit of the data, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new MatrixNxN with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        int n = checkSquare(dataInUnit.length);
+        return new MatrixNxN<Q>(DenseDoubleDataSi.of(dataInUnit, unit, n, n), unit);
+    }
+
+    /**
+     * Create a MatrixNxN without needing generics, based on a row-major array with SI-values.
+     * @param dataSi the matrix values {a11, a12, 13, ..., aN1, aN2, ..., aNN} as an array using SI units
+     * @param displayUnit the display unit to use
+     * @return a new MatrixNxN with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataSi does not contain a square number of values
+     */
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(dataSi, "dataSi");
+        int n = checkSquare(dataSi.length);
+        return new MatrixNxN<Q>(DenseDoubleDataSi.ofSi(dataSi, n, n), displayUnit);
+    }
+
+    /**
+     * Create a MatrixNxN without needing generics, based on a row-major array of quantities. The unit is taken from the first
+     * quantity in the array.
+     * @param data the matrix values {a11, a12, 13, ..., aN1, aN2, ..., aNN} expressed as an array of quantities
+     * @return a new MatrixNxN with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when data does not contain a square number of quantities
+     */
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final Q[] data)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(data.length == 0, IllegalArgumentException.class, "data.length = 0");
+        int n = checkSquare(data.length);
+        return new MatrixNxN<Q>(DenseDoubleDataSi.of(data, n, n), data[0].getDisplayUnit());
+    }
+
+    /**
+     * Create a new MatrixNxN with a unit, based on a 2-dimensional grid with SI-values.
+     * @param gridSi the matrix values {a11, a12, ..., a1N}, ..., {aN1, aN2, ..., aNN}} expressed in the SI or base unit
+     * @param displayUnit the unit of the data, which will also be used as the display unit
+     * @param <Q> the quantity type
+     * @return a new MatrixNxN with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(displayUnit, "displayUnit");
+        return new MatrixNxN<>(DenseDoubleDataSi.ofSi(gridSi), displayUnit);
+    }
+
+    /**
+     * Create a new MatrixNxN with a unit, based on a 2-dimensional grid with values in the given unit.
+     * @param gridInUnit the matrix values {a11, a12, ..., a1N}, ..., {aN1, aN2, ..., aNN}} expressed in the unit
+     * @param unit the unit of the values, also used as the display unit
+     * @param <Q> the quantity type
+     * @return a new MatrixNxN with a unit
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final double[][] gridInUnit, final Unit<?, Q> unit)
+    {
+        return new MatrixNxN<>(DenseDoubleDataSi.of(gridInUnit, unit), unit);
+    }
+
+    /**
+     * Create a MatrixNxN without needing generics, based on a 2-dimensional grid of quantities. The unit is taken from the
+     * first quantity in the grid.
+     * @param grid the matrix values {a11, a12, ..., a1N}, ..., {aN1, aN2, ..., aNN}} expressed as a 2-dimensional array of
+     *            quantities
+     * @return a new MatrixNxN with a unit
+     * @param <Q> the quantity type
+     * @throws IllegalArgumentException when dataInUnit does not contain a square number of quantities
+     */
+    public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final Q[][] grid)
+    {
+        Throw.whenNull(grid, "grid");
+        Throw.when(grid.length == 0 || grid[0].length == 0, IllegalArgumentException.class,
+                "grid.length = 0 or grid[0].length = 0");
+        return new MatrixNxN<>(DenseDoubleDataSi.of(grid), grid[0][0].getDisplayUnit());
+    }
+
+    // ------------------------------------------ AS METHODS ------------------------------------------
 
     /**
      * Return the matrix "as" a matrix with a known quantity, using a unit to express the result in.
