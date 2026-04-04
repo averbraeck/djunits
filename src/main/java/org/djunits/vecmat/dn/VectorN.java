@@ -552,7 +552,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          */
         public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
         {
-            return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit.getBaseUnit())
+            return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), 1, dataSi.length), displayUnit.getBaseUnit())
                     .setDisplayUnit(displayUnit);
         }
 
