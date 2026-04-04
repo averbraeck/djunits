@@ -37,60 +37,32 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     private static final long serialVersionUID = 600L;
 
     /** The data of the table, in SI unit. */
-    private final DataGridSi<?> dataSi;
+    private final DataGridSi<?> dataGridSi;
 
     /**
      * Create a new NxM Matrix with a unit, based on a DataGrid storage object that contains SI data.
-     * @param dataSi the data of the matrix, in SI unit.
+     * @param dataGridSi the data of the matrix, in SI unit.
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    public MatrixNxM(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+    public MatrixNxM(final DataGridSi<?> dataGridSi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
-        Throw.whenNull(dataSi, "dataSi");
-        this.dataSi = dataSi;
-    }
-
-    /**
-     * Create a new MatrixNxM with a unit, based on a 1-dimensional double array.
-     * @param valueArrayInUnit the matrix values {a11, a12, ..., a1M, aN2, ..., aNM} expressed in the display unit
-     * @param displayUnit the display unit to use
-     * @param <Q> the quantity type
-     * @param rows the number of rows in the valueArray
-     * @param cols the number of columns in the valueArray
-     * @return a new MatrixNxM with a unit
-     * @throws IllegalArgumentException when rows or cols is not positive, or when the number of entries in valueArray is not
-     *             equal to rows*cols
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[] valueArrayInUnit, final int rows, final int cols,
-            final Unit<?, Q> displayUnit)
-    {
-        Throw.whenNull(valueArrayInUnit, "valueArrayInUnit");
-        Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(rows <= 0, IllegalArgumentException.class, "rows <= 0");
-        Throw.when(cols <= 0, IllegalArgumentException.class, "cols <= 0");
-        Throw.when(rows * cols != valueArrayInUnit.length, IllegalArgumentException.class,
-                "valueArrayInUnit does not contain the correct number of entries (%d x %d != %d)", rows, cols,
-                valueArrayInUnit.length);
-        double[] aSi = new double[rows * cols];
-        for (int i = 0; i < valueArrayInUnit.length; i++)
-            aSi[i] = displayUnit.toBaseValue(valueArrayInUnit[i]);
-        return new MatrixNxM<Q>(new DenseDoubleDataSi(aSi, rows, cols), displayUnit);
+        Throw.whenNull(dataGridSi, "dataGridSi");
+        this.dataGridSi = dataGridSi;
     }
 
     @Override
     public MatrixNxM<Q> instantiateSi(final double[] siNew)
     {
-        return new MatrixNxM<Q>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
+        return new MatrixNxM<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public MatrixNxM<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
     {
-        return new MatrixNxM<SIQuantity>(this.dataSi.instantiateNew(siNew), siUnit);
+        return new MatrixNxM<SIQuantity>(this.dataGridSi.instantiateNew(siNew), siUnit);
     }
 
     /**
@@ -99,13 +71,13 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      */
     public DataGridSi<?> getDataGrid()
     {
-        return this.dataSi;
+        return this.dataGridSi;
     }
 
     @Override
     public double[] si()
     {
-        return this.dataSi.getDataArray();
+        return this.dataGridSi.getDataArray();
     }
 
     @Override
@@ -113,7 +85,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     {
         checkRow(row);
         checkCol(col);
-        return this.dataSi.get(row, col);
+        return this.dataGridSi.get(row, col);
     }
 
     @Override
@@ -144,32 +116,32 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public double[] getRowSi(final int row)
     {
         checkRow(row);
-        return this.dataSi.getRowArray(row);
+        return this.dataGridSi.getRowArray(row);
     }
 
     @Override
     public double[] getColumnSi(final int col)
     {
         checkCol(col);
-        return this.dataSi.getColArray(col);
+        return this.dataGridSi.getColArray(col);
     }
 
     @Override
     public int rows()
     {
-        return this.dataSi.rows();
+        return this.dataGridSi.rows();
     }
 
     @Override
     public int cols()
     {
-        return this.dataSi.cols();
+        return this.dataGridSi.cols();
     }
 
     @Override
     public int nonZeroCount()
     {
-        return this.dataSi.nonZeroCount();
+        return this.dataGridSi.nonZeroCount();
     }
 
     /**
@@ -189,13 +161,13 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
                 newSi[c * rows + r] = data[r * cols + c];
-        return new MatrixNxM<Q>(this.dataSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
+        return new MatrixNxM<Q>(this.dataGridSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.dataSi);
+        return Objects.hash(this.dataGridSi);
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -209,7 +181,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         if (getClass() != obj.getClass())
             return false;
         MatrixNxM<?> other = (MatrixNxM<?>) obj;
-        return Objects.equals(this.dataSi, other.dataSi);
+        return Objects.equals(this.dataGridSi, other.dataGridSi);
     }
 
     // ---------------------------------------------- MULTIPLY() METHODS ----------------------------------------------
@@ -351,17 +323,17 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     /**
      * Create a new MatrixNxM with a unit, based on a row-major array with values in the given unit.
      * @param dataInUnit the matrix values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed in the unit
-     * @param unit the unit of the data, also used as the display unit
      * @param rows the number of rows
      * @param cols the number of columns
+     * @param unit the unit of the data, also used as the display unit
      * @param <Q> the quantity type
      * @return a new MatrixNxM with a unit
      * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
      */
-    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[] dataInUnit, final Unit<?, Q> unit, final int rows,
-            final int cols)
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[] dataInUnit, final int rows,
+            final int cols, final Unit<?, Q> unit)
     {
-        return new MatrixNxM<Q>(DenseDoubleDataSi.of(dataInUnit, unit, rows, cols), unit);
+        return new MatrixNxM<Q>(DenseDoubleDataSi.of(dataInUnit, rows, cols, unit), unit);
     }
 
     /**
@@ -458,7 +430,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxM.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxM<TQ>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new MatrixNxM<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**

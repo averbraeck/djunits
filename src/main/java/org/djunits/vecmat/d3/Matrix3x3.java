@@ -28,12 +28,12 @@ public class Matrix3x3<Q extends Quantity<Q>>
 
     /**
      * Create a new Matrix3x3 with a unit.
-     * @param arrayInUnit the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the display unit
-     * @param displayUnit the display unit to use
+     * @param dataInUnit the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the unit
+     * @param unit the unit of the data, also functions as display unit for the matrix
      */
-    protected Matrix3x3(final double[] arrayInUnit, final Unit<?, Q> displayUnit)
+    protected Matrix3x3(final double[] dataInUnit, final Unit<?, Q> unit)
     {
-        super(arrayInUnit, displayUnit, 3);
+        super(dataInUnit, unit, 3);
     }
 
     @Override

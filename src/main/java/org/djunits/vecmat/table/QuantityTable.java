@@ -36,32 +36,32 @@ public class QuantityTable<Q extends Quantity<Q>>
     private static final long serialVersionUID = 600L;
 
     /** The data of the table, in SI unit. */
-    private final DataGridSi<?> dataSi;
+    private final DataGridSi<?> dataGridSi;
 
     /**
      * Create a new NxM QuantityTable with a unit, based on a DataGrid storage object. This constructor assumes dataSi stores SI
      * values. Note: NO safe copy is made.
-     * @param dataSi the data of the matrix, in SI unit.
+     * @param dataGridSi the data of the matrix, in SI unit.
      * @param displayUnit the display unit to use
      */
-    public QuantityTable(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+    public QuantityTable(final DataGridSi<?> dataGridSi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
-        Throw.whenNull(dataSi, "dataSi");
-        this.dataSi = dataSi;
+        Throw.whenNull(dataGridSi, "dataGridSi");
+        this.dataGridSi = dataGridSi;
     }
 
     @Override
     public QuantityTable<Q> instantiateSi(final double[] siNew)
     {
-        return new QuantityTable<Q>(this.dataSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
+        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public QuantityTable<SIQuantity> instantiateSi(final double[] siNew, final SIUnit siUnit)
     {
-        return new QuantityTable<SIQuantity>(this.dataSi.instantiateNew(siNew), siUnit);
+        return new QuantityTable<SIQuantity>(this.dataGridSi.instantiateNew(siNew), siUnit);
     }
 
     /**
@@ -70,13 +70,13 @@ public class QuantityTable<Q extends Quantity<Q>>
      */
     public DataGridSi<?> getDataGrid()
     {
-        return this.dataSi;
+        return this.dataGridSi;
     }
 
     @Override
     public double[] si()
     {
-        return this.dataSi.getDataArray();
+        return this.dataGridSi.getDataArray();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         checkRow(row);
         checkCol(col);
-        return this.dataSi.get(row, col);
+        return this.dataGridSi.get(row, col);
     }
 
     @Override
@@ -115,32 +115,32 @@ public class QuantityTable<Q extends Quantity<Q>>
     public double[] getRowSi(final int row)
     {
         checkRow(row);
-        return this.dataSi.getRowArray(row);
+        return this.dataGridSi.getRowArray(row);
     }
 
     @Override
     public double[] getColumnSi(final int col)
     {
         checkCol(col);
-        return this.dataSi.getColArray(col);
+        return this.dataGridSi.getColArray(col);
     }
 
     @Override
     public int rows()
     {
-        return this.dataSi.rows();
+        return this.dataGridSi.rows();
     }
 
     @Override
     public int cols()
     {
-        return this.dataSi.cols();
+        return this.dataGridSi.cols();
     }
 
     @Override
     public int nonZeroCount()
     {
-        return this.dataSi.nonZeroCount();
+        return this.dataGridSi.nonZeroCount();
     }
 
     /**
@@ -160,7 +160,7 @@ public class QuantityTable<Q extends Quantity<Q>>
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
                 newSi[c * rows + r] = data[r * cols + c];
-        return new QuantityTable<Q>(this.dataSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
+        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
     }
 
     // --------------------------------------- EQUALS AND HASHCODE ---------------------------------
@@ -168,7 +168,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.dataSi);
+        return Objects.hash(this.dataGridSi);
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -182,7 +182,7 @@ public class QuantityTable<Q extends Quantity<Q>>
         if (getClass() != obj.getClass())
             return false;
         QuantityTable<?> other = (QuantityTable<?>) obj;
-        return Objects.equals(this.dataSi, other.dataSi);
+        return Objects.equals(this.dataGridSi, other.dataGridSi);
     }
 
     // ------------------------------------------ OF METHODS ------------------------------------------
@@ -190,17 +190,17 @@ public class QuantityTable<Q extends Quantity<Q>>
     /**
      * Create a new QuantityTable with a unit, based on a row-major array with values in the given unit.
      * @param dataInUnit the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed in the unit
-     * @param unit the unit of the data, also used as the display unit
      * @param rows the number of rows
      * @param cols the number of columns
+     * @param unit the unit of the data, also used as the display unit
      * @param <Q> the quantity type
      * @return a new QuantityTable with a unit
      * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
      */
-    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final double[] dataInUnit, final Unit<?, Q> unit, final int rows,
-            final int cols)
+    public static <Q extends Quantity<Q>> QuantityTable<Q> of(final double[] dataInUnit, final int rows,
+            final int cols, final Unit<?, Q> unit)
     {
-        return new QuantityTable<Q>(DenseDoubleDataSi.of(dataInUnit, unit, rows, cols), unit);
+        return new QuantityTable<Q>(DenseDoubleDataSi.of(dataInUnit, rows, cols, unit), unit);
     }
 
     /**
@@ -297,7 +297,7 @@ public class QuantityTable<Q extends Quantity<Q>>
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new QuantityTable<TQ>(this.dataSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new QuantityTable<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
     }
 
     /**

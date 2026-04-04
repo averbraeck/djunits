@@ -27,12 +27,12 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
 
     /**
      * Create a new Matrix2x2 with a unit.
-     * @param arrayInUnit the matrix values {a11, a12, a21, a22} expressed in the displayUnit
-     * @param displayUnit the display unit to use
+     * @param dataInUnit the matrix values {a11, a12, a21, a22} expressed in the unit
+     * @param unit the unit of the data, also functions as display unit for the matrix
      */
-    protected Matrix2x2(final double[] arrayInUnit, final Unit<?, Q> displayUnit)
+    protected Matrix2x2(final double[] dataInUnit, final Unit<?, Q> unit)
     {
-        super(arrayInUnit, displayUnit, 2);
+        super(dataInUnit, unit, 2);
     }
 
     @Override

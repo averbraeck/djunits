@@ -31,7 +31,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     /**
      * Create a new Matrix1x1 with a unit.
      * @param dataInUnit the matrix values {a11} expressed in the unit
-     * @param unit the unit of the data, which will also be used as the display unit
+     * @param unit the unit of the data, also functions as display unit for the matrix
      */
     protected Matrix1x1(final double[] dataInUnit, final Unit<?, Q> unit)
     {
