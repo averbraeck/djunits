@@ -204,11 +204,11 @@ public final class VectorNTest
         assertEquals(3000.0, v1.si()[1], 1E-6);
 
         var q2 = new Length[] {Length.of(1.0, "km"), Length.of(3.0, "km"), Length.of(5.0, "km")};
-        var v2 = VectorN.Col.of(q2, Length.Unit.km);
+        var v2 = VectorN.Col.of(q2);
         assertEquals(3000.0, v2.si()[1], 1E-6);
 
         List<Length> l3 = Arrays.asList(q2);
-        var v3 = VectorN.Col.of(l3, Length.Unit.km);
+        var v3 = VectorN.Col.of(l3);
         assertEquals(3000.0, v3.si()[1], 1E-6);
 
         var dsi = new double[] {1, 2, 3, 4};
@@ -230,11 +230,11 @@ public final class VectorNTest
         assertEquals(3000.0, v1.si()[1], 1E-6);
 
         var q2 = new Length[] {Length.of(1.0, "km"), Length.of(3.0, "km"), Length.of(5.0, "km")};
-        var v2 = VectorN.Row.of(q2, Length.Unit.km);
+        var v2 = VectorN.Row.of(q2);
         assertEquals(3000.0, v2.si()[1], 1E-6);
 
         List<Length> l3 = Arrays.asList(q2);
-        var v3 = VectorN.Row.of(l3, Length.Unit.km);
+        var v3 = VectorN.Row.of(l3);
         assertEquals(3000.0, v3.si()[1], 1E-6);
 
         var dsi = new double[] {1, 2, 3, 4};

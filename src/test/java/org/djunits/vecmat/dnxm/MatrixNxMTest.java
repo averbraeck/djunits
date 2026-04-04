@@ -108,7 +108,7 @@ public class MatrixNxMTest
     public void testFactoryQuantityGrid()
     {
         Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
-        MatrixNxM<Length> m = MatrixNxM.of(q, Length.Unit.m);
+        MatrixNxM<Length> m = MatrixNxM.of(q).setDisplayUnit(Length.Unit.m);
         assertArrayEquals(new double[] {1000.0, 200.0}, m.si(), EPS);
         assertEquals(1, m.rows());
         assertEquals(2, m.cols());

@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for {@link DenseDoubleDataSi}.
  * <p>
- * This test class verifies the functional behavior of {@link DenseDoubleDataSi} and the default methods in the {@link DataGridSi}
- * interface:
+ * This test class verifies the functional behavior of {@link DenseDoubleDataSi} and the default methods in the
+ * {@link DataGridSi} interface:
  * <ul>
  * <li>Constructors: double[], double[][], and Q[][] (SI values)</li>
  * <li>Accessors: {@code rows()}, {@code cols()}, {@code get(int,int)}, {@code getDataArray()}</li>
@@ -280,20 +280,20 @@ public class DenseDoubleDataSiTest
     public void testCtor2DArrayValidationCopyingAndOrder()
     {
         // Null -> NPE (from Throw.whenNull)
-        assertThrows(NullPointerException.class, () -> new DenseDoubleDataSi((double[][]) null));
+        assertThrows(NullPointerException.class, () -> DenseDoubleDataSi.ofSi((double[][]) null));
 
         // Empty outer array -> IAE
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new double[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.ofSi(new double[][] {}));
 
         // Ragged array -> should throw exactly IllegalArgumentException (not a subclass)
         double[][] ragged = new double[][] {{1.0, 2.0}, {3.0}};
-        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(ragged));
+        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.ofSi(ragged));
         assertEquals(IllegalArgumentException.class, raggedEx.getClass(),
                 "Ragged rows must throw exactly IllegalArgumentException (format bug would cause a different type)");
 
         // Happy path; verify safe copy and row-major
         double[][] m = new double[][] {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}};
-        DenseDoubleDataSi d = new DenseDoubleDataSi(m);
+        DenseDoubleDataSi d = DenseDoubleDataSi.ofSi(m);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
 
@@ -315,21 +315,21 @@ public class DenseDoubleDataSiTest
     public void testCtorQuantity2DArraySIConversion()
     {
         // Null -> NPE
-        assertThrows(NullPointerException.class, () -> new DenseDoubleDataSi((Length[][]) null));
+        assertThrows(NullPointerException.class, () -> DenseDoubleDataSi.of((Length[][]) null));
 
         // Empty -> IAE
-        assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(new Length[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.of(new Length[][] {}));
 
         // Ragged -> should throw exactly IllegalArgumentException (not a subclass)
         Length[][] ragged = new Length[][] {{new Length(1.0, Length.Unit.m)}, {}};
-        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> new DenseDoubleDataSi(ragged));
+        Exception raggedEx = assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.of(ragged));
         assertEquals(IllegalArgumentException.class, raggedEx.getClass(),
                 "Ragged rows must throw exactly IllegalArgumentException (format bug would cause a different type)");
 
         // Happy path with mixed units; SI values are meters
         Length[][] l = new Length[][] {{new Length(1.0, Length.Unit.km), new Length(2.0, Length.Unit.m)},
                 {new Length(3.0, Length.Unit.cm), new Length(4.0, Length.Unit.mm)}};
-        DenseDoubleDataSi d = new DenseDoubleDataSi(l);
+        DenseDoubleDataSi d = DenseDoubleDataSi.of(l);
 
         // Expected SI (meters): [1000.0, 2.0, 0.03, 0.004]
         double[] expected = new double[] {1000.0, 2.0, 0.03, 0.004};

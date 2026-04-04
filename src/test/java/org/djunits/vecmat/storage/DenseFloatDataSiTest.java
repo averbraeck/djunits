@@ -293,18 +293,18 @@ public class DenseFloatDataSiTest
     @DisplayName("ctor(float[][]): validation, safe copy, row-major, ragged detection")
     public void testCtor2DFloatArray()
     {
-        assertThrows(NullPointerException.class, () -> new DenseFloatDataSi((float[][]) null));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new float[][] {}));
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.ofSi((float[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new float[][] {}));
 
         // Ragged rows -> must throw exactly IllegalArgumentException
         float[][] ragged = new float[][] {{1f, 2f}, {3f}};
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(ragged));
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(ragged));
         assertEquals(IllegalArgumentException.class, ex.getClass(),
                 "Expected IAE; formatting bug in code would produce different exception");
 
         // Valid safe-copy
         float[][] arr = new float[][] {{1f, 2f, 3f}, {4f, 5f, 6f}};
-        DenseFloatDataSi d = new DenseFloatDataSi(arr);
+        DenseFloatDataSi d = DenseFloatDataSi.ofSi(arr);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
         assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, d.getDataArray(), 1e-12);
@@ -321,18 +321,18 @@ public class DenseFloatDataSiTest
     @DisplayName("ctor(Q[][]): SI conversion, safe copy, ragged detection")
     public void testCtorQuantityArray()
     {
-        assertThrows(NullPointerException.class, () -> new DenseFloatDataSi((Length[][]) null));
-        assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(new Length[][] {}));
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((Length[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new Length[][] {}));
 
         // Ragged rows must throw exactly IAE
         Length[][] ragged = new Length[][] {{new Length(1, Length.Unit.m)}, {}};
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> new DenseFloatDataSi(ragged));
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(ragged));
         assertEquals(IllegalArgumentException.class, ex.getClass());
 
         // Valid mixed-unit input
         Length[][] q = new Length[][] {{new Length(1.0, Length.Unit.km), new Length(1.0, Length.Unit.m)},
                 {new Length(2.0, Length.Unit.cm), new Length(3.0, Length.Unit.mm)}};
-        DenseFloatDataSi d = new DenseFloatDataSi(q);
+        DenseFloatDataSi d = DenseFloatDataSi.of(q);
 
         // Expected SI values (float-cast): 1000.0, 1.0, 0.02, 0.003
         assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);

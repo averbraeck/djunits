@@ -160,10 +160,10 @@ public class MatrixNxNTest
     @DisplayName("MatrixNxN constructor")
     public void testConstructor()
     {
-        var dataSi = new DenseDoubleDataSi(new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+        var dataSi = DenseDoubleDataSi.ofSi(new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
         assertThrows(IllegalArgumentException.class, () -> new MatrixNxN<>(dataSi, Length.Unit.m));
 
-        var dataSi2x2 = new DenseDoubleDataSi(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+        var dataSi2x2 = DenseDoubleDataSi.ofSi(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
         var mat = new MatrixNxN<>(dataSi2x2, Length.Unit.m);
         assertEquals(4.0, mat.msi(2, 2));
     }
