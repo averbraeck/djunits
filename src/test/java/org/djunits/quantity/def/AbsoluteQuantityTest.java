@@ -31,17 +31,15 @@ import org.junit.jupiter.api.Test;
  * <strong>Goals and coverage:</strong>
  * <ul>
  * <li>Reference-aware comparisons and {@link Comparable} rules</li>
- * <li>Reference transformations via {@link AbsQuantity#relativeTo(AbstractReference)}</li>
- * <li>Parsing helpers: {@link AbsQuantity#valueOf(String, AbsQuantity, AbstractReference)} and
- * {@link AbsQuantity#of(double, String, AbsQuantity, AbstractReference)}</li>
+ * <li>Reference transformations via {@link AbsQuantity#relativeTo(Reference)}</li>
+ * <li>Parsing helpers: {@link AbsQuantity#valueOf(String, AbsQuantity, Reference)} and
+ * {@link AbsQuantity#of(double, String, AbsQuantity, Reference)}</li>
  * <li>Stringification and SI-prefix formatting</li>
  * <li>Static helpers: {@link AbsQuantity#interpolate(AbsQuantity, AbsQuantity, double)},
- * {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])},
- * {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])},
- * {@link AbsQuantity#sum(AbsQuantity, AbsQuantity[])},
- * {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])}</li>
- * <li>Arithmetic with relative quantities: {@link AbsQuantity#add(Quantity)} and
- * {@link AbsQuantity#subtract(Quantity)} and {@link AbsQuantity#subtract(AbsQuantity)}</li>
+ * {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])}, {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])},
+ * {@link AbsQuantity#sum(AbsQuantity, AbsQuantity[])}, {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])}</li>
+ * <li>Arithmetic with relative quantities: {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} and
+ * {@link AbsQuantity#subtract(AbsQuantity)}</li>
  * <li>{@code equals}/{@code hashCode} contract</li>
  * </ul>
  * <p>
@@ -52,10 +50,10 @@ import org.junit.jupiter.api.Test;
  * formatting/parsing behavior; the original locale is restored afterwards.
  * <p>
  * <strong>Reference registry hygiene:</strong> Each created {@link org.djunits.quantity.Position.Reference} is
- * {@link AbstractReference#unregister() unregistered} in {@link #cleanup()} to avoid cross-test pollution of the static
- * per-class registry. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All
- * rights reserved. See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The
- * DJUNITS project is distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style
+ * {@link Reference#unregister() unregistered} in {@link #cleanup()} to avoid cross-test pollution of the static per-class
+ * registry. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights
+ * reserved. See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS
+ * project is distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style
  * license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
@@ -142,8 +140,8 @@ public class AbsoluteQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies that the constructor of {@link Position} (as a representative of {@link AbsQuantity}) rejects {@code null}
-     * for either the relative quantity or the reference.
+     * Verifies that the constructor of {@link Position} (as a representative of {@link AbsQuantity}) rejects {@code null} for
+     * either the relative quantity or the reference.
      */
     @Test
     void constructorNulls()
@@ -153,9 +151,8 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies that {@link AbsQuantity#getDisplayUnit()} and
-     * {@link AbsQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate correctly to the inner relative quantity and that
-     * the setter is fluent.
+     * Verifies that {@link AbsQuantity#getDisplayUnit()} and {@link AbsQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate
+     * correctly to the inner relative quantity and that the setter is fluent.
      */
     @Test
     void displayUnitAccessors()
@@ -259,8 +256,8 @@ public class AbsoluteQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies successful parsing via {@link AbsQuantity#valueOf(String, AbsQuantity, AbstractReference)} and error
-     * branches for {@code null} parameters, empty text, and unknown units.
+     * Verifies successful parsing via {@link AbsQuantity#valueOf(String, AbsQuantity, Reference)} and error branches for
+     * {@code null} parameters, empty text, and unknown units.
      */
     @Test
     void valueOfParses()
@@ -278,8 +275,8 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies successful parsing via {@link AbsQuantity#of(double, String, AbsQuantity, AbstractReference)} and
-     * error branches for {@code null} parameters, empty unit string, and unknown units.
+     * Verifies successful parsing via {@link AbsQuantity#of(double, String, AbsQuantity, Reference)} and error branches for
+     * {@code null} parameters, empty unit string, and unknown units.
      */
     @Test
     void ofParses()
@@ -301,7 +298,7 @@ public class AbsoluteQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#relativeTo(AbstractReference)} for:
+     * Verifies {@link AbsQuantity#relativeTo(Reference)} for:
      * <ul>
      * <li>identity transform (same reference)</li>
      * <li>direct parent/child transform (A ⇄ B)</li>
@@ -352,8 +349,8 @@ public class AbsoluteQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#format(double)} and {@link AbsQuantity#format(double, String)} paths: fixed format
-     * range and E-notation range.
+     * Verifies {@link AbsQuantity#format(double)} and {@link AbsQuantity#format(double, String)} paths: fixed format range and
+     * E-notation range.
      */
     @Test
     void formatVariants()
@@ -365,8 +362,8 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies {@link AbsQuantity#toString()} variants, ensuring that when {@code withUnit=true} the reference id is
-     * appended as " (refId)" and that the verbose flag adds the "Abs " prefix.
+     * Verifies {@link AbsQuantity#toString()} variants, ensuring that when {@code withUnit=true} the reference id is appended
+     * as " (refId)" and that the verbose flag adds the "Abs " prefix.
      */
     @Test
     void toStringVariants()
@@ -388,8 +385,8 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies that {@link AbsQuantity#toStringSIPrefixed()} delegates to the inner relative quantity and produces a
-     * sensible SI prefix when possible.
+     * Verifies that {@link AbsQuantity#toStringSIPrefixed()} delegates to the inner relative quantity and produces a sensible
+     * SI prefix when possible.
      */
     @Test
     void toStringSIPrefixed()
@@ -431,8 +428,8 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} adjust the inner relative
-     * quantity while preserving the absolute reference and the display unit.
+     * Verifies {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} adjust the inner relative quantity
+     * while preserving the absolute reference and the display unit.
      */
     @Test
     void addSubtractRelative()
@@ -479,9 +476,8 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])} and
-     * {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])} for identical references and that mixing references
-     * raises an {@link IllegalArgumentException}.
+     * Verifies {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])} and {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])} for
+     * identical references and that mixing references raises an {@link IllegalArgumentException}.
      */
     @Test
     void maxMin()
@@ -498,9 +494,9 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Verifies {@link AbsQuantity#sum(AbsQuantity, AbsQuantity[])} and
-     * {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])} for identical references, and ensures that the
-     * reference and display unit of the first argument are preserved. Mixing references must throw.
+     * Verifies {@link AbsQuantity#sum(AbsQuantity, AbsQuantity[])} and {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])} for
+     * identical references, and ensures that the reference and display unit of the first argument are preserved. Mixing
+     * references must throw.
      */
     @Test
     void sumMean()
@@ -737,8 +733,7 @@ public class AbsoluteQuantityTest
             {
                 return new AbsoluteExampleQuantityAQxyz(quantity, this);
             }
-            
-            
+
         }
     }
 }
