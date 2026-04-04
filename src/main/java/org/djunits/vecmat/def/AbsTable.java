@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 
 import org.djunits.formatter.Format;
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 
@@ -33,7 +33,7 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
      * @param matrix the underlying relative matrix with SI values relative to the reference point
      * @param reference the reference point for the absolute values
      */
-    public AbsTable(final MQ matrix, final AbstractReference<?, A, Q> reference)
+    public AbsTable(final MQ matrix, final Reference<?, A, Q> reference)
     {
         super(matrix, reference);
     }

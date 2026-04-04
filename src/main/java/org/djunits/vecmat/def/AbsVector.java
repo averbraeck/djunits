@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djutils.exceptions.Throw;
@@ -35,7 +35,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      * @param vector the underlying relative vector with SI values relative to the reference point
      * @param reference the reference point for the absolute values
      */
-    public AbsVector(final VQ vector, final AbstractReference<?, A, Q> reference)
+    public AbsVector(final VQ vector, final Reference<?, A, Q> reference)
     {
         super(vector, reference);
     }

@@ -1,7 +1,7 @@
 package org.djunits.vecmat.d2;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsSquareMatrix;
@@ -28,13 +28,13 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param relativeMatrix the matrix values {a11} expressed in the displayUnit
      * @param reference the reference point for the absolute values
      */
-    public AbsMatrix2x2(final Matrix2x2<Q> relativeMatrix, final AbstractReference<?, A, Q> reference)
+    public AbsMatrix2x2(final Matrix2x2<Q> relativeMatrix, final Reference<?, A, Q> reference)
     {
         super(relativeMatrix, reference);
     }
 
     @Override
-    public AbsMatrix2x2<A, Q> instantiate(final Matrix2x2<Q> relativeMatrix, final AbstractReference<?, A, Q> reference)
+    public AbsMatrix2x2<A, Q> instantiate(final Matrix2x2<Q> relativeMatrix, final Reference<?, A, Q> reference)
     {
         return new AbsMatrix2x2<>(relativeMatrix, reference);
     }
@@ -81,7 +81,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the corresponding relative quantity type
      */
     public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> AbsMatrix2x2<A, Q> ofSi(final double[] dataSi,
-            final Unit<?, Q> displayUnit, final AbstractReference<?, A, Q> reference)
+            final Unit<?, Q> displayUnit, final Reference<?, A, Q> reference)
     {
         return of(Matrix2x2.ofSi(dataSi, displayUnit), reference);
     }
@@ -95,7 +95,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the corresponding relative quantity type
      */
     public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> AbsMatrix2x2<A, Q> of(
-            final Matrix2x2<Q> relativeMatrix, final AbstractReference<?, A, Q> reference)
+            final Matrix2x2<Q> relativeMatrix, final Reference<?, A, Q> reference)
     {
         return new AbsMatrix2x2<>(relativeMatrix, reference);
     }

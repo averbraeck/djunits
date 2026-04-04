@@ -1,7 +1,7 @@
 package org.djunits.vecmat.d3;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.vecmat.def.AbsVector;
 
@@ -32,7 +32,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param relativeVector the vector with values relative to the reference point
      * @param reference the reference point for the absolute values
      */
-    public AbsVector3(final VQ relativeVector, final AbstractReference<?, A, Q> reference)
+    public AbsVector3(final VQ relativeVector, final Reference<?, A, Q> reference)
     {
         super(relativeVector, reference);
     }
@@ -58,14 +58,14 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Row(final Vector3.Row<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+        public Row(final Vector3.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
         public AbsVector3.Row<A, Q> instantiate(final Vector3.Row<Q> relativeVector,
-                final AbstractReference<?, A, Q> reference)
+                final Reference<?, A, Q> reference)
         {
             return new AbsVector3.Row<>(relativeVector, reference);
         }
@@ -98,14 +98,14 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Col(final Vector3.Col<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+        public Col(final Vector3.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
         public AbsVector3.Col<A, Q> instantiate(final Vector3.Col<Q> relativeVector,
-                final AbstractReference<?, A, Q> reference)
+                final Reference<?, A, Q> reference)
         {
             return new AbsVector3.Col<>(relativeVector, reference);
         }

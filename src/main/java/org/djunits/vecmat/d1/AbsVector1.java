@@ -1,7 +1,7 @@
 package org.djunits.vecmat.d1;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.vecmat.def.AbsVector;
 
@@ -28,13 +28,13 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param relativeVector the vector with values relative to the reference point
      * @param reference the reference point for the absolute values
      */
-    public AbsVector1(final Vector1<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+    public AbsVector1(final Vector1<Q> relativeVector, final Reference<?, A, Q> reference)
     {
         super(relativeVector, reference);
     }
 
     @Override
-    public AbsVector1<A, Q> instantiate(final Vector1<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+    public AbsVector1<A, Q> instantiate(final Vector1<Q> relativeVector, final Reference<?, A, Q> reference)
     {
         return new AbsVector1<>(relativeVector, reference);
     }

@@ -1,7 +1,7 @@
 package org.djunits.vecmat.d2;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.vecmat.def.AbsVector;
 
@@ -32,7 +32,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param relativeVector the vector with values relative to the reference point
      * @param reference the reference point for the absolute values
      */
-    public AbsVector2(final VQ relativeVector, final AbstractReference<?, A, Q> reference)
+    public AbsVector2(final VQ relativeVector, final Reference<?, A, Q> reference)
     {
         super(relativeVector, reference);
     }
@@ -58,13 +58,13 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Row(final Vector2.Row<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+        public Row(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
-        public AbsVector2.Row<A, Q> instantiate(final Vector2.Row<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+        public AbsVector2.Row<A, Q> instantiate(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             return new AbsVector2.Row<>(relativeVector, reference);
         }
@@ -97,13 +97,13 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Col(final Vector2.Col<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+        public Col(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
-        public AbsVector2.Col<A, Q> instantiate(final Vector2.Col<Q> relativeVector, final AbstractReference<?, A, Q> reference)
+        public AbsVector2.Col<A, Q> instantiate(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             return new AbsVector2.Col<>(relativeVector, reference);
         }

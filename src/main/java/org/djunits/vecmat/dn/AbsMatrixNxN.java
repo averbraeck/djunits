@@ -1,7 +1,7 @@
 package org.djunits.vecmat.dn;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.vecmat.def.AbsSquareMatrix;
 
@@ -27,13 +27,13 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param relativeMatrix the matrix values {a_ij} expressed in the displayUnit
      * @param reference the reference point for the absolute values
      */
-    public AbsMatrixNxN(final MatrixNxN<Q> relativeMatrix, final AbstractReference<?, A, Q> reference)
+    public AbsMatrixNxN(final MatrixNxN<Q> relativeMatrix, final Reference<?, A, Q> reference)
     {
         super(relativeMatrix, reference);
     }
 
     @Override
-    public AbsMatrixNxN<A, Q> instantiate(final MatrixNxN<Q> relativeMatrix, final AbstractReference<?, A, Q> reference)
+    public AbsMatrixNxN<A, Q> instantiate(final MatrixNxN<Q> relativeMatrix, final Reference<?, A, Q> reference)
     {
         return new AbsMatrixNxN<>(relativeMatrix, reference);
     }

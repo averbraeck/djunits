@@ -1,7 +1,7 @@
 package org.djunits.vecmat.def;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.util.ArrayMath;
@@ -32,14 +32,14 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     private final VMQ relativeVecMat;
 
     /** The reference point for the absolute values. */
-    private final AbstractReference<?, A, Q> reference;
+    private final Reference<?, A, Q> reference;
 
     /**
      * Create a new vector or matrix of absolute values with a reference point.
      * @param relativeVecMat the underlying relative vector or matrix with SI values relative to the reference point
      * @param reference the reference point for the absolute values
      */
-    public AbsVectorMatrix(final VMQ relativeVecMat, final AbstractReference<?, A, Q> reference)
+    public AbsVectorMatrix(final VMQ relativeVecMat, final Reference<?, A, Q> reference)
     {
         Throw.whenNull(relativeVecMat, "relativeVecMat");
         Throw.whenNull(reference, "reference");
@@ -85,7 +85,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * @param newReference the reference point for the relative SI values
      * @return a new matrix with the provided SI or BASE values
      */
-    public VMA instantiateSi(final double[] siNew, final AbstractReference<?, A, Q> newReference)
+    public VMA instantiateSi(final double[] siNew, final Reference<?, A, Q> newReference)
     {
         VMQ rel = this.relativeVecMat.instantiateSi(siNew).setDisplayUnit(getDisplayUnit());
         return instantiate(rel, newReference);
@@ -97,7 +97,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * @param newReference the reference point for the relative SI values
      * @return a new matrix with the provided SI or BASE values
      */
-    public abstract VMA instantiate(VMQ relVecMat, AbstractReference<?, A, Q> newReference);
+    public abstract VMA instantiate(VMQ relVecMat, Reference<?, A, Q> newReference);
 
     /**
      * Return the underlying relative vector or matrix with SI values relative to the reference point.
@@ -112,7 +112,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * Return the reference point for the absolute values.
      * @return the reference point for the absolute values
      */
-    public AbstractReference<?, A, Q> getReference()
+    public Reference<?, A, Q> getReference()
     {
         return this.reference;
     }
