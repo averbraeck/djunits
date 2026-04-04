@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.Unit;
 import org.djutils.exceptions.Throw;
 
 /**
  * DenseFloatData implements a dense data grid for N x M matrices or N x 1 or 1 x N vectors with float values. Calculations are
- * carried out in double precision, so the instantiate() and si() method work with double[].
+ * carried out in double precision, so the instantiate() and si() method work with double[]. DenseFloatData always stores a safe
+ * copy of the data.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -27,94 +29,278 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
     private final int cols;
 
     /**
-     * Instantiate a data object with one array in row-major format. Note that NO safe copy of the data is stored.
-     * @param data the data in row-major format
+     * Instantiate a data object with one array in row-major format. NO safe copy of the data is stored. The constructor is very
+     * useful to store data after a calculation that already made a new safe copy.
+     * @param dataSi the data in row-major format
      * @param rows the number of rows
      * @param cols the number of columns
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public DenseFloatDataSi(final float[] data, final int rows, final int cols)
+    public DenseFloatDataSi(final float[] dataSi, final int rows, final int cols)
     {
-        Throw.whenNull(data, "data");
+        Throw.whenNull(dataSi, "dataSi");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
-        Throw.when(data.length != rows * cols, IllegalArgumentException.class,
-                "Data object length != rows * cols, %d != %d * %d", data.length, rows, cols);
-        this.data = data;
+        Throw.when(dataSi.length != rows * cols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", dataSi.length, rows, cols);
+        this.data = dataSi.clone();
         this.rows = rows;
         this.cols = cols;
     }
 
     /**
-     * Instantiate a data object with one array in row-major format. Note that NO safe copy of the data is stored.
-     * @param data the data in row-major format
+     * Instantiate a data object with one array in row-major format. A safe copy of the data is stored, since the data has to be
+     * transferred from double format to float format.
+     * @param dataSi the data in row-major format
      * @param rows the number of rows
      * @param cols the number of columns
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public DenseFloatDataSi(final double[] data, final int rows, final int cols)
+    public DenseFloatDataSi(final double[] dataSi, final int rows, final int cols)
     {
-        Throw.whenNull(data, "data");
+        Throw.whenNull(dataSi, "dataSi");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
         Throw.when(cols <= 0, IllegalArgumentException.class, "Number of columns <= 0");
-        Throw.when(data.length != rows * cols, IllegalArgumentException.class,
-                "Data object length != rows * cols, %d != %d * %d", data.length, rows, cols);
-        this.data = new float[data.length];
-        for (int i = 0; i < data.length; i++)
+        Throw.when(dataSi.length != rows * cols, IllegalArgumentException.class,
+                "Data object length != rows * cols, %d != %d * %d", dataSi.length, rows, cols);
+        this.data = new float[dataSi.length];
+        for (int i = 0; i < dataSi.length; i++)
         {
-            this.data[i] = (float) data[i];
+            this.data[i] = (float) dataSi[i];
         }
         this.rows = rows;
         this.cols = cols;
+    }
+
+    /**
+     * Instantiate a data object with one array in row-major format. A safe copy of the data is stored.
+     * @param dataSi the data in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     */
+    public static DenseFloatDataSi ofSi(final float[] dataSi, final int rows, final int cols)
+    {
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with one array in row-major format. A safe copy of the data is stored.
+     * @param dataSi the data in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     */
+    public static DenseFloatDataSi ofSi(final double[] dataSi, final int rows, final int cols)
+    {
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with one array in row-major format. A safe copy of the data is stored.
+     * @param dataInUnit the data in row-major format
+     * @param unit the unit of the data
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> DenseFloatDataSi of(final float[] dataInUnit, final Unit<?, Q> unit, final int rows,
+            final int cols)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        Throw.whenNull(unit, "unit");
+        float[] dataSi = new float[dataInUnit.length];
+        for (int i = 0; i < dataInUnit.length; i++)
+        {
+            dataSi[i] = (float) unit.toBaseValue(dataInUnit[i]);
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with one array in row-major format. A safe copy of the data is stored.
+     * @param dataInUnit the data in row-major format
+     * @param unit the unit of the data
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> DenseFloatDataSi of(final double[] dataInUnit, final Unit<?, Q> unit, final int rows,
+            final int cols)
+    {
+        Throw.whenNull(dataInUnit, "data");
+        Throw.whenNull(unit, "unit");
+        float[] dataSi = new float[dataInUnit.length];
+        for (int i = 0; i < dataInUnit.length; i++)
+        {
+            dataSi[i] = (float) unit.toBaseValue(dataInUnit[i]);
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with one array in row-major format. A safe copy of the data is stored.
+     * @param data the data in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> DenseFloatDataSi of(final Q[] data, final int rows, final int cols)
+    {
+        Throw.whenNull(data, "data");
+        float[] dataSi = new float[data.length];
+        for (int i = 0; i < data.length; i++)
+        {
+            dataSi[i] = (float) data[i].si();
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with a double[rows][cols]. A safe copy of the data is stored.
+     * @param data the data in row-major format
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static DenseFloatDataSi ofSi(final double[][] data)
+    {
+        Throw.whenNull(data, "data");
+        Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        int rows = data.length;
+        int cols = data[0].length;
+        float[] dataSi = new float[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.when(data[r].length != cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, data[r].length,
+                    cols);
+            for (int c = 0; c < cols; c++)
+                dataSi[r * cols + c] = (float) data[r][c];
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
     }
 
     /**
      * Instantiate a data object with a float[rows][cols]. A safe copy of the data is stored.
      * @param data the data in row-major format
+     * @return a dense float data object with SI values for vectors, matrices and tables
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public DenseFloatDataSi(final float[][] data)
+    public static DenseFloatDataSi ofSi(final float[][] data)
     {
         Throw.whenNull(data, "data");
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
-        this.rows = data.length;
-        this.cols = data[0].length;
-        for (int r = 1; r < this.rows; r++)
-            Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
+        int rows = data.length;
+        int cols = data[0].length;
+        float[] dataSi = new float[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.when(data[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, data[r].length,
-                    this.cols);
-        this.data = new float[this.rows * this.cols];
-        for (int r = 0; r < this.rows; r++)
-            for (int c = 0; c < this.cols; c++)
-                this.data[r * this.cols + c] = data[r][c];
+                    cols);
+            for (int c = 0; c < cols; c++)
+                dataSi[r * cols + c] = data[r][c];
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with a double[rows][cols]. A safe copy of the data is stored.
+     * @param dataInUnit the data in row-major format
+     * @param unit the unit of the data
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     * @param <Q> the quantity type
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> DenseFloatDataSi of(final double[][] dataInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        Throw.whenNull(unit, "unit");
+        Throw.when(dataInUnit.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        int rows = dataInUnit.length;
+        int cols = dataInUnit[0].length;
+        float[] dataSi = new float[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.when(dataInUnit[r].length != cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, dataInUnit[r].length,
+                    cols);
+            for (int c = 0; c < cols; c++)
+                dataSi[r * cols + c] = (float) unit.toBaseValue(dataInUnit[r][c]);
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with a float[rows][cols]. A safe copy of the data is stored.
+     * @param dataInUnit the data in row-major format
+     * @param unit the unit of the data
+     * @return a dense float data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     * @param <Q> the quantity type
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <Q extends Quantity<Q>> DenseFloatDataSi of(final float[][] dataInUnit, final Unit<?, Q> unit)
+    {
+        Throw.whenNull(dataInUnit, "dataInUnit");
+        Throw.whenNull(unit, "unit");
+        Throw.when(dataInUnit.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        int rows = dataInUnit.length;
+        int cols = dataInUnit[0].length;
+        float[] dataSi = new float[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.when(dataInUnit[r].length != cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, dataInUnit[r].length,
+                    cols);
+            for (int c = 0; c < cols; c++)
+                dataSi[r * cols + c] = (float) unit.toBaseValue(dataInUnit[r][c]);
+        }
+        return new DenseFloatDataSi(dataSi, rows, cols);
     }
 
     /**
      * Instantiate a data object with a Q[rows][cols]. A safe copy of the data is stored.
      * @param data the data in row-major format
+     * @return a dense float data object with SI values for vectors, matrices and tables
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
-
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q>> DenseFloatDataSi(final Q[][] data)
+    public static <Q extends Quantity<Q>> DenseFloatDataSi of(final Q[][] data)
     {
         Throw.whenNull(data, "data");
         Throw.when(data.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
-        this.rows = data.length;
-        this.cols = data[0].length;
-        this.data = new float[this.rows * this.cols];
-        for (int r = 0; r < this.rows; r++)
+        int rows = data.length;
+        int cols = data[0].length;
+        float[] dataSi = new float[rows * cols];
+        for (int r = 0; r < rows; r++)
         {
-            Throw.when(data[r].length != this.cols, IllegalArgumentException.class,
+            Throw.when(data[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, data[r].length,
-                    this.cols);
-            for (int c = 0; c < this.cols; c++)
-                this.data[r * this.cols + c] = data[r][c].floatValue();
+                    cols);
+            for (int c = 0; c < cols; c++)
+                dataSi[r * cols + c] = (float) data[r][c].si();
         }
+        return new DenseFloatDataSi(dataSi, rows, cols);
     }
 
     @Override
