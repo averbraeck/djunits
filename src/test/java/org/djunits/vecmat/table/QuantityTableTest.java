@@ -12,6 +12,8 @@ import org.djunits.quantity.Area;
 import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d1.Matrix1x1;
 import org.djunits.vecmat.d1.Vector1;
@@ -157,8 +159,7 @@ public class QuantityTableTest
     @DisplayName("invertElements(): reciprocal of each SI value")
     public void testInvertElements()
     {
-        QuantityTable<Length> q =
-                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 4, 5}, 2, 2), Length.Unit.m);
+        QuantityTable<Length> q = new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 4, 5}, 2, 2), Length.Unit.m);
 
         QuantityTable<?> inv = q.invertEntries();
         double[] expected = new double[] {1.0, 1.0 / 2.0, 1.0 / 4.0, 1.0 / 5.0};
@@ -178,8 +179,7 @@ public class QuantityTableTest
     @DisplayName("multiplyElements(): Hadamard multiplication")
     public void testMultiplyElements()
     {
-        QuantityTable<Length> a =
-                new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4}, 2, 2), Length.Unit.m);
+        QuantityTable<Length> a = new QuantityTable<>(new DenseDoubleDataSi(new double[] {1, 2, 3, 4}, 2, 2), Length.Unit.m);
 
         QuantityTable<Length> b =
                 new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 20, 30, 40}, 2, 2), Length.Unit.m);
@@ -203,8 +203,7 @@ public class QuantityTableTest
         QuantityTable<Length> a =
                 new QuantityTable<>(new DenseDoubleDataSi(new double[] {100, 50, 20, 10}, 2, 2), Length.Unit.m);
 
-        QuantityTable<Length> b =
-                new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 5, 2, 1}, 2, 2), Length.Unit.m);
+        QuantityTable<Length> b = new QuantityTable<>(new DenseDoubleDataSi(new double[] {10, 5, 2, 1}, 2, 2), Length.Unit.m);
 
         QuantityTable<?> result = a.divideEntries(b);
 
@@ -413,8 +412,7 @@ public class QuantityTableTest
 
         // row mismatch (1x2) and col mismatch (2x3)
         QuantityTable<Length> m12mat = QuantityTable.of(new double[] {9.0, 10.0}, 1, 2, Length.Unit.m);
-        QuantityTable<Length> m23mat =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        QuantityTable<Length> m23mat = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m12mat.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> m23mat.asMatrix2x2());
 
@@ -448,10 +446,8 @@ public class QuantityTableTest
         assertEquals(9.0, m33si[8], EPS);
 
         // row mismatch (2x3) and col mismatch (3x2)
-        QuantityTable<Length> m23badMat =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
-        QuantityTable<Length> m32badMat =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
+        QuantityTable<Length> m23badMat = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        QuantityTable<Length> m32badMat = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m23badMat.asMatrix3x3());
         assertThrows(IllegalStateException.class, () -> m32badMat.asMatrix3x3());
     }
@@ -560,13 +556,11 @@ public class QuantityTableTest
         // ----------------------------
 
         // 2x3 (row-mismatch branch of "rows != cols")
-        QuantityTable<Length> m23m =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
+        QuantityTable<Length> m23m = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m23m.asMatrixNxN());
 
         // 3x2 (column-mismatch branch of "rows != cols")
-        QuantityTable<Length> m32m =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
+        QuantityTable<Length> m32m = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 3, 2, Length.Unit.m);
         assertThrows(IllegalStateException.class, () -> m32m.asMatrixNxN());
     }
 
@@ -665,8 +659,7 @@ public class QuantityTableTest
         assertEquals(0.001, vRow1.get(0).si(), EPS);
 
         // Bad path: 2xN must throw (rows() != 1)
-        QuantityTable<Length> m24cm =
-                QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8}, 2, 4, Length.Unit.cm);
+        QuantityTable<Length> m24cm = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8}, 2, 4, Length.Unit.cm);
         assertThrows(IllegalStateException.class, () -> m24cm.asVectorNRow());
     }
 
@@ -880,8 +873,7 @@ public class QuantityTableTest
     @Test
     public void testMultiplyScalarAs()
     {
-        QuantityTable<Length> r =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
+        QuantityTable<Length> r = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
         var d = Duration.of(2.0, "h");
         QuantityTable<Speed> sr = r.divideEntries(d).as(Speed.Unit.km_h);
         assertEquals(Speed.Unit.km_h, sr.getDisplayUnit());
@@ -899,8 +891,7 @@ public class QuantityTableTest
     @DisplayName("test nnz()")
     public void testNnz()
     {
-        QuantityTable<Length> qt =
-                QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
+        QuantityTable<Length> qt = QuantityTable.of(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, 2, 3, Length.Unit.km);
         assertEquals(6, qt.nnz());
         assertEquals(6, qt.nonZeroCount());
         assertEquals(6, qt.getDataGrid().nnz());
@@ -911,4 +902,207 @@ public class QuantityTableTest
         assertEquals(0, qt0.getDataGrid().nnz());
     }
 
+    // ----------------------------------------------------------------------
+    // transpose()
+    // ----------------------------------------------------------------------
+
+    /**
+     * Verify {@link QuantityTable#transpose()} for a rectangular table. Uses a 2x4 table (rows=2, cols=4) and verifies:
+     * <ul>
+     * <li>Correct transposition to 4x2</li>
+     * <li>Correct row-major data remapping</li>
+     * <li>Display unit is preserved</li>
+     * <li>Double transpose restores the original table</li>
+     * </ul>
+     */
+    @Test
+    @DisplayName("transpose(): rectangular 2x4 → 4x2, data and unit preserved")
+    public void testTransposeRectangular()
+    {
+        /*
+         * Original table (2x4), expressed in kilometers: [ 1 2 3 4 ] [ 5 6 7 8 ] SI values are meters: {1000..8000}
+         */
+        QuantityTable<Length> qt = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8}, 2, 4, Length.Unit.km);
+
+        // Sanity check original
+        assertEquals(2, qt.rows());
+        assertEquals(4, qt.cols());
+        assertEquals(Length.Unit.km, qt.getDisplayUnit());
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000}, qt.si(), EPS);
+
+        // Transpose: 4x2
+        QuantityTable<Length> t = qt.transpose();
+
+        assertEquals(4, t.rows());
+        assertEquals(2, t.cols());
+
+        // Display unit must be preserved
+        assertEquals(qt.getDisplayUnit(), t.getDisplayUnit());
+
+        /*
+         * Expected transposed layout (4x2): [ 1 5 ] [ 2 6 ] [ 3 7 ] [ 4 8 ] Row‑major SI: {1000,5000, 2000,6000, 3000,7000,
+         * 4000,8000}
+         */
+        assertArrayEquals(new double[] {1000, 5000, 2000, 6000, 3000, 7000, 4000, 8000}, t.si(), EPS);
+
+        // Spot‑check element access
+        assertEquals(1000.0, t.si(0, 0), EPS);
+        assertEquals(5000.0, t.si(0, 1), EPS);
+        assertEquals(4000.0, t.si(3, 0), EPS);
+        assertEquals(8000.0, t.si(3, 1), EPS);
+
+        // Double transpose should restore original
+        QuantityTable<Length> tt = t.transpose();
+
+        assertEquals(qt.rows(), tt.rows());
+        assertEquals(qt.cols(), tt.cols());
+        assertEquals(qt.getDisplayUnit(), tt.getDisplayUnit());
+        assertArrayEquals(qt.si(), tt.si(), EPS);
+    }
+
+    // ------------------------------------------------------------------------------------
+    // QuantityTable — Static factory methods of() and ofSi()
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify {@link QuantityTable#of(double[], int, int, Unit)} for null handling, size validation, and SI conversion using
+     * {@link Length}.
+     */
+    @Test
+    @DisplayName("QuantityTable.of(double[], rows, cols, Unit): nulls, size, SI conversion")
+    public void testOfDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.of((double[]) null, 2, 3, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> QuantityTable.of(new double[6], 2, 3, null));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[5], 2, 3, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[6], 0, 3, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new double[6], 2, 0, Length.Unit.m));
+
+        double[] inCm = {1, 2, 3, 4, 5, 6};
+        QuantityTable<Length> qt = QuantityTable.of(inCm, 2, 3, Length.Unit.cm);
+
+        assertEquals(2, qt.rows());
+        assertEquals(3, qt.cols());
+        assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, qt.si(), EPS);
+    }
+
+    /**
+     * Verify {@link QuantityTable#ofSi(double[], int, int, Unit)} for null handling, size validation, and display unit
+     * preservation.
+     */
+    @Test
+    @DisplayName("QuantityTable.ofSi(double[], rows, cols, Unit): nulls, size, display unit")
+    public void testOfSiDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.ofSi((double[]) null, 2, 2, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> QuantityTable.ofSi(new double[4], 2, 2, null));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.ofSi(new double[3], 2, 2, Length.Unit.m));
+
+        double[] si = {1, 2, 3, 4};
+        QuantityTable<Length> qt = QuantityTable.ofSi(si, 2, 2, Length.Unit.km);
+
+        assertEquals(Length.Unit.km, qt.getDisplayUnit());
+        assertArrayEquals(si, qt.si(), EPS);
+    }
+
+    /**
+     * Verify {@link QuantityTable#of(Quantity[], int, int)} for null handling, size validation, and SI conversion.
+     */
+    @Test
+    @DisplayName("QuantityTable.of(Q[], rows, cols): nulls, size, SI conversion")
+    public void testOfQuantityArray()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.of((Length[]) null, 2, 2));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new Length[] {}, 2, 2));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new Length[] {Length.ofSi(1)}, 2, 2));
+
+        Length[] data = {new Length(1, Length.Unit.km), new Length(2, Length.Unit.m), new Length(3, Length.Unit.cm),
+                new Length(4, Length.Unit.mm)};
+
+        QuantityTable<Length> qt = QuantityTable.of(data, 2, 2);
+
+        assertEquals(1000.0, qt.si(0, 0), EPS);
+        assertEquals(2.0, qt.si(0, 1), EPS);
+        assertEquals(0.03, qt.si(1, 0), EPS);
+        assertEquals(0.004, qt.si(1, 1), EPS);
+    }
+
+    /**
+     * Verify {@link QuantityTable#ofSi(double[][], Unit)} for null handling, empty grids, ragged grids, and SI usage.
+     */
+    @Test
+    @DisplayName("QuantityTable.ofSi(double[][], Unit): nulls, empty/ragged grids, SI values")
+    public void testOfSiDoubleGrid()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.ofSi((double[][]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> QuantityTable.ofSi(new double[2][2], null));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.ofSi(new double[][] {}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.ofSi(new double[][] {{1, 2}, {3}}, Length.Unit.m));
+
+        double[][] gridSi = {{1, 2, 3}, {4, 5, 6}};
+
+        QuantityTable<Length> qt = QuantityTable.ofSi(gridSi, Length.Unit.m);
+
+        assertEquals(2, qt.rows());
+        assertEquals(3, qt.cols());
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, qt.si(), EPS);
+    }
+
+    /**
+     * Verify {@link QuantityTable#of(double[][], Unit)} for SI conversion using {@link Duration}.
+     */
+    @Test
+    @DisplayName("QuantityTable.of(double[][], Unit): rectangular grid & SI conversion (ms/h)")
+    public void testOfDoubleGridWithUnit()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.of((double[][]) null, Duration.Unit.s));
+
+        assertThrows(NullPointerException.class, () -> QuantityTable.of(new double[2][2], null));
+
+        double[][] inHours = {{1, 2}, {3, 4}};
+
+        QuantityTable<Duration> qt = QuantityTable.of(inHours, Duration.Unit.h);
+
+        assertEquals(3600.0, qt.si(0, 0), EPS);
+        assertEquals(7200.0, qt.si(0, 1), EPS);
+        assertEquals(10_800.0, qt.si(1, 0), EPS);
+        assertEquals(14_400.0, qt.si(1, 1), EPS);
+    }
+
+    /**
+     * Verify {@link QuantityTable#of(Quantity[][])} for null handling, empty grids, and SI conversion.
+     */
+    @Test
+    @DisplayName("QuantityTable.of(Q[][]): nulls, empty grids, SI conversion")
+    public void testOfQuantityGrid()
+    {
+        assertThrows(NullPointerException.class, () -> QuantityTable.of((Duration[][]) null));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new Duration[][] {}));
+
+        assertThrows(NullPointerException.class, () -> QuantityTable.of(new Duration[][] {null}));
+
+        assertThrows(IllegalArgumentException.class, () -> QuantityTable.of(new Duration[][] {{}}));
+
+        Duration[][] grid = {{new Duration(1, Duration.Unit.ms), new Duration(2, Duration.Unit.ms)},
+                {new Duration(3, Duration.Unit.ms), new Duration(4, Duration.Unit.ms)}};
+
+        QuantityTable<Duration> qt = QuantityTable.of(grid);
+
+        assertEquals(0.001, qt.si(0, 0), EPS);
+        assertEquals(0.002, qt.si(0, 1), EPS);
+        assertEquals(0.003, qt.si(1, 0), EPS);
+        assertEquals(0.004, qt.si(1, 1), EPS);
+    }
 }
