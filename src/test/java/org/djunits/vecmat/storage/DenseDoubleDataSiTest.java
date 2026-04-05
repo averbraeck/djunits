@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.djunits.quantity.Length;
+import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -341,5 +343,76 @@ public class DenseDoubleDataSiTest
         l[0][0] = new Length(42.0, Length.Unit.m);
         assertArrayEquals(expected, d.getDataArray(), 1e-12, "safe copy on ctor(Q[][])");
     }
+
+    // ------------------------------------------------------------------------------------
+    // Factory methods of() and ofSi() — explicit coverage
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify {@link DenseDoubleDataSi#ofSi(double[], int, int)} performs a safe copy and preserves shape.
+     */
+    @Test
+    @DisplayName("ofSi(double[], rows, cols): safe copy and geometry")
+    public void testOfSiDoubleArray()
+    {
+        double[] raw = new double[] {1.0, 2.0, 3.0, 4.0};
+        DenseDoubleDataSi d = DenseDoubleDataSi.ofSi(raw, 2, 2);
+
+        assertEquals(2, d.rows());
+        assertEquals(2, d.cols());
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, d.getDataArray(), 1e-12);
+
+        // Safe copy
+        raw[0] = 99.0;
+        assertEquals(1.0, d.get(0, 0), 1e-12);
+    }
+
+    /**
+     * Verify {@link DenseDoubleDataSi#of(double[], int, int, Unit)} converts to SI and performs a safe copy.
+     */
+    @Test
+    @DisplayName("of(double[], rows, cols, Unit): unit conversion and safe copy")
+    public void testOfDoubleArrayWithUnit()
+    {
+        double[] valuesKm = new double[] {1.0, 2.0, 3.0, 4.0};
+        DenseDoubleDataSi d = DenseDoubleDataSi.of(valuesKm, 2, 2, Length.Unit.km);
+
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0, 4000.0}, d.getDataArray(), 1e-12);
+
+        // Safe copy
+        valuesKm[0] = 99.0;
+        assertEquals(1000.0, d.get(0, 0), 1e-12);
+    }
+
+    /**
+     * Verify {@link DenseDoubleDataSi#of(Quantity[], int, int)} converts quantities to SI and enforces null checks.
+     */
+    @Test
+    @DisplayName("of(Q[], rows, cols): SI conversion and null checks")
+    public void testOfQuantityArray()
+    {
+        Length[] data = new Length[] {new Length(1.0, Length.Unit.km), new Length(2.0, Length.Unit.m),
+                new Length(3.0, Length.Unit.cm), new Length(4.0, Length.Unit.mm)};
+
+        DenseDoubleDataSi d = DenseDoubleDataSi.of(data, 2, 2);
+
+        assertArrayEquals(new double[] {1000.0, 2.0, 0.03, 0.004}, d.getDataArray(), 1e-12);
+
+        // Null element
+        assertThrows(NullPointerException.class, () -> DenseDoubleDataSi.of(new Length[] {null}, 1, 1));
+    }
+
+    /**
+     * Verify {@link DenseDoubleDataSi#ofSi(double[], int, int)} rejects mismatched sizes.
+     */
+    @Test
+    @DisplayName("ofSi(double[], rows, cols): length mismatch")
+    public void testOfSiLengthMismatch()
+    {
+        double[] bad = new double[] {1.0, 2.0, 3.0};
+
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.ofSi(bad, 2, 2));
+    }
+
 
 }

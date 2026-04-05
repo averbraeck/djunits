@@ -341,4 +341,267 @@ public class DenseFloatDataSiTest
         q[0][0] = new Length(7.0, Length.Unit.m);
         assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);
     }
+
+    // ------------------------------------------------------------------------------------
+    // Factory methods of() and ofSi() — explicit coverage
+    // ------------------------------------------------------------------------------------
+
+    /** epsilon. */
+    private static final double EPS = 1e-6;
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return a float[] 2x2 matrix.
+     */
+    private static float[] f2x2()
+    {
+        return new float[] {1f, 2f, 3f, 4f};
+    }
+
+    /**
+     * @return a double[] 2x2 matrix.
+     */
+    private static double[] d2x2()
+    {
+        return new double[] {1.0, 2.0, 3.0, 4.0};
+    }
+
+    /**
+     * Verify {@link DenseDoubleDataSi#ofSi(double[], int, int)} rejects mismatched sizes.
+     */
+    @Test
+    @DisplayName("ofSi(double[], rows, cols): length mismatch")
+    public void testOfSiLengthMismatch()
+    {
+        double[] bad = new double[] {1.0, 2.0, 3.0};
+
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.ofSi(bad, 2, 2));
+    }
+
+    // -------------------------------------------------------------------------
+    // ofSi(float[], rows, cols)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test ofSi(float[], r, c): nulls, size, safe copy.
+     */
+    @Test
+    @DisplayName("ofSi(float[], r, c): nulls, size, safe copy")
+    public void testOfSiFloatArray()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.ofSi((float[]) null, 1, 1));
+
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new float[] {1f, 2f}, 1, 1));
+
+        float[] raw = f2x2();
+        DenseFloatDataSi d = DenseFloatDataSi.ofSi(raw, 2, 2);
+
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+
+        raw[0] = 99f;
+        assertEquals(1.0, d.get(0, 0), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // ofSi(double[], rows, cols)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test ofSi(double[], r, c): nulls, size, safe copy.
+     */
+    @Test
+    @DisplayName("ofSi(double[], r, c): nulls, size, cast correctness")
+    public void testOfSiDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.ofSi((double[]) null, 1, 1));
+
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new double[] {1, 2}, 1, 1));
+
+        DenseFloatDataSi d = DenseFloatDataSi.ofSi(d2x2(), 2, 2);
+
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // of(float[], rows, cols, Unit)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test of(float[], r, c, Unit): nulls and SI conversion.
+     */
+    @Test
+    @DisplayName("of(float[], r, c, Unit): nulls and SI conversion")
+    public void testOfFloatArrayUnit()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((float[]) null, 1, 1, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new float[] {1f}, 1, 1, null));
+
+        DenseFloatDataSi d = DenseFloatDataSi.of(new float[] {1f, 2f, 3f, 4f}, 2, 2, Length.Unit.km);
+
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // of(double[], rows, cols, Unit)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test of(double[], r, c, Unit): nulls and SI conversion.
+     */
+    @Test
+    @DisplayName("of(double[], r, c, Unit): nulls and SI conversion")
+    public void testOfDoubleArrayUnit()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((double[]) null, 1, 1, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new double[] {1.0}, 1, 1, null));
+
+        DenseFloatDataSi d = DenseFloatDataSi.of(new double[] {10, 20, 30, 40}, 2, 2, Length.Unit.cm);
+
+        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // of(Q[], rows, cols)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test of(Q[], r, c): nulls and SI conversion.
+     */
+    @Test
+    @DisplayName("of(Q[], r, c): nulls and SI conversion")
+    public void testOfQuantityArray()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((Length[]) null, 1, 1));
+
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new Length[] {null}, 1, 1));
+
+        Length[] q = new Length[] {new Length(1, Length.Unit.km), new Length(2, Length.Unit.m), new Length(3, Length.Unit.cm),
+                new Length(4, Length.Unit.mm)};
+
+        DenseFloatDataSi d = DenseFloatDataSi.of(q, 2, 2);
+
+        assertArrayEquals(new double[] {1000, 2, 0.03, 0.004}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // ofSi(float[][])
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test ofSi(float[][]): nulls, ragged rows, safe copy.
+     */
+    @Test
+    @DisplayName("ofSi(float[][]): nulls, ragged rows, safe copy")
+    public void testOfSiFloatGrid()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.ofSi((float[][]) null));
+
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new float[][] {}));
+
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.ofSi(new float[][] {null}));
+
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new float[][] {{1f, 2f}, {3f}}));
+
+        float[][] grid = {{1f, 2f}, {3f, 4f}};
+        DenseFloatDataSi d = DenseFloatDataSi.ofSi(grid);
+
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+
+        grid[0][0] = 99f;
+        assertEquals(1.0, d.get(0, 0), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // ofSi(double[][])
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test ofSi(double[][]): nulls, ragged rows, SI preservation.
+     */
+    @Test
+    @DisplayName("ofSi(double[][]): nulls, ragged rows, SI preservation")
+    public void testOfSiDoubleGrid()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.ofSi((double[][]) null));
+
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new double[][] {}));
+
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.ofSi(new double[][] {{1, 2}, {3}}));
+
+        DenseFloatDataSi d = DenseFloatDataSi.ofSi(new double[][] {{1, 2}, {3, 4}});
+
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // of(float[][], Unit)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test of(float[][], Unit): nulls, ragged, SI conversion.
+     */
+    @Test
+    @DisplayName("of(float[][], Unit): nulls, ragged, SI conversion")
+    public void testOfFloatGridUnit()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((float[][]) null, Length.Unit.m));
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new float[][] {{1f}}, null));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new float[][] {{1f, 2f}, {3f}}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new float[][] {{}}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new float[][] {}, Length.Unit.m));
+        
+        DenseFloatDataSi d = DenseFloatDataSi.of(new float[][] {{1f, 2f}, {3f, 4f}}, Length.Unit.km);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // of(double[][], Unit)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test of(double[][], Unit): nulls, ragged, SI conversion.
+     */
+    @Test
+    @DisplayName("of(double[][], Unit): nulls, ragged, SI conversion")
+    public void testOfDoubleGridUnit()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((double[][]) null, Length.Unit.m));
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new double[][] {{1.0}}, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> DenseFloatDataSi.of(new double[][] {{1.0, 2.0}, {3.0}}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new double[][] {{}}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new double[][] {}, Length.Unit.m));
+
+        DenseFloatDataSi d = DenseFloatDataSi.of(new double[][] {{10, 20}, {30, 40}}, Length.Unit.cm);
+        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, d.getDataArray(), EPS);
+    }
+
+    // -------------------------------------------------------------------------
+    // of(Q[][])
+    // -------------------------------------------------------------------------
+
+    /**
+     * Test of(Q[][]): nulls, ragged, element nulls, SI conversion.
+     */
+    @Test
+    @DisplayName("of(Q[][]): nulls, ragged, element nulls, SI conversion")
+    public void testOfQuantityGrid()
+    {
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of((Length[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new Length[][] {}));
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new Length[][] {null}));
+        assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new Length[][] {{Length.ofSi(1)}, {}}));
+        assertThrows(NullPointerException.class, () -> DenseFloatDataSi.of(new Length[][] {{null}}));
+
+        Length[][] q = {{new Length(1, Length.Unit.km), new Length(2, Length.Unit.m)},
+                {new Length(3, Length.Unit.cm), new Length(4, Length.Unit.mm)}};
+        DenseFloatDataSi d = DenseFloatDataSi.of(q);
+        assertArrayEquals(new double[] {1000, 2, 0.03, 0.004}, d.getDataArray(), EPS);
+    }
+
 }
