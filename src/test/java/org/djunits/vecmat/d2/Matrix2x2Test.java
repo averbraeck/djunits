@@ -731,4 +731,184 @@ public class Matrix2x2Test
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
+    // ------------------------------------------------------------------------------------
+    // Static factory methods: of() and ofSi() — exhaustive corner cases and conversions
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Test {@link Matrix2x2#of(double[], Unit)} for nulls, wrong sizes, and unit conversion.
+     */
+    @Test
+    @DisplayName("of(double[], Unit): nulls, size checks, unit conversion")
+    public void testOfDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of((double[]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of(new double[] {1, 2, 3, 4}, null));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new double[] {1, 2, 3}, Length.Unit.m));
+
+        Matrix2x2<Length> m = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.cm);
+        assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix2x2#ofSi(double[], Unit)} for nulls, wrong sizes, and display unit handling.
+     */
+    @Test
+    @DisplayName("ofSi(double[], Unit): nulls, size checks, display unit")
+    public void testOfSiDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix2x2.ofSi((double[]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix2x2.ofSi(new double[] {1, 2, 3, 4}, null));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.ofSi(new double[] {1, 2, 3}, Length.Unit.m));
+
+        Matrix2x2<Length> m = Matrix2x2.ofSi(new double[] {1000, 2000, 3000, 4000}, Length.Unit.km);
+
+        assertEquals(Length.Unit.km, m.getDisplayUnit());
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive test of {@link Matrix2x2#of(double[][], Unit)} grid validation and conversion.
+     */
+    @Test
+    @DisplayName("of(double[][], Unit): exhaustive null and shape validation")
+    public void testOfDoubleGridAllCornerCases()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of((double[][]) null, Length.Unit.m));
+
+        // wrong number of rows
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new double[][] {{1, 2}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix2x2.of(new double[][] {{1, 2}, {3, 4}, {5, 6}}, Length.Unit.m));
+
+        // null rows
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of(new double[][] {null, new double[] {1, 2}}, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of(new double[][] {new double[] {1, 2}, null}, Length.Unit.m));
+
+        // wrong column size, first row
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new double[][] {{1}, {2, 3}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new double[][] {{1, 2, 3}, {4, 5}}, Length.Unit.m));
+
+        // wrong column size, second row
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new double[][] {{1, 2}, {3}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new double[][] {{1, 2}, {3, 4, 5}}, Length.Unit.m));
+
+        // valid grid (control)
+        Matrix2x2<Duration> m = Matrix2x2.of(new double[][] {{1, 2}, {3, 4}}, Duration.Unit.h);
+
+        assertArrayEquals(new double[] {3600, 7200, 10800, 14400}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive test of {@link Matrix2x2#ofSi(double[][], Unit)} grid validation.
+     */
+    @Test
+    @DisplayName("ofSi(double[][], Unit): exhaustive null and shape validation")
+    public void testOfSiDoubleGridAllCornerCases()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix2x2.ofSi((double[][]) null, Length.Unit.m));
+
+        // wrong row count
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.ofSi(new double[][] {{1, 2}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix2x2.ofSi(new double[][] {{1, 2}, {3, 4}, {5, 6}}, Length.Unit.m));
+
+        // null rows
+        assertThrows(NullPointerException.class,
+                () -> Matrix2x2.ofSi(new double[][] {null, new double[] {1, 2}}, Length.Unit.m));
+
+        assertThrows(NullPointerException.class,
+                () -> Matrix2x2.ofSi(new double[][] {new double[] {1, 2}, null}, Length.Unit.m));
+
+        // wrong column sizes
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.ofSi(new double[][] {{1}, {2, 3}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.ofSi(new double[][] {{1, 2}, {3}}, Length.Unit.m));
+
+        // valid grid (control)
+        Matrix2x2<Duration> m = Matrix2x2.ofSi(new double[][] {{1, 2}, {3, 4}}, Duration.Unit.ms);
+
+        assertEquals(Duration.Unit.ms, m.getDisplayUnit());
+        assertArrayEquals(new double[] {1, 2, 3, 4}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix2x2#of(Quantity[])} for nulls, wrong size, and conversion.
+     */
+    @Test
+    @DisplayName("of(Q[]): null elements, wrong length, unit conversion")
+    public void testOfQuantityArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of((Length[]) null));
+
+        assertThrows(NullPointerException.class,
+                () -> Matrix2x2.of(new Length[] {Length.ofSi(1), null, Length.ofSi(3), Length.ofSi(4)}));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix2x2.of(new Length[] {Length.ofSi(1), Length.ofSi(2), Length.ofSi(3)}));
+
+        Length[] data = {new Length(1, Length.Unit.km), new Length(200, Length.Unit.m), new Length(3, Length.Unit.km),
+                new Length(400, Length.Unit.m)};
+
+        Matrix2x2<Length> m = Matrix2x2.of(data);
+        assertArrayEquals(new double[] {1000, 200, 3000, 400}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive test of {@link Matrix2x2#of(Quantity[][])} grid validation. Covers all branches of:
+     * 
+     * <pre>
+     * grid == null
+     * grid.length != 2
+     * grid[0] == null
+     * grid[1] == null
+     * grid[0].length != 2
+     * grid[1].length != 2
+     * grid[r][c] == null
+     * </pre>
+     */
+    @Test
+    @DisplayName("of(Q[][]): exhaustive null and shape validation (full branch coverage)")
+    public void testOfQuantityGridAllCornerCases()
+    {
+        // null grid
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of((Length[][]) null));
+
+        // wrong number of rows
+        assertThrows(IllegalArgumentException.class, () -> Matrix2x2.of(new Length[][] {{Length.ofSi(1), Length.ofSi(2)}}));
+
+        // null rows
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of(new Length[][] {null, {Length.ofSi(3), Length.ofSi(4)}}));
+
+        assertThrows(NullPointerException.class, () -> Matrix2x2.of(new Length[][] {{Length.ofSi(1), Length.ofSi(2)}, null}));
+
+        // wrong column size — FIRST row wrong
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix2x2.of(new Length[][] {{Length.ofSi(1)}, {Length.ofSi(2), Length.ofSi(3)}}));
+
+        // wrong column size — SECOND row wrong
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix2x2.of(new Length[][] {{Length.ofSi(1), Length.ofSi(2)}, {Length.ofSi(3)}}));
+
+        // null element inside grid
+        assertThrows(NullPointerException.class,
+                () -> Matrix2x2.of(new Length[][] {{null, Length.ofSi(2)}, {Length.ofSi(3), Length.ofSi(4)}}));
+
+        // valid grid (control case)
+        Length[][] grid = {{new Length(10, Length.Unit.cm), new Length(20, Length.Unit.cm)},
+                {new Length(30, Length.Unit.cm), new Length(40, Length.Unit.cm)}};
+
+        Matrix2x2<Length> m = Matrix2x2.of(grid);
+        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, m.si(), EPS);
+    }
+    
 }

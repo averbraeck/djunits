@@ -709,4 +709,142 @@ public class Matrix1x1Test
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
 
+    // ------------------------------------------------------------------------------------
+    // Static factory methods: Matrix1x1 of() and ofSi() — exhaustive corner cases
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Test {@link Matrix1x1#of(double, Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 of(double, Unit): basic creation and conversion")
+    public void testMatrix1x1OfScalar()
+    {
+        Matrix1x1<Length> m = Matrix1x1.of(2.5, Length.Unit.cm);
+        assertArrayEquals(new double[] {0.025}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix1x1#of(double[], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 of(double[], Unit): nulls, size, conversion")
+    public void testMatrix1x1OfDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of((double[]) null, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new double[] {}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new double[] {1, 2}, Length.Unit.m));
+
+        Matrix1x1<Length> m = Matrix1x1.of(new double[] {3}, Length.Unit.km);
+        assertArrayEquals(new double[] {3000}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix1x1#ofSi(double[], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 ofSi(double[], Unit): nulls, size, display unit")
+    public void testMatrix1x1OfSiDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.ofSi((double[]) null, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.ofSi(new double[] {1, 2}, Length.Unit.m));
+
+        Matrix1x1<Length> m = Matrix1x1.ofSi(new double[] {5}, Length.Unit.km);
+        assertEquals(Length.Unit.km, m.getDisplayUnit());
+        assertArrayEquals(new double[] {5}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive test of {@link Matrix1x1#of(double[][], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 of(double[][], Unit): exhaustive grid validation")
+    public void testMatrix1x1OfDoubleGrid()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of((double[][]) null, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new double[][] {}, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of(new double[][] {null}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new double[][] {{1, 2}}, Length.Unit.m));
+
+        Matrix1x1<Length> m = Matrix1x1.of(new double[][] {{4}}, Length.Unit.cm);
+        assertArrayEquals(new double[] {0.04}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive test of {@link Matrix1x1#ofSi(double[][], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 ofSi(double[][], Unit): exhaustive grid validation")
+    public void testMatrix1x1OfSiDoubleGrid()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.ofSi((double[][]) null, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.ofSi(new double[][] {}, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix1x1.ofSi(new double[][] {null}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.ofSi(new double[][] {{1, 2}}, Length.Unit.m));
+
+        Matrix1x1<Duration> m = Matrix1x1.ofSi(new double[][] {{7}}, Duration.Unit.ms);
+        assertEquals(Duration.Unit.ms, m.getDisplayUnit());
+        assertArrayEquals(new double[] {7}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix1x1#of(Quantity)}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 of(Q): null and conversion")
+    public void testMatrix1x1OfQuantity()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of((Length) null));
+
+        Matrix1x1<Length> m = Matrix1x1.of(new Length(2.0, Length.Unit.cm));
+        assertArrayEquals(new double[] {0.02}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix1x1#of(Quantity[])}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 of(Q[]): nulls, size, conversion")
+    public void testMatrix1x1OfQuantityArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of((Length[]) null));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new Length[] {}));
+
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of(new Length[] {null}));
+
+        Matrix1x1<Length> m = Matrix1x1.of(new Length[] {new Length(3, Length.Unit.km)});
+        assertArrayEquals(new double[] {3000}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive test of {@link Matrix1x1#of(Quantity[][])}.
+     */
+    @Test
+    @DisplayName("Matrix1x1 of(Q[][]): exhaustive grid validation")
+    public void testMatrix1x1OfQuantityGrid()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of((Length[][]) null));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new Length[][] {}));
+
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of(new Length[][] {null}));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix1x1.of(new Length[][] {{Length.ofSi(1), Length.ofSi(2)}}));
+
+        assertThrows(NullPointerException.class, () -> Matrix1x1.of(new Length[][] {{null}}));
+
+        Matrix1x1<Length> m = Matrix1x1.of(new Length[][] {{new Length(5, Length.Unit.cm)}});
+        assertArrayEquals(new double[] {0.05}, m.si(), EPS);
+    }
+
 }

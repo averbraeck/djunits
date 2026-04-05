@@ -13,6 +13,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
@@ -702,4 +703,149 @@ public class MatrixNxNTest
         assertThrows(IllegalStateException.class, () -> n22m.asMatrix3x3());
         assertThrows(IllegalStateException.class, () -> n44m.asMatrix3x3());
     }
+
+    // ------------------------------------------------------------------------------------
+    // MatrixNxN — Static factory methods of() and ofSi()
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Verify {@link MatrixNxN#of(double[], Unit)} for null checks, non-square sizes, and SI conversion using different length
+     * units.
+     */
+    @Test
+    @DisplayName("of(double[], Unit): nulls, square check, SI conversion (cm/km)")
+    public void testOfDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> MatrixNxN.of((double[]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> MatrixNxN.of(new double[16], null));
+
+        // length not a perfect square
+        assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new double[15], Length.Unit.m));
+
+        // 4x4 in cm → SI meters
+        double[] inCm = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+
+        MatrixNxN<Length> m = MatrixNxN.of(inCm, Length.Unit.cm);
+
+        assertEquals(4, m.rows());
+        assertEquals(4, m.cols());
+        assertArrayEquals(
+                new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16},
+                m.si(), EPS);
+    }
+
+    /**
+     * Verify {@link MatrixNxN#ofSi(double[], Unit)} for null checks, square validation, and display-unit handling.
+     */
+    @Test
+    @DisplayName("ofSi(double[], Unit): nulls, square check, display unit")
+    public void testOfSiDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> MatrixNxN.ofSi((double[]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> MatrixNxN.ofSi(new double[16], null));
+
+        assertThrows(IllegalArgumentException.class, () -> MatrixNxN.ofSi(new double[10], Length.Unit.m));
+
+        double[] si = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+
+        MatrixNxN<Length> m = MatrixNxN.ofSi(si, Length.Unit.km);
+
+        assertEquals(Length.Unit.km, m.getDisplayUnit());
+        assertArrayEquals(si, m.si(), EPS);
+    }
+
+    /**
+     * Verify {@link MatrixNxN#of(Quantity[])} for nulls, square-size validation, and SI conversion.
+     */
+    @Test
+    @DisplayName("of(Q[]): nulls, square check, SI conversion")
+    public void testOfQuantityArray()
+    {
+        assertThrows(NullPointerException.class, () -> MatrixNxN.of((Length[]) null));
+
+        assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new Length[] {}));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> MatrixNxN.of(new Length[] {Length.ofSi(1), Length.ofSi(2), Length.ofSi(3)}));
+
+        Length[] data = {new Length(1, Length.Unit.km), new Length(2, Length.Unit.m), new Length(3, Length.Unit.cm),
+                new Length(4, Length.Unit.mm),
+
+                new Length(5, Length.Unit.km), new Length(6, Length.Unit.m), new Length(7, Length.Unit.cm),
+                new Length(8, Length.Unit.mm),
+
+                new Length(9, Length.Unit.km), new Length(10, Length.Unit.m), new Length(11, Length.Unit.cm),
+                new Length(12, Length.Unit.mm),
+
+                new Length(13, Length.Unit.km), new Length(14, Length.Unit.m), new Length(15, Length.Unit.cm),
+                new Length(16, Length.Unit.mm)};
+
+        MatrixNxN<Length> m = MatrixNxN.of(data);
+
+        assertEquals(4, m.rows());
+        assertEquals(4, m.cols());
+        assertEquals(1000.0, m.si(0, 0), EPS); // 1 km -> 1000 m
+        assertEquals(2.0, m.si(0, 1), EPS); // 2 m -> 2 m
+        assertEquals(0.03, m.si(0, 2), EPS); // 3 cm -> 0.03 m
+        assertEquals(0.004, m.si(0, 3), EPS); // 4 mm -> 0.004 m
+    }
+
+    /**
+     * Verify {@link MatrixNxN#ofSi(double[][], Unit)} for nulls, non-square grids, and SI handling.
+     */
+    @Test
+    @DisplayName("ofSi(double[][], Unit): nulls, square grid validation, SI values")
+    public void testOfSiDoubleGrid()
+    {
+        assertThrows(NullPointerException.class, () -> MatrixNxN.ofSi((double[][]) null, Length.Unit.m));
+        assertThrows(NullPointerException.class, () -> MatrixNxN.ofSi(new double[4][4], null));
+
+        // not square
+        assertThrows(IllegalArgumentException.class,
+                () -> MatrixNxN.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.m));
+
+        double[][] gridSi = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
+        MatrixNxN<Length> m = MatrixNxN.ofSi(gridSi, Length.Unit.m);
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, m.si(), EPS);
+    }
+
+    /**
+     * Verify {@link MatrixNxN#of(double[][], Unit)} for unit conversion and structural validation using {@link Duration}.
+     */
+    @Test
+    @DisplayName("of(double[][], Unit): square grid & unit conversion (ms/h)")
+    public void testOfDoubleGridWithUnit()
+    {
+        assertThrows(NullPointerException.class, () -> MatrixNxN.of((double[][]) null, Duration.Unit.s));
+        assertThrows(NullPointerException.class, () -> MatrixNxN.of(new double[2][2], null));
+
+        double[][] gridInHours = {{1, 2}, {3, 4}};
+        MatrixNxN<Duration> m = MatrixNxN.of(gridInHours, Duration.Unit.h);
+        assertEquals(2, m.rows());
+        assertEquals(3600.0, m.si(0, 0), EPS);
+        assertEquals(14_400.0, m.si(1, 1), EPS);
+    }
+
+    /**
+     * Verify {@link MatrixNxN#of(Quantity[][])} for null checks, square validation, and SI conversion.
+     */
+    @Test
+    @DisplayName("of(Q[][]): nulls, square grid validation, SI conversion")
+    public void testOfQuantityGrid()
+    {
+        assertThrows(NullPointerException.class, () -> MatrixNxN.of((Duration[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new Duration[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> MatrixNxN.of(new Duration[][] {{}}));
+        assertThrows(IllegalArgumentException.class,
+                () -> MatrixNxN.of(new Duration[][] {{Duration.ofSi(1), Duration.ofSi(2)}}));
+        Duration[][] grid = {{new Duration(1, Duration.Unit.ms), new Duration(2, Duration.Unit.ms)},
+                {new Duration(3, Duration.Unit.ms), new Duration(4, Duration.Unit.ms)}};
+
+        MatrixNxN<Duration> m = MatrixNxN.of(grid);
+        assertEquals(0.001, m.si(0, 0), EPS);
+        assertEquals(0.004, m.si(1, 1), EPS);
+    }
+
 }

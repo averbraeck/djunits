@@ -14,6 +14,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
+import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
@@ -675,6 +676,159 @@ public class Matrix3x3Test
         assertEquals(1.5, sr.mget(1, 3).getInUnit(), 1E-6);
         assertEquals(2.0, sr.mget(2, 1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Static factory methods: Matrix3x3 of() and ofSi() — exhaustive corner cases
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Test {@link Matrix3x3#of(double[], Unit)} for nulls, wrong sizes, and unit conversion.
+     */
+    @Test
+    @DisplayName("Matrix3x3 of(double[], Unit): nulls, size checks, unit conversion")
+    public void testMatrix3x3OfDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of((double[]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of(new double[9], null));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix3x3.of(new double[8], Length.Unit.m));
+
+        Matrix3x3<Length> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.cm);
+
+        assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix3x3#ofSi(double[], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix3x3 ofSi(double[], Unit): nulls, size checks")
+    public void testMatrix3x3OfSiDoubleArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix3x3.ofSi((double[]) null, Length.Unit.m));
+
+        assertThrows(NullPointerException.class, () -> Matrix3x3.ofSi(new double[9], null));
+
+        assertThrows(IllegalArgumentException.class, () -> Matrix3x3.ofSi(new double[10], Length.Unit.m));
+
+        Matrix3x3<Length> m = Matrix3x3.ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
+
+        assertEquals(Length.Unit.km, m.getDisplayUnit());
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive grid validation for {@link Matrix3x3#of(double[][], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix3x3 of(double[][], Unit): exhaustive grid validation")
+    public void testMatrix3x3OfDoubleGridAllCornerCases()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of((double[][]) null, Length.Unit.m));
+
+        // wrong row count
+        assertThrows(IllegalArgumentException.class, () -> Matrix3x3.of(new double[][] {{1, 2, 3}}, Length.Unit.m));
+
+        // null rows
+        assertThrows(NullPointerException.class,
+                () -> Matrix3x3.of(new double[][] {null, {1, 2, 3}, {4, 5, 6}}, Length.Unit.m));
+
+        assertThrows(NullPointerException.class,
+                () -> Matrix3x3.of(new double[][] {{1, 2, 3}, null, {4, 5, 6}}, Length.Unit.m));
+
+        // wrong column sizes — each row isolated
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new double[][] {{1, 2}, {3, 4, 5}, {6, 7, 8}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new double[][] {{1, 2, 3}, {4, 5}, {6, 7, 8}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new double[][] {{1, 2, 3}, {4, 5, 6}, {7, 8}}, Length.Unit.m));
+
+        // valid grid
+        Matrix3x3<Duration> m = Matrix3x3.of(new double[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, Duration.Unit.h);
+
+        assertArrayEquals(new double[] {3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 32400}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive grid validation for {@link Matrix3x3#ofSi(double[][], Unit)}.
+     */
+    @Test
+    @DisplayName("Matrix3x3 ofSi(double[][], Unit): exhaustive grid validation")
+    public void testMatrix3x3OfSiDoubleGridAllCornerCases()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix3x3.ofSi((double[][]) null, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.m));
+
+        assertThrows(NullPointerException.class,
+                () -> Matrix3x3.ofSi(new double[][] {{1, 2, 3}, null, {7, 8, 9}}, Length.Unit.m));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.ofSi(new double[][] {{1, 2, 3}, {4, 5}, {7, 8, 9}}, Length.Unit.m));
+
+        Matrix3x3<Duration> m = Matrix3x3.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, Duration.Unit.ms);
+
+        assertEquals(Duration.Unit.ms, m.getDisplayUnit());
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, m.si(), EPS);
+    }
+
+    /**
+     * Test {@link Matrix3x3#of(Quantity[])}.
+     */
+    @Test
+    @DisplayName("Matrix3x3 of(Q[]): nulls, size, conversion")
+    public void testMatrix3x3OfQuantityArray()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of((Length[]) null));
+
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of(new Length[] {Length.ofSi(1), Length.ofSi(2), null,
+                Length.ofSi(4), Length.ofSi(5), Length.ofSi(6), Length.ofSi(7), Length.ofSi(8), Length.ofSi(9)}));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new Length[] {Length.ofSi(1), Length.ofSi(2), Length.ofSi(3)}));
+
+        Length[] data = {new Length(1, Length.Unit.km), new Length(2, Length.Unit.km), new Length(3, Length.Unit.km),
+                new Length(4, Length.Unit.km), new Length(5, Length.Unit.km), new Length(6, Length.Unit.km),
+                new Length(7, Length.Unit.km), new Length(8, Length.Unit.km), new Length(9, Length.Unit.km)};
+
+        Matrix3x3<Length> m = Matrix3x3.of(data);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, m.si(), EPS);
+    }
+
+    /**
+     * Exhaustive grid validation for {@link Matrix3x3#of(Quantity[][])}.
+     */
+    @Test
+    @DisplayName("Matrix3x3 of(Q[][]): exhaustive grid validation")
+    public void testMatrix3x3OfQuantityGridAllCornerCases()
+    {
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of((Length[][]) null));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new Length[][] {{Length.ofSi(1), Length.ofSi(2), Length.ofSi(3)}}));
+
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of(new Length[][] {null,
+                {Length.ofSi(4), Length.ofSi(5), Length.ofSi(6)}, {Length.ofSi(7), Length.ofSi(8), Length.ofSi(9)}}));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Matrix3x3.of(new Length[][] {{Length.ofSi(1), Length.ofSi(2), Length.ofSi(3)},
+                        {Length.ofSi(4), Length.ofSi(5)}, {Length.ofSi(7), Length.ofSi(8), Length.ofSi(9)}}));
+
+        assertThrows(NullPointerException.class, () -> Matrix3x3.of(new Length[][] {{Length.ofSi(1), null, Length.ofSi(3)},
+                {Length.ofSi(4), Length.ofSi(5), Length.ofSi(6)}, {Length.ofSi(7), Length.ofSi(8), Length.ofSi(9)}}));
+
+        Length[][] grid = {{new Length(1, Length.Unit.cm), new Length(2, Length.Unit.cm), new Length(3, Length.Unit.cm)},
+                {new Length(4, Length.Unit.cm), new Length(5, Length.Unit.cm), new Length(6, Length.Unit.cm)},
+                {new Length(7, Length.Unit.cm), new Length(8, Length.Unit.cm), new Length(9, Length.Unit.cm)}};
+
+        Matrix3x3<Length> m = Matrix3x3.of(grid);
+        assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09}, m.si(), EPS);
     }
 
 }
