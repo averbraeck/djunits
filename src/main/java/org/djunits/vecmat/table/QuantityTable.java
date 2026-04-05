@@ -247,7 +247,6 @@ public class QuantityTable<Q extends Quantity<Q>>
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> QuantityTable<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
     {
-        Throw.whenNull(displayUnit, "displayUnit");
         return new QuantityTable<>(DenseDoubleDataSi.ofSi(gridSi), displayUnit);
     }
 
@@ -277,8 +276,10 @@ public class QuantityTable<Q extends Quantity<Q>>
     public static <Q extends Quantity<Q>> QuantityTable<Q> of(final Q[][] grid)
     {
         Throw.whenNull(grid, "grid");
-        Throw.when(grid.length == 0 || grid[0].length == 0, IllegalArgumentException.class,
-                "grid.length = 0 or grid[0].length = 0");
+        Throw.when(grid.length == 0, IllegalArgumentException.class, "grid.length = 0");
+        Throw.whenNull(grid[0], "grid[0] = null");
+        Throw.when(grid[0].length == 0, IllegalArgumentException.class, "grid[0].length = 0");
+        Throw.whenNull(grid[0][0], "grid[0][0] = null");
         return new QuantityTable<>(DenseDoubleDataSi.of(grid), grid[0][0].getDisplayUnit());
     }
 
