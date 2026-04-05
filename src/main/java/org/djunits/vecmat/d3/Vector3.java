@@ -515,6 +515,22 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         }
 
         /**
+         * Create a Vector3.Col without needing generics.
+         * @param xSi the x vector entry expressed in the SI unit
+         * @param ySi the y vector entry expressed in the SI unit
+         * @param zSi the z vector entry expressed in the SI unit
+         * @param displayUnit the display unit to use
+         * @return a new Vector3.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> ofSi(final double xSi, final double ySi, final double zSi,
+                final Unit<?, Q> displayUnit)
+        {
+            Throw.whenNull(displayUnit, "displayUnit");
+            return new Vector3.Col<>(xSi, ySi, zSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
          * Create a Vector3.Col without needing generics. The display unit will be taken from the first quantity in the array.
          * @param data the vector entries expressed as an array of quantities
          * @return a new Vector3.Col with a unit
@@ -727,6 +743,22 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
             Throw.whenNull(displayUnit, "displayUnit");
             Throw.when(dataSi.length != 3, IllegalArgumentException.class, "Length of dataSi != 3 but %d", dataSi.length);
             return new Vector3.Row<>(dataSi[0], dataSi[1], dataSi[2], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a Vector3.Row without needing generics.
+         * @param xSi the x vector entry expressed in the SI unit
+         * @param ySi the y vector entry expressed in the SI unit
+         * @param zSi the z vector entry expressed in the SI unit
+         * @param displayUnit the display unit to use
+         * @return a new Vector3.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> ofSi(final double xSi, final double ySi, final double zSi,
+                final Unit<?, Q> displayUnit)
+        {
+            Throw.whenNull(displayUnit, "displayUnit");
+            return new Vector3.Row<>(xSi, ySi, zSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
         }
 
         /**

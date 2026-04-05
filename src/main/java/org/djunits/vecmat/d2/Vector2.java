@@ -457,6 +457,21 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         }
 
         /**
+         * Create a Vector2.Col without needing generics.
+         * @param xSi the x vector entry expressed in the SI unit
+         * @param ySi the y vector entry expressed in the SI unit
+         * @param displayUnit the display unit to use
+         * @return a new Vector2.Col with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector2.Col<Q> ofSi(final double xSi, final double ySi,
+                final Unit<?, Q> displayUnit)
+        {
+            Throw.whenNull(displayUnit, "displayUnit");
+            return new Vector2.Col<>(xSi, ySi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
          * Create a Vector2.Col without needing generics. The display unit will be taken from the first quantity in the array.
          * @param data the vector entries expressed as an array of quantities
          * @return a new Vector2.Col with a unit
@@ -664,6 +679,21 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.whenNull(displayUnit, "displayUnit");
             Throw.when(dataSi.length != 2, IllegalArgumentException.class, "Length of dataSi != 2 but %d", dataSi.length);
             return new Vector2.Row<>(dataSi[0], dataSi[1], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        }
+
+        /**
+         * Create a Vector2.Row without needing generics.
+         * @param xSi the x vector entry expressed in the SI unit
+         * @param ySi the y vector entry expressed in the SI unit
+         * @param displayUnit the display unit to use
+         * @return a new Vector2.Row with a unit
+         * @param <Q> the quantity type
+         */
+        public static <Q extends Quantity<Q>> Vector2.Row<Q> ofSi(final double xSi, final double ySi,
+                final Unit<?, Q> displayUnit)
+        {
+            Throw.whenNull(displayUnit, "displayUnit");
+            return new Vector2.Row<>(xSi, ySi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
         }
 
         /**

@@ -1,9 +1,11 @@
 package org.djunits.vecmat.d1;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
+import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsVector;
+import org.djutils.exceptions.Throw;
 
 /**
  * AbsVector1 implements a vector with one real-valued entry representing an absolute quantity. The vector is immutable, except
@@ -43,6 +45,102 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     public AbsVector1<A, Q> transpose()
     {
         return this;
+    }
+
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param xInUnit the x-value expressed in the unit
+     * @param unit the unit of the data, which will also be used as the display unit
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final double xInUnit, final Unit<?, Q> unit, final R reference)
+    {
+        return new AbsVector1<>(Vector1.of(xInUnit, unit), reference);
+    }
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param data the x-value expressed as a quantity
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final Q data, final R reference)
+    {
+        return new AbsVector1<>(Vector1.of(data), reference);
+    }
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param dataInUnit the x-value expressed as an array in the display unit
+     * @param unit the unit of the data, which will also be used as the display unit
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> of(
+            final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
+    {
+        return new AbsVector1<>(Vector1.of(dataInUnit, unit), reference);
+    }
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param dataSi the x-value expressed as an array in the SI units
+     * @param displayUnit the display unit to use
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
+            final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
+    {
+        return new AbsVector1<>(Vector1.ofSi(dataSi, displayUnit), reference);
+    }
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param data the x-value expressed as an array of quantities
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final Q[] data, final R reference)
+    {
+        return new AbsVector1<>(Vector1.of(data), reference);
+    }
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param relativeVector the relative vector
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final Vector1<Q> relativeVector, final R reference)
+    {
+        Throw.whenNull(relativeVector, "relativeVector");
+        return new AbsVector1<>(relativeVector, reference);
     }
 
 }

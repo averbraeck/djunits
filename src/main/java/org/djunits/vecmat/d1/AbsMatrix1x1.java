@@ -1,8 +1,9 @@
 package org.djunits.vecmat.d1;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
+import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsSquareMatrix;
 
 /**
@@ -66,6 +67,150 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     public AbsVector1<A, Q> getDiagonalVector()
     {
         return new AbsVector1<>(getRelativeVecMat().getDiagonalVector(), getReference());
+    }
+
+    // ------------------------------------------ OF METHODS ------------------------------------------
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param xInUnit the a11-value expressed in the display unit
+     * @param displayUnit the display unit to use
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(
+            final double xInUnit, final Unit<?, Q> displayUnit, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(xInUnit, displayUnit), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param data the a11-value expressed as a quantity
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(final Q data, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(data), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param dataInUnit the a11-value expressed as an array in the display unit
+     * @param unit the unit of the data, which will also be used as the display unit
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(
+            final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(dataInUnit, unit), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param dataSi the a11-value expressed as an array in the SI units
+     * @param displayUnit the display unit to use
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> ofSi(
+            final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(dataSi, displayUnit), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param data the matrix values {a11} expressed as an array of quantities
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(final Q[] data, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(data), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 with a unit, based on a 2-dimensional grid with SI-values.
+     * @param gridSi the matrix values {{a11}} expressed in the SI or base unit
+     * @param displayUnit the unit of the data, which will also be used as the display unit
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> ofSi(
+            final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(gridSi, displayUnit), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 with a unit, based on a 2-dimensional grid.
+     * @param gridInUnit the matrix values {{a11}} expressed in the unit
+     * @param unit the unit of the data, which will also be used as the display unit
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(
+            final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(gridInUnit, unit), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param grid the matrix values {{a11}} expressed as an array of quantities
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(final Q[][] grid, final R reference)
+    {
+        return new AbsMatrix1x1<>(Matrix1x1.of(grid), reference);
+    }
+
+    /**
+     * Create an AbsMatrix1x1 without needing generics.
+     * @param relativeMatrix the relative matrix with values relative to the reference point
+     * @param reference the reference point for the absolute quantities
+     * @return a new Matrix1x1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(final Matrix1x1<Q> relativeMatrix, final R reference)
+    {
+        return new AbsMatrix1x1<>(relativeMatrix, reference);
     }
 
 }

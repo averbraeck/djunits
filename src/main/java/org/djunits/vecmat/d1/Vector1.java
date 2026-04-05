@@ -302,6 +302,19 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
 
     /**
      * Create a Vector1 without needing generics.
+     * @param xSi the x-value expressed in the SI unit
+     * @param displayUnit the display unit to use
+     * @return a new Vector1 with the display unit
+     * @param <Q> the quantity type
+     */
+    public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double xSi, final Unit<?, Q> displayUnit)
+    {
+        Throw.whenNull(displayUnit, "displayUnit");
+        return new Vector1<>(xSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+    }
+
+    /**
+     * Create a Vector1 without needing generics.
      * @param dataSi the x-value expressed as an array in the SI units
      * @param displayUnit the display unit to use
      * @return a new Vector1 with a unit

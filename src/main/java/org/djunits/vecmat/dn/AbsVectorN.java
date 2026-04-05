@@ -1,9 +1,13 @@
 package org.djunits.vecmat.dn;
 
+import java.util.List;
+
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
+import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsVector;
+import org.djutils.exceptions.Throw;
 
 /**
  * AbsVectorN implements a vector with three real-valued entries representing an absolute quantity. The vector is immutable,
@@ -38,46 +42,6 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
     }
 
     /**
-     * Row vector for AbsVectorN with absolute quantities.
-     * <p>
-     * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
-     * @author Alexander Verbraeck
-     * @param <A> the absolute quantity type
-     * @param <Q> the corresponding relative quantity type
-     */
-    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
-            extends AbsVectorN<A, Q, AbsVectorN.Row<A, Q>, VectorN.Row<Q>, AbsVectorN.Col<A, Q>>
-    {
-        /** */
-        private static final long serialVersionUID = 600L;
-
-        /**
-         * Create a new AbsVectorN with absolute quantities, with a display unit and a reference point.
-         * @param relativeVector the vector with values relative to the reference point
-         * @param reference the reference point for the absolute values
-         */
-        public Row(final VectorN.Row<Q> relativeVector, final Reference<?, A, Q> reference)
-        {
-            super(relativeVector, reference);
-        }
-
-        @Override
-        public AbsVectorN.Row<A, Q> instantiate(final VectorN.Row<Q> relativeVector,
-                final Reference<?, A, Q> reference)
-        {
-            return new AbsVectorN.Row<>(relativeVector, reference);
-        }
-
-        @Override
-        public AbsVectorN.Col<A, Q> transpose()
-        {
-            return new AbsVectorN.Col<>(getRelativeVecMat().transpose(), getReference());
-        }
-    }
-
-    /**
      * Column vector for AbsVectorN with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
@@ -104,8 +68,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         }
 
         @Override
-        public AbsVectorN.Col<A, Q> instantiate(final VectorN.Col<Q> relativeVector,
-                final Reference<?, A, Q> reference)
+        public AbsVectorN.Col<A, Q> instantiate(final VectorN.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             return new AbsVectorN.Col<>(relativeVector, reference);
         }
@@ -114,6 +77,215 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         public AbsVectorN.Row<A, Q> transpose()
         {
             return new AbsVectorN.Row<>(getRelativeVecMat().transpose(), getReference());
+        }
+
+        // ------------------------------------------ OF METHODS ------------------------------------------
+
+        /**
+         * Create a AbsVectorN.Col without needing generics.
+         * @param dataInUnit the vector entries expressed as an array in the unit
+         * @param unit the unit of the data, which will also be used as the display unit
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final double[] dataInUnit, final Unit<?, Q> unit,
+                        final R reference)
+        {
+            return new AbsVectorN.Col<>(VectorN.Col.of(dataInUnit, unit), reference);
+        }
+
+        /**
+         * Create a AbsVectorN.Col without needing generics.
+         * @param dataSi the vector entries expressed as an array in the SI units
+         * @param displayUnit the display unit to use
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit,
+                        final R reference)
+        {
+            return new AbsVectorN.Col<>(VectorN.Col.ofSi(dataSi, displayUnit), reference);
+        }
+
+        /**
+         * Create a AbsVectorN.Col without needing generics. The display unit will be taken from the first quantity in the
+         * array.
+         * @param data the vector entries expressed as an array of quantities
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final Q[] data, final R reference)
+        {
+            return new AbsVectorN.Col<>(VectorN.Col.of(data), reference);
+        }
+
+        /**
+         * Create a new column VectorN with a unit, based on a quantity list that contains data. The display unit will be taken
+         * from the first quantity in the list.
+         * @param data the data of the vector, expressed as a list of quantities.
+         * @param reference the reference point for the absolute quantities
+         * @return a new column VectorN with a display unit, based on a quantity list
+         * @throws IllegalArgumentException when data size is less than 1
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final List<Q> data, final R reference)
+        {
+            return new AbsVectorN.Col<>(VectorN.Col.of(data), reference);
+        }
+
+        /**
+         * Create an AbsVectorN.Col without needing generics.
+         * @param relativeVector the relative vector
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final VectorN.Col<Q> relativeVector, final R reference)
+        {
+            Throw.whenNull(relativeVector, "relativeVector");
+            return new AbsVectorN.Col<>(relativeVector, reference);
+        }
+    }
+
+    /**
+     * Row vector for AbsVectorN with absolute quantities.
+     * <p>
+     * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
+     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
+     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * @author Alexander Verbraeck
+     * @param <A> the absolute quantity type
+     * @param <Q> the corresponding relative quantity type
+     */
+    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+            extends AbsVectorN<A, Q, AbsVectorN.Row<A, Q>, VectorN.Row<Q>, AbsVectorN.Col<A, Q>>
+    {
+        /** */
+        private static final long serialVersionUID = 600L;
+
+        /**
+         * Create a new AbsVectorN with absolute quantities, with a display unit and a reference point.
+         * @param relativeVector the vector with values relative to the reference point
+         * @param reference the reference point for the absolute values
+         */
+        public Row(final VectorN.Row<Q> relativeVector, final Reference<?, A, Q> reference)
+        {
+            super(relativeVector, reference);
+        }
+
+        @Override
+        public AbsVectorN.Row<A, Q> instantiate(final VectorN.Row<Q> relativeVector, final Reference<?, A, Q> reference)
+        {
+            return new AbsVectorN.Row<>(relativeVector, reference);
+        }
+
+        @Override
+        public AbsVectorN.Col<A, Q> transpose()
+        {
+            return new AbsVectorN.Col<>(getRelativeVecMat().transpose(), getReference());
+        }
+
+        // ------------------------------------------ OF METHODS ------------------------------------------
+
+        /**
+         * Create a AbsVectorN.Row without needing generics.
+         * @param dataInUnit the vector entries expressed as an array in the unit
+         * @param unit the unit of the data, which will also be used as the display unit
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final double[] dataInUnit, final Unit<?, Q> unit,
+                        final R reference)
+        {
+            return new AbsVectorN.Row<>(VectorN.Row.of(dataInUnit, unit), reference);
+        }
+
+        /**
+         * Create a AbsVectorN.Row without needing generics.
+         * @param dataSi the vector entries expressed as an array in the SI units
+         * @param displayUnit the display unit to use
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit,
+                        final R reference)
+        {
+            return new AbsVectorN.Row<>(VectorN.Row.ofSi(dataSi, displayUnit), reference);
+        }
+
+        /**
+         * Create a AbsVectorN.Row without needing generics. The display unit will be taken from the first quantity in the
+         * array.
+         * @param data the vector entries expressed as an array of quantities
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final Q[] data, final R reference)
+        {
+            return new AbsVectorN.Row<>(VectorN.Row.of(data), reference);
+        }
+
+        /**
+         * Create a new column VectorN with a unit, based on a quantity list that contains data. The display unit will be taken
+         * from the first quantity in the list.
+         * @param data the data of the vector, expressed as a list of quantities.
+         * @param reference the reference point for the absolute quantities
+         * @return a new column VectorN with a display unit, based on a quantity list
+         * @throws IllegalArgumentException when data size is less than 1
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final List<Q> data, final R reference)
+        {
+            return new AbsVectorN.Row<>(VectorN.Row.of(data), reference);
+        }
+
+        /**
+         * Create an AbsVectorN.Row without needing generics.
+         * @param relativeVector the relative vector
+         * @param reference the reference point for the absolute quantities
+         * @return a new AbsVectorN.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final VectorN.Row<Q> relativeVector, final R reference)
+        {
+            Throw.whenNull(relativeVector, "relativeVector");
+            return new AbsVectorN.Row<>(relativeVector, reference);
         }
     }
 
