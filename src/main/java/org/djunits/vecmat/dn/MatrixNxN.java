@@ -329,7 +329,6 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> MatrixNxN<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
     {
-        Throw.whenNull(displayUnit, "displayUnit");
         return new MatrixNxN<>(DenseDoubleDataSi.ofSi(gridSi), displayUnit);
     }
 
@@ -359,8 +358,10 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     public static <Q extends Quantity<Q>> MatrixNxN<Q> of(final Q[][] grid)
     {
         Throw.whenNull(grid, "grid");
-        Throw.when(grid.length == 0 || grid[0].length == 0, IllegalArgumentException.class,
-                "grid.length = 0 or grid[0].length = 0");
+        Throw.when(grid.length == 0, IllegalArgumentException.class, "grid.length = 0");
+        Throw.whenNull(grid[0], "grid[0] = null");
+        Throw.when(grid[0].length == 0, IllegalArgumentException.class, "grid[0].length = 0");
+        Throw.whenNull(grid[0][0], "grid[0][0] = null");
         return new MatrixNxN<>(DenseDoubleDataSi.of(grid), grid[0][0].getDisplayUnit());
     }
 

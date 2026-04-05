@@ -256,6 +256,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     {
         Throw.whenNull(data, "data");
         Throw.when(data.length != 1, IllegalArgumentException.class, "Length of data != 1 but %d", data.length);
+        Throw.whenNull(data[0], "data[0] = null");
         return new Matrix1x1<>(new double[] {data[0].si()}, data[0].getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(data[0].getDisplayUnit());
     }
@@ -271,7 +272,9 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public static <Q extends Quantity<Q>> Matrix1x1<Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(gridSi, "gridSi");
-        Throw.when(gridSi.length != 1 || gridSi[0].length != 1, IllegalArgumentException.class, "gridSi is not a 1x1 array");
+        Throw.when(gridSi.length != 1, IllegalArgumentException.class, "gridSi does not have 1 row");
+        Throw.whenNull(gridSi[0], "gridSi[0] = null");
+        Throw.when(gridSi[0].length != 1, IllegalArgumentException.class, "gridSi is not a 1x1 array");
         return new Matrix1x1<Q>(new double[] {gridSi[0][0]}, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
     }
 
@@ -286,8 +289,9 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[][] gridInUnit, final Unit<?, Q> unit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
-        Throw.when(gridInUnit.length != 1 || gridInUnit[0].length != 1, IllegalArgumentException.class,
-                "gridInUnit is not a 1x1 array");
+        Throw.when(gridInUnit.length != 1, IllegalArgumentException.class, "gridInUnit does not have 1 row");
+        Throw.whenNull(gridInUnit[0], "gridInUnit[0] = null");
+        Throw.when(gridInUnit[0].length != 1, IllegalArgumentException.class, "gridInUnit is not a 1x1 array");
         return new Matrix1x1<Q>(new double[] {gridInUnit[0][0]}, unit);
     }
 
@@ -300,8 +304,10 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final Q[][] grid)
     {
         Throw.whenNull(grid, "grid");
-        Throw.when(grid.length != 1, IllegalArgumentException.class, "Length of grid != 1 but %d", grid.length);
-        Throw.when(grid[0].length != 1, IllegalArgumentException.class, "Length of grid[0] != 1 but %d", grid.length);
+        Throw.when(grid.length != 1, IllegalArgumentException.class, "grid does not have 1 row");
+        Throw.whenNull(grid[0], "grid[0] = null");
+        Throw.when(grid[0].length != 1, IllegalArgumentException.class, "grid is not a 1x1 array");
+        Throw.whenNull(grid[0][0], "grid[0][0] = null");
         return new Matrix1x1<>(new double[] {grid[0][0].si()}, grid[0][0].getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(grid[0][0].getDisplayUnit());
     }

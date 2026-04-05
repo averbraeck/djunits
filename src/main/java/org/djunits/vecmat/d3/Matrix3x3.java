@@ -20,8 +20,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  */
-public class Matrix3x3<Q extends Quantity<Q>>
-        extends SquareDenseMatrix<Q, Matrix3x3<Q>, Matrix3x3<SIQuantity>, Matrix3x3<?>>
+public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matrix3x3<Q>, Matrix3x3<SIQuantity>, Matrix3x3<?>>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -133,8 +132,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
     {
         checkMultiply(otherMat);
         double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 3, 3, 3);
-        return new Matrix3x3<SIQuantity>(resultData,
-                getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
+        return new Matrix3x3<SIQuantity>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
     /**
@@ -206,6 +204,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
         double[] dataSi = new double[9];
         for (int i = 0; i < 9; i++)
         {
+            Throw.whenNull(data[i], "data[%d] = null", i);
             dataSi[i] = data[i].si();
         }
         return new Matrix3x3<>(dataSi, data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
@@ -224,11 +223,12 @@ public class Matrix3x3<Q extends Quantity<Q>>
     {
         Throw.whenNull(gridSi, "gridSi");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(gridSi.length != 3 || gridSi[0].length != 3 || gridSi[1].length != 3, IllegalArgumentException.class,
-                "grid is not a 3x3 array");
+        Throw.when(gridSi.length != 3, IllegalArgumentException.class, "gridSi does not have 3 rows");
         double[] dataSi = new double[9];
         for (int r = 0; r < 3; r++)
         {
+            Throw.whenNull(gridSi[r], "gridSi[%d][] = null", r);
+            Throw.when(gridSi[r].length != 3, IllegalArgumentException.class, "gridSi is not a 3x3 array");
             for (int c = 0; c < 3; c++)
             {
                 dataSi[r * 3 + c] = gridSi[r][c];
@@ -250,11 +250,12 @@ public class Matrix3x3<Q extends Quantity<Q>>
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
-        Throw.when(gridInUnit.length != 3 || gridInUnit[0].length != 3 || gridInUnit[1].length != 3,
-                IllegalArgumentException.class, "gridInUnit is not a 3x3 array");
+        Throw.when(gridInUnit.length != 3, IllegalArgumentException.class, "gridInUnit does not have 3 rows");
         double[] dataInUnit = new double[9];
         for (int r = 0; r < 3; r++)
         {
+            Throw.whenNull(gridInUnit[r], "gridInUnit[%d][] = null", r);
+            Throw.when(gridInUnit[r].length != 3, IllegalArgumentException.class, "gridInUnit is not a 3x3 array");
             for (int c = 0; c < 3; c++)
             {
                 dataInUnit[r * 3 + c] = gridInUnit[r][c];
@@ -274,13 +275,15 @@ public class Matrix3x3<Q extends Quantity<Q>>
     public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final Q[][] grid)
     {
         Throw.whenNull(grid, "grid");
-        Throw.when(grid.length != 3 || grid[0].length != 3 || grid[1].length != 3, IllegalArgumentException.class,
-                "grid is not a 3x3 array");
+        Throw.when(grid.length != 3, IllegalArgumentException.class, "grid does not have 3 rows");
         double[] dataSi = new double[9];
         for (int r = 0; r < 3; r++)
         {
+            Throw.whenNull(grid[r], "grid[%d][] = null", r);
+            Throw.when(grid[r].length != 3, IllegalArgumentException.class, "grid is not a 3x3 array");
             for (int c = 0; c < 3; c++)
             {
+                Throw.whenNull(grid[r][c], "grid[%d][%d] = null", r, c);
                 dataSi[r * 3 + c] = grid[r][c].si();
             }
         }
@@ -297,8 +300,7 @@ public class Matrix3x3<Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final Unit<?, TQ> targetUnit)
-            throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,

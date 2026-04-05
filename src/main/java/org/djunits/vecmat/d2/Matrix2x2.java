@@ -153,7 +153,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     // ------------------------------------------ OF METHODS ------------------------------------------
 
     /**
-     * Create a new Matrix2x2 with a unit, based on a , based on a row-major array with values in the given unit.
+     * Create a new Matrix2x2 with a unit, based on a row-major array with values in the given unit.
      * @param dataInUnit the matrix values {a11, a12, a21, a22} expressed in the unit
      * @param unit the unit of the data, also used as the display unit
      * @param <Q> the quantity type
@@ -199,6 +199,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         double[] dataSi = new double[4];
         for (int i = 0; i < 4; i++)
         {
+            Throw.whenNull(data[i], "data[%d] = null", i);
             dataSi[i] = data[i].si();
         }
         return new Matrix2x2<>(dataSi, data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
@@ -217,11 +218,12 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     {
         Throw.whenNull(gridSi, "gridSi");
         Throw.whenNull(displayUnit, "displayUnit");
-        Throw.when(gridSi.length != 2 || gridSi[0].length != 2 || gridSi[1].length != 2, IllegalArgumentException.class,
-                "grid is not a 2x2 array");
+        Throw.when(gridSi.length != 2, IllegalArgumentException.class, "gridSi does not have 2 rows");
         double[] dataSi = new double[4];
         for (int r = 0; r < 2; r++)
         {
+            Throw.whenNull(gridSi[r], "gridSi[%d][] = null", r);
+            Throw.when(gridSi[r].length != 2, IllegalArgumentException.class, "gridSi is not a 2x2 array");
             for (int c = 0; c < 2; c++)
             {
                 dataSi[r * 2 + c] = gridSi[r][c];
@@ -243,11 +245,12 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
-        Throw.when(gridInUnit.length != 2 || gridInUnit[0].length != 2 || gridInUnit[1].length != 2,
-                IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
+        Throw.when(gridInUnit.length != 2, IllegalArgumentException.class, "gridInUnit does not have 2 rows");
         double[] dataInUnit = new double[4];
         for (int r = 0; r < 2; r++)
         {
+            Throw.whenNull(gridInUnit[r], "gridInUnit[%d][] = null", r);
+            Throw.when(gridInUnit[r].length != 2, IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
             for (int c = 0; c < 2; c++)
             {
                 dataInUnit[r * 2 + c] = gridInUnit[r][c];
@@ -267,13 +270,15 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public static <Q extends Quantity<Q>> Matrix2x2<Q> of(final Q[][] grid)
     {
         Throw.whenNull(grid, "grid");
-        Throw.when(grid.length != 2 || grid[0].length != 2 || grid[1].length != 2, IllegalArgumentException.class,
-                "grid is not a 2x2 array");
+        Throw.when(grid.length != 2, IllegalArgumentException.class, "grid does not have 2 rows");
         double[] dataSi = new double[4];
         for (int r = 0; r < 2; r++)
         {
+            Throw.whenNull(grid[r], "grid[%d][] = null", r);
+            Throw.when(grid[r].length != 2, IllegalArgumentException.class, "grid is not a 2x2 array");
             for (int c = 0; c < 2; c++)
             {
+                Throw.whenNull(grid[r][c], "grid[%d][%d] = null", r, c);
                 dataSi[r * 2 + c] = grid[r][c].si();
             }
         }
