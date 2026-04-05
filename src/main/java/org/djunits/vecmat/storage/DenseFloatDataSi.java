@@ -140,7 +140,7 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
     public static <Q extends Quantity<Q>> DenseFloatDataSi of(final double[] dataInUnit, final int rows, final int cols,
             final Unit<?, Q> unit)
     {
-        Throw.whenNull(dataInUnit, "data");
+        Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.whenNull(unit, "unit");
         float[] dataSi = new float[dataInUnit.length];
         for (int i = 0; i < dataInUnit.length; i++)
@@ -166,6 +166,7 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
         float[] dataSi = new float[data.length];
         for (int i = 0; i < data.length; i++)
         {
+            Throw.whenNull(data[i], "data[%d] = null", i);
             dataSi[i] = (float) data[i].si();
         }
         return new DenseFloatDataSi(dataSi, rows, cols);
@@ -177,21 +178,24 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
      * @return a dense float data object with SI values for vectors, matrices and tables
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    @SuppressWarnings("checkstyle:needbraces")
     public static DenseFloatDataSi ofSi(final double[][] gridSi)
     {
-        Throw.whenNull(gridSi, "data");
+        Throw.whenNull(gridSi, "gridSi");
         Throw.when(gridSi.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         int rows = gridSi.length;
+        Throw.whenNull(gridSi[0], "gridSi[0] = null");
         int cols = gridSi[0].length;
         float[] dataSi = new float[rows * cols];
         for (int r = 0; r < rows; r++)
         {
+            Throw.whenNull(gridSi[r], "gridSi[%d] = null", r);
             Throw.when(gridSi[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, gridSi[r].length,
                     cols);
             for (int c = 0; c < cols; c++)
+            {
                 dataSi[r * cols + c] = (float) gridSi[r][c];
+            }
         }
         return new DenseFloatDataSi(dataSi, rows, cols);
     }
@@ -202,21 +206,24 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
      * @return a dense float data object with SI values for vectors, matrices and tables
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    @SuppressWarnings("checkstyle:needbraces")
     public static DenseFloatDataSi ofSi(final float[][] gridSi)
     {
-        Throw.whenNull(gridSi, "data");
+        Throw.whenNull(gridSi, "gridSi");
         Throw.when(gridSi.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         int rows = gridSi.length;
+        Throw.whenNull(gridSi[0], "gridSi[0] = null");
         int cols = gridSi[0].length;
         float[] dataSi = new float[rows * cols];
         for (int r = 0; r < rows; r++)
         {
+            Throw.whenNull(gridSi[r], "gridSi[%d] = null", r);
             Throw.when(gridSi[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, gridSi[r].length,
                     cols);
             for (int c = 0; c < cols; c++)
+            {
                 dataSi[r * cols + c] = gridSi[r][c];
+            }
         }
         return new DenseFloatDataSi(dataSi, rows, cols);
     }
@@ -229,22 +236,25 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
      */
-    @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> DenseFloatDataSi of(final double[][] gridInUnit, final Unit<?, Q> unit)
     {
-        Throw.whenNull(gridInUnit, "dataInUnit");
+        Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
         Throw.when(gridInUnit.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         int rows = gridInUnit.length;
+        Throw.whenNull(gridInUnit[0], "gridInUnit[0] = null");
         int cols = gridInUnit[0].length;
         float[] dataSi = new float[rows * cols];
         for (int r = 0; r < rows; r++)
         {
+            Throw.whenNull(gridInUnit[r], "gridInUnit[%d] = null", r);
             Throw.when(gridInUnit[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, gridInUnit[r].length,
                     cols);
             for (int c = 0; c < cols; c++)
+            {
                 dataSi[r * cols + c] = (float) unit.toBaseValue(gridInUnit[r][c]);
+            }
         }
         return new DenseFloatDataSi(dataSi, rows, cols);
     }
@@ -257,22 +267,25 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
      */
-    @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> DenseFloatDataSi of(final float[][] gridInUnit, final Unit<?, Q> unit)
     {
-        Throw.whenNull(gridInUnit, "dataInUnit");
+        Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
         Throw.when(gridInUnit.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         int rows = gridInUnit.length;
+        Throw.whenNull(gridInUnit[0], "gridInUnit[0] = null");
         int cols = gridInUnit[0].length;
         float[] dataSi = new float[rows * cols];
         for (int r = 0; r < rows; r++)
         {
+            Throw.whenNull(gridInUnit[r], "gridInUnit[%d] = null", r);
             Throw.when(gridInUnit[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, gridInUnit[r].length,
                     cols);
             for (int c = 0; c < cols; c++)
+            {
                 dataSi[r * cols + c] = (float) unit.toBaseValue(gridInUnit[r][c]);
+            }
         }
         return new DenseFloatDataSi(dataSi, rows, cols);
     }
@@ -284,21 +297,25 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
      */
-    @SuppressWarnings("checkstyle:needbraces")
     public static <Q extends Quantity<Q>> DenseFloatDataSi of(final Q[][] grid)
     {
-        Throw.whenNull(grid, "data");
+        Throw.whenNull(grid, "grid");
         Throw.when(grid.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
         int rows = grid.length;
+        Throw.whenNull(grid[0], "grid[0] = null");
         int cols = grid[0].length;
         float[] dataSi = new float[rows * cols];
         for (int r = 0; r < rows; r++)
         {
+            Throw.whenNull(grid[r], "grid[%d] = null", r);
             Throw.when(grid[r].length != cols, IllegalArgumentException.class,
                     "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, grid[r].length,
                     cols);
             for (int c = 0; c < cols; c++)
+            {
+                Throw.whenNull(grid[r][c], "grid[%d][%d] = null", r, c);
                 dataSi[r * cols + c] = (float) grid[r][c].si();
+            }
         }
         return new DenseFloatDataSi(dataSi, rows, cols);
     }
