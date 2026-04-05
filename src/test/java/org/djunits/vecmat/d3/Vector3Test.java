@@ -610,5 +610,280 @@ public class Vector3Test
         assertEquals(1.5, sr.get(2).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> c.divideEntries(d).as(Area.Unit.m2));
     }
+    // =================================================================================================
+    // COMPLETE FACTORY TESTS FOR Vector3.of(...) AND Vector3.ofSi(...).
+    // Coverage goal: ALL overloads, ALL branches, Row vs Col explicit.
+    // =================================================================================================
 
+    // -------------------------------------------------------------------------------------------------
+    // of(double x, double y, double z, Unit unit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(double,double,double,unit) happy path. */
+    @Test
+    public void testColOfDoubleTripleUnitHappy()
+    {
+        Vector3.Col<Length> v = Vector3.Col.of(1.0, 2.0, 3.0, Length.Unit.km);
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, v.si(), EPS);
+    }
+
+    /** Row.of(double,double,double,unit) happy path. */
+    @Test
+    public void testRowOfDoubleTripleUnitHappy()
+    {
+        Vector3.Row<Duration> v = Vector3.Row.of(500.0, 1500.0, 2500.0, Duration.Unit.ms);
+        assertEquals(Duration.Unit.ms, v.getDisplayUnit());
+        assertArrayEquals(new double[] {0.5, 1.5, 2.5}, v.si(), EPS);
+    }
+
+    /** Col.of(double,double,double,null) must throw. */
+    @Test
+    public void testColOfDoubleTripleUnitNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.of(1.0, 2.0, 3.0, null));
+    }
+
+    /** Row.of(double,double,double,null) must throw. */
+    @Test
+    public void testRowOfDoubleTripleUnitNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Row.of(1.0, 2.0, 3.0, null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(Q x, Q y, Q z).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(Q,Q,Q) happy path. */
+    @Test
+    public void testColOfQQQHappy()
+    {
+        Length x = new Length(1.0, Length.Unit.km);
+        Length y = new Length(200.0, Length.Unit.m);
+        Length z = Length.ofSi(3.0);
+
+        Vector3.Col<Length> v = Vector3.Col.of(x, y, z);
+
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1000.0, 200.0, 3.0}, v.si(), EPS);
+    }
+
+    /** Row.of(Q,Q,Q) happy path. */
+    @Test
+    public void testRowOfQQQHappy()
+    {
+        Duration x = new Duration(1.0, Duration.Unit.h);
+        Duration y = new Duration(30.0, Duration.Unit.min);
+        Duration z = Duration.ofSi(15.0);
+
+        Vector3.Row<Duration> v = Vector3.Row.of(x, y, z);
+
+        assertEquals(Duration.Unit.h, v.getDisplayUnit());
+        assertArrayEquals(new double[] {3600.0, 1800.0, 15.0}, v.si(), EPS);
+    }
+
+    /** Col.of(Q,Q,Q) with null x. */
+    @Test
+    public void testColOfQQQNullX()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.of(null, Length.ofSi(1.0), Length.ofSi(2.0)));
+    }
+
+    /** Row.of(Q,Q,Q) with null y. */
+    @Test
+    public void testRowOfQQQNullY()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Row.of(Duration.ofSi(1.0), null, Duration.ofSi(2.0)));
+    }
+
+    /** Col.of(Q,Q,Q) with null z. */
+    @Test
+    public void testColOfQQQNullZ()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.of(Length.ofSi(1.0), Length.ofSi(2.0), null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(double[] dataInUnit, Unit unit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(double[],unit) happy path. */
+    @Test
+    public void testColOfArrayUnitHappy()
+    {
+        Vector3.Col<Length> v = Vector3.Col.of(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+    }
+
+    /** Row.of(double[],unit) happy path. */
+    @Test
+    public void testRowOfArrayUnitHappy()
+    {
+        Vector3.Row<Duration> v = Vector3.Row.of(new double[] {1000.0, 2000.0, 3000.0}, Duration.Unit.ms);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+    }
+
+    /** Col.of(double[],unit) null array. */
+    @Test
+    public void testColOfArrayUnitNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.of((double[]) null, Length.Unit.m));
+    }
+
+    /** Row.of(double[],unit) null array. */
+    @Test
+    public void testRowOfArrayUnitNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Row.of((double[]) null, Length.Unit.m));
+    }
+
+    /** Col.of(double[],unit) wrong length. */
+    @Test
+    public void testColOfArrayUnitWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector3.Col.of(new double[] {1.0, 2.0}, Duration.Unit.s));
+    }
+
+    /** Row.of(double[],unit) wrong length. */
+    @Test
+    public void testRowOfArrayUnitWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector3.Row.of(new double[] {1.0, 2.0}, Duration.Unit.s));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // ofSi(double[] dataSi, Unit displayUnit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.ofSi(double[],unit) happy path. */
+    @Test
+    public void testColOfSiArrayUnitHappy()
+    {
+        Vector3.Col<Length> v = Vector3.Col.ofSi(new double[] {10.0, 20.0, 30.0}, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, v.getDisplayUnit());
+        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, v.si(), EPS);
+    }
+
+    /** Row.ofSi(double[],unit) happy path. */
+    @Test
+    public void testRowOfSiArrayUnitHappy()
+    {
+        Vector3.Row<Duration> v = Vector3.Row.ofSi(new double[] {3600.0, 7200.0, 1800.0}, Duration.Unit.s);
+        assertEquals(Duration.Unit.s, v.getDisplayUnit());
+        assertArrayEquals(new double[] {3600.0, 7200.0, 1800.0}, v.si(), EPS);
+    }
+
+    /** Col.ofSi(double[],unit) wrong length. */
+    @Test
+    public void testColOfSiArrayWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector3.Col.ofSi(new double[] {1.0, 2.0}, Length.Unit.m));
+    }
+
+    /** Row.ofSi(double[],unit) wrong length. */
+    @Test
+    public void testRowOfSiArrayWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector3.Row.ofSi(new double[] {1.0, 2.0}, Length.Unit.m));
+    }
+
+    /** Col.ofSi(double[],null unit). */
+    @Test
+    public void testColOfSiArrayNullUnit()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.ofSi(new double[] {1.0, 2.0, 3.0}, null));
+    }
+
+    /** Row.ofSi(double[],null unit). */
+    @Test
+    public void testRowOfSiArrayNullUnit()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Row.ofSi(new double[] {1.0, 2.0, 3.0}, null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // ofSi(double xSi, double ySi, double zSi, Unit displayUnit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.ofSi(double,double,double,unit) happy path. */
+    @Test
+    public void testColOfSiScalarsHappy()
+    {
+        Vector3.Col<Length> v = Vector3.Col.ofSi(1.0, 2.0, 3.0, Length.Unit.m);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+    }
+
+    /** Row.ofSi(double,double,double,unit) happy path. */
+    @Test
+    public void testRowOfSiScalarsHappy()
+    {
+        Vector3.Row<Duration> v = Vector3.Row.ofSi(5.0, 6.0, 7.0, Duration.Unit.s);
+        assertArrayEquals(new double[] {5.0, 6.0, 7.0}, v.si(), EPS);
+    }
+
+    /** Col.ofSi(double,double,double,null) must throw. */
+    @Test
+    public void testColOfSiScalarsNullUnit()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.ofSi(1.0, 2.0, 3.0, null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(Q[] data).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(Q[]) happy path. */
+    @Test
+    public void testColOfQuantityArrayHappy()
+    {
+        Length[] data = {new Length(1.0, Length.Unit.km), new Length(500.0, Length.Unit.m), Length.ofSi(2.0)};
+
+        Vector3.Col<Length> v = Vector3.Col.of(data);
+
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1000.0, 500.0, 2.0}, v.si(), EPS);
+    }
+
+    /** Row.of(Q[]) happy path. */
+    @Test
+    public void testRowOfQuantityArrayHappy()
+    {
+        Duration[] data = {new Duration(1.0, Duration.Unit.h), new Duration(30.0, Duration.Unit.min), Duration.ofSi(10.0)};
+
+        Vector3.Row<Duration> v = Vector3.Row.of(data);
+
+        assertEquals(Duration.Unit.h, v.getDisplayUnit());
+        assertArrayEquals(new double[] {3600.0, 1800.0, 10.0}, v.si(), EPS);
+    }
+
+    /** Col.of(Q[]) null array. */
+    @Test
+    public void testColOfQuantityArrayNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Col.of((Length[]) null));
+    }
+
+    /** Row.of(Q[]) null array. */
+    @Test
+    public void testRowOfQuantityArrayNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector3.Row.of((Length[]) null));
+    }
+
+    /** Col.of(Q[]) wrong length. */
+    @Test
+    public void testColOfQuantityArrayWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class,
+                () -> Vector3.Col.of(new Duration[] {Duration.ofSi(1.0), Duration.ofSi(2.0)}));
+    }
+
+    /** Row.of(Q[]) wrong length. */
+    @Test
+    public void testRowOfQuantityArrayWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class,
+                () -> Vector3.Row.of(new Duration[] {Duration.ofSi(1.0), Duration.ofSi(2.0)}));
+    }
 }

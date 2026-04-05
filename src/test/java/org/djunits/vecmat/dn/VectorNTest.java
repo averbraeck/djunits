@@ -727,4 +727,252 @@ public final class VectorNTest
         assertThrows(IllegalArgumentException.class, () -> c.divideEntries(d).as(Area.Unit.m2));
     }
 
+    // =================================================================================================
+    // COMPLETE FACTORY TESTS FOR VectorN.of(...) AND VectorN.ofSi(...).
+    // All overloads, all branches, Row and Col symmetric.
+    // =================================================================================================
+
+    // -------------------------------------------------------------------------------------------------
+    // of(double[] dataInUnit, Unit unit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(double[], unit) happy path. */
+    @Test
+    public void testColOfArrayUnitHappy()
+    {
+        VectorN.Col<Length> v = VectorN.Col.of(new double[] {1.0, 2.0, 3.0}, Length.Unit.km);
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, v.si(), EPS);
+    }
+
+    /** Row.of(double[], unit) happy path. */
+    @Test
+    public void testRowOfArrayUnitHappy()
+    {
+        VectorN.Row<Length> v = VectorN.Row.of(new double[] {10.0, 20.0}, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, v.getDisplayUnit());
+        assertArrayEquals(new double[] {0.10, 0.20}, v.si(), EPS);
+    }
+
+    /** Col.of(double[], unit) with empty array. */
+    @Test
+    public void testColOfArrayUnitEmpty()
+    {
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Col.of(new double[] {}, Length.Unit.m));
+    }
+
+    /** Row.of(double[], unit) with empty array. */
+    @Test
+    public void testRowOfArrayUnitEmpty()
+    {
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Row.of(new double[] {}, Length.Unit.m));
+    }
+
+    /** Col.of(double[], unit) with null array. */
+    @Test
+    public void testColOfArrayUnitNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> VectorN.Col.of((double[]) null, Length.Unit.m));
+    }
+
+    /** Row.of(double[], unit) with null array. */
+    @Test
+    public void testRowOfArrayUnitNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> VectorN.Row.of((double[]) null, Length.Unit.m));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // ofSi(double[] dataSi, Unit displayUnit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.ofSi(double[], unit) happy path. */
+    @Test
+    public void testColOfSiArrayHappy()
+    {
+        VectorN.Col<Length> v = VectorN.Col.ofSi(new double[] {5.0, 6.0}, Length.Unit.m);
+        assertEquals(Length.Unit.m, v.getDisplayUnit());
+        assertArrayEquals(new double[] {5.0, 6.0}, v.si(), EPS);
+    }
+
+    /** Row.ofSi(double[], unit) happy path. */
+    @Test
+    public void testRowOfSiArrayHappy()
+    {
+        VectorN.Row<Length> v = VectorN.Row.ofSi(new double[] {7.0, 8.0, 9.0}, Length.Unit.km);
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {7.0, 8.0, 9.0}, v.si(), EPS);
+    }
+
+    /** Col.ofSi(double[], unit) with null unit. */
+    @Test
+    public void testColOfSiArrayNullUnit()
+    {
+        assertThrows(NullPointerException.class, () -> VectorN.Col.ofSi(new double[] {1.0}, null));
+    }
+
+    /** Row.ofSi(double[], unit) with null array. */
+    @Test
+    public void testRowOfSiArrayNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> VectorN.Row.ofSi((double[]) null, Length.Unit.m));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(Q[] data).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(Q[]) happy path. */
+    @Test
+    public void testColOfQuantityArrayHappy()
+    {
+        Length[] data = {new Length(1.0, Length.Unit.km), new Length(500.0, Length.Unit.m)};
+
+        VectorN.Col<Length> v = VectorN.Col.of(data);
+
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1000.0, 500.0}, v.si(), EPS);
+    }
+
+    /** Row.of(Q[]) happy path. */
+    @Test
+    public void testRowOfQuantityArrayHappy()
+    {
+        Length[] data = {new Length(2.0, Length.Unit.m), new Length(3.0, Length.Unit.m), new Length(4.0, Length.Unit.m)};
+
+        VectorN.Row<Length> v = VectorN.Row.of(data);
+
+        assertEquals(Length.Unit.m, v.getDisplayUnit());
+        assertArrayEquals(new double[] {2.0, 3.0, 4.0}, v.si(), EPS);
+    }
+
+    /** Col.of(Q[]) with empty array. */
+    @Test
+    public void testColOfQuantityArrayEmpty()
+    {
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Col.of(new Length[] {}));
+    }
+
+    /** Row.of(Q[]) with empty array. */
+    @Test
+    public void testRowOfQuantityArrayEmpty()
+    {
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Row.of(new Length[] {}));
+    }
+
+    /** Col.of(Q[]) with null array. */
+    @Test
+    public void testColOfQuantityArrayNull()
+    {
+        assertThrows(NullPointerException.class, () -> VectorN.Col.of((Length[]) null));
+    }
+
+    /** Row.of(Q[]) with null array. */
+    @Test
+    public void testRowOfQuantityArrayNull()
+    {
+        assertThrows(NullPointerException.class, () -> VectorN.Row.of((Length[]) null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(List<Q> data).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.of(List) happy path. */
+    @Test
+    public void testColOfQuantityListHappy()
+    {
+        List<Length> list = List.of(new Length(1.0, Length.Unit.km), new Length(2.0, Length.Unit.km));
+
+        VectorN.Col<Length> v = VectorN.Col.of(list);
+
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1000.0, 2000.0}, v.si(), EPS);
+    }
+
+    /** Row.of(List) happy path. */
+    @Test
+    public void testRowOfQuantityListHappy()
+    {
+        List<Length> list = List.of(new Length(10.0, Length.Unit.cm), new Length(20.0, Length.Unit.cm));
+
+        VectorN.Row<Length> v = VectorN.Row.of(list);
+
+        assertEquals(Length.Unit.cm, v.getDisplayUnit());
+        assertArrayEquals(new double[] {0.10, 0.20}, v.si(), EPS);
+    }
+
+    /** Col.of(List) with empty list. */
+    @Test
+    public void testColOfQuantityListEmpty()
+    {
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Col.of(List.of()));
+    }
+
+    /** Row.of(List) with empty list. */
+    @Test
+    public void testRowOfQuantityListEmpty()
+    {
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Row.of(List.of()));
+    }
+
+    /** Col.of(List) with null element. */
+    @Test
+    public void testColOfQuantityListWithNullElement()
+    {
+        List<Length> list = Arrays.asList(Length.ofSi(1.0), null);
+
+        assertThrows(NullPointerException.class, () -> VectorN.Col.of(list));
+    }
+
+    /** Row.of(List) with null element. */
+    @Test
+    public void testRowOfQuantityListWithNullElement()
+    {
+        List<Length> list = Arrays.asList(Length.ofSi(1.0), null);
+
+        assertThrows(NullPointerException.class, () -> VectorN.Row.of(list));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // ofSi(DataGridSi dataSi, Unit displayUnit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Col.ofSi(DataGridSi, unit) happy path. */
+    @Test
+    public void testColOfSiDataGridHappy()
+    {
+        var d = new DenseDoubleDataSi(new double[] {1.0, 2.0, 3.0}, 3, 1);
+        VectorN.Col<Length> v = VectorN.Col.ofSi(d, Length.Unit.m);
+
+        assertEquals(Length.Unit.m, v.getDisplayUnit());
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+    }
+
+    /** Row.ofSi(DataGridSi, unit) happy path. */
+    @Test
+    public void testRowOfSiDataGridHappy()
+    {
+        var d = new DenseDoubleDataSi(new double[] {4.0, 5.0}, 1, 2);
+        VectorN.Row<Length> v = VectorN.Row.ofSi(d, Length.Unit.m);
+
+        assertEquals(Length.Unit.m, v.getDisplayUnit());
+        assertArrayEquals(new double[] {4.0, 5.0}, v.si(), EPS);
+    }
+
+    /** Col.ofSi(DataGridSi, unit) with wrong shape. */
+    @Test
+    public void testColOfSiDataGridWrongShape()
+    {
+        var d = new DenseDoubleDataSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2);
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Col.ofSi(d, Length.Unit.m));
+    }
+
+    /** Row.ofSi(DataGridSi, unit) with wrong shape. */
+    @Test
+    public void testRowOfSiDataGridWrongShape()
+    {
+        var d = new DenseDoubleDataSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2);
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Row.ofSi(d, Length.Unit.m));
+    }
 }

@@ -400,4 +400,162 @@ public class Vector1Test
         assertEquals(0.5, sr.mget(1).getInUnit(), 1E-6);
         assertThrows(IllegalArgumentException.class, () -> r.divideEntries(d).as(Area.Unit.m2));
     }
+
+    // =================================================================================================
+    // COMPLETE FACTORY TESTS FOR Vector1.of(...) AND Vector1.ofSi(...).
+    // Vector1 is a corner case: no Row/Col distinction, but full branch coverage is required.
+    // =================================================================================================
+
+    // -------------------------------------------------------------------------------------------------
+    // of(double xInUnit, Unit unit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Vector1.of(double, unit) happy path. */
+    @Test
+    public void testOfDoubleUnitHappy()
+    {
+        Vector1<Length> v = Vector1.of(2.0, Length.Unit.km);
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {2000.0}, v.si(), EPS);
+    }
+
+    /** Vector1.of(double, null) must throw. */
+    @Test
+    public void testOfDoubleUnitNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector1.of(1.0, null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(Q data).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Vector1.of(Q) happy path. */
+    @Test
+    public void testOfQuantityHappy()
+    {
+        Length q = new Length(5.0, Length.Unit.cm);
+
+        Vector1<Length> v = Vector1.of(q);
+
+        assertEquals(Length.Unit.cm, v.getDisplayUnit());
+        assertArrayEquals(new double[] {0.05}, v.si(), EPS);
+    }
+
+    /** Vector1.of(Q) with null quantity. */
+    @Test
+    public void testOfQuantityNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector1.of((Length) null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(double[] dataInUnit, Unit unit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Vector1.of(double[], unit) happy path. */
+    @Test
+    public void testOfArrayUnitHappy()
+    {
+        Vector1<Length> v = Vector1.of(new double[] {3.0}, Length.Unit.m);
+
+        assertEquals(Length.Unit.m, v.getDisplayUnit());
+        assertArrayEquals(new double[] {3.0}, v.si(), EPS);
+    }
+
+    /** Vector1.of(double[], unit) with null array. */
+    @Test
+    public void testOfArrayUnitNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> Vector1.of((double[]) null, Length.Unit.m));
+    }
+
+    /** Vector1.of(double[], unit) with wrong length. */
+    @Test
+    public void testOfArrayUnitWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector1.of(new double[] {}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> Vector1.of(new double[] {1.0, 2.0}, Length.Unit.m));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // ofSi(double xSi, Unit displayUnit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Vector1.ofSi(double, unit) happy path. */
+    @Test
+    public void testOfSiScalarHappy()
+    {
+        Vector1<Length> v = Vector1.ofSi(7.0, Length.Unit.km);
+
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {7.0}, v.si(), EPS);
+    }
+
+    /** Vector1.ofSi(double, null) must throw. */
+    @Test
+    public void testOfSiScalarNullUnit()
+    {
+        assertThrows(NullPointerException.class, () -> Vector1.ofSi(1.0, null));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // ofSi(double[] dataSi, Unit displayUnit).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Vector1.ofSi(double[], unit) happy path. */
+    @Test
+    public void testOfSiArrayHappy()
+    {
+        Vector1<Length> v = Vector1.ofSi(new double[] {9.0}, Length.Unit.m);
+
+        assertEquals(Length.Unit.m, v.getDisplayUnit());
+        assertArrayEquals(new double[] {9.0}, v.si(), EPS);
+    }
+
+    /** Vector1.ofSi(double[], unit) with null array. */
+    @Test
+    public void testOfSiArrayNullArray()
+    {
+        assertThrows(NullPointerException.class, () -> Vector1.ofSi((double[]) null, Length.Unit.m));
+    }
+
+    /** Vector1.ofSi(double[], unit) with wrong length. */
+    @Test
+    public void testOfSiArrayWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector1.ofSi(new double[] {}, Length.Unit.m));
+        assertThrows(IllegalArgumentException.class, () -> Vector1.ofSi(new double[] {1.0, 2.0}, Length.Unit.m));
+    }
+
+    // -------------------------------------------------------------------------------------------------
+    // of(Q[] data).
+    // -------------------------------------------------------------------------------------------------
+
+    /** Vector1.of(Q[]) happy path. */
+    @Test
+    public void testOfQuantityArrayHappy()
+    {
+        Length[] data = {new Length(4.0, Length.Unit.km)};
+
+        Vector1<Length> v = Vector1.of(data);
+
+        assertEquals(Length.Unit.km, v.getDisplayUnit());
+        assertArrayEquals(new double[] {4000.0}, v.si(), EPS);
+    }
+
+    /** Vector1.of(Q[]) with null array. */
+    @Test
+    public void testOfQuantityArrayNull()
+    {
+        assertThrows(NullPointerException.class, () -> Vector1.of((Length[]) null));
+    }
+
+    /** Vector1.of(Q[]) with wrong length. */
+    @Test
+    public void testOfQuantityArrayWrongLength()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Vector1.of(new Length[] {}));
+        assertThrows(IllegalArgumentException.class, () -> Vector1.of(new Length[] {Length.ofSi(1.0), Length.ofSi(2.0)}));
+    }
 }
