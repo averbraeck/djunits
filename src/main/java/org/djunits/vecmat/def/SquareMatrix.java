@@ -64,7 +64,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
                 newSi[n * i + j] = data[n * j + i];
-        return instantiateSi(newSi);
+        return instantiateSi(newSi).setDisplayUnit(getDisplayUnit());
     }
 
     /**

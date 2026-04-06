@@ -408,7 +408,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         @Override
         public Vector3.Row<Q> transpose()
         {
-            return new Vector3.Row<Q>(xSi(), ySi(), zSi(), getDisplayUnit());
+            return new Vector3.Row<Q>(xSi(), ySi(), zSi(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -627,7 +627,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         @Override
         public Vector3.Col<Q> transpose()
         {
-            return new Vector3.Col<Q>(xSi(), ySi(), zSi(), getDisplayUnit());
+            return new Vector3.Col<Q>(xSi(), ySi(), zSi(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

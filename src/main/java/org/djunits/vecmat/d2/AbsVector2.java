@@ -40,7 +40,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
     }
 
     /**
-     * Row vector for AbsVector2 with absolute quantities.
+     * Column vector for AbsVector2 with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -49,8 +49,8 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
      */
-    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
-            extends AbsVector2<A, Q, AbsVector2.Row<A, Q>, Vector2.Row<Q>, AbsVector2.Col<A, Q>>
+    public static class Col<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+            extends AbsVector2<A, Q, AbsVector2.Col<A, Q>, Vector2.Col<Q>, AbsVector2.Row<A, Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -60,21 +60,21 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Row(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
+        public Col(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
-        public AbsVector2.Row<A, Q> instantiate(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
+        public AbsVector2.Col<A, Q> instantiate(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVector2.Row<>(relativeVector, reference);
+            return new AbsVector2.Col<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public AbsVector2.Col<A, Q> transpose()
+        public AbsVector2.Row<A, Q> transpose()
         {
-            return new AbsVector2.Col<>(getRelativeVecMat().transpose(), getReference());
+            return new AbsVector2.Row<>(getRelativeVecMat().transpose(), getReference());
         }
 
         // ------------------------------------------ OF METHODS ------------------------------------------
@@ -162,7 +162,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVector2.Col<A, Q> ofSi(final double xSi, final double ySi,
                         final Unit<?, Q> displayUnit, final R reference)
         {
-            return new AbsVector2.Col<>(Vector2.Col.of(xSi, ySi, displayUnit), reference);
+            return new AbsVector2.Col<>(Vector2.Col.ofSi(xSi, ySi, displayUnit), reference);
         }
 
         /**
@@ -200,7 +200,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
     }
 
     /**
-     * Column vector for AbsVector2 with absolute quantities.
+     * Row vector for AbsVector2 with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -209,8 +209,8 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
      */
-    public static class Col<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
-            extends AbsVector2<A, Q, AbsVector2.Col<A, Q>, Vector2.Col<Q>, AbsVector2.Row<A, Q>>
+    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+            extends AbsVector2<A, Q, AbsVector2.Row<A, Q>, Vector2.Row<Q>, AbsVector2.Col<A, Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -220,21 +220,21 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Col(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
+        public Row(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
-        public AbsVector2.Col<A, Q> instantiate(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
+        public AbsVector2.Row<A, Q> instantiate(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVector2.Col<>(relativeVector, reference);
+            return new AbsVector2.Row<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public AbsVector2.Row<A, Q> transpose()
+        public AbsVector2.Col<A, Q> transpose()
         {
-            return new AbsVector2.Row<>(getRelativeVecMat().transpose(), getReference());
+            return new AbsVector2.Col<>(getRelativeVecMat().transpose(), getReference());
         }
 
         // ------------------------------------------ OF METHODS ------------------------------------------
@@ -322,7 +322,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVector2.Row<A, Q> ofSi(final double xSi, final double ySi,
                         final Unit<?, Q> displayUnit, final R reference)
         {
-            return new AbsVector2.Row<>(Vector2.Row.of(xSi, ySi, displayUnit), reference);
+            return new AbsVector2.Row<>(Vector2.Row.ofSi(xSi, ySi, displayUnit), reference);
         }
 
         /**

@@ -257,7 +257,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Row<Q> transpose()
         {
             var newSi = this.dataSi.instantiateNew(this.dataSi.getDataArray().clone(), cols(), rows());
-            return new VectorN.Row<Q>(newSi, getDisplayUnit());
+            return new VectorN.Row<Q>(newSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -493,7 +493,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Col<Q> transpose()
         {
             var newSi = this.dataSi.instantiateNew(this.dataSi.getDataArray().clone(), cols(), rows());
-            return new VectorN.Col<Q>(newSi, getDisplayUnit());
+            return new VectorN.Col<Q>(newSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

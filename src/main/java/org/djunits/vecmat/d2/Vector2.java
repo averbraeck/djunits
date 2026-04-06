@@ -274,7 +274,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.xSi, this.ySi);
+        return Objects.hash(this.xSi, this.ySi, rows(), cols());
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -289,7 +289,8 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             return false;
         Vector2<?, ?, ?, ?, ?> other = (Vector2<?, ?, ?, ?, ?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi)
-                && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi);
+                && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi)
+                && rows() == other.rows() && cols() == other.cols();
     }
 
     @Override
@@ -374,7 +375,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         @Override
         public Vector2.Row<Q> transpose()
         {
-            return new Vector2.Row<Q>(xSi(), ySi(), getDisplayUnit());
+            return new Vector2.Row<Q>(xSi(), ySi(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         /**
@@ -567,7 +568,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         @Override
         public Vector2.Col<Q> transpose()
         {
-            return new Vector2.Col<Q>(xSi(), ySi(), getDisplayUnit());
+            return new Vector2.Col<Q>(xSi(), ySi(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

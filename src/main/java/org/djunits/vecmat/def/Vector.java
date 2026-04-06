@@ -49,6 +49,15 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
     public abstract boolean isColumnVector();
 
     /**
+     * Return whether this vector is a row vector.
+     * @return whether this vector is a row vector
+     */
+    public boolean isRowVector()
+    {
+        return !isColumnVector();
+    }
+
+    /**
      * Retrieve an si-value from the vector.
      * @param index the index (0-based) to retrieve the value from
      * @return the value as a Scalar

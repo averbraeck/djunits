@@ -59,6 +59,15 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
     }
 
     /**
+     * Return whether this vector is a row vector.
+     * @return whether this vector is a row vector
+     */
+    public boolean isRowVector()
+    {
+        return getRelativeVecMat().isRowVector();
+    }
+
+    /**
      * Retrieve an si-value from the vector.
      * @param index the index (0-based) to retrieve the value from
      * @return the value as a Scalar
@@ -118,13 +127,32 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
             out[i] = get(i);
         }
         return out;
+    }
 
+    /**
+     * Return the vector as an array of SI values.
+     * @return the vector as an array of SI valies
+     */
+    public double[] getSiArray()
+    {
+        final double[] out = new double[size()];
+        for (int i = 0; i < size(); i++)
+        {
+            out[i] = si(i);
+        }
+        return out;
     }
 
     @Override
     public String toString(final Unit<?, Q> displayUnit)
     {
         return getRelativeVecMat().toString(displayUnit);
+    }
+
+    @Override
+    public String toString()
+    {
+        return toString(getDisplayUnit());
     }
     
     /**
