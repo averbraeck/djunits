@@ -1,4 +1,4 @@
-package org.djunits.vecmat.dnxm;
+package org.djunits.vecmat.table;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,25 +13,25 @@ import org.djunits.vecmat.dn.AbsVectorN;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link AbsMatrixNxM}.
+ * Tests for {@link AbsQuantityTable}.
  * <p>
- * This class provides exhaustive coverage of AbsMatrixNxM and all inherited functionality from AbsMatrix, AbsTable,
- * AbsVectorMatrix and Value.
+ * This class provides exhaustive coverage of AbsQuantityTable and all inherited functionality from AbsTable, AbsVectorMatrix
+ * and Value.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class AbsMatrixNxMTest
+public class AbsQuantityTableTest
 {
     /**
      * Create a standard test matrix.
      * @return a test matrix
      */
-    private AbsMatrixNxM<Direction, Angle> northDeg2x3()
+    private AbsQuantityTable<Direction, Angle> northDeg2x3()
     {
-        return AbsMatrixNxM.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg,
+        return AbsQuantityTable.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg,
                 Direction.Reference.NORTH);
     }
 
@@ -43,8 +43,8 @@ public class AbsMatrixNxMTest
     @Test
     public void testCtorBase()
     {
-        var rm = MatrixNxM.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg);
-        var am = new AbsMatrixNxM<>(rm, Direction.Reference.NORTH);
+        var rm = QuantityTable.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg);
+        var am = new AbsQuantityTable<>(rm, Direction.Reference.NORTH);
 
         assertEquals(Angle.Unit.deg, am.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, am.getReference());
@@ -92,9 +92,9 @@ public class AbsMatrixNxMTest
     @Test
     public void testCtorBaseExceptions()
     {
-        var rm = MatrixNxM.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg);
-        assertThrows(NullPointerException.class, () -> new AbsMatrixNxM<>(null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> new AbsMatrixNxM<>(rm, null));
+        var rm = QuantityTable.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg);
+        assertThrows(NullPointerException.class, () -> new AbsQuantityTable<>(null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> new AbsQuantityTable<>(rm, null));
     }
 
     /**
@@ -135,159 +135,160 @@ public class AbsMatrixNxMTest
         var adegg = new double[][] {{0.0, 90.0, 180.0}, {270.0, 45.0, 135.0}};
         var arad = new double[] {0.0, 0.5 * Math.PI, Math.PI, 1.5 * Math.PI, 0.25 * Math.PI, 0.75 * Math.PI};
         var aradg = new double[][] {{0.0, 0.5 * Math.PI, Math.PI}, {1.5 * Math.PI, 0.25 * Math.PI, 0.75 * Math.PI}};
-        var rm = MatrixNxM.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg);
-        var am = new AbsMatrixNxM<>(rm, Direction.Reference.NORTH);
+        var rm = QuantityTable.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0}, 2, 3, Angle.Unit.deg);
+        var am = new AbsQuantityTable<>(rm, Direction.Reference.NORTH);
 
         // of(double[], unit, ref)
-        AbsMatrixNxM<Direction, Angle> mdu = AbsMatrixNxM.of(adeg, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mdu = AbsQuantityTable.of(adeg, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mdu.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, mdu.getDisplayUnit());
 
         assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of((double[]) null, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(adeg, 2, 3, null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(adeg, 2, 3, Angle.Unit.deg, null));
+                () -> AbsQuantityTable.of((double[]) null, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(adeg, 2, 3, null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(adeg, 2, 3, Angle.Unit.deg, null));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[] {}, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new double[] {}, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(adeg10, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(adeg10, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(adeg, 0, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(adeg, 0, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(adeg, -1, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(adeg, -1, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(adeg, 2, 0, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(adeg, 2, 0, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(adeg, 2, -1, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(adeg, 2, -1, Angle.Unit.deg, Direction.Reference.NORTH));
 
         // ofSi(double[], displayUnit, ref)
-        AbsMatrixNxM<Direction, Angle> msi = AbsMatrixNxM.ofSi(arad, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> msi = AbsQuantityTable.ofSi(arad, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), msi.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, msi.getDisplayUnit());
 
         assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.ofSi((double[]) null, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(arad, 2, 3, null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(arad, 2, 3, Angle.Unit.deg, null));
+                () -> AbsQuantityTable.ofSi((double[]) null, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(arad, 2, 3, null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(arad, 2, 3, Angle.Unit.deg, null));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[] {}, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(new double[] {}, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(adeg10, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(adeg10, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(arad, 0, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(arad, 0, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(arad, -1, 3, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(arad, -1, 3, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(arad, 2, 0, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(arad, 2, 0, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(arad, 2, -1, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(arad, 2, -1, Angle.Unit.deg, Direction.Reference.NORTH));
 
         // of(double[][], unit, ref)
-        AbsMatrixNxM<Direction, Angle> mdgu = AbsMatrixNxM.of(adegg, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mdgu = AbsQuantityTable.of(adegg, Angle.Unit.deg, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mdgu.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, mdgu.getDisplayUnit());
 
         assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of((double[][]) null, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(adegg, null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(adegg, Angle.Unit.deg, null));
+                () -> AbsQuantityTable.of((double[][]) null, Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(adegg, null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(adegg, Angle.Unit.deg, null));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[][] {}, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new double[][] {}, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{}}, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new double[][] {{}}, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{1, 2, 3}, {4, 5}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{}, {4, 5, 6}, {7, 8, 9}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{1, 2, 3}, {}, {7, 8, 9}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{1, 2, 3}, {4, 5, 6}, {}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of(new double[][] {null, {4, 5, 6}, {7, 8, 9}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{1, 2, 3}, null, {7, 8, 9}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of(new double[][] {{1, 2, 3}, {4, 5, 6}, null}, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new double[][] {{1, 2, 3}, {4, 5}}, Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(new double[][] {{}, {4, 5, 6}, {7, 8, 9}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(new double[][] {{1, 2, 3}, {}, {7, 8, 9}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(new double[][] {{1, 2, 3}, {4, 5, 6}, {}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(new double[][] {null, {4, 5, 6}, {7, 8, 9}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(new double[][] {{1, 2, 3}, null, {7, 8, 9}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(new double[][] {{1, 2, 3}, {4, 5, 6}, null},
+                Angle.Unit.deg, Direction.Reference.NORTH));
 
         // ofSi(double[][], displayUnit, ref)
-        AbsMatrixNxM<Direction, Angle> mgsi = AbsMatrixNxM.ofSi(aradg, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mgsi = AbsQuantityTable.ofSi(aradg, Angle.Unit.deg, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mgsi.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, mgsi.getDisplayUnit());
 
         assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.ofSi((double[][]) null, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(adegg, null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(adegg, Angle.Unit.deg, null));
+                () -> AbsQuantityTable.ofSi((double[][]) null, Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(adegg, null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(adegg, Angle.Unit.deg, null));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[][] {}, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(new double[][] {}, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[][] {{}}, Angle.Unit.deg, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.ofSi(new double[][] {{}}, Angle.Unit.deg, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[][] {{1, 2, 3}, {4, 5}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[][] {{}, {4, 5, 6}, {7, 8, 9}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[][] {{1, 2, 3}, {}, {7, 8, 9}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}, {}}, Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(new double[][] {null, {4, 5, 6}, {7, 8, 9}},
+                () -> AbsQuantityTable.ofSi(new double[][] {{1, 2, 3}, {4, 5}}, Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.ofSi(new double[][] {{}, {4, 5, 6}, {7, 8, 9}},
                 Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(new double[][] {{1, 2, 3}, null, {7, 8, 9}},
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.ofSi(new double[][] {{1, 2, 3}, {}, {7, 8, 9}},
                 Angle.Unit.deg, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}, null},
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}, {}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(new double[][] {null, {4, 5, 6}, {7, 8, 9}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(new double[][] {{1, 2, 3}, null, {7, 8, 9}},
+                Angle.Unit.deg, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.ofSi(new double[][] {{1, 2, 3}, {4, 5, 6}, null},
                 Angle.Unit.deg, Direction.Reference.NORTH));
 
         // of(Q[], ref)
-        AbsMatrixNxM<Direction, Angle> mqa = AbsMatrixNxM.of(qa, 2, 3, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mqa = AbsQuantityTable.of(qa, 2, 3, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mqa.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, mqa.getDisplayUnit());
 
-        AbsMatrixNxM<Direction, Angle> mqa2 = AbsMatrixNxM
+        AbsQuantityTable<Direction, Angle> mqa2 = AbsQuantityTable
                 .of(new Angle[] {Angle.of(0.0, "rad"), qa[1], qa[2], qa[3], qa[4], qa[5]}, 2, 3, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mqa2.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.rad, mqa2.getDisplayUnit());
 
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of((Angle[]) null, 2, 3, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(qa, 2, 3, null));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Angle[] {}, 2, 3, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of((Angle[]) null, 2, 3, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(qa, 2, 3, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> AbsQuantityTable.of(new Angle[] {}, 2, 3, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable
                 .of(new Angle[] {qa[0], qa[1], qa[2], qa[3], qa[4], qa[5], qa[1], qa[2]}, 2, 3, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qa, 0, 3, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qa, -1, 3, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qa, 2, 0, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qa, 2, -1, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qa, 2, 2, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(qa, 0, 3, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(qa, -1, 3, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(qa, 2, 0, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(qa, 2, -1, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(qa, 2, 2, Direction.Reference.NORTH));
 
         // of(Q[][], ref)
         Angle[][] qg = {{qa[0], qa[1], qa[2]}, {qa[3], qa[4], qa[5]}};
-        AbsMatrixNxM<Direction, Angle> mqg = AbsMatrixNxM.of(qg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mqg = AbsQuantityTable.of(qg, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mqg.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, mqg.getDisplayUnit());
 
-        AbsMatrixNxM<Direction, Angle> mqg2 = AbsMatrixNxM
+        AbsQuantityTable<Direction, Angle> mqg2 = AbsQuantityTable
                 .of(new Angle[][] {{Angle.of(0.0, "rad"), qa[1], qa[2]}, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mqg2.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.rad, mqg2.getDisplayUnit());
 
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of((Angle[][]) null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(qg, null));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Angle[][] {}, Direction.Reference.NORTH));
-        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Angle[][] {{}}, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of((Angle[][]) null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(qg, null));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(new Angle[][] {}, Direction.Reference.NORTH));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantityTable.of(new Angle[][] {{}}, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new Angle[][] {{qa[0], qa[1], qa[2]}, {qa[3], qa[4]}}, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new Angle[][] {{qa[0], qa[1], qa[2]}, {qa[3], qa[4]}}, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
-                () -> AbsMatrixNxM.of(new Angle[][] {{}, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new Angle[][] {{}, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of(new Angle[][] {null, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of(new Angle[][] {{qa[0], qa[1], qa[2]}, {qa[3], qa[4], null}}, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class,
-                () -> AbsMatrixNxM.of(new Angle[][] {{null, qa[1], qa[2]}, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH));
+                () -> AbsQuantityTable.of(new Angle[][] {null, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable
+                .of(new Angle[][] {{qa[0], qa[1], qa[2]}, {qa[3], qa[4], null}}, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable
+                .of(new Angle[][] {{null, qa[1], qa[2]}, {qa[3], qa[4], qa[5]}}, Direction.Reference.NORTH));
 
         // of(Matrix, ref)
-        MatrixNxM<Angle> rel = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Angle.Unit.deg);
-        AbsMatrixNxM<Direction, Angle> amrel = AbsMatrixNxM.of(rel, Direction.Reference.NORTH);
+        QuantityTable<Angle> rel = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Angle.Unit.deg);
+        AbsQuantityTable<Direction, Angle> amrel = AbsQuantityTable.of(rel, Direction.Reference.NORTH);
 
         assertEquals(1.0 * Math.PI / 180.0, amrel.si(0, 0), 1E-10);
         assertEquals(2.0 * Math.PI / 180.0, amrel.si(0, 1), 1E-10);
@@ -297,8 +298,9 @@ public class AbsMatrixNxMTest
         assertEquals(6.0 * Math.PI / 180.0, amrel.si(1, 2), 1E-10);
         assertEquals(Angle.Unit.deg, amrel.getDisplayUnit());
 
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of((MatrixNxM<Angle>) null, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(rel, null));
+        assertThrows(NullPointerException.class,
+                () -> AbsQuantityTable.of((QuantityTable<Angle>) null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsQuantityTable.of(rel, null));
     }
 
     // ==================================== Scalar & SI array / grid access ====================================
@@ -309,7 +311,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testScalarAndSiGrids()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         Direction[][] s = m.getScalarGrid();
         double[][] si = m.getSiGrid();
@@ -340,7 +342,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testGetRowAndColumnSi()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         double[] row = m.getRowSi(1);
         double[] col = m.getColumnSi(1);
@@ -364,7 +366,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testGetRowAndColumnScalars()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         Direction[] row = m.getRowScalars(0);
         Direction[] col = m.getColumnScalars(1);
@@ -391,7 +393,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testMgetRowAndColumnSi()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         double[] row = m.mgetRowSi(2);
         double[] col = m.mgetColumnSi(2);
@@ -414,7 +416,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testMgetRowAndColumnScalars()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         Direction[] row = m.mgetRowScalars(1);
         Direction[] col = m.mgetColumnScalars(2);
@@ -443,7 +445,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testGetRowAndColumnVector()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         var row = m.getRowVector(0);
         var col = m.getColumnVector(1);
@@ -470,7 +472,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testMgetRowAndColumnVector()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         var row = m.mgetRowVector(1);
         var col = m.mgetColumnVector(2);
@@ -499,7 +501,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testMinMaxMedian()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         assertEquals(0.0, m.min().si());
         assertEquals(1.5 * Math.PI, m.max().si(), 1E-10); // 315 deg
@@ -509,8 +511,8 @@ public class AbsMatrixNxMTest
         assertEquals(Angle.Unit.deg, m.max().getDisplayUnit());
         assertEquals(Angle.Unit.deg, m.median().getDisplayUnit());
 
-        AbsMatrixNxM<Direction, Angle> e =
-                AbsMatrixNxM.ofSi(new double[] {1, 1, 1, 1, 1, 1}, 3, 2, Angle.Unit.rad, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> e =
+                AbsQuantityTable.ofSi(new double[] {1, 1, 1, 1, 1, 1}, 3, 2, Angle.Unit.rad, Direction.Reference.NORTH);
         assertEquals(1.0, e.min().si(), 1E-10);
         assertEquals(1.0, e.max().si(), 1E-10);
         assertEquals(1.0, e.median().si(), 1E-10);
@@ -524,7 +526,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testTranspose()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
         var mt = m.transpose();
         var mt2 = mt.transpose();
@@ -549,12 +551,12 @@ public class AbsMatrixNxMTest
     @Test
     public void testAddSubtract()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
 
-        AbsMatrixNxM<Direction, Angle> madd = northDeg2x3().add(Angle.of(5.0, "deg"));
-        AbsMatrixNxM<Direction, Angle> msub = northDeg2x3().subtract(Angle.of(5.0, "deg"));
+        AbsQuantityTable<Direction, Angle> madd = northDeg2x3().add(Angle.of(5.0, "deg"));
+        AbsQuantityTable<Direction, Angle> msub = northDeg2x3().subtract(Angle.of(5.0, "deg"));
 
-        MatrixNxM<Angle> m0 = m.subtract(m);
+        QuantityTable<Angle> m0 = m.subtract(m);
         assertArrayEquals(new double[] {0, 0, 0, 0, 0, 0}, m0.si());
 
         assertEquals(5.0, madd.get(0, 0).getInUnit(Angle.Unit.deg), 1E-10);
@@ -573,7 +575,7 @@ public class AbsMatrixNxMTest
         assertEquals(40.0, msub.get(1, 1).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(130.0, msub.get(1, 2).getInUnit(Angle.Unit.deg), 1E-10);
 
-        MatrixNxM<Angle> m123456 = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Angle.Unit.deg);
+        QuantityTable<Angle> m123456 = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Angle.Unit.deg);
         madd = m.add(m123456);
         msub = m.subtract(m123456);
 
@@ -595,9 +597,9 @@ public class AbsMatrixNxMTest
 
         assertThrows(NullPointerException.class, () -> m.add((Angle) null));
         assertThrows(NullPointerException.class, () -> m.subtract((Angle) null));
-        assertThrows(NullPointerException.class, () -> m.add((MatrixNxM<Angle>) null));
-        assertThrows(NullPointerException.class, () -> m.subtract((MatrixNxM<Angle>) null));
-        assertThrows(NullPointerException.class, () -> m.subtract((AbsMatrixNxM<Direction, Angle>) null));
+        assertThrows(NullPointerException.class, () -> m.add((QuantityTable<Angle>) null));
+        assertThrows(NullPointerException.class, () -> m.subtract((QuantityTable<Angle>) null));
+        assertThrows(NullPointerException.class, () -> m.subtract((AbsQuantityTable<Direction, Angle>) null));
     }
 
     // ==================================== toString ====================================
@@ -608,7 +610,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testToString()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
         String sdeg = m.toString();
         String srad = m.toString(Angle.Unit.rad);
 
@@ -627,14 +629,14 @@ public class AbsMatrixNxMTest
     @Test
     public void testEqualsHashCode()
     {
-        AbsMatrixNxM<Direction, Angle> mdn =
-                AbsMatrixNxM.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH);
-        AbsMatrixNxM<Direction, Angle> mrn =
-                AbsMatrixNxM.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3, Angle.Unit.rad, Direction.Reference.NORTH);
-        AbsMatrixNxM<Direction, Angle> mde =
-                AbsMatrixNxM.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3, Angle.Unit.deg, Direction.Reference.EAST);
-        AbsMatrixNxM<Direction, Angle> mdt =
-                AbsMatrixNxM.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 3, 2, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mdn = AbsQuantityTable.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3,
+                Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mrn = AbsQuantityTable.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3,
+                Angle.Unit.rad, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mde = AbsQuantityTable.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3,
+                Angle.Unit.deg, Direction.Reference.EAST);
+        AbsQuantityTable<Direction, Angle> mdt = AbsQuantityTable.ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 3, 2,
+                Angle.Unit.deg, Direction.Reference.NORTH);
 
         assertTrue(mdn.equals(mdn));
         assertTrue(mdn.equals(mrn));
@@ -644,7 +646,7 @@ public class AbsMatrixNxMTest
         assertFalse(mdn.equals(new String("abc")));
         assertFalse(mdn.equals(northDeg2x3()));
 
-        assertEquals(mdn.hashCode(), AbsMatrixNxM
+        assertEquals(mdn.hashCode(), AbsQuantityTable
                 .ofSi(new double[] {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}, 2, 3, Angle.Unit.deg, Direction.Reference.NORTH).hashCode());
         assertEquals(mdn.hashCode(), mrn.hashCode());
         assertNotEquals(mdn.hashCode(), mde.hashCode());
@@ -659,7 +661,7 @@ public class AbsMatrixNxMTest
     @Test
     public void testVectorAccess()
     {
-        AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
+        AbsQuantityTable<Direction, Angle> m = northDeg2x3();
         AbsVectorN.Row<Direction, Angle> row = m.mgetRowVector(2);
         AbsVectorN.Col<Direction, Angle> col = m.getColumnVector(1);
 
