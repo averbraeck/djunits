@@ -38,13 +38,25 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     @Override
     public AbsVector1<A, Q> instantiate(final Vector1<Q> relativeVector, final Reference<?, A, Q> reference)
     {
-        return new AbsVector1<>(relativeVector, reference);
+        return new AbsVector1<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public AbsVector1<A, Q> transpose()
     {
         return this;
+    }
+
+    @Override
+    public boolean isColumnVector()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isRowVector()
+    {
+        return true;
     }
 
     // ------------------------------------------ OF METHODS ------------------------------------------
@@ -94,6 +106,23 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
             final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsVector1<>(Vector1.of(dataInUnit, unit), reference);
+    }
+
+
+    /**
+     * Create an AbsVector1 without needing generics.
+     * @param xSi the x-value expressed as an array in the SI units
+     * @param displayUnit the display unit to use
+     * @param reference the reference point for the absolute quantities
+     * @return a new AbsVector1 with a unit
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
+            final double xSi, final Unit<?, Q> displayUnit, final R reference)
+    {
+        return new AbsVector1<>(Vector1.ofSi(xSi, displayUnit), reference);
     }
 
     /**

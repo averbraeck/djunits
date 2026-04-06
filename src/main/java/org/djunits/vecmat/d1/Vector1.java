@@ -104,6 +104,12 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     }
 
     @Override
+    public boolean isRowVector()
+    {
+        return true;
+    }
+
+    @Override
     public double si(final int index) throws IndexOutOfBoundsException
     {
         Throw.when(index != 0, IndexOutOfBoundsException.class, "Cannot retrieve Vector1[%d]", index);
