@@ -202,7 +202,7 @@ public class Vector1Test
     @DisplayName("rows/cols/isColumnVector and transpose()")
     public void testShapeAndTranspose()
     {
-        Vector1<Length> v = vec(2.0, Length.Unit.m);
+        Vector1<Length> v = vec(2.0, Length.Unit.cm);
         assertEquals(1, v.rows());
         assertEquals(1, v.cols());
         assertTrue(v.isColumnVector());

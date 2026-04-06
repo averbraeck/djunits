@@ -696,11 +696,24 @@ public final class VectorNTest
     @DisplayName("Transpose")
     public void testTranspose()
     {
-        final VectorN.Col<Length> ac = col(new double[] {1, -2, 3, -4}, Length.Unit.m);
-        final VectorN.Row<Length> ar = row(new double[] {1, -2, 3, -4}, Length.Unit.m);
+        final VectorN.Col<Length> c = col(new double[] {1, -2, 3, -4}, Length.Unit.km);
+        final VectorN.Row<Length> r = row(new double[] {1, -2, 3, -4}, Length.Unit.km);
 
-        assertEquals(ac, ar.transpose());
-        assertEquals(ar, ac.transpose());
+        var rt = r.transpose();
+        var ct = c.transpose();
+        
+        assertEquals(c, rt);
+        assertEquals(r, ct);
+        
+        var rt2 = rt.transpose();
+        var ct2 = ct.transpose();
+        assertEquals(r, rt2);
+        assertEquals(c, ct2);
+        
+        assertArrayEquals(r.si(), rt.si(), EPS, "Row to Col preserves SI");
+        assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
+        assertArrayEquals(c.si(), ct.si(), EPS, "Col to Row preserves SI");
+        assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
     }
 
     /**

@@ -290,8 +290,8 @@ public class Vector3Test
     @DisplayName("rows/cols/isColumnVector and transpose()")
     public void testShapeAndTranspose()
     {
-        Vector3.Row<Length> r = row(1.0, 2.0, 3.0, Length.Unit.m);
-        Vector3.Col<Length> c = col(1.0, 2.0, 3.0, Length.Unit.m);
+        Vector3.Row<Length> r = row(1.0, 2.0, 3.0, Length.Unit.km);
+        Vector3.Col<Length> c = col(1.0, 2.0, 3.0, Length.Unit.km);
         assertEquals(1, r.rows());
         assertEquals(3, r.cols());
         assertFalse(r.isColumnVector());
@@ -305,6 +305,11 @@ public class Vector3Test
         assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
         assertArrayEquals(c.si(), ct.si(), EPS);
         assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
+
+        var rt2 = rt.transpose();
+        var ct2 = ct.transpose();
+        assertEquals(r, rt2);
+        assertEquals(c, ct2);
 
         assertEquals(3, c.nnz());
         assertEquals(3, r.nnz());

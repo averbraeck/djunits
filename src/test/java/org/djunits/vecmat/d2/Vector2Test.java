@@ -293,8 +293,8 @@ public class Vector2Test
     @DisplayName("rows/cols/isColumnVector and transpose()")
     public void testShapeAndTranspose()
     {
-        Vector2.Row<Length> r = row(1.0, 2.0, Length.Unit.m);
-        Vector2.Col<Length> c = col(1.0, 2.0, Length.Unit.m);
+        Vector2.Row<Length> r = row(1.0, 2.0, Length.Unit.km);
+        Vector2.Col<Length> c = col(1.0, 2.0, Length.Unit.km);
         assertEquals(1, r.rows());
         assertEquals(2, r.cols());
         assertFalse(r.isColumnVector());
@@ -304,15 +304,20 @@ public class Vector2Test
 
         Vector2.Col<Length> rt = r.transpose();
         Vector2.Row<Length> ct = c.transpose();
-        assertArrayEquals(r.si(), rt.si(), EPS, "Row→Col preserves SI");
+        assertArrayEquals(r.si(), rt.si(), EPS, "Row to Col preserves SI");
         assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
-        assertArrayEquals(c.si(), ct.si(), EPS, "Col→Row preserves SI");
+        assertArrayEquals(c.si(), ct.si(), EPS, "Col to Row preserves SI");
         assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
+        
+        var rt2 = rt.transpose();
+        var ct2 = ct.transpose();
+        assertEquals(r, rt2);
+        assertEquals(c, ct2);
 
         assertEquals(2, c.nnz());
         assertEquals(2, r.nnz());
-        Vector2.Row<Length> r0 = row(0.0, 0.0, Length.Unit.m);
-        Vector2.Col<Length> c0 = col(0.0, 0.0, Length.Unit.m);
+        Vector2.Row<Length> r0 = row(0.0, 0.0, Length.Unit.km);
+        Vector2.Col<Length> c0 = col(0.0, 0.0, Length.Unit.km);
         assertEquals(0, r0.nnz());
         assertEquals(0, c0.nnz());
     }
