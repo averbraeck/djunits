@@ -100,7 +100,7 @@ public class AbsMatrix3x3<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix3x3<A, Q> ofSi(
             final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
     {
-        return new AbsMatrix3x3<>(Matrix3x3.of(dataSi, displayUnit), reference);
+        return new AbsMatrix3x3<>(Matrix3x3.ofSi(dataSi, displayUnit), reference);
     }
 
     /**
@@ -132,7 +132,7 @@ public class AbsMatrix3x3<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix3x3<A, Q> ofSi(
             final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
     {
-        return new AbsMatrix3x3<>(Matrix3x3.of(gridSi, displayUnit), reference);
+        return new AbsMatrix3x3<>(Matrix3x3.ofSi(gridSi, displayUnit), reference);
     }
 
     /**

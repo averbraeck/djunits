@@ -117,15 +117,59 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
     {
         // Allocate a double[rows()][cols()] array and fill it.
         final double[][] out = (double[][]) Array.newInstance(double.class, rows(), cols());
-        for (int i = 0; i < rows(); i++)
+        for (int r = 0; r < rows(); r++)
         {
-            for (int j = 0; j < cols(); j++)
+            for (int c = 0; c < cols(); c++)
             {
-                out[i][j] = si(i, j);
+                out[r][c] = si(r, c);
             }
         }
         return out;
     }
+
+    /**
+     * Return the vector or matrix as a row-major array of scalars.
+     * @return a new A[rows() * cols()] array.
+     */
+    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
+    public A[] getScalarArray()
+    {
+        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 0.
+        final A first = get(0, 0);
+        final Class<?> qClass = first.getClass();
+        int cols = cols();
+
+        // Allocate a Q[rows() * cols()] array and fill it.
+        final A[] out = (A[]) Array.newInstance(qClass, rows() * cols());
+        for (int r = 0; r < rows(); r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                out[r * cols + c] = get(r, c);
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Return the vector or matrix as a row-major array of double SI values.
+     * @return a new double[rows() * cols()] array.
+     */
+    public double[] getSiArray()
+    {
+        // Allocate a double[rows()][cols()] array and fill it.
+        final double[] out = new double[rows() * cols()];
+        int cols = cols();
+        for (int r = 0; r < rows(); r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                out[r * cols + c] = si(r, c);
+            }
+        }
+        return out;
+    }
+
 
     /**
      * Return a quantity row (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by

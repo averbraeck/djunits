@@ -102,7 +102,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
             final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
     {
-        return new AbsMatrixNxN<>(MatrixNxN.of(dataSi, displayUnit), reference);
+        return new AbsMatrixNxN<>(MatrixNxN.ofSi(dataSi, displayUnit), reference);
     }
 
     /**
@@ -136,7 +136,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
             final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
     {
-        return new AbsMatrixNxN<>(MatrixNxN.of(gridSi, displayUnit), reference);
+        return new AbsMatrixNxN<>(MatrixNxN.ofSi(gridSi, displayUnit), reference);
     }
 
     /**

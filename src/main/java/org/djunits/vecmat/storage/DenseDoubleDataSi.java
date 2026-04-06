@@ -99,6 +99,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final Q[] data, final int rows, final int cols)
     {
         Throw.whenNull(data, "data");
+        Throw.when(data.length != rows * cols, IllegalArgumentException.class, "Q[] length != rows * cols");
         double[] dataSi = new double[data.length];
         for (int i = 0; i < data.length; i++)
         {

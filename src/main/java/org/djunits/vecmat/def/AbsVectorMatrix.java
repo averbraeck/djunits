@@ -1,8 +1,10 @@
 package org.djunits.vecmat.def;
 
+import java.util.Objects;
+
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.util.ArrayMath;
 import org.djunits.value.Value;
@@ -253,6 +255,28 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     {
         return this.relativeVecMat.instantiateSi(ArrayMath.subtract(this.relativeVecMat.si(), other.getRelativeVecMat().si()))
                 .setDisplayUnit(getDisplayUnit());
+    }
+
+    // ======================================= hashCode() and equals() ===============================================
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(this.reference, this.relativeVecMat);
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:needbraces")
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbsVectorMatrix<?, ?, ?, ?, ?> other = (AbsVectorMatrix<?, ?, ?, ?, ?>) obj;
+        return Objects.equals(this.reference, other.reference) && Objects.equals(this.relativeVecMat, other.relativeVecMat);
     }
 
 }
