@@ -304,7 +304,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.xSi, this.ySi, this.zSi);
+        return Objects.hash(this.xSi, this.ySi, this.zSi, rows(), cols());
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -320,7 +320,8 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         Vector3<?, ?, ?, ?, ?> other = (Vector3<?, ?, ?, ?, ?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi)
                 && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi)
-                && Double.doubleToLongBits(this.zSi) == Double.doubleToLongBits(other.zSi);
+                && Double.doubleToLongBits(this.zSi) == Double.doubleToLongBits(other.zSi)
+                && rows() == other.rows() && cols() == other.cols();
     }
 
     @Override

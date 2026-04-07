@@ -40,7 +40,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
     }
 
     /**
-     * Row vector for AbsVector3 with absolute quantities.
+     * Column vector for AbsVector3 with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -49,8 +49,8 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
      */
-    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
-            extends AbsVector3<A, Q, AbsVector3.Row<A, Q>, Vector3.Row<Q>, AbsVector3.Col<A, Q>>
+    public static class Col<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+            extends AbsVector3<A, Q, AbsVector3.Col<A, Q>, Vector3.Col<Q>, AbsVector3.Row<A, Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -60,21 +60,21 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Row(final Vector3.Row<Q> relativeVector, final Reference<?, A, Q> reference)
+        public Col(final Vector3.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
-        public AbsVector3.Row<A, Q> instantiate(final Vector3.Row<Q> relativeVector, final Reference<?, A, Q> reference)
+        public AbsVector3.Col<A, Q> instantiate(final Vector3.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVector3.Row<>(relativeVector, reference);
+            return new AbsVector3.Col<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public AbsVector3.Col<A, Q> transpose()
+        public AbsVector3.Row<A, Q> transpose()
         {
-            return new AbsVector3.Col<>(getRelativeVecMat().transpose(), getReference());
+            return new AbsVector3.Row<>(getRelativeVecMat().transpose(), getReference());
         }
 
         // ------------------------------------------ OF METHODS ------------------------------------------
@@ -165,7 +165,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> ofSi(final double xSi, final double ySi, final double zSi,
                         final Unit<?, Q> displayUnit, final R reference)
         {
-            return new AbsVector3.Col<>(Vector3.Col.of(xSi, ySi, zSi, displayUnit), reference);
+            return new AbsVector3.Col<>(Vector3.Col.ofSi(xSi, ySi, zSi, displayUnit), reference);
         }
 
         /**
@@ -202,7 +202,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
     }
 
     /**
-     * Column vector for AbsVector3 with absolute quantities.
+     * Row vector for AbsVector3 with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
@@ -211,8 +211,8 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
      */
-    public static class Col<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
-            extends AbsVector3<A, Q, AbsVector3.Col<A, Q>, Vector3.Col<Q>, AbsVector3.Row<A, Q>>
+    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+            extends AbsVector3<A, Q, AbsVector3.Row<A, Q>, Vector3.Row<Q>, AbsVector3.Col<A, Q>>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -222,21 +222,21 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param relativeVector the vector with values relative to the reference point
          * @param reference the reference point for the absolute values
          */
-        public Col(final Vector3.Col<Q> relativeVector, final Reference<?, A, Q> reference)
+        public Row(final Vector3.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
             super(relativeVector, reference);
         }
 
         @Override
-        public AbsVector3.Col<A, Q> instantiate(final Vector3.Col<Q> relativeVector, final Reference<?, A, Q> reference)
+        public AbsVector3.Row<A, Q> instantiate(final Vector3.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVector3.Col<>(relativeVector, reference);
+            return new AbsVector3.Row<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
-        public AbsVector3.Row<A, Q> transpose()
+        public AbsVector3.Col<A, Q> transpose()
         {
-            return new AbsVector3.Row<>(getRelativeVecMat().transpose(), getReference());
+            return new AbsVector3.Col<>(getRelativeVecMat().transpose(), getReference());
         }
 
         // ------------------------------------------ OF METHODS ------------------------------------------
@@ -327,7 +327,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> ofSi(final double xSi, final double ySi, final double zSi,
                         final Unit<?, Q> displayUnit, final R reference)
         {
-            return new AbsVector3.Row<>(Vector3.Row.of(xSi, ySi, zSi, displayUnit), reference);
+            return new AbsVector3.Row<>(Vector3.Row.ofSi(xSi, ySi, zSi, displayUnit), reference);
         }
 
         /**
