@@ -70,7 +70,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         @Override
         public AbsVectorN.Col<A, Q> instantiate(final VectorN.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVectorN.Col<>(relativeVector, reference);
+            return new AbsVectorN.Col<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
         }
 
         @Override
@@ -194,7 +194,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         @Override
         public AbsVectorN.Row<A, Q> instantiate(final VectorN.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVectorN.Row<>(relativeVector, reference);
+            return new AbsVectorN.Row<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
         }
 
         @Override

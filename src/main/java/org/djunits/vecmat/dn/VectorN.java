@@ -152,7 +152,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.dataSi);
+        return Objects.hash(this.dataSi, rows(), cols());
     }
 
     @SuppressWarnings("checkstyle:needbraces")
@@ -166,7 +166,8 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         if (getClass() != obj.getClass())
             return false;
         VectorN<?, ?, ?, ?, ?> other = (VectorN<?, ?, ?, ?, ?>) obj;
-        return Objects.equals(this.dataSi, other.dataSi);
+        return Objects.equals(this.dataSi, other.dataSi)
+                && rows() == other.rows() && cols() == other.cols();
     }
 
     @Override
