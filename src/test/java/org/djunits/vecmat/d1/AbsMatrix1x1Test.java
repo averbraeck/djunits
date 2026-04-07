@@ -111,6 +111,20 @@ public class AbsMatrix1x1Test
         var rm = new Matrix1x1<Angle>(new double[] {90.0}, Angle.Unit.deg);
         var am = new AbsMatrix1x1<>(rm, Direction.Reference.NORTH);
 
+        // of(double, unit, ref)
+        AbsMatrix1x1<Direction, Angle> md1u = AbsMatrix1x1.of(90.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        assertArrayEquals(am.getSiArray(), md1u.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, md1u.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(90.0, null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(90.0, Angle.Unit.deg, null));
+
+        // of(Q, ref)
+        AbsMatrix1x1<Direction, Angle> mq = AbsMatrix1x1.of(qa[0], Direction.Reference.NORTH);
+        assertArrayEquals(am.getSiArray(), mq.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mq.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of((Angle) null, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(qa[0], null));
+
         // of(double[], unit, ref)
         AbsMatrix1x1<Direction, Angle> mdu = AbsMatrix1x1.of(adeg, Angle.Unit.deg, Direction.Reference.NORTH);
         assertArrayEquals(am.getSiArray(), mdu.getSiArray(), 1E-10);
@@ -204,8 +218,7 @@ public class AbsMatrix1x1Test
                 () -> AbsMatrix1x1.of(new Angle[][] {{}, {qa[0], qa[0]}}, Direction.Reference.NORTH));
         assertThrows(IllegalArgumentException.class,
                 () -> AbsMatrix1x1.of(new Angle[][] {null, {qa[0], qa[0]}}, Direction.Reference.NORTH));
-        assertThrows(NullPointerException.class,
-                () -> AbsMatrix1x1.of(new Angle[][] {null}, Direction.Reference.NORTH));
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(new Angle[][] {null}, Direction.Reference.NORTH));
 
         // of(Matrix, ref)
         Matrix1x1<Angle> rel = Matrix1x1.of(new double[] {1}, Angle.Unit.deg);

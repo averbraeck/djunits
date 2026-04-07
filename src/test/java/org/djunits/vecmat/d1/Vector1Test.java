@@ -83,6 +83,10 @@ public class Vector1Test
         Vector1<Length> v = vec(5.0, Length.Unit.km);
         assertArrayEquals(new double[] {5000.0}, v.si(), EPS);
         assertEquals(Length.Unit.km, v.getDisplayUnit(), "display unit preserved");
+        assertTrue(v.isRowVector());
+        assertTrue(v.isColumnVector());
+        assertFalse(v.isAbsolute());
+        assertTrue(v.isRelative());
 
         // Factory .of for vec
         Vector1<Length> cf = Vector1.of(1.2, Length.Unit.m);
