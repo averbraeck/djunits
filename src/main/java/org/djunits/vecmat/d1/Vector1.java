@@ -31,14 +31,14 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     private final double xSi;
 
     /**
-     * Create a new Vector1 with a unit.
-     * @param xInUnit the x-value expressed in the given unit
-     * @param displayUnit the display unit to use
+     * Create a new Vector1 with a display unit.
+     * @param xSi the x-value expressed in the SI unit for the quantity
+     * @param displayUnit the display unit of the vector
      */
-    public Vector1(final double xInUnit, final Unit<?, Q> displayUnit)
+    public Vector1(final double xSi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
-        this.xSi = displayUnit.toBaseValue(xInUnit);
+        this.xSi = xSi;
     }
 
     /**
@@ -48,7 +48,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      */
     public Vector1<Q> instantiateSi(final double xSiNew)
     {
-        return new Vector1<Q>(xSiNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<Q>(xSiNew, getDisplayUnit());
     }
 
     @Override
@@ -144,10 +144,6 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
         return this.xSi;
     }
 
-    /**
-     * Return the contents of the vector as an array.
-     * @return the contents of the vector as an array
-     */
     @Override
     public double[] si()
     {
@@ -276,7 +272,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      */
     public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit, final Unit<?, Q> unit)
     {
-        return new Vector1<>(xInUnit, unit);
+        return new Vector1<>(unit.toBaseValue(xInUnit), unit);
     }
 
     /**
@@ -288,7 +284,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     public static <Q extends Quantity<Q>> Vector1<Q> of(final Q data)
     {
         Throw.whenNull(data, "data");
-        return new Vector1<>(data.si(), data.getDisplayUnit().getBaseUnit()).setDisplayUnit(data.getDisplayUnit());
+        return new Vector1<>(data.si(), data.getDisplayUnit());
     }
 
     /**
@@ -303,7 +299,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.when(dataInUnit.length != 1, IllegalArgumentException.class, "Length of dataInUnit != 1 but %d",
                 dataInUnit.length);
-        return new Vector1<>(dataInUnit[0], unit);
+        return new Vector1<>(unit.toBaseValue(dataInUnit[0]), unit);
     }
 
     /**
@@ -316,7 +312,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double xSi, final Unit<?, Q> displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
-        return new Vector1<>(xSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Vector1<>(xSi, displayUnit);
     }
 
     /**
@@ -330,7 +326,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     {
         Throw.whenNull(dataSi, "dataSi");
         Throw.when(dataSi.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", dataSi.length);
-        return new Vector1<>(dataSi[0], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Vector1<>(dataSi[0], displayUnit);
     }
 
     /**
@@ -343,7 +339,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     {
         Throw.whenNull(data, "dataSi");
         Throw.when(data.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", data.length);
-        return new Vector1<>(data[0].si(), data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
+        return new Vector1<>(data[0].si(), data[0].getDisplayUnit());
     }
 
     // ------------------------------------------ AS METHODS ------------------------------------------
@@ -361,7 +357,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Vector1<TQ>(xSi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new Vector1<TQ>(xSi(), targetUnit);
     }
 
     // ---------------------------------- HASHCODE, EQUALS, TOSTRING ----------------------------------
