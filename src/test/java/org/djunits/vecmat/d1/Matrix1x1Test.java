@@ -400,7 +400,7 @@ public class Matrix1x1Test
         Matrix1x1<Length> a11 = ofSi(2.0, Length.Unit.m);
 
         // Vector [5]^T in km → SI = [5000]
-        Vector1<Length> v1 = new Vector1<>(5.0, Length.Unit.km);
+        Vector1<Length> v1 = Vector1.of(5.0, Length.Unit.km);
         Vector1<SIQuantity> r1 = a11.multiply(v1); // [2*5000] = [10k]
         assertEquals(10_000.0, r1.si()[0], EPS);
 

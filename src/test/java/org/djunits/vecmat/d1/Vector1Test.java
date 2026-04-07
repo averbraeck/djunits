@@ -65,7 +65,7 @@ public class Vector1Test
      */
     private static Vector1<Length> vec(final double xInUnit, final Length.Unit unit)
     {
-        return new Vector1<>(xInUnit, unit);
+        return Vector1.of(xInUnit, unit);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -44,7 +44,7 @@ public class AbsVector1Test
     @Test
     public void testCtorBase()
     {
-        var rv = new Vector1<Angle>(180.0, Angle.Unit.deg);
+        var rv = Vector1.of(180.0, Angle.Unit.deg);
         var av = new AbsVector1<>(rv, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, av.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, av.getReference());
@@ -74,7 +74,7 @@ public class AbsVector1Test
     @Test
     public void testCtorBaseExceptions()
     {
-        var rv = new Vector1<Angle>(180.0, Angle.Unit.deg);
+        var rv = Vector1.of(180.0, Angle.Unit.deg);
         assertThrows(NullPointerException.class, () -> new AbsVector1<>(null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> new AbsVector1<>(rv, null));
     }
@@ -119,7 +119,7 @@ public class AbsVector1Test
         var adeg = new double[] {180.0};
         var adeg5 = new double[] {0.0, 90.0, 180.0, 270.0, 45.0};
         var arad = new double[] {Math.PI};
-        var rv = new Vector1<Angle>(180.0, Angle.Unit.deg);
+        var rv = Vector1.of(180.0, Angle.Unit.deg);
         var av = new AbsVector1<>(rv, Direction.Reference.NORTH);
 
         // of(double, double, unit, ref)
@@ -171,8 +171,7 @@ public class AbsVector1Test
         AbsVector1<Direction, Angle> vqa = AbsVector1.of(qa, Direction.Reference.NORTH);
         assertArrayEquals(av.getSiArray(), vqa.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, vqa.getDisplayUnit());
-        AbsVector1<Direction, Angle> vqa2 =
-                AbsVector1.of(new Angle[] {Angle.of(Math.PI, "rad")}, Direction.Reference.NORTH);
+        AbsVector1<Direction, Angle> vqa2 = AbsVector1.of(new Angle[] {Angle.of(Math.PI, "rad")}, Direction.Reference.NORTH);
         assertArrayEquals(av.getSiArray(), vqa2.getSiArray(), 1E-10);
         assertEquals(Angle.Unit.rad, vqa2.getDisplayUnit());
         assertThrows(NullPointerException.class, () -> AbsVector1.of((Angle[]) null, Direction.Reference.NORTH));
@@ -342,8 +341,7 @@ public class AbsVector1Test
         assertFalse(vdn.equals(new String("abc")));
         assertFalse(vdn.equals(northDeg()));
 
-        assertEquals(vdn.hashCode(),
-                AbsVector1.ofSi(new double[] {0.1}, Angle.Unit.deg, Direction.Reference.NORTH).hashCode());
+        assertEquals(vdn.hashCode(), AbsVector1.ofSi(new double[] {0.1}, Angle.Unit.deg, Direction.Reference.NORTH).hashCode());
         assertEquals(vdn.hashCode(), vrn.hashCode());
         assertNotEquals(vdn.hashCode(), vde.hashCode());
         assertNotEquals(vdn.hashCode(), northDeg().hashCode());
