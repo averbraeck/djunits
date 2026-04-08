@@ -155,6 +155,23 @@ For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` ex
   creates a `Vector3.Col` based on an array of length 3 containing the provided quantities.
 
 
+### Creating a `VectorN`
+
+The `VectorN` class is used for storing row and column vectors of any length. Data can be stored as single-precision `float` variable, or as double-preciding `double` values. Both dense (store every number) and sparse (only store non-zero values) is possible. For a `VectorN`, a row vector subclass `VectorN.Row` and a column vector subclass `VectorN.Col` exist. Several methods exist to instantiate a `VectorN`. Below, the instantiation methods are given for `VectorN.Col`. The instantiation methods for a `VectorN.Row` are analogous.
+
+- `new VectorN.Col<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `VectorN.Col.of(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `VectorN.Col.of(double[] dataInUnit, Unit unit)` <br>
+  creates a `VectorN.Col` based on an array with values expressed in the given unit. The vector will have the same number of elements as the array.
+- `VectorN.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
+  creates a `VectorN.Col` based on an array with SI-values for the quantities. The vector will have the same number of elements as the array.
+- `VectorN.Col.of(Q[] data)` <br>
+  creates a `VectorN.Col` based on an array with quantities. The vector will have the same number of elements as the array.
+- `VectorN.Col.of(List<Q> data)` <br>
+  creates a `VectorN.Col` based on a list with quantities. The vector will have the same number of elements as the list.
+
 
 ## Example for Vector instantiation and usage
 
