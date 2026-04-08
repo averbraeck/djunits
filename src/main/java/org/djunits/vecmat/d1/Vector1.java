@@ -277,14 +277,14 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
 
     /**
      * Create a Vector1 without needing generics.
-     * @param data the x-value expressed as a quantity
+     * @param x the x-value expressed as a quantity
      * @return a new Vector1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Vector1<Q> of(final Q data)
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final Q x)
     {
-        Throw.whenNull(data, "data");
-        return new Vector1<>(data.si(), data.getDisplayUnit());
+        Throw.whenNull(x, "x");
+        return new Vector1<>(x.si(), x.getDisplayUnit());
     }
 
     /**
