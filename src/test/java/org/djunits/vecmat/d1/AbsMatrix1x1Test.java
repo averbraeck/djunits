@@ -41,7 +41,7 @@ public class AbsMatrix1x1Test
     @Test
     public void testCtorBase()
     {
-        var rm = new Matrix1x1<Angle>(new double[] {90.0}, Angle.Unit.deg);
+        var rm = Matrix1x1.of(new double[] {90.0}, Angle.Unit.deg);
         var am = new AbsMatrix1x1<>(rm, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, am.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, am.getReference());
@@ -71,7 +71,7 @@ public class AbsMatrix1x1Test
     @Test
     public void testCtorBaseExceptions()
     {
-        var rm = new Matrix1x1<Angle>(new double[] {90.0}, Angle.Unit.deg);
+        var rm = Matrix1x1.of(new double[] {90.0}, Angle.Unit.deg);
         assertThrows(NullPointerException.class, () -> new AbsMatrix1x1<>(null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> new AbsMatrix1x1<>(rm, null));
     }
@@ -108,7 +108,7 @@ public class AbsMatrix1x1Test
         var adegg = new double[][] {{90.0}};
         var arad = new double[] {Math.PI / 2.0};
         var aradg = new double[][] {{Math.PI / 2.0}};
-        var rm = new Matrix1x1<Angle>(new double[] {90.0}, Angle.Unit.deg);
+        var rm = Matrix1x1.of(new double[] {90.0}, Angle.Unit.deg);
         var am = new AbsMatrix1x1<>(rm, Direction.Reference.NORTH);
 
         // of(double, unit, ref)

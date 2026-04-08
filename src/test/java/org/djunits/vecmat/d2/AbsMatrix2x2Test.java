@@ -41,7 +41,7 @@ public class AbsMatrix2x2Test
     @Test
     public void testCtorBase()
     {
-        var rm = new Matrix2x2<Angle>(new double[] {0.0, 90.0, 180.0, 270.0}, Angle.Unit.deg);
+        var rm = Matrix2x2.of(new double[] {0.0, 90.0, 180.0, 270.0}, Angle.Unit.deg);
         var am = new AbsMatrix2x2<>(rm, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, am.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, am.getReference());
@@ -81,7 +81,7 @@ public class AbsMatrix2x2Test
     @Test
     public void testCtorBaseExceptions()
     {
-        var rm = new Matrix2x2<Angle>(new double[] {0.0, 90.0, 180.0, 270.0}, Angle.Unit.deg);
+        var rm = Matrix2x2.of(new double[] {0.0, 90.0, 180.0, 270.0}, Angle.Unit.deg);
         assertThrows(NullPointerException.class, () -> new AbsMatrix2x2<>(null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> new AbsMatrix2x2<>(rm, null));
     }
@@ -120,7 +120,7 @@ public class AbsMatrix2x2Test
         var adegg = new double[][] {{0.0, 90.0}, {180.0, 270.0}};
         var arad = new double[] {0.0, Math.PI / 2.0, Math.PI, 1.5 * Math.PI};
         var aradg = new double[][] {{0.0, Math.PI / 2.0}, {Math.PI, 1.5 * Math.PI}};
-        var rm = new Matrix2x2<Angle>(new double[] {0.0, 90.0, 180.0, 270.0}, Angle.Unit.deg);
+        var rm = Matrix2x2.of(new double[] {0.0, 90.0, 180.0, 270.0}, Angle.Unit.deg);
         var am = new AbsMatrix2x2<>(rm, Direction.Reference.NORTH);
 
         // of(double[], unit, ref)

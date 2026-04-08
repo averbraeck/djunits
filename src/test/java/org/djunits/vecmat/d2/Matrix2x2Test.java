@@ -394,8 +394,8 @@ public class Matrix2x2Test
     public void testMatrixMultiply()
     {
         // A = [[1,2],[3,4]] ; B = [[5,6],[7,8]] ; A*B = [[19,22],[43,50]]
-        var a = new Matrix2x2<Length>(new double[] {1, 2, 3, 4}, Length.Unit.m);
-        var b = new Matrix2x2<Length>(new double[] {5, 6, 7, 8}, Length.Unit.km);
+        var a = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.m);
+        var b = Matrix2x2.of(new double[] {5, 6, 7, 8}, Length.Unit.km);
         Matrix2x2<SIQuantity> c = a.multiply(b);
         assertArrayEquals(new double[] {19_000.0, 22_000.0, 43_000.0, 50_000.0}, c.si(), EPS,
                 "result in SI reflects both inputs (mxkm→m^2 in SI numerical terms)");
@@ -424,8 +424,8 @@ public class Matrix2x2Test
     @DisplayName("Hadamard: invertElements / multiplyElements / divideElements")
     public void testHadamard()
     {
-        var a = new Matrix2x2<Length>(new double[] {2, 4, 5, 10}, Length.Unit.m);
-        var b = new Matrix2x2<Length>(new double[] {1, 2, 0.5, 4}, Length.Unit.km);
+        var a = Matrix2x2.of(new double[] {2, 4, 5, 10}, Length.Unit.m);
+        var b = Matrix2x2.of(new double[] {1, 2, 0.5, 4}, Length.Unit.km);
 
         // invert: reciprocal per element
         Matrix2x2<SIQuantity> inv = a.invertEntries();

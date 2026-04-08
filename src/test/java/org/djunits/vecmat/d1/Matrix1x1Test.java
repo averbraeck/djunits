@@ -382,8 +382,8 @@ public class Matrix1x1Test
     @DisplayName("matrix x matrix multiplication")
     public void testMatrixMultiply()
     {
-        var a1 = new Matrix1x1<Length>(new double[] {1}, Length.Unit.m);
-        var b1 = new Matrix1x1<Length>(new double[] {5}, Length.Unit.km);
+        var a1 = Matrix1x1.of(new double[] {1}, Length.Unit.m);
+        var b1 = Matrix1x1.of(new double[] {5}, Length.Unit.km);
         Matrix1x1<SIQuantity> c = a1.multiply(b1);
         assertArrayEquals(new double[] {5_000.0}, c.si(), EPS,
                 "result in SI reflects both inputs (mxkm→m^2 in SI numerical terms)");
@@ -433,8 +433,8 @@ public class Matrix1x1Test
     @DisplayName("Hadamard: invertElements / multiplyElements / divideElements")
     public void testHadamard()
     {
-        var a = new Matrix1x1<Length>(new double[] {2}, Length.Unit.m);
-        var b = new Matrix1x1<Length>(new double[] {4}, Length.Unit.km);
+        var a = Matrix1x1.of(new double[] {2}, Length.Unit.m);
+        var b = Matrix1x1.of(new double[] {4}, Length.Unit.km);
 
         // invert: reciprocal per element
         Matrix1x1<SIQuantity> inv = a.invertEntries();

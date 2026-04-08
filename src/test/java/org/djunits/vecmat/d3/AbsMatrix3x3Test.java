@@ -42,7 +42,7 @@ public class AbsMatrix3x3Test
     @Test
     public void testCtorBase()
     {
-        var rm = new Matrix3x3<Angle>(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0, 225.0, 30.0, 315.0}, Angle.Unit.deg);
+        var rm = Matrix3x3.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0, 225.0, 30.0, 315.0}, Angle.Unit.deg);
         var am = new AbsMatrix3x3<>(rm, Direction.Reference.NORTH);
 
         assertEquals(Angle.Unit.deg, am.getDisplayUnit());
@@ -109,7 +109,7 @@ public class AbsMatrix3x3Test
     @Test
     public void testCtorBaseExceptions()
     {
-        var rm = new Matrix3x3<Angle>(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0, 225.0, 30.0, 315.0}, Angle.Unit.deg);
+        var rm = Matrix3x3.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0, 225.0, 30.0, 315.0}, Angle.Unit.deg);
         assertThrows(NullPointerException.class, () -> new AbsMatrix3x3<>(null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> new AbsMatrix3x3<>(rm, null));
     }
@@ -154,7 +154,7 @@ public class AbsMatrix3x3Test
                 (1.0 / 6.0) * Math.PI, 1.75 * Math.PI};
         var aradg = new double[][] {{0.0, 0.5 * Math.PI, Math.PI}, {1.5 * Math.PI, 0.25 * Math.PI, 0.75 * Math.PI},
                 {1.25 * Math.PI, (1.0 / 6.0) * Math.PI, 1.75 * Math.PI}};
-        var rm = new Matrix3x3<Angle>(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0, 225.0, 30.0, 315.0}, Angle.Unit.deg);
+        var rm = Matrix3x3.of(new double[] {0.0, 90.0, 180.0, 270.0, 45.0, 135.0, 225.0, 30.0, 315.0}, Angle.Unit.deg);
         var am = new AbsMatrix3x3<>(rm, Direction.Reference.NORTH);
 
         // of(double[], unit, ref)
