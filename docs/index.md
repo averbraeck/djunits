@@ -69,7 +69,7 @@ Generally, if adding a value to itself makes no sense, the value is absolute; ot
 
 > **Note** that when multiplying two relative quantities, the resulting quantity is of a different type: the multiplication of two `Length` quantities results in an `Area` quantity. The same holds for division: dividing a `Length` quantity by a `Duration` quantity results in a `Speed` quantity.
 
-Attempts to perform operations that are marked not allowed are caught at compile time.
+Attempts to perform operations that are marked 'Not allowed' are caught at compile time.
 
 All quantities make sense as relative values. The four quantities that also make sense as absolute values are listed in the 
 table below.
@@ -199,7 +199,7 @@ This would print:
 
 ## Scalars, Vectors and Matrices
 
-Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same unit) such as vectors or 
+Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same quantity) such as vectors or 
 matrices. Efficient classes have been created for the 'small' vectors and matrices of size 1 to 3. The following vector and matrix classes exist:
 
 * `Vector1` for a vector with just one entry
@@ -212,7 +212,7 @@ matrices. Efficient classes have been created for the 'small' vectors and matric
 * `MatrixNxN` for a square matrix of any size
 * `MatrixNxM` for a non-square or square matrix of any size
 
-The larger vectors and matrices (`VectorN`, `MatrixNxN`, `MatrixNxM`) come in four varieties:
+The storage for larger vectors and matrices (`VectorN`, `MatrixNxN`, `MatrixNxM`) come in four varieties:
 
 * Dense, Double
 * Dense, Float
@@ -371,7 +371,7 @@ The following localizations are currently bundled with DJUNITS: `en_US`, `de`, `
 DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. Version 6 is a completely new implementation of the code with the following notable differences:
 
 - The `Quantity` is now the central object from which all quantities inherit.
-- The method `getSI()` and the field `si` for a `Quantity` have been replaced by the method `si()`.
+- The method `getSI()` for a `Quantity` has been replaced by the method `si()`. The field `si` is still (read-only) accessible.
 - Unit classes are inner classes of the quantity, such as `Energy.Unit`.
 - Units use 'human readable' definitions, such as `Volume.Unit.m3` and `Length.Unit.km`. 
 - The `SIQuantity` and `SIUnit` classes have been implemented as a normal quantity.
@@ -381,6 +381,7 @@ DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. 
 - Operation names are streamlined across quantities, vectors and matrices, e.g., `add`, `subtract`, `multiply`, `divide`.
 - Vector and matrix classes use generics for definitions such as `Matrix3x3<Area>`, and only allow correct operations.
 - Vector and matrix operations such as trace, multiplication, and inverse are now fully supported with consistent unit calculations.
+- Vectors and matrices with absolute quantities such as `Matrix3x3<Position, Length>` are fully supported.
 - Hadamard operations have been added to vector and matrix calculations.
 - The `QuantityTable` has been added for storage of tabular quantity data.
 
