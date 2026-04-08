@@ -86,7 +86,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     @Override
     public Vector1<Q> transpose()
     {
-        return instantiateSi(this.xSi).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(this.xSi);
     }
 
     @Override
