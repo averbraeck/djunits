@@ -136,6 +136,140 @@ Square matrices have a number of additional operations:
 - `boolean isSkewSymmetric(final Q tolerance)` returns whether the matrix is skew-symmetric or not, using a provided tolerance.
 
 
+## Vector definition and storage
+
+### Creating a `Matrix1x1`
+
+Several methods exist to instantiate a `Matrix1x1`:
+
+- `new Matrix1x1<Q>(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Matrix1x1` based on an array of length 1 with SI-values for a quantity with a displayUnit.
+- `Matrix1x1.of(double xInUnit, Unit unit)` <br>
+  creates a `Matrix1x1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`.
+- `Matrix1x1.of(double[] dataInUnit, Unit unit)` <br>
+  creates a `Matrix1x1` based on an array of length 1 with values expressed in the given unit.
+- `Matrix1x1.of(double[][] gridInUnit, Unit unit)` <br>
+  creates a `Matrix1x1` based on a 1x1 grid (array of arrays) of values expressed in the given unit.
+- `Matrix1x1.ofSi(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Matrix1x1` based on an array of length 1 with SI-values for a quantity and a displayUnit.
+- `Matrix1x1.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+  creates a `Matrix1x1` based on a 1x1 grid (array of arrays) of SI values and a displayUnit.
+- `Matrix1x1.of(Q[] data)` <br>
+  creates a `Matrix1x1` based on an array of length 1 containing the quantity. The display unit is taken from the quantity.
+- `Matrix1x1.of(Q[][] grid)` <br>
+  creates a `Matrix1x1` based on a 1x1 grid (array of arrays) of quantities. The display unit is taken from the quantity.
+
+
+### Creating a `Matrix2x2`
+
+Several methods exist to instantiate a `Matrix2x2`. 
+
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m21, m22}`. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices.
+
+The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
+
+- `new Matrix2x2<Q>(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Matrix2x2` based on a row-major array of length 4 with SI-values for a quantity with a displayUnit.
+- `Matrix2x2.of(double[] dataInUnit, Unit unit)` <br>
+  creates a `Matrix2x2` based on a row-major array of length 4 with values expressed in the given unit.
+- `Matrix2x2.of(double[][] gridInUnit, Unit unit)` <br>
+  creates a `Matrix2x2` based on a 2x2 grid (array of arrays) of values expressed in the given unit.
+- `Matrix2x2.ofSi(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Matrix2x2` based on a row-major array of length 4 with SI-values for a quantity and a displayUnit.
+- `Matrix2x2.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+  creates a `Matrix2x2` based on a 2x2 grid (array of arrays) of SI values and a displayUnit.
+- `Matrix2x2.of(Q[] data)` <br>
+  creates a `Matrix2x2` based on a row-major array of length 4 containing the quantity. The display unit is taken from the quantity at position `[0]`.
+- `Matrix2x2.of(Q[][] grid)` <br>
+  creates a `Matrix2x2` based on a 2x2 grid (array of arrays) of quantities. The display unit is taken from the quantity at position `[0][0]`.
+
+
+### Creating a `Matrix3x3`
+
+Several methods exist to instantiate a `Matrix3x3`. 
+
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23, m31, m32, m33}`. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices.
+
+The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
+
+- `new Matrix3x3<Q>(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Matrix3x3` based on a row-major array of length 9 with SI-values for a quantity with a displayUnit.
+- `Matrix3x3.of(double[] dataInUnit, Unit unit)` <br>
+  creates a `Matrix3x3` based on a row-major array of length 9 with values expressed in the given unit.
+- `Matrix3x3.of(double[][] gridInUnit, Unit unit)` <br>
+  creates a `Matrix3x3` based on a 3x3 grid (array of arrays) of values expressed in the given unit.
+- `Matrix3x3.ofSi(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Matrix3x3` based on a row-major array of length 9 with SI-values for a quantity and a displayUnit.
+- `Matrix3x3.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+  creates a `Matrix3x3` based on a 3x3 grid (array of arrays) of SI values and a displayUnit.
+- `Matrix3x3.of(Q[] data)` <br>
+  creates a `Matrix3x3` based on a row-major array of length 9 containing the quantity. The display unit is taken from the quantity at position `[0]`.
+- `Matrix3x3.of(Q[][] grid)` <br>
+  creates a `Matrix3x3` based on a 3x3 grid (array of arrays) of quantities. The display unit is taken from the quantity at position `[0][0]`.
+
+
+### Creating a `MatrixNxN`
+
+The `MatrixNxN` class is used for storing **square** matrices of any size (1x1 and up). Data can be stored as single-precision `float` variable, or as double-precision `double` values. Both dense storage (store every number) and sparse storage (only store non-zero values) are possible. 
+
+Several methods exist to instantiate a `MatrixNxN`.
+
+The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For many `of` and `ofSi` methods and the constructor, the number of rows and columns of the matrix need to be provided for the `DataGridSi` object to know the shape of the matrix. A `double[4]` array of SI values can represent a 2x2 matrix, but also a 4x1 or 1x4 matrix or vector. All three shapes can be stored in the `DataGridSi` object.
+
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23, m31, m32, m33}` for a 3x3 matrix. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices. Since the construction methods know that a square matrix has to be constructed, they test whether the array length is a perfect square (e.g., 25) and construct the corresponding square matrix (e.g., 5x5) by taking the square root of the length for the number of rows and columns. 
+
+The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. For a square NxN matrix, the number of rows and columns should be the same, and 'ragged' grids are not allowed and result in an `IllegalArgumentException`. 
+
+
+- `new MatrixNxN<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `MatrixNxN` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `MatrixNxN.of(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `MatrixNxN` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `MatrixNxN.of(double[] dataInUnit, Unit unit)` <br>
+  creates a `MatrixNxN` based on a row-major array with values expressed in the given unit. The number of elements in the array needs to be a perfect square.
+- `MatrixNxN.of(double[][] gridInUnit, Unit unit)` <br>
+  creates a `MatrixNxN` based on a grid (array of arrays) with values expressed in the given unit. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
+- `MatrixNxN.ofSi(double[] dataSi, Unit displayUnit)` <br>
+  creates a `MatrixNxN` based on a row-major array with SI-values for the quantities. The number of elements in the array needs to be a perfect square.
+- `MatrixNxN.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+  creates a `MatrixNxN` based on a grid (array of arrays) with with SI-values for the quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
+- `MatrixNxN.of(Q[] data)` <br>
+  creates a `MatrixNxN` based on a row-major array with quantities. The number of elements in the array needs to be a perfect square.
+- `MatrixNxN.of(Q[][] grid)` <br>
+  creates a `MatrixNxN` based on a grid (array of arrays) with with quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
+
+
+### Creating a `MatrixNxM`
+
+The `MatrixNxM` class is the most generic matrix class. It can be used for matrices of any size (1x1 and up). Data can be stored as single-precision `float` variable, or as double-precision `double` values. Both dense storage (store every number) and sparse storage (only store non-zero values) are possible. 
+
+Several methods exist to instantiate a `MatrixNxM`.
+
+The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For many `of` and `ofSi` methods and the constructor, the number of rows and columns of the matrix need to be provided for the `DataGridSi` object to know the shape of the matrix. A `double[6]` array of SI values can represent a 2x3 matrix, but also a 3x2 matrix or a 1x6 or 6x1 matrix or vector. All four shapes can be stored in the `DataGridSi` object by providing the number of rows and columns.
+
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23}` for a 2x3 matrix. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices. 
+
+The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
+
+
+- `new MatrixNxM<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `MatrixNxM` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `MatrixNxM.of(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `MatrixNxM` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `MatrixNxM.of(double[] dataInUnit, int rows, int cols, Unit unit)` <br>
+  creates a `MatrixNxM` based on a row-major array with values expressed in the given unit. The length of the array needs to be equal to `rows * cols`.
+- `MatrixNxM.of(double[][] gridInUnit, Unit unit)` <br>
+  creates a `MatrixNxM` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
+- `MatrixNxM.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit)` <br>
+  creates a `MatrixNxM` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+- `MatrixNxM.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+  creates a `MatrixNxM` based on a grid (array of arrays) with with SI-values for the quantities. The grid cannot be 'ragged'.
+- `MatrixNxM.of(Q[] data, int rows, int cols)` <br>
+  creates a `MatrixNxM` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.
+- `MatrixNxM.of(Q[][] grid)` <br>
+  creates a `MatrixNxM` based on a grid (array of arrays) with with quantities. The grid cannot be 'ragged'.
+
+
 ## Example matrix definition and usage
 
 The example below shows the instantiation and usage of a `MatrixNxM`:
