@@ -39,6 +39,12 @@ nav:
   - Vector: vector.md
   - Matrix: matrix.md
   - Quantity Table: quantity_table.md
+  - Absolute Vector: absolute_vector.md
+  - Absolute Matrix: absolute_matrix.md
+  - Absolute Table: absolute_table.md
+  - Data Storage: storage.md
+  - Localization: localization.md
+  - Migrating v5-v6: migration.md
   - Code generation: code_generation.md
   - Documentation v5: https://djunits.org/docs/5.4.2/manual/
   - DJUNITS documentation: https://djunits.org/docs/current/index.html
