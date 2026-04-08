@@ -419,7 +419,7 @@ public class Matrix3x3Test
     {
         // A same as above (in m); v in km → SI [1000, 2000, 3000]
         Matrix3x3<Length> a = ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.m);
-        Vector3.Col<Length> v = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.km);
+        Vector3.Col<Length> v = Vector3.Col.of(1.0, 2.0, 3.0, Length.Unit.km);
 
         Vector3.Col<SIQuantity> r = a.multiply(v);
         // r = A·[1000,2000,3000]^T = [14000, 32000, 50000]

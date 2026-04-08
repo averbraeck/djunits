@@ -65,7 +65,7 @@ public class Vector3Test
     private static Vector3.Col<Length> col(final double xInUnit, final double yInUnit, final double zInUnit,
             final Length.Unit unit)
     {
-        return new Vector3.Col<>(xInUnit, yInUnit, zInUnit, unit);
+        return Vector3.Col.of(xInUnit, yInUnit, zInUnit, unit);
     }
 
     /**
@@ -79,7 +79,7 @@ public class Vector3Test
     private static Vector3.Row<Length> row(final double xInUnit, final double yInUnit, final double zInUnit,
             final Length.Unit unit)
     {
-        return new Vector3.Row<>(xInUnit, yInUnit, zInUnit, unit);
+        return Vector3.Row.of(xInUnit, yInUnit, zInUnit, unit);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -411,7 +411,7 @@ public class Matrix1x1Test
         assertEquals(12_000.0, r2.si()[1], EPS);
 
         // Vector [5, 6, 7]^T in km → SI = [5000, 6000, 7000]
-        Vector3.Row<Length> v3 = new Vector3.Row<>(5.0, 6.0, 7.0, Length.Unit.km);
+        Vector3.Row<Length> v3 = Vector3.Row.of(5.0, 6.0, 7.0, Length.Unit.km);
         Vector3.Row<SIQuantity> r3 = a11.multiply(v3); // [2*5000, 2*6000, 2*7000] = [10k, 12k, 14k]
         assertEquals(10_000.0, r3.si()[0], EPS);
         assertEquals(12_000.0, r3.si()[1], EPS);

@@ -53,7 +53,7 @@ public class AbsVector3Test
     @Test
     public void testCtorBaseCol()
     {
-        var rvCol = new Vector3.Col<Angle>(180.0, 270.0, 90.0, Angle.Unit.deg);
+        var rvCol = Vector3.Col.of(180.0, 270.0, 90.0, Angle.Unit.deg);
         var avCol = new AbsVector3.Col<>(rvCol, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, avCol.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, avCol.getReference());
@@ -88,7 +88,7 @@ public class AbsVector3Test
     @Test
     public void testCtorBaseRow()
     {
-        var rvRow = new Vector3.Row<Angle>(180.0, 270.0, 90.0, Angle.Unit.deg);
+        var rvRow = Vector3.Row.of(180.0, 270.0, 90.0, Angle.Unit.deg);
         var avRow = new AbsVector3.Row<>(rvRow, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, avRow.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, avRow.getReference());
@@ -128,11 +128,11 @@ public class AbsVector3Test
     @Test
     public void testCtorBaseExceptions()
     {
-        var rvCol = new Vector3.Col<Angle>(180.0, 270.0, 90.0, Angle.Unit.deg);
+        var rvCol = Vector3.Col.of(180.0, 270.0, 90.0, Angle.Unit.deg);
         assertThrows(NullPointerException.class, () -> new AbsVector3.Col<>(null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> new AbsVector3.Col<>(rvCol, null));
 
-        var rvRow = new Vector3.Row<Angle>(180.0, 270.0, 90.0, Angle.Unit.deg);
+        var rvRow = Vector3.Row.of(180.0, 270.0, 90.0, Angle.Unit.deg);
         assertThrows(NullPointerException.class, () -> new AbsVector3.Row<>(null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> new AbsVector3.Row<>(rvRow, null));
     }
@@ -205,7 +205,7 @@ public class AbsVector3Test
         var adeg = new double[] {180.0, 270.0, 90.0};
         var adeg5 = new double[] {0.0, 90.0, 180.0, 270.0, 45.0};
         var arad = new double[] {Math.PI, 1.5 * Math.PI, 0.5 * Math.PI};
-        var rv = new Vector3.Col<Angle>(180.0, 270.0, 90.0, Angle.Unit.deg);
+        var rv = Vector3.Col.of(180.0, 270.0, 90.0, Angle.Unit.deg);
         var av = new AbsVector3.Col<>(rv, Direction.Reference.NORTH);
 
         // of(double, double, double, unit, ref)
@@ -293,7 +293,7 @@ public class AbsVector3Test
         var adeg = new double[] {180.0, 270.0, 90.0};
         var adeg5 = new double[] {0.0, 90.0, 180.0, 270.0, 45.0};
         var arad = new double[] {Math.PI, 1.5 * Math.PI, 0.5 * Math.PI};
-        var rv = new Vector3.Row<Angle>(180.0, 270.0, 90.0, Angle.Unit.deg);
+        var rv = Vector3.Row.of(180.0, 270.0, 90.0, Angle.Unit.deg);
         var av = new AbsVector3.Row<>(rv, Direction.Reference.NORTH);
 
         // of(double, double, double, unit, ref)

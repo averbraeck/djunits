@@ -293,7 +293,7 @@ public class MatrixNxMTest
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), r2.getDisplayUnit());
 
         MatrixNxM<Length> a23 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 2, 3, Length.Unit.m);
-        Vector3.Col<Length> v3 = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.km); // [1k,2k,3k]
+        Vector3.Col<Length> v3 = Vector3.Col.of(1.0, 2.0, 3.0, Length.Unit.km); // [1k,2k,3k]
         VectorN.Col<SIQuantity> r3 = a23.multiply(v3);
         assertEquals(2, r3.size());
         assertArrayEquals(new double[] {14000, 32000}, r3.si(), EPS);
@@ -1319,7 +1319,7 @@ public class MatrixNxMTest
         MatrixNxM<Length> left = ofSi(new double[] {1000.0, 2000.0, 3000.0, 4000.0, 5000.0, 6000.0}, 2, 3, Length.Unit.km);
 
         // Right vector: [1 m; 2 m; 3 m]
-        Vector3.Col<Length> v3 = new Vector3.Col<>(1.0, 2.0, 3.0, Length.Unit.m);
+        Vector3.Col<Length> v3 = Vector3.Col.of(1.0, 2.0, 3.0, Length.Unit.m);
 
         VectorN.Col<SIQuantity> prod = left.multiply(v3);
         assertEquals(2, prod.size());
