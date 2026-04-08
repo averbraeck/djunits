@@ -382,7 +382,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxN<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new MatrixNxN<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit);
     }
 
     /**
@@ -394,7 +394,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         Throw.when(order() != 1, IllegalStateException.class, "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(),
                 cols());
-        return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return Matrix1x1.ofSi(si(), getDisplayUnit());
     }
 
     /**
@@ -406,7 +406,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         Throw.when(order() != 2, IllegalStateException.class, "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(),
                 cols());
-        return Matrix2x2.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return Matrix2x2.ofSi(si(), getDisplayUnit());
     }
 
     /**
@@ -418,7 +418,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         Throw.when(order() != 3, IllegalStateException.class, "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(),
                 cols());
-        return Matrix3x3.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return Matrix3x3.ofSi(si(), getDisplayUnit());
     }
 
 }
