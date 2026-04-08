@@ -36,7 +36,7 @@ Quantities are strongly typed, and many operations on quantities are possible. A
 
 - `getDisplayUnit()` to ask the current unit in which the quantity is displayed.
 - `setDisplayUnit(newUnit)` to give the unit a new display unit, without changing its value. Values are _always_ stored using the SI or BASE unit.
-- `si()` to give the value of the quantity expressed in SI or BASE units.
+- `si()` or `si` to give the value of the quantity expressed in SI or BASE units.
 - `getInUnit(targetUnit)` to get the value expressed in the given target unit.
 - `doubleValue()`, `floatValue()`, `intValue()`, etc. are provided since `Quantity` extends `Number`.
 - logical operators such as `lt`, `le`, `eq`, `ne`, to check whether one quantity is, e.g., bigger or smaller than another one.
