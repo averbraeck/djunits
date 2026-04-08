@@ -164,7 +164,7 @@ Several methods exist to instantiate a `Matrix1x1`:
 
 Several methods exist to instantiate a `Matrix2x2`. 
 
-The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m21, m22}`. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices.
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m21, m22}`. A `(r,c)` value is retrieved by `m[index]`, `index = r * cols() + c` where r, c are 0-based indices.
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
@@ -188,7 +188,7 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 
 Several methods exist to instantiate a `Matrix3x3`. 
 
-The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23, m31, m32, m33}`. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices.
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23, m31, m32, m33}`. A `(r,c)` value is retrieved by `m[index]`, `index = r * cols() + c` where r, c are 0-based indices.
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
@@ -216,7 +216,7 @@ Several methods exist to instantiate a `MatrixNxN`.
 
 The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For many `of` and `ofSi` methods and the constructor, the number of rows and columns of the matrix need to be provided for the `DataGridSi` object to know the shape of the matrix. A `double[4]` array of SI values can represent a 2x2 matrix, but also a 4x1 or 1x4 matrix or vector. All three shapes can be stored in the `DataGridSi` object.
 
-The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23, m31, m32, m33}` for a 3x3 matrix. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices. Since the construction methods know that a square matrix has to be constructed, they test whether the array length is a perfect square (e.g., 25) and construct the corresponding square matrix (e.g., 5x5) by taking the square root of the length for the number of rows and columns. 
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23, m31, m32, m33}` for a 3x3 matrix. A `(r,c)` value is retrieved by `m[index]`, `index = r * cols() + c` where r, c are 0-based indices. Since the construction methods know that a square matrix has to be constructed, they test whether the array length is a perfect square (e.g., 25) and construct the corresponding square matrix (e.g., 5x5) by taking the square root of the length for the number of rows and columns. 
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. For a square NxN matrix, the number of rows and columns should be the same, and 'ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
@@ -247,7 +247,7 @@ Several methods exist to instantiate a `MatrixNxM`.
 
 The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For many `of` and `ofSi` methods and the constructor, the number of rows and columns of the matrix need to be provided for the `DataGridSi` object to know the shape of the matrix. A `double[6]` array of SI values can represent a 2x3 matrix, but also a 3x2 matrix or a 1x6 or 6x1 matrix or vector. All four shapes can be stored in the `DataGridSi` object by providing the number of rows and columns.
 
-The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23}` for a 2x3 matrix. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices. 
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23}` for a 2x3 matrix. A `(r,c)` value is retrieved by `m[index]`, `index = r * cols() + c` where r, c are 0-based indices. 
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 

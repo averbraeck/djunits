@@ -117,7 +117,7 @@ Several methods exist to instantiate a `QuantityTable`.
 
 The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For many `of` and `ofSi` methods and the constructor, the number of rows and columns of the quantity table need to be provided for the `DataGridSi` object to know the shape of the quantity table. A `double[6]` array of SI values can represent a 2x3 quantity table, but also a 3x2 quantity table or a 1x6 or 6x1 quantity table. All four shapes can be stored in the `DataGridSi` object by providing the number of rows and columns.
 
-The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23}` for a 2x3 quantity table. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices. 
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23}` for a 2x3 quantity table. A `(r,c)` value is retrieved by `m[index]`, `index = r * cols() + c` where r, c are 0-based indices. 
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
