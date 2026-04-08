@@ -41,16 +41,16 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
     private final double ySi;
 
     /**
-     * Create a new Vector2 with a unit.
-     * @param xInUnit the x-value expressed in the given unit
-     * @param yInUnit the y-value expressed in the given unit
+     * Create a new Vector2 with a display unit.
+     * @param xSi the x-value expressed in the SI unit
+     * @param ySi the y-value expressed in the SI unit
      * @param displayUnit the display unit to use
      */
-    protected Vector2(final double xInUnit, final double yInUnit, final Unit<?, Q> displayUnit)
+    protected Vector2(final double xSi, final double ySi, final Unit<?, Q> displayUnit)
     {
         super(displayUnit);
-        this.xSi = displayUnit.toBaseValue(xInUnit);
-        this.ySi = displayUnit.toBaseValue(yInUnit);
+        this.xSi = xSi;
+        this.ySi = ySi;
     }
 
     /**
@@ -289,8 +289,8 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             return false;
         Vector2<?, ?, ?, ?, ?> other = (Vector2<?, ?, ?, ?, ?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi)
-                && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi)
-                && rows() == other.rows() && cols() == other.cols();
+                && Double.doubleToLongBits(this.ySi) == Double.doubleToLongBits(other.ySi) && rows() == other.rows()
+                && cols() == other.cols();
     }
 
     @Override
@@ -330,14 +330,14 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         private static final long serialVersionUID = 600L;
 
         /**
-         * Create a new 2 column vector with a unit.
-         * @param xInUnit the x-value expressed in the given display unit
-         * @param yInUnit the y-value expressed in the given display unit
+         * Create a new 2 column vector with a display unit.
+         * @param xSi the x-value expressed in the SI unit
+         * @param ySi the y-value expressed in the SI unit
          * @param displayUnit the display unit to use
          */
-        public Col(final double xInUnit, final double yInUnit, final Unit<?, Q> displayUnit)
+        public Col(final double xSi, final double ySi, final Unit<?, Q> displayUnit)
         {
-            super(xInUnit, yInUnit, displayUnit);
+            super(xSi, ySi, displayUnit);
         }
 
         @Override
@@ -361,7 +361,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         @Override
         protected Vector2.Col<Q> instantiateSi(final double xSi, final double ySi)
         {
-            return new Vector2.Col<>(xSi, ySi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector2.Col<>(xSi, ySi, getDisplayUnit());
         }
 
         @Override
@@ -375,7 +375,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         @Override
         public Vector2.Row<Q> transpose()
         {
-            return new Vector2.Row<Q>(xSi(), ySi(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector2.Row<Q>(xSi(), ySi(), getDisplayUnit());
         }
 
         /**
@@ -410,7 +410,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         public static <Q extends Quantity<Q>> Vector2.Col<Q> of(final double xInUnit, final double yInUnit,
                 final Unit<?, Q> unit)
         {
-            return new Vector2.Col<>(xInUnit, yInUnit, unit);
+            return new Vector2.Col<>(unit.toBaseValue(xInUnit), unit.toBaseValue(yInUnit), unit);
         }
 
         /**
@@ -424,7 +424,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         {
             Throw.whenNull(x, "x");
             Throw.whenNull(y, "y");
-            return new Vector2.Col<>(x.si(), y.si(), x.getDisplayUnit().getBaseUnit()).setDisplayUnit(x.getDisplayUnit());
+            return new Vector2.Col<>(x.si(), y.si(), x.getDisplayUnit());
         }
 
         /**
@@ -439,7 +439,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.whenNull(dataInUnit, "dataInUnit");
             Throw.when(dataInUnit.length != 2, IllegalArgumentException.class, "Length of dataInUnit != 2 but %d",
                     dataInUnit.length);
-            return new Vector2.Col<>(dataInUnit[0], dataInUnit[1], unit);
+            return new Vector2.Col<>(unit.toBaseValue(dataInUnit[0]), unit.toBaseValue(dataInUnit[1]), unit);
         }
 
         /**
@@ -454,7 +454,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.whenNull(dataSi, "dataSi");
             Throw.whenNull(displayUnit, "displayUnit");
             Throw.when(dataSi.length != 2, IllegalArgumentException.class, "Length of dataSi != 2 but %d", dataSi.length);
-            return new Vector2.Col<>(dataSi[0], dataSi[1], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+            return new Vector2.Col<>(dataSi[0], dataSi[1], displayUnit);
         }
 
         /**
@@ -469,7 +469,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
                 final Unit<?, Q> displayUnit)
         {
             Throw.whenNull(displayUnit, "displayUnit");
-            return new Vector2.Col<>(xSi, ySi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+            return new Vector2.Col<>(xSi, ySi, displayUnit);
         }
 
         /**
@@ -482,8 +482,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         {
             Throw.whenNull(data, "dataSi");
             Throw.when(data.length != 2, IllegalArgumentException.class, "Length of dataSi != 2 but %d", data.length);
-            return new Vector2.Col<>(data[0].si(), data[1].si(), data[0].getDisplayUnit().getBaseUnit())
-                    .setDisplayUnit(data[0].getDisplayUnit());
+            return new Vector2.Col<>(data[0].si(), data[1].si(), data[0].getDisplayUnit());
         }
 
         // ------------------------------------------ AS METHODS ------------------------------------------
@@ -501,7 +500,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new Vector2.Col<TQ>(xSi(), ySi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+            return new Vector2.Col<TQ>(xSi(), ySi(), targetUnit);
         }
 
     }
@@ -524,13 +523,13 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
 
         /**
          * Create a new 2 row vector with a unit.
-         * @param xInUnit the x-value expressed in the given unit
-         * @param yInUnit the y-value expressed in the given unit
+         * @param xSi the x-value expressed in the SI unit
+         * @param ySi the y-value expressed in the SI unit
          * @param displayUnit the display unit to use
          */
-        public Row(final double xInUnit, final double yInUnit, final Unit<?, Q> displayUnit)
+        public Row(final double xSi, final double ySi, final Unit<?, Q> displayUnit)
         {
-            super(xInUnit, yInUnit, displayUnit);
+            super(xSi, ySi, displayUnit);
         }
 
         @Override
@@ -554,7 +553,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         @Override
         protected Vector2.Row<Q> instantiateSi(final double xSi, final double ySi)
         {
-            return new Vector2.Row<>(xSi, ySi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector2.Row<>(xSi, ySi, getDisplayUnit());
         }
 
         @Override
@@ -568,7 +567,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         @Override
         public Vector2.Col<Q> transpose()
         {
-            return new Vector2.Col<Q>(xSi(), ySi(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector2.Col<Q>(xSi(), ySi(), getDisplayUnit());
         }
 
         @Override
@@ -635,7 +634,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         public static <Q extends Quantity<Q>> Vector2.Row<Q> of(final double xInUnit, final double yInUnit,
                 final Unit<?, Q> unit)
         {
-            return new Vector2.Row<>(xInUnit, yInUnit, unit);
+            return new Vector2.Row<>(unit.toBaseValue(xInUnit), unit.toBaseValue(yInUnit), unit);
         }
 
         /**
@@ -649,7 +648,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         {
             Throw.whenNull(x, "x");
             Throw.whenNull(y, "y");
-            return new Vector2.Row<>(x.si(), y.si(), x.getDisplayUnit().getBaseUnit()).setDisplayUnit(x.getDisplayUnit());
+            return new Vector2.Row<>(x.si(), y.si(), x.getDisplayUnit());
         }
 
         /**
@@ -664,7 +663,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.whenNull(dataInUnit, "dataInUnit");
             Throw.when(dataInUnit.length != 2, IllegalArgumentException.class, "Length of dataInUnit != 2 but %d",
                     dataInUnit.length);
-            return new Vector2.Row<>(dataInUnit[0], dataInUnit[1], unit);
+            return new Vector2.Row<>(unit.toBaseValue(dataInUnit[0]), unit.toBaseValue(dataInUnit[1]), unit);
         }
 
         /**
@@ -679,7 +678,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.whenNull(dataSi, "dataSi");
             Throw.whenNull(displayUnit, "displayUnit");
             Throw.when(dataSi.length != 2, IllegalArgumentException.class, "Length of dataSi != 2 but %d", dataSi.length);
-            return new Vector2.Row<>(dataSi[0], dataSi[1], displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+            return new Vector2.Row<>(dataSi[0], dataSi[1], displayUnit);
         }
 
         /**
@@ -694,7 +693,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
                 final Unit<?, Q> displayUnit)
         {
             Throw.whenNull(displayUnit, "displayUnit");
-            return new Vector2.Row<>(xSi, ySi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+            return new Vector2.Row<>(xSi, ySi, displayUnit);
         }
 
         /**
@@ -707,8 +706,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         {
             Throw.whenNull(data, "dataSi");
             Throw.when(data.length != 2, IllegalArgumentException.class, "Length of dataSi != 2 but %d", data.length);
-            return new Vector2.Row<>(data[0].si(), data[1].si(), data[0].getDisplayUnit().getBaseUnit())
-                    .setDisplayUnit(data[0].getDisplayUnit());
+            return new Vector2.Row<>(data[0].si(), data[1].si(), data[0].getDisplayUnit());
         }
 
         // ------------------------------------------ AS METHODS ------------------------------------------
@@ -726,7 +724,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new Vector2.Row<TQ>(xSi(), ySi(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+            return new Vector2.Row<TQ>(xSi(), ySi(), targetUnit);
         }
 
     }
