@@ -51,17 +51,12 @@ public class MatrixNxMTest
      * @param si row-major SI values
      * @param rows number of rows
      * @param cols number of cols
-     * @param unit display unit
+     * @param displayUnit display unit
      * @return matrix
      */
-    private static MatrixNxM<Length> ofSi(final double[] si, final int rows, final int cols, final Length.Unit unit)
+    private static MatrixNxM<Length> ofSi(final double[] si, final int rows, final int cols, final Length.Unit displayUnit)
     {
-        final double[] inUnit = new double[si.length];
-        for (int i = 0; i < si.length; i++)
-        {
-            inUnit[i] = unit.fromBaseValue(si[i]);
-        }
-        return MatrixNxM.of(inUnit, rows, cols, unit);
+        return MatrixNxM.ofSi(si, rows, cols, displayUnit);
     }
 
     // ------------------------------------------------------------------------------------
