@@ -44,6 +44,7 @@ The generic methods of a `Vector` are:
 - `int cols()` returns the number of columns of the vector.
 - `int size()` returns the size of the vector; the number of rows for a column vector, or the number of columns for a row vector.
 - `boolean isColumnVector()` returns whether this vector is a column vector.
+- `boolean isRowVector()` returns whether this vector is a row vector. Note that a `Vector1` is both a column vector and and row vector.
 - `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector.
 - `getDisplayUnit()` returns the display unit of the entire `Vector`.
 - `setDisplayUnit(unit)` sets a new display unit for the entire `Vector` based on a strongly typed `unit`.
@@ -65,14 +66,12 @@ Quantity-based methods return a value `Q` that is consistent with the quantity s
 
 A `Vector` contains the following methods to obtain its values:
 
-- `double[] si()` returns the values of the vector in SI-units as a `double[]` array with the same length as the vector.
+- `double[] getSiArray()` returns a safe copy of the values of the vector in SI-units as a `double[]` array with the same length as the vector.
 - `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the original `Vector`.
 - `double si(int index)` returns the SI-value of the entry at the 0-based `index`. 
 - `double msi(int mIndex)` returns the SI-value of the entry at the 1-based `mIndex`. 
 - `Q get(int index)` returns the quantity representation of the entry at the 0-based `index`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
 - `Q mget(int mIndex)` returns the quantity representation of the entry at the 1-based `mIndex`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
-
-All `Matrix` methods are also implemented for the `Vector`, where a `Vector` is seen as a 1xM or Nx1 matrix. These methods are not often used, however. If necessary, one can use these methods such as `get(int row, int col)`, `si(int row, int col`), and several more methods for retrieving row and column quantities and SI-values, both with 0-based and 1-based row and column indexes. 
 
 
 ## Mathematical operations
@@ -94,7 +93,36 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the vector.
 
 
-## Example vector definition and storage
+## Vector definition and storage
+
+### Creating a `Vector1`
+
+For a `Vector1`, there is no distinction between a row and column vector. Several methods exist to instantiate a `Vector1`:
+
+- `new Vector1<Q>(double xSi, Unit displayUnit)` creates a `Vector1` based on an SI-value for the quantity with a displayUnit.
+- `Vector1.of(double xInUnit, Unit unit)` creates a `Vector1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`.
+- `Vector1.of(double[] dataInUnit, Unit unit)` creates a `Vector1` based on an array of length 1 with values expressed in the given unit.
+- `Vector1.ofSi(double xSi, Unit displayUnit)` creates a `Vector1` based on an SI-value for a quantity with a displayUnit.
+- `Vector1.ofSi(double[] dataSi, Unit displayUnit)` creates a `Vector1` based on an array of length 1 with SI-values for a quantity with a displayUnit.
+- `Vector1.of(Q data)` creates a `Vector1` based on a provided quantity.
+- `Vector1.of(Q[] data)` creates a `Vector1` based on an array of length 1 containing a provided quantity.
+
+
+### Creating a `Vector2`
+
+For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` exist. Several methods exist to instantiate a `Vector2`. Below, the instantiation methods are given for `Vector2.Col`. The instantiation methods for a `Vector2.Row` are analogous.
+
+- `new Vector2.Col<Q>(double xSi, double ySi, Unit displayUnit)` creates a `Vector2.Col` based on two SI-values for the quantities with a displayUnit.
+- `Vector2.Col.of(double xInUnit, double yInUnit, Unit unit)` creates a `Vector2.Col` based on two values expressed in the given unit.
+- `Vector2.Col.of(double[] dataInUnit, Unit unit)` creates a `Vector2.Col` based on an array of length 2 with values expressed in the given unit.
+- `Vector2.Col.ofSi(double xSi, double ySi, Unit displayUnit)` creates a `Vector2.Col` based on two SI-values for the quantities with a displayUnit.
+- `Vector2.Col.ofSi(double[] dataSi, Unit displayUnit)` creates a `Vector2.Col` based on an array of length 2 with SI-values for the quantities with a displayUnit.
+- `Vector2.Col.of(Q x, Q y)` creates a `Vector2.Col` containing the two provided quantities.
+- `Vector2.Col.of(Q[] data)` creates a `Vector2.Col` based on an array of length 2 containing the provided quantities.
+
+
+
+## Example for Vector instantiation and usage
 
 The example below shows the instantiation and usage of a column vector with 5 entries `VectorN.Col`:
 
