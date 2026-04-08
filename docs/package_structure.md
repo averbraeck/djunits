@@ -28,14 +28,14 @@ DJUNITS is divided into a number of packages:
 
 * **org.djunits.vecmat.storage** contains the interfaces and implementations of dense and sparse storage for larger vectors, matrices and quantity tables. It is possible to store data in double precision (`double`) or single precision (`float`).
 
-* **org.djunits.vecmat.d1** contains the 1-dimensional vectors and matrices `Vector1` and `Matrix1x1`.
+* **org.djunits.vecmat.d1** contains the 1-dimensional vectors and matrices `Vector1` and `Matrix1x1`, and the absolute `AbsVector1` and `AbsMatrix1x1`
 
-* **org.djunits.vecmat.d2** contains the 2-dimensional vectors and matrices `Vector2.Row`, `Vector2.Col` and the square matrix `Matrix2x2`.
+* **org.djunits.vecmat.d2** contains the 2-dimensional vectors and matrices `Vector2.Row`, `Vector2.Col` and the square matrix `Matrix2x2`. The absolute equivalents are also supported through the classes `AbsVector2.Row`, `AbsVector2.Col` and the square matrix `AbsMatrix2x2`.
 
-* **org.djunits.vecmat.d3** contains the 3-dimensional vectors and matrices `Vector3.Row`, `Vector3.Col` and the square matrix `Matrix3x3`.
+* **org.djunits.vecmat.d3** contains the 3-dimensional vectors and matrices `Vector3.Row`, `Vector3.Col` and the square matrix `Matrix3x3`. The absolute equivalents are also supported through the classes `AbsVector3.Row`, `AbsVector3.Col` and the square matrix `AbsMatrix3x3`.
 
-* **org.djunits.vecmat.dn** contains the n-dimensional vectors and matrices `VectorN.Row`, `VectorN.Col` and the square matrix `MatrixNxN`.
+* **org.djunits.vecmat.dn** contains the n-dimensional vectors and matrices `VectorN.Row`, `VectorN.Col` and the square matrix `MatrixNxN`. The absolute equivalents are also supported through the classes `AbsVectorN.Row`, `AbsVectorN.Col` and the square matrix `AbsMatrixNxN`.
 
-* **org.djunits.vecmat.dnxm** contains the (n x m)-dimensional matrices `MatrixNxM`.
+* **org.djunits.vecmat.dnxm** contains the (n x m)-dimensional matrices `MatrixNxM` and the absolute matrix `AbsMatrixNxM`.
 
-* **org.djunits.vecmat.table** contains the (n x m)-dimensional quantity table `QuantityTable`.
+* **org.djunits.vecmat.table** contains the (n x m)-dimensional quantity table `QuantityTable` and its absolute equivalent `AbsQuantityTable`.
