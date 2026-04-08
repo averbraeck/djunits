@@ -108,4 +108,33 @@ A `QuantityTable` implements several mathematical operations. The most important
 
 Reversely, `Matrix` or column or row `Vector` instances can all be turned _into_ a `QuantityTable` with the `asQuantityTable()` method. 
 
- 
+
+### Creating a `QuantityTable`
+
+The `QuantityTable` class can be used to represent quantity tables of any size (1x1 and up). Data can be stored as single-precision `float` variable, or as double-precision `double` values. Both dense storage (store every number) and sparse storage (only store non-zero values) are possible. 
+
+Several methods exist to instantiate a `QuantityTable`.
+
+The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For many `of` and `ofSi` methods and the constructor, the number of rows and columns of the quantity table need to be provided for the `DataGridSi` object to know the shape of the quantity table. A `double[6]` array of SI values can represent a 2x3 quantity table, but also a 3x2 quantity table or a 1x6 or 6x1 quantity table. All four shapes can be stored in the `DataGridSi` object by providing the number of rows and columns.
+
+The **array**-based methods use a row-major array. This means that the data is presented "row-by-row", so, `{m11, m12, m13, m21, m22, m23}` for a 2x3 quantity table. A `(r,c)` value is retrieved by `m[index]`, `index = r * rows() + c` where r, c are 0-based indices. 
+
+The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
+
+- `new QuantityTable<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `QuantityTable` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `QuantityTable.of(DataGridSi dataSi, Unit displayUnit)` <br>
+  creates a `QuantityTable` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+- `QuantityTable.of(double[] dataInUnit, int rows, int cols, Unit unit)` <br>
+  creates a `QuantityTable` based on a row-major array with values expressed in the given unit. The length of the array needs to be equal to `rows * cols`.
+- `QuantityTable.of(double[][] gridInUnit, Unit unit)` <br>
+  creates a `QuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
+- `QuantityTable.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit)` <br>
+  creates a `QuantityTable` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+- `QuantityTable.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+  creates a `QuantityTable` based on a grid (array of arrays) with with SI-values for the quantities. The grid cannot be 'ragged'.
+- `QuantityTable.of(Q[] data, int rows, int cols)` <br>
+  creates a `QuantityTable` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.
+- `QuantityTable.of(Q[][] grid)` <br>
+  creates a `QuantityTable` based on a grid (array of arrays) with with quantities. The grid cannot be 'ragged'.
+
