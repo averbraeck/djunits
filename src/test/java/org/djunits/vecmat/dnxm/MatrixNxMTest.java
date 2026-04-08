@@ -286,7 +286,7 @@ public class MatrixNxMTest
     public void testMultiplyVector()
     {
         MatrixNxM<Length> a32 = ofSi(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.m);
-        Vector2.Col<Length> v2 = new Vector2.Col<>(1.0, 2.0, Length.Unit.km); // SI [1000,2000]
+        Vector2.Col<Length> v2 = Vector2.Col.of(1.0, 2.0, Length.Unit.km); // SI [1000,2000]
         VectorN.Col<SIQuantity> r2 = a32.multiply(v2);
         assertEquals(3, r2.size());
         assertArrayEquals(new double[] {5000, 11000, 17000}, r2.si(), EPS);

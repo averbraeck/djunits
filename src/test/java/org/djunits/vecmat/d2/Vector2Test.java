@@ -66,7 +66,7 @@ public class Vector2Test
      */
     private static Vector2.Col<Length> col(final double xInUnit, final double yInUnit, final Length.Unit unit)
     {
-        return new Vector2.Col<>(xInUnit, yInUnit, unit);
+        return Vector2.Col.of(xInUnit, yInUnit, unit);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Vector2Test
      */
     private static Vector2.Row<Length> row(final double xInUnit, final double yInUnit, final Length.Unit unit)
     {
-        return new Vector2.Row<>(xInUnit, yInUnit, unit);
+        return Vector2.Row.of(xInUnit, yInUnit, unit);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

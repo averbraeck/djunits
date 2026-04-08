@@ -53,7 +53,7 @@ public class AbsVector2Test
     @Test
     public void testCtorBaseCol()
     {
-        var rvCol = new Vector2.Col<Angle>(180.0, 270.0, Angle.Unit.deg);
+        var rvCol = Vector2.Col.of(180.0, 270.0, Angle.Unit.deg);
         var avCol = new AbsVector2.Col<>(rvCol, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, avCol.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, avCol.getReference());
@@ -88,7 +88,7 @@ public class AbsVector2Test
     @Test
     public void testCtorBaseRow()
     {
-        var rvRow = new Vector2.Row<Angle>(180.0, 270.0, Angle.Unit.deg);
+        var rvRow = Vector2.Row.of(180.0, 270.0, Angle.Unit.deg);
         var avRow = new AbsVector2.Row<>(rvRow, Direction.Reference.NORTH);
         assertEquals(Angle.Unit.deg, avRow.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, avRow.getReference());
@@ -200,7 +200,7 @@ public class AbsVector2Test
         var adeg = new double[] {180.0, 270.0};
         var adeg5 = new double[] {0.0, 90.0, 180.0, 270.0, 45.0};
         var arad = new double[] {Math.PI, 1.5 * Math.PI};
-        var rv = new Vector2.Col<Angle>(180.0, 270.0, Angle.Unit.deg);
+        var rv = Vector2.Col.of(180.0, 270.0, Angle.Unit.deg);
         var av = new AbsVector2.Col<>(rv, Direction.Reference.NORTH);
 
         // of(double, double, unit, ref)
@@ -285,7 +285,7 @@ public class AbsVector2Test
         var adeg = new double[] {180.0, 270.0};
         var adeg5 = new double[] {0.0, 90.0, 180.0, 270.0, 45.0};
         var arad = new double[] {Math.PI, 1.5 * Math.PI};
-        var rv = new Vector2.Row<Angle>(180.0, 270.0, Angle.Unit.deg);
+        var rv = Vector2.Row.of(180.0, 270.0, Angle.Unit.deg);
         var av = new AbsVector2.Row<>(rv, Direction.Reference.NORTH);
 
         // of(double, double, unit, ref)

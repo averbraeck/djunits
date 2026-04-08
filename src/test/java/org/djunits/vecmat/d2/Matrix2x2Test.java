@@ -411,7 +411,7 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length> a = ofSi(new double[] {1, 2, 3, 4}, Length.Unit.m);
         // Vector [5, 6]^T in km → SI = [5000, 6000]
-        Vector2.Col<Length> v = new Vector2.Col<>(5.0, 6.0, Length.Unit.km);
+        Vector2.Col<Length> v = Vector2.Col.of(5.0, 6.0, Length.Unit.km);
         Vector2.Col<SIQuantity> r = a.multiply(v); // [1*5000+2*6000, 3*5000+4*6000] = [17k, 39k]
         assertEquals(17_000.0, r.si()[0], EPS);
         assertEquals(39_000.0, r.si()[1], EPS);

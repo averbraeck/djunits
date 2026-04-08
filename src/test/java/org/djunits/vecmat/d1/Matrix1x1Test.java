@@ -405,7 +405,7 @@ public class Matrix1x1Test
         assertEquals(10_000.0, r1.si()[0], EPS);
 
         // Vector [5, 6]^T in km → SI = [5000, 6000]
-        Vector2.Row<Length> v2 = new Vector2.Row<>(5.0, 6.0, Length.Unit.km);
+        Vector2.Row<Length> v2 = Vector2.Row.of(5.0, 6.0, Length.Unit.km);
         Vector2.Row<SIQuantity> r2 = a11.multiply(v2); // [2*5000, 2*6000] = [10k, 12k]
         assertEquals(10_000.0, r2.si()[0], EPS);
         assertEquals(12_000.0, r2.si()[1], EPS);
