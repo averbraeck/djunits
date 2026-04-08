@@ -92,8 +92,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     public abstract SI instantiateSi(double[] siNew, SIUnit siUnit);
 
     /**
-     * Return a row-major array of SI-values for this matrix or vector. Note that this is NOT a safe copy.
-     * @return the row-major array of SI-values
+     * Return a row-major array of SI-values for this matrix or vector. This is guaranteed to be a safe copy.
+     * @return the row-major array of SI-values (safe copy)
      */
     public abstract double[] si();
 

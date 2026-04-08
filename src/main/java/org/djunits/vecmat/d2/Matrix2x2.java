@@ -27,18 +27,18 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
 
     /**
      * Create a new Matrix2x2 with a unit.
-     * @param dataInUnit the matrix values {a11, a12, a21, a22} expressed in the unit
-     * @param unit the unit of the data, also functions as display unit for the matrix
+     * @param dataSi the matrix values {a11, a12, a21, a22} expressed in the SI-unit
+     * @param displayUnit the display unit for the matrix
      */
-    protected Matrix2x2(final double[] dataInUnit, final Unit<?, Q> unit)
+    protected Matrix2x2(final double[] dataSi, final Unit<?, Q> displayUnit)
     {
-        super(dataInUnit, unit, 2);
+        super(dataSi, displayUnit, 2);
     }
 
     @Override
     public Matrix2x2<Q> instantiateSi(final double[] siNew)
     {
-        return new Matrix2x2<Q>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Matrix2x2<Q>(siNew, getDisplayUnit());
     }
 
     @Override
@@ -51,28 +51,28 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Vector2.Row<Q> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector2.Row<Q>(si(row, 0), si(row, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Row<Q>(si(row, 0), si(row, 1), getDisplayUnit());
     }
 
     @Override
     public Vector2.Row<Q> mgetRowVector(final int mRow)
     {
         mcheckRow(mRow);
-        return new Vector2.Row<Q>(msi(mRow, 1), msi(mRow, 2), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Row<Q>(msi(mRow, 1), msi(mRow, 2), getDisplayUnit());
     }
 
     @Override
     public Vector2.Col<Q> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector2.Col<Q>(si(0, col), si(1, col), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Col<Q>(si(0, col), si(1, col), getDisplayUnit());
     }
 
     @Override
     public Vector2.Col<Q> mgetColumnVector(final int mCol)
     {
         mcheckCol(mCol);
-        return new Vector2.Col<Q>(msi(1, mCol), msi(2, mCol), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Col<Q>(msi(1, mCol), msi(2, mCol), getDisplayUnit());
     }
 
     @Override
@@ -165,7 +165,12 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.whenNull(unit, "unit");
         Throw.when(dataInUnit.length != 4, IllegalArgumentException.class, "Length of array != 4 but %d", dataInUnit.length);
-        return new Matrix2x2<Q>(dataInUnit, unit);
+        double[] dataSi = new double[4];
+        for (int i = 0; i < 4; i++)
+        {
+            dataSi[i] = unit.toBaseValue(dataInUnit[i]);
+        }
+        return new Matrix2x2<Q>(dataSi, unit);
     }
 
     /**
@@ -181,7 +186,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(dataSi, "dataSi");
         Throw.whenNull(displayUnit, "displayUnit");
         Throw.when(dataSi.length != 4, IllegalArgumentException.class, "Length of dataSi != 4 but %d", dataSi.length);
-        return new Matrix2x2<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Matrix2x2<>(dataSi, displayUnit);
     }
 
     /**
@@ -202,7 +207,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
             Throw.whenNull(data[i], "data[%d] = null", i);
             dataSi[i] = data[i].si();
         }
-        return new Matrix2x2<>(dataSi, data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
+        return new Matrix2x2<>(dataSi, data[0].getDisplayUnit());
     }
 
     /**
@@ -229,7 +234,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
                 dataSi[r * 2 + c] = gridSi[r][c];
             }
         }
-        return new Matrix2x2<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Matrix2x2<>(dataSi, displayUnit);
     }
 
     /**
@@ -246,17 +251,17 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
         Throw.when(gridInUnit.length != 2, IllegalArgumentException.class, "gridInUnit does not have 2 rows");
-        double[] dataInUnit = new double[4];
+        double[] dataSi = new double[4];
         for (int r = 0; r < 2; r++)
         {
             Throw.whenNull(gridInUnit[r], "gridInUnit[%d][] = null", r);
             Throw.when(gridInUnit[r].length != 2, IllegalArgumentException.class, "gridInUnit is not a 2x2 array");
             for (int c = 0; c < 2; c++)
             {
-                dataInUnit[r * 2 + c] = gridInUnit[r][c];
+                dataSi[r * 2 + c] = unit.toBaseValue(gridInUnit[r][c]);
             }
         }
-        return new Matrix2x2<>(dataInUnit, unit);
+        return new Matrix2x2<>(dataSi, unit);
     }
 
     /**
@@ -282,7 +287,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
                 dataSi[r * 2 + c] = grid[r][c].si();
             }
         }
-        return new Matrix2x2<>(dataSi, grid[0][0].getDisplayUnit().getBaseUnit()).setDisplayUnit(grid[0][0].getDisplayUnit());
+        return new Matrix2x2<>(dataSi, grid[0][0].getDisplayUnit());
     }
 
     // ------------------------------------------ AS METHODS ------------------------------------------
@@ -300,7 +305,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix2x2.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix2x2<TQ>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new Matrix2x2<TQ>(si(), targetUnit);
     }
 
 }

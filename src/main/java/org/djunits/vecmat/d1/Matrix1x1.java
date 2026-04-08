@@ -29,19 +29,19 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     private static final long serialVersionUID = 600L;
 
     /**
-     * Create a new Matrix1x1 with a unit.
-     * @param dataInUnit the matrix values {a11} expressed in the unit
-     * @param unit the unit of the data, also functions as display unit for the matrix
+     * Create a new Matrix1x1 with a display unit.
+     * @param dataSi the matrix values {a11} expressed in the SI unit
+     * @param displayUnit the display unit for the matrix
      */
-    protected Matrix1x1(final double[] dataInUnit, final Unit<?, Q> unit)
+    protected Matrix1x1(final double[] dataSi, final Unit<?, Q> displayUnit)
     {
-        super(dataInUnit, unit, 1);
+        super(dataSi, displayUnit, 1);
     }
 
     @Override
     public Matrix1x1<Q> instantiateSi(final double[] siNew)
     {
-        return new Matrix1x1<Q>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Matrix1x1<Q>(siNew, getDisplayUnit());
     }
 
     @Override
@@ -54,34 +54,34 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Vector1<Q> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> mgetRowVector(final int mRow)
     {
         mcheckRow(mRow);
-        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> mgetColumnVector(final int mCol)
     {
         mcheckCol(mCol);
-        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector1<>(si(0, 0), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<>(si(0, 0), getDisplayUnit());
     }
 
     @Override
@@ -194,14 +194,14 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
 
     /**
      * Create a Matrix1x1 without needing generics.
-     * @param xInUnit the a11-value expressed in the display unit
-     * @param displayUnit the display unit to use
+     * @param xInUnit the a11-value expressed in the given unit
+     * @param unit the unit of the value
      * @return a new Matrix1x1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double xInUnit, final Unit<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double xInUnit, final Unit<?, Q> unit)
     {
-        return new Matrix1x1<>(new double[] {xInUnit}, displayUnit);
+        return new Matrix1x1<>(new double[] {unit.toBaseValue(xInUnit)}, unit);
     }
 
     /**
@@ -213,8 +213,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final Q data)
     {
         Throw.whenNull(data, "data");
-        return new Matrix1x1<>(new double[] {data.si()}, data.getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(data.getDisplayUnit());
+        return new Matrix1x1<>(new double[] {data.si()}, data.getDisplayUnit());
     }
 
     /**
@@ -229,7 +228,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.when(dataInUnit.length != 1, IllegalArgumentException.class, "Length of dataInUnit != 1 but %d",
                 dataInUnit.length);
-        return new Matrix1x1<>(dataInUnit, unit);
+        return new Matrix1x1<>(new double[] {unit.toBaseValue(dataInUnit[0])}, unit);
     }
 
     /**
@@ -243,7 +242,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     {
         Throw.whenNull(dataSi, "dataSi");
         Throw.when(dataSi.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", dataSi.length);
-        return new Matrix1x1<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Matrix1x1<>(dataSi, displayUnit);
     }
 
     /**
@@ -257,8 +256,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(data, "data");
         Throw.when(data.length != 1, IllegalArgumentException.class, "Length of data != 1 but %d", data.length);
         Throw.whenNull(data[0], "data[0] = null");
-        return new Matrix1x1<>(new double[] {data[0].si()}, data[0].getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(data[0].getDisplayUnit());
+        return new Matrix1x1<>(new double[] {data[0].si()}, data[0].getDisplayUnit());
     }
 
     /**
@@ -275,7 +273,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.when(gridSi.length != 1, IllegalArgumentException.class, "gridSi does not have 1 row");
         Throw.whenNull(gridSi[0], "gridSi[0] = null");
         Throw.when(gridSi[0].length != 1, IllegalArgumentException.class, "gridSi is not a 1x1 array");
-        return new Matrix1x1<Q>(new double[] {gridSi[0][0]}, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Matrix1x1<Q>(new double[] {gridSi[0][0]}, displayUnit);
     }
 
     /**
@@ -292,7 +290,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.when(gridInUnit.length != 1, IllegalArgumentException.class, "gridInUnit does not have 1 row");
         Throw.whenNull(gridInUnit[0], "gridInUnit[0] = null");
         Throw.when(gridInUnit[0].length != 1, IllegalArgumentException.class, "gridInUnit is not a 1x1 array");
-        return new Matrix1x1<Q>(new double[] {gridInUnit[0][0]}, unit);
+        return new Matrix1x1<Q>(new double[] {unit.toBaseValue(gridInUnit[0][0])}, unit);
     }
 
     /**
@@ -308,8 +306,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(grid[0], "grid[0] = null");
         Throw.when(grid[0].length != 1, IllegalArgumentException.class, "grid is not a 1x1 array");
         Throw.whenNull(grid[0][0], "grid[0][0] = null");
-        return new Matrix1x1<>(new double[] {grid[0][0].si()}, grid[0][0].getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(grid[0][0].getDisplayUnit());
+        return new Matrix1x1<>(new double[] {grid[0][0].si()}, grid[0][0].getDisplayUnit());
     }
 
     // ------------------------------------------ AS METHODS ------------------------------------------
@@ -327,7 +324,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix1x1.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix1x1<TQ>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new Matrix1x1<TQ>(si(), targetUnit);
     }
 
 }

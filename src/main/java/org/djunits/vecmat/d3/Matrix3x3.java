@@ -27,18 +27,18 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
 
     /**
      * Create a new Matrix3x3 with a unit.
-     * @param dataInUnit the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the unit
-     * @param unit the unit of the data, also functions as display unit for the matrix
+     * @param dataSi the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the SI-unit
+     * @param displayUnit the display unit for the matrix
      */
-    protected Matrix3x3(final double[] dataInUnit, final Unit<?, Q> unit)
+    protected Matrix3x3(final double[] dataSi, final Unit<?, Q> displayUnit)
     {
-        super(dataInUnit, unit, 3);
+        super(dataSi, displayUnit, 3);
     }
 
     @Override
     public Matrix3x3<Q> instantiateSi(final double[] siNew)
     {
-        return new Matrix3x3<Q>(siNew, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Matrix3x3<Q>(siNew, getDisplayUnit());
     }
 
     @Override
@@ -51,39 +51,34 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Vector3.Row<Q> getRowVector(final int row)
     {
         checkRow(row);
-        return new Vector3.Row<Q>(si(row, 0), si(row, 1), si(row, 2), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Row<Q>(si(row, 0), si(row, 1), si(row, 2), getDisplayUnit());
     }
 
     @Override
     public Vector3.Row<Q> mgetRowVector(final int mRow)
     {
         mcheckRow(mRow);
-        return new Vector3.Row<Q>(msi(mRow, 1), msi(mRow, 2), msi(mRow, 3), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Row<Q>(msi(mRow, 1), msi(mRow, 2), msi(mRow, 3), getDisplayUnit());
     }
 
     @Override
     public Vector3.Col<Q> getColumnVector(final int col)
     {
         checkCol(col);
-        return new Vector3.Col<Q>(si(0, col), si(1, col), si(2, col), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Col<Q>(si(0, col), si(1, col), si(2, col), getDisplayUnit());
     }
 
     @Override
     public Vector3.Col<Q> mgetColumnVector(final int mCol)
     {
         mcheckCol(mCol);
-        return new Vector3.Col<Q>(msi(1, mCol), msi(2, mCol), msi(3, mCol), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Col<Q>(msi(1, mCol), msi(2, mCol), msi(3, mCol), getDisplayUnit());
     }
 
     @Override
     public Vector3.Col<Q> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector3.Col<Q>(si(0, 0), si(1, 1), si(2, 2), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new Vector3.Col<Q>(si(0, 0), si(1, 1), si(2, 2), getDisplayUnit());
     }
 
     @Override
@@ -170,7 +165,12 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.whenNull(unit, "unit");
         Throw.when(dataInUnit.length != 9, IllegalArgumentException.class, "Length of array != 9 but %d", dataInUnit.length);
-        return new Matrix3x3<Q>(dataInUnit, unit);
+        double[] dataSi = new double[9];
+        for (int i = 0; i < 9; i++)
+        {
+            dataSi[i] = unit.toBaseValue(dataInUnit[i]);
+        }
+        return new Matrix3x3<Q>(dataSi, unit);
     }
 
     /**
@@ -186,7 +186,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(dataSi, "dataSi");
         Throw.whenNull(displayUnit, "displayUnit");
         Throw.when(dataSi.length != 9, IllegalArgumentException.class, "Length of dataSi != 9 but %d", dataSi.length);
-        return new Matrix3x3<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Matrix3x3<>(dataSi, displayUnit);
     }
 
     /**
@@ -207,7 +207,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
             Throw.whenNull(data[i], "data[%d] = null", i);
             dataSi[i] = data[i].si();
         }
-        return new Matrix3x3<>(dataSi, data[0].getDisplayUnit().getBaseUnit()).setDisplayUnit(data[0].getDisplayUnit());
+        return new Matrix3x3<>(dataSi, data[0].getDisplayUnit());
     }
 
     /**
@@ -234,7 +234,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
                 dataSi[r * 3 + c] = gridSi[r][c];
             }
         }
-        return new Matrix3x3<>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+        return new Matrix3x3<>(dataSi, displayUnit);
     }
 
     /**
@@ -251,17 +251,17 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
         Throw.when(gridInUnit.length != 3, IllegalArgumentException.class, "gridInUnit does not have 3 rows");
-        double[] dataInUnit = new double[9];
+        double[] dataSi = new double[9];
         for (int r = 0; r < 3; r++)
         {
             Throw.whenNull(gridInUnit[r], "gridInUnit[%d][] = null", r);
             Throw.when(gridInUnit[r].length != 3, IllegalArgumentException.class, "gridInUnit is not a 3x3 array");
             for (int c = 0; c < 3; c++)
             {
-                dataInUnit[r * 3 + c] = gridInUnit[r][c];
+                dataSi[r * 3 + c] = unit.toBaseValue(gridInUnit[r][c]);
             }
         }
-        return new Matrix3x3<>(dataInUnit, unit);
+        return new Matrix3x3<>(dataSi, unit);
     }
 
     /**
@@ -287,7 +287,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
                 dataSi[r * 3 + c] = grid[r][c].si();
             }
         }
-        return new Matrix3x3<>(dataSi, grid[0][0].getDisplayUnit().getBaseUnit()).setDisplayUnit(grid[0][0].getDisplayUnit());
+        return new Matrix3x3<>(dataSi, grid[0][0].getDisplayUnit());
     }
 
     // ------------------------------------------ AS METHODS ------------------------------------------
@@ -305,7 +305,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix3x3<TQ>(si(), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new Matrix3x3<TQ>(si(), targetUnit);
     }
 
 }
