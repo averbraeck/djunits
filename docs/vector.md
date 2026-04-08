@@ -99,19 +99,19 @@ A `Vector` implements several mathematical operations. The most important ones a
 
 For a `Vector1`, there is no distinction between a row and column vector. Several methods exist to instantiate a `Vector1`:
 
-- `new Vector1<Q>(double xSi, Unit displayUnit)` \
+- `new Vector1<Q>(double xSi, Unit displayUnit)` <br>
   creates a `Vector1` based on an SI-value for the quantity with a displayUnit.
-- `Vector1.of(double xInUnit, Unit unit)` \
+- `Vector1.of(double xInUnit, Unit unit)` <br>
   creates a `Vector1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`.
-- `Vector1.of(double[] dataInUnit, Unit unit)` \
+- `Vector1.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Vector1` based on an array of length 1 with values expressed in the given unit.
-- `Vector1.ofSi(double xSi, Unit displayUnit)` \
+- `Vector1.ofSi(double xSi, Unit displayUnit)` <br>
   creates a `Vector1` based on an SI-value for a quantity with a displayUnit.
-- `Vector1.ofSi(double[] dataSi, Unit displayUnit)` \
+- `Vector1.ofSi(double[] dataSi, Unit displayUnit)` <br>
   creates a `Vector1` based on an array of length 1 with SI-values for a quantity with a displayUnit.
-- `Vector1.of(Q x)` \
+- `Vector1.of(Q x)` <br>
   creates a `Vector1` based on a provided quantity.
-- `Vector1.of(Q[] data)` \
+- `Vector1.of(Q[] data)` <br>
   creates a `Vector1` based on an array of length 1 containing a provided quantity.
 
 
@@ -119,20 +119,40 @@ For a `Vector1`, there is no distinction between a row and column vector. Severa
 
 For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` exist. Several methods exist to instantiate a `Vector2`. Below, the instantiation methods are given for `Vector2.Col`. The instantiation methods for a `Vector2.Row` are analogous.
 
-- `new Vector2.Col<Q>(double xSi, double ySi, Unit displayUnit)` \
+- `new Vector2.Col<Q>(double xSi, double ySi, Unit displayUnit)` <br>
   creates a `Vector2.Col` based on two SI-values for the quantities with a displayUnit.
-- `Vector2.Col.of(double xInUnit, double yInUnit, Unit unit)` \
+- `Vector2.Col.of(double xInUnit, double yInUnit, Unit unit)` <br>
   creates a `Vector2.Col` based on two values expressed in the given unit.
-- `Vector2.Col.of(double[] dataInUnit, Unit unit)` \
+- `Vector2.Col.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Vector2.Col` based on an array of length 2 with values expressed in the given unit.
-- `Vector2.Col.ofSi(double xSi, double ySi, Unit displayUnit)` \
+- `Vector2.Col.ofSi(double xSi, double ySi, Unit displayUnit)` <br>
   creates a `Vector2.Col` based on two SI-values for the quantities with a displayUnit.
-- `Vector2.Col.ofSi(double[] dataSi, Unit displayUnit)` \
+- `Vector2.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
   creates a `Vector2.Col` based on an array of length 2 with SI-values for the quantities with a displayUnit.
-- `Vector2.Col.of(Q x, Q y)` \
+- `Vector2.Col.of(Q x, Q y)` <br>
   creates a `Vector2.Col` containing the two provided quantities.
-- `Vector2.Col.of(Q[] data)` \
+- `Vector2.Col.of(Q[] data)` <br>
   creates a `Vector2.Col` based on an array of length 2 containing the provided quantities.
+
+
+### Creating a `Vector3`
+
+For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` exist. Several methods exist to instantiate a `Vector3`. Below, the instantiation methods are given for `Vector3.Col`. The instantiation methods for a `Vector3.Row` are analogous.
+
+- `new Vector3.Col<Q>(double xSi, double ySi, double zSi, Unit displayUnit)` <br>
+  creates a `Vector3.Col` based on three SI-values for the quantities with a displayUnit.
+- `Vector3.Col.of(double xInUnit, double yInUnit, double zInUnit, Unit unit)` <br>
+  creates a `Vector3.Col` based on three values expressed in the given unit.
+- `Vector3.Col.of(double[] dataInUnit, Unit unit)` <br>
+  creates a `Vector3.Col` based on an array of length 3 with values expressed in the given unit.
+- `Vector3.Col.ofSi(double xSi, double ySi, double zSi, Unit displayUnit)` <br>
+  creates a `Vector3.Col` based on three SI-values for the quantities with a displayUnit.
+- `Vector3.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
+  creates a `Vector3.Col` based on an array of length 3 with SI-values for the quantities with a displayUnit.
+- `Vector3.Col.of(Q x, Q y, Q z)` <br>
+  creates a `Vector3.Col` containing the three provided quantities.
+- `Vector3.Col.of(Q[] data)` <br>
+  creates a `Vector3.Col` based on an array of length 3 containing the provided quantities.
 
 
 
