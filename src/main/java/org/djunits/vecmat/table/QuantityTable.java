@@ -54,8 +54,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     @Override
     public QuantityTable<Q> instantiateSi(final double[] siNew)
     {
-        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit());
     }
 
     @Override
@@ -298,7 +297,7 @@ public class QuantityTable<Q extends Quantity<Q>>
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new QuantityTable<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+        return new QuantityTable<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit);
     }
 
     /**
@@ -310,7 +309,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class,
                 "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
-        return Matrix1x1.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return Matrix1x1.ofSi(si(), getDisplayUnit());
     }
 
     /**
@@ -322,7 +321,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
                 "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
-        return Matrix2x2.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return Matrix2x2.ofSi(si(), getDisplayUnit());
     }
 
     /**
@@ -334,7 +333,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
                 "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
-        return Matrix3x3.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return Matrix3x3.ofSi(si(), getDisplayUnit());
     }
 
     /**
@@ -346,8 +345,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
                 rows(), cols());
-        return new MatrixNxN<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new MatrixNxN<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit());
     }
 
     /**
@@ -359,7 +357,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
         final double[] data = si();
-        return new Vector1<Q>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector1<Q>(data[0], getDisplayUnit());
     }
 
     /**
@@ -371,7 +369,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
         final double[] data = si();
-        return new Vector2.Col<Q>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Col<Q>(data[0], data[1], getDisplayUnit());
     }
 
     /**
@@ -383,7 +381,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
         final double[] data = si();
-        return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit());
     }
 
     /**
@@ -394,7 +392,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     public VectorN.Col<Q> asVectorNCol()
     {
         Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
-        return VectorN.Col.ofSi(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return VectorN.Col.ofSi(si(), getDisplayUnit());
     }
 
     /**
@@ -406,7 +404,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
         final double[] data = si();
-        return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit());
     }
 
     /**
@@ -418,7 +416,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     {
         Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
         final double[] data = si();
-        return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit());
     }
 
     /**
@@ -429,7 +427,7 @@ public class QuantityTable<Q extends Quantity<Q>>
     public VectorN.Row<Q> asVectorNRow()
     {
         Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
-        return VectorN.Row.of(si(), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return VectorN.Row.ofSi(si(), getDisplayUnit());
     }
 
 }
