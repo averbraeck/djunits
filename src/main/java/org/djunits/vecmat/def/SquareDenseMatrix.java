@@ -39,17 +39,14 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q>, M extends SquareD
      * @param dataSi the matrix values {a11, a12, ..., a21, a22, ...} expressed in the SI unit
      * @param displayUnit the display unit to use
      * @param order the order of the square matrix (number of rows/columns)
+     * @throws IllegalArgumentException when dataSi.length != order * order.
      */
     protected SquareDenseMatrix(final double[] dataSi, final Unit<?, Q> displayUnit, final int order)
     {
         super(displayUnit);
         Throw.when(dataSi.length != order * order, IllegalArgumentException.class,
                 "SquareDenseMatrix initialized with %d values instead of %d", dataSi.length, order * order);
-        this.dataSi = new double[dataSi.length];
-        for (int i = 0; i < this.dataSi.length; i++)
-        {
-            this.dataSi[i] = dataSi[i];
-        }
+        this.dataSi = dataSi.clone();
         this.order = order;
     }
 
