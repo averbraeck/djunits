@@ -39,7 +39,7 @@ The generic methods of an `AbsVector` are:
 - `boolean isAbsolute()` returns whether the underlying `AbsQuantity` is absolute or not. Note that `AbsVector` only stores absolute quantities.
 - `transpose()` returns a new `Vector` where the rows and columns are swapped.
 
-Addition and subtraction of absolute vectors and matrices follow the rules for the [absolute quantity](absolute_quantity):
+Addition and subtraction of absolute vectors and matrices follow the rules for the [absolute quantity](../absolute_quantity):
 
 - `absVector.add(quantity)` returns a new `AbsVector` where all entries of of `absVector` have been increased by the (relative) quantity. The `displayUnit` and `reference` of the resulting absolute vector are taken from `absVector`.
 - `absVector1.add(relVector2)` returns a new `AbsVector` where all entries of `relVector2` have been added to the corresponding entries of `absVector1`. The `displayUnit` and `reference` of the resulting absolute vector are taken from `absVector1`. The number of rows and columns of `absVector1` and `relVector2` have to be equal, of course.
