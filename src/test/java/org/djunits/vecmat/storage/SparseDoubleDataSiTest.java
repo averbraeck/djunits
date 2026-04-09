@@ -215,7 +215,7 @@ public class SparseDoubleDataSiTest
         SparseDoubleDataSi d = new SparseDoubleDataSi(q, idx, 2, 3);
 
         // Check SI conversion
-        double[] dense = d.getDataArray();
+        double[] dense = d.getSiArray();
         assertEquals(1000.0, dense[0], 1e-12);
         assertEquals(2.0, dense[3], 1e-12);
         assertEquals(0.03, dense[5], 1e-12);
@@ -223,7 +223,7 @@ public class SparseDoubleDataSiTest
         // Mutation safety
         q[0] = new Length(999.0, Length.Unit.m);
         idx[0] = 10;
-        double[] dense2 = d.getDataArray();
+        double[] dense2 = d.getSiArray();
         assertEquals(1000.0, dense2[0], 1e-12);
     }
 
@@ -246,7 +246,7 @@ public class SparseDoubleDataSiTest
         expected[1] = 1.0;
         expected[3] = 2000.0;
 
-        assertArrayEquals(expected, d.getDataArray(), 1e-12);
+        assertArrayEquals(expected, d.getSiArray(), 1e-12);
     }
 
     // ----------------------------------------------------------------------
@@ -270,7 +270,7 @@ public class SparseDoubleDataSiTest
                 {new Length(2.0, Length.Unit.cm), new Length(3.0, Length.Unit.mm)}};
         SparseDoubleDataSi d = new SparseDoubleDataSi(m);
 
-        double[] dense = d.getDataArray();
+        double[] dense = d.getSiArray();
         assertEquals(1000.0, dense[0], 1e-12);
         assertEquals(0.02, dense[2], 1e-12);
         assertEquals(0.003, dense[3], 1e-12);
@@ -316,7 +316,7 @@ public class SparseDoubleDataSiTest
     }
 
     // ----------------------------------------------------------------------
-    // get(), getDataArray()
+    // get(), getSiArray()
     // ----------------------------------------------------------------------
 
     /**
@@ -334,7 +334,7 @@ public class SparseDoubleDataSiTest
         assertEquals(4.0, d.get(1, 2), 1e-12); // hit
 
         // getDataArray should return full dense version
-        double[] dense = d.getDataArray();
+        double[] dense = d.getSiArray();
         assertArrayEquals(dense2x3(), dense, 1e-12);
 
         // Must be safe copy
@@ -380,13 +380,13 @@ public class SparseDoubleDataSiTest
         SparseDoubleDataSi c = d.copy();
 
         assertNotSame(d, c);
-        assertNotSame(d.getDataArray(), c.getDataArray());
-        assertArrayEquals(d.getDataArray(), c.getDataArray(), 1e-12);
+        assertNotSame(d.getSiArray(), c.getSiArray());
+        assertArrayEquals(d.getSiArray(), c.getSiArray(), 1e-12);
 
         // Mutate original sparseData via instantiateNew → copy unaffected
         SparseDoubleDataSi d2 = d.instantiateNew(new double[] {0, 0, 0, 0, 0, 1});
         assertEquals(1.0, d2.get(1, 2), 1e-12);
-        assertArrayEquals(d.getDataArray(), c.getDataArray(), 1e-12);
+        assertArrayEquals(d.getSiArray(), c.getSiArray(), 1e-12);
     }
 
     // ----------------------------------------------------------------------

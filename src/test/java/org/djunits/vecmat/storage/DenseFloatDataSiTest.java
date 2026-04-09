@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
  * <li>Cardinality behavior</li>
  * <li>Equality and hashCode</li>
  * <li>SI-conversion correctness for Q[][] (using Length)</li>
- * <li>Float → double copying correctness in {@code getDataArray()}</li>
+ * <li>Float → double copying correctness in {@code getSiArray()}</li>
  * </ul>
  * <br>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -121,11 +121,11 @@ public class DenseFloatDataSiTest
     }
 
     // ---------------------------------------------------------------------------
-    // getDataArray(): must return a fresh double[] copy
+    // getSiArray(): must return a fresh double[] copy
     // ---------------------------------------------------------------------------
 
     /**
-     * Verify that {@code getDataArray()} returns a *new* double array each call and does not expose the internal float[].
+     * Verify that {@code getSiArray()} returns a *new* double array each call and does not expose the internal float[].
      */
     @Test
     @DisplayName("getDataArray: returns new array every time; not exposing internals")
@@ -133,10 +133,10 @@ public class DenseFloatDataSiTest
     {
         DenseFloatDataSi d = new DenseFloatDataSi(sample2x3(), 2, 3);
 
-        double[] a1 = d.getDataArray();
-        double[] a2 = d.getDataArray();
+        double[] a1 = d.getSiArray();
+        double[] a2 = d.getSiArray();
 
-        assertNotSame(a1, a2, "getDataArray() must create a new array");
+        assertNotSame(a1, a2, "getSiArray() must create a new array");
         assertArrayEquals(a1, a2, 1e-12, "arrays must contain the same values");
 
         // Mutations must not affect stored float array
@@ -160,15 +160,15 @@ public class DenseFloatDataSiTest
 
         assertEquals(d.rows(), copy.rows());
         assertEquals(d.cols(), copy.cols());
-        assertArrayEquals(d.getDataArray(), copy.getDataArray(), 1e-12);
+        assertArrayEquals(d.getSiArray(), copy.getSiArray(), 1e-12);
 
         // float[] should be cloned
-        assertNotSame(d.getDataArray(), copy.getDataArray(), "getDataArray() always returns new double[]");
+        assertNotSame(d.getSiArray(), copy.getSiArray(), "getSiArray() always returns new double[]");
         assertNotSame(d, copy);
 
         // Mutate original backing array -> copy must not change
         d.instantiateNew(new double[] {10, 20, 30, 40, 50, 60}); // replace via instantiateNew
-        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, copy.getDataArray(), 1e-12,
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, copy.getSiArray(), 1e-12,
                 "copy must remain unchanged after original changes");
     }
 
@@ -191,7 +191,7 @@ public class DenseFloatDataSiTest
         assertEquals(2, d2.rows());
         assertEquals(3, d2.cols());
 
-        double[] retrieved = d2.getDataArray();
+        double[] retrieved = d2.getSiArray();
         assertEquals((float) 1.5, retrieved[0], 1e-12);
         assertEquals((float) -2.25, retrieved[1], 1e-12);
         assertFalse(!Double.isNaN(retrieved[5]), "NaN must remain NaN after float conversion");
@@ -214,7 +214,7 @@ public class DenseFloatDataSiTest
 
         assertEquals(3, reshaped.rows());
         assertEquals(2, reshaped.cols());
-        assertArrayEquals(new double[] {9, 8, 7, 6, 5, 4}, reshaped.getDataArray(), 1e-12);
+        assertArrayEquals(new double[] {9, 8, 7, 6, 5, 4}, reshaped.getSiArray(), 1e-12);
 
         // Wrong size
         assertThrows(IllegalArgumentException.class, () -> d.instantiateNew(new double[] {1, 2, 3}, 2, 2));
@@ -307,7 +307,7 @@ public class DenseFloatDataSiTest
         DenseFloatDataSi d = DenseFloatDataSi.ofSi(arr);
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
-        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, d.getDataArray(), 1e-12);
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, d.getSiArray(), 1e-12);
 
         // Modify source; DenseFloatDataSi must remain stable
         arr[0][0] = 999f;
@@ -335,11 +335,11 @@ public class DenseFloatDataSiTest
         DenseFloatDataSi d = DenseFloatDataSi.of(q);
 
         // Expected SI values (float-cast): 1000.0, 1.0, 0.02, 0.003
-        assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);
+        assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getSiArray(), 1e-7);
 
         // Modify input source -> DenseFloatDataSi must not change
         q[0][0] = new Length(7.0, Length.Unit.m);
-        assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getDataArray(), 1e-7);
+        assertArrayEquals(new double[] {1000.0, 1.0, 0.02, 0.003}, d.getSiArray(), 1e-7);
     }
 
     // ------------------------------------------------------------------------------------
@@ -399,7 +399,7 @@ public class DenseFloatDataSiTest
         float[] raw = f2x2();
         DenseFloatDataSi d = DenseFloatDataSi.ofSi(raw, 2, 2);
 
-        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getSiArray(), EPS);
 
         raw[0] = 99f;
         assertEquals(1.0, d.get(0, 0), EPS);
@@ -422,7 +422,7 @@ public class DenseFloatDataSiTest
 
         DenseFloatDataSi d = DenseFloatDataSi.ofSi(d2x2(), 2, 2);
 
-        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -442,7 +442,7 @@ public class DenseFloatDataSiTest
 
         DenseFloatDataSi d = DenseFloatDataSi.of(new float[] {1f, 2f, 3f, 4f}, 2, 2, Length.Unit.km);
 
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -462,7 +462,7 @@ public class DenseFloatDataSiTest
 
         DenseFloatDataSi d = DenseFloatDataSi.of(new double[] {10, 20, 30, 40}, 2, 2, Length.Unit.cm);
 
-        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -485,7 +485,7 @@ public class DenseFloatDataSiTest
 
         DenseFloatDataSi d = DenseFloatDataSi.of(q, 2, 2);
 
-        assertArrayEquals(new double[] {1000, 2, 0.03, 0.004}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1000, 2, 0.03, 0.004}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -510,7 +510,7 @@ public class DenseFloatDataSiTest
         float[][] grid = {{1f, 2f}, {3f, 4f}};
         DenseFloatDataSi d = DenseFloatDataSi.ofSi(grid);
 
-        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getSiArray(), EPS);
 
         grid[0][0] = 99f;
         assertEquals(1.0, d.get(0, 0), EPS);
@@ -535,7 +535,7 @@ public class DenseFloatDataSiTest
 
         DenseFloatDataSi d = DenseFloatDataSi.ofSi(new double[][] {{1, 2}, {3, 4}});
 
-        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1, 2, 3, 4}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -554,9 +554,9 @@ public class DenseFloatDataSiTest
         assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new float[][] {{1f, 2f}, {3f}}, Length.Unit.m));
         assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new float[][] {{}}, Length.Unit.m));
         assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new float[][] {}, Length.Unit.m));
-        
+
         DenseFloatDataSi d = DenseFloatDataSi.of(new float[][] {{1f, 2f}, {3f, 4f}}, Length.Unit.km);
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -578,7 +578,7 @@ public class DenseFloatDataSiTest
         assertThrows(IllegalArgumentException.class, () -> DenseFloatDataSi.of(new double[][] {}, Length.Unit.m));
 
         DenseFloatDataSi d = DenseFloatDataSi.of(new double[][] {{10, 20}, {30, 40}}, Length.Unit.cm);
-        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, d.getSiArray(), EPS);
     }
 
     // -------------------------------------------------------------------------
@@ -601,7 +601,7 @@ public class DenseFloatDataSiTest
         Length[][] q = {{new Length(1, Length.Unit.km), new Length(2, Length.Unit.m)},
                 {new Length(3, Length.Unit.cm), new Length(4, Length.Unit.mm)}};
         DenseFloatDataSi d = DenseFloatDataSi.of(q);
-        assertArrayEquals(new double[] {1000, 2, 0.03, 0.004}, d.getDataArray(), EPS);
+        assertArrayEquals(new double[] {1000, 2, 0.03, 0.004}, d.getSiArray(), EPS);
     }
 
 }

@@ -89,7 +89,7 @@ public class QuantityTableTest
 
         // 3x2 in km → SI
         QuantityTable<Length> m = QuantityTable.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.getSiArray(), EPS);
         assertEquals(3, m.rows());
         assertEquals(2, m.cols());
     }
@@ -106,7 +106,7 @@ public class QuantityTableTest
 
         // 2x3 in km
         QuantityTable<Length> m = QuantityTable.of(new double[][] {{1, 2, 3}, {4, 5, 6}}, Length.Unit.km);
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.si(), EPS);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000}, m.getSiArray(), EPS);
         assertEquals(2, m.rows());
         assertEquals(3, m.cols());
 
@@ -122,7 +122,7 @@ public class QuantityTableTest
     {
         Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
         QuantityTable<Length> m = QuantityTable.of(q).setDisplayUnit(Length.Unit.m);
-        assertArrayEquals(new double[] {1000.0, 200.0}, m.si(), EPS);
+        assertArrayEquals(new double[] {1000.0, 200.0}, m.getSiArray(), EPS);
         assertEquals(1, m.rows());
         assertEquals(2, m.cols());
     }
@@ -144,7 +144,7 @@ public class QuantityTableTest
         QuantityTable<Length> q2 = q.instantiateSi(newSi);
 
         assertNotSame(q, q2);
-        assertArrayEquals(newSi, q2.si(), 1e-12);
+        assertArrayEquals(newSi, q2.getSiArray(), 1e-12);
         assertEquals(q.getDisplayUnit(), q2.getDisplayUnit());
     }
 
@@ -164,7 +164,7 @@ public class QuantityTableTest
         QuantityTable<?> inv = q.invertEntries();
         double[] expected = new double[] {1.0, 1.0 / 2.0, 1.0 / 4.0, 1.0 / 5.0};
 
-        assertArrayEquals(expected, inv.si(), 1e-12);
+        assertArrayEquals(expected, inv.getSiArray(), 1e-12);
         assertTrue(inv.getDisplayUnit() instanceof SIUnit, "Display unit after inversion must be SIUnit (inverted)");
     }
 
@@ -186,7 +186,7 @@ public class QuantityTableTest
 
         QuantityTable<?> result = a.multiplyEntries(b);
 
-        assertArrayEquals(new double[] {10, 40, 90, 160}, result.si(), 1e-12);
+        assertArrayEquals(new double[] {10, 40, 90, 160}, result.getSiArray(), 1e-12);
     }
 
     // ----------------------------------------------------------------------
@@ -207,7 +207,7 @@ public class QuantityTableTest
 
         QuantityTable<?> result = a.divideEntries(b);
 
-        assertArrayEquals(new double[] {10, 10, 10, 10}, result.si(), 1e-12);
+        assertArrayEquals(new double[] {10, 10, 10, 10}, result.getSiArray(), 1e-12);
     }
 
     /** Verify equals/hashCode. */
@@ -242,7 +242,7 @@ public class QuantityTableTest
 
         assertNotSame(q, converted);
         assertEquals(Length.Unit.km, converted.getDisplayUnit());
-        assertArrayEquals(q.si(), converted.si(), 1e-12);
+        assertArrayEquals(q.getSiArray(), converted.getSiArray(), 1e-12);
 
         // Units NOT matching → error
         assertThrows(IllegalArgumentException.class, () -> q.as(SIUnit.of("s"))); // dimension mismatch: meter vs second
@@ -264,8 +264,8 @@ public class QuantityTableTest
 
         QuantityTable<Length> m11cm = QuantityTable.of(new double[] {3}, 1, 1, Length.Unit.cm);
         assertEquals(Length.Unit.cm, m11cm.getDisplayUnit());
-        assertEquals(1, m11cm.si().length);
-        assertEquals(0.03, m11cm.si()[0], EPS);
+        assertEquals(1, m11cm.getSiArray().length);
+        assertEquals(0.03, m11cm.getSiArray()[0], EPS);
         Vector1<Length> v1cm = m11cm.asVector1();
         assertEquals(1, v1cm.size());
         assertEquals(0.03, v1cm.get(0).si(), EPS);
@@ -283,9 +283,9 @@ public class QuantityTableTest
 
         QuantityTable<Length> m21ok = QuantityTable.of(new double[] {5.0, 6.0}, 2, 1, Length.Unit.km);
         assertEquals(Length.Unit.km, m21ok.getDisplayUnit());
-        assertEquals(2, m21ok.si().length);
-        assertEquals(5000.0, m21ok.si()[0], EPS);
-        assertEquals(6000.0, m21ok.si()[1], EPS);
+        assertEquals(2, m21ok.getSiArray().length);
+        assertEquals(5000.0, m21ok.getSiArray()[0], EPS);
+        assertEquals(6000.0, m21ok.getSiArray()[1], EPS);
         Vector2.Col<Length> v2col = m21ok.asVector2Col();
         assertEquals(2, v2col.size());
         assertEquals(5000.0, v2col.get(0).si(), EPS);
@@ -303,9 +303,9 @@ public class QuantityTableTest
         // ----------------------------
         QuantityTable<Length> m12ok = QuantityTable.of(new double[] {3, 4}, 1, 2, Length.Unit.cm);
         assertEquals(Length.Unit.cm, m12ok.getDisplayUnit());
-        assertEquals(2, m12ok.si().length);
-        assertEquals(0.03, m12ok.si()[0], EPS);
-        assertEquals(0.04, m12ok.si()[1], EPS);
+        assertEquals(2, m12ok.getSiArray().length);
+        assertEquals(0.03, m12ok.getSiArray()[0], EPS);
+        assertEquals(0.04, m12ok.getSiArray()[1], EPS);
         Vector2.Row<Length> v2row = m12ok.asVector2Row();
         assertEquals(2, v2row.size());
         assertEquals(0.03, v2row.get(0).si(), EPS);
@@ -373,14 +373,14 @@ public class QuantityTableTest
         // Happy path: 1x1, using km to verify SI-preservation (5 km -> 5000 m).
         QuantityTable<Length> m1x1km = QuantityTable.of(new double[] {5.0}, 1, 1, Length.Unit.km);
         assertEquals(Length.Unit.km, m1x1km.getDisplayUnit());
-        assertEquals(1, m1x1km.si().length);
-        assertEquals(5000.0, m1x1km.si()[0], EPS);
+        assertEquals(1, m1x1km.getSiArray().length);
+        assertEquals(5000.0, m1x1km.getSiArray()[0], EPS);
         assertEquals(5000.0, m1x1km.si(0, 0), EPS);
 
         Matrix1x1<Length> fixed1x1 = m1x1km.asMatrix1x1();
         assertEquals(Length.Unit.km, fixed1x1.getDisplayUnit());
         assertEquals(5000.0, fixed1x1.si(0, 0), EPS);
-        double[] si11 = fixed1x1.si();
+        double[] si11 = fixed1x1.getSiArray();
         assertEquals(1, si11.length);
         assertEquals(5000.0, si11[0], EPS);
 
@@ -403,7 +403,7 @@ public class QuantityTableTest
         assertEquals(2.0, m22fixed.si(0, 1), EPS);
         assertEquals(3.0, m22fixed.si(1, 0), EPS);
         assertEquals(4.0, m22fixed.si(1, 1), EPS);
-        double[] m22si = m22fixed.si();
+        double[] m22si = m22fixed.getSiArray();
         assertEquals(4, m22si.length);
         assertEquals(1.0, m22si[0], EPS);
         assertEquals(2.0, m22si[1], EPS);
@@ -433,7 +433,7 @@ public class QuantityTableTest
         assertEquals(7.0, m33fixed.si(2, 0), EPS);
         assertEquals(8.0, m33fixed.si(2, 1), EPS);
         assertEquals(9.0, m33fixed.si(2, 2), EPS);
-        double[] m33si = m33fixed.si();
+        double[] m33si = m33fixed.getSiArray();
         assertEquals(9, m33si.length);
         assertEquals(1.0, m33si[0], EPS);
         assertEquals(2.0, m33si[1], EPS);
@@ -476,7 +476,7 @@ public class QuantityTableTest
         assertEquals(4000.0, m23fixed.si(1, 1), EPS);
         assertEquals(5000.0, m23fixed.si(2, 0), EPS);
         assertEquals(6000.0, m23fixed.si(2, 1), EPS);
-        double[] m23si = m23fixed.si();
+        double[] m23si = m23fixed.getSiArray();
         assertEquals(6, m23si.length);
         assertEquals(1000.0 * newSi[0], m23si[0]);
     }
@@ -488,7 +488,7 @@ public class QuantityTableTest
     /**
      * Verify that {@code asMatrixNxN()} preserves SI data and display unit for square matrices (tested with 1x1 and 4x4), and
      * throws {@link IllegalStateException} for non-square shapes (tested with 2x3 and 3x2). SI correctness is checked via both
-     * the row-major {@code si()} array and {@code si(row, col)} with 0-based indices.
+     * the row-major {@code getSiArray()} array and {@code si(row, col)} with 0-based indices.
      */
     @Test
     @DisplayName("QuantityTable: asMatrixNxN preserves SI & unit (square) and throws for non-square shapes")
@@ -499,13 +499,13 @@ public class QuantityTableTest
         // ----------------------------
         QuantityTable<Length> m11cm = QuantityTable.of(new double[] {3}, 1, 1, Length.Unit.cm);
         assertEquals(Length.Unit.cm, m11cm.getDisplayUnit());
-        assertEquals(1, m11cm.si().length);
-        assertEquals(0.03, m11cm.si()[0], EPS);
+        assertEquals(1, m11cm.getSiArray().length);
+        assertEquals(0.03, m11cm.getSiArray()[0], EPS);
         assertEquals(0.03, m11cm.si(0, 0), EPS);
 
         MatrixNxN<Length> n11 = m11cm.asMatrixNxN();
         assertEquals(Length.Unit.cm, n11.getDisplayUnit());
-        double[] si11 = n11.si();
+        double[] si11 = n11.getSiArray();
         assertEquals(1, si11.length);
         assertEquals(0.03, si11[0], EPS);
         assertEquals(0.03, n11.si(0, 0), EPS);
@@ -516,9 +516,9 @@ public class QuantityTableTest
         double[] si44 = new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0};
         QuantityTable<Length> m44km = QuantityTable.of(si44, 4, 4, Length.Unit.km);
         assertEquals(Length.Unit.km, m44km.getDisplayUnit());
-        assertEquals(16, m44km.si().length);
-        assertEquals(1000.0, m44km.si()[0], EPS);
-        assertEquals(16000.0, m44km.si()[15], EPS);
+        assertEquals(16, m44km.getSiArray().length);
+        assertEquals(1000.0, m44km.getSiArray()[0], EPS);
+        assertEquals(16000.0, m44km.getSiArray()[15], EPS);
         assertEquals(1000.0, m44km.si(0, 0), EPS);
         assertEquals(4000.0, m44km.si(0, 3), EPS);
         assertEquals(13000.0, m44km.si(3, 0), EPS);
@@ -527,7 +527,7 @@ public class QuantityTableTest
         MatrixNxN<Length> n44 = m44km.asMatrixNxN();
         assertEquals(Length.Unit.km, n44.getDisplayUnit());
 
-        double[] si44Out = n44.si();
+        double[] si44Out = n44.getSiArray();
         assertEquals(16, si44Out.length);
         assertEquals(1000.0, si44Out[0], EPS);
         assertEquals(2000.0, si44Out[1], EPS);
@@ -574,7 +574,7 @@ public class QuantityTableTest
      * <li>Preserves SI data and display unit for {@code N x 1} matrices (tested with N=4 and N=1),</li>
      * <li>Throws {@link IllegalStateException} when the matrix has more than one column (e.g., {@code N x 2}).</li>
      * </ul>
-     * SI correctness is validated via both the row-major {@code si()} array and element access on the returned vector.
+     * SI correctness is validated via both the row-major {@code getSiArray()} array and element access on the returned vector.
      */
     @Test
     @DisplayName("QuantityTable: asVectorNCol preserves SI & unit (Nx1) and throws for Nx2")
@@ -584,9 +584,9 @@ public class QuantityTableTest
         QuantityTable<Length> m41km = QuantityTable.of(new double[] {5.0, 6.0, 7.0, 8.0}, 4, 1, Length.Unit.km);
 
         assertEquals(Length.Unit.km, m41km.getDisplayUnit());
-        assertEquals(4, m41km.si().length);
-        assertEquals(5000.0, m41km.si()[0], EPS);
-        assertEquals(8000.0, m41km.si()[3], EPS);
+        assertEquals(4, m41km.getSiArray().length);
+        assertEquals(5000.0, m41km.getSiArray()[0], EPS);
+        assertEquals(8000.0, m41km.getSiArray()[3], EPS);
         assertEquals(5000.0, m41km.si(0, 0), EPS);
         assertEquals(8000.0, m41km.si(3, 0), EPS);
 
@@ -596,7 +596,7 @@ public class QuantityTableTest
         assertEquals(5000.0, vCol.get(0).si(), EPS);
         assertEquals(8000.0, vCol.get(3).si(), EPS);
 
-        double[] vColSi = vCol.si();
+        double[] vColSi = vCol.getSiArray();
         assertEquals(4, vColSi.length);
         assertEquals(5000.0, vColSi[0], EPS);
         assertEquals(8000.0, vColSi[3], EPS);
@@ -624,7 +624,7 @@ public class QuantityTableTest
      * <li>Preserves SI data and display unit for {@code 1 x N} matrices (tested with N=4 and N=1),</li>
      * <li>Throws {@link IllegalStateException} when the matrix has more than one row (e.g., {@code 2 x N}).</li>
      * </ul>
-     * SI correctness is validated via both the row-major {@code si()} array and element access on the returned vector.
+     * SI correctness is validated via both the row-major {@code getSiArray()} array and element access on the returned vector.
      */
     @Test
     @DisplayName("QuantityTable: asVectorNRow preserves SI & unit (1xN) and throws for 2xN")
@@ -634,9 +634,9 @@ public class QuantityTableTest
         QuantityTable<Length> m14cm = QuantityTable.of(new double[] {3, 4, 5, 6}, 1, 4, Length.Unit.cm);
 
         assertEquals(Length.Unit.cm, m14cm.getDisplayUnit());
-        assertEquals(4, m14cm.si().length);
-        assertEquals(0.03, m14cm.si()[0], EPS);
-        assertEquals(0.06, m14cm.si()[3], EPS);
+        assertEquals(4, m14cm.getSiArray().length);
+        assertEquals(0.03, m14cm.getSiArray()[0], EPS);
+        assertEquals(0.06, m14cm.getSiArray()[3], EPS);
         assertEquals(0.03, m14cm.si(0, 0), EPS);
         assertEquals(0.06, m14cm.si(0, 3), EPS);
 
@@ -646,7 +646,7 @@ public class QuantityTableTest
         assertEquals(0.03, vRow.get(0).si(), EPS);
         assertEquals(0.06, vRow.get(3).si(), EPS);
 
-        double[] vRowSi = vRow.si();
+        double[] vRowSi = vRow.getSiArray();
         assertEquals(4, vRowSi.length);
         assertEquals(0.03, vRowSi[0], EPS);
         assertEquals(0.06, vRowSi[3], EPS);
@@ -681,14 +681,14 @@ public class QuantityTableTest
         // 1. asMatrixNxM() must preserve SI and assign displayUnit correctly
         // ----------------------------------------------------------------------
         MatrixNxM<Length> mxm = qtKm.asMatrixNxM();
-        assertArrayEquals(si, mxm.si(), 1e-12, "asMatrixNxM(): SI values must be preserved exactly");
+        assertArrayEquals(si, mxm.getSiArray(), 1e-12, "asMatrixNxM(): SI values must be preserved exactly");
         assertEquals(Length.Unit.km, mxm.getDisplayUnit(), "asMatrixNxM(): display unit must match the QuantityTable");
 
         // ----------------------------------------------------------------------
         // 2. asMatrix2x2() must also preserve SI and display units
         // ----------------------------------------------------------------------
         Matrix2x2<Length> m2 = qtKm.asMatrix2x2();
-        assertArrayEquals(si, m2.si(), 1e-12, "asMatrix2x2(): SI values must be preserved exactly");
+        assertArrayEquals(si, m2.getSiArray(), 1e-12, "asMatrix2x2(): SI values must be preserved exactly");
         assertEquals(Length.Unit.km, m2.getDisplayUnit(), "asMatrix2x2(): display unit must match the QuantityTable");
 
         // ----------------------------------------------------------------------
@@ -698,11 +698,11 @@ public class QuantityTableTest
         QuantityTable<Length> qtKm9 = new QuantityTable<>(new DenseDoubleDataSi(si9, 3, 3), Length.Unit.km);
 
         Matrix3x3<Length> m3 = qtKm9.asMatrix3x3();
-        assertArrayEquals(si9, m3.si(), 1e-12, "asMatrix3x3(): SI values must be preserved for 3x3");
+        assertArrayEquals(si9, m3.getSiArray(), 1e-12, "asMatrix3x3(): SI values must be preserved for 3x3");
         assertEquals(Length.Unit.km, m3.getDisplayUnit(), "asMatrix3x3(): display unit must match the QuantityTable");
 
         MatrixNxN<Length> mxn = qtKm9.asMatrixNxN();
-        assertArrayEquals(si9, mxn.si(), 1e-12, "asMatrixNxN(): SI values must be preserved for square matrices");
+        assertArrayEquals(si9, mxn.getSiArray(), 1e-12, "asMatrixNxN(): SI values must be preserved for square matrices");
         assertEquals(Length.Unit.km, mxn.getDisplayUnit(), "asMatrixNxN(): display unit must match the QuantityTable");
 
         // ----------------------------------------------------------------------
@@ -710,7 +710,7 @@ public class QuantityTableTest
         // ----------------------------------------------------------------------
         QuantityTable<Length> qtKmToM = qtKm.as(Length.Unit.m);
 
-        assertArrayEquals(si, qtKmToM.si(), 1e-12, "as(unit): SI values must not change");
+        assertArrayEquals(si, qtKmToM.getSiArray(), 1e-12, "as(unit): SI values must not change");
         assertEquals(Length.Unit.m, qtKmToM.getDisplayUnit(), "as(unit): display unit must be replaced but SI preserved");
 
         // ----------------------------------------------------------------------
@@ -928,7 +928,7 @@ public class QuantityTableTest
         assertEquals(2, qt.rows());
         assertEquals(4, qt.cols());
         assertEquals(Length.Unit.km, qt.getDisplayUnit());
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000}, qt.si(), EPS);
+        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000}, qt.getSiArray(), EPS);
 
         // Transpose: 4x2
         QuantityTable<Length> t = qt.transpose();
@@ -943,7 +943,7 @@ public class QuantityTableTest
          * Expected transposed layout (4x2): [ 1 5 ] [ 2 6 ] [ 3 7 ] [ 4 8 ] Row‑major SI: {1000,5000, 2000,6000, 3000,7000,
          * 4000,8000}
          */
-        assertArrayEquals(new double[] {1000, 5000, 2000, 6000, 3000, 7000, 4000, 8000}, t.si(), EPS);
+        assertArrayEquals(new double[] {1000, 5000, 2000, 6000, 3000, 7000, 4000, 8000}, t.getSiArray(), EPS);
 
         // Spot‑check element access
         assertEquals(1000.0, t.si(0, 0), EPS);
@@ -957,7 +957,7 @@ public class QuantityTableTest
         assertEquals(qt.rows(), tt.rows());
         assertEquals(qt.cols(), tt.cols());
         assertEquals(qt.getDisplayUnit(), tt.getDisplayUnit());
-        assertArrayEquals(qt.si(), tt.si(), EPS);
+        assertArrayEquals(qt.getSiArray(), tt.getSiArray(), EPS);
     }
 
     // ------------------------------------------------------------------------------------
@@ -987,7 +987,7 @@ public class QuantityTableTest
 
         assertEquals(2, qt.rows());
         assertEquals(3, qt.cols());
-        assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, qt.si(), EPS);
+        assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, qt.getSiArray(), EPS);
     }
 
     /**
@@ -1008,7 +1008,7 @@ public class QuantityTableTest
         QuantityTable<Length> qt = QuantityTable.ofSi(si, 2, 2, Length.Unit.km);
 
         assertEquals(Length.Unit.km, qt.getDisplayUnit());
-        assertArrayEquals(si, qt.si(), EPS);
+        assertArrayEquals(si, qt.getSiArray(), EPS);
     }
 
     /**
@@ -1056,7 +1056,7 @@ public class QuantityTableTest
 
         assertEquals(2, qt.rows());
         assertEquals(3, qt.cols());
-        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, qt.si(), EPS);
+        assertArrayEquals(new double[] {1, 2, 3, 4, 5, 6}, qt.getSiArray(), EPS);
     }
 
     /**

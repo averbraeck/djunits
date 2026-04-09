@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * {@link DataGridSi} interface:
  * <ul>
  * <li>Constructors: double[], double[][], and Q[][] (SI values)</li>
- * <li>Accessors: {@code rows()}, {@code cols()}, {@code get(int,int)}, {@code getDataArray()}</li>
+ * <li>Accessors: {@code rows()}, {@code cols()}, {@code get(int,int)}, {@code getSiArray()}</li>
  * <li>Default methods in {@link DataGridSi}: {@code getRowArray(int)}, {@code getColArray(int)} including bounds checks</li>
  * <li>Copy and instantiation: {@code copy()}, {@code instantiateNew(double[])}, {@code instantiateNew(double[],int,int)}</li>
  * <li>Cardinality semantics, including 0.0, -0.0, {@code NaN}, and infinities</li>
@@ -113,21 +113,21 @@ public class DenseDoubleDataSiTest
     }
 
     /**
-     * Verify exposure semantics of {@link DenseDoubleDataSi#getDataArray()} (no safe copy). Modifications through the returned
+     * Verify exposure semantics of {@link DenseDoubleDataSi#getSiArray()} (no safe copy). Modifications through the returned
      * array are reflected in the object, by design.
      */
     @Test
-    @DisplayName("getDataArray: exposes internal array (by design)")
-    public void testGetDataArrayExposure()
+    @DisplayName("unsafeSiArray: exposes internal array (by design)")
+    public void testUnsafeSiArrayExposure()
     {
         double[] data = sample2x3();
         DenseDoubleDataSi d = new DenseDoubleDataSi(data, 2, 3);
 
         // Same reference is returned (no safe copy)
-        assertSame(data, d.getDataArray(), "Internal array should be exposed by design");
+        assertSame(data, d.unsafeSiArray(), "Internal array should be exposed by design");
 
-        // Mutating via getDataArray() must mutate the object state
-        double[] exposed = d.getDataArray();
+        // Mutating via unsafeSiArray() must mutate the object state
+        double[] exposed = d.unsafeSiArray();
         exposed[0] = 10.0;
         assertEquals(10.0, d.get(0, 0), 1e-12, "mutation through exposed array is visible");
     }
@@ -144,11 +144,11 @@ public class DenseDoubleDataSiTest
 
         assertEquals(original.rows(), copy.rows(), "rows identical");
         assertEquals(original.cols(), copy.cols(), "cols identical");
-        assertArrayEquals(original.getDataArray(), copy.getDataArray(), 1e-12, "data identical");
-        assertNotSame(original.getDataArray(), copy.getDataArray(), "backing arrays must differ");
+        assertArrayEquals(original.getSiArray(), copy.getSiArray(), 1e-12, "data identical");
+        assertNotSame(original.getSiArray(), copy.getSiArray(), "backing arrays must differ");
 
         // Mutations to the original must not affect the copy
-        original.getDataArray()[0] = 99.0;
+        original.unsafeSiArray()[0] = 99.0;
         assertEquals(99.0, original.get(0, 0), 1e-12, "original mutated");
         assertEquals(1.0, copy.get(0, 0), 1e-12, "copy isolated");
     }
@@ -167,7 +167,7 @@ public class DenseDoubleDataSiTest
 
         assertEquals(2, d2.rows(), "rows preserved");
         assertEquals(3, d2.cols(), "cols preserved");
-        assertSame(other, d2.getDataArray(), "constructor exposes provided array");
+        assertSame(other, d2.unsafeSiArray(), "constructor exposes provided array");
         assertEquals(7.0, d2.get(0, 0), 1e-12);
         assertEquals(8.0, d2.get(0, 1), 1e-12);
         assertEquals(9.0, d2.get(0, 2), 1e-12);
@@ -190,7 +190,7 @@ public class DenseDoubleDataSiTest
         DenseDoubleDataSi reshaped = d.instantiateNew(data3x2, 3, 2);
         assertEquals(3, reshaped.rows());
         assertEquals(2, reshaped.cols());
-        assertSame(data3x2, reshaped.getDataArray(), "backing exposed (by design)");
+        assertSame(data3x2, reshaped.unsafeSiArray(), "backing exposed (by design)");
         assertEquals(1.0, reshaped.get(0, 0), 1e-12);
         assertEquals(2.0, reshaped.get(0, 1), 1e-12);
         assertEquals(5.0, reshaped.get(2, 0), 1e-12);
@@ -268,7 +268,7 @@ public class DenseDoubleDataSiTest
         // Happy path
         double[] payload = sample2x3();
         DenseDoubleDataSi d = new DenseDoubleDataSi(payload, 2, 3);
-        assertSame(payload, d.getDataArray(), "no safe copy on ctor(double[])");
+        assertSame(payload, d.unsafeSiArray(), "no safe copy on ctor(double[])");
         assertEquals(2, d.rows());
         assertEquals(3, d.cols());
     }
@@ -300,7 +300,7 @@ public class DenseDoubleDataSiTest
         assertEquals(3, d.cols());
 
         // Must be row-major: [1,2,3, 4,5,6]
-        assertArrayEquals(sample2x3(), d.getDataArray(), 1e-12, "row-major order");
+        assertArrayEquals(sample2x3(), d.getSiArray(), 1e-12, "row-major order");
 
         // Safe copy: mutate source matrix; DenseDoubleDataSi must remain unchanged
         m[0][0] = 999.0;
@@ -337,11 +337,11 @@ public class DenseDoubleDataSiTest
         double[] expected = new double[] {1000.0, 2.0, 0.03, 0.004};
         assertEquals(2, d.rows());
         assertEquals(2, d.cols());
-        assertArrayEquals(expected, d.getDataArray(), 1e-12, "SI values must be written in row-major order");
+        assertArrayEquals(expected, d.getSiArray(), 1e-12, "SI values must be written in row-major order");
 
         // Safe copy: mutate source lengths; result must remain unchanged
         l[0][0] = new Length(42.0, Length.Unit.m);
-        assertArrayEquals(expected, d.getDataArray(), 1e-12, "safe copy on ctor(Q[][])");
+        assertArrayEquals(expected, d.getSiArray(), 1e-12, "safe copy on ctor(Q[][])");
     }
 
     // ------------------------------------------------------------------------------------
@@ -360,7 +360,7 @@ public class DenseDoubleDataSiTest
 
         assertEquals(2, d.rows());
         assertEquals(2, d.cols());
-        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, d.getDataArray(), 1e-12);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, d.getSiArray(), 1e-12);
 
         // Safe copy
         raw[0] = 99.0;
@@ -377,7 +377,7 @@ public class DenseDoubleDataSiTest
         double[] valuesKm = new double[] {1.0, 2.0, 3.0, 4.0};
         DenseDoubleDataSi d = DenseDoubleDataSi.of(valuesKm, 2, 2, Length.Unit.km);
 
-        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0, 4000.0}, d.getDataArray(), 1e-12);
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0, 4000.0}, d.getSiArray(), 1e-12);
 
         // Safe copy
         valuesKm[0] = 99.0;
@@ -396,7 +396,7 @@ public class DenseDoubleDataSiTest
 
         DenseDoubleDataSi d = DenseDoubleDataSi.of(data, 2, 2);
 
-        assertArrayEquals(new double[] {1000.0, 2.0, 0.03, 0.004}, d.getDataArray(), 1e-12);
+        assertArrayEquals(new double[] {1000.0, 2.0, 0.03, 0.004}, d.getSiArray(), 1e-12);
 
         // Null element
         assertThrows(NullPointerException.class, () -> DenseDoubleDataSi.of(new Length[] {null}, 1, 1));
@@ -413,6 +413,5 @@ public class DenseDoubleDataSiTest
 
         assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.ofSi(bad, 2, 2));
     }
-
 
 }

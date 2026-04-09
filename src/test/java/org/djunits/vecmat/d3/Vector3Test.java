@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  * Coverage goals:
  * <ul>
  * <li>Constructors, factories, and display→SI conversion</li>
- * <li>Accessors: x(), y(), z(), xSi(), ySi(), zSi(), si(), get(index)</li>
+ * <li>Accessors: x(), y(), z(), xSi(), ySi(), zSi(), getSiArray(), get(index)</li>
  * <li>Iterator and getScalarArray()</li>
  * <li>Vector algebra: add/sub (Q &amp; V), negate, abs, scaleBy</li>
  * <li>Normed: norm(), normL1(), normL2(), normLp(p), normLinf()</li>
@@ -92,12 +92,12 @@ public class Vector3Test
     public void testConstructorAndSiStorageCol()
     {
         Vector3.Col<Length> c = col(1.0, 2.0, 3.0, Length.Unit.km); // SI: 1000, 2000, 3000
-        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, c.si(), EPS);
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, c.getSiArray(), EPS);
         assertEquals(Length.Unit.km, c.getDisplayUnit());
 
         // Factory .of for Col should behave the same as constructor (no double conversion!)
         Vector3.Col<Length> cf = Vector3.Col.of(0.1, 20.0, 3000.0, Length.Unit.cm); // 0.001m, 0.2m, 30m
-        assertArrayEquals(new double[] {0.001, 0.2, 30.0}, cf.si(), EPS);
+        assertArrayEquals(new double[] {0.001, 0.2, 30.0}, cf.getSiArray(), EPS);
     }
 
     /** Verify that constructor interprets values in display unit and stores SI internally (Row). */
@@ -106,12 +106,12 @@ public class Vector3Test
     public void testConstructorAndSiStorageRow()
     {
         Vector3.Row<Length> r = row(1.0, 2.0, 3.0, Length.Unit.km); // SI: 1000, 2000, 3000
-        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, r.si(), EPS);
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, r.getSiArray(), EPS);
         assertEquals(Length.Unit.km, r.getDisplayUnit());
 
         // Factory .of for Row should behave the same as constructor (no double conversion!)
         Vector3.Row<Length> rf = Vector3.Row.of(0.1, 20.0, 3000.0, Length.Unit.cm); // 0.001m, 0.2m, 30m
-        assertArrayEquals(new double[] {0.001, 0.2, 30.0}, rf.si(), EPS);
+        assertArrayEquals(new double[] {0.001, 0.2, 30.0}, rf.getSiArray(), EPS);
     }
 
     /** Verify instantiateSi(double[]) enforces length=3 and delegates (Col). */
@@ -122,18 +122,18 @@ public class Vector3Test
         Vector3.Col<Length> c = col(1.0, 2.0, 3.0, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> c.instantiateSi(new double[] {1.0, 2.0}), "Wrong length must throw");
         Vector3.Col<Length> d = c.instantiateSi(new double[] {10.0, 20.0, 30.0});
-        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, d.si(), EPS);
+        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, d.getSiArray(), EPS);
         assertEquals(c.getDisplayUnit(), d.getDisplayUnit());
 
         double[] newSi = {20, 30, 40};
         Vector3.Col<SIQuantity> csiVector = c.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", csiVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
-        assertArrayEquals(newSi, csiVector.si(), EPS, "si array used as-is");
+        assertArrayEquals(newSi, csiVector.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, csiVector.get(0).si(), EPS);
 
         Vector3.Col<SIQuantity> csiVectorOf = Vector3.Col.of(20.0, 30.0, 40.0, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
-        assertArrayEquals(newSi, csiVectorOf.si(), EPS, "si array used as-is");
+        assertArrayEquals(newSi, csiVectorOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, csiVectorOf.get(0).si(), EPS);
 
         assertThrows(IllegalArgumentException.class, () -> c.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
@@ -147,18 +147,18 @@ public class Vector3Test
         Vector3.Row<Length> r = row(1.0, 2.0, 3.0, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> r.instantiateSi(new double[] {1.0, 2.0}), "Wrong length must throw");
         Vector3.Row<Length> s = r.instantiateSi(new double[] {10.0, 20.0, 30.0});
-        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, s.si(), EPS);
+        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, s.getSiArray(), EPS);
         assertEquals(r.getDisplayUnit(), s.getDisplayUnit());
 
         double[] newSi = {20, 30, 40};
         Vector3.Row<SIQuantity> rsiVector = r.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", rsiVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
-        assertArrayEquals(newSi, rsiVector.si(), EPS, "si array used as-is");
+        assertArrayEquals(newSi, rsiVector.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVector.get(0).si(), EPS);
 
         Vector3.Row<SIQuantity> rsiVectorOf = Vector3.Row.of(20.0, 30.0, 40.0, SIUnit.of("kgm/s2K"));
         assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
-        assertArrayEquals(newSi, rsiVectorOf.si(), EPS, "si array used as-is");
+        assertArrayEquals(newSi, rsiVectorOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVectorOf.get(0).si(), EPS);
 
         assertThrows(IllegalArgumentException.class, () -> r.instantiateSi(new double[] {1, 2, 3, 4, 5}, SIUnit.of("kgm/s2K")));
@@ -168,9 +168,9 @@ public class Vector3Test
     // Accessors, indexing, iterator, scalar array
     // -----------------------------------------------------------------------------------------------------------------
 
-    /** Verify size, x/y/z quantities, xSi/ySi/zSi, si() copy semantics, and get(index) branches (Row). */
+    /** Verify size, x/y/z quantities, xSi/ySi/zSi, getSiArray() copy semantics, and get(index) branches (Row). */
     @Test
-    @DisplayName("size, x/y/z (Q), xSi/ySi/zSi, si() copy, and get(index) (Row)")
+    @DisplayName("size, x/y/z (Q), xSi/ySi/zSi, getSiArray() copy, and get(index) (Row)")
     public void testAccessorsAndIndexingRow()
     {
         Vector3.Row<Length> v = row(0.5, 200.0, 3.0, Length.Unit.cm); // 0.005, 2.0, 0.03
@@ -193,7 +193,7 @@ public class Vector3Test
         assertEquals(200.0, v.mget(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
         assertEquals(3.0, v.mget(3).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
 
-        double[] siCopy = v.si();
+        double[] siCopy = v.getSiArray();
         siCopy[0] = 12345.0;
         assertEquals(0.005, v.xSi(), EPS, "internal storage not affected");
 
@@ -201,9 +201,9 @@ public class Vector3Test
         assertThrows(IndexOutOfBoundsException.class, () -> v.get(3));
     }
 
-    /** Verify size, x/y/z quantities, xSi/ySi/zSi, si(), get(index) (Col). */
+    /** Verify size, x/y/z quantities, xSi/ySi/zSi, getSiArray(), get(index) (Col). */
     @Test
-    @DisplayName("size, x/y/z (Q), xSi/ySi/zSi, si() copy, and get(index) (Col)")
+    @DisplayName("size, x/y/z (Q), xSi/ySi/zSi, getSiArray() copy, and get(index) (Col)")
     public void testAccessorsAndIndexingCol()
     {
         Vector3.Col<Length> v = col(0.5, 200.0, 3.0, Length.Unit.cm); // 0.005, 2.0, 0.03
@@ -226,7 +226,7 @@ public class Vector3Test
         assertEquals(200.0, v.mget(2).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
         assertEquals(3.0, v.mget(3).setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS);
 
-        double[] siCopy = v.si();
+        double[] siCopy = v.getSiArray();
         siCopy[1] = 12345.0;
         assertEquals(2.0, v.ySi(), EPS, "internal storage not affected");
 
@@ -301,9 +301,9 @@ public class Vector3Test
 
         Vector3.Col<Length> rt = r.transpose();
         Vector3.Row<Length> ct = c.transpose();
-        assertArrayEquals(r.si(), rt.si(), EPS);
+        assertArrayEquals(r.getSiArray(), rt.getSiArray(), EPS);
         assertEquals(r.getDisplayUnit(), rt.getDisplayUnit());
-        assertArrayEquals(c.si(), ct.si(), EPS);
+        assertArrayEquals(c.getSiArray(), ct.getSiArray(), EPS);
         assertEquals(c.getDisplayUnit(), ct.getDisplayUnit());
 
         var rt2 = rt.transpose();
@@ -332,15 +332,15 @@ public class Vector3Test
         Vector3.Row<Length> b = row(0.5, 3.0, -1.0, Length.Unit.m); // 0.5, 3, -1
         Length inc = Length.of(2.0, "m");
 
-        assertArrayEquals(new double[] {1.5, 1.0, 2.0}, a.add(b).si(), EPS);
-        assertArrayEquals(new double[] {0.5, -5.0, 4.0}, a.subtract(b).si(), EPS);
+        assertArrayEquals(new double[] {1.5, 1.0, 2.0}, a.add(b).getSiArray(), EPS);
+        assertArrayEquals(new double[] {0.5, -5.0, 4.0}, a.subtract(b).getSiArray(), EPS);
 
-        assertArrayEquals(new double[] {3.0, 0.0, 5.0}, a.add(inc).si(), EPS);
-        assertArrayEquals(new double[] {-1.0, -4.0, 1.0}, a.subtract(inc).si(), EPS);
+        assertArrayEquals(new double[] {3.0, 0.0, 5.0}, a.add(inc).getSiArray(), EPS);
+        assertArrayEquals(new double[] {-1.0, -4.0, 1.0}, a.subtract(inc).getSiArray(), EPS);
 
-        assertArrayEquals(new double[] {-1.0, 2.0, -3.0}, a.negate().si(), EPS);
-        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, a.abs().si(), EPS);
-        assertArrayEquals(new double[] {2.0, -4.0, 6.0}, a.scaleBy(2.0).si(), EPS);
+        assertArrayEquals(new double[] {-1.0, 2.0, -3.0}, a.negate().getSiArray(), EPS);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, a.abs().getSiArray(), EPS);
+        assertArrayEquals(new double[] {2.0, -4.0, 6.0}, a.scaleBy(2.0).getSiArray(), EPS);
     }
 
     /** Verify add(Q), subtract(Q), add(V), subtract(V), negate(), abs(), scaleBy() (Col). */
@@ -352,15 +352,15 @@ public class Vector3Test
         Vector3.Col<Length> b = col(0.5, 3.0, -1.0, Length.Unit.m);
         Length inc = Length.of(2.0, "m");
 
-        assertArrayEquals(new double[] {1.5, 1.0, 2.0}, a.add(b).si(), EPS);
-        assertArrayEquals(new double[] {0.5, -5.0, 4.0}, a.subtract(b).si(), EPS);
+        assertArrayEquals(new double[] {1.5, 1.0, 2.0}, a.add(b).getSiArray(), EPS);
+        assertArrayEquals(new double[] {0.5, -5.0, 4.0}, a.subtract(b).getSiArray(), EPS);
 
-        assertArrayEquals(new double[] {3.0, 0.0, 5.0}, a.add(inc).si(), EPS);
-        assertArrayEquals(new double[] {-1.0, -4.0, 1.0}, a.subtract(inc).si(), EPS);
+        assertArrayEquals(new double[] {3.0, 0.0, 5.0}, a.add(inc).getSiArray(), EPS);
+        assertArrayEquals(new double[] {-1.0, -4.0, 1.0}, a.subtract(inc).getSiArray(), EPS);
 
-        assertArrayEquals(new double[] {-1.0, 2.0, -3.0}, a.negate().si(), EPS);
-        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, a.abs().si(), EPS);
-        assertArrayEquals(new double[] {2.0, -4.0, 6.0}, a.scaleBy(2.0).si(), EPS);
+        assertArrayEquals(new double[] {-1.0, 2.0, -3.0}, a.negate().getSiArray(), EPS);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, a.abs().getSiArray(), EPS);
+        assertArrayEquals(new double[] {2.0, -4.0, 6.0}, a.scaleBy(2.0).getSiArray(), EPS);
     }
 
     /**
@@ -457,15 +457,15 @@ public class Vector3Test
         Vector3.Col<Length> b = col(1.0, 2.0, 3.0, Length.Unit.km); // 1000, 2000, 3000
 
         var inv = a.invertEntries();
-        assertArrayEquals(new double[] {0.5, 0.25, 0.125}, inv.si(), EPS);
+        assertArrayEquals(new double[] {0.5, 0.25, 0.125}, inv.getSiArray(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit());
 
         var mul = a.multiplyEntries(b);
-        assertArrayEquals(new double[] {2000.0, 8000.0, 24000.0}, mul.si(), EPS);
+        assertArrayEquals(new double[] {2000.0, 8000.0, 24000.0}, mul.getSiArray(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         var div = a.divideEntries(b);
-        assertArrayEquals(new double[] {0.002, 0.002, 0.0026666666666666666}, div.si(), 1e-15);
+        assertArrayEquals(new double[] {0.002, 0.002, 0.0026666666666666666}, div.getSiArray(), 1e-15);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
 
@@ -478,15 +478,15 @@ public class Vector3Test
         Vector3.Row<Length> b = row(1.0, 2.0, 3.0, Length.Unit.km);
 
         var inv = a.invertEntries();
-        assertArrayEquals(new double[] {0.5, 0.25, 0.125}, inv.si(), EPS);
+        assertArrayEquals(new double[] {0.5, 0.25, 0.125}, inv.getSiArray(), EPS);
         assertEquals(Length.Unit.m.siUnit().invert(), inv.getDisplayUnit());
 
         var mul = a.multiplyEntries(b);
-        assertArrayEquals(new double[] {2000.0, 8000.0, 24000.0}, mul.si(), EPS);
+        assertArrayEquals(new double[] {2000.0, 8000.0, 24000.0}, mul.getSiArray(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), mul.getDisplayUnit());
 
         var div = a.divideEntries(b);
-        assertArrayEquals(new double[] {0.002, 0.002, 0.0026666666666666666}, div.si(), 1e-15);
+        assertArrayEquals(new double[] {0.002, 0.002, 0.0026666666666666666}, div.getSiArray(), 1e-15);
         assertEquals(SIUnit.subtract(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), div.getDisplayUnit());
     }
 
@@ -516,7 +516,7 @@ public class Vector3Test
         Matrix3x3<SIQuantity> m = c.multiply(r);
         double[] expected = {1000.0 * 7.0, 1000.0 * 8.0, 1000.0 * 9.0, 2000.0 * 7.0, 2000.0 * 8.0, 2000.0 * 9.0, 3000.0 * 7.0,
                 3000.0 * 8.0, 3000.0 * 9.0};
-        assertArrayEquals(expected, m.si(), EPS);
+        assertArrayEquals(expected, m.getSiArray(), EPS);
         assertEquals(SIUnit.add(Length.Unit.km.siUnit(), Length.Unit.m.siUnit()), m.getDisplayUnit().siUnit());
     }
 
@@ -531,7 +531,7 @@ public class Vector3Test
                                                                                                                         // in km
         Vector3.Col<SIQuantity> prod = r.multiply(a); // result SI in m*km
         double[] expected = {30_000.0, 36_000.0, 42_000.0};
-        assertArrayEquals(expected, prod.si(), EPS);
+        assertArrayEquals(expected, prod.getSiArray(), EPS);
         assertEquals(SIUnit.add(Length.Unit.m.siUnit(), Length.Unit.km.siUnit()), prod.getDisplayUnit());
     }
 
@@ -547,12 +547,12 @@ public class Vector3Test
         Vector3.Col<Length> c = col(1.0, 2.0, 3.0, Length.Unit.km);
         Vector3.Col<Length> cm = c.as(Length.Unit.m);
         assertEquals(Length.Unit.m, cm.getDisplayUnit());
-        assertArrayEquals(c.si(), cm.si(), EPS);
+        assertArrayEquals(c.getSiArray(), cm.getSiArray(), EPS);
 
         Vector3.Row<Length> r = row(1.0, 2.0, 3.0, Length.Unit.km);
         Vector3.Row<Length> rm = r.as(Length.Unit.m);
         assertEquals(Length.Unit.m, rm.getDisplayUnit());
-        assertArrayEquals(r.si(), rm.si(), EPS);
+        assertArrayEquals(r.getSiArray(), rm.getSiArray(), EPS);
 
         SIUnit second = SIUnit.of("s");
         assertThrows(IllegalArgumentException.class, () -> c.as(second));
@@ -630,7 +630,7 @@ public class Vector3Test
     {
         Vector3.Col<Length> v = Vector3.Col.of(1.0, 2.0, 3.0, Length.Unit.km);
         assertEquals(Length.Unit.km, v.getDisplayUnit());
-        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {1000.0, 2000.0, 3000.0}, v.getSiArray(), EPS);
     }
 
     /** Row.of(double,double,double,unit) happy path. */
@@ -639,7 +639,7 @@ public class Vector3Test
     {
         Vector3.Row<Duration> v = Vector3.Row.of(500.0, 1500.0, 2500.0, Duration.Unit.ms);
         assertEquals(Duration.Unit.ms, v.getDisplayUnit());
-        assertArrayEquals(new double[] {0.5, 1.5, 2.5}, v.si(), EPS);
+        assertArrayEquals(new double[] {0.5, 1.5, 2.5}, v.getSiArray(), EPS);
     }
 
     /** Col.of(double,double,double,null) must throw. */
@@ -671,7 +671,7 @@ public class Vector3Test
         Vector3.Col<Length> v = Vector3.Col.of(x, y, z);
 
         assertEquals(Length.Unit.km, v.getDisplayUnit());
-        assertArrayEquals(new double[] {1000.0, 200.0, 3.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {1000.0, 200.0, 3.0}, v.getSiArray(), EPS);
     }
 
     /** Row.of(Q,Q,Q) happy path. */
@@ -685,7 +685,7 @@ public class Vector3Test
         Vector3.Row<Duration> v = Vector3.Row.of(x, y, z);
 
         assertEquals(Duration.Unit.h, v.getDisplayUnit());
-        assertArrayEquals(new double[] {3600.0, 1800.0, 15.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {3600.0, 1800.0, 15.0}, v.getSiArray(), EPS);
     }
 
     /** Col.of(Q,Q,Q) with null x. */
@@ -718,7 +718,7 @@ public class Vector3Test
     public void testColOfArrayUnitHappy()
     {
         Vector3.Col<Length> v = Vector3.Col.of(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
-        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.getSiArray(), EPS);
     }
 
     /** Row.of(double[],unit) happy path. */
@@ -726,7 +726,7 @@ public class Vector3Test
     public void testRowOfArrayUnitHappy()
     {
         Vector3.Row<Duration> v = Vector3.Row.of(new double[] {1000.0, 2000.0, 3000.0}, Duration.Unit.ms);
-        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.getSiArray(), EPS);
     }
 
     /** Col.of(double[],unit) null array. */
@@ -767,7 +767,7 @@ public class Vector3Test
     {
         Vector3.Col<Length> v = Vector3.Col.ofSi(new double[] {10.0, 20.0, 30.0}, Length.Unit.cm);
         assertEquals(Length.Unit.cm, v.getDisplayUnit());
-        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {10.0, 20.0, 30.0}, v.getSiArray(), EPS);
     }
 
     /** Row.ofSi(double[],unit) happy path. */
@@ -776,7 +776,7 @@ public class Vector3Test
     {
         Vector3.Row<Duration> v = Vector3.Row.ofSi(new double[] {3600.0, 7200.0, 1800.0}, Duration.Unit.s);
         assertEquals(Duration.Unit.s, v.getDisplayUnit());
-        assertArrayEquals(new double[] {3600.0, 7200.0, 1800.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {3600.0, 7200.0, 1800.0}, v.getSiArray(), EPS);
     }
 
     /** Col.ofSi(double[],unit) wrong length. */
@@ -816,7 +816,7 @@ public class Vector3Test
     public void testColOfSiScalarsHappy()
     {
         Vector3.Col<Length> v = Vector3.Col.ofSi(1.0, 2.0, 3.0, Length.Unit.m);
-        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0}, v.getSiArray(), EPS);
     }
 
     /** Row.ofSi(double,double,double,unit) happy path. */
@@ -824,7 +824,7 @@ public class Vector3Test
     public void testRowOfSiScalarsHappy()
     {
         Vector3.Row<Duration> v = Vector3.Row.ofSi(5.0, 6.0, 7.0, Duration.Unit.s);
-        assertArrayEquals(new double[] {5.0, 6.0, 7.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {5.0, 6.0, 7.0}, v.getSiArray(), EPS);
     }
 
     /** Col.ofSi(double,double,double,null) must throw. */
@@ -847,7 +847,7 @@ public class Vector3Test
         Vector3.Col<Length> v = Vector3.Col.of(data);
 
         assertEquals(Length.Unit.km, v.getDisplayUnit());
-        assertArrayEquals(new double[] {1000.0, 500.0, 2.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {1000.0, 500.0, 2.0}, v.getSiArray(), EPS);
     }
 
     /** Row.of(Q[]) happy path. */
@@ -859,7 +859,7 @@ public class Vector3Test
         Vector3.Row<Duration> v = Vector3.Row.of(data);
 
         assertEquals(Duration.Unit.h, v.getDisplayUnit());
-        assertArrayEquals(new double[] {3600.0, 1800.0, 10.0}, v.si(), EPS);
+        assertArrayEquals(new double[] {3600.0, 1800.0, 10.0}, v.getSiArray(), EPS);
     }
 
     /** Col.of(Q[]) null array. */

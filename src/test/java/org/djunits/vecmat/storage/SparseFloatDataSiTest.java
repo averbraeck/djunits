@@ -232,7 +232,7 @@ public class SparseFloatDataSiTest
 
         double[][] m = dense2x3Matrix();
         SparseFloatDataSi d = new SparseFloatDataSi(m);
-        assertArrayEquals(dense2x3(), d.getDataArray(), 1e-12);
+        assertArrayEquals(dense2x3(), d.getSiArray(), 1e-12);
 
         // Modify source → must not change
         m[0][0] = 999.0;
@@ -258,7 +258,7 @@ public class SparseFloatDataSiTest
 
         float[][] m = dense2x3FloatMatrix();
         SparseFloatDataSi d = new SparseFloatDataSi(m);
-        assertArrayEquals(dense2x3(), d.getDataArray(), 1e-12);
+        assertArrayEquals(dense2x3(), d.getSiArray(), 1e-12);
 
         // Modify source → must not change
         m[0][0] = 999.0f;
@@ -284,7 +284,7 @@ public class SparseFloatDataSiTest
 
         SparseFloatDataSi d = new SparseFloatDataSi(q, idx, 2, 3);
 
-        double[] dense = d.getDataArray();
+        double[] dense = d.getSiArray();
         assertEquals(1000f, dense[0], 1e-9);
         assertEquals(2f, dense[2], 1e-9);
         assertEquals(0.03f, dense[5], 1e-9);
@@ -311,7 +311,7 @@ public class SparseFloatDataSiTest
         SparseFloatDataSi d = new SparseFloatDataSi(q, 2, 2);
 
         double[] expected = new double[] {0, 1, 0, 1000};
-        assertArrayEquals(expected, d.getDataArray(), 1e-9);
+        assertArrayEquals(expected, d.getSiArray(), 1e-9);
 
         // Wrong length
         assertThrows(IllegalArgumentException.class, () -> new SparseFloatDataSi(q, 3, 3));
@@ -337,7 +337,7 @@ public class SparseFloatDataSiTest
 
         SparseFloatDataSi d = new SparseFloatDataSi(m);
 
-        double[] dense = d.getDataArray();
+        double[] dense = d.getSiArray();
         assertEquals(1000f, dense[0], 1e-9);
         assertEquals(0.02f, dense[2], 1e-9);
         assertEquals(0.003f, dense[3], 1e-9);
@@ -382,14 +382,14 @@ public class SparseFloatDataSiTest
     }
 
     // ----------------------------------------------------------------------
-    // get(), getDataArray()
+    // get(), getSiArray()
     // ----------------------------------------------------------------------
 
     /**
-     * get() and getDataArray(): binary search hit/miss + safe copy.
+     * get() and getSiArray(): binary search hit/miss + safe copy.
      */
     @Test
-    @DisplayName("get() and getDataArray(): binary search hit/miss + safe copy")
+    @DisplayName("get() and getSiArray(): binary search hit/miss + safe copy")
     public void testGetAndGetDataArray()
     {
         SparseFloatDataSi d = new SparseFloatDataSi(dense2x3(), 2, 3);
@@ -398,7 +398,7 @@ public class SparseFloatDataSiTest
         assertEquals(0f, d.get(0, 1), 1e-9); // miss
         assertEquals(4f, d.get(1, 2), 1e-9); // hit
 
-        double[] dense = d.getDataArray();
+        double[] dense = d.getSiArray();
         assertArrayEquals(dense2x3(), dense, 1e-12);
 
         // Must be safe
@@ -444,12 +444,12 @@ public class SparseFloatDataSiTest
         SparseFloatDataSi c = d.copy();
 
         assertNotSame(d, c);
-        assertArrayEquals(d.getDataArray(), c.getDataArray(), 1e-9);
+        assertArrayEquals(d.getSiArray(), c.getSiArray(), 1e-9);
 
         // Mutate original → copy must not change
         SparseFloatDataSi mutated = d.instantiateNew(new double[] {0, 0, 0, 0, 0, 5});
         assertEquals(5f, mutated.get(1, 2), 1e-9);
-        assertArrayEquals(dense2x3(), c.getDataArray(), 1e-9);
+        assertArrayEquals(dense2x3(), c.getSiArray(), 1e-9);
     }
 
     // ----------------------------------------------------------------------

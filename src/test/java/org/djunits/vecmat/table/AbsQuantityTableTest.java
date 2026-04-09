@@ -557,7 +557,7 @@ public class AbsQuantityTableTest
         AbsQuantityTable<Direction, Angle> msub = northDeg2x3().subtract(Angle.of(5.0, "deg"));
 
         QuantityTable<Angle> m0 = m.subtract(m);
-        assertArrayEquals(new double[] {0, 0, 0, 0, 0, 0}, m0.si());
+        assertArrayEquals(new double[] {0, 0, 0, 0, 0, 0}, m0.getSiArray());
 
         assertEquals(5.0, madd.get(0, 0).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(95.0, madd.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);

@@ -261,7 +261,7 @@ public class AbsVector1Test
         AbsVector1<Direction, Angle> vsub = northDeg().subtract(Angle.of(5.0, "deg"));
         Vector1<Angle> v0 = v.subtract(v);
 
-        assertArrayEquals(new double[] {0}, v0.si());
+        assertArrayEquals(new double[] {0}, v0.getSiArray());
         assertEquals(185.0, vadd.get(0).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(175.0, vsub.get(0).getInUnit(Angle.Unit.deg), 1E-10);
 

@@ -459,7 +459,7 @@ public class AbsVectorNTest
         AbsVectorN.Col<Direction, Angle> vsub = northDegCol().subtract(Angle.of(5.0, "deg"));
         VectorN.Col<Angle> v0 = v.subtract(v);
 
-        assertArrayEquals(new double[] {0, 0, 0}, v0.si());
+        assertArrayEquals(new double[] {0, 0, 0}, v0.getSiArray());
         assertEquals(185.0, vadd.get(0).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(275.0, vadd.get(1).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(95.0, vadd.get(2).getInUnit(Angle.Unit.deg), 1E-10);
@@ -495,7 +495,7 @@ public class AbsVectorNTest
         AbsVectorN.Row<Direction, Angle> vsub = northDegRow().subtract(Angle.of(5.0, "deg"));
         VectorN.Row<Angle> v0 = v.subtract(v);
 
-        assertArrayEquals(new double[] {0, 0, 0}, v0.si());
+        assertArrayEquals(new double[] {0, 0, 0}, v0.getSiArray());
         assertEquals(185.0, vadd.get(0).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(275.0, vadd.get(1).getInUnit(Angle.Unit.deg), 1E-10);
         assertEquals(95.0, vadd.get(2).getInUnit(Angle.Unit.deg), 1E-10);
