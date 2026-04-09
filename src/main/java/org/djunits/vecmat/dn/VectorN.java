@@ -397,7 +397,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new VectorN.Col<TQ>(this.dataSi, targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+            return new VectorN.Col<TQ>(this.dataSi, targetUnit);
         }
 
         /**
@@ -502,7 +502,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Col<Q> transpose()
         {
             var newSi = this.dataSi.instantiateNew(unsafeSiArray(), cols(), rows());
-            return new VectorN.Col<Q>(newSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new VectorN.Col<Q>(newSi, getDisplayUnit());
         }
 
         @Override
@@ -564,8 +564,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          */
         public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
         {
-            return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), 1, dataSi.length), displayUnit.getBaseUnit())
-                    .setDisplayUnit(displayUnit);
+            return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), 1, dataSi.length), displayUnit);
         }
 
         /**
@@ -598,7 +597,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          */
         public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
         {
-            return new VectorN.Row<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+            return new VectorN.Row<Q>(dataSi, displayUnit);
         }
 
         /**
@@ -636,7 +635,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-            return new VectorN.Row<TQ>(this.dataSi, targetUnit.getBaseUnit()).setDisplayUnit(targetUnit);
+            return new VectorN.Row<TQ>(this.dataSi, targetUnit);
         }
 
         /**
@@ -648,7 +647,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
             final double[] data = unsafeSiArray();
-            return new Vector1<Q>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector1<Q>(data[0], getDisplayUnit());
         }
 
         /**
@@ -660,7 +659,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
             final double[] data = unsafeSiArray();
-            return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit());
         }
 
         /**
@@ -672,8 +671,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
             final double[] data = unsafeSiArray();
-            return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
-                    .setDisplayUnit(getDisplayUnit());
+            return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit());
         }
 
     }
