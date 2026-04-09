@@ -95,7 +95,14 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      * Return a row-major array of SI-values for this matrix or vector. This is guaranteed to be a safe copy.
      * @return the row-major array of SI-values (safe copy)
      */
-    public abstract double[] si();
+    public abstract double[] getSiArray();
+
+    /**
+     * Return a row-major possibly UNSAFE array of SI-values for this matrix or vector. The method might give access to the
+     * underlying data structure, so treat the data carefully.
+     * @return the row-major array of SI-values (safe copy)
+     */
+    public abstract double[] unsafeSiArray();
 
     /**
      * Return a transposed vector or matrix, where rows and columns have been swapped.
@@ -115,7 +122,8 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q mean()
     {
-        return getDisplayUnit().ofSi(sum().si() / si().length).setDisplayUnit(getDisplayUnit());
+        double[] siArray = unsafeSiArray();
+        return getDisplayUnit().ofSi(Math2.sum(siArray) / siArray.length).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -124,7 +132,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q min()
     {
-        return getDisplayUnit().ofSi(Math2.min(si())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.min(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -133,7 +141,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q max()
     {
-        return getDisplayUnit().ofSi(Math2.max(si())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.max(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -142,7 +150,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q median()
     {
-        return getDisplayUnit().ofSi(Math2.median(si())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.median(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -151,7 +159,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q sum()
     {
-        return getDisplayUnit().ofSi(Math2.sum(si())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.sum(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -161,7 +169,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public VM add(final Q increment)
     {
-        return instantiateSi(ArrayMath.add(si(), increment.si()));
+        return instantiateSi(ArrayMath.add(unsafeSiArray(), increment.si()));
     }
 
     /**
@@ -171,19 +179,19 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public VM subtract(final Q decrement)
     {
-        return instantiateSi(ArrayMath.add(si(), -decrement.si()));
+        return instantiateSi(ArrayMath.add(unsafeSiArray(), -decrement.si()));
     }
 
     @Override
     public VM add(final VM other)
     {
-        return instantiateSi(ArrayMath.add(si(), other.si()));
+        return instantiateSi(ArrayMath.add(unsafeSiArray(), other.unsafeSiArray()));
     }
 
     @Override
     public VM subtract(final VM other)
     {
-        return instantiateSi(ArrayMath.subtract(si(), other.si()));
+        return instantiateSi(ArrayMath.subtract(unsafeSiArray(), other.unsafeSiArray()));
     }
 
     @Override
@@ -195,13 +203,13 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     @Override
     public VM abs()
     {
-        return instantiateSi(ArrayMath.abs(si()));
+        return instantiateSi(ArrayMath.abs(unsafeSiArray()));
     }
 
     @Override
     public VM scaleBy(final double factor)
     {
-        return instantiateSi(ArrayMath.scaleBy(si(), factor));
+        return instantiateSi(ArrayMath.scaleBy(unsafeSiArray(), factor));
     }
 
     /**
@@ -246,47 +254,49 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     @Override
     public SI invertEntries()
     {
-        return (SI) instantiateSi(ArrayMath.reciprocal(si()), getDisplayUnit().siUnit().invert());
+        return (SI) instantiateSi(ArrayMath.reciprocal(unsafeSiArray()), getDisplayUnit().siUnit().invert());
     }
 
     @Override
     public SI multiplyEntries(final H other)
     {
-        return (SI) instantiateSi(ArrayMath.multiply(si(), other.si()),
+        return (SI) instantiateSi(ArrayMath.multiply(unsafeSiArray(), other.unsafeSiArray()),
                 getDisplayUnit().siUnit().plus(other.getDisplayUnit().siUnit()));
     }
 
     @Override
     public SI divideEntries(final H other)
     {
-        return (SI) instantiateSi(ArrayMath.divide(si(), other.si()),
+        return (SI) instantiateSi(ArrayMath.divide(unsafeSiArray(), other.unsafeSiArray()),
                 getDisplayUnit().siUnit().minus(other.getDisplayUnit().siUnit()));
     }
 
     @Override
     public SI multiplyEntries(final Quantity<?> quantity)
     {
-        return (SI) instantiateSi(ArrayMath.scaleBy(si(), quantity.si()),
+        return (SI) instantiateSi(ArrayMath.scaleBy(unsafeSiArray(), quantity.si()),
                 getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));
     }
 
     /**
-     * Convert this vector or matrix to a {@link MatrixNxM}.
+     * Convert this vector or matrix to a {@link MatrixNxM}. The unerlying data MIGHT be shared between this object and the
+     * MatrixNxM.
      * @return a {@code MatrixNxN} with identical SI data and display unit
      */
     public MatrixNxM<Q> asMatrixNxM()
     {
-        return new MatrixNxM<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+        return new MatrixNxM<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 
     /**
-     * Convert this vector or matrix to a {@link QuantityTable}.
+     * Convert this vector or matrix to a {@link QuantityTable}. The underlying data MIGHT be shared between this object and the
+     * quantity table.
      * @return a {@code QuantityTable} with identical SI data and display unit
      */
     public QuantityTable<Q> asQuantityTable()
     {
-        return new QuantityTable<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit())
+        return new QuantityTable<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit().getBaseUnit())
                 .setDisplayUnit(getDisplayUnit());
     }
 

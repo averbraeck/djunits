@@ -145,7 +145,13 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     }
 
     @Override
-    public double[] si()
+    public double[] unsafeSiArray()
+    {
+        return getSiArray();
+    }
+
+    @Override
+    public double[] getSiArray()
     {
         return new double[] {this.xSi};
     }

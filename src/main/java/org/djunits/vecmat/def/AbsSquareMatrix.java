@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 
 /**
  * AbsSquareMatrix defines a number of operations that can be applied to square matrixes with absolute quantity values.
@@ -48,7 +48,7 @@ public abstract class AbsSquareMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     @Override
     public MA transpose()
     {
-        return instantiateSi(getRelativeVecMat().transpose().si(), getReference()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(getRelativeVecMat().transpose().unsafeSiArray(), getReference()).setDisplayUnit(getDisplayUnit());
     }
 
     /**

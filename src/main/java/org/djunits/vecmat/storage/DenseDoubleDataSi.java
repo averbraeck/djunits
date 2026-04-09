@@ -243,9 +243,15 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     }
 
     @Override
-    public double[] getDataArray()
+    public double[] unsafeSiArray()
     {
         return this.dataSi;
+    }
+
+    @Override
+    public double[] getSiArray()
+    {
+        return this.dataSi.clone();
     }
 
     @Override
@@ -301,7 +307,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
         if (getClass() != obj.getClass())
         {
             if (obj instanceof DataGridSi dg)
-                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(this.dataSi, dg.getDataArray());
+                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(this.dataSi, dg.unsafeSiArray());
             return false;
         }
         DenseDoubleDataSi other = (DenseDoubleDataSi) obj;

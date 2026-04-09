@@ -59,7 +59,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     @Override
     public Iterator<Q> iterator()
     {
-        final double[] si = this.dataSi.getDataArray(); // should be immutable, otherwise make defensive copy
+        final double[] si = this.dataSi.unsafeSiArray();
         final Unit<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
     }
@@ -67,16 +67,16 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     @Override
     public Q[] getScalarArray()
     {
-        final double[] si = this.dataSi.getDataArray(); // should be immutable, otherwise make defensive copy
+        final double[] siArray = this.dataSi.unsafeSiArray();
         final Unit<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
-        final Q first = frozenDisplayUnit.ofSi(si[0]).setDisplayUnit(frozenDisplayUnit);
+        final Q first = frozenDisplayUnit.ofSi(siArray[0]).setDisplayUnit(frozenDisplayUnit);
         final Class<?> qClass = first.getClass();
         @SuppressWarnings("unchecked")
-        final Q[] out = (Q[]) Array.newInstance(qClass, si.length);
+        final Q[] out = (Q[]) Array.newInstance(qClass, siArray.length);
         out[0] = first;
-        for (int i = 1; i < si.length; i++)
+        for (int i = 1; i < siArray.length; i++)
         {
-            out[i] = frozenDisplayUnit.ofSi(si[i]).setDisplayUnit(frozenDisplayUnit);
+            out[i] = frozenDisplayUnit.ofSi(siArray[i]).setDisplayUnit(frozenDisplayUnit);
         }
         return out;
     }
@@ -85,7 +85,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     public Q normL1()
     {
         double n = 0.0;
-        for (var d : si())
+        for (var d : unsafeSiArray())
         {
             n += Math.abs(d);
         }
@@ -96,7 +96,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     public Q normL2()
     {
         double n = 0.0;
-        for (var d : si())
+        for (var d : unsafeSiArray())
         {
             n += d * d;
         }
@@ -107,7 +107,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     public Q normLp(final int p)
     {
         double n = 0.0;
-        for (var d : si())
+        for (var d : unsafeSiArray())
         {
             n += Math.pow(Math.abs(d), p);
         }
@@ -118,7 +118,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     public Q normLinf()
     {
         double max = Double.NEGATIVE_INFINITY;
-        for (var d : si())
+        for (var d : unsafeSiArray())
         {
             max = Math.max(Math.abs(d), max);
         }
@@ -138,9 +138,15 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     }
 
     @Override
-    public double[] si()
+    public double[] getSiArray()
     {
-        return this.dataSi.getDataArray();
+        return this.dataSi.getSiArray();
+    }
+
+    @Override
+    public double[] unsafeSiArray()
+    {
+        return this.dataSi.unsafeSiArray();
     }
 
     @Override
@@ -166,14 +172,13 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         if (getClass() != obj.getClass())
             return false;
         VectorN<?, ?, ?, ?, ?> other = (VectorN<?, ?, ?, ?, ?>) obj;
-        return Objects.equals(this.dataSi, other.dataSi)
-                && rows() == other.rows() && cols() == other.cols();
+        return Objects.equals(this.dataSi, other.dataSi) && rows() == other.rows() && cols() == other.cols();
     }
 
     @Override
     public String toString(final Unit<?, Q> withUnit)
     {
-        double[] data = si();
+        double[] data = unsafeSiArray();
         var s = new StringBuilder();
         s.append(isColumnVector() ? "Col" : "Row");
         s.append("[");
@@ -257,7 +262,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         @Override
         public VectorN.Row<Q> transpose()
         {
-            var newSi = this.dataSi.instantiateNew(this.dataSi.getDataArray().clone(), cols(), rows());
+            var newSi = this.dataSi.instantiateNew(unsafeSiArray(), cols(), rows());
             return new VectorN.Row<Q>(newSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -265,28 +270,31 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Col<SIQuantity> invertEntries()
         {
             SIUnit siUnit = getDisplayUnit().siUnit().invert();
-            return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
+            return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.reciprocal(unsafeSiArray())), siUnit);
         }
 
         @Override
         public VectorN.Col<SIQuantity> multiplyEntries(final VectorN.Col<?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
+            return new VectorN.Col<SIQuantity>(
+                    this.dataSi.instantiateNew(ArrayMath.multiply(unsafeSiArray(), other.unsafeSiArray())), siUnit);
         }
 
         @Override
         public VectorN.Col<SIQuantity> divideEntries(final VectorN.Col<?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+            return new VectorN.Col<SIQuantity>(
+                    this.dataSi.instantiateNew(ArrayMath.divide(unsafeSiArray(), other.unsafeSiArray())), siUnit);
         }
 
         @Override
         public VectorN.Col<SIQuantity> multiplyEntries(final Quantity<?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-            return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
+            return new VectorN.Col<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(unsafeSiArray(), quantity.si())),
+                    siUnit);
         }
 
         // ------------------------------------------ OF METHODS ------------------------------------------
@@ -400,7 +408,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Vector1<Q> asVector1()
         {
             Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
-            final double[] data = si();
+            final double[] data = unsafeSiArray();
             return new Vector1<Q>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -412,7 +420,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Vector2.Col<Q> asVector2Col()
         {
             Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
-            final double[] data = si();
+            final double[] data = unsafeSiArray();
             return new Vector2.Col<Q>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -424,7 +432,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Vector3.Col<Q> asVector3Col()
         {
             Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
-            final double[] data = si();
+            final double[] data = unsafeSiArray();
             return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
                     .setDisplayUnit(getDisplayUnit());
         }
@@ -493,7 +501,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         @Override
         public VectorN.Col<Q> transpose()
         {
-            var newSi = this.dataSi.instantiateNew(this.dataSi.getDataArray().clone(), cols(), rows());
+            var newSi = this.dataSi.instantiateNew(unsafeSiArray(), cols(), rows());
             return new VectorN.Col<Q>(newSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -501,28 +509,31 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Row<SIQuantity> invertEntries()
         {
             SIUnit siUnit = getDisplayUnit().siUnit().invert();
-            return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
+            return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.reciprocal(unsafeSiArray())), siUnit);
         }
 
         @Override
         public VectorN.Row<SIQuantity> multiplyEntries(final VectorN.Row<?> other)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
+            return new VectorN.Row<SIQuantity>(
+                    this.dataSi.instantiateNew(ArrayMath.multiply(unsafeSiArray(), other.unsafeSiArray())), siUnit);
         }
 
         @Override
         public VectorN.Row<SIQuantity> divideEntries(final VectorN.Row<?> other)
         {
             SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-            return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+            return new VectorN.Row<SIQuantity>(
+                    this.dataSi.instantiateNew(ArrayMath.divide(unsafeSiArray(), other.unsafeSiArray())), siUnit);
         }
 
         @Override
         public VectorN.Row<SIQuantity> multiplyEntries(final Quantity<?> quantity)
         {
             SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-            return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
+            return new VectorN.Row<SIQuantity>(this.dataSi.instantiateNew(ArrayMath.scaleBy(unsafeSiArray(), quantity.si())),
+                    siUnit);
         }
 
         // ------------------------------------------ OF METHODS ------------------------------------------
@@ -636,7 +647,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Vector1<Q> asVector1()
         {
             Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
-            final double[] data = si();
+            final double[] data = unsafeSiArray();
             return new Vector1<Q>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -648,7 +659,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Vector2.Row<Q> asVector2Row()
         {
             Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
-            final double[] data = si();
+            final double[] data = unsafeSiArray();
             return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
         }
 
@@ -660,7 +671,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public Vector3.Row<Q> asVector3Row()
         {
             Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
-            final double[] data = si();
+            final double[] data = unsafeSiArray();
             return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
                     .setDisplayUnit(getDisplayUnit());
         }

@@ -74,9 +74,15 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     }
 
     @Override
-    public double[] si()
+    public double[] getSiArray()
     {
-        return this.dataGridSi.getDataArray();
+        return this.dataGridSi.getSiArray();
+    }
+
+    @Override
+    public double[] unsafeSiArray()
+    {
+        return this.dataGridSi.unsafeSiArray();
     }
 
     @Override
@@ -151,7 +157,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     @SuppressWarnings("checkstyle:needbraces")
     public MatrixNxM<Q> transpose()
     {
-        double[] data = si();
+        double[] data = unsafeSiArray();
         double[] newSi = new double[data.length];
         int rows = rows();
         int cols = cols();
@@ -195,7 +201,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public MatrixNxM<SIQuantity> multiply(final Matrix1x1<?> matrix)
     {
         checkMultiply(matrix);
-        double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), matrix.unsafeSiArray(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
     }
@@ -211,7 +217,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public MatrixNxM<SIQuantity> multiply(final Matrix2x2<?> matrix)
     {
         checkMultiply(matrix);
-        double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), matrix.unsafeSiArray(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
     }
@@ -227,7 +233,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public MatrixNxM<SIQuantity> multiply(final Matrix3x3<?> matrix)
     {
         checkMultiply(matrix);
-        double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), matrix.unsafeSiArray(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
     }
@@ -243,7 +249,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public MatrixNxM<SIQuantity> multiply(final MatrixNxN<?> matrix)
     {
         checkMultiply(matrix);
-        double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), matrix.unsafeSiArray(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         if (matrix.getDataGrid().isDouble())
         {
@@ -263,7 +269,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public MatrixNxM<SIQuantity> multiply(final Vector1<?> vector)
     {
         checkMultiply(vector);
-        double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), vector.unsafeSiArray(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new MatrixNxM<SIQuantity>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
     }
@@ -279,7 +285,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public VectorN.Col<SIQuantity> multiply(final Vector2.Col<?> vector)
     {
         checkMultiply(vector);
-        double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), vector.unsafeSiArray(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
     }
@@ -295,7 +301,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public VectorN.Col<SIQuantity> multiply(final Vector3.Col<?> vector)
     {
         checkMultiply(vector);
-        double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), vector.unsafeSiArray(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
     }
@@ -311,7 +317,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public VectorN.Col<SIQuantity> multiply(final VectorN.Col<?> vector)
     {
         checkMultiply(vector);
-        double[] result = MatrixMath.multiply(si(), vector.si(), rows(), cols(), vector.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), vector.unsafeSiArray(), rows(), cols(), vector.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(vector.getDisplayUnit().siUnit());
         return new VectorN.Col<SIQuantity>(new DenseDoubleDataSi(result, rows(), vector.cols()), siUnit);
     }
@@ -429,7 +435,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxM.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxM<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit);
+        return new MatrixNxM<TQ>(this.dataGridSi.instantiateNew(unsafeSiArray()), targetUnit);
     }
 
     /**
@@ -441,7 +447,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     {
         Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class,
                 "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
-        return Matrix1x1.ofSi(si(), getDisplayUnit());
+        return Matrix1x1.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
     /**
@@ -453,7 +459,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     {
         Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
                 "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
-        return Matrix2x2.ofSi(si(), getDisplayUnit());
+        return Matrix2x2.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
     /**
@@ -465,7 +471,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     {
         Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
                 "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
-        return Matrix3x3.ofSi(si(), getDisplayUnit());
+        return Matrix3x3.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
     /**
@@ -477,7 +483,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     {
         Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
                 rows(), cols());
-        return new MatrixNxN<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit());
+        return new MatrixNxN<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit());
     }
 
     /**
@@ -488,7 +494,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public Vector1<Q> asVector1()
     {
         Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
-        final double[] dataSi = si();
+        final double[] dataSi = unsafeSiArray();
         return new Vector1<Q>(dataSi[0], getDisplayUnit());
     }
 
@@ -500,7 +506,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public Vector2.Col<Q> asVector2Col()
     {
         Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
-        final double[] dataSi = si();
+        final double[] dataSi = unsafeSiArray();
         return new Vector2.Col<Q>(dataSi[0], dataSi[1], getDisplayUnit());
     }
 
@@ -512,7 +518,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public Vector3.Col<Q> asVector3Col()
     {
         Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
-        final double[] dataSi = si();
+        final double[] dataSi = unsafeSiArray();
         return new Vector3.Col<Q>(dataSi[0], dataSi[1], dataSi[2], getDisplayUnit());
     }
 
@@ -524,7 +530,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public VectorN.Col<Q> asVectorNCol()
     {
         Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
-        return VectorN.Col.ofSi(si(), getDisplayUnit());
+        return VectorN.Col.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
     /**
@@ -535,7 +541,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public Vector2.Row<Q> asVector2Row()
     {
         Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
-        final double[] dataSi = si();
+        final double[] dataSi = unsafeSiArray();
         return new Vector2.Row<Q>(dataSi[0], dataSi[1], getDisplayUnit());
     }
 
@@ -547,7 +553,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public Vector3.Row<Q> asVector3Row()
     {
         Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
-        final double[] dataSi = si();
+        final double[] dataSi = unsafeSiArray();
         return new Vector3.Row<Q>(dataSi[0], dataSi[1], dataSi[2], getDisplayUnit());
     }
 
@@ -559,7 +565,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     public VectorN.Row<Q> asVectorNRow()
     {
         Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
-        return VectorN.Row.ofSi(si(), getDisplayUnit());
+        return VectorN.Row.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
 }

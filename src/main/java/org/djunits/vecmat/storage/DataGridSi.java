@@ -41,7 +41,13 @@ public interface DataGridSi<D extends DataGridSi<D>>
      * Return the data in row-major format. When the data is available in the correct format, NO safe copy is made.
      * @return the data in row-major format
      */
-    double[] getDataArray();
+    double[] unsafeSiArray();
+
+    /**
+     * Return a safe copy of the data in row-major format.
+     * @return the data in row-major format
+     */
+    double[] getSiArray();
 
     /**
      * Return a deep copy of the DataGrid object.
@@ -160,8 +166,8 @@ public interface DataGridSi<D extends DataGridSi<D>>
             return false;
         if (rows() != other.rows() || cols() != other.cols())
             return false;
-        double[] da1 = getDataArray();
-        double[] da2 = other.getDataArray();
+        double[] da1 = unsafeSiArray();
+        double[] da2 = other.unsafeSiArray();
         for (int i = 0; i < da1.length; i++)
         {
             if (Math.abs(da1[i] - da2[i]) > epsilon)

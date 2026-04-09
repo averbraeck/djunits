@@ -84,14 +84,14 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     @Override
     public Matrix3x3<SIQuantity> inverse() throws NonInvertibleMatrixException
     {
-        double[] invData = MatrixMath.inverse(si(), 3);
+        double[] invData = MatrixMath.inverse(unsafeSiArray(), 3);
         return new Matrix3x3<SIQuantity>(invData, getDisplayUnit().siUnit().invert());
     }
 
     @Override
     public Matrix3x3<SIQuantity> adjugate()
     {
-        double[] invData = MatrixMath.adjugate(si(), 3);
+        double[] invData = MatrixMath.adjugate(unsafeSiArray(), 3);
         return new Matrix3x3<SIQuantity>(invData, getDisplayUnit().siUnit().pow(order() - 1));
     }
 
@@ -99,21 +99,21 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Matrix3x3<SIQuantity> invertEntries()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new Matrix3x3<SIQuantity>(ArrayMath.reciprocal(si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.reciprocal(unsafeSiArray()), siUnit);
     }
 
     @Override
     public Matrix3x3<SIQuantity> multiplyEntries(final Matrix3x3<?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new Matrix3x3<SIQuantity>(ArrayMath.multiply(si(), other.si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.multiply(unsafeSiArray(), other.unsafeSiArray()), siUnit);
     }
 
     @Override
     public Matrix3x3<SIQuantity> divideEntries(final Matrix3x3<?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new Matrix3x3<SIQuantity>(ArrayMath.divide(si(), other.si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.divide(unsafeSiArray(), other.unsafeSiArray()), siUnit);
     }
 
     // ------------------------------ MATRIX MULTIPLICATION -----------------------------------
@@ -126,7 +126,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Matrix3x3<SIQuantity> multiply(final Matrix3x3<?> otherMat)
     {
         checkMultiply(otherMat);
-        double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 3, 3, 3);
+        double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherMat.unsafeSiArray(), 3, 3, 3);
         return new Matrix3x3<SIQuantity>(resultData, getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
     }
 
@@ -138,7 +138,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Vector3.Col<SIQuantity> multiply(final Vector3.Col<?> otherVec)
     {
         checkMultiply(otherVec);
-        double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 3, 3, 1);
+        double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherVec.unsafeSiArray(), 3, 3, 1);
         return new Vector3.Col<SIQuantity>(resultData[0], resultData[1], resultData[2],
                 getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
     }
@@ -147,7 +147,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     public Matrix3x3<SIQuantity> multiplyEntries(final Quantity<?> quantity)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-        return new Matrix3x3<SIQuantity>(ArrayMath.scaleBy(si(), quantity.si()), siUnit);
+        return new Matrix3x3<SIQuantity>(ArrayMath.scaleBy(unsafeSiArray(), quantity.si()), siUnit);
     }
 
     // ------------------------------------------ OF METHODS ------------------------------------------
@@ -305,7 +305,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new Matrix3x3<TQ>(si(), targetUnit);
+        return new Matrix3x3<TQ>(unsafeSiArray(), targetUnit);
     }
 
 }

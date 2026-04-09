@@ -145,11 +145,9 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      *             or columns is not positive, or when indexes is not in strictly increasing order
      * @throws IndexOutOfBoundsException when one of the entries in indexes is out of bounds
      * @param <Q> the quantity type
-
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[] sparseData,
-            final int[] indexes, final int rows, final int cols)
+    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[] sparseData, final int[] indexes, final int rows, final int cols)
     {
         Throw.whenNull(sparseData, "sparseData");
         Throw.whenNull(indexes, "indexes");
@@ -174,10 +172,8 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      * @param <Q> the quantity type
-
      */
-    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[] denseData, final int rows,
-            final int cols)
+    public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[] denseData, final int rows, final int cols)
     {
         Throw.whenNull(denseData, "denseData");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
@@ -194,7 +190,6 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @param denseData the data in row-major format as a double[][]
      * @throws IllegalArgumentException when the data matrix is ragged
      * @param <Q> the quantity type
-
      */
     @SuppressWarnings("checkstyle:needbraces")
     public <Q extends Quantity<Q>> SparseFloatDataSi(final Q[][] denseData)
@@ -217,11 +212,10 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * @param cols the number of columns
      * @throws IndexOutOfBoundsException when a row or column index of an element is out of bounds
      * @param <Q> the quantity type
-
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public <Q extends Quantity<Q>> SparseFloatDataSi(
-            final Collection<FloatSparseValue<Q>> indexedData, final int rows, final int cols)
+    public <Q extends Quantity<Q>> SparseFloatDataSi(final Collection<FloatSparseValue<Q>> indexedData, final int rows,
+            final int cols)
     {
         Throw.whenNull(indexedData, "indexedData");
         Throw.when(rows <= 0, IllegalArgumentException.class, "Number of rows <= 0");
@@ -369,7 +363,6 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * Store sparse data[] and indexes[].
      * @param denseData the dense data in row-major format
      * @param <Q> the quantity type
-
      */
     @SuppressWarnings("checkstyle:needbraces")
     public <Q extends Quantity<Q>> void storeSparse(final Q[] denseData)
@@ -394,7 +387,6 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
      * Store sparse data[] and indexes[].
      * @param denseData the dense data in row-major format
      * @param <Q> the quantity type
-
      */
     @SuppressWarnings("checkstyle:needbraces")
     public <Q extends Quantity<Q>> void storeSparse(final Q[][] denseData)
@@ -466,12 +458,18 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public double[] getDataArray()
+    public double[] getSiArray()
     {
         double[] denseData = new double[rows() * cols()];
         for (int i = 0; i < this.sparseData.length; i++)
             denseData[this.indexes[i]] = this.sparseData[i];
         return denseData;
+    }
+
+    @Override
+    public double[] unsafeSiArray()
+    {
+        return getSiArray();
     }
 
     @Override
@@ -511,7 +509,7 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(getDataArray());
+        result = prime * result + Arrays.hashCode(unsafeSiArray());
         result = prime * result + Objects.hash(this.cols, this.rows);
         return result;
     }
@@ -527,7 +525,7 @@ public class SparseFloatDataSi implements DataGridSi<SparseFloatDataSi>
         if (getClass() != obj.getClass())
         {
             if (obj instanceof DataGridSi dg)
-                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(getDataArray(), dg.getDataArray());
+                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(unsafeSiArray(), dg.unsafeSiArray());
             return false;
         }
         SparseFloatDataSi other = (SparseFloatDataSi) obj;

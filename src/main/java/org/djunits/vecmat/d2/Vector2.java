@@ -132,12 +132,14 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         return n;
     }
 
-    /**
-     * Return the contents of the vector as an array.
-     * @return the contents of the vector as an array
-     */
     @Override
-    public double[] si()
+    public double[] unsafeSiArray()
+    {
+        return getSiArray();
+    }
+
+    @Override
+    public double[] getSiArray()
     {
         return new double[] {this.xSi, this.ySi};
     }
@@ -386,7 +388,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         public Matrix2x2<SIQuantity> multiply(final Vector2.Row<?> otherVec)
         {
             checkMultiply(otherVec);
-            double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 2, 1, 2);
+            double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherVec.unsafeSiArray(), 2, 1, 2);
             return new Matrix2x2<SIQuantity>(resultData, getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
         }
 
@@ -597,7 +599,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
          */
         public SIQuantity multiply(final Vector2.Col<?> otherVec)
         {
-            double[] resultData = MatrixMath.multiply(si(), otherVec.si(), 1, 2, 1);
+            double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherVec.unsafeSiArray(), 1, 2, 1);
             return new SIQuantity(resultData[0], getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit()));
         }
 
@@ -609,7 +611,7 @@ public abstract class Vector2<Q extends Quantity<Q>, V extends Vector2<Q, V, SI,
         public Vector2.Col<SIQuantity> multiply(final Matrix2x2<?> otherMat)
         {
             checkMultiply(otherMat);
-            double[] resultData = MatrixMath.multiply(si(), otherMat.si(), 1, 2, 2);
+            double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherMat.unsafeSiArray(), 1, 2, 2);
             return new Vector2.Col<SIQuantity>(resultData[0], resultData[1],
                     getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit()));
         }

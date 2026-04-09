@@ -49,7 +49,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
     public MatrixNxM<SIQuantity> multiply(final MatrixNxM<?> matrix)
     {
         checkMultiply(matrix);
-        double[] result = MatrixMath.multiply(si(), matrix.si(), rows(), cols(), matrix.cols());
+        double[] result = MatrixMath.multiply(unsafeSiArray(), matrix.unsafeSiArray(), rows(), cols(), matrix.cols());
         SIUnit siUnit = getDisplayUnit().siUnit().plus(matrix.getDisplayUnit().siUnit());
         if (matrix.getDataGrid().isDouble())
         {

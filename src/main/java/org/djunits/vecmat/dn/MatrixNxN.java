@@ -58,9 +58,15 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     }
 
     @Override
-    public double[] si()
+    public double[] unsafeSiArray()
     {
-        return this.dataGridSi.getDataArray();
+        return this.dataGridSi.unsafeSiArray();
+    }
+
+    @Override
+    public double[] getSiArray()
+    {
+        return this.dataGridSi.getSiArray();
     }
 
     @Override
@@ -160,14 +166,14 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     @Override
     public MatrixNxN<SIQuantity> inverse() throws NonInvertibleMatrixException
     {
-        double[] invData = MatrixMath.inverse(si(), order());
+        double[] invData = MatrixMath.inverse(unsafeSiArray(), order());
         return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(invData), getDisplayUnit().siUnit().invert());
     }
 
     @Override
     public MatrixNxN<SIQuantity> adjugate()
     {
-        double[] invData = MatrixMath.adjugate(si(), order());
+        double[] invData = MatrixMath.adjugate(unsafeSiArray(), order());
         return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(invData), getDisplayUnit().siUnit().pow(order() - 1));
     }
 
@@ -175,28 +181,31 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     public MatrixNxN<SIQuantity> invertEntries()
     {
         SIUnit siUnit = getDisplayUnit().siUnit().invert();
-        return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(ArrayMath.reciprocal(si())), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(ArrayMath.reciprocal(unsafeSiArray())), siUnit);
     }
 
     @Override
     public MatrixNxN<SIQuantity> multiplyEntries(final MatrixNxN<?> other)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(ArrayMath.multiply(si(), other.si())), siUnit);
+        return new MatrixNxN<SIQuantity>(
+                this.dataGridSi.instantiateNew(ArrayMath.multiply(unsafeSiArray(), other.unsafeSiArray())), siUnit);
     }
 
     @Override
     public MatrixNxN<SIQuantity> divideEntries(final MatrixNxN<?> other)
     {
         SIUnit siUnit = SIUnit.subtract(getDisplayUnit().siUnit(), other.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(ArrayMath.divide(si(), other.si())), siUnit);
+        return new MatrixNxN<SIQuantity>(
+                this.dataGridSi.instantiateNew(ArrayMath.divide(unsafeSiArray(), other.unsafeSiArray())), siUnit);
     }
 
     @Override
     public MatrixNxN<SIQuantity> multiplyEntries(final Quantity<?> quantity)
     {
         SIUnit siUnit = SIUnit.add(getDisplayUnit().siUnit(), quantity.getDisplayUnit().siUnit());
-        return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(ArrayMath.scaleBy(si(), quantity.si())), siUnit);
+        return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(ArrayMath.scaleBy(unsafeSiArray(), quantity.si())),
+                siUnit);
     }
 
     @Override
@@ -233,7 +242,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         checkMultiply(otherMat);
         final int n = order();
-        final double[] resultData = MatrixMath.multiply(si(), otherMat.si(), n, n, n);
+        final double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherMat.unsafeSiArray(), n, n, n);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherMat.getDisplayUnit().siUnit());
         return new MatrixNxN<SIQuantity>(this.dataGridSi.instantiateNew(resultData), resultUnit);
     }
@@ -251,7 +260,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         checkMultiply(otherVec);
         final int n = order();
-        final double[] resultData = MatrixMath.multiply(si(), otherVec.si(), n, n, 1);
+        final double[] resultData = MatrixMath.multiply(unsafeSiArray(), otherVec.unsafeSiArray(), n, n, 1);
         final SIUnit resultUnit = getDisplayUnit().siUnit().plus(otherVec.getDisplayUnit().siUnit());
         return VectorN.Col.ofSi(resultData, resultUnit);
     }
@@ -382,7 +391,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxN.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
-        return new MatrixNxN<TQ>(this.dataGridSi.instantiateNew(si()), targetUnit);
+        return new MatrixNxN<TQ>(this.dataGridSi.instantiateNew(unsafeSiArray()), targetUnit);
     }
 
     /**
@@ -394,7 +403,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         Throw.when(order() != 1, IllegalStateException.class, "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(),
                 cols());
-        return Matrix1x1.ofSi(si(), getDisplayUnit());
+        return Matrix1x1.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
     /**
@@ -406,7 +415,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         Throw.when(order() != 2, IllegalStateException.class, "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(),
                 cols());
-        return Matrix2x2.ofSi(si(), getDisplayUnit());
+        return Matrix2x2.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
     /**
@@ -418,7 +427,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     {
         Throw.when(order() != 3, IllegalStateException.class, "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(),
                 cols());
-        return Matrix3x3.ofSi(si(), getDisplayUnit());
+        return Matrix3x3.ofSi(unsafeSiArray(), getDisplayUnit());
     }
 
 }

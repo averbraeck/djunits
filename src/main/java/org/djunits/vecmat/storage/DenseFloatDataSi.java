@@ -366,12 +366,18 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
 
     @SuppressWarnings("checkstyle:needbraces")
     @Override
-    public double[] getDataArray()
+    public double[] getSiArray()
     {
         double[] doubleData = new double[this.data.length];
         for (int i = 0; i < doubleData.length; i++)
             doubleData[i] = this.data[i];
         return doubleData;
+    }
+
+    @Override
+    public double[] unsafeSiArray()
+    {
+        return getSiArray();
     }
 
     @Override
@@ -419,7 +425,7 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.hashCode(getDataArray());
+        result = prime * result + Arrays.hashCode(unsafeSiArray());
         result = prime * result + Objects.hash(this.cols, this.rows);
         return result;
     }
@@ -435,7 +441,7 @@ public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
         if (getClass() != obj.getClass())
         {
             if (obj instanceof DataGridSi dg)
-                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(getDataArray(), dg.getDataArray());
+                return this.cols == dg.cols() && this.rows == dg.rows() && Arrays.equals(unsafeSiArray(), dg.unsafeSiArray());
             return false;
         }
         DenseFloatDataSi other = (DenseFloatDataSi) obj;

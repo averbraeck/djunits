@@ -25,9 +25,8 @@ import org.djunits.vecmat.NonInvertibleMatrixException;
  * @param <SI> the square matrix type with generics &lt;SIQuantity, SIUnit&lt;
  * @param <H> the generic square matrix type with generics &lt;?, ?&lt; for Hadamard operations
  */
-public abstract class SquareMatrix<Q extends Quantity<Q>,
-        M extends SquareMatrix<Q, M, SI, H>, SI extends SquareMatrix<SIQuantity, SI, ?, ?>,
-        H extends SquareMatrix<?, ?, ?, ?>> extends Matrix<Q, M, SI, H, M>
+public abstract class SquareMatrix<Q extends Quantity<Q>, M extends SquareMatrix<Q, M, SI, H>,
+        SI extends SquareMatrix<SIQuantity, SI, ?, ?>, H extends SquareMatrix<?, ?, ?, ?>> extends Matrix<Q, M, SI, H, M>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -58,7 +57,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
     @SuppressWarnings("checkstyle:needbraces")
     public M transpose()
     {
-        double[] data = si();
+        double[] data = unsafeSiArray();
         double[] newSi = new double[data.length];
         int n = order();
         for (int i = 0; i < n; i++)
@@ -73,7 +72,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public double determinantSi()
     {
-        return MatrixMath.determinant(si(), order());
+        return MatrixMath.determinant(unsafeSiArray(), order());
     }
 
     /**
@@ -151,7 +150,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public Q trace()
     {
-        return getDisplayUnit().ofSi(MatrixMath.trace(si(), order()));
+        return getDisplayUnit().ofSi(MatrixMath.trace(unsafeSiArray(), order()));
     }
 
     /**
@@ -163,7 +162,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public Q normFrobenius()
     {
-        return getDisplayUnit().ofSi(Math.sqrt(Math2.sumSqr(si()))).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.sqrt(Math2.sumSqr(unsafeSiArray()))).setDisplayUnit(getDisplayUnit());
     }
 
     /**
@@ -172,7 +171,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public boolean isSymmetric()
     {
-        return MatrixMath.isSymmetric(si(), order());
+        return MatrixMath.isSymmetric(unsafeSiArray(), order());
     }
 
     /**
@@ -182,7 +181,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public boolean isSymmetric(final Q tolerance)
     {
-        return MatrixMath.isSymmetric(si(), order(), tolerance.si());
+        return MatrixMath.isSymmetric(unsafeSiArray(), order(), tolerance.si());
     }
 
     /**
@@ -191,7 +190,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public boolean isSkewSymmetric()
     {
-        return MatrixMath.isSkewSymmetric(si(), order());
+        return MatrixMath.isSkewSymmetric(unsafeSiArray(), order());
     }
 
     /**
@@ -201,7 +200,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>,
      */
     public boolean isSkewSymmetric(final Q tolerance)
     {
-        return MatrixMath.isSkewSymmetric(si(), order(), tolerance.si());
+        return MatrixMath.isSkewSymmetric(unsafeSiArray(), order(), tolerance.si());
     }
 
 }

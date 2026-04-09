@@ -209,7 +209,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA add(final Q increment)
     {
-        return instantiateSi(ArrayMath.add(this.relativeVecMat.si(), increment.si()), getReference())
+        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), increment.si()), getReference())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -220,7 +220,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA subtract(final Q decrement)
     {
-        return instantiateSi(ArrayMath.add(this.relativeVecMat.si(), -decrement.si()), getReference())
+        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), -decrement.si()), getReference())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -231,7 +231,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA add(final VMQ other)
     {
-        return instantiateSi(ArrayMath.add(this.relativeVecMat.si(), other.si()), getReference())
+        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), other.unsafeSiArray()), getReference())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -242,7 +242,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA subtract(final VMQ other)
     {
-        return instantiateSi(ArrayMath.subtract(this.relativeVecMat.si(), other.si()), getReference())
+        return instantiateSi(ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.unsafeSiArray()), getReference())
                 .setDisplayUnit(getDisplayUnit());
     }
 
@@ -253,7 +253,9 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMQ subtract(final VMA other)
     {
-        return this.relativeVecMat.instantiateSi(ArrayMath.subtract(this.relativeVecMat.si(), other.getRelativeVecMat().si()))
+        return this.relativeVecMat
+                .instantiateSi(
+                        ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.getRelativeVecMat().unsafeSiArray()))
                 .setDisplayUnit(getDisplayUnit());
     }
 

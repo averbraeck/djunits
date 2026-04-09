@@ -51,9 +51,15 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q>, M extends SquareD
     }
 
     @Override
-    public double[] si()
+    public double[] unsafeSiArray()
     {
         return this.dataSi;
+    }
+
+    @Override
+    public double[] getSiArray()
+    {
+        return this.dataSi.clone();
     }
 
     @Override
