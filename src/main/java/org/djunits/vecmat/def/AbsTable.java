@@ -130,7 +130,7 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
      * Return the vector or matrix as a row-major array of scalars.
      * @return a new A[rows() * cols()] array.
      */
-    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to Q[][]
+    @SuppressWarnings("unchecked") // cast from Array.newInstance(...) to A[][]
     public A[] getScalarArray()
     {
         // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 0.

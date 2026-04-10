@@ -125,7 +125,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * Return the underlying relative vector or matrix with SI values relative to the reference point.
      * @return the underlying relative vector or matrix with SI values relative to the reference point
      */
-    protected VMQ getRelativeVecMat()
+    public VMQ getRelativeVecMat()
     {
         return this.relativeVecMat;
     }

@@ -83,6 +83,28 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
     }
 
     /**
+     * Return a row-major array of quantities for this QuantityTable.
+     * @return a row-major array of quantities for this QuantityTable
+     */
+    @SuppressWarnings("unchecked")
+    public Q[] getScalarArray()
+    {
+        // Determine the runtime type of Q using the first cell; constructors guarantee rows, cols >= 0.
+        final Q first = get(0, 0);
+        final Class<?> qClass = first.getClass();
+
+        // Allocate a Q[rows() * cols()] array and fill it.
+        final Q[] out = (Q[]) Array.newInstance(qClass, rows() * cols());
+        double[] dataSi = unsafeSiArray();
+        var unit = getDisplayUnit();
+        for (int i = 0; i < rows() * cols(); i++)
+        {
+            out[i] = unit.ofSi(dataSi[i]).setDisplayUnit(unit);
+        }
+        return out;
+    }
+
+    /**
      * Return the table or matrix as a 2D array of scalars.
      * @return a new Q[rows()][cols()] array; entry [i][j] contains get(i, j).
      */
