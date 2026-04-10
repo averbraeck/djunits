@@ -628,6 +628,11 @@ public class AbsMatrixNxMTest
 
         AbsMatrixNxN<Direction, Angle> mxn = m33.asAbsMatrixNxN();
         assertEquals(3, mxn.rows());
+        
+        assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrixNxN());
     }
 
     /** Verify as* vector conversions for 2/3/N Col and Row, plus shape checks. */
