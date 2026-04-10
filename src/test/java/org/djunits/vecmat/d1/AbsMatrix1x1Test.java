@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -564,6 +565,63 @@ public class AbsMatrix1x1Test
         AbsMatrix1x1<Direction, Angle> m = northDeg();
         assertThrows(NullPointerException.class, () -> m.isSymmetric(null));
         assertThrows(NullPointerException.class, () -> m.isSkewSymmetric(null));
+    }
+
+    /**
+     * Test as() functions.
+     */
+    @Test
+    @DisplayName("Matrix1x1 as() functions test")
+    public void testAsFunctions()
+    {
+        var m = northDeg();
+
+        var m1 = m.asAbsMatrix1x1();
+        assertArrayEquals(m.getSiArray(), m1.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, m1.getDisplayUnit());
+        assertEquals(m.getReference(), m1.getReference());
+        assertEquals(90.0, m1.get(0, 0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var v1 = m.asAbsVector1();
+        assertArrayEquals(m.getSiArray(), v1.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v1.getDisplayUnit());
+        assertEquals(m.getReference(), v1.getReference());
+        assertEquals(90.0, v1.get(0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var mNxN = m.asAbsMatrixNxN();
+        assertArrayEquals(m.getSiArray(), mNxN.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mNxN.getDisplayUnit());
+        assertEquals(m.getReference(), mNxN.getReference());
+        assertEquals(90.0, mNxN.get(0, 0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var mNxM = m.asAbsMatrixNxM();
+        assertArrayEquals(m.getSiArray(), mNxM.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mNxM.getDisplayUnit());
+        assertEquals(m.getReference(), mNxM.getReference());
+        assertEquals(90.0, mNxM.get(0, 0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var mQT = m.asAbsQuantityTable();
+        assertArrayEquals(m.getSiArray(), mQT.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mQT.getDisplayUnit());
+        assertEquals(m.getReference(), mQT.getReference());
+        assertEquals(90.0, mQT.get(0, 0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var vNcol = m.asAbsVectorNCol();
+        assertArrayEquals(m.getSiArray(), vNcol.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vNcol.getDisplayUnit());
+        assertEquals(90.0, vNcol.get(0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var vNrow = m.asAbsVectorNRow();
+        assertArrayEquals(m.getSiArray(), vNrow.asAbsMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vNrow.getDisplayUnit());
+        assertEquals(90.0, vNrow.get(0).getInUnit(Angle.Unit.deg), 1E-10);
+
+        assertThrows(IllegalStateException.class, () -> m.asAbsMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> m.asAbsMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector2Col());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector2Row());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector3Col());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector3Row());
     }
 
 }

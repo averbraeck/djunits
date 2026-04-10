@@ -9,7 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
+import org.djunits.vecmat.d2.AbsMatrix2x2;
+import org.djunits.vecmat.d2.AbsVector2;
+import org.djunits.vecmat.d3.AbsMatrix3x3;
+import org.djunits.vecmat.d3.AbsVector3;
+import org.djunits.vecmat.dn.AbsMatrixNxN;
 import org.djunits.vecmat.dn.AbsVectorN;
+import org.djunits.vecmat.table.AbsQuantityTable;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -600,6 +607,82 @@ public class AbsMatrixNxMTest
         assertThrows(NullPointerException.class, () -> m.subtract((AbsMatrixNxM<Direction, Angle>) null));
     }
 
+    // ------------------------------------------------------------------------------------
+    // as() matrix/vector conversions
+    // ------------------------------------------------------------------------------------
+
+    /** Verify as* matrix conversions and shape checks. */
+    @Test
+    @DisplayName("asAbsMatrix2x2 / asAbsMatrix3x3 / asAbsMatrixNxN")
+    public void testAsAbsMatrixConversions()
+    {
+        AbsMatrixNxM<Direction, Angle> m22 =
+                AbsMatrixNxM.ofSi(new double[] {1, 2, 3, 4}, 2, 2, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsMatrix2x2<Direction, Angle> mm22 = m22.asAbsMatrix2x2();
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, mm22.getSiArray(), 1E-10);
+
+        AbsMatrixNxM<Direction, Angle> m33 =
+                AbsMatrixNxM.ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsMatrix3x3<Direction, Angle> mm33 = m33.asAbsMatrix3x3();
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, mm33.getSiArray(), 1E-10);
+
+        AbsMatrixNxN<Direction, Angle> mxn = m33.asAbsMatrixNxN();
+        assertEquals(3, mxn.rows());
+    }
+
+    /** Verify as* vector conversions for 2/3/N Col and Row, plus shape checks. */
+    @Test
+    @DisplayName("asAbsVector2/3/N (Col/Row) conversions")
+    public void testAsAbsVectorConversions()
+    {
+        // Col
+        AbsMatrixNxM<Direction, Angle> c21 =
+                AbsMatrixNxM.ofSi(new double[] {1000, 2000}, 2, 1, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsVector2.Col<Direction, Angle> vc2 = c21.asAbsVector2Col();
+        assertEquals(2, vc2.size());
+        assertArrayEquals(new double[] {1000, 2000}, vc2.getSiArray(), 1E-10);
+
+        AbsMatrixNxM<Direction, Angle> c31 =
+                AbsMatrixNxM.ofSi(new double[] {1, 2, 3}, 3, 1, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsVector3.Col<Direction, Angle> vc3 = c31.asAbsVector3Col();
+        assertArrayEquals(new double[] {1, 2, 3}, vc3.getSiArray(), 1E-10);
+
+        AbsVectorN.Col<Direction, Angle> vcn = c31.asAbsVectorNCol();
+        assertEquals(3, vcn.size());
+
+        // Row
+        AbsMatrixNxM<Direction, Angle> r12 =
+                AbsMatrixNxM.ofSi(new double[] {1000, 2000}, 1, 2, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsVector2.Row<Direction, Angle> vr2 = r12.asAbsVector2Row();
+        assertArrayEquals(new double[] {1000, 2000}, vr2.getSiArray(), 1E-10);
+
+        AbsMatrixNxM<Direction, Angle> r13 =
+                AbsMatrixNxM.ofSi(new double[] {1, 2, 3}, 1, 3, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsVector3.Row<Direction, Angle> vr3 = r13.asAbsVector3Row();
+        assertArrayEquals(new double[] {1, 2, 3}, vr3.getSiArray(), 1E-10);
+
+        AbsVectorN.Row<Direction, Angle> vrn = r13.asAbsVectorNRow();
+        assertEquals(3, vrn.size());
+
+        // Negative shape checks
+        AbsMatrixNxM<Direction, Angle> bad =
+                AbsMatrixNxM.ofSi(new double[] {1, 2, 3, 4}, 2, 2, Angle.Unit.deg, Direction.Reference.NORTH);
+        assertThrows(IllegalStateException.class, () -> bad.asAbsVector2Col());
+        assertThrows(IllegalStateException.class, () -> bad.asAbsVector3Row());
+        assertThrows(IllegalStateException.class, () -> bad.asAbsVectorNRow()); // rows()!=1
+    }
+
+    /** Verify asAbsQuantityTable() conversion and shape checks. */
+    @Test
+    @DisplayName("asAbsQuantityTable")
+    public void testAsAbsQuantityTableConversions()
+    {
+        AbsMatrixNxM<Direction, Angle> m33 =
+                AbsMatrixNxM.ofSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, 3, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsQuantityTable<Direction, Angle> mm33 = m33.asAbsQuantityTable();
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, mm33.getSiArray(), 1E-10);
+    }
+    
     // ==================================== toString ====================================
 
     /**

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -770,4 +771,48 @@ public class AbsMatrix3x3Test
         assertThrows(NullPointerException.class, () -> m.isSymmetric(null));
         assertThrows(NullPointerException.class, () -> m.isSkewSymmetric(null));
     }
+    
+    /**
+     * Test as() functions.
+     */
+    @Test
+    @DisplayName("Matrix3x3 as() functions test")
+    public void testAsFunctions()
+    {
+        var m = northDeg();
+
+        var m2 = m.asAbsMatrix3x3();
+        assertArrayEquals(m.getSiArray(), m2.asAbsMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, m2.getDisplayUnit());
+        assertEquals(m.getReference(), m2.getReference());
+        assertEquals(90.0, m2.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var mNxN = m.asAbsMatrixNxN();
+        assertArrayEquals(m.getSiArray(), mNxN.asAbsMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mNxN.getDisplayUnit());
+        assertEquals(m.getReference(), mNxN.getReference());
+        assertEquals(90.0, mNxN.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var mNxM = m.asAbsMatrixNxM();
+        assertArrayEquals(m.getSiArray(), mNxM.asAbsMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mNxM.getDisplayUnit());
+        assertEquals(m.getReference(), mNxM.getReference());
+        assertEquals(90.0, mNxM.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
+
+        var mQT = m.asAbsQuantityTable();
+        assertArrayEquals(m.getSiArray(), mQT.asAbsMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mQT.getDisplayUnit());
+        assertEquals(m.getReference(), mQT.getReference());
+        assertEquals(90.0, mQT.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
+
+        assertThrows(IllegalStateException.class, () -> m.asAbsMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> m.asAbsMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector2Col());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector2Row());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector3Col());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVector3Row());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVectorNCol());
+        assertThrows(IllegalStateException.class, () -> m.asAbsVectorNRow());
+    }
+
 }
