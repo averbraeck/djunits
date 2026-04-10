@@ -167,7 +167,7 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
 
     /**
      * Create an AbsMatrix1x1 without needing generics.
-     * @param absData the a11-value expressed as an absolute quantity
+     * @param absData the {a11} value expressed as an array of absolute quantities
      * @return a new Matrix1x1 with a unit
      * @param <A> the absolute quantity type
      * @param <Q> the quantity type
