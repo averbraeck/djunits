@@ -308,6 +308,62 @@ public class AbsMatrixNxMTest
         assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(rel, null));
     }
 
+    /**
+     * Test of(A[]) and of(A[][]) factory methods.
+     */
+    @Test
+    @SuppressWarnings("checkstyle:needbraces")
+    public void testAbsoluteFactories()
+    {
+        Angle[] qa = {new Angle(0, Angle.Unit.deg), new Angle(90, Angle.Unit.deg), new Angle(180, Angle.Unit.deg),
+                new Angle(270, Angle.Unit.deg), new Angle(45, Angle.Unit.deg), new Angle(135, Angle.Unit.deg)};
+        Direction[] qd = new Direction[qa.length];
+        for (int i = 0; i < qa.length; i++)
+            qd[i] = new Direction(qa[i], Direction.Reference.NORTH);
+        Direction[][] dgrid = new Direction[2][3];
+        for (int r = 0; r < 2; r++)
+            for (int c = 0; c < 3; c++)
+                dgrid[r][c] = qd[r * 3 + c];
+
+        AbsMatrixNxM<Direction, Angle> aqt1 = AbsMatrixNxM.of(dgrid);
+        assertEquals(2, aqt1.rows());
+        assertEquals(3, aqt1.cols());
+        assertEquals(Angle.Unit.deg, aqt1.getDisplayUnit());
+        assertEquals(Direction.Reference.NORTH, aqt1.getReference());
+        assertArrayEquals(qd, aqt1.getScalarArray());
+        assertArrayEquals(qa, aqt1.getRelativeVecMat().getScalarArray());
+
+        AbsMatrixNxM<Direction, Angle> aqt2 = AbsMatrixNxM.of(qd, 2, 3);
+        assertEquals(2, aqt2.rows());
+        assertEquals(3, aqt2.cols());
+        assertEquals(Angle.Unit.deg, aqt2.getDisplayUnit());
+        assertEquals(Direction.Reference.NORTH, aqt2.getReference());
+        System.out.println(aqt2.toString(Angle.Unit.deg));
+        assertArrayEquals(qd, aqt2.getScalarArray());
+        assertArrayEquals(qa, aqt2.getRelativeVecMat().getScalarArray());
+
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Direction[] {}, 2, 3));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qd, 0, 3));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qd, 2, 0));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qd, 3, 3));
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(null, 2, 3));
+
+        qd[3] = new Direction(qa[3], Direction.Reference.EAST);
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(qd, 2, 3));
+        qd[3] = null;
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(qd, 2, 3));
+
+        dgrid[1][1] = new Direction(dgrid[1][1].getQuantity(), Direction.Reference.EAST);
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(dgrid));
+        dgrid[1][1] = null;
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxM.of(dgrid));
+        dgrid[1] = new Direction[] {qd[1]};
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(dgrid));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Direction[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Direction[][] {{}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxM.of(new Direction[][] {{}, {}}));
+    }
+
     // ==================================== Scalar & SI array / grid access ====================================
 
     /**
@@ -605,7 +661,7 @@ public class AbsMatrixNxMTest
         assertThrows(NullPointerException.class, () -> m.add((MatrixNxM<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((MatrixNxM<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((AbsMatrixNxM<Direction, Angle>) null));
-        
+
         MatrixNxM<Angle> msubq = m.subtract(Direction.of(5.0, "deg", Direction.Reference.NORTH));
         assertEquals(85.0, msubq.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
     }
@@ -631,7 +687,7 @@ public class AbsMatrixNxMTest
 
         AbsMatrixNxN<Direction, Angle> mxn = m33.asAbsMatrixNxN();
         assertEquals(3, mxn.rows());
-        
+
         assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrix1x1());
         assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrix2x2());
         assertThrows(IllegalStateException.class, () -> northDeg2x3().asAbsMatrix3x3());
@@ -690,7 +746,7 @@ public class AbsMatrixNxMTest
         AbsQuantityTable<Direction, Angle> mm33 = m33.asAbsQuantityTable();
         assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}, mm33.getSiArray(), 1E-10);
     }
-    
+
     // ==================================== toString ====================================
 
     /**
@@ -757,5 +813,5 @@ public class AbsMatrixNxMTest
         assertEquals(3, row.size());
         assertEquals(90.0, col.get(0).getInUnit(Angle.Unit.deg), 1e-12);
     }
-    
+
 }
