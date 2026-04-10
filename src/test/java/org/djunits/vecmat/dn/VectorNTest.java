@@ -988,4 +988,117 @@ public final class VectorNTest
         var d = new DenseDoubleDataSi(new double[] {1.0, 2.0, 3.0, 4.0}, 2, 2);
         assertThrows(IllegalArgumentException.class, () -> VectorN.Row.ofSi(d, Length.Unit.m));
     }
+
+    /**
+     * Test as() functions for Col vector.
+     */
+    @Test
+    @DisplayName("VectorN.Col as() functions test")
+    public void testVectorNColAsFunctions()
+    {
+        var v = col(new double[] {2.0, 3.0, 4.0}, Length.Unit.km);
+
+        var v3Col = v.asVector3Col();
+        assertArrayEquals(v.getSiArray(), v3Col.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v3Col.getDisplayUnit());
+        assertEquals(2000.0, v3Col.si(0), 1E-10);
+        
+        var mNxM = v.asMatrixNxM();
+        assertArrayEquals(v.getSiArray(), mNxM.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+        
+        var mQT = v.asQuantityTable();
+        assertArrayEquals(v.getSiArray(), mQT.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+        
+        var vNcol = v.asVectorNCol();
+        assertArrayEquals(v.getSiArray(), vNcol.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, vNcol.getDisplayUnit());
+        assertEquals(2000.0, vNcol.si(0), 1E-10);
+        
+        assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> v.asVector1());
+        assertThrows(IllegalStateException.class, () -> v.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> v.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> v.asVector3Row());
+        assertThrows(IllegalStateException.class, () -> v.asVectorNRow());
+        
+        var v1 = col(new double[] {2.0}, Length.Unit.km);
+        var v1Col = v1.asVector1();
+        assertArrayEquals(v1.getSiArray(), v1Col.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v1Col.getDisplayUnit());
+        assertEquals(2000.0, v1Col.si(0), 1E-10);
+
+        var m1x1 = v1.asMatrix1x1();
+        assertArrayEquals(v1.getSiArray(), m1x1.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, m1x1.getDisplayUnit());
+        assertEquals(2000.0, m1x1.si(0, 0), 1E-10);
+
+        var v2 = col(new double[] {2.0, 3.0}, Length.Unit.km);
+        var v2Col = v2.asVector2Col();
+        assertArrayEquals(v2.getSiArray(), v2Col.asVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v2Col.getDisplayUnit());
+        assertEquals(2000.0, v2Col.si(0), 1E-10);
+    }
+
+    /**
+     * Test as() functions for Row vector.
+     */
+    @Test
+    @DisplayName("VectorN.Row as() functions test")
+    public void testVectorNRowAsFunctions()
+    {
+        var v = row(new double[] {2.0, 3.0, 4.0}, Length.Unit.km);
+
+        var v3Row = v.asVector3Row();
+        assertArrayEquals(v.getSiArray(), v3Row.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v3Row.getDisplayUnit());
+        assertEquals(2000.0, v3Row.si(0), 1E-10);
+        
+        var mNxM = v.asMatrixNxM();
+        assertArrayEquals(v.getSiArray(), mNxM.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+        
+        var mQT = v.asQuantityTable();
+        assertArrayEquals(v.getSiArray(), mQT.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+        
+        var vNrow = v.asVectorNRow();
+        assertArrayEquals(v.getSiArray(), vNrow.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, vNrow.getDisplayUnit());
+        assertEquals(2000.0, vNrow.si(0), 1E-10);
+        
+        assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> v.asVector1());
+        assertThrows(IllegalStateException.class, () -> v.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> v.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> v.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> v.asVectorNCol());
+        
+        var v1 = row(new double[] {2.0}, Length.Unit.km);
+        var v1Row = v1.asVector1();
+        assertArrayEquals(v1.getSiArray(), v1Row.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v1Row.getDisplayUnit());
+        assertEquals(2000.0, v1Row.si(0), 1E-10);
+
+        var m1x1 = v1.asMatrix1x1();
+        assertArrayEquals(v1.getSiArray(), m1x1.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, m1x1.getDisplayUnit());
+        assertEquals(2000.0, m1x1.si(0, 0), 1E-10);
+        
+        var v2 = row(new double[] {2.0, 3.0}, Length.Unit.km);
+        var v2Row = v2.asVector2Row();
+        assertArrayEquals(v2.getSiArray(), v2Row.asVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v2Row.getDisplayUnit());
+        assertEquals(2000.0, v2Row.si(0), 1E-10);
+    }
+
 }

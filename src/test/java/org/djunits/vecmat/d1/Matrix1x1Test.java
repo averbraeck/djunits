@@ -847,4 +847,56 @@ public class Matrix1x1Test
         assertArrayEquals(new double[] {0.05}, m.getSiArray(), EPS);
     }
 
+    /**
+     * Test as() functions.
+     */
+    @Test
+    @DisplayName("Matrix1x1 as() functions test")
+    public void testAsFunctions()
+    {
+        var m = ofSi(2000.0, Length.Unit.km);
+
+        var m1 = m.asMatrix1x1();
+        assertArrayEquals(m.getSiArray(), m1.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, m1.getDisplayUnit());
+        assertEquals(2000.0, m1.si(0, 0), 1E-10);
+
+        var v1 = m.asVector1();
+        assertArrayEquals(m.getSiArray(), v1.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v1.getDisplayUnit());
+        assertEquals(2000.0, v1.si(0), 1E-10);
+        
+        var mNxN = m.asMatrixNxN();
+        assertArrayEquals(m.getSiArray(), mNxN.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxN.getDisplayUnit());
+        assertEquals(2000.0, mNxN.si(0, 0), 1E-10);
+        
+        var mNxM = m.asMatrixNxM();
+        assertArrayEquals(m.getSiArray(), mNxM.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+        
+        var mQT = m.asQuantityTable();
+        assertArrayEquals(m.getSiArray(), mQT.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+        
+        var vNcol = m.asVectorNCol();
+        assertArrayEquals(m.getSiArray(), vNcol.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, vNcol.getDisplayUnit());
+        assertEquals(2000.0, vNcol.si(0), 1E-10);
+        
+        var vNrow = m.asVectorNRow();
+        assertArrayEquals(m.getSiArray(), vNrow.asMatrix1x1().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, vNrow.getDisplayUnit());
+        assertEquals(2000.0, vNrow.si(0), 1E-10);
+        
+        assertThrows(IllegalStateException.class, () -> m.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> m.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> m.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> m.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> m.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> m.asVector3Row());
+    }
+
 }

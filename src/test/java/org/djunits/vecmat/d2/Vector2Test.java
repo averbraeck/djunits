@@ -298,9 +298,11 @@ public class Vector2Test
         assertEquals(1, r.rows());
         assertEquals(2, r.cols());
         assertFalse(r.isColumnVector());
+        assertTrue(r.isRowVector());
         assertEquals(2, c.rows());
         assertEquals(1, c.cols());
         assertTrue(c.isColumnVector());
+        assertFalse(c.isRowVector());
 
         Vector2.Col<Length> rt = r.transpose();
         Vector2.Row<Length> ct = c.transpose();
@@ -925,6 +927,84 @@ public class Vector2Test
     {
         assertThrows(IllegalArgumentException.class,
                 () -> Vector2.Row.of(new Duration[] {Duration.ofSi(1.0), Duration.ofSi(2.0), Duration.ofSi(3.0)}));
+    }
+
+    /**
+     * Test as() functions for Col vector.
+     */
+    @Test
+    @DisplayName("Vector2.Col as() functions test")
+    public void testVector2ColAsFunctions()
+    {
+        var v = col(2.0, 3.0, Length.Unit.km);
+
+        var v2 = v.asVector2Col();
+        assertArrayEquals(v.getSiArray(), v2.asVector2Col().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v2.getDisplayUnit());
+        assertEquals(2000.0, v2.si(0), 1E-10);
+        
+        var mNxM = v.asMatrixNxM();
+        assertArrayEquals(v.getSiArray(), mNxM.asVector2Col().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+        
+        var mQT = v.asQuantityTable();
+        assertArrayEquals(v.getSiArray(), mQT.asVector2Col().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+        
+        var vNcol = v.asVectorNCol();
+        assertArrayEquals(v.getSiArray(), vNcol.asVector2Col().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, vNcol.getDisplayUnit());
+        assertEquals(2000.0, vNcol.si(0), 1E-10);
+        
+        assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> v.asVector1());
+        assertThrows(IllegalStateException.class, () -> v.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> v.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> v.asVector3Row());
+        assertThrows(IllegalStateException.class, () -> v.asVectorNRow());
+    }
+
+    /**
+     * Test as() functions for Row vector.
+     */
+    @Test
+    @DisplayName("Vector2.Row as() functions test")
+    public void testVector2RowAsFunctions()
+    {
+        var v = row(2.0, 3.0, Length.Unit.km);
+
+        var v2 = v.asVector2Row();
+        assertArrayEquals(v.getSiArray(), v2.asVector2Row().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, v2.getDisplayUnit());
+        assertEquals(2000.0, v2.si(0), 1E-10);
+        
+        var mNxM = v.asMatrixNxM();
+        assertArrayEquals(v.getSiArray(), mNxM.asVector2Row().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+        
+        var mQT = v.asQuantityTable();
+        assertArrayEquals(v.getSiArray(), mQT.asVector2Row().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+        
+        var vNrow = v.asVectorNRow();
+        assertArrayEquals(v.getSiArray(), vNrow.asVector2Row().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, vNrow.getDisplayUnit());
+        assertEquals(2000.0, vNrow.si(0), 1E-10);
+        
+        assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> v.asVector1());
+        assertThrows(IllegalStateException.class, () -> v.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> v.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> v.asVector3Row());
+        assertThrows(IllegalStateException.class, () -> v.asVectorNCol());
     }
 
 }

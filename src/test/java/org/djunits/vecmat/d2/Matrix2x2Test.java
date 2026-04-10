@@ -911,4 +911,44 @@ public class Matrix2x2Test
         assertArrayEquals(new double[] {0.1, 0.2, 0.3, 0.4}, m.getSiArray(), EPS);
     }
 
+    /**
+     * Test as() functions.
+     */
+    @Test
+    @DisplayName("Matrix2x2 as() functions test")
+    public void testAsFunctions()
+    {
+        var m = ofSi(new double[] {2000.0, 3000.0, 4000.0, 5000.0}, Length.Unit.km);
+
+        var m2 = m.asMatrix2x2();
+        assertArrayEquals(m.getSiArray(), m2.asMatrix2x2().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, m2.getDisplayUnit());
+        assertEquals(2000.0, m2.si(0, 0), 1E-10);
+
+        var mNxN = m.asMatrixNxN();
+        assertArrayEquals(m.getSiArray(), mNxN.asMatrix2x2().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxN.getDisplayUnit());
+        assertEquals(2000.0, mNxN.si(0, 0), 1E-10);
+        
+        var mNxM = m.asMatrixNxM();
+        assertArrayEquals(m.getSiArray(), mNxM.asMatrix2x2().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+        
+        var mQT = m.asQuantityTable();
+        assertArrayEquals(m.getSiArray(), mQT.asMatrix2x2().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+        
+        assertThrows(IllegalStateException.class, () -> m.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> m.asMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> m.asVector1());
+        assertThrows(IllegalStateException.class, () -> m.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> m.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> m.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> m.asVector3Row());
+        assertThrows(IllegalStateException.class, () -> m.asVectorNCol());
+        assertThrows(IllegalStateException.class, () -> m.asVectorNRow());
+    }
+
 }

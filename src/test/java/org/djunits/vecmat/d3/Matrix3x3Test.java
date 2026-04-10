@@ -832,4 +832,44 @@ public class Matrix3x3Test
         assertArrayEquals(new double[] {0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09}, m.getSiArray(), EPS);
     }
 
+    /**
+     * Test as() functions.
+     */
+    @Test
+    @DisplayName("Matrix3x3 as() functions test")
+    public void testAsFunctions()
+    {
+        var m = ofSi(new double[] {2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 1000}, Length.Unit.km);
+
+        var m3 = m.asMatrix3x3();
+        assertArrayEquals(m.getSiArray(), m3.asMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, m3.getDisplayUnit());
+        assertEquals(2000.0, m3.si(0, 0), 1E-10);
+
+        var mNxN = m.asMatrixNxN();
+        assertArrayEquals(m.getSiArray(), mNxN.asMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxN.getDisplayUnit());
+        assertEquals(2000.0, mNxN.si(0, 0), 1E-10);
+
+        var mNxM = m.asMatrixNxM();
+        assertArrayEquals(m.getSiArray(), mNxM.asMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
+        assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
+
+        var mQT = m.asQuantityTable();
+        assertArrayEquals(m.getSiArray(), mQT.asMatrix3x3().getSiArray(), 1E-10);
+        assertEquals(Length.Unit.km, mQT.getDisplayUnit());
+        assertEquals(2000.0, mQT.si(0, 0), 1E-10);
+
+        assertThrows(IllegalStateException.class, () -> m.asMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> m.asMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> m.asVector1());
+        assertThrows(IllegalStateException.class, () -> m.asVector2Col());
+        assertThrows(IllegalStateException.class, () -> m.asVector2Row());
+        assertThrows(IllegalStateException.class, () -> m.asVector3Col());
+        assertThrows(IllegalStateException.class, () -> m.asVector3Row());
+        assertThrows(IllegalStateException.class, () -> m.asVectorNCol());
+        assertThrows(IllegalStateException.class, () -> m.asVectorNRow());
+    }
+
 }
