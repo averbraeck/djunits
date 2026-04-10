@@ -3,7 +3,9 @@ package org.djunits.vecmat.storage;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djutils.exceptions.Throw;
 
@@ -110,6 +112,37 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     }
 
     /**
+     * Instantiate a data object based on a row-major A[] array. A safe copy of the data is stored.
+     * @param absData the absolute quantities as a array in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense double data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     */
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final A[] absData,
+            final int rows, final int cols)
+    {
+        Throw.whenNull(absData, "absData");
+        Throw.when(rows == 0, IllegalArgumentException.class, "rows = 0");
+        Throw.when(cols == 0, IllegalArgumentException.class, "cols = 0");
+        Throw.when(absData.length != rows * cols, IllegalArgumentException.class, "A[] length != rows * cols");
+        Throw.whenNull(absData[0], "absData[0] = null");
+        Reference<?, A, Q> reference = absData[0].getReference();
+        double[] dataSi = new double[rows * cols];
+        for (int i = 0; i < rows * cols; i++)
+        {
+            Throw.whenNull(absData[i], "absGrid[%d] = null", i);
+            Throw.when(!reference.equals(absData[i].getReference()), IllegalArgumentException.class,
+                    "Reference of absGrid[%d] != %s, but %s", i, reference.toString(), absData[i].getReference().toString());
+            dataSi[i] = absData[i].si();
+        }
+        return new DenseDoubleDataSi(dataSi, rows, cols);
+    }
+
+    /**
      * Instantiate a data object with a double[rows][cols]. A safe copy of the data is stored.
      * @param gridSi the data as a double[][] array in row-major format, with SI-values
      * @return a dense double data object with SI values for vectors, matrices and tables
@@ -118,7 +151,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     public static DenseDoubleDataSi ofSi(final double[][] gridSi)
     {
         Throw.whenNull(gridSi, "gridSi");
-        Throw.when(gridSi.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        Throw.when(gridSi.length == 0, IllegalArgumentException.class, "Number of rows in the data grid = 0");
         int rows = gridSi.length;
         Throw.whenNull(gridSi[0], "gridSi[0] = null");
         int cols = gridSi[0].length;
@@ -149,7 +182,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
-        Throw.when(gridInUnit.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        Throw.when(gridInUnit.length == 0, IllegalArgumentException.class, "Number of rows in the data grid = 0");
         int rows = gridInUnit.length;
         Throw.whenNull(gridInUnit[0], "gridInUnit[0] = null");
         int cols = gridInUnit[0].length;
@@ -178,7 +211,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final Q[][] grid)
     {
         Throw.whenNull(grid, "grid");
-        Throw.when(grid.length == 0, IllegalArgumentException.class, "Number of rows in the data matrix = 0");
+        Throw.when(grid.length == 0, IllegalArgumentException.class, "Number of rows in the data grid = 0");
         int rows = grid.length;
         Throw.whenNull(grid[0], "grid[0] = null");
         int cols = grid[0].length;
@@ -193,6 +226,43 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
             {
                 Throw.whenNull(grid[r][c], "grid[%d][%d] = null", r, c);
                 dataSi[r * cols + c] = grid[r][c].si();
+            }
+        }
+        return new DenseDoubleDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object with a A[rows][cols]. A safe copy of the data is stored.
+     * @param absGrid the quantities as a [][] array in row-major format
+     * @return a dense double data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     */
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final A[][] absGrid)
+    {
+        Throw.whenNull(absGrid, "absGrid");
+        int rows = absGrid.length;
+        Throw.when(rows == 0, IllegalArgumentException.class, "rows = 0");
+        Throw.whenNull(absGrid[0], "absGrid[0] = null");
+        int cols = absGrid[0].length;
+        Throw.when(cols == 0, IllegalArgumentException.class, "cols = 0");
+        Throw.whenNull(absGrid[0][0], "absGrid[0][0] = null");
+        Reference<?, A, Q> reference = absGrid[0][0].getReference();
+        double[] dataSi = new double[rows * cols];
+        for (int r = 0; r < rows; r++)
+        {
+            Throw.whenNull(absGrid[r], "absGrid[%d] = null", r);
+            Throw.when(absGrid[r].length != cols, IllegalArgumentException.class,
+                    "Number of columns in row %d (%d) is not equal to number of columns in row 0 (%d)", r, absGrid[r].length,
+                    cols);
+            for (int c = 0; c < cols; c++)
+            {
+                Throw.whenNull(absGrid[r][c], "absGrid[%d][%d] = null", r, c);
+                Throw.when(!reference.equals(absGrid[r][c].getReference()), IllegalArgumentException.class,
+                        "Reference of absGrid[%d][%d] != %s, but %s", r, c, reference.toString(),
+                        absGrid[r][c].getReference().toString());
+                dataSi[r * cols + c] = absGrid[r][c].si();
             }
         }
         return new DenseDoubleDataSi(dataSi, rows, cols);
