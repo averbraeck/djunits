@@ -254,6 +254,80 @@ public class AbsMatrixNxNTest
         assertThrows(NullPointerException.class, () -> AbsMatrixNxN.of(rel, null));
     }
 
+    /**
+     * Test the of(A[]) and of(A[][]) static factories.
+     */
+    @Test
+    public void testAbsStaticFactories()
+    {
+        Angle[] qa = {new Angle(0, Angle.Unit.deg), new Angle(90, Angle.Unit.deg), new Angle(180, Angle.Unit.deg),
+                new Angle(270, Angle.Unit.deg), new Angle(45, Angle.Unit.deg), new Angle(135, Angle.Unit.deg),
+                new Angle(225, Angle.Unit.deg), new Angle(30, Angle.Unit.deg), new Angle(315, Angle.Unit.deg)};
+        Direction[] arr = new Direction[9];
+        for (int i = 0; i < 9; i++)
+        {
+            arr[i] = new Direction(qa[i], Direction.Reference.EAST);
+        }
+        Direction[] arr7 = new Direction[7];
+        for (int i = 0; i < 7; i++)
+        {
+            arr7[i] = new Direction(qa[i], Direction.Reference.EAST);
+        }
+        
+        Direction[][] grid = new Direction[3][3];
+        for (int r = 0; r < 3; r++)
+        {
+            for (int c = 0; c < 3; c++)
+            {
+                grid[r][c] = new Direction(qa[r * 3 + c], Direction.Reference.EAST);
+            }
+        }
+        Direction[][] grid2x3 = new Direction[2][3];
+        for (int r = 0; r < 2; r++)
+        {
+            for (int c = 0; c < 3; c++)
+            {
+                grid2x3[r][c] = new Direction(qa[r * 3 + c], Direction.Reference.EAST);
+            }
+        }
+
+        var aa = AbsMatrixNxN.of(arr);
+        assertEquals(Angle.Unit.deg, aa.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, aa.getReference());
+        assertEquals(90.0, aa.get(0, 1).getInUnit(), 1E-10);
+        assertEquals(270.0, aa.get(1, 0).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxN.of((Direction[]) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(new Direction[] {}));
+        var arrRef = arr.clone();
+        arrRef[2] = new Direction(qa[2], Direction.Reference.NORTH);
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(arrRef));
+        arrRef[2] = null;
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxN.of(arrRef));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(arr7));
+
+        var ag = AbsMatrixNxN.of(grid);
+        assertEquals(Angle.Unit.deg, ag.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, ag.getReference());
+        assertEquals(90.0, ag.get(0, 1).getInUnit(), 1E-10);
+        assertEquals(270.0, ag.get(1, 0).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxN.of((Direction[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(new Direction[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(new Direction[][] {{}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN
+                .of(new Direction[][] {{arr[1], arr[2]}, {arr[1], arr[2], arr[3]}, {arr[1], arr[2], arr[3]}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN
+                .of(new Direction[][] {{arr[1], arr[2], arr[3]}, {arr[1], arr[2], arr[3]}, {arr[1], arr[2]}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(new Direction[][] {{arr[1], arr[2]}, {arr[3]}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(new Direction[][] {arr, arr}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(new Direction[][] {{}, {}}));
+        var gridRef = grid.clone();
+        gridRef[1][0] = new Direction(grid[1][0].getQuantity(), Direction.Reference.NORTH);
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(gridRef));
+        gridRef[1][0] = null;
+        assertThrows(NullPointerException.class, () -> AbsMatrixNxN.of(gridRef));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrixNxN.of(grid2x3));
+    }
+
     // ==================================== Scalar & SI array / grid access ====================================
 
     /**
@@ -558,7 +632,7 @@ public class AbsMatrixNxNTest
         assertThrows(NullPointerException.class, () -> m.add((MatrixNxN<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((MatrixNxN<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((AbsMatrixNxN<Direction, Angle>) null));
-        
+
         MatrixNxN<Angle> msubq = m.subtract(Direction.of(5.0, "deg", Direction.Reference.NORTH));
         assertEquals(85.0, msubq.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
     }
@@ -703,8 +777,7 @@ public class AbsMatrixNxNTest
         assertEquals(Angle.Unit.deg, m2NxN.getDisplayUnit());
         assertEquals(pi2, m2NxN.si(0, 1), 1E-10);
 
-        var m3 = AbsMatrixNxN.of(new double[] {0, 90, 180, 270, 0, 90, 180, 270, 0}, Angle.Unit.deg,
-                Direction.Reference.NORTH);
+        var m3 = AbsMatrixNxN.of(new double[] {0, 90, 180, 270, 0, 90, 180, 270, 0}, Angle.Unit.deg, Direction.Reference.NORTH);
         var m3NxN = m3.asAbsMatrix3x3();
         assertArrayEquals(m3.getSiArray(), m3NxN.asAbsMatrixNxN().getSiArray(), 1E-10);
         assertEquals(Angle.Unit.deg, m3NxN.getDisplayUnit());
