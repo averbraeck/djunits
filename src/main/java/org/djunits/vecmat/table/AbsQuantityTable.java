@@ -6,6 +6,7 @@ import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsTable;
 import org.djunits.vecmat.dn.AbsVectorN;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -137,6 +138,27 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
     }
 
     /**
+     * Create a AbsQuantityTable without needing generics, based on a row-major array of absolute quantities. The unit is
+     * taken from the first quantity in the grid. The reference points have to be all the same.
+     * @param absData the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed as an array of
+     *            absolute quantities
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a new AbsQuantityTable with a display unit and reference point
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final A[] absData, final int rows, final int cols)
+    {
+        Throw.whenNull(absData, "absData");
+        var ddd = DenseDoubleDataSi.of(absData, rows, cols); // guarantees that absGrid[0][0] exists
+        return new AbsQuantityTable<>(new QuantityTable<Q>(ddd, absData[0].getDisplayUnit()), absData[0].getReference());
+    }
+
+    /**
      * Create a new AbsQuantityTable with a unit, based on a 2-dimensional grid with SI-values.
      * @param gridSi the table values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed in the SI or base unit
      * @param displayUnit the unit of the data, which will also be used as the display unit
@@ -191,6 +213,25 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final Q[][] grid, final R reference)
     {
         return new AbsQuantityTable<>(QuantityTable.of(grid), reference);
+    }
+
+    /**
+     * Create a AbsQuantityTable without needing generics, based on a 2-dimensional grid of absolute quantities. The unit is
+     * taken from the first quantity in the grid. The reference points have to be all the same.
+     * @param absGrid the table values {{a11, a12, ..., A1M}, ..., {aN1, aN2, ..., aNM}} expressed as a 2-dimensional array of
+     *            absolute quantities
+     * @return a new AbsQuantityTable with a display unit and reference point
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final A[][] absGrid)
+    {
+        Throw.whenNull(absGrid, "absGrid");
+        var ddd = DenseDoubleDataSi.of(absGrid); // guarantees that absGrid[0][0] exists
+        return new AbsQuantityTable<>(new QuantityTable<Q>(ddd, absGrid[0][0].getDisplayUnit()), absGrid[0][0].getReference());
     }
 
     /**
