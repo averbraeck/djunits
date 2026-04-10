@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -670,6 +671,120 @@ public class AbsVectorNTest
         assertEquals(vdn.hashCode(), vrn.hashCode());
         assertNotEquals(vdn.hashCode(), vde.hashCode());
         assertNotEquals(vdn.hashCode(), northDegRow().hashCode());
+    }
+
+    /**
+     * Test as() functions for Col vector.
+     */
+    @Test
+    @DisplayName("AbsVectorN.Col as() functions test")
+    public void testAbsVectorNColAsFunctions()
+    {
+        var v = northDegCol();
+        var pi2 = Math.PI / 2.0;
+
+        var v3Col = v.asAbsVector3Col();
+        assertArrayEquals(v.getSiArray(), v3Col.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v3Col.getDisplayUnit());
+        assertEquals(pi2, v3Col.si(2), 1E-10);
+
+        var mNxM = v.asAbsMatrixNxM();
+        assertArrayEquals(v.getSiArray(), mNxM.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mNxM.getDisplayUnit());
+        assertEquals(pi2, mNxM.si(2, 0), 1E-10);
+
+        var mQT = v.asAbsQuantityTable();
+        assertArrayEquals(v.getSiArray(), mQT.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mQT.getDisplayUnit());
+        assertEquals(pi2, mQT.si(2, 0), 1E-10);
+
+        var vNcol = v.asAbsVectorNCol();
+        assertArrayEquals(v.getSiArray(), vNcol.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vNcol.getDisplayUnit());
+        assertEquals(pi2, vNcol.si(2), 1E-10);
+
+        assertThrows(IllegalStateException.class, () -> v.asAbsMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> v.asAbsMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> v.asAbsMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector1());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector2Col());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector2Row());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector3Row());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVectorNRow());
+
+        var v1 = AbsVectorN.Col.of(new double[] {90.0}, Angle.Unit.deg, Direction.Reference.NORTH);
+        var v1Col = v1.asAbsVector1();
+        assertArrayEquals(v1.getSiArray(), v1Col.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v1Col.getDisplayUnit());
+        assertEquals(pi2, v1Col.si(0), 1E-10);
+
+        var m1x1 = v1.asAbsMatrix1x1();
+        assertArrayEquals(v1.getSiArray(), m1x1.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, m1x1.getDisplayUnit());
+        assertEquals(pi2, m1x1.si(0, 0), 1E-10);
+
+        var v2 = AbsVectorN.Col.of(new double[] {90, 180}, Angle.Unit.deg, Direction.Reference.NORTH);
+        var v2Col = v2.asAbsVector2Col();
+        assertArrayEquals(v2.getSiArray(), v2Col.asAbsVectorNCol().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v2Col.getDisplayUnit());
+        assertEquals(pi2, v2Col.si(0), 1E-10);
+    }
+
+    /**
+     * Test as() functions for Row vector.
+     */
+    @Test
+    @DisplayName("AbsVectorN.Row as() functions test")
+    public void testAbsVectorNRowAsFunctions()
+    {
+        var v = northDegRow();
+        var pi2 = Math.PI / 2.0;
+
+        var v3Row = v.asAbsVector3Row();
+        assertArrayEquals(v.getSiArray(), v3Row.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v3Row.getDisplayUnit());
+        assertEquals(pi2, v3Row.si(2), 1E-10);
+
+        var mNxM = v.asAbsMatrixNxM();
+        assertArrayEquals(v.getSiArray(), mNxM.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mNxM.getDisplayUnit());
+        assertEquals(pi2, mNxM.si(0, 2), 1E-10);
+
+        var mQT = v.asAbsQuantityTable();
+        assertArrayEquals(v.getSiArray(), mQT.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, mQT.getDisplayUnit());
+        assertEquals(pi2, mQT.si(0, 2), 1E-10);
+
+        var vNrow = v.asAbsVectorNRow();
+        assertArrayEquals(v.getSiArray(), vNrow.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vNrow.getDisplayUnit());
+        assertEquals(pi2, vNrow.si(2), 1E-10);
+
+        assertThrows(IllegalStateException.class, () -> v.asAbsMatrix1x1());
+        assertThrows(IllegalStateException.class, () -> v.asAbsMatrix2x2());
+        assertThrows(IllegalStateException.class, () -> v.asAbsMatrix3x3());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector1());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector2Col());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector2Row());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVector3Col());
+        assertThrows(IllegalStateException.class, () -> v.asAbsVectorNCol());
+
+        var v1 = AbsVectorN.Row.of(new double[] {90.0}, Angle.Unit.deg, Direction.Reference.NORTH);
+        var v1Row = v1.asAbsVector1();
+        assertArrayEquals(v1.getSiArray(), v1Row.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v1Row.getDisplayUnit());
+        assertEquals(pi2, v1Row.si(0), 1E-10);
+
+        var m1x1 = v1.asAbsMatrix1x1();
+        assertArrayEquals(v1.getSiArray(), m1x1.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, m1x1.getDisplayUnit());
+        assertEquals(pi2, m1x1.si(0, 0), 1E-10);
+
+        var v2 = AbsVectorN.Row.of(new double[] {90, 180}, Angle.Unit.deg, Direction.Reference.NORTH);
+        var v2Row = v2.asAbsVector2Row();
+        assertArrayEquals(v2.getSiArray(), v2Row.asAbsVectorNRow().getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, v2Row.getDisplayUnit());
+        assertEquals(pi2, v2Row.si(0), 1E-10);
     }
 
 }
