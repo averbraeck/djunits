@@ -11,9 +11,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
-import org.djunits.vecmat.d1.Vector1;
-import org.djunits.vecmat.d2.Vector2;
-import org.djunits.vecmat.d3.Vector3;
 import org.djunits.vecmat.def.Vector;
 import org.djunits.vecmat.storage.DataGridSi;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -400,43 +397,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
             return new VectorN.Col<TQ>(this.dataSi, targetUnit);
         }
 
-        /**
-         * Return this matrix as a 1-element column vector. Shape must be 1 x 1.
-         * @return a {@code Vector1} with identical SI data and display unit
-         * @throws IllegalStateException if shape is not 1 x 1
-         */
-        public Vector1<Q> asVector1()
-        {
-            Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
-            final double[] data = unsafeSiArray();
-            return new Vector1<Q>(data[0], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        /**
-         * Return this matrix as a 2-element column vector. Shape must be 2 x 1.
-         * @return a {@code Vector2.Col} with identical SI data and display unit
-         * @throws IllegalStateException if shape is not 2 x 1
-         */
-        public Vector2.Col<Q> asVector2Col()
-        {
-            Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
-            final double[] data = unsafeSiArray();
-            return new Vector2.Col<Q>(data[0], data[1], getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
-        }
-
-        /**
-         * Return this matrix as a 3-element column vector. Shape must be 3 x 1.
-         * @return a {@code Vector3.Col} with identical SI data and display unit
-         * @throws IllegalStateException if shape is not 3 x 1
-         */
-        public Vector3.Col<Q> asVector3Col()
-        {
-            Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
-            final double[] data = unsafeSiArray();
-            return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit().getBaseUnit())
-                    .setDisplayUnit(getDisplayUnit());
-        }
-
     }
 
     /**
@@ -636,42 +596,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
                     getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
             return new VectorN.Row<TQ>(this.dataSi, targetUnit);
-        }
-
-        /**
-         * Return this matrix as a 1-element column vector. Shape must be 1 x 1.
-         * @return a {@code Vector1} with identical SI data and display unit
-         * @throws IllegalStateException if shape is not 1 x 1
-         */
-        public Vector1<Q> asVector1()
-        {
-            Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
-            final double[] data = unsafeSiArray();
-            return new Vector1<Q>(data[0], getDisplayUnit());
-        }
-
-        /**
-         * Return this matrix as a 2-element row vector. Shape must be 1 x 2.
-         * @return a {@code Vector2.Row} with identical SI data and display unit
-         * @throws IllegalStateException if shape is not 1 x 2
-         */
-        public Vector2.Row<Q> asVector2Row()
-        {
-            Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
-            final double[] data = unsafeSiArray();
-            return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit());
-        }
-
-        /**
-         * Return this matrix as a 3-element row vector. Shape must be 1 x 3.
-         * @return a {@code Vector3.Row} with identical SI data and display unit
-         * @throws IllegalStateException if shape is not 1 x 3
-         */
-        public Vector3.Row<Q> asVector3Row()
-        {
-            Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
-            final double[] data = unsafeSiArray();
-            return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit());
         }
 
     }

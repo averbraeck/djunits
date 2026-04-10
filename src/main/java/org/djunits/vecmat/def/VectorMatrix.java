@@ -10,6 +10,14 @@ import org.djunits.util.Math2;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
 import org.djunits.value.Value;
+import org.djunits.vecmat.d1.Matrix1x1;
+import org.djunits.vecmat.d1.Vector1;
+import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d2.Vector2;
+import org.djunits.vecmat.d3.Matrix3x3;
+import org.djunits.vecmat.d3.Vector3;
+import org.djunits.vecmat.dn.MatrixNxN;
+import org.djunits.vecmat.dn.VectorN;
 import org.djunits.vecmat.dnxm.MatrixNxM;
 import org.djunits.vecmat.operations.Hadamard;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -278,15 +286,16 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
                 getDisplayUnit().siUnit().plus(quantity.getDisplayUnit().siUnit()));
     }
 
+    // ------------------------------------ AS() METHODS ------------------------------------
+
     /**
-     * Convert this vector or matrix to a {@link MatrixNxM}. The unerlying data MIGHT be shared between this object and the
+     * Convert this vector or matrix to a {@link MatrixNxM}. The underlying data MIGHT be shared between this object and the
      * MatrixNxM.
      * @return a {@code MatrixNxN} with identical SI data and display unit
      */
     public MatrixNxM<Q> asMatrixNxM()
     {
-        return new MatrixNxM<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new MatrixNxM<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit());
     }
 
     /**
@@ -296,8 +305,140 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public QuantityTable<Q> asQuantityTable()
     {
-        return new QuantityTable<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new QuantityTable<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit());
+    }
+
+    /**
+     * Return this vector, matrix or table as a 1-element column vector. Shape must be 1 x 1.
+     * @return a {@code Vector1} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 1
+     */
+    public Vector1<Q> asVector1()
+    {
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
+        final double[] data = unsafeSiArray();
+        return new Vector1<Q>(data[0], getDisplayUnit());
+    }
+
+    /**
+     * Return this vector, matrix or table as a 2-element column vector. Shape must be 2 x 1.
+     * @return a {@code Vector2.Col} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 2 x 1
+     */
+    public Vector2.Col<Q> asVector2Col()
+    {
+        Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
+        final double[] data = unsafeSiArray();
+        return new Vector2.Col<Q>(data[0], data[1], getDisplayUnit());
+    }
+
+    /**
+     * Return this vector, matrix or table as a 3-element column vector. Shape must be 3 x 1.
+     * @return a {@code Vector3.Col} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 3 x 1
+     */
+    public Vector3.Col<Q> asVector3Col()
+    {
+        Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
+        final double[] data = unsafeSiArray();
+        return new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector, matrix or table to an N-element column vector. Shape must be N x 1. The underlying data MIGHT be
+     * shared between this object and the VectorN.Col.
+     * @return a {@code VectorN.Col} with identical SI data and display unit
+     * @throws IllegalStateException if {@code cols() != 1}
+     */
+    public VectorN.Col<Q> asVectorNCol()
+    {
+        Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
+        return VectorN.Col.ofSi(unsafeSiArray(), getDisplayUnit());
+    }
+
+    /**
+     * Return this vector, matrix or table as a 2-element row vector. Shape must be 1 x 2.
+     * @return a {@code Vector2.Row} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 2
+     */
+    public Vector2.Row<Q> asVector2Row()
+    {
+        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
+        final double[] data = unsafeSiArray();
+        return new Vector2.Row<Q>(data[0], data[1], getDisplayUnit());
+    }
+
+    /**
+     * Return this vector, matrix or table as a 3-element row vector. Shape must be 1 x 3.
+     * @return a {@code Vector3.Row} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 3
+     */
+    public Vector3.Row<Q> asVector3Row()
+    {
+        Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
+        final double[] data = unsafeSiArray();
+        return new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector, matrix or table to an N-element row vector. Shape must be 1 x N. The underlying data MIGHT be shared
+     * between this object and the VectorN.Row.
+     * @return a {@code VectorN.Row} with identical SI data and display unit
+     * @throws IllegalStateException if {@code rows() != 1}
+     */
+    public VectorN.Row<Q> asVectorNRow()
+    {
+        Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
+        return VectorN.Row.ofSi(unsafeSiArray(), getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector, matrix or table to a {@link Matrix1x1}. The shape must be 1 x 1.
+     * @return a {@code Matrix1x1} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 1 x 1
+     */
+    public Matrix1x1<Q> asMatrix1x1()
+    {
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class,
+                "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
+        return Matrix1x1.ofSi(unsafeSiArray(), getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector, matrix or table to a {@link Matrix2x2}. The shape must be 2 x 2.
+     * @return a {@code Matrix2x2} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 2 x 2
+     */
+    public Matrix2x2<Q> asMatrix2x2()
+    {
+        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
+                "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
+        return Matrix2x2.ofSi(unsafeSiArray(), getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector, matrix or table to a {@link Matrix3x3}. The shape must be 3 x 3.
+     * @return a {@code Matrix3x3} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 3 x 3
+     */
+    public Matrix3x3<Q> asMatrix3x3()
+    {
+        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
+                "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
+        return Matrix3x3.ofSi(unsafeSiArray(), getDisplayUnit());
+    }
+
+    /**
+     * Convert this vector, matrix or table to a {@link MatrixNxN}. The shape must be square. The underlying data MIGHT be
+     * shared between this object and the MatrixNxN.
+     * @return a {@code MatrixNxN} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not square
+     */
+    public MatrixNxN<Q> asMatrixNxN()
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "asMatrixNxN() called, but matrix is no square but %dx%d",
+                rows(), cols());
+        return new MatrixNxN<Q>(new DenseDoubleDataSi(unsafeSiArray(), rows(), cols()), getDisplayUnit());
     }
 
     // ------------------------------------ HELPER METHODS ------------------------------------
