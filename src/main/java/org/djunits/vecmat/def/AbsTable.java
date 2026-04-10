@@ -4,8 +4,8 @@ import java.lang.reflect.Array;
 
 import org.djunits.formatter.Format;
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 
 /**
@@ -21,9 +21,8 @@ import org.djunits.unit.Unit;
  * @param <MQ> the relative table type
  * @param <MAT> the type of the transposed version of the absolute table
  */
-public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>,
-        MA extends AbsTable<A, Q, MA, MQ, MAT>, MQ extends Table<Q, MQ, ?, ?, ?>, MAT extends AbsTable<A, Q, MAT, ?, MA>>
-        extends AbsVectorMatrix<A, Q, MA, MQ, MAT>
+public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>, MA extends AbsTable<A, Q, MA, MQ, MAT>,
+        MQ extends Table<Q, MQ, ?, ?, ?>, MAT extends AbsTable<A, Q, MAT, ?, MA>> extends AbsVectorMatrix<A, Q, MA, MQ, MAT>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -170,7 +169,6 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
         return out;
     }
 
-
     /**
      * Return a quantity row (0-based) from the vector or matrix. Note that the specific vector to return can be tightened by
      * the implementing class.
@@ -242,6 +240,7 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
     {
         return getRelativeVecMat().mgetColumnSi(mCol);
     }
+
     /**
      * Retrieve a row (0-based) from the matrix as an array of scalars.
      * @param row row of the values to retrieve (0-based)
@@ -307,7 +306,6 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
         return getColumnScalars(mCol - 1);
     }
 
-
     @SuppressWarnings("checkstyle:needbraces")
     @Override
     public String toString(final Unit<?, Q> withUnit)
@@ -333,27 +331,5 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
     {
         return toString(getDisplayUnit());
     }
-
-    // TODO: as.. methods
-    /*-
-     * Convert this vector or matrix to a {@link MatrixNxM}.
-     * @return a {@code MatrixNxN} with identical SI data and display unit
-     * /
-    public AbsMatrixNxM<Q> asAbsMatrixNxM()
-    {
-        return new AbsMatrixNxM<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit(), getReference())
-                .setDisplayUnit(getDisplayUnit());
-    }
-    
-    /**
-     * Convert this vector or matrix to a {@link QuantityTable}.
-     * @return a {@code QuantityTable} with identical SI data and display unit
-     * /
-    public AbsQuantityTable<Q> asAbsQuantityTable()
-    {
-        return new AbsQuantityTable<Q>(new DenseDoubleDataSi(si(), rows(), cols()), getDisplayUnit().getBaseUnit(),
-                getReference()).setDisplayUnit(getDisplayUnit());
-    }
-    */
 
 }

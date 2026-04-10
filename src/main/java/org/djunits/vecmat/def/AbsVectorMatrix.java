@@ -8,6 +8,26 @@ import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.util.ArrayMath;
 import org.djunits.value.Value;
+import org.djunits.vecmat.d1.AbsMatrix1x1;
+import org.djunits.vecmat.d1.AbsVector1;
+import org.djunits.vecmat.d1.Matrix1x1;
+import org.djunits.vecmat.d1.Vector1;
+import org.djunits.vecmat.d2.AbsMatrix2x2;
+import org.djunits.vecmat.d2.AbsVector2;
+import org.djunits.vecmat.d2.Matrix2x2;
+import org.djunits.vecmat.d2.Vector2;
+import org.djunits.vecmat.d3.AbsMatrix3x3;
+import org.djunits.vecmat.d3.AbsVector3;
+import org.djunits.vecmat.d3.Matrix3x3;
+import org.djunits.vecmat.d3.Vector3;
+import org.djunits.vecmat.dn.AbsMatrixNxN;
+import org.djunits.vecmat.dn.AbsVectorN;
+import org.djunits.vecmat.dn.MatrixNxN;
+import org.djunits.vecmat.dn.VectorN;
+import org.djunits.vecmat.dnxm.AbsMatrixNxM;
+import org.djunits.vecmat.dnxm.MatrixNxM;
+import org.djunits.vecmat.table.AbsQuantityTable;
+import org.djunits.vecmat.table.QuantityTable;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -257,6 +277,165 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
                 .instantiateSi(
                         ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.getRelativeVecMat().unsafeSiArray()))
                 .setDisplayUnit(getDisplayUnit());
+    }
+
+    // ------------------------------------ AS() METHODS ------------------------------------
+
+    /**
+     * Convert this absolute vector or matrix to a {@link AbsMatrixNxM}. The underlying data MIGHT be shared between this object
+     * and the new AbsMatrixNxM.
+     * @return a {@code AbsMatrixNxN} with identical SI data, display unit, and reference point
+     */
+    public AbsMatrixNxM<A, Q> asAbsMatrixNxM()
+    {
+        return new AbsMatrixNxM<A, Q>(MatrixNxM.ofSi(getRelativeVecMat().unsafeSiArray(), rows(), cols(), getDisplayUnit()),
+                getReference());
+    }
+
+    /**
+     * Convert this absolute vector or matrix to a {@link AbsQuantityTable}. The underlying data MIGHT be shared between this
+     * object and the new AbsQuantityTable.
+     * @return a {@code AbsQuantityTable} with identical SI data, display unit, and reference point
+     */
+    public AbsQuantityTable<A, Q> asAbsQuantityTable()
+    {
+        return new AbsQuantityTable<A, Q>(
+                QuantityTable.ofSi(getRelativeVecMat().unsafeSiArray(), rows(), cols(), getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Return this absolute vector, matrix or table as a 1-element column vector. Shape must be 1 x 1.
+     * @return a {@code AbsVector1} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 1
+     */
+    public AbsVector1<A, Q> asAbsVector1()
+    {
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class, "Matrix is not 1x1");
+        final double[] data = getRelativeVecMat().unsafeSiArray();
+        return new AbsVector1<A, Q>(new Vector1<Q>(data[0], getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Return this absolute vector, matrix or table as a 2-element column vector. Shape must be 2 x 1.
+     * @return a {@code AbsVector2.Col} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 2 x 1
+     */
+    public AbsVector2.Col<A, Q> asAbsVector2Col()
+    {
+        Throw.when(rows() != 2 || cols() != 1, IllegalStateException.class, "Matrix is not 2x1");
+        final double[] data = getRelativeVecMat().unsafeSiArray();
+        return new AbsVector2.Col<A, Q>(new Vector2.Col<Q>(data[0], data[1], getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Return this absolute vector, matrix or table as a 3-element column vector. Shape must be 3 x 1.
+     * @return a {@code AbsVector3.Col} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 3 x 1
+     */
+    public AbsVector3.Col<A, Q> asAbsVector3Col()
+    {
+        Throw.when(rows() != 3 || cols() != 1, IllegalStateException.class, "Matrix is not 3x1");
+        final double[] data = getRelativeVecMat().unsafeSiArray();
+        return new AbsVector3.Col<A, Q>(new Vector3.Col<Q>(data[0], data[1], data[2], getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Convert this absolute vector, matrix or table to an N-element column vector. Shape must be N x 1. The underlying data
+     * MIGHT be shared between this object and the AbsVectorN.Col.
+     * @return a {@code AbsVectorN.Col} with identical SI data and display unit
+     * @throws IllegalStateException if {@code cols() != 1}
+     */
+    public AbsVectorN.Col<A, Q> asAbsVectorNCol()
+    {
+        Throw.when(cols() != 1, IllegalStateException.class, "Matrix is not Nx1");
+        return new AbsVectorN.Col<A, Q>(VectorN.Col.ofSi(getRelativeVecMat().unsafeSiArray(), getDisplayUnit()),
+                getReference());
+    }
+
+    /**
+     * Return this absolute vector, matrix or table as a 2-element row vector. Shape must be 1 x 2.
+     * @return a {@code AbsVector2.Row} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 2
+     */
+    public AbsVector2.Row<A, Q> asAbsVector2Row()
+    {
+        Throw.when(rows() != 1 || cols() != 2, IllegalStateException.class, "Matrix is not 1x2");
+        final double[] data = getRelativeVecMat().unsafeSiArray();
+        return new AbsVector2.Row<A, Q>(new Vector2.Row<Q>(data[0], data[1], getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Return this absolute vector, matrix or table as a 3-element row vector. Shape must be 1 x 3.
+     * @return a {@code AbsVector3.Row} with identical SI data and display unit
+     * @throws IllegalStateException if shape is not 1 x 3
+     */
+    public AbsVector3.Row<A, Q> asAbsVector3Row()
+    {
+        Throw.when(rows() != 1 || cols() != 3, IllegalStateException.class, "Matrix is not 1x3");
+        final double[] data = getRelativeVecMat().unsafeSiArray();
+        return new AbsVector3.Row<A, Q>(new Vector3.Row<Q>(data[0], data[1], data[2], getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Convert this absolute vector, matrix or table to an N-element row vector. Shape must be 1 x N. The underlying data MIGHT
+     * be shared between this object and the AbsVectorN.Row.
+     * @return a {@code AbsVectorN.Row} with identical SI data and display unit
+     * @throws IllegalStateException if {@code rows() != 1}
+     */
+    public AbsVectorN.Row<A, Q> asAbsVectorNRow()
+    {
+        Throw.when(rows() != 1, IllegalStateException.class, "Matrix is not 1xN");
+        return new AbsVectorN.Row<A, Q>(VectorN.Row.ofSi(getRelativeVecMat().unsafeSiArray(), getDisplayUnit()),
+                getReference());
+    }
+
+    /**
+     * Convert this absolute vector, matrix or table to a {@link AbsMatrix1x1}. The shape must be 1 x 1.
+     * @return a {@code AbsMatrix1x1} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 1 x 1
+     */
+    public AbsMatrix1x1<A, Q> asAbsMatrix1x1()
+    {
+        Throw.when(rows() != 1 || cols() != 1, IllegalStateException.class,
+                "asAbsMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(), cols());
+        return new AbsMatrix1x1<A, Q>(Matrix1x1.ofSi(getRelativeVecMat().unsafeSiArray(), getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Convert this absolute vector, matrix or table to a {@link AbsMatrix2x2}. The shape must be 2 x 2.
+     * @return a {@code AbsMatrix2x2} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 2 x 2
+     */
+    public AbsMatrix2x2<A, Q> asAbsMatrix2x2()
+    {
+        Throw.when(rows() != 2 || cols() != 2, IllegalStateException.class,
+                "asAbsMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(), cols());
+        return new AbsMatrix2x2<A, Q>(Matrix2x2.ofSi(getRelativeVecMat().unsafeSiArray(), getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Convert this absolute vector, matrix or table to a {@link AbsMatrix3x3}. The shape must be 3 x 3.
+     * @return a {@code AbsMatrix3x3} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not 3 x 3
+     */
+    public AbsMatrix3x3<A, Q> asAbsMatrix3x3()
+    {
+        Throw.when(rows() != 3 || cols() != 3, IllegalStateException.class,
+                "asAbsMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(), cols());
+        return new AbsMatrix3x3<A, Q>(Matrix3x3.ofSi(getRelativeVecMat().unsafeSiArray(), getDisplayUnit()), getReference());
+    }
+
+    /**
+     * Convert this absolute vector, matrix or table to a {@link AbsMatrixNxN}. The shape must be square. The underlying data
+     * MIGHT be shared between this object and the AbsMatrixNxN.
+     * @return a {@code AbsMatrixNxN} with identical SI data and display unit
+     * @throws IllegalStateException if this matrix is not square
+     */
+    public AbsMatrixNxN<A, Q> asAbsMatrixNxN()
+    {
+        Throw.when(rows() != cols(), IllegalStateException.class, "asAbsMatrixNxN() called, but matrix is no square but %dx%d",
+                rows(), cols());
+        return new AbsMatrixNxN<A, Q>(MatrixNxN.ofSi(getRelativeVecMat().unsafeSiArray(), getDisplayUnit()), getReference());
     }
 
     // ======================================= hashCode() and equals() ===============================================
