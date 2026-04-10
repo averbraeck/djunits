@@ -48,6 +48,8 @@ Addition and subtraction of absolute vectors and matrices follow the rules for t
 - `absVector.subtract(absQuantity)` returns a new **relative** `Vector` where all entries of of `absVector` have been decreased by the provided absolute quantity. The `displayUnit` of the resulting relative vector is taken from `absVector`.
 - `absVector1.subtract(absVector2)` returns a new **relative** `Vector` where all entries of `absVector2` have been subtracted from the corresponding entries of `absVector1`. The `displayUnit` of the resulting absolute vector is taken from `absVector1`. The number of rows and columns of `absVector1` and `absVector2` have to be equal, of course.
 
+It is possible to transform any `AbsVector` into an `AbsVectorN`, an `AbsMatrixNxM` or `AbsQuantityTable`. If the dimensions match, an `AbsQuantityTable`, `AbsMatrixNxM`, `AbsMatrixNxN`, or `AbsVectorN` can be transformed into an `AbsVector1`, `AbsVector2.Col`, `AbsVector2.Row`, `AbsVector3.Col`, or `AbsVector3.Row`. The methods are named, e.g., `asAbsMatrixNxM()`, `asAbsVector2Col()`, etc.
+
 
 ## Obtaining values of vector entries
 
