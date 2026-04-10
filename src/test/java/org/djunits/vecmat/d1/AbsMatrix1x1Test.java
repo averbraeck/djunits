@@ -230,6 +230,41 @@ public class AbsMatrix1x1Test
         assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(rel, null));
     }
 
+    /**
+     * Test the of(A), of(A[]) and of(A[][]) static factories.
+     */
+    @Test
+    public void testAbsStaticFactories()
+    {
+        Angle[] qa = {new Angle(90, Angle.Unit.deg)};
+        var dir = new Direction(qa[0], Direction.Reference.EAST);
+
+        var a1 = AbsMatrix1x1.of(dir);
+        assertEquals(Angle.Unit.deg, a1.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, a1.getReference());
+        assertEquals(90.0, a1.get(0, 0).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of((Direction) null));
+
+        var aa = AbsMatrix1x1.of(new Direction[] {dir});
+        assertEquals(Angle.Unit.deg, aa.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, aa.getReference());
+        assertEquals(90.0, aa.get(0, 0).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of((Direction[]) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix1x1.of(new Direction[] {}));
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(new Direction[] {null}));
+
+        var ag = AbsMatrix1x1.of(new Direction[][] {{dir}});
+        assertEquals(Angle.Unit.deg, ag.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, ag.getReference());
+        assertEquals(90.0, ag.get(0, 0).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of((Direction[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix1x1.of(new Direction[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix1x1.of(new Direction[][] {{}}));
+        assertThrows(NullPointerException.class, () -> AbsMatrix1x1.of(new Direction[][] {null}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix1x1.of(new Direction[][] {{dir, dir}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix1x1.of(new Direction[][] {{}, {}}));
+    }
+
     // ==================================== Scalar & SI array / grid access ====================================
 
     /**
