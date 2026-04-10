@@ -605,6 +605,9 @@ public class AbsMatrixNxMTest
         assertThrows(NullPointerException.class, () -> m.add((MatrixNxM<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((MatrixNxM<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((AbsMatrixNxM<Direction, Angle>) null));
+        
+        MatrixNxM<Angle> msubq = m.subtract(Direction.of(5.0, "deg", Direction.Reference.NORTH));
+        assertEquals(85.0, msubq.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
     }
 
     // ------------------------------------------------------------------------------------
@@ -754,5 +757,5 @@ public class AbsMatrixNxMTest
         assertEquals(3, row.size());
         assertEquals(90.0, col.get(0).getInUnit(Angle.Unit.deg), 1e-12);
     }
-
+    
 }

@@ -681,6 +681,9 @@ public class AbsMatrix3x3Test
         assertThrows(NullPointerException.class, () -> m.add((Matrix3x3<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((Matrix3x3<Angle>) null));
         assertThrows(NullPointerException.class, () -> m.subtract((AbsMatrix3x3<Direction, Angle>) null));
+        
+        Matrix3x3<Angle> msubq = m.subtract(Direction.of(5.0, "deg", Direction.Reference.NORTH));
+        assertEquals(85.0, msubq.get(0, 1).getInUnit(Angle.Unit.deg), 1E-10);
     }
 
     // ==================================== toString ====================================

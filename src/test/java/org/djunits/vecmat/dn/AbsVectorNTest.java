@@ -483,6 +483,9 @@ public class AbsVectorNTest
         assertThrows(NullPointerException.class, () -> v.add((VectorN.Col<Angle>) null));
         assertThrows(NullPointerException.class, () -> v.subtract((VectorN.Col<Angle>) null));
         assertThrows(NullPointerException.class, () -> v.subtract((AbsVectorN.Col<Direction, Angle>) null));
+
+        VectorN.Col<Angle> vsubq = v.subtract(Direction.of(5.0, "deg", Direction.Reference.NORTH));
+        assertEquals(85.0, vsubq.get(2).getInUnit(Angle.Unit.deg), 1E-10);
     }
 
     /**
@@ -519,6 +522,9 @@ public class AbsVectorNTest
         assertThrows(NullPointerException.class, () -> v.add((VectorN.Row<Angle>) null));
         assertThrows(NullPointerException.class, () -> v.subtract((VectorN.Row<Angle>) null));
         assertThrows(NullPointerException.class, () -> v.subtract((AbsVectorN.Row<Direction, Angle>) null));
+
+        VectorN.Row<Angle> vsubq = v.subtract(Direction.of(5.0, "deg", Direction.Reference.NORTH));
+        assertEquals(85.0, vsubq.get(2).getInUnit(Angle.Unit.deg), 1E-10);
     }
 
     // ==================================== iterator ====================================
