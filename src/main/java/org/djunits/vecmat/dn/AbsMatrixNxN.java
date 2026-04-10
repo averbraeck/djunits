@@ -5,6 +5,8 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsSquareMatrix;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
+import org.djutils.exceptions.Throw;
 
 /**
  * AbsMatrixNxN implements a matrix with NxN absolute quantities with a reference point. The matrix is immutable, except for the
@@ -122,6 +124,26 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     }
 
     /**
+     * Create a AbsMatrixNxN without needing generics, based on a row-major array of absolute quantities. The unit is taken from
+     * the first quantity in the grid. The reference points have to be all the same.
+     * @param absData the values {a11, a12, ..., A1N, ..., aN1, aN2, ..., aNN} expressed as an array of absolute quantities
+     * @return a new AbsMatrixNxN with a display unit and reference point
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     * @throws IllegalArgumentException when the size of the data object is not a perfect square
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final A[] absData)
+    {
+        Throw.whenNull(absData, "absData");
+        int size = (int) Math.sqrt(absData.length);
+        Throw.when(size * size != absData.length, IllegalArgumentException.class, "absData.length is not square");
+        var ddd = DenseDoubleDataSi.of(absData, size, size); // guarantees that absGrid[0][0] exists
+        return new AbsMatrixNxN<>(new MatrixNxN<Q>(ddd, absData[0].getDisplayUnit()), absData[0].getReference());
+    }
+
+    /**
      * Create an AbsMatrixNxN with a unit, based on a 2-dimensional grid with SI-values.
      * @param gridSi the matrix values {a11, a12, ..., a1N}, ..., {aN1, aN2, ..., aNN}} expressed in the SI or base unit
      * @param displayUnit the unit of the data, which will also be used as the display unit
@@ -171,6 +193,24 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
             R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final Q[][] grid, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(grid), reference);
+    }
+
+    /**
+     * Create a AbsMatrixNxN without needing generics, based on a row-major array of absolute quantities. The unit is taken from
+     * the first quantity in the grid. The reference points have to be all the same.
+     * @param absGrid the values {{a11, a12, ..., A1N}, ..., {aN1, aN2, ..., aNN}} expressed as an array of absolute quantities
+     * @return a new AbsMatrixNxN with a display unit and reference point
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     * @param <R> the reference type
+     * @throws IllegalArgumentException when the size of the data object is not a perfect square
+     */
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final A[][] absGrid)
+    {
+        Throw.whenNull(absGrid, "absGrid");
+        var ddd = DenseDoubleDataSi.of(absGrid); // guarantees that absGrid[0][0] exists
+        return new AbsMatrixNxN<>(new MatrixNxN<Q>(ddd, absGrid[0][0].getDisplayUnit()), absGrid[0][0].getReference());
     }
 
     /**
