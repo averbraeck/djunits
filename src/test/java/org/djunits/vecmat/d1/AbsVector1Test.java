@@ -190,6 +190,32 @@ public class AbsVector1Test
         assertThrows(NullPointerException.class, () -> AbsVector1.of(rel, null));
     }
 
+    /**
+     * Test of(A) and of(A[]) static factories for column matrices.
+     */
+    @Test
+    public void testAbsStaticFactoriesCol()
+    {
+        Angle[] qa = {new Angle(180, Angle.Unit.deg)};
+        Direction[] da = {new Direction(qa[0], Direction.Reference.NORTH)};
+        var siArr = new double[] {qa[0].si()};
+
+        // of(A, ref)
+        AbsVector1<Direction, Angle> va = AbsVector1.of(da[0]);
+        assertArrayEquals(siArr, va.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, va.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVector1.of((Direction) null));
+
+        // of(A[], ref)
+        AbsVector1<Direction, Angle> vaa = AbsVector1.of(da);
+        assertArrayEquals(siArr, vaa.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vaa.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVector1.of((Direction[]) null));
+        assertThrows(NullPointerException.class, () -> AbsVector1.of(new Direction[] {null}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector1.of(new Direction[] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector1.of(new Direction[] {da[0], da[0]}));
+    }
+
     // ==================================== Scalar & SI array access ====================================
 
     /**
