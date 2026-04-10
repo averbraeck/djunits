@@ -279,6 +279,17 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
                 .setDisplayUnit(getDisplayUnit());
     }
 
+    /**
+     * Return a relative vector or matrix with entries that contain the absolute value minus the absolute decrement.
+     * @param decrement the absolute quantity by which to decrease the values of the vector or matrix
+     * @return a vector or matrix with entries that are decremented by the given decrement
+     */
+    public VMQ subtract(final A decrement)
+    {
+        return this.relativeVecMat.instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), -decrement.si()))
+                .setDisplayUnit(getDisplayUnit());
+    }
+
     // ------------------------------------ AS() METHODS ------------------------------------
 
     /**
