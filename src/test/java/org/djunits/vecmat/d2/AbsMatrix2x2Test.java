@@ -240,6 +240,59 @@ public class AbsMatrix2x2Test
         assertThrows(NullPointerException.class, () -> AbsMatrix2x2.of(rel, null));
     }
 
+    /**
+     * Test the of(A[]) and of(A[][]) static factories.
+     */
+    @Test
+    public void testAbsStaticFactories()
+    {
+        Angle[] qa = {new Angle(0, Angle.Unit.deg), new Angle(90, Angle.Unit.deg), new Angle(180, Angle.Unit.deg),
+                new Angle(270, Angle.Unit.deg)};
+        Direction[] arr = new Direction[4];
+        for (int i = 0; i < 4; i++)
+        {
+            arr[i] = new Direction(qa[i], Direction.Reference.EAST);
+        }
+        Direction[][] grid = new Direction[2][2];
+        for (int r = 0; r < 2; r++)
+        {
+            for (int c = 0; c < 2; c++)
+            {
+                grid[r][c] = new Direction(qa[r * 2 + c], Direction.Reference.EAST);
+            }
+        }
+
+        var aa = AbsMatrix2x2.of(arr);
+        assertEquals(Angle.Unit.deg, aa.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, aa.getReference());
+        assertEquals(90.0, aa.get(0, 1).getInUnit(), 1E-10);
+        assertEquals(270.0, aa.get(1, 1).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrix2x2.of((Direction[]) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[] {}));
+        assertThrows(NullPointerException.class, () -> AbsMatrix2x2.of(new Direction[] {null, null, null, null}));
+        var arrRef = arr.clone();
+        arrRef[2] = new Direction(qa[2], Direction.Reference.NORTH);
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(arrRef));
+
+        var ag = AbsMatrix2x2.of(grid);
+        assertEquals(Angle.Unit.deg, ag.getDisplayUnit());
+        assertEquals(Direction.Reference.EAST, ag.getReference());
+        assertEquals(90.0, ag.get(0, 1).getInUnit(), 1E-10);
+        assertEquals(270.0, ag.get(1, 1).getInUnit(), 1E-10);
+        assertThrows(NullPointerException.class, () -> AbsMatrix2x2.of((Direction[][]) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[][] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[][] {{}}));
+        assertThrows(NullPointerException.class, () -> AbsMatrix2x2.of(new Direction[][] {{null, null}, {null, null}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[][] {{arr[1], arr[2]}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[][] {{arr[1], arr[2]}, {arr[3]}}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[][] {arr, arr}));
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(new Direction[][] {{}, {}}));
+        assertThrows(NullPointerException.class, () -> AbsMatrix2x2.of(new Direction[][] {{arr[0], arr[1]}, {null, arr[3]}}));
+        var gridRef = grid.clone();
+        gridRef[1][0] = new Direction(grid[1][0].getQuantity(), Direction.Reference.NORTH);
+        assertThrows(IllegalArgumentException.class, () -> AbsMatrix2x2.of(gridRef));
+    }
+
     // ==================================== Scalar & SI array / grid access ====================================
 
     /**
