@@ -33,6 +33,7 @@ The generic methods of an `AbsMatrix` are:
 - `getDisplayUnit()` returns the display unit of the entire `AbsMatrix`.
 - `setDisplayUnit(unit)` sets a new display unit for the entire `AbsMatrix` based on a strongly typed `unit`.
 - `setDisplayUnit(string)` sets a new display unit for the entire `AbsMatrix` based on a `String` representation of the unit.
+- `getReference()` returns the reference point for all absolute quantities in the `AbsMatrix`.
 - `boolean isRelative()` returns whether the underlying `AbsQuantity` is relative or not. Note that `AbsMatrix` only stores absolute quantities.
 - `boolean isAbsolute()` returns whether the underlying `AbsQuantity` is absolute or not. Note that `AbsMatrix` only stores absolute quantities.
 - `transpose()` returns a new `AbsMatrix` where the rows and columns are swapped.
