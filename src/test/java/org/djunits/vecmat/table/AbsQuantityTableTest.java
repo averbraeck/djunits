@@ -340,7 +340,6 @@ public class AbsQuantityTableTest
         assertEquals(3, aqt2.cols());
         assertEquals(Angle.Unit.deg, aqt2.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, aqt2.getReference());
-        System.out.println(aqt2.toString(Angle.Unit.deg));
         assertArrayEquals(qd, aqt2.getScalarArray());
         assertArrayEquals(qa, aqt2.getRelativeVecMat().getScalarArray());
         
