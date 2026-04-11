@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -338,6 +339,92 @@ public class AbsVectorNTest
         assertEquals(Angle.Unit.deg, avrel.getDisplayUnit());
         assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of((VectorN.Row<Angle>) null, Direction.Reference.NORTH));
         assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(rel, null));
+    }
+
+    /**
+     * Test of(A) and of(A[]) static factories for column matrices.
+     */
+    @Test
+    public void testAbsStaticFactoriesCol()
+    {
+        final var north = Direction.Reference.NORTH;
+        Angle[] qa = {new Angle(180, Angle.Unit.deg), new Angle(90, Angle.Unit.deg), new Angle(135, Angle.Unit.deg)};
+        Direction[] da = {new Direction(qa[0], north), new Direction(qa[1], north), new Direction(qa[2], north)};
+        var siArr = new double[] {qa[0].si(), qa[1].si(), qa[2].si()};
+        var dEast = new Direction(qa[0], Direction.Reference.EAST);
+        var dList = List.of(da[0], da[1], da[2]);
+
+        // of(A[])
+        AbsVectorN.Col<Direction, Angle> vaa = AbsVectorN.Col.of(da);
+        assertArrayEquals(siArr, vaa.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vaa.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of((Direction[]) null));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(new Direction[] {null, null, null}));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(new Direction[] {null, da[1], da[2]}));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(new Direction[] {da[0], null, da[2]}));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(new Direction[] {da[0], da[1], null}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Col.of(new Direction[] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Col.of(new Direction[] {da[0], dEast, da[2]}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Col.of(new Direction[] {da[0], da[1], dEast}));
+
+        // of(List<A>)
+        AbsVectorN.Col<Direction, Angle> val = AbsVectorN.Col.of(dList);
+        assertArrayEquals(siArr, val.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, val.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(List.of((Direction) null)));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(List.of(null, da[1], da[2])));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(List.of(da[0], null, da[2])));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Col.of(List.of(da[0], da[1], null)));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Col.of(new ArrayList<Direction>()));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Col.of(List.of(da[0], dEast, da[2])));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Col.of(List.of(da[0], da[1], dEast)));
+        
+        // Test DenseDoubleData.of(List<A>) exceptions
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.of(dList, 0, 3));
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.of(dList, 3, 0));
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.of(dList, 1, 1));
+        assertThrows(NullPointerException.class, () -> DenseDoubleDataSi.of((List<Direction>) null, 1, 3));
+        assertThrows(NullPointerException.class, () -> DenseDoubleDataSi.of(List.of(da[0], null, da[2]), 1, 3));
+        assertThrows(IllegalArgumentException.class, () -> DenseDoubleDataSi.of(List.of(da[0], dEast, da[2]), 1, 3));
+    }
+
+    /**
+     * Test of(A) and of(A[]) static factories for row matrices.
+     */
+    @Test
+    public void testAbsStaticFactoriesRow()
+    {
+        final var north = Direction.Reference.NORTH;
+        Angle[] qa = {new Angle(180, Angle.Unit.deg), new Angle(90, Angle.Unit.deg), new Angle(135, Angle.Unit.deg)};
+        Direction[] da = {new Direction(qa[0], north), new Direction(qa[1], north), new Direction(qa[2], north)};
+        var siArr = new double[] {qa[0].si(), qa[1].si(), qa[2].si()};
+        var dEast = new Direction(qa[0], Direction.Reference.EAST);
+        var dList = List.of(da[0], da[1], da[2]);
+
+        // of(A[])
+        AbsVectorN.Row<Direction, Angle> vaa = AbsVectorN.Row.of(da);
+        assertArrayEquals(siArr, vaa.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vaa.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of((Direction[]) null));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(new Direction[] {null, null, null}));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(new Direction[] {null, da[1], da[2]}));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(new Direction[] {da[0], null, da[2]}));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(new Direction[] {da[0], da[1], null}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Row.of(new Direction[] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Row.of(new Direction[] {da[0], dEast, da[2]}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Row.of(new Direction[] {da[0], da[1], dEast}));
+
+        // of(List<A>)
+        AbsVectorN.Row<Direction, Angle> val = AbsVectorN.Row.of(dList);
+        assertArrayEquals(siArr, val.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, val.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(List.of((Direction) null)));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(List.of(null, da[1], da[2])));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(List.of(da[0], null, da[2])));
+        assertThrows(NullPointerException.class, () -> AbsVectorN.Row.of(List.of(da[0], da[1], null)));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Row.of(new ArrayList<Direction>()));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Row.of(List.of(da[0], dEast, da[2])));
+        assertThrows(IllegalArgumentException.class, () -> AbsVectorN.Row.of(List.of(da[0], da[1], dEast)));
     }
 
     // ==================================== Scalar & SI array access ====================================
