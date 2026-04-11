@@ -114,6 +114,25 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         }
 
         /**
+         * Create an AbsVector2.Col without needing generics.
+         * @param absX the v1-value expressed as an absolute quantity
+         * @param absY the v2-value expressed as an absolute quantity
+         * @return a new AbsVector2.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVector2.Col<A, Q> of(final A absX, final A absY)
+        {
+            Throw.whenNull(absX, "absX");
+            Throw.whenNull(absY, "absY");
+            Throw.when(!absX.getReference().equals(absY.getReference()), IllegalArgumentException.class,
+                    "absX.reference != absY.reference");
+            return new AbsVector2.Col<>(Vector2.Col.of(absX.getQuantity(), absY.getQuantity()), absX.getReference());
+        }
+
+        /**
          * Create a AbsVector2.Col without needing generics.
          * @param dataInUnit the vector entries expressed as an array in the unit
          * @param unit the unit of the data, which will also be used as the display unit
@@ -179,6 +198,22 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVector2.Col<A, Q> of(final Q[] data, final R reference)
         {
             return new AbsVector2.Col<>(Vector2.Col.of(data), reference);
+        }
+
+        /**
+         * Create an AbsVector2.Col without needing generics.
+         * @param absData the {x, y} value expressed as an array of absolute quantities
+         * @return a new AbsVector2.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVector2.Col<A, Q> of(final A[] absData)
+        {
+            Throw.whenNull(absData, "absData");
+            Throw.when(absData.length != 2, IllegalArgumentException.class, "absData.length != 2");
+            return AbsVector2.Col.of(absData[0], absData[1]);
         }
 
         /**
@@ -274,6 +309,25 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         }
 
         /**
+         * Create an AbsVector2.Row without needing generics.
+         * @param absX the v1-value expressed as an absolute quantity
+         * @param absY the v2-value expressed as an absolute quantity
+         * @return a new AbsVector2.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVector2.Row<A, Q> of(final A absX, final A absY)
+        {
+            Throw.whenNull(absX, "absX");
+            Throw.whenNull(absY, "absY");
+            Throw.when(!absX.getReference().equals(absY.getReference()), IllegalArgumentException.class,
+                    "absX.reference != absY.reference");
+            return new AbsVector2.Row<>(Vector2.Row.of(absX.getQuantity(), absY.getQuantity()), absX.getReference());
+        }
+
+        /**
          * Create a AbsVector2.Row without needing generics.
          * @param dataInUnit the vector entries expressed as an array in the unit
          * @param unit the unit of the data, which will also be used as the display unit
@@ -339,6 +393,22 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVector2.Row<A, Q> of(final Q[] data, final R reference)
         {
             return new AbsVector2.Row<>(Vector2.Row.of(data), reference);
+        }
+
+        /**
+         * Create an AbsVector2.Row without needing generics.
+         * @param absData the {x, y} value expressed as an array of absolute quantities
+         * @return a new AbsVector2.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVector2.Row<A, Q> of(final A[] absData)
+        {
+            Throw.whenNull(absData, "absData");
+            Throw.when(absData.length != 2, IllegalArgumentException.class, "absData.length != 2");
+            return AbsVector2.Row.of(absData[0], absData[1]);
         }
 
         /**
