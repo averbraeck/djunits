@@ -1,6 +1,7 @@
 package org.djunits.vecmat.storage;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import org.djunits.quantity.def.AbsQuantity;
@@ -136,8 +137,40 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
         {
             Throw.whenNull(absData[i], "absGrid[%d] = null", i);
             Throw.when(!reference.equals(absData[i].getReference()), IllegalArgumentException.class,
-                    "Reference of absGrid[%d] != %s, but %s", i, reference.toString(), absData[i].getReference().toString());
+                    "Reference of absData[%d] != %s, but %s", i, reference.toString(), absData[i].getReference().toString());
             dataSi[i] = absData[i].si();
+        }
+        return new DenseDoubleDataSi(dataSi, rows, cols);
+    }
+
+    /**
+     * Instantiate a data object based on a row-major list of absolute quantities. A safe copy of the data is stored.
+     * @param absData the absolute quantities as a list in row-major format
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a dense double data object with SI values for vectors, matrices and tables
+     * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
+     *             or columns is not positive
+     * @param <A> the absolute quantity type
+     * @param <Q> the quantity type
+     */
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final List<A> absData,
+            final int rows, final int cols)
+    {
+        Throw.whenNull(absData, "absData");
+        Throw.when(rows == 0, IllegalArgumentException.class, "rows = 0");
+        Throw.when(cols == 0, IllegalArgumentException.class, "cols = 0");
+        Throw.when(absData.size() != rows * cols, IllegalArgumentException.class, "List size != rows * cols");
+        Throw.whenNull(absData.get(0), "absData[0] = null");
+        Reference<?, A, Q> reference = absData.get(0).getReference();
+        double[] dataSi = new double[rows * cols];
+        for (int i = 0; i < rows * cols; i++)
+        {
+            Throw.whenNull(absData.get(i), "absData[%d] = null", i);
+            Throw.when(!reference.equals(absData.get(i).getReference()), IllegalArgumentException.class,
+                    "Reference of absGrid[%d] != %s, but %s", i, reference.toString(),
+                    absData.get(i).getReference().toString());
+            dataSi[i] = absData.get(i).si();
         }
         return new DenseDoubleDataSi(dataSi, rows, cols);
     }
