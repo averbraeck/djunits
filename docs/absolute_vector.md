@@ -4,9 +4,9 @@
 
 Vectors and matrices for absolute quantities are one-dimensional and two-dimensional mathematical data containers for `AbsQuantity` values, where each instance of an `AbsVector` or `AbsMatrix` contains values of one specific absolute quantity. `AbsVector` and `AbsMatrix` have a single `displayUnit` for the entire vector or matrix, and a single `Reference` to store the reference point for all quantities in the vector or matrix. The `AbsVector` or `AbsMatrix` classes store the vector information in a relative `Vector` or `Matrix` of the same size as the `AbsVector` or `AbsMatrix`, and add a `Reference`.
 
-To define absolute vectors and matrices, both the absolute quantity and the corresponding relative quantity need to be specified as generics. Whereas a relative `Vector2.Col` can be specified as `Vector2.Col<Angle>`, its absolute equivalent to store a `Direction` is specified as `Vector2.Col<Direction, Angle>`. 
+To define absolute vectors, both the absolute quantity and the corresponding relative quantity need to be specified as generics. Whereas a relative `Vector2.Col` can be specified as `Vector2.Col<Angle>`, its absolute equivalent to store a `Direction` is specified as `AbsVector2.Col<Direction, Angle>`. 
 
-Larger absolute vectors and matrices are implemented in four different ways: Sparse or Dense data storage, combined with Double or Float precision, which gives four combinations. Sparse storage should be used for vectors or matrices that contain many zero values. Dense data storage would, in that case, store all the zeros, whereas in a sparse storage only the numbers unequal to zero are stored, together with an index. As the index adds some overhead, sparse storage only makes sense when the number of zeros is over 50% of the number of entries. 
+Larger absolute vectors are implemented in four different ways: Sparse or Dense data storage, combined with Double or Float precision, which gives four combinations. Sparse storage should be used for vectors that contain many zero values. Dense data storage would, in that case, store all the zeros, whereas in a sparse storage only the numbers unequal to zero are stored, together with an index. As the index adds some overhead, sparse storage only makes sense when the number of zeros is over 50% of the number of entries. 
 
 
 ## Absolute vector types
