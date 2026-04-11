@@ -7,6 +7,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsVector;
+import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -132,6 +133,24 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         }
 
         /**
+         * Create an AbsVectorN.Col without needing generics.
+         * @param absData the values expressed as an array of absolute quantities
+         * @return a new AbsVectorN.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final A[] absData)
+        {
+            Throw.whenNull(absData, "absData");
+            Throw.when(absData.length == 0, IllegalArgumentException.class, "absData.length = 0");
+            Throw.whenNull(absData[0], "absData[0]");
+            var ddd = DenseDoubleDataSi.of(absData, absData.length, 1);
+            return new AbsVectorN.Col<A, Q>(VectorN.Col.ofSi(ddd, absData[0].getDisplayUnit()), absData[0].getReference());
+        }
+
+        /**
          * Create a new column VectorN with a unit, based on a quantity list that contains data. The display unit will be taken
          * from the first quantity in the list.
          * @param data the data of the vector, expressed as a list of quantities.
@@ -146,6 +165,24 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final List<Q> data, final R reference)
         {
             return new AbsVectorN.Col<>(VectorN.Col.of(data), reference);
+        }
+
+        /**
+         * Create an AbsVectorN.Col without needing generics.
+         * @param absData the values expressed as a list of absolute quantities
+         * @return a new AbsVectorN.Col with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final List<A> absData)
+        {
+            Throw.whenNull(absData, "absData");
+            Throw.when(absData.size() == 0, IllegalArgumentException.class, "absData.size() = 0");
+            var ddd = DenseDoubleDataSi.of(absData, absData.size(), 1);
+            return new AbsVectorN.Col<A, Q>(VectorN.Col.ofSi(ddd, absData.get(0).getDisplayUnit()),
+                    absData.get(0).getReference());
         }
 
         /**
@@ -256,6 +293,24 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         }
 
         /**
+         * Create an AbsVectorN.Row without needing generics.
+         * @param absData the values expressed as an array of absolute quantities
+         * @return a new AbsVectorN.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final A[] absData)
+        {
+            Throw.whenNull(absData, "absData");
+            Throw.when(absData.length == 0, IllegalArgumentException.class, "absData.length = 0");
+            Throw.whenNull(absData[0], "absData[0]");
+            var ddd = DenseDoubleDataSi.of(absData, 1, absData.length);
+            return new AbsVectorN.Row<A, Q>(VectorN.Row.ofSi(ddd, absData[0].getDisplayUnit()), absData[0].getReference());
+        }
+
+        /**
          * Create a new column VectorN with a unit, based on a quantity list that contains data. The display unit will be taken
          * from the first quantity in the list.
          * @param data the data of the vector, expressed as a list of quantities.
@@ -270,6 +325,24 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final List<Q> data, final R reference)
         {
             return new AbsVectorN.Row<>(VectorN.Row.of(data), reference);
+        }
+
+        /**
+         * Create an AbsVectorN.Row without needing generics.
+         * @param absData the values expressed as a list of absolute quantities
+         * @return a new AbsVectorN.Row with a unit
+         * @param <A> the absolute quantity type
+         * @param <Q> the quantity type
+         * @param <R> the reference type
+         */
+        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final List<A> absData)
+        {
+            Throw.whenNull(absData, "absData");
+            Throw.when(absData.size() == 0, IllegalArgumentException.class, "absData.size() = 0");
+            var ddd = DenseDoubleDataSi.of(absData, 1, absData.size());
+            return new AbsVectorN.Row<A, Q>(VectorN.Row.ofSi(ddd, absData.get(0).getDisplayUnit()),
+                    absData.get(0).getReference());
         }
 
         /**
