@@ -191,10 +191,10 @@ public class AbsVector1Test
     }
 
     /**
-     * Test of(A) and of(A[]) static factories for column matrices.
+     * Test of(A) and of(A[]) static factories.
      */
     @Test
-    public void testAbsStaticFactoriesCol()
+    public void testAbsStaticFactories()
     {
         Angle[] qa = {new Angle(180, Angle.Unit.deg)};
         Direction[] da = {new Direction(qa[0], Direction.Reference.NORTH)};

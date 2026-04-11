@@ -94,8 +94,8 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
 
     /**
      * Create an AbsVector1 without needing generics.
-     * @param absX the a11-value expressed as an absolute quantity
-     * @return a new Vector1 with a unit
+     * @param absX the v1-value expressed as an absolute quantity
+     * @return a new AbsVector1 with a unit
      * @param <A> the absolute quantity type
      * @param <Q> the quantity type
      * @param <R> the reference type
@@ -174,7 +174,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     /**
      * Create an AbsVector1 without needing generics.
      * @param absData the {x} value expressed as an array of absolute quantities
-     * @return a new Vector1 with a unit
+     * @return a new AbsVector1 with a unit
      * @param <A> the absolute quantity type
      * @param <Q> the quantity type
      * @param <R> the reference type
