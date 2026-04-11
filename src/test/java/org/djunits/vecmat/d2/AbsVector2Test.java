@@ -361,6 +361,72 @@ public class AbsVector2Test
         assertThrows(NullPointerException.class, () -> AbsVector2.Row.of(rel, null));
     }
 
+    /**
+     * Test of(A) and of(A[]) static factories for column matrices.
+     */
+    @Test
+    public void testAbsStaticFactoriesCol()
+    {
+        final var north = Direction.Reference.NORTH;
+        Angle[] qa = {new Angle(180, Angle.Unit.deg), new Angle(90, Angle.Unit.deg)};
+        Direction[] da = {new Direction(qa[0], north), new Direction(qa[1], north)};
+        var siArr = new double[] {qa[0].si(), qa[1].si()};
+        var dEast = new Direction(qa[0], Direction.Reference.EAST);
+
+        // of(A, A, ref)
+        AbsVector2.Col<Direction, Angle> va = AbsVector2.Col.of(da[0], da[1]);
+        assertArrayEquals(siArr, va.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, va.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVector2.Col.of((Direction) null, da[1]));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Col.of(da[0], (Direction) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Col.of(da[0], dEast));
+
+        // of(A[], ref)
+        AbsVector2.Col<Direction, Angle> vaa = AbsVector2.Col.of(da);
+        assertArrayEquals(siArr, vaa.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vaa.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVector2.Col.of((Direction[]) null));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Col.of(new Direction[] {null, null}));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Col.of(new Direction[] {da[0], null}));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Col.of(new Direction[] {null, da[1]}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Col.of(new Direction[] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Col.of(new Direction[] {da[0], da[1], da[0]}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Col.of(new Direction[] {da[0], dEast}));
+    }
+
+    /**
+     * Test of(A) and of(A[]) static factories for row matrices.
+     */
+    @Test
+    public void testAbsStaticFactoriesRow()
+    {
+        final var north = Direction.Reference.NORTH;
+        Angle[] qa = {new Angle(180, Angle.Unit.deg), new Angle(90, Angle.Unit.deg)};
+        Direction[] da = {new Direction(qa[0], north), new Direction(qa[1], north)};
+        var siArr = new double[] {qa[0].si(), qa[1].si()};
+        var dEast = new Direction(qa[0], Direction.Reference.EAST);
+
+        // of(A, A, ref)
+        AbsVector2.Row<Direction, Angle> va = AbsVector2.Row.of(da[0], da[1]);
+        assertArrayEquals(siArr, va.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, va.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVector2.Row.of((Direction) null, da[1]));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Row.of(da[0], (Direction) null));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Row.of(da[0], dEast));
+
+        // of(A[], ref)
+        AbsVector2.Row<Direction, Angle> vaa = AbsVector2.Row.of(da);
+        assertArrayEquals(siArr, vaa.getSiArray(), 1E-10);
+        assertEquals(Angle.Unit.deg, vaa.getDisplayUnit());
+        assertThrows(NullPointerException.class, () -> AbsVector2.Row.of((Direction[]) null));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Row.of(new Direction[] {null, null}));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Row.of(new Direction[] {da[0], null}));
+        assertThrows(NullPointerException.class, () -> AbsVector2.Row.of(new Direction[] {null, da[1]}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Row.of(new Direction[] {}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Row.of(new Direction[] {da[0], da[1], da[0]}));
+        assertThrows(IllegalArgumentException.class, () -> AbsVector2.Row.of(new Direction[] {da[0], dEast}));
+    }
+
     // ==================================== Scalar & SI array access ====================================
 
     /**
