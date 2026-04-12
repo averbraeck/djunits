@@ -281,7 +281,7 @@ final class UnitTest
         }
 
         @Override
-        public Jerk instantiate(final double si)
+        public Jerk instantiateSi(final double si)
         {
             return ofSi(si);
         }
@@ -549,7 +549,7 @@ final class UnitTest
         }
 
         @Override
-        public PerMass instantiate(final double si)
+        public PerMass instantiateSi(final double si)
         {
             return ofSi(si);
         }

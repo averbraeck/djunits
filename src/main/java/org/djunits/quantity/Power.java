@@ -86,7 +86,7 @@ public class Power extends Quantity<Power>
     }
 
     @Override
-    public Power instantiate(final double si)
+    public Power instantiateSi(final double si)
     {
         return ofSi(si);
     }

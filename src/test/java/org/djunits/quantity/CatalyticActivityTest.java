@@ -82,7 +82,7 @@ class CatalyticActivityTest
         assertEquals(750.0e-9, p3.si(), 1E-21);
 
         // instantiate
-        assertEquals(-10.1, cStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, cStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
         assertEquals("mol/s", cStr.siUnit().toString(true, false));

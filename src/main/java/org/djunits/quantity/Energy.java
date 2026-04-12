@@ -86,7 +86,7 @@ public class Energy extends Quantity<Energy>
     }
 
     @Override
-    public Energy instantiate(final double si)
+    public Energy instantiateSi(final double si)
     {
         return ofSi(si);
     }

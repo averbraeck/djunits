@@ -86,7 +86,7 @@ public class Mass extends Quantity<Mass>
     }
 
     @Override
-    public Mass instantiate(final double si)
+    public Mass instantiateSi(final double si)
     {
         return ofSi(si);
     }

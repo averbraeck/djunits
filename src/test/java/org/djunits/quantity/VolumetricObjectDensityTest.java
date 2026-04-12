@@ -89,7 +89,7 @@ class VolumetricObjectDensityTest
         assertEquals(5.0, p2.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, s.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, s.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit
         assertEquals("1/m3", s.siUnit().toString(true, false));

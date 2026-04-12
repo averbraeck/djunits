@@ -98,7 +98,7 @@ class AngleTest
         assertEquals(Math.PI / 6.0, p3.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, aDeg.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, aDeg.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit and its textual representation
         assertEquals("rad", aDeg.siUnit().toString(true, false));

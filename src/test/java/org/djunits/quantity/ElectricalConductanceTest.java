@@ -78,7 +78,7 @@ class ElectricalConductanceTest
         assertEquals(5e-7, p3.si(), 1E-18);
 
         // instantiate
-        assertEquals(-10.1, gStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, gStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
         assertEquals("s3A2/kgm2", gStr.siUnit().toString(true, false));

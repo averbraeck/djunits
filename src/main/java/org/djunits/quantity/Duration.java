@@ -88,7 +88,7 @@ public class Duration extends Quantity<Duration>
     }
 
     @Override
-    public Duration instantiate(final double si)
+    public Duration instantiateSi(final double si)
     {
         return ofSi(si);
     }

@@ -86,7 +86,7 @@ public class EquivalentDose extends Quantity<EquivalentDose>
     }
 
     @Override
-    public EquivalentDose instantiate(final double si)
+    public EquivalentDose instantiateSi(final double si)
     {
         return ofSi(si);
     }

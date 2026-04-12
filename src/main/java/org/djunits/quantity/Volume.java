@@ -86,7 +86,7 @@ public class Volume extends Quantity<Volume>
     }
 
     @Override
-    public Volume instantiate(final double si)
+    public Volume instantiateSi(final double si)
     {
         return ofSi(si);
     }

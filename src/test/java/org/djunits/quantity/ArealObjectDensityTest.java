@@ -69,7 +69,7 @@ class ArealObjectDensityTest
         assertEquals(5.0, p2.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, dStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, dStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
         assertEquals("1/m2", dStr.siUnit().toString(true, false));

@@ -86,7 +86,7 @@ public class FlowMass extends Quantity<FlowMass>
     }
 
     @Override
-    public FlowMass instantiate(final double si)
+    public FlowMass instantiateSi(final double si)
     {
         return ofSi(si);
     }

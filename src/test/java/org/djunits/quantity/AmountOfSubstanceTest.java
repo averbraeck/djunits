@@ -50,7 +50,7 @@ class AmountOfSubstanceTest
         assertEquals(q2.si(), q3.si());
         var q4 = new AmountOfSubstance(4.0, "mol");
         assertEquals(4.0, q4.si());
-        assertEquals(-10.1, q4.instantiate(-10.1).si());
+        assertEquals(-10.1, q4.instantiateSi(-10.1).si());
         assertEquals("mol", q4.siUnit().toString(true, false));
         
         var q5 = AmountOfSubstance.valueOf("12.1 mmol");

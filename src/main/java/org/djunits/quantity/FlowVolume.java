@@ -86,7 +86,7 @@ public class FlowVolume extends Quantity<FlowVolume>
     }
 
     @Override
-    public FlowVolume instantiate(final double si)
+    public FlowVolume instantiateSi(final double si)
     {
         return ofSi(si);
     }

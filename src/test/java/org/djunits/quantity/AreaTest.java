@@ -104,7 +104,7 @@ class AreaTest
         assertEquals(3.0 * Length.Unit.CONST_YD * Length.Unit.CONST_YD, p3.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, aKm2.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, aKm2.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
         assertEquals("m2", aKm2.siUnit().toString(true, false));

@@ -92,7 +92,7 @@ class AngularVelocityTest
         assertEquals(Math.PI / 6.0, p3.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, wDeg.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, wDeg.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit (of the quantity) and textual representation
         assertEquals("rad/s", wDeg.siUnit().toString(true, false));

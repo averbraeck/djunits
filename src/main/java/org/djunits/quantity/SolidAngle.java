@@ -86,7 +86,7 @@ public class SolidAngle extends Quantity<SolidAngle>
     }
 
     @Override
-    public SolidAngle instantiate(final double si)
+    public SolidAngle instantiateSi(final double si)
     {
         return ofSi(si);
     }

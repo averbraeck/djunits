@@ -86,7 +86,7 @@ public class LuminousFlux extends Quantity<LuminousFlux>
     }
 
     @Override
-    public LuminousFlux instantiate(final double si)
+    public LuminousFlux instantiateSi(final double si)
     {
         return ofSi(si);
     }

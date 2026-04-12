@@ -86,7 +86,7 @@ public class Illuminance extends Quantity<Illuminance>
     }
 
     @Override
-    public Illuminance instantiate(final double si)
+    public Illuminance instantiateSi(final double si)
     {
         return ofSi(si);
     }

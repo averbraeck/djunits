@@ -70,7 +70,7 @@ class LinearObjectDensityTest
         assertEquals(-2.0, neg.si(), 1E-12);
 
         // instantiate (delegates to ofSi)
-        assertEquals(-10.1, fromStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, fromStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation must match the SIUnit.of string used in Unit ("/m")
         assertEquals("1/m", fromStr.siUnit().toString(true, false));

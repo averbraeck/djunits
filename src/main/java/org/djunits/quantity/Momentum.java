@@ -86,7 +86,7 @@ public class Momentum extends Quantity<Momentum>
     }
 
     @Override
-    public Momentum instantiate(final double si)
+    public Momentum instantiateSi(final double si)
     {
         return ofSi(si);
     }

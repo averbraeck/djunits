@@ -86,7 +86,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
     }
 
     @Override
-    public AngularAcceleration instantiate(final double si)
+    public AngularAcceleration instantiateSi(final double si)
     {
         return ofSi(si);
     }

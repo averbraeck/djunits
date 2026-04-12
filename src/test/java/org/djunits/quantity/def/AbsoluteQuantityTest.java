@@ -618,7 +618,7 @@ public class AbsoluteQuantityTest
         }
 
         @Override
-        public RelativeExampleQuantityAQxyz instantiate(final double siValue)
+        public RelativeExampleQuantityAQxyz instantiateSi(final double siValue)
         {
             return null;
         }

@@ -86,7 +86,7 @@ public class Pressure extends Quantity<Pressure>
     }
 
     @Override
-    public Pressure instantiate(final double si)
+    public Pressure instantiateSi(final double si)
     {
         return ofSi(si);
     }

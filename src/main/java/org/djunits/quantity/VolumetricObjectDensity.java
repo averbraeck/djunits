@@ -86,7 +86,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
     }
 
     @Override
-    public VolumetricObjectDensity instantiate(final double si)
+    public VolumetricObjectDensity instantiateSi(final double si)
     {
         return ofSi(si);
     }

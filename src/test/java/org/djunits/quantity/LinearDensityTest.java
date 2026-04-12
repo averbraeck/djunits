@@ -66,7 +66,7 @@ class LinearDensityTest
         assertEquals(2.0, p1.si(), 1E-12);
 
         // instantiate (delegates to ofSi)
-        assertEquals(-10.1, fromStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, fromStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (like FrequencyTest style)
         assertEquals("kg/m", fromStr.siUnit().toString(true, false));

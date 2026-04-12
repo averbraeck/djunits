@@ -86,7 +86,7 @@ public class Frequency extends Quantity<Frequency>
     }
 
     @Override
-    public Frequency instantiate(final double si)
+    public Frequency instantiateSi(final double si)
     {
         return ofSi(si);
     }

@@ -87,7 +87,7 @@ public class ElectricCharge extends Quantity<ElectricCharge>
     }
 
     @Override
-    public ElectricCharge instantiate(final double si)
+    public ElectricCharge instantiateSi(final double si)
     {
         return ofSi(si);
     }

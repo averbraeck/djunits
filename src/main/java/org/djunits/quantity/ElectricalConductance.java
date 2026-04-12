@@ -87,7 +87,7 @@ public class ElectricalConductance extends Quantity<ElectricalConductance>
     }
 
     @Override
-    public ElectricalConductance instantiate(final double si)
+    public ElectricalConductance instantiateSi(final double si)
     {
         return ofSi(si);
     }

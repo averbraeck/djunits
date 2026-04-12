@@ -94,7 +94,7 @@ class ForceTest
         assertEquals(0.5, p3.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, fStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, fStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
         assertEquals("kgm/s2", fStr.siUnit().toString(true, false));

@@ -146,7 +146,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @param siValue the value expressed in the base (SI) unit
      * @return a quantity with the given SI-value and base (SI) unit
      */
-    public abstract Q instantiate(double siValue);
+    public abstract Q instantiateSi(double siValue);
 
     /**
      * Instantiate a quantity with a value and a unit.
@@ -156,7 +156,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      */
     public Q instantiate(final double valueInUnit, final Unit<?, Q> unit)
     {
-        return instantiate(unit.toBaseValue(valueInUnit)).setDisplayUnit(unit);
+        return instantiateSi(unit.toBaseValue(valueInUnit)).setDisplayUnit(unit);
     }
 
     /**********************************************************************************/
@@ -617,7 +617,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
-        return zero.instantiate(zero.si() * (1 - ratio) + one.si() * ratio).setDisplayUnit(zero.getDisplayUnit());
+        return zero.instantiateSi(zero.si() * (1 - ratio) + one.si() * ratio).setDisplayUnit(zero.getDisplayUnit());
     }
 
     /**
@@ -677,7 +677,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
         {
             sum += quantity.si();
         }
-        return quantity1.instantiate(sum).setDisplayUnit(quantity1.getDisplayUnit());
+        return quantity1.instantiateSi(sum).setDisplayUnit(quantity1.getDisplayUnit());
     }
 
     /**
@@ -720,31 +720,31 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     @Override
     public Q add(final Q increment)
     {
-        return instantiate(si() + increment.si()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(si() + increment.si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q subtract(final Q decrement)
     {
-        return instantiate(si() - decrement.si()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(si() - decrement.si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q abs()
     {
-        return instantiate(Math.abs(si())).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(Math.abs(si())).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q negate()
     {
-        return instantiate(-si()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(-si()).setDisplayUnit(getDisplayUnit());
     }
 
     @Override
     public Q scaleBy(final double factor)
     {
-        return instantiate(si() * factor).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(si() * factor).setDisplayUnit(getDisplayUnit());
     }
 
     /**

@@ -86,7 +86,7 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
     }
 
     @Override
-    public MagneticFluxDensity instantiate(final double si)
+    public MagneticFluxDensity instantiateSi(final double si)
     {
         return ofSi(si);
     }

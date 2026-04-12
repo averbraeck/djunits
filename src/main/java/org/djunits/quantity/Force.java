@@ -86,7 +86,7 @@ public class Force extends Quantity<Force>
     }
 
     @Override
-    public Force instantiate(final double si)
+    public Force instantiateSi(final double si)
     {
         return ofSi(si);
     }

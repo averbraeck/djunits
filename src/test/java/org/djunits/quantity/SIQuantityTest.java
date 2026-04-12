@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * tests cover:
  * <ul>
  * <li>All constructors (value+unit, value+string-abbreviation, copy constructor)</li>
- * <li>{@link SIQuantity#instantiate(double)} and {@link SIQuantity#siUnit()}</li>
+ * <li>{@link SIQuantity#instantiateSi(double)} and {@link SIQuantity#siUnit()}</li>
  * <li>Parsing helpers: {@link SIQuantity#valueOf(String)} and {@link SIQuantity#of(double, String)}</li>
  * <li>Formatting and pretty name ({@link Quantity#getName()}) behavior for the "SIQuantity" camel-case class name</li>
  * <li>Fluent {@code setDisplayUnit} behavior and equals/hashCode semantics</li>
@@ -119,7 +119,7 @@ public class SIQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link SIQuantity#instantiate(double)} creates a new instance with the same display unit as the receiver at call
+     * Verifies {@link SIQuantity#instantiateSi(double)} creates a new instance with the same display unit as the receiver at call
      * time (i.e., reflects the current {@code getDisplayUnit()} value).
      */
     @Test
@@ -130,7 +130,7 @@ public class SIQuantityTest
 
         // Change the display unit; instantiate should pick up the new one.
         base.setDisplayUnit(SIUnit.of("s"));
-        SIQuantity inst = base.instantiate(42.0);
+        SIQuantity inst = base.instantiateSi(42.0);
         assertEquals(42.0, inst.si(), 1e-12);
         assertEquals(SIUnit.of("s"), inst.getDisplayUnit(), "instantiate must use the current display unit of the receiver");
     }

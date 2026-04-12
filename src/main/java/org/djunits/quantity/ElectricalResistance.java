@@ -88,7 +88,7 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
     }
 
     @Override
-    public ElectricalResistance instantiate(final double si)
+    public ElectricalResistance instantiateSi(final double si)
     {
         return ofSi(si);
     }

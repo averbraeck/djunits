@@ -86,7 +86,7 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
     }
 
     @Override
-    public LuminousIntensity instantiate(final double si)
+    public LuminousIntensity instantiateSi(final double si)
     {
         return ofSi(si);
     }

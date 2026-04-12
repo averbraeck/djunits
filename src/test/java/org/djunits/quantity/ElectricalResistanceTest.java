@@ -84,7 +84,7 @@ class ElectricalResistanceTest
         assertEquals(0.5, p3.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, rStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, rStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
         assertEquals("kgm2/s3A2", rStr.siUnit().toString(true, false));

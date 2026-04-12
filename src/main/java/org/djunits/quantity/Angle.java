@@ -100,7 +100,7 @@ public class Angle extends Quantity<Angle>
     }
 
     @Override
-    public Angle instantiate(final double si)
+    public Angle instantiateSi(final double si)
     {
         return ofSi(si);
     }

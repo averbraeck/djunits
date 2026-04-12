@@ -98,7 +98,7 @@ class ElectricChargeTest
         assertEquals(500.0 * 3.335641E-10, p3.si(), 1E-16);
 
         // instantiate
-        assertEquals(-10.1, qStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, qStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (A·s)
         assertEquals("sA", qStr.siUnit().toString(true, false));

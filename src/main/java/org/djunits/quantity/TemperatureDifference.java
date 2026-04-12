@@ -83,7 +83,7 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
     }
 
     @Override
-    public TemperatureDifference instantiate(final double si)
+    public TemperatureDifference instantiateSi(final double si)
     {
         return ofSi(si);
     }

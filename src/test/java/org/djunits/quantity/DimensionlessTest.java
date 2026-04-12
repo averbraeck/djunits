@@ -70,7 +70,7 @@ class DimensionlessTest
         assertEquals(5.0, p2.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, three.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, three.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimensionless -> "" with all zero exponents)
         assertEquals("", three.siUnit().toString(true, false));

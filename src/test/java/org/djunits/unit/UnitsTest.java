@@ -379,7 +379,7 @@ public class UnitsTest
         }
 
         @Override
-        public Q instantiate(final double siValue)
+        public Q instantiateSi(final double siValue)
         {
             return new Q(siValue, QUnit.DEFAULT);
         }

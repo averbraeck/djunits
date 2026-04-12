@@ -86,7 +86,7 @@ public class Length extends Quantity<Length>
     }
 
     @Override
-    public Length instantiate(final double si)
+    public Length instantiateSi(final double si)
     {
         return ofSi(si);
     }

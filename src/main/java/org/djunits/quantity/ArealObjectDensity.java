@@ -86,7 +86,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
     }
 
     @Override
-    public ArealObjectDensity instantiate(final double si)
+    public ArealObjectDensity instantiateSi(final double si)
     {
         return ofSi(si);
     }

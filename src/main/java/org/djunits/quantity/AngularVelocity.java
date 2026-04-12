@@ -86,7 +86,7 @@ public class AngularVelocity extends Quantity<AngularVelocity>
     }
 
     @Override
-    public AngularVelocity instantiate(final double si)
+    public AngularVelocity instantiateSi(final double si)
     {
         return ofSi(si);
     }

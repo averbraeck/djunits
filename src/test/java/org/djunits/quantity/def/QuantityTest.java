@@ -658,7 +658,7 @@ public class QuantityTest
         }
 
         @Override
-        public ExampleQuantityAQxyz instantiate(final double siValue)
+        public ExampleQuantityAQxyz instantiateSi(final double siValue)
         {
             return null;
         }

@@ -124,7 +124,7 @@ class LengthTest
         assertThrows(UnitRuntimeException.class, () -> Length.of(1.0, "blargh"));
 
         // instantiate
-        assertEquals(-10.1, lStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, lStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
         assertEquals("m", lStr.siUnit().toString(true, false));

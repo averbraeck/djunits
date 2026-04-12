@@ -86,7 +86,7 @@ public class AbsorbedDose extends Quantity<AbsorbedDose>
     }
 
     @Override
-    public AbsorbedDose instantiate(final double si)
+    public AbsorbedDose instantiateSi(final double si)
     {
         return ofSi(si);
     }

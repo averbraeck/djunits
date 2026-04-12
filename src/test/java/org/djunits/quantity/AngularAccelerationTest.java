@@ -96,7 +96,7 @@ class AngularAccelerationTest
         assertEquals(Math.PI / 6.0, p3.si(), 1E-12);
 
         // instantiate
-        assertEquals(-10.1, aDeg.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, aDeg.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit (of the quantity) and textual representation
         assertEquals("rad/s2", aDeg.siUnit().toString(true, false));

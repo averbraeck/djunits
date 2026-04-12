@@ -86,7 +86,7 @@ public class LinearDensity extends Quantity<LinearDensity>
     }
 
     @Override
-    public LinearDensity instantiate(final double si)
+    public LinearDensity instantiateSi(final double si)
     {
         return ofSi(si);
     }

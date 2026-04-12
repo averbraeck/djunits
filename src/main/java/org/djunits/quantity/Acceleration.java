@@ -86,7 +86,7 @@ public class Acceleration extends Quantity<Acceleration>
     }
 
     @Override
-    public Acceleration instantiate(final double si)
+    public Acceleration instantiateSi(final double si)
     {
         return ofSi(si);
     }

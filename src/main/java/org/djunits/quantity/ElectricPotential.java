@@ -87,7 +87,7 @@ public class ElectricPotential extends Quantity<ElectricPotential>
     }
 
     @Override
-    public ElectricPotential instantiate(final double si)
+    public ElectricPotential instantiateSi(final double si)
     {
         return ofSi(si);
     }

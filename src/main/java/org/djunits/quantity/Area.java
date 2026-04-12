@@ -47,22 +47,22 @@ public class Area extends Quantity<Area>
 
     /**
      * Instantiate a Area quantity with a unit.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public Area(final double value, final Area.Unit unit)
+    public Area(final double valueInUnit, final Area.Unit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     /**
      * Instantiate a Area quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public Area(final double value, final String abbreviation)
+    public Area(final double valueInUnit, final String abbreviation)
     {
-        this(value, Units.resolve(Area.Unit.class, abbreviation));
+        this(valueInUnit, Units.resolve(Area.Unit.class, abbreviation));
     }
 
     /**
@@ -86,7 +86,7 @@ public class Area extends Quantity<Area>
     }
 
     @Override
-    public Area instantiate(final double si)
+    public Area instantiateSi(final double si)
     {
         return ofSi(si);
     }

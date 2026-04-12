@@ -81,7 +81,7 @@ public class Dimensionless extends Quantity<Dimensionless>
     }
 
     @Override
-    public Dimensionless instantiate(final double si)
+    public Dimensionless instantiateSi(final double si)
     {
         return ofSi(si);
     }

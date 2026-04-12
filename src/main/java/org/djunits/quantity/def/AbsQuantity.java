@@ -659,7 +659,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
         Q quantity =
-                zero.getQuantity().instantiate(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio)
+                zero.getQuantity().instantiateSi(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio)
                         .setDisplayUnit(zero.getDisplayUnit());
         return zero.instantiate(quantity, zero.getReference());
     }
@@ -742,7 +742,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
                     quantity1.getReference().getId(), absq.getReference().getId());
             sum += absq.si();
         }
-        return quantity1.instantiate(quantity1.getQuantity().instantiate(sum).setDisplayUnit(quantity1.getDisplayUnit()),
+        return quantity1.instantiate(quantity1.getQuantity().instantiateSi(sum).setDisplayUnit(quantity1.getDisplayUnit()),
                 quantity1.getReference());
     }
 

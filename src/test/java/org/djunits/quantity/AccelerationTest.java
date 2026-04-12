@@ -50,7 +50,7 @@ class AccelerationTest
         assertEquals(q2.si(), q3.si());
         var q4 = new Acceleration(4.0, "m/s2");
         assertEquals(4.0, q4.si());
-        assertEquals(-10.1, q4.instantiate(-10.1).si());
+        assertEquals(-10.1, q4.instantiateSi(-10.1).si());
         assertEquals("m/s2", q4.siUnit().toString(true, false));
 
         var q5 = Acceleration.valueOf("12.1 mi/s2");

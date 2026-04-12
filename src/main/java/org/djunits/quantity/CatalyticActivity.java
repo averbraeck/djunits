@@ -87,7 +87,7 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
     }
 
     @Override
-    public CatalyticActivity instantiate(final double si)
+    public CatalyticActivity instantiateSi(final double si)
     {
         return ofSi(si);
     }

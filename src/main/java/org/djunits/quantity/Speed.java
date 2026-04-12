@@ -87,7 +87,7 @@ public class Speed extends Quantity<Speed>
     }
 
     @Override
-    public Speed instantiate(final double si)
+    public Speed instantiateSi(final double si)
     {
         return ofSi(si);
     }

@@ -86,7 +86,7 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
     }
 
     @Override
-    public AmountOfSubstance instantiate(final double si)
+    public AmountOfSubstance instantiateSi(final double si)
     {
         return ofSi(si);
     }

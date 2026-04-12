@@ -86,7 +86,7 @@ public class RadioActivity extends Quantity<RadioActivity>
     }
 
     @Override
-    public RadioActivity instantiate(final double si)
+    public RadioActivity instantiateSi(final double si)
     {
         return ofSi(si);
     }

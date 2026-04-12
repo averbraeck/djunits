@@ -86,7 +86,7 @@ public class Torque extends Quantity<Torque>
     }
 
     @Override
-    public Torque instantiate(final double si)
+    public Torque instantiateSi(final double si)
     {
         return ofSi(si);
     }

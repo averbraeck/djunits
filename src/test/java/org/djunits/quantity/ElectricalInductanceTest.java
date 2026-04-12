@@ -79,7 +79,7 @@ class ElectricalInductanceTest
         assertEquals(5e-7, p3.si(), 1E-18);
 
         // instantiate
-        assertEquals(-10.1, lStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, lStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
         assertEquals("kgm2/s2A2", lStr.siUnit().toString(true, false));

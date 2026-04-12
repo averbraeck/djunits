@@ -86,7 +86,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
     }
 
     @Override
-    public ElectricCurrent instantiate(final double si)
+    public ElectricCurrent instantiateSi(final double si)
     {
         return ofSi(si);
     }

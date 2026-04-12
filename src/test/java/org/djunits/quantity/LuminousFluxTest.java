@@ -69,7 +69,7 @@ class LuminousFluxTest
         assertEquals(500.0, p2.si(), 1E-12);
 
         // instantiate (delegates to ofSi)
-        assertEquals(-10.1, fromStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, fromStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation must match the SIUnit.of string used in Unit ("cdsr")
         assertEquals("srcd", fromStr.siUnit().toString(true, false));

@@ -74,7 +74,7 @@ class FlowMassTest
         assertEquals(10.0 * lbInKg, p2.si(), 1E-12);
 
         // instantiate creates new instance with same SI value
-        assertEquals(-10.1, fmStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, fmStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
         assertEquals("kg/s", fmStr.siUnit().toString(true, false));

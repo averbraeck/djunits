@@ -51,7 +51,7 @@ public class SIQuantity extends Quantity<SIQuantity>
     }
 
     @Override
-    public SIQuantity instantiate(final double si)
+    public SIQuantity instantiateSi(final double si)
     {
         return new SIQuantity(si, getDisplayUnit());
     }

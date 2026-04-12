@@ -82,7 +82,7 @@ class FrequencyTest
         assertEquals(5e8, p3.si(), 1E-3);
 
         // instantiate (delegates to ofSi)
-        assertEquals(-10.1, fStr.instantiate(-10.1).si(), 1E-12);
+        assertEquals(-10.1, fStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation for frequency
         assertEquals("1/s", fStr.siUnit().toString(true, false));
