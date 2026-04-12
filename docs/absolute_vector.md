@@ -58,15 +58,17 @@ Several methods exist to get access to the entries of an `AbsVector`. When singl
 
 Quantity-based methods return a value `A` that is consistent with the absolute quantity stored in the `Vector`. Suppose `v` is an `AbsoluteVector3.Row<Direction, Angle>`. The result of the operation `v.mget(1)` will then be a strongly typed `Direction` (absolute) quantity. The letter `A` in the methods below indicates that strongly typed absolute quantity such as `Direction`.
 
+If the underlying relative matrix is needed, where all values are of type `Q` and relative to the reference point of the absolute matrix, the method `getRelativeVecMat()` can be used. As an example, for an `AbsVectorN.Row<Time, Duration>`, the `getRelativeVecMat()` method returns a `VectorN.Row<Duration>` with the same dimensions, SI-content, and display unit.
+
 An `AbsVector` contains the following methods to obtain its values:
 
-- `getRelativeVecMat()` returns the 'embedded' relative vector or matrix, whose values are relative to the reference point of the `AbsVector`. The size and type of the returned vector are congruent with the type of the `AbsVector`.
 - `double[] getSiArray()` returns a safe copy of the values of the vector in SI-units as a `double[]` array with the same length as the vector. All returned SI-values are relative to the reference point.
 - `A[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` and `Reference` as the original `AbsVector`.
 - `double si(int index)` returns the SI-value of the entry at the 0-based `index`. The returned SI-value is relative to the reference point.
 - `double msi(int mIndex)` returns the SI-value of the entry at the 1-based `mIndex`. The returned SI-value is relative to the reference point.
 - `A get(int index)` returns the absolute quantity representation of the entry at the 0-based `index`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsVector`.
 - `A mget(int mIndex)` returns the absolute quantity representation of the entry at the 1-based `mIndex`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsVector`.
+- `getRelativeVecMat()` returns the 'embedded' relative vector or matrix, whose values are relative to the reference point of the `AbsVector`. The size and type of the returned vector are congruent with the type of the `AbsVector`.
 
 
 ## Mathematical operations

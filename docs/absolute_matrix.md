@@ -58,6 +58,8 @@ Several methods exist to get access to the entries of an `AbsMatrix`. When singl
 
 Quantity-based value methods return a value `A` that is consistent with the absolute quantity stored in the `AbsMatrix`. Suppose `mx` is an `AbsMatrix3x3<Direction, Angle>`. The result of the operation `mx.mget(1,3)` will then be a strongly typed `Direction` quantity. The letter `A` in the methods below indicates that strongly typed quantity such as `Direction`, and the letter `Q` is the generic indicator for the corresponding relative quantity type such as `Angle`.
 
+If the underlying relative matrix is needed, where all values are of type `Q` and relative to the reference point of the absolute matrix, the method `getRelativeVecMat()` can be used. As an example, for an `AbsMatrixNxN<Time, Duration>`, the `getRelativeVecMat()` method returns a `MatrixNxN<Duration>` with the same dimensions, SI-content, and display unit.
+
 A `AbsMatrix` contains the following methods to obtain its values:
 
 ### SI-based value methods
@@ -74,6 +76,7 @@ A `AbsMatrix` contains the following methods to obtain its values:
 - `A[] getScalarArray()` returns a 1-dimensional strongly typed row-major absolute quantity array that represents the matrix. The absolute quantities in the array will all have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
 - `A get(int row, int col)` returns the absolute quantity of the entry at the 0-based row and column. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
 - `A mget(int mRow, int mCol)` returns the absolute quantity of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
+- `getRelativeVecMat()` returns the 'embedded' relative vector or matrix, whose values are relative to the reference point of the `AbsVector`. The size and type of the returned vector are congruent with the type of the `AbsVector`.
 
 
 ### Retrieving matrix rows
