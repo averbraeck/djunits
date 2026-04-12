@@ -44,7 +44,7 @@ Quantities are strongly typed, and many operations on quantities are possible. A
 - logical operators such as `lt0`, `le0`, `eq0`, `ne0` to check whether one quantity is, e.g., bigger or smaller than zero.
 - `String toString()` with several variants for formatting the unit, so it can be expressed, e.g., as `kgm/s2` or `kg.m.s-2` or as a HTML string `kg.m.s<sup>-2</sup>`.
 - `String getName()` gives the (localized) name of the quantity.
-- `SIUNit siUnit()` returns the SI-unit of the quantity, such as $kg^1\middotm^2/s^2$. 
+- `SIUNit siUnit()` returns the SI-unit of the quantity, such as kg&middot;m/s<sup>2</sup>. 
 
 
 ## Instantiating quantities
