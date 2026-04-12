@@ -2,14 +2,14 @@
 
 ## Introduction
 
-ABsolute quantity tables are 2-dimensional tables with data of absolute quantities of the same type. They can be regarded as generic data containers, suitable for data interfaces or method input types. In a sense, it acts like an `AbsMatrixNxM` without the ability to carry out matrix and vector calculations, and without the Hadamard (entry-by-entry) operations.
+Absolute quantity tables are 2-dimensional tables with data of absolute quantities of the same type. They can be regarded as generic data containers, suitable for data interfaces or method input types. In a sense, it acts like an `AbsMatrixNxM` without the ability to carry out matrix and vector calculations, and without the Hadamard (entry-by-entry) operations.
 
 The `AbsQuantityTable` supports dense storage in a `double[]` or `float[]` array, or sparse storage, where values are stored with an integer-based row-column index and a `double` or `float` value. Since the sparse storage involves quite some overhead, tables need to have a significant percentage of 0-values (40-50% or more) for using sparse storage to make sense. 
 
 
 ## Quantity table operations
 
-The generic methods of a `AbsQuantityTable` are:
+The generic methods of an `AbsQuantityTable` are:
 
 - `int rows()` returns the number of rows of the quantity table.
 - `int cols()` returns the number of columns of the quantity table.
@@ -33,9 +33,9 @@ Addition and subtraction of absolute vectors and matrices follow the rules for t
 
 ## Obtaining values of quantity table entries
 
-Several methods exist to get access to the entries of a `AbsQuantityTable`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `table.rows()-1` and `col` ranges from `0` to `table.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` up to and including `table.rows()` and `mCol` ranges from `1` up to and including `table.cols`.
+Several methods exist to get access to the entries of an `AbsQuantityTable`. When single entries, rows or columns are retrieved, two versions of the methods exist: a version where the row and column number are 0-based, and a version where the row and column number are 1-based. The 1-based methods have a name that starts with `m` for `matrix`, since the entry numbering of a matrix start with m<sub>11</sub>, and not with m<sub>00</sub>. So, there is an `si(row, col)` method where `row` ranges from `0` to `table.rows()-1` and `col` ranges from `0` to `table.cols()-1`, and an `msi(mRow, mCol)` method where `mRow` ranges from `1` up to and including `table.rows()` and `mCol` ranges from `1` up to and including `table.cols`.
 
-Quantity-based value methods return a value `A` that is consistent with the absolute quantity stored in the `AbsQuantityTable`. Suppose `aqt` is a `AbsQuantityTable<Time, Duration>`. The result of the operation `aqt.get(1,3)` will then be a strongly typed `Time` quantity. The letter `A` in the methods below indicates that strongly typed absolute quantity such as `Time`. The letter `Q` indicates the relative quantity belonging to the absolute quantity, such as `Duration` as the relative quantity for `Time`.
+Quantity-based value methods return a value `A` that is consistent with the absolute quantity stored in the `AbsQuantityTable`. Suppose `aqt` is an `AbsQuantityTable<Time, Duration>`. The result of the operation `aqt.get(1,3)` will then be a strongly typed `Time` quantity. The letter `A` in the methods below indicates that strongly typed absolute quantity such as `Time`. The letter `Q` indicates the relative quantity belonging to the absolute quantity, such as `Duration` as the relative quantity for `Time`.
 
 If the underlying relative quantity table is needed, where all values are of type `Q` and relative to the reference point of the absolute quantity table, the method `getRelativeVecMat()` can be used. As an example, for an `AbsQuantityTable<Time, Duration>`, the `getRelativeVecMat()` method returns a `QuantityTable<Duration>` with the same dimensions, SI-content, and display unit.
 
@@ -93,14 +93,14 @@ A `AbsQuantityTable` implements several mathematical operations. The most import
 
 `AbsQuantityTable` objects do not implement matrix operations such as determinant, matrix multiplication, etc. If an `AbsQuantityTable` at some point needs to be used for matrix operations, the `asVector` and `asMatrix` methods can transform the `AbsQuantityTable` into an `AbsMatrix` or column or row `AbsVector` of any of the types. For this, the `AbsQuantityTable` implements the `asAbsMatrix1x1()`, `asAbsMatrix2x2()`, `asAbsMatrix3x3()`, `asAbsMatrixNxN()`, `asAbsMatrixNxM()`, `asAbsVector1()`, `asAbsVector2Row()`, `asAbsVector2Col()`, `asAbsVector3Row()`, `asAbsVector3Col()`, `asAbsVectorNRow()`, and `asAbsVectorNCol()` methods. These methods will check the consistency of the quantity table size with the desired vector or matrix type at runtime.
 
-Reversely, `AbsMatrix` or column or row `AbsVector` instances can all be turned _into_ a `AbsQuantityTable` with the `asAbsQuantityTable()` method. 
+Reversely, `AbsMatrix` or column or row `AbsVector` instances can all be turned _into_ an `AbsQuantityTable` with the `asAbsQuantityTable()` method. 
 
 
-### Creating a `AbsQuantityTable`
+### Creating an `AbsQuantityTable`
 
 The `AbsQuantityTable` class can be used to represent quantity tables of any size (1x1 and up). Data can be stored as single-precision `float` variable, or as double-precision `double` values. Both dense storage (store every number) and sparse storage (only store non-zero values) are possible. 
 
-Several methods exist to instantiate a `AbsQuantityTable`.
+Several methods exist to instantiate an `AbsQuantityTable`.
 
 The **DataGridSi**-based methods store the data in the `dataGridSi` object, which can be `DenseDoubleDataSi`, `SparseDoubleDataSi`, `DenseFloatDataSi`, or `SparseFloatDataSi`. These objects are instantiated through one of their `of()`, `ofSi()` or constructor methods. For some `of` and `ofSi` methods, the number of rows and columns of the quantity table need to be provided for the `DataGridSi` object to know the shape of the quantity table. A `double[6]` array of SI values can represent a 2x3 quantity table, but also a 3x2 quantity table or a 1x6 or 6x1 quantity table. All four shapes can be stored in the `DataGridSi` object by providing the number of rows and columns.
 
@@ -109,25 +109,25 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
 - `new AbsQuantityTable<A, Q>(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
+  creates an `AbsQuantityTable` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
 - `AbsQuantityTable.of(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
+  creates an `AbsQuantityTable` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
 - `AbsQuantityTable.of(double[] dataInUnit, int rows, int cols, Unit unit, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a row-major array with values expressed in the given unit. The data is relative to the provided reference point. The length of the array needs to be equal to `rows * cols`.
+  creates an `AbsQuantityTable` based on a row-major array with values expressed in the given unit. The data is relative to the provided reference point. The length of the array needs to be equal to `rows * cols`.
 - `AbsQuantityTable.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The data is relative to the provided reference point. The grid cannot be 'ragged'.
+  creates an `AbsQuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The data is relative to the provided reference point. The grid cannot be 'ragged'.
 - `AbsQuantityTable.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+  creates an `AbsQuantityTable` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
 - `AbsQuantityTable.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a grid (array of arrays) with with SI-values for the quantities, a display unit and a reference point. The grid cannot be 'ragged'.
+  creates an `AbsQuantityTable` based on a grid (array of arrays) with with SI-values for the quantities, a display unit and a reference point. The grid cannot be 'ragged'.
 - `AbsQuantityTable.of(Q[] data, int rows, int cols, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a row-major array with quantities, and a reference point for the values. The length of the array needs to be equal to `rows * cols`.
+  creates an `AbsQuantityTable` based on a row-major array with quantities, and a reference point for the values. The length of the array needs to be equal to `rows * cols`.
 - `AbsQuantityTable.of(Q[][] grid, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a grid (array of arrays) with with quantities, and a reference point for the values. The grid cannot be 'ragged'.
+  creates an `AbsQuantityTable` based on a grid (array of arrays) with with quantities, and a reference point for the values. The grid cannot be 'ragged'.
 - `AbsQuantityTable.of(A[] data, int rows, int cols)` <br>
-  creates a `AbsQuantityTable` based on a row-major array with absolute quantities. The length of the array needs to be equal to `rows * cols`.
+  creates an `AbsQuantityTable` based on a row-major array with absolute quantities. The length of the array needs to be equal to `rows * cols`.
 - `AbsQuantityTable.of(A[][] grid)` <br>
-  creates a `AbsQuantityTable` based on a grid (array of arrays) with with absolute quantities. The grid cannot be 'ragged'.
+  creates an `AbsQuantityTable` based on a grid (array of arrays) with with absolute quantities. The grid cannot be 'ragged'.
 - `AbsQuantityTable.of(QuantityTable<Q> relativeTable, Reference reference)` <br>
-  creates a `AbsQuantityTable` based on a relative quantity table, and a reference point for the values.
+  creates an `AbsQuantityTable` based on a relative quantity table, and a reference point for the values.
 

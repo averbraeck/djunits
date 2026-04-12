@@ -81,8 +81,8 @@ A `AbsMatrix` contains the following methods to obtain its values:
 
 ### Retrieving matrix rows
 
-- `AbsVector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is an `AbsMatrix3x3`, the vector returned is a `AbsVector3.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
-- `AbsVector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is a `AbsVectorN.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
+- `AbsVector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is an `AbsMatrix3x3`, the vector returned is an `AbsVector3.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
+- `AbsVector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is an `AbsVectorN.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
 - `A[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the absolute quantities in the array have the same `displayUnit` and the same `Reference` as the original matrix. 
 - `A[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. Note that the resulting `Temperature[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the SI-values of the 0-based `row` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI-values are relative to the reference point of the absolute matrix.
@@ -91,8 +91,8 @@ A `AbsMatrix` contains the following methods to obtain its values:
 
 ### Retrieving matrix columns
 
-- `AbsVector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is an `AbsMatrix3x3`, the vector returned is a `AbsVector3.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
-- `AbsVector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is a `AbsVectorN.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
+- `AbsVector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is an `AbsMatrix3x3`, the vector returned is an `AbsVector3.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
+- `AbsVector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is an `AbsVectorN.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
 - `A[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. 
 - `A[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. Note that the resulting `Temperature[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the SI-values of the 0-based `col` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI-values are relative to the reference point of the absolute matrix. 
@@ -151,6 +151,8 @@ Several methods exist to instantiate an `AbsMatrix1x1`:
   creates an `AbsMatrix1x1` based on an array of length 1 containing the absolute quantity. The display unit and reference are taken from the absolute quantity.
 - `AbsMatrix1x1.of(A[][] absGrid)` <br>
   creates an `AbsMatrix1x1` based on a 1x1 grid (array of arrays) of absolute quantities. The display unit and reference are taken from the absolute quantity.
+- `AbsMatrix1x1.of(Matrix1x1 relativeMatrix, Reference reference)` <br>
+  creates an `AbsMatrix1x1` based on the underlying relative vector and a reference point.
 
 
 ### Creating an `AbsMatrix2x2`
@@ -179,6 +181,8 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
   creates an `AbsMatrix2x2` based on a row-major array of length 4 containing the absolute quantities. The display unit and reference are taken from the absolute quantity at position `[0]`. The reference points of all quantities should be the same.
 - `AbsMatrix2x2.of(A[][] absGrid)` <br>
   creates an `AbsMatrix2x2` based on a 2x2 grid (array of arrays) of absolute quantities. The display unit and reference are taken from the absolute quantity at position `[0][0]`. The reference points of all quantities should be the same.
+- `AbsMatrix2x2.of(Matrix2x2 relativeMatrix, Reference reference)` <br>
+  creates an `AbsMatrix2x2` based on the underlying relative vector and a reference point.
 
 
 ### Creating an `AbsMatrix3x3`
@@ -207,6 +211,8 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
   creates an `AbsMatrix3x3` based on a row-major array of length 9 containing the absolute quantities. The display unit and reference are taken from the absolute quantity at position `[0]`. The reference points of all quantities should be the same.
 - `AbsMatrix3x3.of(A[][] absGrid)` <br>
   creates an `AbsMatrix3x3` based on a 3x3 grid (array of arrays) of absolute quantities. The display unit and reference are taken from the absolute quantity at position `[0][0]`. The reference points of all quantities should be the same.
+- `AbsMatrix3x3.of(Matri3x3 relativeMatrix, Reference reference)` <br>
+  creates an `AbsMatrix3x3` based on the underlying relative vector and a reference point.
 
 
 ### Creating an `AbsMatrixNxN`
@@ -242,6 +248,8 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
   creates an `AbsMatrixNxN` based on a row-major array containing the absolute quantities. The number of elements in the array needs to be a perfect square. The display unit and reference are taken from the absolute quantity at position `[0]`. The reference points of all quantities should be the same.
 - `AbsMatrixNxN.of(A[][] absGrid)` <br>
   creates an `AbsMatrixNxN` based on a square grid (array of arrays) of absolute quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'. The display unit and reference are taken from the absolute quantity at position `[0][0]`. The reference points of all quantities should be the same.
+- `AbsMatrixNxN.of(MatrixNxN relativeMatrix, Reference reference)` <br>
+  creates an `AbsMatrixNxN` based on the underlying relative vector and a reference point.
 
 
 ### Creating an `AbsMatrixNxM`
@@ -277,5 +285,7 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
   creates an `AbsMatrixNxM` based on a row-major array containing the absolute quantities. The length of the array needs to be equal to `rows * cols`. The display unit and reference are taken from the absolute quantity at position `[0]`. The reference points of all quantities should be the same.
 - `AbsMatrixNxM.of(A[][] absGrid)` <br>
   creates an `AbsMatrixNxM` based on a grid (array of arrays) of absolute quantities. The grid cannot be 'ragged'. The display unit and reference are taken from the absolute quantity at position `[0][0]`. The reference points of all quantities should be the same.
+- `AbsMatrixNxM.of(MatrixNxM relativeMatrix, Reference reference)` <br>
+  creates an `AbsMatrixNxM` based on the underlying relative vector and a reference point.
 
  

@@ -22,7 +22,7 @@ An `AbsVector` does **not** implement the `Hadamard` interface for entry-by-entr
 
 If an `AbsVectorN` is internally of a size congruent with a specific vector type, e.g. `AbsVector2.Row` or `AbsVector3.Col`, it can be obtained as such using methods such as `asAbsVector2Row()` or `asAbsVector3Col()`. Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the vector size with the desired vector type at runtime. All absolute vectors, irrespective of their size, can be transformed to an `AbsQuantityTable` using the `asAbsQuantityTable()` method, and to an `AbsMatrixNxM` with the `asAbsMatrixNxM()` method.
 
-The `AbsVector` class implements the `transpose()` operation, which transforms an absolute row vector into a column vector and vice versa. The resulting vector will have the same outer class type as the original; the `transpose()` method on an `AbsVector2.Row` will result in a `AbsVector2.Col`. 
+The `AbsVector` class implements the `transpose()` operation, which transforms an absolute row vector into a column vector and vice versa. The resulting vector will have the same outer class type as the original; the `transpose()` method on an `AbsVector2.Row` will result in an `AbsVector2.Col`. 
 
 The generic methods of an `AbsVector` are:
 
@@ -30,7 +30,7 @@ The generic methods of an `AbsVector` are:
 - `int cols()` returns the number of columns of the vector.
 - `int size()` returns the size of the vector; the number of rows for a column vector, or the number of columns for a row vector.
 - `boolean isColumnVector()` returns whether this vector is a column vector.
-- `boolean isRowVector()` returns whether this vector is a row vector. Note that a `AbsVector1` is both a column vector and and row vector.
+- `boolean isRowVector()` returns whether this vector is a row vector. Note that an `AbsVector1` is both a column vector and and row vector.
 - `Iterator<A> iterator()` returns an `AbsQuantity` iterator over the entries of the vector.
 - `getDisplayUnit()` returns the display unit of the entire `AbsVector`.
 - `setDisplayUnit(unit)` sets a new display unit for the entire `AbsVector` based on a strongly typed `unit`.
@@ -83,95 +83,104 @@ An `AbsVector` implements several mathematical operations. The most important on
 
 ## Vector definition and storage
 
-### Creating a `AbsVector1`
+### Creating an `AbsVector1`
 
-For a `AbsVector1`, there is no distinction between a row and column vector. Several methods exist to instantiate a `AbsVector1`:
+For an `AbsVector1`, there is no distinction between a row and column vector. Several methods exist to instantiate an `AbsVector1`:
 
 - `new AbsVector1<A, Q>(double xSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector1` based on an SI-value for the quantity, with a displayUnit and a reference point.
+  creates an `AbsVector1` based on an SI-value for the quantity, with a displayUnit and a reference point.
 - `AbsVector1.of(double xInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVector1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`, and a reference point.
+  creates an `AbsVector1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`, and a reference point.
 - `AbsVector1.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVector1` based on an array of length 1 with values expressed in the given unit, and a reference point.
+  creates an `AbsVector1` based on an array of length 1 with values expressed in the given unit, and a reference point.
 - `AbsVector1.ofSi(double xSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector1` based on an SI-value for a quantity with a displayUnit and a reference point.
+  creates an `AbsVector1` based on an SI-value for a quantity with a displayUnit and a reference point.
 - `AbsVector1.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector1` based on an array of length 1 with SI-values for a quantity with a displayUnit and a reference point.
+  creates an `AbsVector1` based on an array of length 1 with SI-values for a quantity with a displayUnit and a reference point.
 - `AbsVector1.of(Q x, Reference reference)` <br>
-  creates a `AbsVector1` based on a provided quantity and a reference point.
+  creates an `AbsVector1` based on a provided quantity and a reference point.
 - `AbsVector1.of(Q[] data, Reference reference)` <br>
-  creates a `AbsVector1` based on an array of length 1 containing a provided quantity and a reference point.
+  creates an `AbsVector1` based on an array of length 1 containing a provided quantity and a reference point.
 - `AbsVector1.of(A absX)` <br>
-  creates a `AbsVector1` based on the provided absolute quantity.
+  creates an `AbsVector1` based on the provided absolute quantity.
 - `AbsVector1.of(A[] absData)` <br>
-  creates a `AbsVector1` based on an array of length 1 containing an absolute quantity.
+  creates an `AbsVector1` based on an array of length 1 containing an absolute quantity.
+- `AbsVector1.of(Vector1 relativeVector, Reference reference)` <br>
+  creates an `AbsVector1` based on the underlying relative vector and a reference point.
 
 
-### Creating a `AbsVector2`
+### Creating an `AbsVector2`
 
-For a `AbsVector2`, a row vector `AbsVector2.Row` and a column vector `AbsVector2.Col` exist. Several methods exist to instantiate a `AbsVector2`. Below, the instantiation methods are given for `AbsVector2.Col`. The instantiation methods for a `AbsVector2.Row` are analogous.
+For an `AbsVector2`, a row vector `AbsVector2.Row` and a column vector `AbsVector2.Col` exist. Several methods exist to instantiate an `AbsVector2`. Below, the instantiation methods are given for `AbsVector2.Col`. The instantiation methods for an `AbsVector2.Row` are analogous.
 
 - `new AbsVector2.Col<A, Q>(double xSi, double ySi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector2.Col` based on two SI-values for the quantities with a displayUnit and a reference point.
+  creates an `AbsVector2.Col` based on two SI-values for the quantities with a displayUnit and a reference point.
 - `AbsVector2.Col.of(double xInUnit, double yInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVector2.Col` based on two values expressed in the given unit and a reference point.
+  creates an `AbsVector2.Col` based on two values expressed in the given unit and a reference point.
 - `AbsVector2.Col.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVector2.Col` based on an array of length 2 with values expressed in the given unit and a reference point.
+  creates an `AbsVector2.Col` based on an array of length 2 with values expressed in the given unit and a reference point.
 - `AbsVector2.Col.ofSi(double xSi, double ySi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector2.Col` based on two SI-values for the quantities with a displayUnit and a reference point.
+  creates an `AbsVector2.Col` based on two SI-values for the quantities with a displayUnit and a reference point.
 - `AbsVector2.Col.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector2.Col` based on an array of length 2 with SI-values for the quantities with a displayUnit and a reference point.
+  creates an `AbsVector2.Col` based on an array of length 2 with SI-values for the quantities with a displayUnit and a reference point.
 - `AbsVector2.Col.of(Q x, Q y, Reference reference)` <br>
-  creates a `AbsVector2.Col` containing the two provided quantities and a reference point.
+  creates an `AbsVector2.Col` containing the two provided quantities and a reference point.
 - `AbsVector2.Col.of(Q[] data, Reference reference)` <br>
-  creates a `AbsVector2.Col` based on an array of length 2 containing the provided quantities and a reference point.
+  creates an `AbsVector2.Col` based on an array of length 2 containing the provided quantities and a reference point.
 - `AbsVector2.Col.of(A absX, A absY)` <br>
-  creates a `AbsVector2.Col` based on the provided absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
+  creates an `AbsVector2.Col` based on the provided absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
 - `AbsVector2.Col.of(A[] absData)` <br>
-  creates a `AbsVector2.Col` based on an array of length 2 containing absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
+  creates an `AbsVector2.Col` based on an array of length 2 containing absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
+- `AbsVector2.Col.of(Vector2.Col relativeVector, Reference reference)` <br>
+  creates an `AbsVector2.Col` based on the underlying relative vector and a reference point.
 
 
-### Creating a `AbsVector3`
+### Creating an `AbsVector3`
 
-For a `AbsVector3`, a row vector `AbsVector3.Row` and a column vector `AbsVector3.Col` exist. Several methods exist to instantiate a `AbsVector3`. Below, the instantiation methods are given for `AbsVector3.Col`. The instantiation methods for a `AbsVector3.Row` are analogous.
+For an `AbsVector3`, a row vector `AbsVector3.Row` and a column vector `AbsVector3.Col` exist. Several methods exist to instantiate an `AbsVector3`. Below, the instantiation methods are given for `AbsVector3.Col`. The instantiation methods for an `AbsVector3.Row` are analogous.
 
 - `new AbsVector3.Col<A, Q>(double xSi, double ySi, double zSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector3.Col` based on three SI-values for the quantities with a displayUnit and a reference point.
+  creates an `AbsVector3.Col` based on three SI-values for the quantities with a displayUnit and a reference point.
 - `AbsVector3.Col.of(double xInUnit, double yInUnit, double zInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVector3.Col` based on three values expressed in the given unit and a reference point.
+  creates an `AbsVector3.Col` based on three values expressed in the given unit and a reference point.
 - `AbsVector3.Col.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVector3.Col` based on an array of length 3 with values expressed in the given unit and a reference point.
+  creates an `AbsVector3.Col` based on an array of length 3 with values expressed in the given unit and a reference point.
 - `AbsVector3.Col.ofSi(double xSi, double ySi, double zSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector3.Col` based on three SI-values for the quantities with a displayUnit and a reference point.
+  creates an `AbsVector3.Col` based on three SI-values for the quantities with a displayUnit and a reference point.
 - `AbsVector3.Col.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVector3.Col` based on an array of length 3 with SI-values for the quantities with a displayUnit and a reference point.
+  creates an `AbsVector3.Col` based on an array of length 3 with SI-values for the quantities with a displayUnit and a reference point.
 - `AbsVector3.Col.of(Q x, Q y, Q z, Reference reference)` <br>
-  creates a `AbsVector3.Col` containing the three provided quantities and a reference point.
+  creates an `AbsVector3.Col` containing the three provided quantities and a reference point.
 - `AbsVector3.Col.of(Q[] data, Reference reference)` <br>
-  creates a `AbsVector3.Col` based on an array of length 3 containing the provided quantities and a reference point.
+  creates an `AbsVector3.Col` based on an array of length 3 containing the provided quantities and a reference point.
 - `AbsVector3.Col.of(A absX, A absY, A absZ)` <br>
-  creates a `AbsVector3.Col` based on the provided absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
+  creates an `AbsVector3.Col` based on the provided absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
 - `AbsVector3.Col.of(A[] absData)` <br>
-  creates a `AbsVector3.Col` based on an array of length 3 containing absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
+  creates an `AbsVector3.Col` based on an array of length 3 containing absolute quantities. The display unit is taken from the first quantity. The reference points of all quantities should be the same.
+- `AbsVector3.Col.of(Vector3.Col relativeVector, Reference reference)` <br>
+  creates an `AbsVector3.Col` based on the underlying relative vector and a reference point.
 
 
-### Creating a `AbsVectorN`
+### Creating an `AbsVectorN`
 
-The `AbsVectorN` class is used for storing row and column vectors of any length. Data can be stored as single-precision `float` variable, or as double-preciding `double` values. Both dense (store every number) and sparse (only store non-zero values) is possible. For a `AbsVectorN`, a row vector subclass `AbsVectorN.Row` and a column vector subclass `AbsVectorN.Col` exist. Several methods exist to instantiate a `AbsVectorN`. Below, the instantiation methods are given for `AbsVectorN.Col`. The instantiation methods for a `AbsVectorN.Row` are analogous.
+The `AbsVectorN` class is used for storing row and column vectors of any length. Data can be stored as single-precision `float` variable, or as double-preciding `double` values. Both dense (store every number) and sparse (only store non-zero values) is possible. For an `AbsVectorN`, a row vector subclass `AbsVectorN.Row` and a column vector subclass `AbsVectorN.Col` exist. Several methods exist to instantiate an `AbsVectorN`. Below, the instantiation methods are given for `AbsVectorN.Col`. The instantiation methods for an `AbsVectorN.Row` are analogous.
 
 - `new AbsVectorN.Col<A, Q>(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVectorN.Col` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
+  creates an `AbsVectorN.Col` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
 - `AbsVectorN.Col.of(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVectorN.Col` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
+  creates an `AbsVectorN.Col` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
 - `AbsVectorN.Col.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
-  creates a `AbsVectorN.Col` based on an array with values expressed in the given unit and a reference point. The vector will have the same number of elements as the array.
+  creates an `AbsVectorN.Col` based on an array with values expressed in the given unit and a reference point. The vector will have the same number of elements as the array.
 - `AbsVectorN.Col.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates a `AbsVectorN.Col` based on an array with SI-values for the quantities, a display unit and a reference point. The vector will have the same number of elements as the array.
+  creates an `AbsVectorN.Col` based on an array with SI-values for the quantities, a display unit and a reference point. The vector will have the same number of elements as the array.
 - `AbsVectorN.Col.of(Q[] data, Reference reference)` <br>
-  creates a `AbsVectorN.Col` based on an array with quantities and a reference point. The vector will have the same number of elements as the array.
+  creates an `AbsVectorN.Col` based on an array with quantities and a reference point. The vector will have the same number of elements as the array.
 - `AbsVectorN.Col.of(List<Q> data, Reference reference)` <br>
-  creates a `AbsVectorN.Col` based on a list with quantities and a reference point. The vector will have the same number of elements as the list.
+  creates an `AbsVectorN.Col` based on a list with quantities and a reference point. The vector will have the same number of elements as the list.
 - `AbsVector3.Col.of(A[] absData)` <br>
-  creates a `AbsVectorN.Col` based on an array containing absolute quantities. The display unit is taken from the first quantity. The reference points of all absolute quantities should be the same.
+  creates an `AbsVectorN.Col` based on an array containing absolute quantities. The display unit is taken from the first quantity. The reference points of all absolute quantities should be the same.
 - `AbsVector3.Col.of(List<A> absData)` <br>
-  creates a `AbsVectorN.Col` based on an array containing absolute quantities. The display unit is taken from the first quantity. The reference points of all absolute quantities should be the same.
+  creates an `AbsVectorN.Col` based on an array containing absolute quantities. The display unit is taken from the first quantity. The reference points of all absolute quantities should be the same.
+- `AbsVectorN.Col.of(VectorN.Col relativeVector, Reference reference)` <br>
+  creates an `AbsVectorN.Col` based on the underlying relative vector and a reference point.
+  
