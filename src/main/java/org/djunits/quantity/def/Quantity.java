@@ -150,13 +150,13 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
 
     /**
      * Instantiate a quantity with a value and a unit.
-     * @param value the double value, experessed in the unit
+     * @param valueInUnit the double value, experessed in the unit
      * @param unit the unit
      * @return a quantity with the given value and display unit
      */
-    public Q instantiate(final double value, final Unit<?, Q> unit)
+    public Q instantiate(final double valueInUnit, final Unit<?, Q> unit)
     {
-        return instantiate(unit.toBaseValue(value)).setDisplayUnit(unit);
+        return instantiate(unit.toBaseValue(valueInUnit)).setDisplayUnit(unit);
     }
 
     /**********************************************************************************/
