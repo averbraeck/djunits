@@ -213,27 +213,22 @@ public class SIQuantityTest
 
     /**
      * Verifies representative {@link Quantity#toString()} variants for an {@link SIQuantity}: default form, explicit target
-     * unit, verbose flag, and unit suppression.
+     * unit, and unit suppression.
      */
     @Test
     void toStringVariants()
     {
         SIQuantity q = new SIQuantity(1500.0, SIUnit.of("m"));
-        // default: "value unit"
+        // default: "display unit"
         String def = q.toString();
         assertTrue(def.endsWith(" m"), "Default toString must end with the display unit");
 
-        // explicit unit (no verbose, with unit)
+        // explicit unit
         String asKg = q.toString(SIUnit.of("kg"));
         assertTrue(asKg.endsWith(" kg"));
 
-        // verbose + with unit
-        String verbose = q.toString(true, true);
-        assertTrue(verbose.startsWith("Rel "), "Verbose rendering must start with 'Rel '");
-        assertTrue(verbose.endsWith(" m"));
-
         // without unit
-        String noUnit = q.toString(false, false);
+        String noUnit = q.toString(q.getDisplayUnit(), false);
         assertFalse(noUnit.endsWith(" m"), "Unit must be omitted when withUnit=false");
     }
 

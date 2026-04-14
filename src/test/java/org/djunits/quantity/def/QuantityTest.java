@@ -403,10 +403,8 @@ public class QuantityTest
         assertTrue(def.endsWith(" m"));
         // explicit unit
         assertTrue(d.toString(Length.Unit.km).endsWith(" km"));
-        // verbose flag
-        assertTrue(d.toString(true, true).startsWith("Rel "));
         // without unit
-        assertFalse(d.toString(false, false).endsWith(" m"));
+        assertFalse(d.toString(d.getDisplayUnit(), false).endsWith(" m"));
     }
 
     /**

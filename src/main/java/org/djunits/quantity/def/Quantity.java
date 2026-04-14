@@ -461,58 +461,42 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
 
     /**
      * Concise description of this value.
-     * @return a String with the value, non-verbose, with the unit attached.
+     * @return a String with the value, with the unit attached.
      */
     @Override
     public String toString()
     {
-        return toString(getDisplayUnit(), false, true);
+        return toString(getDisplayUnit(), true);
     }
 
     /**
-     * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit the unit into which the values are converted for display
-     * @return printable string with the value contents expressed in the specified unit
+     * String representation of this value, expressed in the specified unit.
+     * @param targetUnit the unit into which the values are converted for display
+     * @return printable string with the value expressed in the specified unit
      */
     @Override
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final Unit<?, Q> displayUnit)
+    public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(displayUnit, false, true);
+        return toString(targetUnit, true);
     }
 
     /**
-     * Somewhat verbose description of this value with optional type and unit information.
-     * @param verbose if true; include type info; if false; exclude type info
-     * @param withUnit if true; include the unit; of false; exclude the unit
-     * @return printable string with the value contents
-     */
-    public String toString(final boolean verbose, final boolean withUnit)
-    {
-        return toString(getDisplayUnit(), verbose, withUnit);
-    }
-
-    /**
-     * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit the unit into which the values are converted for display
-     * @param verbose if true; include type info; if false; exclude type info
-     * @param withUnit if true; include the unit; of false; exclude the unit
+     * String representation of this value, expressed in the specified unit.
+     * @param targetUnit the unit into which the values are converted for display
+     * @param withUnit if true; include the unit; if false; exclude the unit
      * @return printable string with the value contents
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final Unit<?, Q> displayUnit, final boolean verbose, final boolean withUnit)
+    public String toString(final Unit<?, Q> targetUnit, final boolean withUnit)
     {
         StringBuffer buf = new StringBuffer();
-        if (verbose)
-        {
-            buf.append("Rel ");
-        }
-        double d = getInUnit(displayUnit);
+        double d = getInUnit(targetUnit);
         buf.append(Format.format(d));
         if (withUnit)
         {
             buf.append(" "); // Insert one space as prescribed by SI writing conventions
-            buf.append(displayUnit.getDisplayAbbreviation());
+            buf.append(targetUnit.getDisplayAbbreviation());
         }
         return buf.toString();
     }
@@ -528,7 +512,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     }
 
     /**
-     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the value is too
+     * Format this Quantity in SI unit using prefixes when possible and within the specified size range. If the value is too
      * small or too large, e-notation and the plain SI unit are used.
      * @param smallestPower the smallest exponent value that will be written using an SI prefix
      * @param biggestPower the largest exponent value that will be written using an SI prefix
