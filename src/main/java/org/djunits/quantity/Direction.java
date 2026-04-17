@@ -23,24 +23,24 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
 
     /**
      * Instantiate a Direction quantity with a unit and a reference point.
-     * @param value the angle value, expressed in a angle unit
+     * @param valueInUnit the angle value, expressed in a angle unit
      * @param unit the angle unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this direction
      */
-    public Direction(final double value, final Angle.Unit unit, final Reference reference)
+    public Direction(final double valueInUnit, final Angle.Unit unit, final Reference reference)
     {
-        super(new Angle(value, unit), reference);
+        super(new Angle(valueInUnit, unit), reference);
     }
 
     /**
      * Instantiate a Direction quantity with a unit, expressed as a String, and a reference point.
-     * @param value the angle value, expressed in the unit, relative to the reference point
+     * @param valueInUnit the angle value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this direction
      */
-    public Direction(final double value, final String abbreviation, final Reference reference)
+    public Direction(final double valueInUnit, final String abbreviation, final Reference reference)
     {
-        this(value, Units.resolve(Angle.Unit.class, abbreviation), reference);
+        this(valueInUnit, Units.resolve(Angle.Unit.class, abbreviation), reference);
     }
 
     /**
@@ -93,16 +93,16 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
 
     /**
      * Returns a Direction based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @param reference the reference point of this direction
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Direction of(final double value, final String unitString, final Reference reference)
+    public static Direction of(final double valueInUnit, final String unitString, final Reference reference)
     {
-        return new Direction(Quantity.of(value, unitString, Angle.ZERO), reference);
+        return new Direction(Quantity.of(valueInUnit, unitString, Angle.ZERO), reference);
     }
 
     @Override

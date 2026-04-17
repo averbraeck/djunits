@@ -12,8 +12,8 @@ import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * AbsQuantity is an abstract class that stores the basic information about a absolute quantity. An absolute quantity wraps
- * a relative Quantity and has a reference point that acts as an origin or zero point.
+ * AbsQuantity is an abstract class that stores the basic information about a absolute quantity. An absolute quantity wraps a
+ * relative Quantity and has a reference point that acts as an origin or zero point.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -23,8 +23,8 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the relative quantity type
  * @param <R> the reference type to use for the absolute quantity
  */
-public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-        R extends Reference<R, A, Q>> implements Value<A, Q>, Comparable<A>
+public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>>
+        implements Value<A, Q>, Comparable<A>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -377,7 +377,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
 
     /**
      * Returns an absolute quantity based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @param example an absolute example instance to deliver
      * @param reference the reference point
@@ -389,7 +389,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param <R> the reference type to use for the absolute quantity
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
-            final double value, final String unitString, final A example, final R reference)
+            final double valueInUnit, final String unitString, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -400,7 +400,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
         @SuppressWarnings("unchecked")
         Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
-        return example.instantiate(example.getQuantity().instantiate(value, unit), reference);
+        return example.instantiate(example.getQuantity().instantiate(valueInUnit, unit), reference);
     }
 
     /**********************************************************************************/
@@ -675,8 +675,8 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> A max(final A quantity1, final A... quantities)
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A max(final A quantity1,
+            final A... quantities)
     {
         A maxA = quantity1;
         for (A absq : quantities)
@@ -703,8 +703,8 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> A min(final A quantity1, final A... quantities)
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A min(final A quantity1,
+            final A... quantities)
     {
         A minA = quantity1;
         for (A absq : quantities)
@@ -731,8 +731,8 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> A sum(final A quantity1, final A... quantities)
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A sum(final A quantity1,
+            final A... quantities)
     {
         double sum = quantity1.si();
         for (A absq : quantities)

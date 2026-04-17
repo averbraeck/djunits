@@ -27,44 +27,44 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
 
     /**
      * Instantiate a Temperature quantity with a unit and a reference point.
-     * @param value the temperature value, expressed in a temperature unit
+     * @param valueInUnit the temperature value, expressed in a temperature unit
      * @param unit the temperature unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final Temperature.Unit unit, final Reference reference)
+    public Temperature(final double valueInUnit, final Temperature.Unit unit, final Reference reference)
     {
-        super(new TemperatureDifference(value, unit), reference);
+        super(new TemperatureDifference(valueInUnit, unit), reference);
     }
 
     /**
      * Instantiate a Temperature quantity with a unit and the KELVIN reference point.
-     * @param value the temperature value, expressed in a temperature unit
+     * @param valueInUnit the temperature value, expressed in a temperature unit
      * @param unit the temperature unit in which the value is expressed, relative to the reference point
      */
-    public Temperature(final double value, final Temperature.Unit unit)
+    public Temperature(final double valueInUnit, final Temperature.Unit unit)
     {
-        this(value, unit, unit.getReference());
+        this(valueInUnit, unit, unit.getReference());
     }
 
     /**
      * Instantiate a Temperature quantity with a unit, expressed as a String, and a reference point.
-     * @param value the temperature value, expressed in the unit, relative to the reference point
+     * @param valueInUnit the temperature value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this absolute temperature
      */
-    public Temperature(final double value, final String abbreviation, final Reference reference)
+    public Temperature(final double valueInUnit, final String abbreviation, final Reference reference)
     {
-        this(value, Units.resolve(Temperature.Unit.class, abbreviation), reference);
+        this(valueInUnit, Units.resolve(Temperature.Unit.class, abbreviation), reference);
     }
 
     /**
      * Instantiate a Temperature quantity with a unit, expressed as a String, and the reference point belonging to the unit.
-     * @param value the temperature value, expressed in the unit, relative to the reference point
+     * @param valueInUnit the temperature value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public Temperature(final double value, final String abbreviation)
+    public Temperature(final double valueInUnit, final String abbreviation)
     {
-        this(value, Units.resolve(Temperature.Unit.class, abbreviation),
+        this(valueInUnit, Units.resolve(Temperature.Unit.class, abbreviation),
                 Units.resolve(Temperature.Unit.class, abbreviation).getReference());
     }
 
@@ -151,30 +151,30 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
 
     /**
      * Returns a Temperature based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @param reference the reference point of this absolute temperature
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Temperature of(final double value, final String unitString, final Reference reference)
+    public static Temperature of(final double valueInUnit, final String unitString, final Reference reference)
     {
-        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), reference);
+        return new Temperature(Quantity.of(valueInUnit, unitString, TemperatureDifference.ZERO), reference);
     }
 
     /**
      * Returns a Temperature based on a value and the textual representation of the unit, which can be localized. Use the KELVIN
      * reference.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Temperature of(final double value, final String unitString)
+    public static Temperature of(final double valueInUnit, final String unitString)
     {
-        return new Temperature(Quantity.of(value, unitString, TemperatureDifference.ZERO), Reference.KELVIN);
+        return new Temperature(Quantity.of(valueInUnit, unitString, TemperatureDifference.ZERO), Reference.KELVIN);
     }
 
     @Override

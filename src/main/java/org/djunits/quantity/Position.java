@@ -21,24 +21,24 @@ public class Position extends AbsQuantity<Position, Length, Position.Reference>
 
     /**
      * Instantiate a Position quantity with a unit and a reference point.
-     * @param value the length value, expressed in a length unit
+     * @param valueInUnit the length value, expressed in a length unit
      * @param unit the length unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this position
      */
-    public Position(final double value, final Length.Unit unit, final Reference reference)
+    public Position(final double valueInUnit, final Length.Unit unit, final Reference reference)
     {
-        super(new Length(value, unit), reference);
+        super(new Length(valueInUnit, unit), reference);
     }
 
     /**
      * Instantiate a Position quantity with a unit, expressed as a String, and a reference point.
-     * @param value the length value, expressed in the unit, relative to the reference point
+     * @param valueInUnit the length value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this position
      */
-    public Position(final double value, final String abbreviation, final Reference reference)
+    public Position(final double valueInUnit, final String abbreviation, final Reference reference)
     {
-        this(value, Units.resolve(Length.Unit.class, abbreviation), reference);
+        this(valueInUnit, Units.resolve(Length.Unit.class, abbreviation), reference);
     }
 
     /**
@@ -91,16 +91,16 @@ public class Position extends AbsQuantity<Position, Length, Position.Reference>
 
     /**
      * Returns a Position based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @param reference the reference point of this position
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Position of(final double value, final String unitString, final Reference reference)
+    public static Position of(final double valueInUnit, final String unitString, final Reference reference)
     {
-        return new Position(Quantity.of(value, unitString, Length.ZERO), reference);
+        return new Position(Quantity.of(valueInUnit, unitString, Length.ZERO), reference);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class Position extends AbsQuantity<Position, Length, Position.Reference>
         {
             return AbstractReference.get(Position.Reference.class, id);
         }
-        
+
         @Override
         public Position instantiate(final Length length)
         {

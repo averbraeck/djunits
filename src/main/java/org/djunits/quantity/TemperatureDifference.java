@@ -44,22 +44,22 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
 
     /**
      * Instantiate a TemperatureDifference quantity with a unit.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public TemperatureDifference(final double value, final Temperature.Unit unit)
+    public TemperatureDifference(final double valueInUnit, final Temperature.Unit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     /**
      * Instantiate a TemperatureDifference quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public TemperatureDifference(final double value, final String abbreviation)
+    public TemperatureDifference(final double valueInUnit, final String abbreviation)
     {
-        this(value, Units.resolve(Temperature.Unit.class, abbreviation));
+        this(valueInUnit, Units.resolve(Temperature.Unit.class, abbreviation));
     }
 
     /**
@@ -110,15 +110,15 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
 
     /**
      * Returns a TemperatureDifference based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static TemperatureDifference of(final double value, final String unitString)
+    public static TemperatureDifference of(final double valueInUnit, final String unitString)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return Quantity.of(valueInUnit, unitString, ZERO);
     }
 
     @Override

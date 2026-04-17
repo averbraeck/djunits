@@ -113,15 +113,15 @@ public class Area extends Quantity<Area>
 
     /**
      * Returns a Area based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Area of(final double value, final String unitString)
+    public static Area of(final double valueInUnit, final String unitString)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return Quantity.of(valueInUnit, unitString, ZERO);
     }
 
     @Override

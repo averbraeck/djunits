@@ -47,22 +47,22 @@ public class Frequency extends Quantity<Frequency>
 
     /**
      * Instantiate a Frequency quantity with a unit.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public Frequency(final double value, final Frequency.Unit unit)
+    public Frequency(final double valueInUnit, final Frequency.Unit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     /**
      * Instantiate a Frequency quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public Frequency(final double value, final String abbreviation)
+    public Frequency(final double valueInUnit, final String abbreviation)
     {
-        this(value, Units.resolve(Frequency.Unit.class, abbreviation));
+        this(valueInUnit, Units.resolve(Frequency.Unit.class, abbreviation));
     }
 
     /**
@@ -113,15 +113,15 @@ public class Frequency extends Quantity<Frequency>
 
     /**
      * Returns a Frequency based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Frequency of(final double value, final String unitString)
+    public static Frequency of(final double valueInUnit, final String unitString)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return Quantity.of(valueInUnit, unitString, ZERO);
     }
 
     @Override

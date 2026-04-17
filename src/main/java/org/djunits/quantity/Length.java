@@ -47,22 +47,22 @@ public class Length extends Quantity<Length>
 
     /**
      * Instantiate a Length quantity with a unit.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public Length(final double value, final Length.Unit unit)
+    public Length(final double valueInUnit, final Length.Unit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     /**
      * Instantiate a Length quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public Length(final double value, final String abbreviation)
+    public Length(final double valueInUnit, final String abbreviation)
     {
-        this(value, Units.resolve(Length.Unit.class, abbreviation));
+        this(valueInUnit, Units.resolve(Length.Unit.class, abbreviation));
     }
 
     /**
@@ -113,15 +113,15 @@ public class Length extends Quantity<Length>
 
     /**
      * Returns a Length based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Length of(final double value, final String unitString)
+    public static Length of(final double valueInUnit, final String unitString)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return Quantity.of(valueInUnit, unitString, ZERO);
     }
 
     @Override

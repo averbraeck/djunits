@@ -23,22 +23,22 @@ public class SIQuantity extends Quantity<SIQuantity>
 
     /**
      * Instantiate a SI quantity with a unit.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public SIQuantity(final double value, final SIUnit unit)
+    public SIQuantity(final double valueInUnit, final SIUnit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     /**
      * Instantiate a SI quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public SIQuantity(final double value, final String abbreviation)
+    public SIQuantity(final double valueInUnit, final String abbreviation)
     {
-        this(value, SIUnit.of(abbreviation));
+        this(valueInUnit, SIUnit.of(abbreviation));
     }
 
     /**
@@ -99,18 +99,18 @@ public class SIQuantity extends Quantity<SIQuantity>
 
     /**
      * Returns an SI quantity based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static SIQuantity of(final double value, final String unitString)
+    public static SIQuantity of(final double valueInUnit, final String unitString)
     {
         Throw.whenNull(unitString, "Error parsing SI quantity: unitString is null");
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing SI quantity: empty unitString");
         SIUnit unit = SIUnit.of(unitString);
-        return new SIQuantity(value, unit);
+        return new SIQuantity(valueInUnit, unit);
     }
 
 }

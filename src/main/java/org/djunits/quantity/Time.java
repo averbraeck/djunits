@@ -22,24 +22,24 @@ public class Time extends AbsQuantity<Time, Duration, Time.Reference>
 
     /**
      * Instantiate a Time quantity with a unit and a reference point.
-     * @param value the duration value, expressed in a duration unit
+     * @param valueInUnit the duration value, expressed in a duration unit
      * @param unit the duration unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this time
      */
-    public Time(final double value, final Duration.Unit unit, final Reference reference)
+    public Time(final double valueInUnit, final Duration.Unit unit, final Reference reference)
     {
-        super(new Duration(value, unit), reference);
+        super(new Duration(valueInUnit, unit), reference);
     }
 
     /**
      * Instantiate a Time quantity with a unit, expressed as a String, and a reference point.
-     * @param value the duration value, expressed in the unit, relative to the reference point
+     * @param valueInUnit the duration value, expressed in the unit, relative to the reference point
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      * @param reference the reference point of this time
      */
-    public Time(final double value, final String abbreviation, final Reference reference)
+    public Time(final double valueInUnit, final String abbreviation, final Reference reference)
     {
-        this(value, Units.resolve(Duration.Unit.class, abbreviation), reference);
+        this(valueInUnit, Units.resolve(Duration.Unit.class, abbreviation), reference);
     }
 
     /**
@@ -92,16 +92,16 @@ public class Time extends AbsQuantity<Time, Duration, Time.Reference>
 
     /**
      * Returns a Time based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @param reference the reference point of this time
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static Time of(final double value, final String unitString, final Reference reference)
+    public static Time of(final double valueInUnit, final String unitString, final Reference reference)
     {
-        return new Time(Quantity.of(value, unitString, Duration.ZERO), reference);
+        return new Time(Quantity.of(valueInUnit, unitString, Duration.ZERO), reference);
     }
 
     @Override

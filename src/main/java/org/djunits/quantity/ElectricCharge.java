@@ -48,22 +48,22 @@ public class ElectricCharge extends Quantity<ElectricCharge>
 
     /**
      * Instantiate a ElectricCharge quantity with a unit.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param unit the unit in which the value is expressed
      */
-    public ElectricCharge(final double value, final ElectricCharge.Unit unit)
+    public ElectricCharge(final double valueInUnit, final ElectricCharge.Unit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     /**
      * Instantiate a ElectricCharge quantity with a unit, expressed as a String.
-     * @param value the value, expressed in the unit
+     * @param valueInUnit the value, expressed in the unit
      * @param abbreviation the String abbreviation of the unit in which the value is expressed
      */
-    public ElectricCharge(final double value, final String abbreviation)
+    public ElectricCharge(final double valueInUnit, final String abbreviation)
     {
-        this(value, Units.resolve(ElectricCharge.Unit.class, abbreviation));
+        this(valueInUnit, Units.resolve(ElectricCharge.Unit.class, abbreviation));
     }
 
     /**
@@ -114,15 +114,15 @@ public class ElectricCharge extends Quantity<ElectricCharge>
 
     /**
      * Returns a ElectricCharge based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
      * @throws NullPointerException when the unitString argument is null
      */
-    public static ElectricCharge of(final double value, final String unitString)
+    public static ElectricCharge of(final double valueInUnit, final String unitString)
     {
-        return Quantity.of(value, unitString, ZERO);
+        return Quantity.of(valueInUnit, unitString, ZERO);
     }
 
     @Override
