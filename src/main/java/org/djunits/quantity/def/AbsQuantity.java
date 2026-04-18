@@ -3,7 +3,7 @@ package org.djunits.quantity.def;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.djunits.formatter.Format;
+import org.djunits.formatter.Formatter;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
@@ -520,7 +520,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
             buf.append("Abs ");
         }
         double d = getInUnit();
-        buf.append(Format.format(d));
+        buf.append(Formatter.format(d));
         if (withUnit)
         {
             buf.append(" "); // Insert one space as prescribed by SI writing conventions

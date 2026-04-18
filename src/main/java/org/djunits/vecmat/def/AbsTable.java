@@ -2,7 +2,7 @@ package org.djunits.vecmat.def;
 
 import java.lang.reflect.Array;
 
-import org.djunits.formatter.Format;
+import org.djunits.formatter.Formatter;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
@@ -318,7 +318,7 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
             {
                 if (c > 0)
                     s.append(", ");
-                s.append(Format.format(withUnit.fromBaseValue(si(r, c))));
+                s.append(Formatter.format(withUnit.fromBaseValue(si(r, c))));
             }
         }
         s.append("] ");
