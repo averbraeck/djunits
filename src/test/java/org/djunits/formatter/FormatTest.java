@@ -7,7 +7,8 @@ import java.util.Locale;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test Formatter.format for quantities. <p>
+ * Test Formatter.format for quantities.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -53,23 +54,22 @@ public class FormatTest
                             assertEquals(width, result.length(), "Length of result should equal specified width");
                         }
                         result = Formatter.format(value);
-                        assertEquals(Format.DEFAULTSIZE, result.length(), "Length of result should equal default width");
+                        assertEquals(Formatter.DEFAULTSIZE, result.length(), "Length of result should equal default width");
                     }
                 }
             }
         }
         // Directly call Format en check that the result has the expected length
-        String result = EngineeringFormatter.format(123.456);
-        assertEquals(Format.DEFAULTSIZE, result.length(), "Width of result of format should be " + Format.DEFAULTSIZE);
+        String result = Formatter.formatEngineering(123.456);
+        assertEquals(Formatter.DEFAULTSIZE, result.length(), "Width of result of format should be " + Formatter.DEFAULTSIZE);
         for (int len = -2; len <= 10; len++)
         {
             // Check that widths less than the minimum are treated as the minimum
-            assertEquals(10, EngineeringFormatter.format(12.3, len).length(), "With should be at least 10 characters");
+            assertEquals(10, Formatter.formatEngineering(12.3, len).length(), "With should be at least 10 characters");
         }
         String input = "78757587585858.55873468764";
-        assertEquals(input, EngineeringFormatter.convertToEngineering(input), "String with no E or e is returned unaltered");
+        assertEquals(input, Formatter.convertToEngineering(input), "String with no E or e is returned unaltered");
         input = "123e4";
-        assertEquals(input, EngineeringFormatter.convertToEngineering(input),
-                "String with no dot or comma is returned unaltered");
+        assertEquals(input, Formatter.convertToEngineering(input), "String with no dot or comma is returned unaltered");
     }
 }

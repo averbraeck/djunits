@@ -2,38 +2,21 @@ package org.djunits.formatter;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
 /**
- * Test the Engineering formatter <p>
+ * Test the Engineering formatter
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Peter Knoppers
  */
-public class EngineeringFormatterTest
+public class FormatterTest
 {
-
-    /**
-     * See if we can increase the code coverage to include the private constructor.
-     * @throws InstantiationException on reflection error
-     * @throws IllegalAccessException on reflection error
-     * @throws IllegalArgumentException on reflection error
-     * @throws InvocationTargetException on reflection error
-     */
-    @Test
-    public final void constructorTest()
-            throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
-    {
-        Constructor<?>[] cons = EngineeringFormatter.class.getDeclaredConstructors();
-        cons[0].setAccessible(true);
-        cons[0].newInstance((Object[]) null);
-    }
 
     /**
      * Run ulpTest with both values of the parameter.
@@ -41,12 +24,12 @@ public class EngineeringFormatterTest
     @Test
     public final void ulpTest()
     {
-        EngineeringFormatter.setUpperCaseFormat(true);
+        Formatter.setUpperCaseFormat(true);
         Locale.setDefault(Locale.US); // Uses a dot as radix symbol
         doULPTest();
         Locale.setDefault(Locale.GERMAN); // Uses a comma as radix symbol
         doULPTest();
-        EngineeringFormatter.setUpperCaseFormat(false);
+        Formatter.setUpperCaseFormat(false);
         Locale.setDefault(Locale.US); // Uses a dot as radix symbol
         doULPTest();
         Locale.setDefault(Locale.GERMAN); // Uses a comma as radix symbol
@@ -95,12 +78,12 @@ public class EngineeringFormatterTest
     @Test
     public final void widthTest()
     {
-        EngineeringFormatter.setUpperCaseFormat(true);
+        Formatter.setUpperCaseFormat(true);
         Locale.setDefault(Locale.US); // Uses a dot as radix symbol
         doWidthTest();
         Locale.setDefault(Locale.GERMAN); // Uses a comma as radix symbol
         doWidthTest();
-        EngineeringFormatter.setUpperCaseFormat(false);
+        Formatter.setUpperCaseFormat(false);
         Locale.setDefault(Locale.US); // Uses a dot as radix symbol
         doWidthTest();
         Locale.setDefault(Locale.GERMAN); // Uses a comma as radix symbol
@@ -153,7 +136,7 @@ public class EngineeringFormatterTest
      */
     public static String convertAndVerify(final double val, final int room)
     {
-        String result = EngineeringFormatter.format(val, room);
+        String result = Formatter.formatEngineering(val, room);
         verifyResult(val, result, room);
         return result;
     }
