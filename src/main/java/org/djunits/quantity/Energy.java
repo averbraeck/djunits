@@ -311,29 +311,29 @@ public class Energy extends Quantity<Energy>
         public static final Energy.Unit kcal = cal.deriveUnit("kcal", "kilocalorie", 1000.0, UnitSystem.OTHER);
 
         /** watt hour. */
-        public static final Energy.Unit WATT_HOUR = new Energy.Unit("Wh", "watt hour", 3600.0, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit Wh = new Energy.Unit("Wh", "watt hour", 3600.0, UnitSystem.SI_DERIVED);
 
         /** microwatt hour. */
         public static final Energy.Unit muWh =
-                WATT_HOUR.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
+                Wh.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
 
         /** milliwatt hour. */
-        public static final Energy.Unit mWh = WATT_HOUR.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit mWh = Wh.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
 
         /** kilowatt hour. */
-        public static final Energy.Unit kWh = WATT_HOUR.deriveUnit("kWh", "kilowatt hour", 1E3, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit kWh = Wh.deriveUnit("kWh", "kilowatt hour", 1E3, UnitSystem.SI_DERIVED);
 
         /** megawatt hour. */
-        public static final Energy.Unit MWh = WATT_HOUR.deriveUnit("MWh", "megawatt hour", 1E6, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit MWh = Wh.deriveUnit("MWh", "megawatt hour", 1E6, UnitSystem.SI_DERIVED);
 
         /** gigawatt hour. */
-        public static final Energy.Unit GWh = WATT_HOUR.deriveUnit("GWh", "gigawatt hour", 1E9, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit GWh = Wh.deriveUnit("GWh", "gigawatt hour", 1E9, UnitSystem.SI_DERIVED);
 
         /** terawatt hour. */
-        public static final Energy.Unit TWh = WATT_HOUR.deriveUnit("TWh", "terawatt hour", 1E12, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit TWh = Wh.deriveUnit("TWh", "terawatt hour", 1E12, UnitSystem.SI_DERIVED);
 
         /** petawatt hour. */
-        public static final Energy.Unit PWh = WATT_HOUR.deriveUnit("PWh", "petawatt hour", 1E15, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit PWh = Wh.deriveUnit("PWh", "petawatt hour", 1E15, UnitSystem.SI_DERIVED);
 
         /** electronvolt. */
         public static final Energy.Unit eV = new Energy.Unit("eV", "electronvolt", 1.602176634E-19, UnitSystem.SI_ACCEPTED);
