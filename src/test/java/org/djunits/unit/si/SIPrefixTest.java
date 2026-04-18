@@ -47,15 +47,15 @@ public class SIPrefixTest
     public void testSiprefixConstructorAndGetters()
     {
         // Nulls must fail
-        assertThrows(NullPointerException.class, () -> new SIPrefix(null, "mega", 1.0E6, "M"));
-        assertThrows(NullPointerException.class, () -> new SIPrefix("M", null, 1.0E6, "M"));
-        assertThrows(NullPointerException.class, () -> new SIPrefix("M", "mega", 1.0E6, null));
+        assertThrows(NullPointerException.class, () -> new SIPrefix(null, "mega", 1.0E6, "M", PrefixType.UNIT));
+        assertThrows(NullPointerException.class, () -> new SIPrefix("M", null, 1.0E6, "M", PrefixType.UNIT));
+        assertThrows(NullPointerException.class, () -> new SIPrefix("M", "mega", 1.0E6, null, PrefixType.UNIT));
 
         // Zero factor must fail
-        assertThrows(RuntimeException.class, () -> new SIPrefix("X", "x", 0.0, "X"));
+        assertThrows(RuntimeException.class, () -> new SIPrefix("X", "x", 0.0, "X", PrefixType.UNIT));
 
         // Valid construction (textual==display when using 3-arg constructor)
-        SIPrefix mega = new SIPrefix("M", "mega", 1.0E6);
+        SIPrefix mega = new SIPrefix("M", "mega", 1.0E6, PrefixType.UNIT);
         assertEquals("M", mega.getDefaultTextualPrefix());
         assertEquals("M", mega.getDefaultDisplayPrefix());
         assertEquals("mega", mega.getPrefixName());
@@ -149,7 +149,7 @@ public class SIPrefixTest
         assertNotNull(perMicro);
         assertEquals(1.0E6, perMicro.getFactor(), 0.0);
         assertEquals("/\u03BC", perMicro.getDefaultDisplayPrefix());
-        
+
         // kilo-prefix
         assertEquals(1.0, SIPrefixes.getSiPrefixKilo("k").getFactor(), 0.0);
     }
@@ -369,14 +369,16 @@ public class SIPrefixTest
     @DisplayName("All public maps are unmodifiable")
     public void testMapsAreUnmodifiable()
     {
-        assertThrows(UnsupportedOperationException.class, () -> SIPrefixes.UNIT_PREFIXES.put("X", new SIPrefix("X", "x", 2.0)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.PER_UNIT_PREFIXES.put("/X", new SIPrefix("/X", "per x", 0.5)));
+                () -> SIPrefixes.UNIT_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.UNIT_POS_PREFIXES.put("X", new SIPrefix("X", "x", 2.0)));
-        assertThrows(UnsupportedOperationException.class, () -> SIPrefixes.KILO_PREFIXES.put("X", new SIPrefix("X", "x", 2.0)));
+                () -> SIPrefixes.PER_UNIT_PREFIXES.put("/X", new SIPrefix("/X", "per x", 0.5, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.PER_KILO_PREFIXES.put("/X", new SIPrefix("/X", "per x", 2.0)));
+                () -> SIPrefixes.UNIT_POS_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
+        assertThrows(UnsupportedOperationException.class,
+                () -> SIPrefixes.KILO_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
+        assertThrows(UnsupportedOperationException.class,
+                () -> SIPrefixes.PER_KILO_PREFIXES.put("/X", new SIPrefix("/X", "per x", 2.0, PrefixType.UNIT)));
     }
 
     /**
