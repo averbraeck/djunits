@@ -72,7 +72,7 @@ class EnergyTest
         assertEquals(1E15, new Energy(1.0, Energy.Unit.PJ).si(), 1E6);
 
         // Watt-hour family (1 Wh = 3600 J)
-        assertEquals(3600.0, new Energy(1.0, Energy.Unit.WATT_HOUR).si(), 1E-9);
+        assertEquals(3600.0, new Energy(1.0, Energy.Unit.Wh).si(), 1E-9);
         assertEquals(3.6e-3, new Energy(1.0, Energy.Unit.muWh).si(), 1E-12);
         assertEquals(3.6, new Energy(1.0, Energy.Unit.mWh).si(), 1E-12);
         assertEquals(3.6e6, new Energy(1.0, Energy.Unit.kWh).si(), 1E-3);
