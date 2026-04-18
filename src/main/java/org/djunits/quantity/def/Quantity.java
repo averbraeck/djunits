@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 import org.djunits.formatter.Format;
+import org.djunits.formatter.FormatHint;
+import org.djunits.formatter.Formatter;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Unitless;
@@ -44,14 +46,14 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
 
     /**
      * Instantiate a quantity with a value and a display unit.
-     * @param value the value expressed in the display unit
-     * @param displayUnit the display unit to use
+     * @param valueInUnit the value expressed in the display unit
+     * @param unit the display unit to use
      */
-    public Quantity(final double value, final Unit<?, Q> displayUnit)
+    public Quantity(final double valueInUnit, final Unit<?, Q> unit)
     {
-        Throw.whenNull(displayUnit, "displayUnit");
-        this.si = displayUnit.toBaseValue(value);
-        this.displayUnit = displayUnit;
+        Throw.whenNull(unit, "unit");
+        this.si = unit.toBaseValue(valueInUnit);
+        this.displayUnit = unit;
     }
 
     /**********************************************************************************/
@@ -395,7 +397,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
 
     /**
      * Returns a quantity based on a value and the textual representation of the unit, which can be localized.
-     * @param value the value to use
+     * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @param example an example instance to deliver
      * @return the quantity representation of the value in its unit
@@ -403,7 +405,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @throws NullPointerException when the unitString argument is null
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Q of(final double value, final String unitString, final Q example)
+    public static <Q extends Quantity<Q>> Q of(final double valueInUnit, final String unitString, final Q example)
     {
         Throw.whenNull(example, "Error parsing Quantity: example is null");
         String quantityClass = example.getClass().getSimpleName();
@@ -413,7 +415,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
         @SuppressWarnings("unchecked")
         Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
-        return example.instantiate(value, unit);
+        return example.instantiate(valueInUnit, unit);
     }
 
     /**********************************************************************************/
@@ -466,7 +468,18 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     @Override
     public String toString()
     {
-        return toString(getDisplayUnit(), true);
+        return toString(new FormatHint[] {});
+    }
+
+    /**
+     * String representation of this value after applying the format hints.
+     * @param hints the format hints to apply on the quantity
+     * @return a String representation of this quantity, formatted according to the format hints
+     */
+    @SuppressWarnings("unchecked")
+    public String toString(final FormatHint... hints)
+    {
+        return Formatter.formatQuantity((Q) this, hints);
     }
 
     /**
