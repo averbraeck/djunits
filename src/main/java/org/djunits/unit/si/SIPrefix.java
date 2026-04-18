@@ -22,6 +22,9 @@ public class SIPrefix
 
     /** The factor that the SI prefix represents, such as 1.0E6 for mega. */
     private final double factor;
+    
+    /** The type of SI prefix. */
+    private final PrefixType type;
 
     /**
      * Construct an SI prefix.
@@ -29,18 +32,21 @@ public class SIPrefix
      * @param prefixName the prefix name such as "mega" or "deca"
      * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
      * @param defaultDisplayPrefix "\u03BC" for micro
+     * @param type the prefix type, e.g., KILO
      */
     public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor,
-            final String defaultDisplayPrefix)
+            final String defaultDisplayPrefix, final PrefixType type)
     {
         Throw.whenNull(defaultTextualPrefix, "SIPrefix.defaultTextualPrefix cannot be null");
         Throw.whenNull(prefixName, "SIPrefix.prefixName cannot be null");
         Throw.whenNull(defaultDisplayPrefix, "SIPrefix.defaultDisplayPrefix cannot be null");
+        Throw.whenNull(type, "SIPrefix.type cannot be null");
         Throw.when(factor == 0, IllegalArgumentException.class, "SIPrefix.factor cannot be 0");
         this.defaultTextualPrefix = defaultTextualPrefix;
         this.prefixName = prefixName;
         this.factor = factor;
         this.defaultDisplayPrefix = defaultDisplayPrefix;
+        this.type = type;
     }
 
     /**
@@ -48,10 +54,11 @@ public class SIPrefix
      * @param defaultTextualPrefix the prefix abbreviation, duch as "M" for mega and "da" for deca
      * @param prefixName the prefix name such as "mega" or "deca"
      * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
+     * @param type the prefix type, e.g., KILO
      */
-    public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor)
+    public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor, final PrefixType type)
     {
-        this(defaultTextualPrefix, prefixName, factor, defaultTextualPrefix);
+        this(defaultTextualPrefix, prefixName, factor, defaultTextualPrefix, type);
     }
 
     /**
@@ -88,6 +95,15 @@ public class SIPrefix
     public String getDefaultDisplayPrefix()
     {
         return this.defaultDisplayPrefix;
+    }
+
+    /**
+     * Retrieve the type.
+     * @return the type
+     */
+    public PrefixType getType()
+    {
+        return this.type;
     }
 
     @Override
