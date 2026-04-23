@@ -118,6 +118,35 @@ final class FormatContext
     /** Prefix to use for a row vector. */
     String vectorRowPrefix = "Row";
 
+    // Matrix or QuantityTable formatting from TableHint, contains default values
+    
+    /** End symbol for first row. */
+    String tableFirstRowStartSymbol = "| ";
+
+    /** End symbol for first row. */
+    String tableFirstRowEndSymbol = " |\n";
+
+    /** Start symbol for middle row. */
+    String tableMiddleRowStartSymbol = "| ";
+
+    /** End symbol for middle row. */
+    String tableMiddleRowEndSymbol = " |\n";
+
+    /** End symbol for last row. */
+    String tableLastRowStartSymbol = "| ";
+
+    /** End symbol for last row. */
+    String tableLastRowEndSymbol = " |";
+
+    /** Separator symbol for column within a row. */
+    String tableColSeparatorSymbol = "  ";
+
+    /** Prefix string to use for a table or matrix. */
+    String tablePrefix = "";
+
+    /** Postfix string to use for a table or matrix. */
+    String tablePostfix = "";
+    
     /**
      * Create a FormatContext and apply the hints.
      * @param hints the format hints to apply

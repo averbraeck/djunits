@@ -44,19 +44,31 @@ public class TableFormatter extends Formatter
     {
         formatUnit();
         StringBuilder s = new StringBuilder();
+        s.append(this.ctx.tablePrefix);
         for (int r = 0; r < table().rows(); r++)
         {
-            s.append(r == 0 ? "[" : "\n ");
+            if (r == 0)
+                s.append(this.ctx.tableFirstRowStartSymbol);
+            else if (r == table().rows() - 1)
+                s.append(this.ctx.tableLastRowStartSymbol);
+            else
+                s.append(this.ctx.tableMiddleRowStartSymbol);
             for (int c = 0; c < table().cols(); c++)
             {
                 if (c > 0)
-                    s.append(", ");
+                    s.append(this.ctx.tableColSeparatorSymbol);
                 double si = table().si(r, c);
                 double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
                 s.append(formatValue(value));
             }
+            if (r == 0)
+                s.append(this.ctx.tableFirstRowEndSymbol);
+            else if (r == table().rows() - 1)
+                s.append(this.ctx.tableLastRowEndSymbol);
+            else
+                s.append(this.ctx.tableMiddleRowEndSymbol);
         }
-        s.append("] ");
+        s.append(this.ctx.tablePostfix);
         s.append(this.ctx.unitSeparator);
         s.append(this.unitStr);
         return s.toString();
