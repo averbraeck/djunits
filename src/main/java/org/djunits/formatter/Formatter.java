@@ -7,6 +7,9 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.value.Value;
+import org.djunits.vecmat.def.AbsTable;
+import org.djunits.vecmat.def.AbsVector;
+import org.djunits.vecmat.def.Table;
 import org.djunits.vecmat.def.Vector;
 
 /**
@@ -52,11 +55,6 @@ public abstract class Formatter
      * @return the formatted value and unit
      */
     abstract String format();
-
-    /**
-     * Format the unit according to the context settings.
-     */
-    abstract void formatUnit();
 
     /**
      * Check if SI formatting needs to be applied.
@@ -153,7 +151,8 @@ public abstract class Formatter
         try
         {
             savedLocale = saveLocale(ctx.locale);
-            return new AbsQuantityFormatter(absQuantity, ctx).format();
+            String reference = ctx.printReference ? " (" + absQuantity.getReference().getId() + ")" : "";
+            return new QuantityFormatter(absQuantity.getQuantity(), ctx).format() + reference;
         }
         finally
         {
@@ -181,6 +180,89 @@ public abstract class Formatter
         {
             restoreLocale(savedLocale);
         }
+    }
+
+    /**
+     * Format an absolute vector according to a number of FormatHints. Note that this method might not be thread-safe for
+     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * @param absVector the absolute vector to format
+     * @param hints the format hints
+     * @return a String with a formatted vector, matching the FormatHints as closely as possible
+     */
+    public static String formatAbsVector(final AbsVector<?, ?, ?, ?, ?> absVector, final FormatHint... hints)
+    {
+        FormatContext ctx = new FormatContext(hints);
+        Locale savedLocale = Locale.getDefault();
+        try
+        {
+            savedLocale = saveLocale(ctx.locale);
+            String reference = ctx.printReference ? " (" + absVector.getReference().getId() + ")" : "";
+            return new VectorFormatter(absVector.getRelativeVecMat(), ctx).format() + reference;
+        }
+        finally
+        {
+            restoreLocale(savedLocale);
+        }
+    }
+
+    /**
+     * Format a matrix or table according to a number of FormatHints. Note that this method might not be thread-safe for setting
+     * the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * @param table the matrix or table to format
+     * @param hints the format hints
+     * @return a String with a formatted matrix or table, matching the FormatHints as closely as possible
+     */
+    public static String formatTable(final Table<?, ?, ?, ?, ?> table, final FormatHint... hints)
+    {
+        FormatContext ctx = new FormatContext(hints);
+        Locale savedLocale = Locale.getDefault();
+        try
+        {
+            savedLocale = saveLocale(ctx.locale);
+            return new TableFormatter(table, ctx).format();
+        }
+        finally
+        {
+            restoreLocale(savedLocale);
+        }
+    }
+
+    /**
+     * Format an absolute matrix or table according to a number of FormatHints. Note that this method might not be thread-safe
+     * for setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * @param absTable the absolute matrix or table to format
+     * @param hints the format hints
+     * @return a String with a formatted matrix or table, matching the FormatHints as closely as possible
+     */
+    public static String formatAbsTable(final AbsTable<?, ?, ?, ?, ?> absTable, final FormatHint... hints)
+    {
+        FormatContext ctx = new FormatContext(hints);
+        Locale savedLocale = Locale.getDefault();
+        try
+        {
+            savedLocale = saveLocale(ctx.locale);
+            String reference = ctx.printReference ? " (" + absTable.getReference().getId() + ")" : "";
+            return new TableFormatter(absTable.getRelativeVecMat(), ctx).format() + reference;
+        }
+        finally
+        {
+            restoreLocale(savedLocale);
+        }
+    }
+
+    /**
+     * Format the unit according to the context settings.
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    void formatUnit()
+    {
+        boolean formatted = checkSiUnits();
+        if (!formatted)
+            formatted = checkUnitString();
+        if (!formatted)
+            formatted = checkDisplayUnit();
+        if (this.unitStr == null)
+            this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getTextualAbbreviation();
     }
 
     /**
@@ -317,7 +399,7 @@ public abstract class Formatter
         }
         return null;
     }
-    
+
     /**
      * Restore the locale to the old locale.
      * @param oldLocale the old locale (can be null if the locale was not changed earlier)
@@ -329,5 +411,5 @@ public abstract class Formatter
             Locale.setDefault(oldLocale);
         }
     }
-    
+
 }
