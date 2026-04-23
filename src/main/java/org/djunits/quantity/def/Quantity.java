@@ -5,11 +5,11 @@ import java.util.Objects;
 
 import org.djunits.formatter.FormatHint;
 import org.djunits.formatter.Formatter;
+import org.djunits.formatter.UnitHint;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
-import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.value.Additive;
 import org.djunits.value.Scalable;
@@ -422,45 +422,6 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     /**********************************************************************************/
 
     /**
-     * Format a string according to the current locale and the standard (minimized) format, such as "3.14" or "300.0".
-     * @param d the number to format
-     * @return the formatted number using the current Locale
-     */
-    public static String format(final double d)
-    {
-        if (d == 0.0 || (Math.abs(d) >= 1E-5 && Math.abs(d) <= 1E5) || !Double.isFinite(d))
-        {
-            return format(d, "%f");
-        }
-        return format(d, "%E");
-    }
-
-    /**
-     * Format a string according to the current locale and the provided format string.
-     * @param d the number to format
-     * @param format the formatting string to use for the number
-     * @return the formatted number using the current Locale and the format string
-     */
-    public static String format(final double d, final String format)
-    {
-        String s = String.format(format, d);
-        if (s.contains("e") || s.contains("E"))
-        {
-            return s;
-        }
-        while (s.endsWith("0") && s.length() > 2)
-        {
-            s = s.substring(0, s.length() - 1);
-        }
-        String last = s.substring(s.length() - 1);
-        if (!"01234567890".contains(last))
-        {
-            s += "0";
-        }
-        return s;
-    }
-
-    /**
      * Concise description of this value.
      * @return a String with the value, with the unit attached.
      */
@@ -475,10 +436,9 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @param hints the format hints to apply on the quantity
      * @return a String representation of this quantity, formatted according to the format hints
      */
-    @SuppressWarnings("unchecked")
     public String toString(final FormatHint... hints)
     {
-        return Formatter.formatQuantity((Q) this, hints);
+        return Formatter.formatQuantity(this, hints);
     }
 
     /**
@@ -487,114 +447,9 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @return printable string with the value expressed in the specified unit
      */
     @Override
-    @SuppressWarnings("checkstyle:hiddenfield")
     public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(targetUnit, true);
-    }
-
-    /**
-     * String representation of this value, expressed in the specified unit.
-     * @param targetUnit the unit into which the values are converted for display
-     * @param withUnit if true; include the unit; if false; exclude the unit
-     * @return printable string with the value contents
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final Unit<?, Q> targetUnit, final boolean withUnit)
-    {
-        StringBuffer buf = new StringBuffer();
-        double d = getInUnit(targetUnit);
-        buf.append(Formatter.format(d));
-        if (withUnit)
-        {
-            buf.append(" "); // Insert one space as prescribed by SI writing conventions
-            buf.append(targetUnit.getDisplayAbbreviation());
-        }
-        return buf.toString();
-    }
-
-    /**
-     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large, e-notation and
-     * the plain SI unit are used.
-     * @return formatted value of this DoubleScalar
-     */
-    public String toStringSIPrefixed()
-    {
-        return toStringSIPrefixed(-30, 32);
-    }
-
-    /**
-     * Format this Quantity in SI unit using prefixes when possible and within the specified size range. If the value is too
-     * small or too large, e-notation and the plain SI unit are used.
-     * @param smallestPower the smallest exponent value that will be written using an SI prefix
-     * @param biggestPower the largest exponent value that will be written using an SI prefix
-     * @return formatted value of this DoubleScalar
-     */
-    public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
-    {
-        // Override this method for weights, nonlinear units and DimensionLess.
-        if (!Double.isFinite(this.si))
-        {
-            return toString(getDisplayUnit().getBaseUnit());
-        }
-        // PK: I can't think of an easier way to figure out what the exponent will be; rounding of the mantissa to the available
-        // width makes this hard; This feels like an expensive way.
-        String check = String.format(this.si >= 0 ? "%10.8E" : "%10.7E", this.si);
-        int exponent = Integer.parseInt(check.substring(check.indexOf("E") + 1));
-        if (exponent < -30 || exponent < smallestPower || exponent > 30 + 2 || exponent > biggestPower)
-        {
-            // Out of SI prefix range; do not scale.
-            return String.format(this.si >= 0 ? "%10.4E" : "%10.3E", this.si) + " " + getDisplayUnit().getBaseUnit().getId();
-        }
-        Integer roundedExponent = (int) Math.ceil((exponent - 2.0) / 3) * 3;
-        String key = SIPrefixes.FACTORS.get(roundedExponent).getDefaultTextualPrefix() + getDisplayUnit().getBaseUnit().getId();
-        @SuppressWarnings({"unchecked", "checkstyle:hiddenfield"})
-        Unit<?, Q> displayUnit = (Unit<?, Q>) Units.resolve(getDisplayUnit().getClass(), key);
-        return toString(displayUnit);
-    }
-
-    /**
-     * Concise textual representation of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @return a String with the value with the default textual representation of the unit attached.
-     */
-    public String toTextualString()
-    {
-        return toTextualString(getDisplayUnit());
-    }
-
-    /**
-     * Concise textual representation of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @param displayUnit the display unit for the value
-     * @return a String with the value with the default textual representation of the provided unit attached.
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toTextualString(final Unit<?, Q> displayUnit)
-    {
-        return format(getInUnit()) + " " + displayUnit.getTextualAbbreviation();
-    }
-
-    /**
-     * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @return a String with the value with the default display representation of the unit attached.
-     */
-    public String toDisplayString()
-    {
-        return toDisplayString(getDisplayUnit());
-    }
-
-    /**
-     * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @param displayUnit the display unit for the value
-     * @return a String with the value with the default display representation of the provided unit attached.
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toDisplayString(final Unit<?, Q> displayUnit)
-    {
-        return format(getInUnit(displayUnit)) + " " + displayUnit.getDisplayAbbreviation();
+        return toString(UnitHint.setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/
