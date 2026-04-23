@@ -3,7 +3,9 @@ package org.djunits.quantity.def;
 import java.util.Locale;
 import java.util.Objects;
 
+import org.djunits.formatter.FormatHint;
 import org.djunits.formatter.Formatter;
+import org.djunits.formatter.UnitHint;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
@@ -433,169 +435,34 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Format a string according to the current locale and the standard (minimized) format, such as "3.14" or "300.0".
-     * @param d the number to format
-     * @return the formatted number using the current Locale
-     */
-    public String format(final double d)
-    {
-        if (d == 0.0 || (Math.abs(d) >= 1E-5 && Math.abs(d) <= 1E5) || !Double.isFinite(d))
-        {
-            return format(d, "%f");
-        }
-        return format(d, "%E");
-    }
-
-    /**
-     * Format a string according to the current locale and the provided format string.
-     * @param d the number to format
-     * @param format the formatting string to use for the number
-     * @return the formatted number using the current Locale and the format string
-     */
-    public String format(final double d, final String format)
-    {
-        String s = String.format(format, d);
-        if (s.contains("e") || s.contains("E"))
-        {
-            return s;
-        }
-        while (s.endsWith("0") && s.length() > 2)
-        {
-            s = s.substring(0, s.length() - 1);
-        }
-        String last = s.substring(s.length() - 1);
-        if (!"01234567890".contains(last))
-        {
-            s += "0";
-        }
-        return s;
-    }
-
-    /**
      * Concise description of this value.
      * @return a String with the value, non-verbose, with the unit attached.
      */
     @Override
     public String toString()
     {
-        return toString(getDisplayUnit(), false, true);
+        return toString(new FormatHint[] {});
     }
 
     /**
-     * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit the unit into which the values are converted for display
+     * String representation of this value after applying the format hints.
+     * @param hints the format hints to apply on the quantity
+     * @return a String representation of this quantity, formatted according to the format hints
+     */
+    public String toString(final FormatHint... hints)
+    {
+        return Formatter.formatAbsQuantity(this, hints);
+    }
+
+    /**
+     * String representation of the value expressed in the specified unit.
+     * @param targetUnit the unit into which the values are converted for display
      * @return printable string with the value contents expressed in the specified unit
      */
     @Override
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final Unit<?, Q> displayUnit)
+    public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(displayUnit, false, true);
-    }
-
-    /**
-     * Somewhat verbose description of this value with optional type and unit information.
-     * @param verbose if true; include type info; if false; exclude type info
-     * @param withUnit if true; include the unit; of false; exclude the unit
-     * @return printable string with the value contents
-     */
-    public String toString(final boolean verbose, final boolean withUnit)
-    {
-        return toString(getDisplayUnit(), verbose, withUnit);
-    }
-
-    /**
-     * Somewhat verbose description of this value with the values expressed in the specified unit.
-     * @param displayUnit the unit into which the values are converted for display
-     * @param verbose if true; include type info; if false; exclude type info
-     * @param withUnit if true; include the unit; of false; exclude the unit
-     * @return printable string with the value contents
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toString(final Unit<?, Q> displayUnit, final boolean verbose, final boolean withUnit)
-    {
-        StringBuffer buf = new StringBuffer();
-        if (verbose)
-        {
-            buf.append("Abs ");
-        }
-        double d = getInUnit();
-        buf.append(Formatter.format(d));
-        if (withUnit)
-        {
-            buf.append(" "); // Insert one space as prescribed by SI writing conventions
-            buf.append(displayUnit.getDisplayAbbreviation());
-            buf.append(" (");
-            buf.append(this.reference.getId());
-            buf.append(")");
-        }
-        return buf.toString();
-    }
-
-    /**
-     * Format this DoubleScalar in SI unit using prefixes when possible. If the value is too small or too large, e-notation and
-     * the plain SI unit are used.
-     * @return formatted value of this DoubleScalar
-     */
-    public String toStringSIPrefixed()
-    {
-        return toStringSIPrefixed(-30, 32);
-    }
-
-    /**
-     * Format this DoubleScalar in SI unit using prefixes when possible and within the specified size range. If the value is too
-     * small or too large, e-notation and the plain SI unit are used.
-     * @param smallestPower the smallest exponent value that will be written using an SI prefix
-     * @param biggestPower the largest exponent value that will be written using an SI prefix
-     * @return formatted value of this DoubleScalar
-     */
-    public String toStringSIPrefixed(final int smallestPower, final int biggestPower)
-    {
-        return this.quantity.toStringSIPrefixed(smallestPower, biggestPower);
-    }
-
-    /**
-     * Concise textual representation of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @return a String with the value with the default textual representation of the unit attached.
-     */
-    public String toTextualString()
-    {
-        return toTextualString(getDisplayUnit());
-    }
-
-    /**
-     * Concise textual representation of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @param displayUnit the display unit for the value
-     * @return a String with the value with the default textual representation of the provided unit attached.
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toTextualString(final Unit<?, Q> displayUnit)
-    {
-        return format(getInUnit()) + " " + displayUnit.getTextualAbbreviation();
-    }
-
-    /**
-     * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @return a String with the value with the default display representation of the unit attached.
-     */
-    public String toDisplayString()
-    {
-        return toDisplayString(getDisplayUnit());
-    }
-
-    /**
-     * Concise display description of this value, without the engineering formatting, so without trailing zeroes. A space is
-     * added between the number and the unit.
-     * @param displayUnit the display unit for the value
-     * @return a String with the value with the default display representation of the provided unit attached.
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public String toDisplayString(final Unit<?, Q> displayUnit)
-    {
-        return format(getInUnit(displayUnit)) + " " + displayUnit.getDisplayAbbreviation();
+        return toString(UnitHint.setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/
