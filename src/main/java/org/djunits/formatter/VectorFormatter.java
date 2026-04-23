@@ -78,20 +78,4 @@ public class VectorFormatter extends Formatter
         return s.toString();
     }
 
-    /**
-     * Format the unit according to the context settings.
-     */
-    @SuppressWarnings("checkstyle:needbraces")
-    @Override
-    void formatUnit()
-    {
-        boolean formatted = checkSiUnits();
-        if (!formatted)
-            formatted = checkUnitString();
-        if (!formatted)
-            formatted = checkDisplayUnit();
-        if (this.unitStr == null)
-            this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getTextualAbbreviation();
-    }
-
 }
