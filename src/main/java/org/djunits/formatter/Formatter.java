@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.value.Value;
@@ -151,8 +152,8 @@ public abstract class Formatter
         try
         {
             savedLocale = saveLocale(ctx.locale);
-            String reference = ctx.printReference ? " (" + absQuantity.getReference().getId() + ")" : "";
-            return new QuantityFormatter(absQuantity.getQuantity(), ctx).format() + reference;
+            return new QuantityFormatter(absQuantity.getQuantity(), ctx).format()
+                    + formatReference(ctx, absQuantity.getReference());
         }
         finally
         {
@@ -196,8 +197,8 @@ public abstract class Formatter
         try
         {
             savedLocale = saveLocale(ctx.locale);
-            String reference = ctx.printReference ? " (" + absVector.getReference().getId() + ")" : "";
-            return new VectorFormatter(absVector.getRelativeVecMat(), ctx).format() + reference;
+            return new VectorFormatter(absVector.getRelativeVecMat(), ctx).format()
+                    + formatReference(ctx, absVector.getReference());
         }
         finally
         {
@@ -241,8 +242,8 @@ public abstract class Formatter
         try
         {
             savedLocale = saveLocale(ctx.locale);
-            String reference = ctx.printReference ? " (" + absTable.getReference().getId() + ")" : "";
-            return new TableFormatter(absTable.getRelativeVecMat(), ctx).format() + reference;
+            return new TableFormatter(absTable.getRelativeVecMat(), ctx).format()
+                    + formatReference(ctx, absTable.getReference());
         }
         finally
         {
@@ -262,7 +263,21 @@ public abstract class Formatter
         if (!formatted)
             formatted = checkDisplayUnit();
         if (this.unitStr == null)
-            this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getTextualAbbreviation();
+            this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getDisplayAbbreviation();
+    }
+
+    /**
+     * Format the reference of an absolute value according to the context settings.
+     * @param ctx the format context with the AbsoluteHint settings
+     * @param reference the reference to format
+     * @return the formatted reference, or an empty string when it is not displayed
+     */
+    @SuppressWarnings("checkstyle:needbraces")
+    static String formatReference(final FormatContext ctx, final Reference<?, ?, ?> reference)
+    {
+        if (!ctx.printReference)
+            return "";
+        return ctx.referencePrefix + reference.getId() + ctx.referencePostfix;
     }
 
     /**

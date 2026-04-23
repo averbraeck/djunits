@@ -64,7 +64,7 @@ public class QuantityFormatter extends Formatter
             formatted = checkDisplayUnit();
         checkScaleSiPrefixes();
         if (this.unitStr == null)
-            this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getTextualAbbreviation();
+            this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getDisplayAbbreviation();
     }
 
     /**

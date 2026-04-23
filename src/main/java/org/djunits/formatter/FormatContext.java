@@ -84,6 +84,12 @@ final class FormatContext
     /** Print the reference or not. */
     boolean printReference = false;
 
+    /** Prefix to the reference. */
+    String referencePrefix = "(";
+
+    /** Postfix to the reference. */
+    String referencePostfix = ")";
+
     // Locale formatting from LocaleHint
 
     /** Used locale for the entire output string (number and unit). */
