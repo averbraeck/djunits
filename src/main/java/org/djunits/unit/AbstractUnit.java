@@ -126,22 +126,30 @@ public abstract class AbstractUnit<U extends Unit<U, Q>, Q extends Quantity<Q>> 
         {
             if (!perUnit)
             {
+                this.siPrefix = SIPrefixes.UNIT_PREFIXES.get("");
                 for (SIPrefix sip : SIPrefixes.UNIT_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation(),
-                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation(),
-                            sip.getPrefixName() + getStoredName(), sip.getFactor(), getUnitSystem());
-                    unit.setSiPrefix(sip);
+                    if (sip.getFactor() != 1.0)
+                    {
+                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation(),
+                                sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation(),
+                                sip.getPrefixName() + getStoredName(), sip.getFactor(), getUnitSystem());
+                        unit.setSiPrefix(sip);
+                    }
                 }
             }
             else
             {
+                this.siPrefix = SIPrefixes.PER_UNIT_PREFIXES.get("/");
                 for (SIPrefix sip : SIPrefixes.PER_UNIT_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
-                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
-                    unit.setSiPrefix(sip);
+                    if (sip.getFactor() != 1.0)
+                    {
+                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
+                                sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
+                                sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
+                        unit.setSiPrefix(sip);
+                    }
                 }
             }
         }
@@ -149,22 +157,31 @@ public abstract class AbstractUnit<U extends Unit<U, Q>, Q extends Quantity<Q>> 
         {
             if (!perUnit)
             {
+                this.siPrefix = SIPrefixes.KILO_PREFIXES.get("k");
                 for (SIPrefix sip : SIPrefixes.KILO_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
-                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
-                            sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
-                    unit.setSiPrefix(sip);
+                    if (sip.getFactor() != 1.0)
+                    {
+                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
+                                sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
+                                sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
+                        unit.setSiPrefix(sip);
+                    }
                 }
             }
             else
             {
+                this.siPrefix = SIPrefixes.PER_KILO_PREFIXES.get("/k");
                 for (SIPrefix sip : SIPrefixes.PER_KILO_PREFIXES.values())
                 {
-                    U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(2),
-                            sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(2),
-                            sip.getPrefixName() + getStoredName().substring(8), sip.getFactor(), getUnitSystem());
-                    unit.setSiPrefix(sip);
+                    if (sip.getFactor() != 1.0)
+                    {
+
+                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(2),
+                                sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(2),
+                                sip.getPrefixName() + getStoredName().substring(8), sip.getFactor(), getUnitSystem());
+                        unit.setSiPrefix(sip);
+                    }
                 }
             }
         }
