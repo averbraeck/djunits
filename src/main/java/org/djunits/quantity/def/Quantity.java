@@ -449,7 +449,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     @Override
     public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(UnitHint.setDisplayUnit(targetUnit));
+        return toString(new UnitHint().setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/

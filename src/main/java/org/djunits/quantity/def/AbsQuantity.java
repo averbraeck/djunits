@@ -462,7 +462,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     @Override
     public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(UnitHint.setDisplayUnit(targetUnit));
+        return toString(new UnitHint().setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/
