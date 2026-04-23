@@ -7,6 +7,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.value.Value;
+import org.djunits.vecmat.def.Vector;
 
 /**
  * Formatter of quantities, vectors and matrices according to formatting hints.
@@ -125,28 +126,16 @@ public abstract class Formatter
      */
     public static String formatQuantity(final Quantity<?> quantity, final FormatHint... hints)
     {
-        FormatContext ctx = new FormatContext();
-        for (var hint : hints)
-        {
-            hint.applyTo(ctx);
-        }
-
-        Locale savedLocale = null;
+        FormatContext ctx = new FormatContext(hints);
+        Locale savedLocale = Locale.getDefault();
         try
         {
-            if (ctx.locale != null)
-            {
-                savedLocale = Locale.getDefault();
-                Locale.setDefault(ctx.locale);
-            }
+            savedLocale = saveLocale(ctx.locale);
             return new QuantityFormatter(quantity, ctx).format();
         }
         finally
         {
-            if (savedLocale != null)
-            {
-                Locale.setDefault(savedLocale);
-            }
+            restoreLocale(savedLocale);
         }
     }
 
@@ -159,28 +148,38 @@ public abstract class Formatter
      */
     public static String formatAbsQuantity(final AbsQuantity<?, ?, ?> absQuantity, final FormatHint... hints)
     {
-        FormatContext ctx = new FormatContext();
-        for (var hint : hints)
-        {
-            hint.applyTo(ctx);
-        }
-
-        Locale savedLocale = null;
+        FormatContext ctx = new FormatContext(hints);
+        Locale savedLocale = Locale.getDefault();
         try
         {
-            if (ctx.locale != null)
-            {
-                savedLocale = Locale.getDefault();
-                Locale.setDefault(ctx.locale);
-            }
+            savedLocale = saveLocale(ctx.locale);
             return new AbsQuantityFormatter(absQuantity, ctx).format();
         }
         finally
         {
-            if (savedLocale != null)
-            {
-                Locale.setDefault(savedLocale);
-            }
+            restoreLocale(savedLocale);
+        }
+    }
+
+    /**
+     * Format a vector according to a number of FormatHints. Note that this method might not be thread-safe for setting the
+     * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * @param vector the vector to format
+     * @param hints the format hints
+     * @return a String with a formatted vector, matching the FormatHints as closely as possible
+     */
+    public static String formatVector(final Vector<?, ?, ?, ?, ?> vector, final FormatHint... hints)
+    {
+        FormatContext ctx = new FormatContext(hints);
+        Locale savedLocale = Locale.getDefault();
+        try
+        {
+            savedLocale = saveLocale(ctx.locale);
+            return new VectorFormatter(vector, ctx).format();
+        }
+        finally
+        {
+            restoreLocale(savedLocale);
         }
     }
 
@@ -234,8 +233,7 @@ public abstract class Formatter
      */
     String formatScientific(final double val)
     {
-        String gs = this.ctx.groupingSeparator ? "%," : "%";
-        String fmt = gs + this.ctx.width + "." + this.ctx.decimals + (this.ctx.upperE ? "E" : "e");
+        String fmt = "%" + this.ctx.width + "." + this.ctx.decimals + (this.ctx.upperE ? "E" : "e");
         return String.format(fmt, val);
     }
 
@@ -304,4 +302,32 @@ public abstract class Formatter
         return String.format("%" + width + "s", s);
     }
 
+    /**
+     * Save the current locale, and change the locale.
+     * @param newLocale the new locale (can be null if the locale does not change)
+     * @return the old locale, or null when the locale was not changed
+     */
+    private static Locale saveLocale(final Locale newLocale)
+    {
+        if (newLocale != null)
+        {
+            Locale oldLocale = Locale.getDefault();
+            Locale.setDefault(newLocale);
+            return oldLocale;
+        }
+        return null;
+    }
+    
+    /**
+     * Restore the locale to the old locale.
+     * @param oldLocale the old locale (can be null if the locale was not changed earlier)
+     */
+    private static void restoreLocale(final Locale oldLocale)
+    {
+        if (oldLocale != null)
+        {
+            Locale.setDefault(oldLocale);
+        }
+    }
+    
 }
