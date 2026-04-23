@@ -12,14 +12,15 @@ package org.djunits.formatter;
 public class AbsoluteHint extends QuantityHint
 {
     /** Print the reference or not. */
-    private boolean printReference = false;
+    private Boolean printReference = null;
 
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public void applyTo(final FormatContext ctx)
     {
         super.applyTo(ctx);
-        ctx.printReference = this.printReference;
+        if (this.printReference != null)
+            ctx.printReference = this.printReference;
     }
 
     /**

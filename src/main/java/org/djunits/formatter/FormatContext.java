@@ -34,7 +34,7 @@ final class FormatContext
     int width = 10;
 
     /** Use grouping separator (e.g., thousands) or not. */
-    boolean groupingSeparator = false;
+    boolean groupingSeparator = true;
 
     /** Number format string. */
     String formatString = null;
@@ -49,7 +49,7 @@ final class FormatContext
 
     /** Textual representation, e.g., deg instead of degree symbol. */
     boolean textual = false;
-    
+
     /** SI representation rather than symbol. */
     boolean siUnits = false;
 
@@ -75,12 +75,12 @@ final class FormatContext
 
     /** maximum 10th power to use SI prefixes for. */
     int maximumPrefixPower = 32;
-    
+
     /** separator between the value and the unit. */
     String unitSeparator = " ";
 
     // Absolute quantity formatting from QuantityHint, contains default values
-    
+
     /** Print the reference or not. */
     boolean printReference = false;
 
@@ -89,24 +89,45 @@ final class FormatContext
     /** Used locale for the entire output string (number and unit). */
     Locale locale = null;
 
-    // Vector formatting from VectorHint
-    
-    /** Start symbol. */
-    String vectorStartSymbol = "[";
+    // Vector formatting from VectorHint, contains default values
 
-    /** End symbol. */
-    String vectorEndSymbol = "]";
+    /** Start symbol for row vector. */
+    String vectorRowStartSymbol = "[";
 
-    /** Separator symbol. */
-    String vectorSeparatorSymbol = ", ";
+    /** End symbol for row vector. */
+    String vectorRowEndSymbol = "]";
+
+    /** Separator symbol for row vector. */
+    String vectorRowSeparatorSymbol = ", ";
+
+    /** Start symbol for column vector. */
+    String vectorColStartSymbol = "[\n";
+
+    /** End symbol for column vector. */
+    String vectorColEndSymbol = "]";
+
+    /** Separator symbol for column vector. */
+    String vectorColSeparatorSymbol = "\n";
 
     /** Print column vector as row vector. */
     boolean vectorColAsRow = true;
-    
+
     /** Prefix to use for a column vector. */
     String vectorColPrefix = "Col";
-    
+
     /** Prefix to use for a row vector. */
     String vectorRowPrefix = "Row";
+
+    /**
+     * Create a FormatContext and apply the hints.
+     * @param hints the format hints to apply
+     */
+    FormatContext(final FormatHint... hints)
+    {
+        for (var hint : hints)
+        {
+            hint.applyTo(this);
+        }
+    }
 
 }

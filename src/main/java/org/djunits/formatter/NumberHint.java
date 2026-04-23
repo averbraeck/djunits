@@ -12,23 +12,24 @@ package org.djunits.formatter;
 public final class NumberHint implements FormatHint
 {
     /** Format mode. */
-    private FloatFormatMode formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+    private FloatFormatMode formatMode = null;
 
     /** Scientific notation: upper case E or lower case e. */
-    private boolean upperE = true;
+    private Boolean upperE = null;
 
     /** Number of decimal digits. */
-    private int decimals = 3;
+    private Integer decimals = null;
 
     /** Fixed width of the numerical output. */
-    private int width = 10;
+    private Integer width = null;
 
     /** Use grouping separator (e.g., thousands) or not. */
-    private boolean groupingSeparator = false;
+    private Boolean groupingSeparator = null;
 
     /** Number format string. */
     private String formatString = null;
 
+    @SuppressWarnings("checkstyle:needbraces")
     @Override
     public void applyTo(final FormatContext ctx)
     {
@@ -39,11 +40,16 @@ public final class NumberHint implements FormatHint
         }
         else
         {
-            ctx.formatMode = this.formatMode;
-            ctx.upperE = this.upperE;
-            ctx.decimals = this.decimals;
-            ctx.width = this.width;
-            ctx.groupingSeparator = this.groupingSeparator;
+            if (this.formatMode != null)
+                ctx.formatMode = this.formatMode;
+            if (this.upperE != null)
+                ctx.upperE = this.upperE;
+            if (this.decimals != null)
+                ctx.decimals = this.decimals;
+            if (this.width != null)
+                ctx.width = this.width;
+            if (this.groupingSeparator != null)
+                ctx.groupingSeparator = this.groupingSeparator;
         }
     }
 
