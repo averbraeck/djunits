@@ -211,7 +211,8 @@ public abstract class Formatter
      */
     String formatVariableLength(final double val)
     {
-        return String.format(this.ctx.upperE ? "%G" : "%g", val);
+        String gs = this.ctx.groupingSeparator ? "%," : "%";
+        return String.format(this.ctx.upperE ? gs + "G" : gs + "g", val);
     }
 
     /**
@@ -221,8 +222,9 @@ public abstract class Formatter
      */
     String formatFixedFloat(final double val)
     {
-        String fmt = "%" + this.ctx.width + "." + this.ctx.decimals + "f";
-        return String.format(fmt, this.value);
+        String gs = this.ctx.groupingSeparator ? "%," : "%";
+        String fmt = gs + this.ctx.width + "." + this.ctx.decimals + "f";
+        return String.format(fmt, val);
     }
 
     /**
@@ -232,8 +234,9 @@ public abstract class Formatter
      */
     String formatScientific(final double val)
     {
-        String fmt = "%" + this.ctx.width + "." + this.ctx.decimals + (this.ctx.upperE ? "E" : "e");
-        return String.format(fmt, this.value);
+        String gs = this.ctx.groupingSeparator ? "%," : "%";
+        String fmt = gs + this.ctx.width + "." + this.ctx.decimals + (this.ctx.upperE ? "E" : "e");
+        return String.format(fmt, val);
     }
 
     /**
@@ -255,7 +258,8 @@ public abstract class Formatter
         double mantissa = val / Math.pow(10, engExp);
 
         // Mantissa formatted as fixed
-        String mantFmt = "%." + this.ctx.decimals + "f";
+        String gs = this.ctx.groupingSeparator ? "%,." : "%.";
+        String mantFmt = gs + this.ctx.decimals + "f";
         String mant = String.format(mantFmt, mantissa);
         String result = mant + "e" + String.format("%+d", engExp);
         return pad(result, this.ctx.width);

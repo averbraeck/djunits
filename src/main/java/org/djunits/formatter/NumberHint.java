@@ -23,6 +23,9 @@ public final class NumberHint implements FormatHint
     /** Fixed width of the numerical output. */
     private int width = 10;
 
+    /** Use grouping separator (e.g., thousands) or not. */
+    private boolean groupingSeparator = false;
+
     /** Number format string. */
     private String formatString = null;
 
@@ -40,6 +43,7 @@ public final class NumberHint implements FormatHint
             ctx.upperE = this.upperE;
             ctx.decimals = this.decimals;
             ctx.width = this.width;
+            ctx.groupingSeparator = this.groupingSeparator;
         }
     }
 
@@ -134,6 +138,17 @@ public final class NumberHint implements FormatHint
     public NumberHint upperE(final boolean upper)
     {
         this.upperE = upper;
+        return this;
+    }
+
+    /**
+     * Set the grouping separator (e.g., 1000s separator) or or off.
+     * @param on indicates whether the grouping separator is on or not
+     * @return the NumberHint instance
+     */
+    public NumberHint setGroupingSeparator(final boolean on)
+    {
+        this.groupingSeparator = on;
         return this;
     }
 

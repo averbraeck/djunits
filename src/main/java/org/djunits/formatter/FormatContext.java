@@ -19,7 +19,7 @@ import org.djunits.unit.Unit;
 @SuppressWarnings("checkstyle:visibilitymodifier")
 final class FormatContext
 {
-    // Number formatting, contains default values
+    // Number formatting from NumberHint, contains default values
 
     /** Format mode. */
     FloatFormatMode formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
@@ -33,10 +33,13 @@ final class FormatContext
     /** Fixed width of the numerical output. */
     int width = 10;
 
+    /** Use grouping separator (e.g., thousands) or not. */
+    boolean groupingSeparator = false;
+
     /** Number format string. */
     String formatString = null;
 
-    // Unit formatting, contains default values
+    // Unit formatting from UnitHint, contains default values
 
     /** Display unit to use. */
     Unit<?, ?> displayUnit = null;
@@ -62,7 +65,7 @@ final class FormatContext
     /** Symbol to use for dot separation, e.g., "." to create kg.m2/s2. */
     String siDotSeparator = "";
 
-    // Quantity formatting, contains default values
+    // Quantity formatting from QuantityHint, contains default values
 
     /** Use closest SI prefix. E.g., turn 20400 m into "20.4 km". */
     boolean scaleSiPrefixes = false;
@@ -76,17 +79,17 @@ final class FormatContext
     /** separator between the value and the unit. */
     String unitSeparator = " ";
 
-    // Absolute quantity formatting, contains default values
+    // Absolute quantity formatting from QuantityHint, contains default values
     
     /** Print the reference or not. */
     boolean printReference = false;
 
-    // Locale formatting
+    // Locale formatting from LocaleHint
 
     /** Used locale for the entire output string (number and unit). */
     Locale locale = null;
 
-    // Vector formatting
+    // Vector formatting from VectorHint
     
     /** Start symbol. */
     String vectorStartSymbol = "[";

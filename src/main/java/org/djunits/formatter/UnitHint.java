@@ -39,45 +39,41 @@ public class UnitHint implements FormatHint
      * @param unit the display unit to use
      * @return UnitHint object for fluent design
      */
-    public static UnitHint setDisplayUnit(final Unit<?, ?> unit)
+    public UnitHint setDisplayUnit(final Unit<?, ?> unit)
     {
-        var uf = new UnitHint();
-        uf.displayUnit = unit;
-        return uf;
+        this.displayUnit = unit;
+        return this;
     }
 
     /**
      * Set the display unit to use, based on a String representation.
-     * @param unitString the String representation of the display unit to use
+     * @param unit the String representation of the display unit to use
      * @return UnitHint object for fluent design
      */
-    public static UnitHint setDisplayUnit(final String unitString)
+    public UnitHint setDisplayUnit(final String unit)
     {
-        var uf = new UnitHint();
-        uf.unitString = unitString;
-        return uf;
+        this.unitString = unit;
+        return this;
     }
 
     /**
      * Set textual mode.
      * @return UnitHint object for fluent design
      */
-    public static UnitHint textual()
+    public UnitHint textual()
     {
-        var uf = new UnitHint();
-        uf.textual = true;
-        return uf;
+        this.textual = true;
+        return this;
     }
 
     /**
      * Set display mode.
      * @return UnitHint object for fluent design
      */
-    public static UnitHint display()
+    public UnitHint display()
     {
-        var uf = new UnitHint();
-        uf.textual = false;
-        return uf;
+        this.textual = false;
+        return this;
     }
 
     /**
@@ -85,18 +81,17 @@ public class UnitHint implements FormatHint
      * @param on whether to turn textual mode on or off
      * @return UnitHint object for fluent design
      */
-    public static UnitHint textual(final boolean on)
+    public UnitHint textual(final boolean on)
     {
-        var uf = new UnitHint();
-        uf.textual = on;
-        return uf;
+        this.textual = on;
+        return this;
     }
 
     /**
      * Set SI unit mode.
      * @return UnitHint object for fluent design
      */
-    public static SIHint siUnits()
+    public SIHint siUnits()
     {
         return new SIHint();
     }
