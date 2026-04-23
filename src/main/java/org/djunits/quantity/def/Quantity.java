@@ -422,8 +422,8 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     /**********************************************************************************/
 
     /**
-     * Concise description of this value.
-     * @return a String with the value, with the unit attached.
+     * Concise description of this quantity.
+     * @return a String with the value of the quantity, with the unit attached.
      */
     @Override
     public String toString()
@@ -432,8 +432,8 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     }
 
     /**
-     * String representation of this value after applying the format hints.
-     * @param hints the format hints to apply on the quantity
+     * String representation of this quantity after applying the format hints.
+     * @param hints the format hints to apply for the quantity
      * @return a String representation of this quantity, formatted according to the format hints
      */
     public String toString(final FormatHint... hints)
@@ -442,9 +442,9 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     }
 
     /**
-     * String representation of this value, expressed in the specified unit.
-     * @param targetUnit the unit into which the values are converted for display
-     * @return printable string with the value expressed in the specified unit
+     * String representation of this quantity, expressed in the specified unit.
+     * @param targetUnit the unit into which the quantity is converted for display
+     * @return printable string with the quantity value expressed in the specified unit
      */
     @Override
     public String toString(final Unit<?, Q> targetUnit)
