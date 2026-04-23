@@ -3,7 +3,7 @@ package org.djunits.formatter;
 import org.djunits.unit.Unit;
 
 /**
- * UnitFormat stores a number of settings for the unit part of an output string when formatting a quantity, vector, matrix or
+ * UnitHint stores a number of settings for the unit part of an output string when formatting a quantity, vector, matrix or
  * quantity table.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -11,7 +11,7 @@ import org.djunits.unit.Unit;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class UnitFormat implements FormatHint
+public class UnitHint implements FormatHint
 {
     /** Display unit to use. */
     private Unit<?, ?> displayUnit = null;
@@ -37,11 +37,11 @@ public class UnitFormat implements FormatHint
     /**
      * Set the display unit to use.
      * @param unit the display unit to use
-     * @return UnitFormat object for fluent design
+     * @return UnitHint object for fluent design
      */
-    public static UnitFormat displayUnit(final Unit<?, ?> unit)
+    public static UnitHint setDisplayUnit(final Unit<?, ?> unit)
     {
-        var uf = new UnitFormat();
+        var uf = new UnitHint();
         uf.displayUnit = unit;
         return uf;
     }
@@ -49,33 +49,33 @@ public class UnitFormat implements FormatHint
     /**
      * Set the display unit to use, based on a String representation.
      * @param unitString the String representation of the display unit to use
-     * @return UnitFormat object for fluent design
+     * @return UnitHint object for fluent design
      */
-    public static UnitFormat displayUnit(final String unitString)
+    public static UnitHint setDisplayUnit(final String unitString)
     {
-        var uf = new UnitFormat();
+        var uf = new UnitHint();
         uf.unitString = unitString;
         return uf;
     }
 
     /**
      * Set textual mode.
-     * @return UnitFormat object for fluent design
+     * @return UnitHint object for fluent design
      */
-    public static UnitFormat textual()
+    public static UnitHint textual()
     {
-        var uf = new UnitFormat();
+        var uf = new UnitHint();
         uf.textual = true;
         return uf;
     }
 
     /**
      * Set display mode.
-     * @return UnitFormat object for fluent design
+     * @return UnitHint object for fluent design
      */
-    public static UnitFormat display()
+    public static UnitHint display()
     {
-        var uf = new UnitFormat();
+        var uf = new UnitHint();
         uf.textual = false;
         return uf;
     }
@@ -83,43 +83,43 @@ public class UnitFormat implements FormatHint
     /**
      * Set textual mode on or off.
      * @param on whether to turn textual mode on or off
-     * @return UnitFormat object for fluent design
+     * @return UnitHint object for fluent design
      */
-    public static UnitFormat textual(final boolean on)
+    public static UnitHint textual(final boolean on)
     {
-        var uf = new UnitFormat();
+        var uf = new UnitHint();
         uf.textual = on;
         return uf;
     }
 
     /**
      * Set SI unit mode.
-     * @return UnitFormat object for fluent design
+     * @return UnitHint object for fluent design
      */
-    public static SIFormat siUnits()
+    public static SIHint siUnits()
     {
-        return new SIFormat();
+        return new SIHint();
     }
 
     /**
-     * SIFormat stores a number of settings for the SIUnit part of an output string when formatting a quantity, vector, matrix
-     * or quantity table.
+     * SIHint stores a number of settings for the SIUnit part of an output string when formatting a quantity, vector, matrix or
+     * quantity table.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
      * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
      * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      */
-    public static class SIFormat implements FormatHint
+    public static class SIHint extends UnitHint
     {
         /** Use division symbol, e.g., TRUE: kgm2/s2, FALSE: kgm2s-2. */
         private Boolean siDivisionSymbol = null;
 
-        /** Symbol to use for start of power, e.g., "^" or "&lt;sup&gt;". */
-        private String siPowerStart = null;
+        /** Symbol to use as the prefix for a power, e.g., "^" or "&lt;sup&gt;". */
+        private String siPowerPrefix = null;
 
-        /** Symbol to use for end of power, e.g., "&lt;/sup&gt;". */
-        private String siPowerEnd = null;
+        /** Symbol to use as the postfix for a power, e.g., "&lt;/sup&gt;". */
+        private String siPowerPostfix = null;
 
         /** Symbol to use for dot separation, e.g., "." to create kg.m2/s2. */
         private String siDotSeparator = null;
@@ -128,13 +128,14 @@ public class UnitFormat implements FormatHint
         @SuppressWarnings("checkstyle:needbraces")
         public void applyTo(final FormatContext ctx)
         {
+            super.applyTo(ctx);
             ctx.siUnits = true;
             if (this.siDivisionSymbol != null)
                 ctx.siDivisionSymbol = this.siDivisionSymbol;
-            if (this.siPowerStart != null)
-                ctx.siPowerStart = this.siPowerStart;
-            if (this.siPowerEnd != null)
-                ctx.siPowerEnd = this.siPowerEnd;
+            if (this.siPowerPrefix != null)
+                ctx.siPowerPrefix = this.siPowerPrefix;
+            if (this.siPowerPostfix != null)
+                ctx.siPowerPostfix = this.siPowerPostfix;
             if (this.siDotSeparator != null)
                 ctx.siDotSeparator = this.siDotSeparator;
         }
@@ -142,42 +143,42 @@ public class UnitFormat implements FormatHint
         /**
          * Set whether the divider symbol is used.
          * @param on true when the divider symbol is used, false when not
-         * @return SIFormat for fluent design
+         * @return SIHint for fluent design
          */
-        public SIFormat divider(final boolean on)
+        public SIHint divider(final boolean on)
         {
             this.siDivisionSymbol = on;
             return this;
         }
 
         /**
-         * Set the power start symbol to the given String.
-         * @param symbol the string to use for the power start symbol
-         * @return SIFormat for fluent design
+         * Set the symbol to use as the prefix for a power to the given String.
+         * @param symbol the string to use for the power prefix
+         * @return SIHint for fluent design
          */
-        public SIFormat powerStart(final String symbol)
+        public SIHint powerPrefix(final String symbol)
         {
-            this.siPowerStart = symbol;
+            this.siPowerPrefix = symbol;
             return this;
         }
 
         /**
-         * Set the power end symbol to the given String.
-         * @param symbol the string to use for the power end symbol
-         * @return SIFormat for fluent design
+         * Set the symbol to use as the postfix for a power to the given String.
+         * @param symbol the string to use for the power postfix
+         * @return SIHint for fluent design
          */
-        public SIFormat powerEnd(final String symbol)
+        public SIHint powerPostfix(final String symbol)
         {
-            this.siPowerEnd = symbol;
+            this.siPowerPostfix = symbol;
             return this;
         }
 
         /**
          * Set the dot separator symbol to the given String.
          * @param symbol the string to use for the dot separator symbol
-         * @return SIFormat for fluent design
+         * @return SIHint for fluent design
          */
-        public SIFormat dotSeparator(final String symbol)
+        public SIHint dotSeparator(final String symbol)
         {
             this.siDotSeparator = symbol;
             return this;

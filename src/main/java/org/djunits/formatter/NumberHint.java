@@ -1,99 +1,159 @@
 package org.djunits.formatter;
 
 /**
- * NumberFormat stores a number of settings for the numeric part of an output string when formatting a quantity, vector, matrix
- * or quantity table.
+ * NumberHint stores a number of settings for the numeric part of an output string when formatting a quantity, vector, matrix or
+ * quantity table.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public final class NumberFormat implements FormatHint
+public final class NumberHint implements FormatHint
 {
-    /** Scientific notation. */
-    private Boolean scientificNotation = null;
+    /** Format mode. */
+    private FloatFormatMode formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+
+    /** Scientific notation: upper case E or lower case e. */
+    private boolean upperE = true;
 
     /** Number of decimal digits. */
-    private Integer decimalDigits = null;
-
-    /** Maximum width of the numerical output. */
-    private Integer maxWidth = null;
+    private int decimals = 3;
 
     /** Fixed width of the numerical output. */
-    private Integer fixedWidth = null;
+    private int width = 10;
+
+    /** Number format string. */
+    private String formatString = null;
 
     @Override
-    @SuppressWarnings("checkstyle:needbraces")
     public void applyTo(final FormatContext ctx)
     {
-        if (this.scientificNotation != null)
-            ctx.scientificNotation = this.scientificNotation;
-        if (this.decimalDigits != null)
-            ctx.decimalDigits = this.decimalDigits;
-        if (this.maxWidth != null)
-            ctx.maxWidth = this.maxWidth;
-        if (this.fixedWidth != null)
-            ctx.fixedWidth = this.fixedWidth;
+        if (this.formatString != null)
+        {
+            ctx.formatMode = FloatFormatMode.FORMAT_STRING;
+            ctx.formatString = this.formatString;
+        }
+        else
+        {
+            ctx.formatMode = this.formatMode;
+            ctx.upperE = this.upperE;
+            ctx.decimals = this.decimals;
+            ctx.width = this.width;
+        }
+    }
+
+    /**
+     * Apply variable length notation. Ignore width and decimals restrictions.
+     * @return the NumberHint instance
+     */
+    public NumberHint variableLength()
+    {
+        this.formatMode = FloatFormatMode.VARIABLE_LENGTH;
+        return this;
+    }
+
+    /**
+     * Apply fixed length float-only notation.
+     * @return the NumberHint instance
+     */
+    public NumberHint fixedFloat()
+    {
+        this.formatMode = FloatFormatMode.FIXED_FLOAT;
+        return this;
     }
 
     /**
      * Apply scientific notation.
-     * @return the NumberFormat instance
+     * @return the NumberHint instance
      */
-    public static NumberFormat scientific()
+    public NumberHint scientific()
     {
-        var nf = new NumberFormat();
-        nf.scientificNotation = true;
-        return nf;
+        this.formatMode = FloatFormatMode.SCIENTIFIC_ALWAYS;
+        return this;
     }
 
     /**
-     * Apply scientific or non-scientific notation.
-     * @param on whether scientific notation is on or not
-     * @return the NumberFormat instance
+     * Apply fixed length float-only notation with scientific notation as a fallback.
+     * @return the NumberHint instance
      */
-    public static NumberFormat scientific(final boolean on)
+    public NumberHint fixedWithSciFallback()
     {
-        var nf = new NumberFormat();
-        nf.scientificNotation = on;
-        return nf;
+        this.formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+        return this;
     }
 
     /**
-     * Set the maximum width of the numerical output.
-     * @param width the maximum width of the numerical output
-     * @return the NumberFormat instance
+     * Apply fixed length float-only notation with engineering notation as a fallback. Engineering notation uses an e formatter
+     * with exponents that are multiples of 3.
+     * @return the NumberHint instance
      */
-    public static NumberFormat maxWidth(final int width)
+    public NumberHint fixedWithEngFallback()
     {
-        var nf = new NumberFormat();
-        nf.maxWidth = width;
-        return nf;
+        this.formatMode = FloatFormatMode.FIXED_WITH_ENG_FALLBACK;
+        return this;
     }
 
     /**
-     * Set the fixed width of the numerical output.
-     * @param width the fixed width of the numerical output
-     * @return the NumberFormat instance
+     * Apply engineering notation. Engineering notation uses an e formatter with exponents that are multiples of 3.
+     * @return the NumberHint instance
      */
-    public static NumberFormat fixedWidth(final int width)
+    public NumberHint engineering()
     {
-        var nf = new NumberFormat();
-        nf.fixedWidth = width;
-        return nf;
+        this.formatMode = FloatFormatMode.ENGINEERING_ALWAYS;
+        return this;
+    }
+
+    /**
+     * Set the width of the numerical output.
+     * @param width the width of the numerical output
+     * @return the NumberHint instance
+     */
+    public NumberHint setWidth(final int width)
+    {
+        this.width = width;
+        return this;
     }
 
     /**
      * Set the number of decimal digits of the numerical output.
-     * @param digits the number of decimal digits of the numerical output
-     * @return the NumberFormat instance
+     * @param decimals the number of decimal digits of the numerical output
+     * @return the NumberHint instance
      */
-    public static NumberFormat decimals(final int digits)
+    public NumberHint setDecimals(final int decimals)
     {
-        var nf = new NumberFormat();
-        nf.decimalDigits = digits;
-        return nf;
+        this.decimals = decimals;
+        return this;
+    }
+
+    /**
+     * Set the scientific exponential character to E or e.
+     * @param upper results in E when true, and in e when false
+     * @return the NumberHint instance
+     */
+    public NumberHint upperE(final boolean upper)
+    {
+        this.upperE = upper;
+        return this;
+    }
+
+    /** The format mode. */
+    public enum FloatFormatMode
+    {
+        /** Use a format string. */
+        FORMAT_STRING,
+        /** Use a variable length format -- ignore width and decimals restrictions. */
+        VARIABLE_LENGTH,
+        /** Always apply an "f" formatter. */
+        FIXED_FLOAT,
+        /** Try to apply an "f" formatter, use scientific formatting as fallback. */
+        FIXED_WITH_SCI_FALLBACK,
+        /** Try to apply an "f" formatter, use engineering formatting (exponents are multiples of 3) as fallback. */
+        FIXED_WITH_ENG_FALLBACK,
+        /** Always apply scientific formatting (e formatter). */
+        SCIENTIFIC_ALWAYS,
+        /** Always apply engineering formatting (e formatter where exponents are multiples of 3). */
+        ENGINEERING_ALWAYS;
     }
 
 }

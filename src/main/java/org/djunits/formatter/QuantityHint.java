@@ -1,7 +1,7 @@
 package org.djunits.formatter;
 
 /**
- * QuantityFormat stores a number of settings that influence both the value part and the unit part of an output string when
+ * QuantityHint stores a number of settings that influence both the value part and the unit part of an output string when
  * formatting a quantity.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
@@ -9,7 +9,7 @@ package org.djunits.formatter;
  * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class QuantityFormat implements FormatHint
+public class QuantityHint implements FormatHint
 {
     /** Use closest SI prefix. E.g., turn 20400 m into "20.4 km". */
     private Boolean scaleSiPrefixes = null;
@@ -19,6 +19,9 @@ public class QuantityFormat implements FormatHint
 
     /** maximum 10th power to use SI prefixes for. */
     private Integer maximumPrefixPower = null;
+
+    /** separator between the value and the unit. */
+    private String unitSeparator = null;
 
     @Override
     @SuppressWarnings("checkstyle:needbraces")
@@ -30,32 +33,43 @@ public class QuantityFormat implements FormatHint
             ctx.minimumPrefixPower = this.minimumPrefixPower;
         if (this.maximumPrefixPower != null)
             ctx.maximumPrefixPower = this.maximumPrefixPower;
+        if (this.unitSeparator != null)
+            ctx.unitSeparator = this.unitSeparator;
     }
 
     /**
      * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
-     * @return UnitFormat object for fluent design
+     * @return QuantityHint object for fluent design
      */
-    public static QuantityFormat scaleSiPrefixes()
+    public QuantityHint scaleSiPrefixes()
     {
-        var qf = new QuantityFormat();
-        qf.scaleSiPrefixes = true;
-        return qf;
+        this.scaleSiPrefixes = true;
+        return this;
     }
 
     /**
      * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
-     * @param minimumPrefixPower minimum 10th power to use SI prefixes for
-     * @param maximumPrefixPower maximum 10th power to use SI prefixes for
-     * @return UnitFormat object for fluent design
+     * @param minPrefixPower minimum 10th power to use SI prefixes for
+     * @param maxPrefixPower maximum 10th power to use SI prefixes for
+     * @return QuantityHint object for fluent design
      */
-    public static QuantityFormat scaleSiPrefixes(final int minimumPrefixPower, final int maximumPrefixPower)
+    public QuantityHint scaleSiPrefixes(final int minPrefixPower, final int maxPrefixPower)
     {
-        var qf = new QuantityFormat();
-        qf.scaleSiPrefixes = true;
-        qf.minimumPrefixPower = minimumPrefixPower;
-        qf.maximumPrefixPower = maximumPrefixPower;
-        return qf;
+        this.scaleSiPrefixes = true;
+        this.minimumPrefixPower = minPrefixPower;
+        this.maximumPrefixPower = maxPrefixPower;
+        return this;
+    }
+
+    /**
+     * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
+     * @param separator separator string between the value and the unit
+     * @return QuantityHint object for fluent design
+     */
+    public QuantityHint unitSeparator(final String separator)
+    {
+        this.unitSeparator = separator;
+        return this;
     }
 
 }
