@@ -172,29 +172,6 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         return Objects.equals(this.dataSi, other.dataSi) && rows() == other.rows() && cols() == other.cols();
     }
 
-    @Override
-    public String toString(final Unit<?, Q> withUnit)
-    {
-        double[] data = unsafeSiArray();
-        var s = new StringBuilder();
-        s.append(isColumnVector() ? "Col" : "Row");
-        s.append("[");
-        for (int i = 0; i < data.length; i++)
-        {
-            s.append(i > 0 ? ", " : "");
-            s.append(withUnit.fromBaseValue(data[i]));
-        }
-        s.append("] ");
-        s.append(withUnit.getDisplayAbbreviation());
-        return s.toString();
-    }
-
-    @Override
-    public String toString()
-    {
-        return toString(getDisplayUnit());
-    }
-
     /**
      * VectorN.Col implements a column vector with real-valued entries. The vector is immutable, except for the display unit,
      * which can be changed.

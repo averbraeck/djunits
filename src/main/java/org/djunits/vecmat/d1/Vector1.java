@@ -366,7 +366,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
         return new Vector1<TQ>(xSi(), targetUnit);
     }
 
-    // ---------------------------------- HASHCODE, EQUALS, TOSTRING ----------------------------------
+    // ---------------------------------------- HASHCODE, EQUALS ----------------------------------------
 
     @Override
     public int hashCode()
@@ -386,23 +386,6 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
             return false;
         Vector1<?> other = (Vector1<?>) obj;
         return Double.doubleToLongBits(this.xSi) == Double.doubleToLongBits(other.xSi);
-    }
-
-    @Override
-    public String toString(final Unit<?, Q> withUnit)
-    {
-        var s = new StringBuilder();
-        s.append("[");
-        s.append(withUnit.fromBaseValue(this.xSi));
-        s.append("] ");
-        s.append(withUnit.getDisplayAbbreviation());
-        return s.toString();
-    }
-
-    @Override
-    public String toString()
-    {
-        return toString(getDisplayUnit());
     }
 
 }

@@ -326,28 +326,6 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
                 && cols() == other.cols();
     }
 
-    @Override
-    public String toString(final Unit<?, Q> withUnit)
-    {
-        var s = new StringBuilder();
-        s.append(isColumnVector() ? "Col" : "Row");
-        s.append("[");
-        s.append(withUnit.fromBaseValue(this.xSi));
-        s.append(", ");
-        s.append(withUnit.fromBaseValue(this.ySi));
-        s.append(", ");
-        s.append(withUnit.fromBaseValue(this.zSi));
-        s.append("] ");
-        s.append(withUnit.getDisplayAbbreviation());
-        return s.toString();
-    }
-
-    @Override
-    public String toString()
-    {
-        return toString(getDisplayUnit());
-    }
-
     /**
      * Vector3.Col implements a column vector with three real-valued entries. The vector is immutable, except for the display
      * unit, which can be changed.
