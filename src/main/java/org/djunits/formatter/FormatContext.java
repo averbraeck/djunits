@@ -2,6 +2,7 @@ package org.djunits.formatter;
 
 import java.util.Locale;
 
+import org.djunits.formatter.NumberHint.FloatFormatMode;
 import org.djunits.unit.Unit;
 
 /**
@@ -18,21 +19,24 @@ import org.djunits.unit.Unit;
 @SuppressWarnings("checkstyle:visibilitymodifier")
 final class FormatContext
 {
-    // Number formatting
+    // Number formatting, contains default values
 
-    /** Scientific notation. */
-    Boolean scientificNotation = null;
+    /** Format mode. */
+    FloatFormatMode formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+
+    /** Scientific notation: upper case E or lower case e. */
+    boolean upperE = true;
 
     /** Number of decimal digits. */
-    Integer decimalDigits = null;
-
-    /** Maximum width of the numerical output. */
-    Integer maxWidth = null;
+    int decimals = 3;
 
     /** Fixed width of the numerical output. */
-    Integer fixedWidth = null;
+    int width = 10;
 
-    // Unit formatting
+    /** Number format string. */
+    String formatString = null;
+
+    // Unit formatting, contains default values
 
     /** Display unit to use. */
     Unit<?, ?> displayUnit = null;
@@ -49,16 +53,16 @@ final class FormatContext
     /** Use division symbol, e.g., TRUE: kgm2/s2, FALSE: kgm2s-2. */
     boolean siDivisionSymbol = true;
 
-    /** Symbol to use for start of power, e.g., "^" or "&lt;sup&gt;". */
-    String siPowerStart = "";
+    /** Symbol to use as the prefix for a power, e.g., "^" or "&lt;sup&gt;". */
+    String siPowerPrefix = "";
 
-    /** Symbol to use for end of power, e.g., "&lt;/sup&gt;". */
-    String siPowerEnd = "";
+    /** Symbol to use as the postfix for a power, e.g., "&lt;/sup&gt;". */
+    String siPowerPostfix = "";
 
     /** Symbol to use for dot separation, e.g., "." to create kg.m2/s2. */
     String siDotSeparator = "";
 
-    // Quantity formatting
+    // Quantity formatting, contains default values
 
     /** Use closest SI prefix. E.g., turn 20400 m into "20.4 km". */
     boolean scaleSiPrefixes = false;
@@ -68,10 +72,38 @@ final class FormatContext
 
     /** maximum 10th power to use SI prefixes for. */
     int maximumPrefixPower = 32;
+    
+    /** separator between the value and the unit. */
+    String unitSeparator = " ";
+
+    // Absolute quantity formatting, contains default values
+    
+    /** Print the reference or not. */
+    boolean printReference = false;
 
     // Locale formatting
 
     /** Used locale for the entire output string (number and unit). */
     Locale locale = null;
+
+    // Vector formatting
+    
+    /** Start symbol. */
+    String vectorStartSymbol = "[";
+
+    /** End symbol. */
+    String vectorEndSymbol = "]";
+
+    /** Separator symbol. */
+    String vectorSeparatorSymbol = ", ";
+
+    /** Print column vector as row vector. */
+    boolean vectorColAsRow = true;
+    
+    /** Prefix to use for a column vector. */
+    String vectorColPrefix = "Col";
+    
+    /** Prefix to use for a row vector. */
+    String vectorRowPrefix = "Row";
 
 }
