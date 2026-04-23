@@ -10,66 +10,120 @@ package org.djunits.formatter;
  */
 public class VectorHint implements FormatHint
 {
-    /** Start symbol. */
-    private String startSymbol = "[";
+    /** Start symbol for row. */
+    private String rowStartSymbol = null;
 
-    /** End symbol. */
-    private String endSymbol = "]";
+    /** End symbol for row. */
+    private String rowEndSymbol = null;
 
-    /** Separator symbol. */
-    private String separatorSymbol = ", ";
+    /** Separator symbol for row. */
+    private String rowSeparatorSymbol = null;
+
+    /** Start symbol for column. */
+    private String colStartSymbol = null;
+
+    /** End symbol for column. */
+    private String colEndSymbol = null;
+
+    /** Separator symbol for column. */
+    private String colSeparatorSymbol = null;
 
     /** Print column vector as row vector. */
-    private boolean colAsRow = true;
+    private Boolean colAsRow = null;
 
     /** Prefix to use for a column vector. */
-    private String colVectorPrefix = "Col";
+    private String colVectorPrefix = null;
 
     /** Prefix to use for a row vector. */
-    private String rowVectorPrefix = "Row";
+    private String rowVectorPrefix = null;
 
     @Override
     @SuppressWarnings("checkstyle:needbraces")
     public void applyTo(final FormatContext ctx)
     {
-        ctx.vectorStartSymbol = this.startSymbol;
-        ctx.vectorEndSymbol = this.endSymbol;
-        ctx.vectorSeparatorSymbol = this.separatorSymbol;
-        ctx.vectorColAsRow = this.colAsRow;
-        ctx.vectorColPrefix = this.colVectorPrefix;
-        ctx.vectorRowPrefix = this.rowVectorPrefix;
+        if (this.rowStartSymbol != null)
+            ctx.vectorRowStartSymbol = this.rowStartSymbol;
+        if (this.rowEndSymbol != null)
+            ctx.vectorRowEndSymbol = this.rowEndSymbol;
+        if (this.rowSeparatorSymbol != null)
+            ctx.vectorRowSeparatorSymbol = this.rowSeparatorSymbol;
+        if (this.colStartSymbol != null)
+            ctx.vectorColStartSymbol = this.colStartSymbol;
+        if (this.colEndSymbol != null)
+            ctx.vectorColEndSymbol = this.colEndSymbol;
+        if (this.colSeparatorSymbol != null)
+            ctx.vectorColSeparatorSymbol = this.colSeparatorSymbol;
+        if (this.colAsRow != null)
+            ctx.vectorColAsRow = this.colAsRow;
+        if (this.colVectorPrefix != null)
+            ctx.vectorColPrefix = this.colVectorPrefix;
+        if (this.rowVectorPrefix != null)
+            ctx.vectorRowPrefix = this.rowVectorPrefix;
     }
 
     /**
-     * Set the start symbol to use, e.g., "[".
-     * @param startSymbol new startSymbol
+     * Set the start symbol to use for a row vector, e.g., "[".
+     * @param startSymbol new startSymbol for a row vector
      * @return VectorHint object for fluent design
      */
-    public VectorHint setStartSymbol(final String startSymbol)
+    public VectorHint setRowStartSymbol(final String startSymbol)
     {
-        this.startSymbol = startSymbol;
+        this.rowStartSymbol = startSymbol;
         return this;
     }
 
     /**
-     * Set the end symbol to use, e.g., "]".
-     * @param endSymbol new endSymbol
+     * Set the end symbol to use for a row vector, e.g., "]".
+     * @param endSymbol new endSymbol for a row vector
      * @return VectorHint object for fluent design
      */
-    public VectorHint setEndSymbol(final String endSymbol)
+    public VectorHint setRowEndSymbol(final String endSymbol)
     {
-        this.endSymbol = endSymbol;
+        this.rowEndSymbol = endSymbol;
         return this;
     }
 
     /**
-     * Set the separator symbol to use, e.g., ", ".
-     * @param separatorSymbol new separatorSymbol
+     * Set the separator symbol to use for a column vector, e.g., ", ".
+     * @param separatorSymbol new separatorSymbol for a column vector
      * @return VectorHint object for fluent design
      */
-    public VectorHint setSeparatorSymbol(final String separatorSymbol)
+    public VectorHint setColSeparatorSymbol(final String separatorSymbol)
     {
-        this.separatorSymbol = separatorSymbol;
+        this.colSeparatorSymbol = separatorSymbol;
+        return this;
+    }
+
+    /**
+     * Set the start symbol to use for a column vector, e.g., "[".
+     * @param startSymbol new startSymbol for a column vector
+     * @return VectorHint object for fluent design
+     */
+    public VectorHint setColStartSymbol(final String startSymbol)
+    {
+        this.colStartSymbol = startSymbol;
+        return this;
+    }
+
+    /**
+     * Set the end symbol to use for a column vector, e.g., "]".
+     * @param endSymbol new endSymbol for a column vector
+     * @return VectorHint object for fluent design
+     */
+    public VectorHint setColEndSymbol(final String endSymbol)
+    {
+        this.colEndSymbol = endSymbol;
+        return this;
+    }
+
+    /**
+     * Set the separator symbol to use for a row vector, e.g., "\n ".
+     * @param separatorSymbol new separatorSymbol for a row vector
+     * @return VectorHint object for fluent design
+     */
+    public VectorHint setRowSeparatorSymbol(final String separatorSymbol)
+    {
+        this.rowSeparatorSymbol = separatorSymbol;
         return this;
     }
 
