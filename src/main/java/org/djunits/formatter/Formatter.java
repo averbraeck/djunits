@@ -107,7 +107,7 @@ public abstract class Formatter
         {
             try
             {
-                this.unit = this.ctx.displayUnit;
+                this.unit = Units.resolve(this.unit.getClass(), this.ctx.displayUnit.getId());
                 this.useSi = false;
                 return true;
             }
