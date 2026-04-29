@@ -28,7 +28,7 @@ public class UnitHint implements FormatHint
     {
         if (this.displayUnit != null)
             ctx.displayUnit = this.displayUnit;
-        if (this.displayUnit != null)
+        if (this.unitString != null)
             ctx.unitString = this.unitString;
         if (this.textual != null)
             ctx.textual = this.textual;
