@@ -158,6 +158,17 @@ public final class NumberHint implements FormatHint
         return this;
     }
 
+    /**
+     * Set the format string to use.
+     * @param formatString the format string to use
+     * @return the NumberHint instance
+     */
+    public NumberHint setFormatString(final String formatString)
+    {
+        this.formatString = formatString;
+        return this;
+    }
+
     /** The format mode. */
     public enum FloatFormatMode
     {
