@@ -1,5 +1,8 @@
 package org.djunits.formatter;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 import org.djunits.quantity.def.AbsQuantity;
@@ -296,7 +299,6 @@ public abstract class Formatter
             case FIXED_WITH_SCI_FALLBACK -> formatFixedSciFallback(val);
             case FIXED_WITH_ENG_FALLBACK -> formatFixedEngFallback(val);
             case FORMAT_STRING -> String.format(this.ctx.formatString, val);
-            default -> formatFixedFloat(val);
         };
     }
 
@@ -307,8 +309,21 @@ public abstract class Formatter
      */
     String formatVariableLength(final double val)
     {
-        String gs = this.ctx.groupingSeparator ? "%," : "%";
-        return String.format(this.ctx.upperE ? gs + "G" : gs + "g", val);
+        BigDecimal bd = BigDecimal.valueOf(val).stripTrailingZeros();
+        int left = bd.precision() - bd.scale(); // # digits left of decimal point
+        DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance(Locale.getDefault());
+        DecimalFormat plain = new DecimalFormat("#,##0.############################", sym);
+        DecimalFormat sci = new DecimalFormat("0.################E0", sym);
+
+        // Heuristic similar to %g
+        if (left > 10 || left < -6)
+        {
+            return sci.format(bd);
+        }
+        else
+        {
+            return plain.format(bd);
+        }
     }
 
     /**
@@ -356,7 +371,7 @@ public abstract class Formatter
         String gs = this.ctx.groupingSeparator ? "%,." : "%.";
         String mantFmt = gs + this.ctx.decimals + "f";
         String mant = String.format(mantFmt, mantissa);
-        String result = mant + "e" + String.format("%+d", engExp);
+        String result = mant + (this.ctx.upperE ? "E" : "e") + String.format("%+d", engExp);
         return pad(result, this.ctx.width);
     }
 
