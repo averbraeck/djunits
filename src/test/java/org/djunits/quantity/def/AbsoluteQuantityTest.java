@@ -10,6 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
+import org.djunits.formatter.AbsoluteHint;
+import org.djunits.formatter.LocaleHint;
+import org.djunits.formatter.NumberHint;
+import org.djunits.formatter.QuantityHint;
+import org.djunits.formatter.UnitHint;
+import org.djunits.quantity.Angle;
+import org.djunits.quantity.Direction;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Position;
 import org.djunits.unit.AbstractUnit;
@@ -22,6 +29,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -349,63 +357,98 @@ public class AbsoluteQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#format(double)} and {@link AbsQuantity#format(double, String)} paths: fixed format range and
-     * E-notation range.
+     * Test default {@code toString()} for a simple direction.
      */
     @Test
-    void formatVariants()
+    @DisplayName("Default toString() uses default number and display unit")
+    public void testDefaultToString()
     {
-        Position ex = pos(0, this.refA, Length.Unit.m);
-        assertEquals("3.14", ex.format(3.140000));
-        String e = ex.format(1.23e12);
-        assertTrue(e.contains("E"));
+        Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH);
+        assertEquals("    12.346 deg", d.toString(new UnitHint().textual()));
     }
 
     /**
-     * Verifies {@link AbsQuantity#toString()} variants, ensuring that when {@code withUnit=true} the reference id is appended
-     * as " (refId)" and that the verbose flag adds the "Abs " prefix.
+     * Test {@code toString(Unit)} converts the unit for display.
      */
     @Test
-    void toStringVariants()
+    @DisplayName("toString(Unit) converts value and displays target unit")
+    public void testToStringWithTargetUnit()
     {
-        Position p = pos(1500, this.refB, Length.Unit.m);
-        String s = p.toString();
-        assertTrue(s.endsWith(" m (B)"));
+        Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST);
+        assertEquals("     3.142 rad", d.toString(new UnitHint().textual()));
+        assertEquals("   180.000 deg", d.toString(new UnitHint().setDisplayUnit(Angle.Unit.deg).textual()));
 
-        String kv = p.toString(Length.Unit.km);
-        assertTrue(kv.endsWith(" km (B)"));
-
-        String verbose = p.toString(true, true);
-        assertTrue(verbose.startsWith("Abs "));
-        assertTrue(verbose.endsWith(" m (B)"));
-
-        String noUnit = p.toString(false, false);
-        assertFalse(noUnit.contains("(B)"));
-        assertFalse(noUnit.endsWith(" m (B)"));
+        Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST);
+        assertTrue(d2.toString(Angle.Unit.rad).contains("3.142"));
     }
 
     /**
-     * Verifies that {@link AbsQuantity#toStringSIPrefixed()} delegates to the inner relative quantity and produces a sensible
-     * SI prefix when possible.
+     * Test magnitude change with decimals and width.
      */
     @Test
-    void toStringSIPrefixed()
+    @DisplayName("Large magnitude with explicit NumberHint")
+    public void testLargeMagnitudeFixed()
     {
-        Position p = pos(12_345, this.refA, Length.Unit.m);
-        assertTrue(p.toStringSIPrefixed().contains("km"));
+        Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
+        try
+        {
+            Position p = new Position(12_345_678.9, Length.Unit.m, pref);
+            String s1 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12));
+            assertEquals("12,345,678.9 m", s1);
+            String s2 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+            assertEquals("  12345678.9 m", s2);
+            String s3 = p.toString(new NumberHint().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+            assertEquals(" 12345678.90 m", s3);
+        }
+        finally
+        {
+            pref.unregister();
+        }
     }
 
     /**
-     * Verifies concise textual and display strings for absolute quantities.
+     * Test multiple hints combined.
      */
     @Test
-    void compactStrings()
+    @DisplayName("Combined NumberHint, UnitHint and QuantityHint")
+    public void testCombinedHints()
     {
-        Position p = pos(1234, this.refA, Length.Unit.m);
-        assertTrue(p.toTextualString().endsWith(" m"));
-        assertTrue(p.toDisplayString().endsWith(" m"));
-        assertTrue(p.toTextualString(Length.Unit.km).endsWith(" km"));
-        assertTrue(p.toDisplayString(Length.Unit.km).endsWith(" km"));
+        Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
+        try
+        {
+            Position pos = new Position(20400.0, Length.Unit.m, pref);
+            String s1 = pos.toString(new QuantityHint().scaleSiPrefixes(), new NumberHint().setDecimals(3),
+                    new UnitHint().textual());
+            assertEquals("    20.400 km", s1);
+
+            String s2 = pos.toString(new QuantityHint().scaleSiPrefixes(), new NumberHint().setDecimals(3),
+                    new UnitHint().textual(), new AbsoluteHint().reference().setPrefix(" (").setPostfix(")"));
+            assertEquals("    20.400 km (TEST)", s2);
+        }
+        finally
+        {
+            pref.unregister();
+        }
+    }
+
+    /**
+     * Test locale influence on decimal separator.
+     */
+    @Test
+    @DisplayName("LocaleHint affects decimal separator")
+    public void testLocaleHint()
+    {
+        Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
+        try
+        {
+            Position pos = new Position(20400.0, Length.Unit.m, pref);
+            String s = pos.toString(new LocaleHint().setLocale(Locale.GERMANY));
+            assertEquals("20.400,000 m", s);
+        }
+        finally
+        {
+            pref.unregister();
+        }
     }
 
     // ----------------------------------------------------------------------

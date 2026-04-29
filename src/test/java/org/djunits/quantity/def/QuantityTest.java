@@ -9,8 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
+import org.djunits.formatter.LocaleHint;
+import org.djunits.formatter.NumberHint;
+import org.djunits.formatter.QuantityHint;
+import org.djunits.formatter.UnitHint;
 import org.djunits.quantity.Area;
 import org.djunits.quantity.Dimensionless;
+import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Temperature;
@@ -25,6 +30,7 @@ import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,10 +57,10 @@ import org.junit.jupiter.api.Test;
  * they have their own dedicated unit tests. Here, {@code Length} merely provides a concrete vehicle for the abstract API.
  * <p>
  * <strong>Locale pinning:</strong> The suite pins {@code Locale.Category.FORMAT} to {@code Locale.US} to ensure deterministic
- * behavior of number formatting and parsing; the original locale is restored afterwards.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * behavior of number formatting and parsing; the original locale is restored afterwards. Copyright (c) 2025-2026 Delft
+ * University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class QuantityTest
@@ -119,8 +125,8 @@ public class QuantityTest
     }
 
     /**
-     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)}
-     * round-trip correctly and that the setter is fluent (returns {@code this}).
+     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)} round-trip
+     * correctly and that the setter is fluent (returns {@code this}).
      */
     @Test
     void displayUnitAccessors()
@@ -374,71 +380,76 @@ public class QuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link Quantity#format(double)} for the fixed-format range, E-notation range, and non-finite values.
+     * Test default {@code toString()} for a simple length.
      */
     @Test
-    void formatVariants()
+    @DisplayName("Default toString() uses default number and display unit")
+    public void testDefaultToString()
     {
-        // %f path
-        assertEquals("3.14", Quantity.format(3.140000));
-        assertEquals("0.0", Quantity.format(0));
-        // %E path
-        String s = Quantity.format(1.23e12);
-        assertTrue(s.contains("E"));
-        // Non-finite values should still yield a non-empty result
-        assertFalse(Quantity.format(Double.NaN).isEmpty());
-        assertFalse(Quantity.format(Double.POSITIVE_INFINITY).isEmpty());
-        assertFalse(Quantity.format(Double.NEGATIVE_INFINITY).isEmpty());
+        Length l = new Length(12.34567, Length.Unit.m);
+        assertEquals("    12.346 m", l.toString());
     }
 
     /**
-     * Verifies {@link Quantity#toString()} variants, including verbose/type flags and unit suppression.
+     * Test {@code toString(Unit)} converts the unit for display.
      */
     @Test
-    void toStringVariants()
+    @DisplayName("toString(Unit) converts value and displays target unit")
+    public void testToStringWithTargetUnit()
     {
-        Length d = new Length(1500, Length.Unit.m);
-        // default
-        String def = d.toString();
-        assertTrue(def.endsWith(" m"));
-        // explicit unit
-        assertTrue(d.toString(Length.Unit.km).endsWith(" km"));
-        // without unit
-        assertFalse(d.toString(d.getDisplayUnit(), false).endsWith(" m"));
+        Length l = new Length(1234.0, Length.Unit.m);
+        assertEquals("     1.234 km", l.toString(Length.Unit.km));
     }
 
     /**
-     * Verifies {@link Quantity#toStringSIPrefixed()} both for an in-range SI-prefix selection and an out-of-range fallback to
-     * E-notation.
+     * Test negative quantity formatting.
      */
     @Test
-    void toStringSIPrefixed()
+    @DisplayName("Negative quantities keep sign and formatting")
+    public void testNegativeQuantity()
     {
-        Length small = m(0.001); // 1 mm
-        assertTrue(small.toStringSIPrefixed().endsWith(" mm"));
-
-        Length big = m(12_345); // ~12.345 km
-        String pref = big.toStringSIPrefixed();
-        assertTrue(pref.contains("km"));
-
-        // Out of SI-prefix range -> E-notation with base unit
-        Length huge = m(1e40);
-        String hugeS = huge.toStringSIPrefixed();
-        assertTrue(hugeS.contains("E"));
-        assertTrue(hugeS.endsWith(" m"));
+        Duration d = new Duration(-2.5, Duration.Unit.s);
+        assertEquals("    -2.500 s", d.toString());
     }
 
     /**
-     * Verifies concise textual and display strings (abbreviation correctness and spacing).
+     * Test magnitude change with decimals and width.
      */
     @Test
-    void compactStrings()
+    @DisplayName("Large magnitude with explicit NumberHint")
+    public void testLargeMagnitudeFixed()
     {
-        Length l = new Length(1234, Length.Unit.m);
-        assertTrue(l.toTextualString().endsWith(" m"));
-        assertTrue(l.toDisplayString().endsWith(" m"));
-        assertTrue(l.toTextualString(Length.Unit.km).endsWith(" km"));
-        assertTrue(l.toDisplayString(Length.Unit.km).endsWith(" km"));
+        Area a = new Area(12_345_678.9, Area.Unit.m2);
+        String s1 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12));
+        assertEquals("12,345,678.9 m2", s1);
+        String s2 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+        assertEquals("  12345678.9 m2", s2);
+        String s3 = a.toString(new NumberHint().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+        assertEquals(" 12345678.90 m2", s3);
+    }
+
+    /**
+     * Test multiple hints combined.
+     */
+    @Test
+    @DisplayName("Combined NumberHint, UnitHint and QuantityHint")
+    public void testCombinedHints()
+    {
+        Length l = new Length(20400.0, Length.Unit.m);
+        String s = l.toString(new QuantityHint().scaleSiPrefixes(), new NumberHint().setDecimals(3), new UnitHint().textual());
+        assertEquals("    20.400 km", s);
+    }
+
+    /**
+     * Test locale influence on decimal separator.
+     */
+    @Test
+    @DisplayName("LocaleHint affects decimal separator")
+    public void testLocaleHint()
+    {
+        Length l = new Length(1.5, Length.Unit.m);
+        String s = l.toString(new LocaleHint().setLocale(Locale.GERMANY));
+        assertEquals("     1,500 m", s);
     }
 
     // ----------------------------------------------------------------------
@@ -569,8 +580,8 @@ public class QuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link Quantity#as(org.djunits.unit.Unit)} converts to a correctly typed quantity while preserving the
-     * SI value and replacing the display unit with the requested unit.
+     * Verifies {@link Quantity#as(org.djunits.unit.Unit)} converts to a correctly typed quantity while preserving the SI value
+     * and replacing the display unit with the requested unit.
      */
     @Test
     void asKnownQuantity()
@@ -611,7 +622,7 @@ public class QuantityTest
      * <strong>Why SIQuantity?</strong> The algorithm in {@link Quantity#getName()} inserts a space before each uppercase letter
      * <em>after</em> the first character and lower-cases that letter. Using {@code SIQuantity} guarantees we hit that branch:
      * 'S' (kept as-is), then 'I' (→ " i"), then 'Q' (→ " q"), then "uantity".
-         * <p>
+     * <p>
      * <strong>Expected:</strong>
      * <ul>
      * <li>{@code new Length(...).getName()} yields {@code "Length"} (no spaces added)</li>
