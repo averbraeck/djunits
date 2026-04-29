@@ -420,7 +420,7 @@ public class QuantityTest
     public void testLargeMagnitudeFixed()
     {
         Area a = new Area(12_345_678.9, Area.Unit.m2);
-        String s1 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12));
+        String s1 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
         assertEquals("12,345,678.9 m2", s1);
         String s2 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
         assertEquals("  12345678.9 m2", s2);

@@ -393,7 +393,7 @@ public class AbsoluteQuantityTest
         try
         {
             Position p = new Position(12_345_678.9, Length.Unit.m, pref);
-            String s1 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12));
+            String s1 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
             assertEquals("12,345,678.9 m", s1);
             String s2 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
             assertEquals("  12345678.9 m", s2);
@@ -443,7 +443,7 @@ public class AbsoluteQuantityTest
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
             String s = pos.toString(new LocaleHint().setLocale(Locale.GERMANY));
-            assertEquals("20.400,000 m", s);
+            assertEquals(" 20400,000 m", s);
         }
         finally
         {

@@ -1,6 +1,7 @@
 package org.djunits.quantity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -224,7 +225,8 @@ public class SIQuantityTest
 
         // explicit unit
         String asKg = q.toString(SIUnit.of("kg"));
-        assertTrue(asKg.endsWith(" kg"));
+        assertFalse(asKg.endsWith(" kg"));
+        assertTrue(asKg.endsWith(" m"));
     }
 
     // ----------------------------------------------------------------------
