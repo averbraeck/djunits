@@ -34,7 +34,7 @@ final class FormatContext
     int width = 10;
 
     /** Use grouping separator (e.g., thousands) or not. */
-    boolean groupingSeparator = true;
+    boolean groupingSeparator = false;
 
     /** Number format string. */
     String formatString = null;
