@@ -758,8 +758,8 @@ public class AbsMatrix3x3Test
 
         assertTrue(sdeg.contains(Angle.Unit.deg.getDisplayAbbreviation()));
         assertTrue(srad.contains(Angle.Unit.rad.getDisplayAbbreviation()));
-        assertTrue(sdeg.contains("["));
-        assertTrue(srad.contains("]"));
+        assertTrue(sdeg.contains("|"));
+        assertTrue(srad.contains("|"));
     }
 
     // ==================================== equals, hashCode ====================================
