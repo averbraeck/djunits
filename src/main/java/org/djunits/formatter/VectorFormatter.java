@@ -73,7 +73,7 @@ public class VectorFormatter extends Formatter
             }
             s.append(this.ctx.vectorColEndSymbol);
         }
-        s.append(this.ctx.unitSeparator);
+        s.append(this.ctx.unitPrefix);
         s.append(this.unitStr);
         return s.toString();
     }

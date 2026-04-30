@@ -20,8 +20,11 @@ public class QuantityHint implements FormatHint
     /** maximum 10th power to use SI prefixes for. */
     private Integer maximumPrefixPower = null;
 
-    /** separator between the value and the unit. */
-    private String unitSeparator = null;
+    /** prefix separator between the value and the unit. */
+    private String unitPrefix = null;
+
+    /** postfix separator after the unit. */
+    private String unitPostfix = null;
 
     @Override
     @SuppressWarnings("checkstyle:needbraces")
@@ -33,8 +36,10 @@ public class QuantityHint implements FormatHint
             ctx.minimumPrefixPower = this.minimumPrefixPower;
         if (this.maximumPrefixPower != null)
             ctx.maximumPrefixPower = this.maximumPrefixPower;
-        if (this.unitSeparator != null)
-            ctx.unitSeparator = this.unitSeparator;
+        if (this.unitPrefix != null)
+            ctx.unitPrefix = this.unitPrefix;
+        if (this.unitPostfix != null)
+            ctx.unitPostfix = this.unitPostfix;
     }
 
     /**
@@ -62,13 +67,24 @@ public class QuantityHint implements FormatHint
     }
 
     /**
-     * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
-     * @param separator separator string between the value and the unit
+     * Set the prefix separator between value and unit.
+     * @param prefix separator string between the value and the unit
      * @return QuantityHint object for fluent design
      */
-    public QuantityHint unitSeparator(final String separator)
+    public QuantityHint unitPrefix(final String prefix)
     {
-        this.unitSeparator = separator;
+        this.unitPrefix = prefix;
+        return this;
+    }
+
+    /**
+     * Set the postfix separator after the unit.
+     * @param postfix string after the unit
+     * @return QuantityHint object for fluent design
+     */
+    public QuantityHint unitPostfix(final String postfix)
+    {
+        this.unitPostfix = postfix;
         return this;
     }
 

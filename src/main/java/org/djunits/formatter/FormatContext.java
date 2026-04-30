@@ -76,8 +76,11 @@ final class FormatContext
     /** maximum 10th power to use SI prefixes for. */
     int maximumPrefixPower = 32;
 
-    /** separator between the value and the unit. */
-    String unitSeparator = " ";
+    /** prefix separator between the value and the unit. */
+    String unitPrefix = " ";
+
+    /** postfix atring after the unit. */
+    String unitPostfix = "";
 
     // Absolute quantity formatting from QuantityHint, contains default values
 

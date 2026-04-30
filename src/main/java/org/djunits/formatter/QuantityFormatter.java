@@ -47,7 +47,7 @@ public class QuantityFormatter extends Formatter
     {
         formatUnit();
         double value = this.useSi ? quantity().si : this.unit.getScale().fromBaseValue(quantity().si());
-        return formatValue(value) + this.ctx.unitSeparator + this.unitStr;
+        return formatValue(value) + this.ctx.unitPrefix + this.unitStr + this.ctx.unitPostfix;
     }
 
     /**

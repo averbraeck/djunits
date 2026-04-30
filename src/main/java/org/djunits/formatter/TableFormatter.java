@@ -69,7 +69,7 @@ public class TableFormatter extends Formatter
                 s.append(this.ctx.tableMiddleRowEndSymbol);
         }
         s.append(this.ctx.tablePostfix);
-        s.append(this.ctx.unitSeparator);
+        s.append(this.ctx.unitPrefix);
         s.append(this.unitStr);
         return s.toString();
     }
