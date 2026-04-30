@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 public class QuantityHintTest
 {
     /**
-     * Test separator between number and unit.
+     * Test prefix separator between number and unit, and postfix after the unit.
      */
     @Test
-    public void testSeparator()
+    public void testPrefixPostfix()
     {
         Energy energy = new Energy(1200.345, Energy.Unit.J);
 
@@ -36,13 +36,17 @@ public class QuantityHintTest
         assertTrue(s2.contains("1.2"));
         assertTrue(s2.endsWith(" kJ"));
 
-        String s3 = energy.toString(new QuantityHint().unitSeparator("  "));
+        String s3 = energy.toString(new QuantityHint().unitPrefix("  "));
         assertTrue(s3.contains("1200"));
         assertTrue(s3.endsWith("  J"));
 
-        String s4 = energy.toString(new QuantityHint().unitSeparator(", unit="));
+        String s4 = energy.toString(new QuantityHint().unitPrefix(", unit="));
         assertTrue(s4.contains("1200"));
         assertTrue(s4.endsWith(", unit=J"));
+        
+        String s5 = energy.toString(new QuantityHint().unitPrefix(" (").unitPostfix(")"));
+        assertTrue(s5.contains("1200"));
+        assertTrue(s5.endsWith(" (J)"));
     }
 
     /**
