@@ -88,7 +88,7 @@ final class FormatContext
     boolean printReference = false;
 
     /** Prefix to the reference. */
-    String referencePrefix = "(";
+    String referencePrefix = " (";
 
     /** Postfix to the reference. */
     String referencePostfix = ")";
