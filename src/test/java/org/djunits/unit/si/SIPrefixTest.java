@@ -302,30 +302,6 @@ public class SIPrefixTest
     }
 
     /**
-     * UNIT_POS prefixes contain only factors > 1 (no milli/centi/...).
-     */
-    @Test
-    @DisplayName("UNIT_POS contains only >1 prefixes")
-    public void testUnitPosContainsOnlyPositivePrefixes()
-    {
-        Map<String, SIPrefix> up = SIPrefixes.UNIT_POS_PREFIXES;
-        assertNotNull(up);
-        assertFalse(up.isEmpty());
-
-        // Should include larger-than-one prefixes
-        assertTrue(up.containsKey("da"));
-        assertTrue(up.containsKey("k"));
-        assertTrue(up.containsKey("M"));
-        assertTrue(up.containsKey("Q"));
-
-        // Should NOT include sub-unit prefixes
-        assertFalse(up.containsKey("m"));
-        assertFalse(up.containsKey("c"));
-        assertFalse(up.containsKey("mu"));
-        assertFalse(up.containsKey("n"));
-    }
-
-    /**
      * FACTORS map: exponent → prefix.
      * <ul>
      * <li>3 → kilo</li>
@@ -374,8 +350,6 @@ public class SIPrefixTest
         assertThrows(UnsupportedOperationException.class,
                 () -> SIPrefixes.PER_UNIT_PREFIXES.put("/X", new SIPrefix("/X", "per x", 0.5, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.UNIT_POS_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
-        assertThrows(UnsupportedOperationException.class,
                 () -> SIPrefixes.KILO_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
                 () -> SIPrefixes.PER_KILO_PREFIXES.put("/X", new SIPrefix("/X", "per x", 2.0, PrefixType.UNIT)));
@@ -413,22 +387,21 @@ public class SIPrefixTest
      * Enum constants presence and basic invariants.
      */
     @Test
-    @DisplayName("Enum presence: NONE, UNIT, UNIT_POS, PER_UNIT, KILO")
+    @DisplayName("Enum presence: NONE, UNIT, PER_UNIT, KILO")
     public void testEnumConstantsPresence()
     {
         SIPrefixes[] all = SIPrefixes.values();
-        assertTrue(all.length >= 5);
+        assertTrue(all.length == 4);
 
         // Basic presence checks
-        boolean hasNone = false, hasUnit = false, hasUnitPos = false, hasPerUnit = false, hasKilo = false;
+        boolean hasNone = false, hasUnit = false, hasPerUnit = false, hasKilo = false;
         for (SIPrefixes p : all)
         {
             hasNone |= p == SIPrefixes.NONE;
             hasUnit |= p == SIPrefixes.UNIT;
-            hasUnitPos |= p == SIPrefixes.UNIT_POS;
             hasPerUnit |= p == SIPrefixes.PER_UNIT;
             hasKilo |= p == SIPrefixes.KILO;
         }
-        assertTrue(hasNone && hasUnit && hasUnitPos && hasPerUnit && hasKilo);
+        assertTrue(hasNone && hasUnit && hasPerUnit && hasKilo);
     }
 }

@@ -21,7 +21,4 @@ public enum PrefixType
     
     /** Per kilo. */
     PER_KILO,
-    
-    /** Positive unit. */
-    POS_UNIT;
 }

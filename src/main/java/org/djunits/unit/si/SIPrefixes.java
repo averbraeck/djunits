@@ -21,9 +21,6 @@ public enum SIPrefixes
     /** All standard SI prefixes allowed. E.g., for the "meter". */
     UNIT,
 
-    /** All SI prefixes indicating larger than 1. E.g., for the electronVolt to avoid underflow with float values. */
-    UNIT_POS,
-
     /** All standard SI prefixes allowed for "per unit". E.g., for the "per second". */
     PER_UNIT,
 
@@ -35,9 +32,6 @@ public enum SIPrefixes
     
     /** The SI prefixes and their values for the "PER_UNIT" settings. */
     public static final Map<String, SIPrefix> PER_UNIT_PREFIXES;
-
-    /** The larger than 1 SI prefixes and their values for the "UNIT_POS" settings. */
-    public static final Map<String, SIPrefix> UNIT_POS_PREFIXES;
 
     /** The SI prefixes and their values for the "KILO" settings. */
     public static final Map<String, SIPrefix> KILO_PREFIXES;
@@ -119,21 +113,6 @@ public enum SIPrefixes
         perUnitPrefixes.put("/R", new SIPrefix("/R", "per ronna", 1.0E-27, PrefixType.PER_UNIT));
         perUnitPrefixes.put("/Q", new SIPrefix("/Q", "per quetta", 1.0E-30, PrefixType.PER_UNIT));
         PER_UNIT_PREFIXES = Collections.unmodifiableMap(perUnitPrefixes);
-
-        Map<String, SIPrefix> unitPosPrefixes = new LinkedHashMap<>();
-        unitPosPrefixes.put("da", new SIPrefix("da", "deca", 1.0E1, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("h", new SIPrefix("h", "hecto", 1.0E2, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("k", new SIPrefix("k", "kilo", 1.0E3, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("M", new SIPrefix("M", "mega", 1.0E6, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("G", new SIPrefix("G", "giga", 1.0E9, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("T", new SIPrefix("T", "tera", 1.0E12, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("P", new SIPrefix("P", "peta", 1.0E15, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("E", new SIPrefix("E", "exa", 1.0E18, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("Z", new SIPrefix("Z", "zetta", 1.0E21, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("Y", new SIPrefix("Y", "yotta", 1.0E24, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("R", new SIPrefix("R", "ronna", 1.0E27, PrefixType.POS_UNIT));
-        unitPosPrefixes.put("Q", new SIPrefix("Q", "quetta", 1.0E30, PrefixType.POS_UNIT));
-        UNIT_POS_PREFIXES = Collections.unmodifiableMap(unitPosPrefixes);
 
         Map<String, SIPrefix> kiloPrefixes = new LinkedHashMap<>();
         kiloPrefixes.put("q", new SIPrefix("q", "quecto", 1.0E-33, PrefixType.KILO));
