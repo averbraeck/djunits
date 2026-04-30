@@ -80,7 +80,8 @@ public class QuantityFormatter extends Formatter
         {
             PrefixType type = this.unit.getSiPrefix().getType();
             double si = q.si();
-            int power = 3 * (int) (Math.log10(si) / 3.0);
+            double log10si = Math.log10(si);
+            int power = log10si > 0 ? 3 * (int) (Math.log10(si) / 3.0) : 3 * (int) (Math.log10(si) / 3.0 - 1);
             if (power >= this.ctx.minimumPrefixPower && power <= this.ctx.maximumPrefixPower)
             {
                 switch (type)
@@ -94,6 +95,7 @@ public class QuantityFormatter extends Formatter
                     }
                     case KILO:
                     {
+                        power += 3;
                         SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(power, SIPrefixes.getSiPrefix(""));
                         String key = prefix.getDefaultTextualPrefix() + q.getDisplayUnit().getBaseUnit().getId().substring(1);
                         this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
@@ -109,6 +111,7 @@ public class QuantityFormatter extends Formatter
                     }
                     case PER_KILO:
                     {
+                        power -= 3;
                         SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(-power, SIPrefixes.getSiPrefix(""));
                         String key =
                                 "/" + prefix.getDefaultTextualPrefix() + q.getDisplayUnit().getBaseUnit().getId().substring(2);
