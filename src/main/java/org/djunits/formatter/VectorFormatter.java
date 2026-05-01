@@ -10,8 +10,8 @@ import org.djunits.vecmat.def.Vector;
  * NumberHint, and LocaleHint.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
 public class VectorFormatter extends Formatter
@@ -75,6 +75,7 @@ public class VectorFormatter extends Formatter
         }
         s.append(this.ctx.unitPrefix);
         s.append(this.unitStr);
+        s.append(this.ctx.unitPostfix);
         return s.toString();
     }
 

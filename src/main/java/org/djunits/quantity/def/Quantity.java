@@ -151,7 +151,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
 
     /**
      * Instantiate a quantity with a value and a unit.
-     * @param valueInUnit the double value, experessed in the unit
+     * @param valueInUnit the double value, expressed in the unit
      * @param unit the unit
      * @return a quantity with the given value and display unit
      */

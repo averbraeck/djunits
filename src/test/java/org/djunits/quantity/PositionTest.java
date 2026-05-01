@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 /**
  * PositionTest tests the Position absolute quantity class and its Reference handling.<p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information https://djutils.org. The DJUNITS project is distributed under a https://djunits.org/docs/license.html
+ * for project information https://djunits.org. The DJUNITS project is distributed under a https://djunits.org/docs/license.html
  * three-clause BSD-style license.
  * <p>
  * This test suite provides comprehensive functional coverage of:

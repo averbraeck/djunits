@@ -13,8 +13,8 @@ import org.djutils.exceptions.Throw;
  * be re-implemented for efficiency.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
- * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+ * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <A> the absolute quantity type
  * @param <Q> the corresponding relative quantity type
@@ -43,8 +43,8 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * Column vector for AbsVector2 with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+     * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
@@ -238,8 +238,8 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * Row vector for AbsVector2 with absolute quantities.
      * <p>
      * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved.
-     * See for project information <a href="https://djutils.org" target="_blank">https://djutils.org</a>. The DJUTILS project is
-     * distributed under a <a href="https://djutils.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+     * See for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
+     * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
      * @author Alexander Verbraeck
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
