@@ -136,7 +136,7 @@ Square matrices have a number of additional operations:
 - `boolean isSkewSymmetric(final Q tolerance)` returns whether the matrix is skew-symmetric or not, using a provided tolerance.
 
 
-## Vector definition and storage
+## Matrix definition and storage
 
 ### Creating a `Matrix1x1`
 

@@ -109,7 +109,7 @@ A `QuantityTable` implements several mathematical operations. The most important
 Reversely, `Matrix` or column or row `Vector` instances can all be turned _into_ a `QuantityTable` with the `asQuantityTable()` method. 
 
 
-### Creating a `QuantityTable`
+## `QuantityTable` definition and storage
 
 The `QuantityTable` class can be used to represent quantity tables of any size (1x1 and up). Data can be stored as single-precision `float` variable, or as double-precision `double` values. Both dense storage (store every number) and sparse storage (only store non-zero values) are possible. 
 
