@@ -3,9 +3,8 @@ package org.djunits.quantity.def;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.djunits.formatter.FormatHint;
-import org.djunits.formatter.Formatter;
-import org.djunits.formatter.UnitHint;
+import org.djunits.formatter.QuantityFormat;
+import org.djunits.formatter.QuantityFormatter;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
@@ -441,17 +440,17 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     @Override
     public String toString()
     {
-        return toString(new FormatHint[] {});
+        return toString(QuantityFormat.defaults());
     }
 
     /**
-     * String representation of this value after applying the format hints.
-     * @param hints the format hints to apply on the quantity
-     * @return a String representation of this quantity, formatted according to the format hints
+     * String representation of this absolute quantity after applying the format.
+     * @param format the format to apply for the absolute quantity
+     * @return a String representation of this absolute quantity, formatted according to the given format
      */
-    public String toString(final FormatHint... hints)
+    public String toString(final QuantityFormat format)
     {
-        return Formatter.formatAbsQuantity(this, hints);
+        return QuantityFormatter.format(this, format);
     }
 
     /**
@@ -462,7 +461,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     @Override
     public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(new UnitHint().setDisplayUnit(targetUnit));
+        return toString(QuantityFormat.defaults().setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/
