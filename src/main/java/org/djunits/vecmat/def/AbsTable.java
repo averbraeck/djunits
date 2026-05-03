@@ -2,13 +2,9 @@ package org.djunits.vecmat.def;
 
 import java.lang.reflect.Array;
 
-import org.djunits.formatter.FormatHint;
-import org.djunits.formatter.Formatter;
-import org.djunits.formatter.UnitHint;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
 
 /**
  * AbsTable contains a number of standard operations on 2-dimensional tables that contain absolute quantities.
@@ -306,41 +302,6 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
     {
         mcheckCol(mCol);
         return getColumnScalars(mCol - 1);
-    }
-
-    /**********************************************************************************/
-    /*************************** STRING AND FORMATTING METHODS ************************/
-    /**********************************************************************************/
-
-    /**
-     * Concise description of this absolute matrix or table.
-     * @return a String with the absolute matrix or table, with the unit attached.
-     */
-    @Override
-    public String toString()
-    {
-        return toString(new FormatHint[] {});
-    }
-
-    /**
-     * String representation of this absolute matrix or table after applying the format hints.
-     * @param hints the format hints to apply for the absolute matrix or table
-     * @return a String representation of this absolute matrix or table, formatted according to the format hints
-     */
-    public String toString(final FormatHint... hints)
-    {
-        return Formatter.formatAbsTable(this, hints);
-    }
-
-    /**
-     * String representation of this absolute matrix or table, expressed in the specified unit.
-     * @param targetUnit the unit into which the values of the absolute matrix or table are converted for display
-     * @return printable string with the absolute matrix or table's values expressed in the specified unit
-     */
-    @Override
-    public String toString(final Unit<?, Q> targetUnit)
-    {
-        return toString(new UnitHint().setDisplayUnit(targetUnit));
     }
 
 }

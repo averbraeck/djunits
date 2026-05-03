@@ -2,9 +2,6 @@ package org.djunits.vecmat.def;
 
 import java.lang.reflect.Array;
 
-import org.djunits.formatter.FormatHint;
-import org.djunits.formatter.Formatter;
-import org.djunits.formatter.UnitHint;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
@@ -278,41 +275,6 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
     {
         mcheckCol(mCol);
         return getColumnScalars(mCol - 1);
-    }
-
-    /**********************************************************************************/
-    /*************************** STRING AND FORMATTING METHODS ************************/
-    /**********************************************************************************/
-
-    /**
-     * Concise description of this matrix or table.
-     * @return a String with the matrix or table, with the unit attached.
-     */
-    @Override
-    public String toString()
-    {
-        return toString(new FormatHint[] {});
-    }
-
-    /**
-     * String representation of this matrix or table after applying the format hints.
-     * @param hints the format hints to apply for the matrix or table
-     * @return a String representation of this matrix or table, formatted according to the format hints
-     */
-    public String toString(final FormatHint... hints)
-    {
-        return Formatter.formatTable(this, hints);
-    }
-
-    /**
-     * String representation of this matrix or table, expressed in the specified unit.
-     * @param targetUnit the unit into which the values of the matrix or table are converted for display
-     * @return printable string with the matrix or table's values expressed in the specified unit
-     */
-    @Override
-    public String toString(final Unit<?, Q> targetUnit)
-    {
-        return toString(new UnitHint().setDisplayUnit(targetUnit));
     }
 
     // ------------------------------------ HELPER METHODS ------------------------------------
