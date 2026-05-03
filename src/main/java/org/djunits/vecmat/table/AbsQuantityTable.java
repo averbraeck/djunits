@@ -1,5 +1,7 @@
 package org.djunits.vecmat.table;
 
+import org.djunits.formatter.TableFormat;
+import org.djunits.formatter.TableFormatter;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
@@ -138,10 +140,10 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
     }
 
     /**
-     * Create a AbsQuantityTable without needing generics, based on a row-major array of absolute quantities. The unit is
-     * taken from the first quantity in the grid. The reference points have to be all the same.
-     * @param absData the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed as an array of
-     *            absolute quantities
+     * Create a AbsQuantityTable without needing generics, based on a row-major array of absolute quantities. The unit is taken
+     * from the first quantity in the grid. The reference points have to be all the same.
+     * @param absData the table values {a11, a12, ..., A1M, ..., aN1, aN2, ..., aNM} expressed as an array of absolute
+     *            quantities
      * @param rows the number of rows
      * @param cols the number of columns
      * @return a new AbsQuantityTable with a display unit and reference point
@@ -249,6 +251,39 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final QuantityTable<Q> relativeTable, final R reference)
     {
         return new AbsQuantityTable<>(relativeTable, reference);
+    }
+
+    // ----------------------------------------- STRING AND FORMATTING METHODS ----------------------------------------
+
+    /**
+     * Concise description of this absolute quantity table.
+     * @return a String with the absolute quantity table, with the unit attached.
+     */
+    @Override
+    public String toString()
+    {
+        return toString(TableFormat.defaults());
+    }
+
+    /**
+     * String representation of this absolute quantity table after applying the format.
+     * @param format the format to apply for the absolute quantity table
+     * @return a String representation of this absolute quantity table, formatted according to the given format
+     */
+    public String toString(final TableFormat format)
+    {
+        return TableFormatter.format(this, format);
+    }
+
+    /**
+     * String representation of this absolute quantity table, expressed in the specified unit.
+     * @param targetUnit the unit into which the values of the absolute quantity table are converted for display
+     * @return printable string with the absolute quantity table's values expressed in the specified unit
+     */
+    @Override
+    public String toString(final Unit<?, Q> targetUnit)
+    {
+        return toString(TableFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }

@@ -2,6 +2,8 @@ package org.djunits.vecmat.table;
 
 import java.util.Objects;
 
+import org.djunits.formatter.TableFormat;
+import org.djunits.formatter.TableFormatter;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
@@ -297,6 +299,39 @@ public class QuantityTable<Q extends Quantity<Q>>
                 "QuantityTable.as(%s) called, but units do not match: %s <> %s", targetUnit,
                 getDisplayUnit().siUnit().getDisplayAbbreviation(), targetUnit.siUnit().getDisplayAbbreviation());
         return new QuantityTable<TQ>(this.dataGridSi.instantiateNew(unsafeSiArray()), targetUnit);
+    }
+
+    // ----------------------------------------- STRING AND FORMATTING METHODS ----------------------------------------
+
+    /**
+     * Concise description of this quantity table.
+     * @return a String with the quantity table, with the unit attached.
+     */
+    @Override
+    public String toString()
+    {
+        return toString(TableFormat.defaults());
+    }
+
+    /**
+     * String representation of this quantity table after applying the format.
+     * @param format the format to apply for the quantity table
+     * @return a String representation of this quantity table, formatted according to the given format
+     */
+    public String toString(final TableFormat format)
+    {
+        return TableFormatter.format(this, format);
+    }
+
+    /**
+     * String representation of this quantity table, expressed in the specified unit.
+     * @param targetUnit the unit into which the values of the quantity table are converted for display
+     * @return printable string with the quantity table's values expressed in the specified unit
+     */
+    @Override
+    public String toString(final Unit<?, Q> targetUnit)
+    {
+        return toString(TableFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }
