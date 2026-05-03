@@ -2,9 +2,8 @@ package org.djunits.vecmat.def;
 
 import java.util.Iterator;
 
-import org.djunits.formatter.FormatHint;
-import org.djunits.formatter.Formatter;
-import org.djunits.formatter.UnitHint;
+import org.djunits.formatter.VectorFormat;
+import org.djunits.formatter.VectorFormatter;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
@@ -114,9 +113,9 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
     @Override
     public abstract Iterator<Q> iterator();
 
-    /**********************************************************************************/
-    /*************************** STRING AND FORMATTING METHODS ************************/
-    /**********************************************************************************/
+    /* *********************************************************************************/
+    /* ************************** STRING AND FORMATTING METHODS ************************/
+    /* *********************************************************************************/
 
     /**
      * Concise description of this vector.
@@ -125,17 +124,17 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
     @Override
     public String toString()
     {
-        return toString(new FormatHint[] {});
+        return toString(VectorFormat.defaults());
     }
 
     /**
-     * String representation of this vector after applying the format hints.
-     * @param hints the format hints to apply for the vector
-     * @return a String representation of this vector, formatted according to the format hints
+     * String representation of this vector after applying the format.
+     * @param format the format to apply for the vector
+     * @return a String representation of this vector, formatted according to the given format
      */
-    public String toString(final FormatHint... hints)
+    public String toString(final VectorFormat format)
     {
-        return Formatter.formatVector(this, hints);
+        return VectorFormatter.format(this, format);
     }
 
     /**
@@ -146,7 +145,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
     @Override
     public String toString(final Unit<?, Q> targetUnit)
     {
-        return toString(new UnitHint().setDisplayUnit(targetUnit));
+        return toString(VectorFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }

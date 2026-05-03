@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.djunits.formatter.VectorFormat;
+import org.djunits.formatter.VectorFormatter;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
@@ -143,18 +145,45 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
         return out;
     }
 
-    @Override
-    public String toString(final Unit<?, Q> displayUnit)
-    {
-        return getRelativeVecMat().toString(displayUnit);
-    }
+    /* *********************************************************************************/
+    /* ************************** STRING AND FORMATTING METHODS ************************/
+    /* *********************************************************************************/
 
+    /**
+     * Concise description of this absolute vector.
+     * @return a String with the absolute vector, with the unit and possibly the reference attached.
+     */
     @Override
     public String toString()
     {
-        return toString(getDisplayUnit());
+        return toString(VectorFormat.defaults());
     }
-    
+
+    /**
+     * String representation of this absolute vector after applying the format.
+     * @param format the format to apply for the absolute vector
+     * @return a String representation of this absolute vector, formatted according to the given format
+     */
+    public String toString(final VectorFormat format)
+    {
+        return VectorFormatter.format(this, format);
+    }
+
+    /**
+     * String representation of this absolute vector, expressed in the specified unit.
+     * @param targetUnit the unit into which the values of the absolute vector are converted for display
+     * @return printable string with the absolute vector's values expressed in the specified unit
+     */
+    @Override
+    public String toString(final Unit<?, Q> targetUnit)
+    {
+        return toString(VectorFormat.defaults().setDisplayUnit(targetUnit));
+    }
+
+    /* *********************************************************************************/
+    /* ************************************ ITERATOR ***********************************/
+    /* *********************************************************************************/
+
     /**
      * Create and return an iterator over the scalars in this vector in proper sequence.
      * @return an iterator over the scalars in this vector in proper sequence
