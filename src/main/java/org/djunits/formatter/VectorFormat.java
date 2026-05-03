@@ -16,7 +16,7 @@ public class VectorFormat extends Format<VectorFormat, VectorFormatContext>
      * modified or a default context.
      * @param ctx the quantity format context to use
      */
-    public VectorFormat(final VectorFormatContext ctx)
+    protected VectorFormat(final VectorFormatContext ctx)
     {
         super(ctx);
     }
@@ -25,7 +25,7 @@ public class VectorFormat extends Format<VectorFormat, VectorFormatContext>
      * Return an instance of VectorFormat, initialized with the default values.
      * @return an instance of VectorFormat, initialized with the default values
      */
-    public static VectorFormat with()
+    public static VectorFormat defaults()
     {
         return new VectorFormat(VectorFormatContext.DEFAULT.clone());
     }

@@ -16,7 +16,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * modified or a default context.
      * @param ctx the quantity format context to use
      */
-    public MatrixFormat(final MatrixFormatContext ctx)
+    protected MatrixFormat(final MatrixFormatContext ctx)
     {
         super(ctx);
     }
@@ -25,7 +25,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * Return an instance of MatrixFormat, initialized with the default values.
      * @return an instance of MatrixFormat, initialized with the default values
      */
-    public static MatrixFormat with()
+    public static MatrixFormat defaults()
     {
         return new MatrixFormat(MatrixFormatContext.DEFAULT.clone());
     }

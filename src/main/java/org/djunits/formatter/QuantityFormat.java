@@ -17,7 +17,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * modified or a default context.
      * @param ctx the quantity format context to use
      */
-    public QuantityFormat(final QuantityFormatContext ctx)
+    protected QuantityFormat(final QuantityFormatContext ctx)
     {
         super(ctx);
     }
@@ -26,7 +26,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * Return an instance of QuantityFormat, initialized with the default values.
      * @return an instance of QuantityFormat, initialized with the default values
      */
-    public static QuantityFormat with()
+    public static QuantityFormat defaults()
     {
         return new QuantityFormat(QuantityFormatContext.DEFAULT.clone());
     }

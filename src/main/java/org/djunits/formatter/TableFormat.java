@@ -16,7 +16,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * modified or a default context.
      * @param ctx the quantity format context to use
      */
-    public TableFormat(final TableFormatContext ctx)
+    protected TableFormat(final TableFormatContext ctx)
     {
         super(ctx);
     }
@@ -25,7 +25,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * Return an instance of TableFormat, initialized with the default values.
      * @return an instance of TableFormat, initialized with the default values
      */
-    public static TableFormat with()
+    public static TableFormat defaults()
     {
         return new TableFormat(TableFormatContext.DEFAULT.clone());
     }
