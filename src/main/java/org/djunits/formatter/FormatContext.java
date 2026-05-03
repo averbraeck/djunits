@@ -64,7 +64,7 @@ abstract class FormatContext implements Cloneable
     /** Symbol to use for dot separation, e.g., "." to create kg.m2/s2. */
     String siDotSeparator = "";
 
-    // Quantity formatting from QuantityHint, contains default values
+    // Quantity formatting, contains default values
 
     /** Use closest SI prefix. E.g., turn 20400 m into "20.4 km". */
     boolean scaleSiPrefixes = false;

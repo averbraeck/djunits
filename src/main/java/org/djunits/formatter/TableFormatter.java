@@ -37,11 +37,11 @@ public class TableFormatter extends Formatter<TableFormatContext>
     }
 
     /**
-     * Format a table according to a number of FormatHints. Note that this method might not be thread-safe for setting the
-     * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format a table according to a number of table format settings. Note that this method might not be thread-safe for setting
+     * the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param table the table to format
      * @param tableFormat the format to apply to the table
-     * @return a String with a formatted table, matching the FormatHints as closely as possible
+     * @return a String with a formatted table, matching the table format settings as closely as possible
      */
     public static String format(final QuantityTable<?> table, final TableFormat tableFormat)
     {
@@ -59,11 +59,11 @@ public class TableFormatter extends Formatter<TableFormatContext>
     }
 
     /**
-     * Format an absolute table according to a number of FormatHints. Note that this method might not be thread-safe for setting
-     * the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format an absolute table according to a number of table format settings. Note that this method might not be thread-safe
+     * for setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param absTable the absolute table to format
      * @param tableFormat the format to apply to the table
-     * @return a String with a formatted table, matching the FormatHints as closely as possible
+     * @return a String with a formatted table, matching the table format settings as closely as possible
      */
     public static String format(final AbsQuantityTable<?, ?> absTable, final TableFormat tableFormat)
     {

@@ -37,11 +37,11 @@ public class MatrixFormatter extends Formatter<MatrixFormatContext>
     }
 
     /**
-     * Format a matrix according to a number of FormatHints. Note that this method might not be thread-safe for setting the
-     * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format a matrix according to a number of MatrixFormat settings. Note that this method might not be thread-safe for setting
+     * the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param matrix the matrix to format
      * @param matrixFormat the format to apply to the matrix
-     * @return a String with a formatted matrix, matching the FormatHints as closely as possible
+     * @return a String with a formatted matrix, matching the MatrixFormat settings as closely as possible
      */
     public static String format(final Matrix<?, ?, ?, ?, ?> matrix, final MatrixFormat matrixFormat)
     {
@@ -59,11 +59,11 @@ public class MatrixFormatter extends Formatter<MatrixFormatContext>
     }
 
     /**
-     * Format an absolute matrix according to a number of FormatHints. Note that this method might not be thread-safe for
-     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format an absolute matrix according to a number of MatrixFormat settings. Note that this method might not be thread-safe
+     * for setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param absMatrix the absolute matrix to format
      * @param matrixFormat the format to apply to the matrix
-     * @return a String with a formatted matrix, matching the FormatHints as closely as possible
+     * @return a String with a formatted matrix, matching the MatrixFormat settings as closely as possible
      */
     public static String format(final AbsMatrix<?, ?, ?, ?, ?> absMatrix, final MatrixFormat matrixFormat)
     {

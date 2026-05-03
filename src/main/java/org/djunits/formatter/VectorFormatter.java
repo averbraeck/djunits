@@ -9,7 +9,7 @@ import org.djunits.vecmat.def.Vector;
  * VectorFormatter formats a vector as a String, using the settings of the {@link VectorFormatContext}. The
  * {@link VectorFormatContext} is filled by setting flags using the {@link VectorFormat}. Note that there is no guarantee that
  * the format can always be honored. As an example, when the required width is too small to fit the answer, the output will show
- * the correct result, but violate the width hint.
+ * the correct result, but violate the width setting.
  * <p>
  * Copyright (c) 2026-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -37,11 +37,11 @@ public class VectorFormatter extends Formatter<VectorFormatContext>
     }
 
     /**
-     * Format a vector according to a number of FormatHints. Note that this method might not be thread-safe for setting the
+     * Format a vector according to a number of vector format settings. Note that this method might not be thread-safe for setting the
      * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param vector the vector to format
      * @param vectorFormat the format to apply to the vector
-     * @return a String with a formatted vector, matching the FormatHints as closely as possible
+     * @return a String with a formatted vector, matching the vector format settings as closely as possible
      */
     public static String format(final Vector<?, ?, ?, ?, ?> vector, final VectorFormat vectorFormat)
     {
@@ -59,11 +59,11 @@ public class VectorFormatter extends Formatter<VectorFormatContext>
     }
 
     /**
-     * Format an absolute vector according to a number of FormatHints. Note that this method might not be thread-safe for
+     * Format an absolute vector according to a number of vector format settings. Note that this method might not be thread-safe for
      * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param absVector the absolute vector to format
      * @param vectorFormat the format to apply to the vector
-     * @return a String with a formatted vector, matching the FormatHints as closely as possible
+     * @return a String with a formatted vector, matching the vector format settings as closely as possible
      */
     public static String format(final AbsVector<?, ?, ?, ?, ?> absVector, final VectorFormat vectorFormat)
     {

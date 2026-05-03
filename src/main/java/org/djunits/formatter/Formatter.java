@@ -132,7 +132,7 @@ public abstract class Formatter<C extends FormatContext>
 
     /**
      * Format the reference of an absolute value according to the context settings.
-     * @param ctx the format context with the AbsoluteHint settings
+     * @param ctx the format context with the settings for formatting a reference
      * @param reference the reference to format
      * @return the formatted reference, or an empty string when it is not displayed
      */
