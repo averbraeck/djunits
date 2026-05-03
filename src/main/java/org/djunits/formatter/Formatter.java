@@ -5,31 +5,27 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
 import org.djunits.value.Value;
-import org.djunits.vecmat.def.AbsTable;
-import org.djunits.vecmat.def.AbsVector;
-import org.djunits.vecmat.def.Table;
-import org.djunits.vecmat.def.Vector;
 
 /**
- * Formatter of quantities, vectors and matrices according to formatting hints.
+ * Formatter of quantities, vectors, matrices and tables according to the format options that are stored in the
+ * {@link FormatContext} or one of its extensions.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @author Peter Knoppers
+ * @param <C> the specific {@link FormatContext} that is used
  */
 @SuppressWarnings({"checkstyle:needbraces", "checkstyle:visibilitymodifier"})
-public abstract class Formatter
+public abstract class Formatter<C extends FormatContext>
 {
     /** the format context. */
-    final FormatContext ctx;
+    final C ctx;
 
     /** the value (quantity, vector, matrix) with a display unit. */
     final Value<?, ?> value;
@@ -47,7 +43,7 @@ public abstract class Formatter
      * @param value the value to format
      * @param ctx the format context
      */
-    Formatter(final Value<?, ?> value, final FormatContext ctx)
+    Formatter(final Value<?, ?> value, final C ctx)
     {
         this.ctx = ctx;
         this.value = value;
@@ -120,141 +116,6 @@ public abstract class Formatter
     }
 
     /**
-     * Format a quantity according to a number of FormatHints. Note that this method might not be thread-safe for setting the
-     * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
-     * @param quantity the quantity to format
-     * @param hints the format hints
-     * @return a String with a formatted quantity, matching the FormatHints as closely as possible
-     */
-    public static String formatQuantity(final Quantity<?> quantity, final FormatHint... hints)
-    {
-        FormatContext ctx = new FormatContext(hints);
-        Locale savedLocale = Locale.getDefault();
-        try
-        {
-            savedLocale = saveLocale(ctx.locale);
-            return new QuantityFormatter(quantity, ctx).format();
-        }
-        finally
-        {
-            restoreLocale(savedLocale);
-        }
-    }
-
-    /**
-     * Format an absolute quantity according to a number of FormatHints. Note that this method might not be thread-safe for
-     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
-     * @param absQuantity the absolute quantity to format
-     * @param hints the format hints
-     * @return a String with a formatted quantity, matching the FormatHints as closely as possible
-     */
-    public static String formatAbsQuantity(final AbsQuantity<?, ?, ?> absQuantity, final FormatHint... hints)
-    {
-        FormatContext ctx = new FormatContext(hints);
-        Locale savedLocale = Locale.getDefault();
-        try
-        {
-            savedLocale = saveLocale(ctx.locale);
-            return new QuantityFormatter(absQuantity.getQuantity(), ctx).format()
-                    + formatReference(ctx, absQuantity.getReference());
-        }
-        finally
-        {
-            restoreLocale(savedLocale);
-        }
-    }
-
-    /**
-     * Format a vector according to a number of FormatHints. Note that this method might not be thread-safe for setting the
-     * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
-     * @param vector the vector to format
-     * @param hints the format hints
-     * @return a String with a formatted vector, matching the FormatHints as closely as possible
-     */
-    public static String formatVector(final Vector<?, ?, ?, ?, ?> vector, final FormatHint... hints)
-    {
-        FormatContext ctx = new FormatContext(hints);
-        Locale savedLocale = Locale.getDefault();
-        try
-        {
-            savedLocale = saveLocale(ctx.locale);
-            return new VectorFormatter(vector, ctx).format();
-        }
-        finally
-        {
-            restoreLocale(savedLocale);
-        }
-    }
-
-    /**
-     * Format an absolute vector according to a number of FormatHints. Note that this method might not be thread-safe for
-     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
-     * @param absVector the absolute vector to format
-     * @param hints the format hints
-     * @return a String with a formatted vector, matching the FormatHints as closely as possible
-     */
-    public static String formatAbsVector(final AbsVector<?, ?, ?, ?, ?> absVector, final FormatHint... hints)
-    {
-        FormatContext ctx = new FormatContext(hints);
-        Locale savedLocale = Locale.getDefault();
-        try
-        {
-            savedLocale = saveLocale(ctx.locale);
-            return new VectorFormatter(absVector.getRelativeVecMat(), ctx).format()
-                    + formatReference(ctx, absVector.getReference());
-        }
-        finally
-        {
-            restoreLocale(savedLocale);
-        }
-    }
-
-    /**
-     * Format a matrix or table according to a number of FormatHints. Note that this method might not be thread-safe for setting
-     * the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
-     * @param table the matrix or table to format
-     * @param hints the format hints
-     * @return a String with a formatted matrix or table, matching the FormatHints as closely as possible
-     */
-    public static String formatTable(final Table<?, ?, ?, ?, ?> table, final FormatHint... hints)
-    {
-        FormatContext ctx = new FormatContext(hints);
-        Locale savedLocale = Locale.getDefault();
-        try
-        {
-            savedLocale = saveLocale(ctx.locale);
-            return new TableFormatter(table, ctx).format();
-        }
-        finally
-        {
-            restoreLocale(savedLocale);
-        }
-    }
-
-    /**
-     * Format an absolute matrix or table according to a number of FormatHints. Note that this method might not be thread-safe
-     * for setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
-     * @param absTable the absolute matrix or table to format
-     * @param hints the format hints
-     * @return a String with a formatted matrix or table, matching the FormatHints as closely as possible
-     */
-    public static String formatAbsTable(final AbsTable<?, ?, ?, ?, ?> absTable, final FormatHint... hints)
-    {
-        FormatContext ctx = new FormatContext(hints);
-        Locale savedLocale = Locale.getDefault();
-        try
-        {
-            savedLocale = saveLocale(ctx.locale);
-            return new TableFormatter(absTable.getRelativeVecMat(), ctx).format()
-                    + formatReference(ctx, absTable.getReference());
-        }
-        finally
-        {
-            restoreLocale(savedLocale);
-        }
-    }
-
-    /**
      * Format the unit according to the context settings.
      */
     @SuppressWarnings("checkstyle:needbraces")
@@ -275,11 +136,12 @@ public abstract class Formatter
      * @param reference the reference to format
      * @return the formatted reference, or an empty string when it is not displayed
      */
-    @SuppressWarnings("checkstyle:needbraces")
     static String formatReference(final FormatContext ctx, final Reference<?, ?, ?> reference)
     {
         if (!ctx.printReference)
+        {
             return "";
+        }
         return ctx.referencePrefix + reference.getId() + ctx.referencePostfix;
     }
 
@@ -407,7 +269,7 @@ public abstract class Formatter
      * @param width the width
      * @return a padded string
      */
-    private static String pad(final String s, final int width)
+    static String pad(final String s, final int width)
     {
         if (s.length() >= width)
             return s;
@@ -419,7 +281,7 @@ public abstract class Formatter
      * @param newLocale the new locale (can be null if the locale does not change)
      * @return the old locale, or null when the locale was not changed
      */
-    private static Locale saveLocale(final Locale newLocale)
+    static Locale saveLocale(final Locale newLocale)
     {
         if (newLocale != null)
         {
@@ -434,7 +296,7 @@ public abstract class Formatter
      * Restore the locale to the old locale.
      * @param oldLocale the old locale (can be null if the locale was not changed earlier)
      */
-    private static void restoreLocale(final Locale oldLocale)
+    static void restoreLocale(final Locale oldLocale)
     {
         if (oldLocale != null)
         {
