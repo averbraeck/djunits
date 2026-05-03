@@ -14,7 +14,8 @@ package org.djunits.formatter;
 class VectorFormatContext extends FormatContext implements Cloneable
 {
     /** The defaults (which can be changed). */
-    static final VectorFormatContext DEFAULT = new VectorFormatContext();
+    @SuppressWarnings("checkstyle:staticvariablename")
+    static VectorFormatContext DEFAULT = new VectorFormatContext();
 
     // Vector formatting, contains default values
 

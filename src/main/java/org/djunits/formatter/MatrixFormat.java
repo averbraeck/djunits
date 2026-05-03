@@ -40,6 +40,14 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
     }
 
     /**
+     * Reset the default values of MatrixFormat to their original values.
+     */
+    public static void resetDefaults()
+    {
+        MatrixFormatContext.DEFAULT = new MatrixFormatContext();
+    }
+
+    /**
      * Set the start symbol to use for a middle row in a matrix, e.g., "|".
      * @param startSymbol new startSymbol for a matrix
      * @return MatrixFormat object for fluent design

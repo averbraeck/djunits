@@ -170,6 +170,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
     public F setFormatString(final String formatString)
     {
         this.ctx.formatString = formatString;
+        this.ctx.formatMode = FloatFormatMode.FORMAT_STRING;
         return self();
     }
 

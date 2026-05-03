@@ -14,7 +14,8 @@ package org.djunits.formatter;
 class MatrixFormatContext extends FormatContext implements Cloneable
 {
     /** The defaults (which can be changed). */
-    static final MatrixFormatContext DEFAULT = new MatrixFormatContext();
+    @SuppressWarnings("checkstyle:staticvariablename")
+    static MatrixFormatContext DEFAULT = new MatrixFormatContext();
 
     // Matrix formatting, contains default values
 

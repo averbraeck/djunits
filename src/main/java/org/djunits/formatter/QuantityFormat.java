@@ -41,6 +41,14 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
     }
 
     /**
+     * Reset the default values of QuantityFormat to their original values.
+     */
+    public static void resetDefaults()
+    {
+        QuantityFormatContext.DEFAULT = new QuantityFormatContext();
+    }
+
+    /**
      * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
      * @return QuantityFormat object for fluent design
      */

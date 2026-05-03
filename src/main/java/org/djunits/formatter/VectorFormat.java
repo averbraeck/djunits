@@ -40,6 +40,14 @@ public class VectorFormat extends Format<VectorFormat, VectorFormatContext>
     }
 
     /**
+     * Reset the default values of VectorFormat to their original values.
+     */
+    public static void resetDefaults()
+    {
+        VectorFormatContext.DEFAULT = new VectorFormatContext();
+    }
+
+    /**
      * Set the start symbol to use for a row vector, e.g., "[".
      * @param startSymbol new startSymbol for a row vector
      * @return VectorFormat object for fluent design

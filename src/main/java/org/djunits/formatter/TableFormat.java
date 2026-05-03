@@ -40,6 +40,14 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
     }
 
     /**
+     * Reset the default values of TableFormat to their original values.
+     */
+    public static void resetDefaults()
+    {
+        TableFormatContext.DEFAULT = new TableFormatContext();
+    }
+
+    /**
      * Set the start symbol to use for a middle row in a table, e.g., "|".
      * @param startSymbol new startSymbol for a table
      * @return TableFormat object for fluent design

@@ -14,7 +14,8 @@ package org.djunits.formatter;
 class TableFormatContext extends FormatContext implements Cloneable
 {
     /** The defaults (which can be changed). */
-    static final TableFormatContext DEFAULT = new TableFormatContext();
+    @SuppressWarnings("checkstyle:staticvariablename")
+    static TableFormatContext DEFAULT = new TableFormatContext();
 
     // Table formatting, contains default values
 

@@ -14,7 +14,8 @@ package org.djunits.formatter;
 class QuantityFormatContext extends FormatContext implements Cloneable
 {
     /** The defaults (which can be changed). */
-    static final QuantityFormatContext DEFAULT = new QuantityFormatContext();
+    @SuppressWarnings("checkstyle:staticvariablename")
+    static QuantityFormatContext DEFAULT = new QuantityFormatContext();
 
     // Quantity formatting from QuantityFormat, contains default values
 
