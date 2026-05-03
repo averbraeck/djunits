@@ -1,5 +1,7 @@
 package org.djunits.vecmat.def;
 
+import org.djunits.formatter.MatrixFormat;
+import org.djunits.formatter.MatrixFormatter;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
@@ -39,12 +41,12 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
     }
 
     /**
-     * Multiply this vector or matrix with a MatrixNxM, resulting in a MatrixNxM. The multiplication is a (NxM) x (MxP) matrix
+     * Multiply this matrix with a MatrixNxM, resulting in a MatrixNxM. The multiplication is a (NxM) x (MxP) matrix
      * multiplication resulting in an (NxP) matrix.
      * @param matrix the matrix to multiply with
      * @return a MatrixNxM of an SIQuantity as the result of the matrix multiplication
      * @throws IllegalArgumentException when the number of columns of this matrix does not equal the number of rows of the
-     *             matrix or vector to multiply with
+     *             matrix to multiply with
      */
     public MatrixNxM<SIQuantity> multiply(final MatrixNxM<?> matrix)
     {
@@ -56,6 +58,41 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
             return new MatrixNxM<SIQuantity>(new DenseDoubleDataSi(result, rows(), matrix.cols()), siUnit);
         }
         return new MatrixNxM<SIQuantity>(new DenseFloatDataSi(result, rows(), matrix.cols()), siUnit);
+    }
+
+    /* *********************************************************************************/
+    /* ************************** STRING AND FORMATTING METHODS ************************/
+    /* *********************************************************************************/
+
+    /**
+     * Concise description of this matrix.
+     * @return a String with the matrix, with the unit attached.
+     */
+    @Override
+    public String toString()
+    {
+        return toString(MatrixFormat.defaults());
+    }
+
+    /**
+     * String representation of this matrix after applying the format.
+     * @param format the format to apply for the matrix
+     * @return a String representation of this matrix, formatted according to the given format
+     */
+    public String toString(final MatrixFormat format)
+    {
+        return MatrixFormatter.format(this, format);
+    }
+
+    /**
+     * String representation of this matrix, expressed in the specified unit.
+     * @param targetUnit the unit into which the values of the matrix are converted for display
+     * @return printable string with the matrix's values expressed in the specified unit
+     */
+    @Override
+    public String toString(final Unit<?, Q> targetUnit)
+    {
+        return toString(MatrixFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }
