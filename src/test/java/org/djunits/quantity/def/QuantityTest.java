@@ -9,10 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.formatter.LocaleHint;
-import org.djunits.formatter.NumberHint;
-import org.djunits.formatter.QuantityHint;
-import org.djunits.formatter.UnitHint;
+import org.djunits.formatter.QuantityFormat;
 import org.djunits.quantity.Area;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.Duration;
@@ -416,27 +413,27 @@ public class QuantityTest
      * Test magnitude change with decimals and width.
      */
     @Test
-    @DisplayName("Large magnitude with explicit NumberHint")
+    @DisplayName("Large magnitude with explicit number format")
     public void testLargeMagnitudeFixed()
     {
         Area a = new Area(12_345_678.9, Area.Unit.m2);
-        String s1 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
+        String s1 = a.toString(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
         assertEquals("12,345,678.9 m2", s1);
-        String s2 = a.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+        String s2 = a.toString(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
         assertEquals("  12345678.9 m2", s2);
-        String s3 = a.toString(new NumberHint().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+        String s3 = a.toString(QuantityFormat.defaults().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
         assertEquals(" 12345678.90 m2", s3);
     }
 
     /**
-     * Test multiple hints combined.
+     * Test multiple format settings combined.
      */
     @Test
-    @DisplayName("Combined NumberHint, UnitHint and QuantityHint")
-    public void testCombinedHints()
+    @DisplayName("Combined settings for number, unit and quantity")
+    public void testCombinedFormat()
     {
         Length l = new Length(20400.0, Length.Unit.m);
-        String s = l.toString(new QuantityHint().scaleSiPrefixes(), new NumberHint().setDecimals(3), new UnitHint().textual());
+        String s = l.toString(QuantityFormat.defaults().scaleSiPrefixes().setDecimals(3).textual());
         assertEquals("    20.400 km", s);
     }
 
@@ -444,11 +441,11 @@ public class QuantityTest
      * Test locale influence on decimal separator.
      */
     @Test
-    @DisplayName("LocaleHint affects decimal separator")
-    public void testLocaleHint()
+    @DisplayName("Locale format affects decimal separator")
+    public void testLocaleFormat()
     {
         Length l = new Length(1.5, Length.Unit.m);
-        String s = l.toString(new LocaleHint().setLocale(Locale.GERMANY));
+        String s = l.toString(QuantityFormat.defaults().setLocale(Locale.GERMANY));
         assertEquals("     1,500 m", s);
     }
 

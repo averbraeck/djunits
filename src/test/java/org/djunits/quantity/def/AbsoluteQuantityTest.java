@@ -10,11 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.formatter.AbsoluteHint;
-import org.djunits.formatter.LocaleHint;
-import org.djunits.formatter.NumberHint;
-import org.djunits.formatter.QuantityHint;
-import org.djunits.formatter.UnitHint;
+import org.djunits.formatter.QuantityFormat;
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
 import org.djunits.quantity.Length;
@@ -364,7 +360,7 @@ public class AbsoluteQuantityTest
     public void testDefaultToString()
     {
         Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH);
-        assertEquals("    12.346 deg", d.toString(new UnitHint().textual()));
+        assertEquals("    12.346 deg", d.toString(QuantityFormat.defaults().textual()));
     }
 
     /**
@@ -375,8 +371,8 @@ public class AbsoluteQuantityTest
     public void testToStringWithTargetUnit()
     {
         Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST);
-        assertEquals("     3.142 rad", d.toString(new UnitHint().textual()));
-        assertEquals("   180.000 deg", d.toString(new UnitHint().setDisplayUnit(Angle.Unit.deg).textual()));
+        assertEquals("     3.142 rad", d.toString(QuantityFormat.defaults().textual()));
+        assertEquals("   180.000 deg", d.toString(QuantityFormat.defaults().setDisplayUnit(Angle.Unit.deg).textual()));
 
         Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST);
         assertTrue(d2.toString(Angle.Unit.rad).contains("3.142"));
@@ -386,18 +382,21 @@ public class AbsoluteQuantityTest
      * Test magnitude change with decimals and width.
      */
     @Test
-    @DisplayName("Large magnitude with explicit NumberHint")
+    @DisplayName("Large magnitude with explicit number format")
     public void testLargeMagnitudeFixed()
     {
         Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
         try
         {
             Position p = new Position(12_345_678.9, Length.Unit.m, pref);
-            String s1 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
+            String s1 =
+                    p.toString(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
             assertEquals("12,345,678.9 m", s1);
-            String s2 = p.toString(new NumberHint().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+            String s2 =
+                    p.toString(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
             assertEquals("  12345678.9 m", s2);
-            String s3 = p.toString(new NumberHint().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+            String s3 =
+                    p.toString(QuantityFormat.defaults().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
             assertEquals(" 12345678.90 m", s3);
         }
         finally
@@ -407,22 +406,21 @@ public class AbsoluteQuantityTest
     }
 
     /**
-     * Test multiple hints combined.
+     * Test multiple format settings combined.
      */
     @Test
-    @DisplayName("Combined NumberHint, UnitHint and QuantityHint")
-    public void testCombinedHints()
+    @DisplayName("Combined number format, unit format and quantity format")
+    public void testCombinedFormats()
     {
         Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
         try
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
-            String s1 = pos.toString(new QuantityHint().scaleSiPrefixes(), new NumberHint().setDecimals(3),
-                    new UnitHint().textual());
+            String s1 = pos.toString(QuantityFormat.defaults().scaleSiPrefixes().setDecimals(3).textual());
             assertEquals("    20.400 km", s1);
 
-            String s2 = pos.toString(new QuantityHint().scaleSiPrefixes(), new NumberHint().setDecimals(3),
-                    new UnitHint().textual(), new AbsoluteHint().reference().setPrefix(" (").setPostfix(")"));
+            String s2 = pos.toString(QuantityFormat.defaults().scaleSiPrefixes().setDecimals(3).textual().reference()
+                    .setPrefix(" (").setPostfix(")"));
             assertEquals("    20.400 km (TEST)", s2);
         }
         finally
@@ -435,14 +433,14 @@ public class AbsoluteQuantityTest
      * Test locale influence on decimal separator.
      */
     @Test
-    @DisplayName("LocaleHint affects decimal separator")
-    public void testLocaleHint()
+    @DisplayName("Locale format affects decimal separator")
+    public void testLocaleFormat()
     {
         Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
         try
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
-            String s = pos.toString(new LocaleHint().setLocale(Locale.GERMANY));
+            String s = pos.toString(QuantityFormat.defaults().setLocale(Locale.GERMANY));
             assertEquals(" 20400,000 m", s);
         }
         finally
