@@ -66,7 +66,7 @@ public abstract class Formatter<C extends FormatContext>
             return false;
         this.unit = this.unit.siUnit();
         this.useSi = true;
-        this.unitStr = this.unit.siUnit().toString(this.ctx.siDivisionSymbol, this.ctx.siDotSeparator, this.ctx.siPowerPrefix,
+        this.unitStr = this.unit.siUnit().format(this.ctx.siDivisionSymbol, this.ctx.siDotSeparator, this.ctx.siPowerPrefix,
                 this.ctx.siPowerPostfix);
         return true;
     }

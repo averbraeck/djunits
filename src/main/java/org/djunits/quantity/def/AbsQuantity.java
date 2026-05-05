@@ -426,7 +426,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
                 "Reference %s cannot be transformed to a base reference for a transformation", getReference().getId());
         if (offsetReference.equals(otherReference))
             return instantiate(getQuantity().add(getReference().getOffset()), otherReference);
-        if (otherReference.getOffsetReference().equals(offsetReference))
+        if (offsetReference.equals(otherReference.getOffsetReference()))
             return instantiate(getQuantity().add(getReference().getOffset()).subtract(otherReference.getOffset()),
                     otherReference);
         throw new IllegalArgumentException(String.format("Reference %s cannot be transformed to reference %s",
