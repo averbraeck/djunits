@@ -49,7 +49,7 @@ public interface Unit<U extends Unit<U, Q>, Q extends Quantity<Q>>
      */
     default double toBaseValue(final double value)
     {
-        return getScale().toBaseValue(value);
+        return getScale().toIdentityScale(value);
     }
 
     /**
@@ -59,7 +59,7 @@ public interface Unit<U extends Unit<U, Q>, Q extends Quantity<Q>>
      */
     default double fromBaseValue(final double si)
     {
-        return getScale().fromBaseValue(si);
+        return getScale().fromIdentityScale(si);
     }
 
     /**
@@ -154,7 +154,7 @@ public interface Unit<U extends Unit<U, Q>, Q extends Quantity<Q>>
     @SuppressWarnings("unchecked")
     default Q quantityInUnit(final double value)
     {
-        Q quantity = ofSi(getScale().toBaseValue(value));
+        Q quantity = ofSi(getScale().toIdentityScale(value));
         quantity.setDisplayUnit((U) this);
         return quantity;
     }

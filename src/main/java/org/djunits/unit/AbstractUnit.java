@@ -101,7 +101,7 @@ public abstract class AbstractUnit<U extends Unit<U, Q>, Q extends Quantity<Q>> 
     public U generateSiPrefixes(final boolean kilo, final boolean perUnit)
     {
         String cName = getClass().getSimpleName();
-        Throw.when(!getScale().isBaseScale(), UnitRuntimeException.class,
+        Throw.when(!getScale().isIdentityScale(), UnitRuntimeException.class,
                 "SI prefixes generation for unit %s only applicable to unit with base scale", cName);
         Throw.when(kilo && !perUnit && !getId().startsWith("k"), UnitRuntimeException.class,
                 "SI prefixes generated for kilo class for unit %s, but abbreviation %s does not start with a 'k'", cName,
