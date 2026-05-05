@@ -440,6 +440,15 @@ public class SIUnit implements Unit<SIUnit, SIQuantity>
         return format(true, false);
     }
 
+    /**
+     * Return the SI unit as an array string representation, e.g., [0, 0, 0, 1, 1, -2, 0, 0, 0, 0].
+     * @return the SI unit as an array string representation
+     */
+    public String toArrayString()
+    {
+        return Arrays.toString(this.dimensions);
+    }
+
     @Override
     public Scale getScale()
     {
