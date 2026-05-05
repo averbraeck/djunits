@@ -39,7 +39,7 @@ public class EnergyUnitTest extends AbstractLinearUnitTest<Energy.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s2", Energy.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kgm2/s2", Energy.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Energy.Unit.J, 1, 0.00000001, "joule", "J");
         checkUnitRatioNameAndAbbreviation(Energy.Unit.ft_lbf, 1.35581794833, 0.0000005, "foot pound-force", "ft.lbf");
         checkUnitRatioNameAndAbbreviation(Energy.Unit.BTU_ISO, 1054.5, 0.001, "British thermal unit (ISO)", "BTU(ISO)");

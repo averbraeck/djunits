@@ -82,7 +82,7 @@ class ElectricalInductanceTest
         assertEquals(-10.1, lStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("kgm2/s2A2", lStr.siUnit().toString(true, false));
+        assertEquals("kgm2/s2A2", lStr.siUnit().format(true, false));
 
         // ofSi
         ElectricalInductance neg = ElectricalInductance.ofSi(-2.0);

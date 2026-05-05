@@ -79,7 +79,7 @@ class TimeTest
         assertEquals(Time.Reference.UNIX, t5.getReference());
 
         // siUnit delegates to Duration SI
-        assertEquals("s", t1.siUnit().toString(true, false));
+        assertEquals("s", t1.siUnit().format(true, false));
     }
 
     // =================================================================

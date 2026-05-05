@@ -137,12 +137,12 @@ public class Matrix3x3Test
         assertArrayEquals(newSi, inst.getSiArray(), EPS);
 
         Matrix3x3<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrix.getSiArray(), EPS, "si array used as-is");
         assertEquals(9.0, siMatrix.get(0, 0).si(), EPS);
 
         Matrix3x3<SIQuantity> siMatrixOf = Matrix3x3.of(new double[][] {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrixOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(9.0, siMatrixOf.get(0, 0).si(), EPS);
 

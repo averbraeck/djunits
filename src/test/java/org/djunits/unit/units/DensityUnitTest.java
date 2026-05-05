@@ -39,7 +39,7 @@ public class DensityUnitTest extends AbstractLinearUnitTest<Density.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("kg/m3", Density.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kg/m3", Density.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Density.Unit.kg_m3, 1, 0.00000001, "kilogram per cubic meter", "kg/m3");
         checkUnitRatioNameAndAbbreviation(Density.Unit.g_cm3, 1000, 0.0001, "gram per cubic centimeter", "g/cm3");
         // Check two conversions between two units

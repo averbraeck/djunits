@@ -39,7 +39,7 @@ public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDos
     @Test
     public final void conversions()
     {
-        assertEquals("m2/s2", EquivalentDose.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m2/s2", EquivalentDose.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(EquivalentDose.Unit.Sv, 1, 0.000001, "sievert", "Sv");
     }
 

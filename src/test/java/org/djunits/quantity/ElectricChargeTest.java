@@ -101,7 +101,7 @@ class ElectricChargeTest
         assertEquals(-10.1, qStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (A·s)
-        assertEquals("sA", qStr.siUnit().toString(true, false));
+        assertEquals("sA", qStr.siUnit().format(true, false));
 
         // ofSi
         ElectricCharge neg = ElectricCharge.ofSi(-2.0);

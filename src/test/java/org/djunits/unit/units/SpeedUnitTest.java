@@ -39,7 +39,7 @@ public class SpeedUnitTest extends AbstractLinearUnitTest<Speed.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("m/s", Speed.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m/s", Speed.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Speed.Unit.m_s, 1, 0.00000001, "meter per second", "m/s");
         checkUnitRatioNameAndAbbreviation(Speed.Unit.km_h, 0.277778, 0.000001, "kilometer per hour", "km/h");
         checkUnitRatioNameAndAbbreviation(Speed.Unit.mi_h, 0.44704, 0.00001, "mile per hour", "mi/h");

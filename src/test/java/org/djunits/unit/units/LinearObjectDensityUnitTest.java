@@ -39,7 +39,7 @@ public class LinearObjectDensityUnitTest extends AbstractLinearUnitTest<LinearOb
     @Test
     public final void conversions()
     {
-        assertEquals("1/m", LinearObjectDensity.Unit.SI_UNIT.toString(true, false));
+        assertEquals("1/m", LinearObjectDensity.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(LinearObjectDensity.Unit.per_m, 1, 0.000001, "per meter", "/m");
         checkUnitRatioNameAndAbbreviation(LinearObjectDensity.Unit.per_km, 0.001, 0.0000001, "per kilometer", "/km");
         checkUnitRatioNameAndAbbreviation(LinearObjectDensity.Unit.per_mm, 1000, 0.01, "per millimeter", "/mm");

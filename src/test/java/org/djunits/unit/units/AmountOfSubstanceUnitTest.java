@@ -39,7 +39,7 @@ public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSu
     @Test
     public final void conversions()
     {
-        assertEquals("mol", AmountOfSubstance.Unit.SI_UNIT.toString(true, false));
+        assertEquals("mol", AmountOfSubstance.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(AmountOfSubstance.Unit.mol, 1, 0.000001, "mole", "mol");
     }
 

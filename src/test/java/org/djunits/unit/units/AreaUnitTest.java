@@ -39,7 +39,7 @@ public class AreaUnitTest extends AbstractLinearUnitTest<Area.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("m2", Area.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m2", Area.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Area.Unit.m2, 1, 0.00000001, "square meter", "m2");
         checkUnitRatioNameAndAbbreviation(Area.Unit.km2, 1000000, 0.05, "square kilometer", "km2");
         checkUnitRatioNameAndAbbreviation(Area.Unit.mi2, 2589990, 2, "square mile", "mi2");

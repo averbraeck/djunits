@@ -39,7 +39,7 @@ public class SolidAngleUnitTest extends AbstractLinearUnitTest<SolidAngle.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("sr", SolidAngle.Unit.SI_UNIT.toString(true, false));
+        assertEquals("sr", SolidAngle.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(SolidAngle.Unit.sr, 1, 0.0000001, "steradian", "sr");
         checkUnitRatioNameAndAbbreviation(SolidAngle.Unit.sq_deg, 1.0 / 3283, 0.0005, "square degree", "sq.deg");
         // Check two conversions between units

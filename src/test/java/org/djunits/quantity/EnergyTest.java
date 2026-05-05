@@ -115,7 +115,7 @@ class EnergyTest
         assertEquals(-10.1, eStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("kgm2/s2", eStr.siUnit().toString(true, false));
+        assertEquals("kgm2/s2", eStr.siUnit().format(true, false));
 
         // ofSi
         Energy neg = Energy.ofSi(-2.0);

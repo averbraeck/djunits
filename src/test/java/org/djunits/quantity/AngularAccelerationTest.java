@@ -99,7 +99,7 @@ class AngularAccelerationTest
         assertEquals(-10.1, aDeg.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit (of the quantity) and textual representation
-        assertEquals("rad/s2", aDeg.siUnit().toString(true, false));
+        assertEquals("rad/s2", aDeg.siUnit().format(true, false));
 
         // ofSi
         AngularAcceleration neg = AngularAcceleration.ofSi(-2.0);

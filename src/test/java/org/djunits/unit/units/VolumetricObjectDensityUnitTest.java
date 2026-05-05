@@ -39,7 +39,7 @@ public class VolumetricObjectDensityUnitTest extends AbstractLinearUnitTest<Volu
     @Test
     public final void conversions()
     {
-        assertEquals("1/m3", VolumetricObjectDensity.Unit.SI_UNIT.toString(true, false));
+        assertEquals("1/m3", VolumetricObjectDensity.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(VolumetricObjectDensity.Unit.per_m3, 1, 0.000001, "per cubic meter", "/m3");
     }
 

@@ -87,7 +87,7 @@ class ElectricPotentialTest
         assertEquals(-10.1, vStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("kgm2/s3A", vStr.siUnit().toString(true, false));
+        assertEquals("kgm2/s3A", vStr.siUnit().format(true, false));
 
         // ofSi
         ElectricPotential neg = ElectricPotential.ofSi(-2.0);

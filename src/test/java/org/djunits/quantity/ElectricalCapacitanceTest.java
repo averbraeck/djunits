@@ -82,7 +82,7 @@ class ElectricalCapacitanceTest
         assertEquals(-10.1, cStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("s4A2/kgm2", cStr.siUnit().toString(true, false));
+        assertEquals("s4A2/kgm2", cStr.siUnit().format(true, false));
 
         // ofSi
         ElectricalCapacitance neg = ElectricalCapacitance.ofSi(-2.0);

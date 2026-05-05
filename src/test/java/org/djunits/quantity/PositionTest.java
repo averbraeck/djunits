@@ -71,7 +71,7 @@ class PositionTest
         assertEquals(5.0, p3.si(), 1E-12);
         
         // siUnit textual representation must match the SIUnit.of string used in Unit ("m")
-        assertEquals("m", p2.siUnit().toString(true, false));
+        assertEquals("m", p2.siUnit().format(true, false));
 
         // clean up
         Position.Reference.get("ORIGIN").unregister();

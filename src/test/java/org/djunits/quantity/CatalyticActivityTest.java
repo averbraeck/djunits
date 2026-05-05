@@ -85,7 +85,7 @@ class CatalyticActivityTest
         assertEquals(-10.1, cStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
-        assertEquals("mol/s", cStr.siUnit().toString(true, false));
+        assertEquals("mol/s", cStr.siUnit().format(true, false));
 
         // ofSi
         CatalyticActivity neg = CatalyticActivity.ofSi(-2.0);

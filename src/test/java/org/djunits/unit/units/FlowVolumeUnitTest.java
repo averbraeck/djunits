@@ -39,7 +39,7 @@ public class FlowVolumeUnitTest extends AbstractLinearUnitTest<FlowVolume.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("m3/s", FlowVolume.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m3/s", FlowVolume.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(FlowVolume.Unit.m3_s, 1, 0.000001, "cubic meter per second", "m3/s");
         checkUnitRatioNameAndAbbreviation(FlowVolume.Unit.m3_min, 0.0166667, 0.000001, "cubic meter per minute", "m3/min");
         // Check two conversions between non-standard units

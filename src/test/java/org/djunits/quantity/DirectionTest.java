@@ -63,7 +63,7 @@ class DirectionTest
         assertEquals(Math.PI, p3.si(), 1E-12);
 
         // siUnit delegates to Angle SI
-        assertEquals("rad", dEast90.siUnit().toString(true, false));
+        assertEquals("rad", dEast90.siUnit().format(true, false));
     }
 
     /**

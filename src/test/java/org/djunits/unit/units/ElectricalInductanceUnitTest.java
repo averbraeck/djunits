@@ -39,7 +39,7 @@ public class ElectricalInductanceUnitTest extends AbstractLinearUnitTest<Electri
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s2A2", ElectricalInductance.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kgm2/s2A2", ElectricalInductance.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ElectricalInductance.Unit.H, 1, 0.000001, "henry", "H");
     }
 

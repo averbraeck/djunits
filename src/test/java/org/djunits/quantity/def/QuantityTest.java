@@ -552,12 +552,12 @@ public class QuantityTest
         SIQuantity prod2 = Quantity.product(a, b);
         assertClose(12.0, prod2.si());
         assertClose(12.0, prod2.si);
-        assertEquals("m2", prod2.siUnit().toString(true, false));
+        assertEquals("m2", prod2.siUnit().format(true, false));
 
         SIQuantity prod3 = Quantity.product(a, b, a);
         assertClose(36.0, prod3.si());
         assertClose(36.0, prod3.si);
-        assertEquals("m3", prod3.siUnit().toString(true, false));
+        assertEquals("m3", prod3.siUnit().format(true, false));
         Volume v3 = prod3.as(Volume.Unit.m3);
         assertEquals(36.0, v3.si());
         assertEquals(36.0, v3.si);
@@ -636,7 +636,7 @@ public class QuantityTest
         // AbsQuantity name with capitals
         var q = new ExampleQuantityAQxyz(3.0, ExampleQuantityAQxyz.Unit.DEFAULT);
         assertEquals("Example quantity a qxyz", q.getName(), "Quantity name: camel case should result in spaces");
-        assertEquals("m", q.siUnit().toString(true, false));
+        assertEquals("m", q.siUnit().format(true, false));
         Units.unregister(ExampleQuantityAQxyz.Unit.DEFAULT);
 
         // Internal-uppercase case: "SIQuantity" -> "S i quantity"

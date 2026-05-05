@@ -157,12 +157,12 @@ public final class VectorNTest
 
         double[] newSi = {20, 30, 40};
         VectorN.Col<SIQuantity> csiVector = c.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", csiVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", csiVector.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, csiVector.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, csiVector.get(0).si(), EPS);
 
         VectorN.Col<SIQuantity> csiVectorOf = VectorN.Col.of(new double[] {20.0, 30.0, 40.0}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", csiVectorOf.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, csiVectorOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, csiVectorOf.get(0).si(), EPS);
 
@@ -182,12 +182,12 @@ public final class VectorNTest
 
         double[] newSi = {20, 30, 40};
         VectorN.Row<SIQuantity> rsiVector = r.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", rsiVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", rsiVector.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, rsiVector.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVector.get(0).si(), EPS);
 
         VectorN.Row<SIQuantity> rsiVectorOf = VectorN.Row.of(new double[] {20.0, 30.0, 40.0}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", rsiVectorOf.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, rsiVectorOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, rsiVectorOf.get(0).si(), EPS);
 

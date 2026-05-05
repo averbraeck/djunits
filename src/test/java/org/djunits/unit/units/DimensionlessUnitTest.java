@@ -40,7 +40,7 @@ public class DimensionlessUnitTest extends AbstractLinearUnitTest<Unitless>
     @Test
     public final void conversions()
     {
-        assertEquals("", Unitless.SI_UNIT.toString(true, false));
+        assertEquals("", Unitless.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Unitless.BASE, 1, 0.000001, " ", " ");
     }
 

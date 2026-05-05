@@ -72,7 +72,7 @@ class LuminousIntensityTest
         assertEquals(-10.1, fromStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation must match the SIUnit.of string used in Unit ("cd")
-        assertEquals("cd", fromStr.siUnit().toString(true, false));
+        assertEquals("cd", fromStr.siUnit().format(true, false));
 
         // ofSi
         LuminousIntensity neg = LuminousIntensity.ofSi(-2.0);

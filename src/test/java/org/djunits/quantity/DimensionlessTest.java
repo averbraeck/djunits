@@ -73,7 +73,7 @@ class DimensionlessTest
         assertEquals(-10.1, three.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimensionless -> "" with all zero exponents)
-        assertEquals("", three.siUnit().toString(true, false));
+        assertEquals("", three.siUnit().format(true, false));
 
         // ofSi
         Dimensionless neg = Dimensionless.ofSi(-2.0);

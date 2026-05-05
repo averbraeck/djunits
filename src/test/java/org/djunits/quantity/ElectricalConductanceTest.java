@@ -81,7 +81,7 @@ class ElectricalConductanceTest
         assertEquals(-10.1, gStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("s3A2/kgm2", gStr.siUnit().toString(true, false));
+        assertEquals("s3A2/kgm2", gStr.siUnit().format(true, false));
 
         // ofSi
         ElectricalConductance neg = ElectricalConductance.ofSi(-2.0);

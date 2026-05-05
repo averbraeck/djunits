@@ -39,7 +39,7 @@ public class ElectricalConductanceUnitTest extends AbstractLinearUnitTest<Electr
     @Test
     public final void conversions()
     {
-        assertEquals("s3A2/kgm2", ElectricalConductance.Unit.SI_UNIT.toString(true, false));
+        assertEquals("s3A2/kgm2", ElectricalConductance.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ElectricalConductance.Unit.S, 1, 0.000001, "siemens", "S");
     }
 

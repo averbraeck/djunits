@@ -87,7 +87,7 @@ class ElectricalResistanceTest
         assertEquals(-10.1, rStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("kgm2/s3A2", rStr.siUnit().toString(true, false));
+        assertEquals("kgm2/s3A2", rStr.siUnit().format(true, false));
 
         // ofSi
         ElectricalResistance neg = ElectricalResistance.ofSi(-2.0);

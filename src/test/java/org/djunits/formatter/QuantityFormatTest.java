@@ -390,6 +390,40 @@ public class QuantityFormatTest
     }
 
     /**
+     * Test prefix separator between number and unit, and postfix after the unit for an absolute quantity.
+     */
+    @Test
+    public void testAbsQuantityPrefixPostfix()
+    {
+        Direction dir = new Direction(1.23456, Angle.Unit.rad, Direction.Reference.EAST);
+
+        String s1 = dir.toString();
+        assertTrue(s1.contains("1.23456"));
+        assertTrue(s1.endsWith(" rad"));
+
+        String s2 = dir.format(Angle.Unit.deg);
+        double deg = 1.23456 * 180.0 / Math.PI;
+        assertTrue(s2.contains(String.valueOf(deg).substring(0, 7)));
+        assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
+
+        String s3 = dir.format(QuantityFormat.defaults().setUnitPrefix("  "));
+        assertTrue(s3.contains("1.23456"));
+        assertTrue(s3.endsWith("  rad"));
+
+        String s4 = dir.format(QuantityFormat.defaults().setUnitPrefix(", unit="));
+        assertTrue(s4.contains("1.23456"));
+        assertTrue(s4.endsWith(", unit=rad"));
+
+        String s5 = dir.format(QuantityFormat.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        assertTrue(s5.contains("1.23456"));
+        assertTrue(s5.endsWith(" (rad)"));
+
+        String s6 = dir.format(QuantityFormat.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        assertTrue(s6.contains("1.23456"));
+        assertTrue(s6.endsWith(" rad (EAST)"));
+    }
+
+    /**
      * Test absolute quantity formatting with prefix separator between number and reference, and postfix after the reference.
      */
     @Test

@@ -41,7 +41,7 @@ public class ElectricPotentialUnitTest extends AbstractLinearUnitTest<ElectricPo
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s3A", ElectricPotential.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kgm2/s3A", ElectricPotential.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ElectricPotential.Unit.V, 1, 0.00000001, "volt", "V");
         checkUnitRatioNameAndAbbreviation(ElectricPotential.Unit.mV, 0.001, 0.00000000001, "millivolt", "mV");
         checkUnitRatioNameAndAbbreviation(ElectricPotential.Unit.kV, 1000, 0.005, "kilovolt", "kV");

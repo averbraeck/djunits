@@ -41,7 +41,7 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s3A2", ElectricalResistance.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kgm2/s3A2", ElectricalResistance.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ElectricalResistance.Unit.ohm, 1, 0.00000001, "ohm", "\u03A9");
         checkUnitRatioNameAndAbbreviation(ElectricalResistance.Unit.mohm, 0.001, 0.00000000001, "milliohm", "m\u03A9");
         checkUnitRatioNameAndAbbreviation(ElectricalResistance.Unit.kohm, 1000, 0.005, "kiloohm", "k\u03A9");

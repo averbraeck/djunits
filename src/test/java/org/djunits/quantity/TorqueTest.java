@@ -82,7 +82,7 @@ class TorqueTest
         assertEquals(-10.1, s.instantiateSi(-10.1).si(), 1E-12);
 
         // SI unit textual form
-        assertEquals("kgm2/s2", s.siUnit().toString(true, false));
+        assertEquals("kgm2/s2", s.siUnit().format(true, false));
 
         // ofSi
         Torque neg = Torque.ofSi(-3.0);

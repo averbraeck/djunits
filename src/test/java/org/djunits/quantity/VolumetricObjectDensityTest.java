@@ -92,7 +92,7 @@ class VolumetricObjectDensityTest
         assertEquals(-10.1, s.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit
-        assertEquals("1/m3", s.siUnit().toString(true, false));
+        assertEquals("1/m3", s.siUnit().format(true, false));
 
         // ofSi
         VolumetricObjectDensity neg = VolumetricObjectDensity.ofSi(-3.0);

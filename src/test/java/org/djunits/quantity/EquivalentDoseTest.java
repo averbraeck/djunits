@@ -83,7 +83,7 @@ class EquivalentDoseTest
         assertEquals(-10.1, dStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("m2/s2", dStr.siUnit().toString(true, false));
+        assertEquals("m2/s2", dStr.siUnit().format(true, false));
 
         // ofSi
         EquivalentDose neg = EquivalentDose.ofSi(-2.0);

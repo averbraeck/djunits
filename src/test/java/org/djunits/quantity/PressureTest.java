@@ -72,7 +72,7 @@ class PressureTest
         assertEquals(-10.1, fromStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation must match SIUnit.of literal ("kg/ms2")
-        assertEquals("kg/ms2", fromStr.siUnit().toString(true, false));
+        assertEquals("kg/ms2", fromStr.siUnit().format(true, false));
 
         // ofSi
         Pressure neg = Pressure.ofSi(-2.0);

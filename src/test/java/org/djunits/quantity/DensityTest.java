@@ -82,7 +82,7 @@ class DensityTest
         assertEquals(-10.1, dStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
-        assertEquals("kg/m3", dStr.siUnit().toString(true, false));
+        assertEquals("kg/m3", dStr.siUnit().format(true, false));
 
         // ofSi
         Density neg = Density.ofSi(-2.0);

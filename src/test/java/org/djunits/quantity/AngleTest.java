@@ -101,7 +101,7 @@ class AngleTest
         assertEquals(-10.1, aDeg.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit and its textual representation
-        assertEquals("rad", aDeg.siUnit().toString(true, false));
+        assertEquals("rad", aDeg.siUnit().format(true, false));
 
         // ofSi
         Angle neg = Angle.ofSi(-2.0);
@@ -134,7 +134,7 @@ class AngleTest
         Angle b = new Angle(-Math.PI / 2.0, Angle.Unit.rad);
         Angle m = Angle.normalize(b);
         assertEquals(1.5 * Math.PI, m.si(), 1E-12);
-        assertEquals("rad", m.siUnit().toString(true, false));
+        assertEquals("rad", m.siUnit().format(true, false));
     }
 
     /**

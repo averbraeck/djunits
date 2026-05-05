@@ -107,7 +107,7 @@ class AreaTest
         assertEquals(-10.1, aKm2.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
-        assertEquals("m2", aKm2.siUnit().toString(true, false));
+        assertEquals("m2", aKm2.siUnit().format(true, false));
 
         // ofSi
         Area neg = Area.ofSi(-2.0);

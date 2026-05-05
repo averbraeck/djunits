@@ -88,7 +88,7 @@ class DurationTest
         assertEquals(-10.1, dStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
-        assertEquals("s", dStr.siUnit().toString(true, false));
+        assertEquals("s", dStr.siUnit().format(true, false));
 
         // ofSi
         Duration neg = Duration.ofSi(-2.0);

@@ -39,7 +39,7 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensity.
     @Test
     public final void conversions()
     {
-        assertEquals("kg/m", LinearDensity.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kg/m", LinearDensity.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(LinearDensity.Unit.kg_m, 1, 0.000001, "kilogram per meter", "kg/m");
     }
 

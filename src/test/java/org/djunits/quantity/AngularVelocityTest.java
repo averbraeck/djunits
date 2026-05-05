@@ -95,7 +95,7 @@ class AngularVelocityTest
         assertEquals(-10.1, wDeg.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit (of the quantity) and textual representation
-        assertEquals("rad/s", wDeg.siUnit().toString(true, false));
+        assertEquals("rad/s", wDeg.siUnit().format(true, false));
 
         // ofSi
         AngularVelocity neg = AngularVelocity.ofSi(-2.0);

@@ -86,7 +86,7 @@ class ElectricCurrentTest
         assertEquals(-10.1, iStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (symbol)
-        assertEquals("A", iStr.siUnit().toString(true, false));
+        assertEquals("A", iStr.siUnit().format(true, false));
 
         // ofSi
         ElectricCurrent neg = ElectricCurrent.ofSi(-2.0);

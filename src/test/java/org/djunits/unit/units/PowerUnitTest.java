@@ -39,7 +39,7 @@ public class PowerUnitTest extends AbstractLinearUnitTest<Power.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s3", Power.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kgm2/s3", Power.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Power.Unit.W, 1, 0.00000001, "watt", "W");
         checkUnitRatioNameAndAbbreviation(Power.Unit.ft_lbf_h, 0.00037661608333, 0.0000000001, "foot pound-force per hour",
                 "ft.lbf/h");

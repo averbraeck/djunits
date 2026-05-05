@@ -97,7 +97,7 @@ class FlowVolumeTest
         assertEquals(-10.1, qStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("m3/s", qStr.siUnit().toString(true, false));
+        assertEquals("m3/s", qStr.siUnit().format(true, false));
 
         // ofSi
         FlowVolume neg = FlowVolume.ofSi(-2.0);

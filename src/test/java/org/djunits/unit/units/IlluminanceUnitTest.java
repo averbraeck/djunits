@@ -39,7 +39,7 @@ public class IlluminanceUnitTest extends AbstractLinearUnitTest<Illuminance.Unit
     @Test
     public final void conversions()
     {
-        assertEquals("srcd/m2", Illuminance.Unit.SI_UNIT.toString(true, false));
+        assertEquals("srcd/m2", Illuminance.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Illuminance.Unit.lx, 1, 0.000001, "lux", "lx");
     }
 

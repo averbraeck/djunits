@@ -138,13 +138,13 @@ public class MatrixNxNTest
         assertArrayEquals(newSi, inst.getSiArray(), EPS);
 
         MatrixNxN<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", siMatrix.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrix.getSiArray(), EPS, "si array used as-is");
         assertEquals(16.0, siMatrix.get(0, 0).si(), EPS);
 
         MatrixNxN<SIQuantity> siMatrixOf = MatrixNxN
                 .of(new double[][] {{16, 15, 14, 13}, {12, 11, 10, 9}, {8, 7, 6, 5}, {4, 3, 2, 1}}, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", siMatrixOf.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, siMatrixOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(16.0, siMatrixOf.get(0, 0).si(), EPS);
 

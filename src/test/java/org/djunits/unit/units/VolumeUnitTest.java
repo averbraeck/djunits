@@ -39,7 +39,7 @@ public class VolumeUnitTest extends AbstractLinearUnitTest<Volume.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("m3", Volume.Unit.SI.siUnit().toString(true, false));
+        assertEquals("m3", Volume.Unit.SI.siUnit().format(true, false));
         checkUnitRatioNameAndAbbreviation(Volume.Unit.m3, 1, 0.00000001, "cubic meter", "m3");
         checkUnitRatioNameAndAbbreviation(Volume.Unit.dm3, 0.001, 0.0000000001, "cubic decimeter", "dm3");
         checkUnitRatioNameAndAbbreviation(Volume.Unit.L, 0.001, 0.0000000001, "liter", "L");

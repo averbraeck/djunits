@@ -39,7 +39,7 @@ public class ElectricCurrentUnitTest extends AbstractLinearUnitTest<ElectricCurr
     @Test
     public final void conversions()
     {
-        assertEquals("A", ElectricCurrent.Unit.SI_UNIT.toString(true, false));
+        assertEquals("A", ElectricCurrent.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ElectricCurrent.Unit.A, 1, 0.00000001, "ampere", "A");
         checkUnitRatioNameAndAbbreviation(ElectricCurrent.Unit.mA, 0.001, 0.000000001, "milliampere", "mA");
         // Check two conversions between two units

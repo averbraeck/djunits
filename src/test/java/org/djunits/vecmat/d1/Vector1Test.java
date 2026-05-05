@@ -109,12 +109,12 @@ public class Vector1Test
         assertEquals(v1.getDisplayUnit(), r2.getDisplayUnit(), "display unit copied by instantiate path");
 
         Vector1<SIQuantity> siVector = v1.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siVector.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", siVector.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, siVector.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, siVector.get(0).si(), EPS);
 
         Vector1<SIQuantity> siVectorOf = Vector1.of(20.0, SIUnit.of("kgm/s2K"));
-        assertEquals("kgm/s2K", siVectorOf.getDisplayUnit().siUnit().toString(true, false), "display unit retained");
+        assertEquals("kgm/s2K", siVectorOf.getDisplayUnit().siUnit().format(true, false), "display unit retained");
         assertArrayEquals(newSi, siVectorOf.getSiArray(), EPS, "si array used as-is");
         assertEquals(20.0, siVectorOf.get(0).si(), EPS);
 

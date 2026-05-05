@@ -39,7 +39,7 @@ public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticA
     @Test
     public final void conversions()
     {
-        assertEquals("mol/s", CatalyticActivity.Unit.SI_UNIT.toString(true, false));
+        assertEquals("mol/s", CatalyticActivity.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(CatalyticActivity.Unit.kat, 1, 0.000001, "katal", "kat");
     }
 

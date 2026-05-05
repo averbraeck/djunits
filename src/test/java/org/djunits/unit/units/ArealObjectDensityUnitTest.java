@@ -39,7 +39,7 @@ public class ArealObjectDensityUnitTest extends AbstractLinearUnitTest<ArealObje
     @Test
     public final void conversions()
     {
-        assertEquals("1/m2", ArealObjectDensity.Unit.SI_UNIT.toString(true, false));
+        assertEquals("1/m2", ArealObjectDensity.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ArealObjectDensity.Unit.per_m2, 1, 0.000001, "per square meter", "/m2");
     }
 

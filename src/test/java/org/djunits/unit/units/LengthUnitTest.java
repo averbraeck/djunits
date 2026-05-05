@@ -39,7 +39,7 @@ public class LengthUnitTest extends AbstractLinearUnitTest<Length.Unit>
     @Test
     public final void conversions()
     {
-        assertEquals("m", Length.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m", Length.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Length.Unit.m, 1, 0.00000001, "meter", "m");
         checkUnitRatioNameAndAbbreviation(Length.Unit.mi, 1609, 0.5, "mile", "mi");
         checkUnitRatioNameAndAbbreviation(Length.Unit.cm, 0.01, 0.000000001, "centimeter", "cm");

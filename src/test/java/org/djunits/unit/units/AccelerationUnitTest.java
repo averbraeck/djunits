@@ -39,7 +39,7 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<Acceleration.Un
     @Test
     public final void conversions()
     {
-        assertEquals("m/s2", Acceleration.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m/s2", Acceleration.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(Acceleration.Unit.m_s2, 1, 0.00000001, "meter per second squared", "m/s2");
         checkUnitRatioNameAndAbbreviation(Acceleration.Unit.km_h2, 1 / 3.6 / 3600, 0.0005, "kilometer per hour squared",
                 "km/h2");

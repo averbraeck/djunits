@@ -39,7 +39,7 @@ public class LuminousFluxUnitTest extends AbstractLinearUnitTest<LuminousFlux.Un
     @Test
     public final void conversions()
     {
-        assertEquals("srcd", LuminousFlux.Unit.SI_UNIT.toString(true, false));
+        assertEquals("srcd", LuminousFlux.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(LuminousFlux.Unit.lm, 1, 0.000001, "lumen", "lm");
     }
 

@@ -167,7 +167,7 @@ class TemperatureTest
         assertEquals(5.0, d.si(), 1E-12);
 
         assertEquals(Temperature.Unit.SI, Temperature.Unit.K.getBaseUnit());
-        assertEquals("K", Temperature.Unit.K.siUnit().toString(true, false));
+        assertEquals("K", Temperature.Unit.K.siUnit().format(true, false));
     }
 
     // =========================================================================

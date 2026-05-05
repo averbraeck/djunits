@@ -87,7 +87,7 @@ class IlluminanceTest
         assertEquals(-10.1, eStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("srcd/m2", eStr.siUnit().toString(true, false));
+        assertEquals("srcd/m2", eStr.siUnit().format(true, false));
 
         // ofSi
         Illuminance neg = Illuminance.ofSi(-2.0);

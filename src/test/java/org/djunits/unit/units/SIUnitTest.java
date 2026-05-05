@@ -43,24 +43,24 @@ public class SIUnitTest
         var su = SIUnit.of("kgm3/s2");
 
         // divided, separator
-        assertEquals("kgm3s-2", su.toString(false, false));
-        assertEquals("kgm3/s2", su.toString(true, false));
-        assertEquals("kg.m3.s-2", su.toString(false, true));
-        assertEquals("kg.m3/s2", su.toString(true, true));
+        assertEquals("kgm3s-2", su.format(false, false));
+        assertEquals("kgm3/s2", su.format(true, false));
+        assertEquals("kg.m3.s-2", su.format(false, true));
+        assertEquals("kg.m3/s2", su.format(true, true));
         
         // divided, separator, power
-        assertEquals("kgm3s-2", su.toString(false, false, false));
-        assertEquals("kgm3/s2", su.toString(true, false, false));
-        assertEquals("kg.m3.s-2", su.toString(false, true, false));
-        assertEquals("kg.m3/s2", su.toString(true, true, false));
-        assertEquals("kgm^3s^-2", su.toString(false, false, true));
-        assertEquals("kgm^3/s^2", su.toString(true, false, true));
-        assertEquals("kg.m^3.s^-2", su.toString(false, true, true));
-        assertEquals("kg.m^3/s^2", su.toString(true, true, true));
+        assertEquals("kgm3s-2", su.format(false, false, false));
+        assertEquals("kgm3/s2", su.format(true, false, false));
+        assertEquals("kg.m3.s-2", su.format(false, true, false));
+        assertEquals("kg.m3/s2", su.format(true, true, false));
+        assertEquals("kgm^3s^-2", su.format(false, false, true));
+        assertEquals("kgm^3/s^2", su.format(true, false, true));
+        assertEquals("kg.m^3.s^-2", su.format(false, true, true));
+        assertEquals("kg.m^3/s^2", su.format(true, true, true));
 
         // divided, separator, powerPrefix, powerPostfix
-        assertEquals("kg&cdot;m<sup>3</sup>/s<sup>2</sup>", su.toString(true, "&cdot;", "<sup>", "</sup>"));
-        assertEquals("kg&cdot;m<sup>3</sup>&cdot;s<sup>-2</sup>", su.toString(false, "&cdot;", "<sup>", "</sup>"));
+        assertEquals("kg&cdot;m<sup>3</sup>/s<sup>2</sup>", su.format(true, "&cdot;", "<sup>", "</sup>"));
+        assertEquals("kg&cdot;m<sup>3</sup>&cdot;s<sup>-2</sup>", su.format(false, "&cdot;", "<sup>", "</sup>"));
     }
 
 }

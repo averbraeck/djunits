@@ -72,7 +72,7 @@ class MagneticFluxDensityTest
         assertEquals(-10.1, fromStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation must match the SIUnit.of string used in Unit ("kg/s2A")
-        assertEquals("kg/s2A", fromStr.siUnit().toString(true, false));
+        assertEquals("kg/s2A", fromStr.siUnit().format(true, false));
 
         // ofSi
         MagneticFluxDensity neg = MagneticFluxDensity.ofSi(-2.0);

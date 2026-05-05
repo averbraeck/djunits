@@ -39,7 +39,7 @@ public class RadioActivityUnitTest extends AbstractLinearUnitTest<RadioActivity.
     @Test
     public final void conversions()
     {
-        assertEquals("1/s", RadioActivity.Unit.SI_UNIT.toString(true, false));
+        assertEquals("1/s", RadioActivity.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(RadioActivity.Unit.Bq, 1, 0.000001, "becquerel", "Bq");
     }
 

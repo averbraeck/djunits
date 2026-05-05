@@ -39,7 +39,7 @@ public class ElectricChargeUnitTest extends AbstractLinearUnitTest<ElectricCharg
     @Test
     public final void conversions()
     {
-        assertEquals("sA", ElectricCharge.Unit.SI_UNIT.toString(true, false));
+        assertEquals("sA", ElectricCharge.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(ElectricCharge.Unit.C, 1, 0.00000001, "coulomb", "C");
         checkUnitRatioNameAndAbbreviation(ElectricCharge.Unit.mAh, 3.6, 0.000000005, "milliampere hour", "mAh");
         checkUnitRatioNameAndAbbreviation(ElectricCharge.Unit.F, 96485.3365, 0.005, "faraday", "F");

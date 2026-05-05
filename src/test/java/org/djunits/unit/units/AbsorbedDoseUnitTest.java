@@ -39,7 +39,7 @@ public class AbsorbedDoseUnitTest extends AbstractLinearUnitTest<AbsorbedDose.Un
     @Test
     public final void conversions()
     {
-        assertEquals("m2/s2", AbsorbedDose.Unit.SI_UNIT.toString(true, false));
+        assertEquals("m2/s2", AbsorbedDose.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(AbsorbedDose.Unit.Gy, 1, 0.000001, "gray", "Gy");
     }
 

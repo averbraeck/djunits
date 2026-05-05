@@ -39,7 +39,7 @@ public class MagneticFluxUnitTest extends AbstractLinearUnitTest<MagneticFlux.Un
     @Test
     public final void conversions()
     {
-        assertEquals("kgm2/s2A", MagneticFlux.Unit.SI_UNIT.toString(true, false));
+        assertEquals("kgm2/s2A", MagneticFlux.Unit.SI_UNIT.format(true, false));
         checkUnitRatioNameAndAbbreviation(MagneticFlux.Unit.Wb, 1, 0.000001, "weber", "Wb");
     }
 

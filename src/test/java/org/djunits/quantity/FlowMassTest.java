@@ -77,7 +77,7 @@ class FlowMassTest
         assertEquals(-10.1, fmStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation (dimension string)
-        assertEquals("kg/s", fmStr.siUnit().toString(true, false));
+        assertEquals("kg/s", fmStr.siUnit().format(true, false));
 
         // ofSi
         FlowMass neg = FlowMass.ofSi(-2.0);

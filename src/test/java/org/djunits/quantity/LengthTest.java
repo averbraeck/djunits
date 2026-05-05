@@ -127,7 +127,7 @@ class LengthTest
         assertEquals(-10.1, lStr.instantiateSi(-10.1).si(), 1E-12);
 
         // siUnit textual representation
-        assertEquals("m", lStr.siUnit().toString(true, false));
+        assertEquals("m", lStr.siUnit().format(true, false));
 
         // ofSi
         Length neg = Length.ofSi(-2.0);
