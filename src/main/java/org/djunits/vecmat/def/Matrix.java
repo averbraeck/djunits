@@ -69,9 +69,9 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @return a String with the matrix, with the unit attached.
      */
     @Override
-    public String toString()
+    public String format()
     {
-        return toString(MatrixFormat.defaults());
+        return format(MatrixFormat.defaults());
     }
 
     /**
@@ -79,7 +79,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @param format the format to apply for the matrix
      * @return a String representation of this matrix, formatted according to the given format
      */
-    public String toString(final MatrixFormat format)
+    public String format(final MatrixFormat format)
     {
         return MatrixFormatter.format(this, format);
     }
@@ -90,9 +90,9 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @return printable string with the matrix's values expressed in the specified unit
      */
     @Override
-    public String toString(final Unit<?, Q> targetUnit)
+    public String format(final Unit<?, Q> targetUnit)
     {
-        return toString(MatrixFormat.defaults().setDisplayUnit(targetUnit));
+        return format(MatrixFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }

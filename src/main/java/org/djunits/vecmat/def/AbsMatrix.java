@@ -41,34 +41,34 @@ public abstract class AbsMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
     /* *********************************************************************************/
 
     /**
-     * Concise description of this absolute matrix.
-     * @return a String with the absolute matrix, with the unit attached.
+     * Concise description of this matrix.
+     * @return a String with the matrix, with the unit attached.
      */
     @Override
-    public String toString()
+    public String format()
     {
-        return toString(MatrixFormat.defaults());
+        return format(MatrixFormat.defaults());
     }
 
     /**
-     * String representation of this absolute matrix after applying the format.
-     * @param format the format to apply for the absolute matrix
-     * @return a String representation of this absolute matrix, formatted according to the given format
+     * String representation of this matrix after applying the format.
+     * @param format the format to apply for the matrix
+     * @return a String representation of this matrix, formatted according to the given format
      */
-    public String toString(final MatrixFormat format)
+    public String format(final MatrixFormat format)
     {
         return MatrixFormatter.format(this, format);
     }
 
     /**
-     * String representation of this absolute matrix, expressed in the specified unit.
-     * @param targetUnit the unit into which the values of the absolute matrix are converted for display
-     * @return printable string with the absolute matrix's values expressed in the specified unit
+     * String representation of this matrix, expressed in the specified unit.
+     * @param targetUnit the unit into which the values of the matrix are converted for display
+     * @return printable string with the matrix's values expressed in the specified unit
      */
     @Override
-    public String toString(final Unit<?, Q> targetUnit)
+    public String format(final Unit<?, Q> targetUnit)
     {
-        return toString(MatrixFormat.defaults().setDisplayUnit(targetUnit));
+        return format(MatrixFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }
