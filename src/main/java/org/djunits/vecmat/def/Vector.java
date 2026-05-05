@@ -7,6 +7,7 @@ import org.djunits.formatter.VectorFormatter;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
+import org.djunits.value.Value;
 import org.djunits.vecmat.operations.Normed;
 
 /**
@@ -118,34 +119,81 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
     /* *********************************************************************************/
 
     /**
-     * Concise description of this vector.
-     * @return a String with the vector, with the unit attached.
+     * Formatting methods for column vector.
+     * @param <V> the vector type
+     * @param <Q> the quantity type
      */
-    @Override
-    public String toString()
+    public interface Col<V extends Value<V, Q>, Q extends Quantity<Q>> extends Value<V, Q>
     {
-        return toString(VectorFormat.defaults());
+        /**
+         * Concise description of this vector.
+         * @return a String with the vector, with the unit attached.
+         */
+        @Override
+        default String format()
+        {
+            return format(VectorFormat.Col.defaults());
+        }
+
+        /**
+         * String representation of this vector after applying the format.
+         * @param format the format to apply for the vector
+         * @return a String representation of this vector, formatted according to the given format
+         */
+        default String format(final VectorFormat<?> format)
+        {
+            return VectorFormatter.format((Vector<?, ?, ?, ?, ?>) this, format);
+        }
+
+        /**
+         * String representation of this vector, expressed in the specified unit.
+         * @param targetUnit the unit into which the values of the vector are converted for display
+         * @return printable string with the vector's values expressed in the specified unit
+         */
+        @Override
+        default String format(final Unit<?, Q> targetUnit)
+        {
+            return format(VectorFormat.Col.defaults().setDisplayUnit(targetUnit));
+        }
     }
 
     /**
-     * String representation of this vector after applying the format.
-     * @param format the format to apply for the vector
-     * @return a String representation of this vector, formatted according to the given format
+     * Formatting methods for row vector.
+     * @param <V> the vector type
+     * @param <Q> the quantity type
      */
-    public String toString(final VectorFormat format)
+    public interface Row<V extends Value<V, Q>, Q extends Quantity<Q>> extends Value<V, Q>
     {
-        return VectorFormatter.format(this, format);
-    }
+        /**
+         * Concise description of this vector.
+         * @return a String with the vector, with the unit attached.
+         */
+        @Override
+        default String format()
+        {
+            return format(VectorFormat.Row.defaults());
+        }
 
-    /**
-     * String representation of this vector, expressed in the specified unit.
-     * @param targetUnit the unit into which the values of the vector are converted for display
-     * @return printable string with the vector's values expressed in the specified unit
-     */
-    @Override
-    public String toString(final Unit<?, Q> targetUnit)
-    {
-        return toString(VectorFormat.defaults().setDisplayUnit(targetUnit));
+        /**
+         * String representation of this vector after applying the format.
+         * @param format the format to apply for the vector
+         * @return a String representation of this vector, formatted according to the given format
+         */
+        default String format(final VectorFormat<?> format)
+        {
+            return VectorFormatter.format((Vector<?, ?, ?, ?, ?>) this, format);
+        }
+
+        /**
+         * String representation of this vector, expressed in the specified unit.
+         * @param targetUnit the unit into which the values of the vector are converted for display
+         * @return printable string with the vector's values expressed in the specified unit
+         */
+        @Override
+        default String format(final Unit<?, Q> targetUnit)
+        {
+            return format(VectorFormat.Row.defaults().setDisplayUnit(targetUnit));
+        }
     }
 
 }
