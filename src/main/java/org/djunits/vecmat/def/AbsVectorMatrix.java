@@ -471,4 +471,12 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
         return Objects.equals(this.reference, other.reference) && Objects.equals(this.relativeVecMat, other.relativeVecMat);
     }
 
+    // -------------------------------- TOSTRING / FORMAT METHODS -------------------------------
+
+    @Override
+    public String toString()
+    {
+        return format();
+    }
+ 
 }

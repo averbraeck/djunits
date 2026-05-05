@@ -7,9 +7,10 @@ import java.util.NoSuchElementException;
 import org.djunits.formatter.VectorFormat;
 import org.djunits.formatter.VectorFormatter;
 import org.djunits.quantity.def.AbsQuantity;
-import org.djunits.quantity.def.Reference;
 import org.djunits.quantity.def.Quantity;
+import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
+import org.djunits.value.Value;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -146,41 +147,6 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
     }
 
     /* *********************************************************************************/
-    /* ************************** STRING AND FORMATTING METHODS ************************/
-    /* *********************************************************************************/
-
-    /**
-     * Concise description of this absolute vector.
-     * @return a String with the absolute vector, with the unit and possibly the reference attached.
-     */
-    @Override
-    public String toString()
-    {
-        return toString(VectorFormat.defaults());
-    }
-
-    /**
-     * String representation of this absolute vector after applying the format.
-     * @param format the format to apply for the absolute vector
-     * @return a String representation of this absolute vector, formatted according to the given format
-     */
-    public String toString(final VectorFormat format)
-    {
-        return VectorFormatter.format(this, format);
-    }
-
-    /**
-     * String representation of this absolute vector, expressed in the specified unit.
-     * @param targetUnit the unit into which the values of the absolute vector are converted for display
-     * @return printable string with the absolute vector's values expressed in the specified unit
-     */
-    @Override
-    public String toString(final Unit<?, Q> targetUnit)
-    {
-        return toString(VectorFormat.defaults().setDisplayUnit(targetUnit));
-    }
-
-    /* *********************************************************************************/
     /* ************************************ ITERATOR ***********************************/
     /* *********************************************************************************/
 
@@ -211,6 +177,88 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
         {
             Throw.when(!hasNext(), NoSuchElementException.class, "No more elements in absolute vector");
             return get(this.index++);
+        }
+    }
+
+    /* *********************************************************************************/
+    /* ************************** STRING AND FORMATTING METHODS ************************/
+    /* *********************************************************************************/
+
+    /**
+     * Formatting methods for absolute column vector.
+     * @param <V> the vector type
+     * @param <Q> the quantity type
+     */
+    public interface Col<V extends Value<V, Q>, Q extends Quantity<Q>> extends Value<V, Q>
+    {
+        /**
+         * Concise description of this vector.
+         * @return a String with the vector, with the unit attached.
+         */
+        @Override
+        default String format()
+        {
+            return format(VectorFormat.Col.defaults());
+        }
+
+        /**
+         * String representation of this vector after applying the format.
+         * @param format the format to apply for the vector
+         * @return a String representation of this vector, formatted according to the given format
+         */
+        default String format(final VectorFormat.Col format)
+        {
+            return VectorFormatter.format((AbsVector<?, ?, ?, ?, ?>) this, format);
+        }
+
+        /**
+         * String representation of this vector, expressed in the specified unit.
+         * @param targetUnit the unit into which the values of the vector are converted for display
+         * @return printable string with the vector's values expressed in the specified unit
+         */
+        @Override
+        default String format(final Unit<?, Q> targetUnit)
+        {
+            return format(VectorFormat.Col.defaults().setDisplayUnit(targetUnit));
+        }
+    }
+
+    /**
+     * Formatting methods for absolute row vector.
+     * @param <V> the vector type
+     * @param <Q> the quantity type
+     */
+    public interface Row<V extends Value<V, Q>, Q extends Quantity<Q>> extends Value<V, Q>
+    {
+        /**
+         * Concise description of this vector.
+         * @return a String with the vector, with the unit attached.
+         */
+        @Override
+        default String format()
+        {
+            return format(VectorFormat.Row.defaults());
+        }
+
+        /**
+         * String representation of this vector after applying the format.
+         * @param format the format to apply for the vector
+         * @return a String representation of this vector, formatted according to the given format
+         */
+        default String format(final VectorFormat.Row format)
+        {
+            return VectorFormatter.format((AbsVector<?, ?, ?, ?, ?>) this, format);
+        }
+
+        /**
+         * String representation of this vector, expressed in the specified unit.
+         * @param targetUnit the unit into which the values of the vector are converted for display
+         * @return printable string with the vector's values expressed in the specified unit
+         */
+        @Override
+        default String format(final Unit<?, Q> targetUnit)
+        {
+            return format(VectorFormat.Row.defaults().setDisplayUnit(targetUnit));
         }
     }
 
