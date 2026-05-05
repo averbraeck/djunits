@@ -55,7 +55,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
      * @return QuantityFormat object for fluent design
      */
-    public QuantityFormat scaleSiPrefixes()
+    public QuantityFormat setScaleSiPrefixes()
     {
         this.ctx.scaleSiPrefixes = true;
         return this;
@@ -67,7 +67,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * @param maxPrefixPower maximum 10th power to use SI prefixes for
      * @return QuantityFormat object for fluent design
      */
-    public QuantityFormat scaleSiPrefixes(final int minPrefixPower, final int maxPrefixPower)
+    public QuantityFormat setScaleSiPrefixes(final int minPrefixPower, final int maxPrefixPower)
     {
         this.ctx.scaleSiPrefixes = true;
         this.ctx.minimumPrefixPower = minPrefixPower;

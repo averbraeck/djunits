@@ -61,7 +61,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Apply variable length notation. Ignore width and decimals restrictions.
      * @return the the object instance for fluent design
      */
-    public F variableLength()
+    public F setVariableLength()
     {
         this.ctx.formatMode = FloatFormatMode.VARIABLE_LENGTH;
         return self();
@@ -71,7 +71,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Apply fixed length float-only notation.
      * @return the the object instance for fluent design
      */
-    public F fixedFloat()
+    public F setFixedFloat()
     {
         this.ctx.formatMode = FloatFormatMode.FIXED_FLOAT;
         return self();
@@ -81,7 +81,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Apply scientific notation.
      * @return the the object instance for fluent design
      */
-    public F scientific()
+    public F setScientific()
     {
         this.ctx.formatMode = FloatFormatMode.SCIENTIFIC_ALWAYS;
         return self();
@@ -91,7 +91,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Apply fixed length float-only notation with scientific notation as a fallback.
      * @return the the object instance for fluent design
      */
-    public F fixedWithSciFallback()
+    public F setFixedWithSciFallback()
     {
         this.ctx.formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
         return self();
@@ -102,7 +102,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * with exponents that are multiples of 3.
      * @return the the object instance for fluent design
      */
-    public F fixedWithEngFallback()
+    public F setFixedWithEngFallback()
     {
         this.ctx.formatMode = FloatFormatMode.FIXED_WITH_ENG_FALLBACK;
         return self();
@@ -112,7 +112,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Apply engineering notation. Engineering notation uses an e formatter with exponents that are multiples of 3.
      * @return the the object instance for fluent design
      */
-    public F engineering()
+    public F setEngineering()
     {
         this.ctx.formatMode = FloatFormatMode.ENGINEERING_ALWAYS;
         return self();
@@ -145,7 +145,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param upper results in E when true, and in e when false
      * @return the the object instance for fluent design
      */
-    public F upperE(final boolean upper)
+    public F setUpperE(final boolean upper)
     {
         this.ctx.upperE = upper;
         return self();
@@ -183,7 +183,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param prefix separator string between the value and the unit
      * @return the object instance for fluent design
      */
-    public F unitPrefix(final String prefix)
+    public F setUnitPrefix(final String prefix)
     {
         this.ctx.unitPrefix = prefix;
         return self();
@@ -194,7 +194,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param postfix string after the unit
      * @return the object instance for fluent design
      */
-    public F unitPostfix(final String postfix)
+    public F setUnitPostfix(final String postfix)
     {
         this.ctx.unitPostfix = postfix;
         return self();
@@ -226,7 +226,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Set textual mode.
      * @return the object instance for fluent design
      */
-    public F textual()
+    public F setTextual()
     {
         this.ctx.textual = true;
         return self();
@@ -236,7 +236,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Set display mode.
      * @return the object instance for fluent design
      */
-    public F display()
+    public F setDisplay()
     {
         this.ctx.textual = false;
         return self();
@@ -247,7 +247,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param on whether to turn textual mode on or off
      * @return the object instance for fluent design
      */
-    public F textual(final boolean on)
+    public F setTextual(final boolean on)
     {
         this.ctx.textual = on;
         return self();
@@ -257,7 +257,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Set SI unit mode.
      * @return the object instance for fluent design
      */
-    public F siUnits()
+    public F setSiUnits()
     {
         this.ctx.siUnits = true;
         return self();
@@ -268,7 +268,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param on true when the divider symbol is used, false when not
      * @return the object instance for fluent design
      */
-    public F divider(final boolean on)
+    public F setDivider(final boolean on)
     {
         this.ctx.siDivisionSymbol = on;
         return self();
@@ -280,7 +280,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param symbol the string to use for the power prefix
      * @return the object instance for fluent design
      */
-    public F powerPrefix(final String symbol)
+    public F setPowerPrefix(final String symbol)
     {
         this.ctx.siPowerPrefix = symbol;
         return self();
@@ -292,7 +292,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param symbol the string to use for the power postfix
      * @return the object instance for fluent design
      */
-    public F powerPostfix(final String symbol)
+    public F setPowerPostfix(final String symbol)
     {
         this.ctx.siPowerPostfix = symbol;
         return self();
@@ -303,7 +303,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param symbol the string to use for the dot separator symbol
      * @return the object instance for fluent design
      */
-    public F dotSeparator(final String symbol)
+    public F setDotSeparator(final String symbol)
     {
         this.ctx.siDotSeparator = symbol;
         return self();
@@ -332,7 +332,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Print the reference.
      * @return the object instance for fluent design
      */
-    public F reference()
+    public F setPrintReference()
     {
         this.ctx.printReference = true;
         return self();
@@ -342,7 +342,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * Do not print the reference.
      * @return the object instance for fluent design
      */
-    public F noReference()
+    public F setNoReference()
     {
         this.ctx.printReference = false;
         return self();
@@ -353,7 +353,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param on boolean that indicates whether to print the reference or not
      * @return the object instance for fluent design
      */
-    public F reference(final boolean on)
+    public F setPrintReference(final boolean on)
     {
         this.ctx.printReference = on;
         return self();
@@ -364,7 +364,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param prefix the prefix for the reference
      * @return the object instance for fluent design
      */
-    public F setPrefix(final String prefix)
+    public F setReferencePrefix(final String prefix)
     {
         this.ctx.referencePrefix = prefix;
         return self();
@@ -375,7 +375,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param postfix the postfix for the reference
      * @return the object instance for fluent design
      */
-    public F setPostfix(final String postfix)
+    public F setReferencePostfix(final String postfix)
     {
         this.ctx.referencePostfix = postfix;
         return self();
