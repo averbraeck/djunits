@@ -379,7 +379,7 @@ public final class VectorNTest
 
     /**
      * Verify that {@link VectorN#setDisplayUnit(org.djunits.unit.Unit)} returns {@code this} for fluent usage and that
-     * {@link VectorN#toString()} and {@link VectorN#toString(org.djunits.unit.Unit)} contain correct orientation and unit
+     * {@link VectorN#toString()} and {@link VectorN#format(org.djunits.unit.Unit)} contain correct orientation and unit
      * abbreviation.
      */
     @Test
@@ -389,20 +389,20 @@ public final class VectorNTest
         final VectorN.Row<Length> r = row(new double[] {1, 2, 3}, Length.Unit.m);
         final VectorN.Row<Length> ret = r.setDisplayUnit(Length.Unit.km);
         final String s1 = r.toString();
-        final String s2 = r.toString(Length.Unit.m);
+        final String s2 = r.format(Length.Unit.m);
 
         assertEquals(r, ret, "fluent");
-        assertTrue(s1.startsWith("Row["), "orientation");
-        assertTrue(s1.contains("km"), "unit in default toString");
-        assertTrue(s2.contains("m"), "unit in toString(withUnit)");
+        assertTrue(s1.startsWith("["), "start tag");
+        assertTrue(s1.endsWith("] km"), "unit in default toString");
+        assertTrue(s2.endsWith("] m"), "unit in toString(withUnit)");
 
         final VectorN.Col<Length> c = col(new double[] {1, 2, 3}, Length.Unit.m);
         final VectorN.Col<Length> retc = c.setDisplayUnit(Length.Unit.km);
         final String sc = c.toString();
 
         assertEquals(c, retc, "fluent");
-        assertTrue(sc.startsWith("Col["), "orientation");
-        assertTrue(sc.contains("km"), "unit in toString");
+        assertTrue(sc.startsWith("["), "start tag");
+        assertTrue(sc.endsWith("] km"), "unit in toString");
     }
 
     // =====================================================================================

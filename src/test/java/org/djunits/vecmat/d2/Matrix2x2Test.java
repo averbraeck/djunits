@@ -196,7 +196,7 @@ public class Matrix2x2Test
     }
 
     /**
-     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(Unit)} for coverage. We assert the unit
+     * Call {@link VectorMatrix#toString()} and {@link VectorMatrix#format(Unit)} for coverage. We assert the unit
      * abbreviation is present; we do not depend on exact formatting of numbers.
      */
     @Test
@@ -205,7 +205,7 @@ public class Matrix2x2Test
     {
         Matrix2x2<Length> m = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
         String s1 = m.toString();
-        String s2 = m.toString(Length.Unit.km);
+        String s2 = m.format(Length.Unit.km);
         assertTrue(s1.contains("km"), "default toString includes display unit");
         assertTrue(s2.contains("km"), "toString(withUnit) includes provided unit");
     }

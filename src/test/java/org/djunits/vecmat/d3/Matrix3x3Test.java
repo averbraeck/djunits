@@ -198,7 +198,7 @@ public class Matrix3x3Test
     }
 
     /**
-     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(Unit)}.
+     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#format(Unit)}.
      */
     @Test
     @DisplayName("toString() and toString(unit) contain unit abbreviation")
@@ -206,7 +206,7 @@ public class Matrix3x3Test
     {
         Matrix3x3<Length> m = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
         String s1 = m.toString();
-        String s2 = m.toString(Length.Unit.km);
+        String s2 = m.format(Length.Unit.km);
         assertTrue(s1.contains("km"));
         assertTrue(s2.contains("km"));
     }

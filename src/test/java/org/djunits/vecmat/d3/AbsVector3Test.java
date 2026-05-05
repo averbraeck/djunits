@@ -683,13 +683,11 @@ public class AbsVector3Test
     {
         AbsVector3.Col<Direction, Angle> v = northDegCol();
         String sdeg = v.toString();
-        String srad = v.toString(Angle.Unit.rad);
+        String srad = v.format(Angle.Unit.rad);
         assertTrue(sdeg.contains(Angle.Unit.deg.getDisplayAbbreviation()));
         assertTrue(srad.contains(Angle.Unit.rad.getDisplayAbbreviation()));
-        assertTrue(sdeg.contains("["));
-        assertTrue(srad.contains("]"));
-        assertTrue(sdeg.contains("Col"));
-        assertTrue(srad.contains("Col"));
+        assertTrue(sdeg.startsWith("["));
+        assertTrue(srad.endsWith("] rad"));
     }
 
     /**
@@ -700,13 +698,11 @@ public class AbsVector3Test
     {
         AbsVector3.Row<Direction, Angle> v = northDegRow();
         String sdeg = v.toString();
-        String srad = v.toString(Angle.Unit.rad);
+        String srad = v.format(Angle.Unit.rad);
         assertTrue(sdeg.contains(Angle.Unit.deg.getDisplayAbbreviation()));
         assertTrue(srad.contains(Angle.Unit.rad.getDisplayAbbreviation()));
-        assertTrue(sdeg.contains("["));
-        assertTrue(srad.contains("]"));
-        assertTrue(sdeg.contains("Row"));
-        assertTrue(srad.contains("Row"));
+        assertTrue(sdeg.startsWith("["));
+        assertTrue(srad.endsWith("] rad"));
     }
 
     // ==================================== equals, hashCode ====================================

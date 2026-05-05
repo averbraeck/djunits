@@ -581,10 +581,10 @@ public class Vector3Test
         assertNotEquals(r1, "not a vector");
 
         String sRow = r1.toString();
-        String sCol = c1.toString(Length.Unit.km);
-        assertTrue(sRow.startsWith("Row["));
-        assertTrue(sCol.startsWith("Col["));
-        assertTrue(sCol.contains("km"));
+        String sCol = c1.format(Length.Unit.km);
+        assertTrue(sRow.startsWith("["));
+        assertTrue(sCol.startsWith("["));
+        assertTrue(sCol.endsWith("] km"));
 
         Vector3.Row<Length> ret = r1.setDisplayUnit(Length.Unit.km);
         assertEquals(Length.Unit.km, r1.getDisplayUnit());

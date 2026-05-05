@@ -339,7 +339,7 @@ public class AbsVector1Test
     {
         AbsVector1<Direction, Angle> v = northDeg();
         String sdeg = v.toString();
-        String srad = v.toString(Angle.Unit.rad);
+        String srad = v.format(Angle.Unit.rad);
         assertTrue(sdeg.contains(Angle.Unit.deg.getDisplayAbbreviation()));
         assertTrue(srad.contains(Angle.Unit.rad.getDisplayAbbreviation()));
         assertTrue(sdeg.contains("["));

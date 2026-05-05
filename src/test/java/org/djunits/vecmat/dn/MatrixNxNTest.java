@@ -213,7 +213,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#toString(Unit)} include unit abbreviation.
+     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#format(Unit)} include unit abbreviation.
      */
     @Test
     @DisplayName("toString()/toString(unit) include unit")
@@ -222,7 +222,7 @@ public class MatrixNxNTest
         MatrixNxN<Length> m =
                 MatrixNxN.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.km);
         assertTrue(m.toString().contains("km"));
-        assertTrue(m.toString(Length.Unit.m).contains("m"));
+        assertTrue(m.format(Length.Unit.m).contains("m"));
     }
 
     // ------------------------------------------------------------------------------------

@@ -179,7 +179,7 @@ public class MatrixNxMTest
     {
         MatrixNxM<Length> m = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         assertTrue(m.toString().contains("km"));
-        assertTrue(m.toString(Length.Unit.m).contains("m"));
+        assertTrue(m.format(Length.Unit.m).contains("m"));
     }
 
     // ------------------------------------------------------------------------------------

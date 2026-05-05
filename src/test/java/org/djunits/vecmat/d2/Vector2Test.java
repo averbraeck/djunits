@@ -600,17 +600,17 @@ public class Vector2Test
     {
         Vector2.Col<Length> c = col(1.0, 2.0, Length.Unit.km);
         String s1C = c.toString();
-        String s2C = c.toString(Length.Unit.m);
-        assertTrue(s1C.startsWith("Col["), "orientation tag");
-        assertTrue(s1C.contains("km"), "contains display unit abbreviation");
-        assertTrue(s2C.contains("m"), "toString(withUnit) uses the provided unit");
+        String s2C = c.format(Length.Unit.m);
+        assertTrue(s1C.startsWith("["), "orientation tag");
+        assertTrue(s1C.endsWith("] km"), "contains display unit abbreviation");
+        assertTrue(s2C.endsWith("] m"), "toString(withUnit) uses the provided unit");
 
         Vector2.Row<Length> r = row(1.0, 2.0, Length.Unit.km);
         String s1R = r.toString();
-        String s2R = r.toString(Length.Unit.m);
-        assertTrue(s1R.startsWith("Row["), "orientation tag");
-        assertTrue(s1R.contains("km"), "contains display unit abbreviation");
-        assertTrue(s2R.contains("m"), "toString(withUnit) uses the provided unit");
+        String s2R = r.format(Length.Unit.m);
+        assertTrue(s1R.startsWith("["), "orientation tag");
+        assertTrue(s1R.endsWith("] km"), "contains display unit abbreviation");
+        assertTrue(s2R.endsWith("] m"), "toString(withUnit) uses the provided unit");
     }
 
     /**

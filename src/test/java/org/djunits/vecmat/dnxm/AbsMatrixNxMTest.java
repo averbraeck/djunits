@@ -756,7 +756,7 @@ public class AbsMatrixNxMTest
     {
         AbsMatrixNxM<Direction, Angle> m = northDeg2x3();
         String sdeg = m.toString();
-        String srad = m.toString(Angle.Unit.rad);
+        String srad = m.format(Angle.Unit.rad);
 
         assertTrue(sdeg.contains(Angle.Unit.deg.getDisplayAbbreviation()));
         assertTrue(srad.contains(Angle.Unit.rad.getDisplayAbbreviation()));

@@ -545,7 +545,7 @@ public class AbsMatrix1x1Test
     {
         AbsMatrix1x1<Direction, Angle> m = northDeg();
         String sdeg = m.toString();
-        String srad = m.toString(Angle.Unit.rad);
+        String srad = m.format(Angle.Unit.rad);
         assertTrue(sdeg.contains(Angle.Unit.deg.getDisplayAbbreviation()));
         assertTrue(srad.contains(Angle.Unit.rad.getDisplayAbbreviation()));
         assertTrue(sdeg.contains("|"));

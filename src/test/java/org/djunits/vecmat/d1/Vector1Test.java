@@ -371,10 +371,10 @@ public class Vector1Test
     {
         Vector1<Length> c = vec(1.0, Length.Unit.km);
         String s1C = c.toString();
-        String s2C = c.toString(Length.Unit.m);
-        assertTrue(s1C.startsWith("Row["), "orientation tag");
-        assertTrue(s1C.contains("km"), "contains display unit abbreviation");
-        assertTrue(s2C.contains("m"), "toString(withUnit) uses the provided unit");
+        String s2C = c.format(Length.Unit.m);
+        assertTrue(s1C.startsWith("["), "start symbol");
+        assertTrue(s1C.endsWith("] km"), "contains display unit abbreviation");
+        assertTrue(s2C.endsWith("] m"), "toString(withUnit) uses the provided unit");
     }
 
     /**
