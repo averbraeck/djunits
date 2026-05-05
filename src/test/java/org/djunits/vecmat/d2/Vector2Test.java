@@ -398,6 +398,21 @@ public class Vector2Test
         assertEquals(2.0, w.mean().si(), EPS);
         assertEquals(2.0, w.median().si(), EPS, "median of 2-point set = mean");
         assertEquals(4.0, w.sum().si(), EPS);
+
+        Vector2.Col<Length> v2 = col(3.0, 1.0, Length.Unit.m); // SI: 3, 1
+        assertEquals(1.0, v2.min().si(), EPS);
+        assertEquals(3.0, v2.max().si(), EPS);
+        assertEquals(2.0, v2.mean().si(), EPS);
+        assertEquals(2.0, v2.median().si(), EPS, "median of 2-point set = mean");
+        assertEquals(4.0, v2.sum().si(), EPS);
+
+        Vector2.Row<Length> w2 = row(3.0, 1.0, Length.Unit.m); // SI: 3, 1
+        assertEquals(1.0, w2.min().si(), EPS);
+        assertEquals(3.0, w2.max().si(), EPS);
+        assertEquals(2.0, w2.mean().si(), EPS);
+        assertEquals(2.0, w2.median().si(), EPS, "median of 2-point set = mean");
+        assertEquals(4.0, w2.sum().si(), EPS);
+
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -429,6 +444,22 @@ public class Vector2Test
         assertEquals(5.0, w.normL2().si(), EPS);
         assertEquals(Math.cbrt(27.0 + 64.0), w.normLp(3).si(), EPS);
         assertEquals(4.0, w.normLinf().si(), EPS);
+
+        Vector2.Row<Length> v2 = row(4.0, 3.0, Length.Unit.m); // SI: 4, 3
+        // L2 = 5; Linf = 4; L1 = 7; Lp(p=3) = (3^3 + 4^3)^(1/3)
+        assertEquals(v2.normL2().si(), v2.norm().si(), EPS, "norm() delegates to normL2()");
+        assertEquals(7.0, v2.normL1().si(), EPS, "L1 = |3| + |4| = 7");
+        assertEquals(5.0, v2.normL2().si(), EPS);
+        assertEquals(Math.cbrt(27.0 + 64.0), v2.normLp(3).si(), EPS);
+        assertEquals(4.0, v2.normLinf().si(), EPS);
+
+        Vector2.Col<Length> w2 = col(4.0, 3.0, Length.Unit.m); // SI: 4, 3
+        // L2 = 5; Linf = 4; L1 = 7; Lp(p=3) = (3^3 + 4^3)^(1/3)
+        assertEquals(w2.normL2().si(), w2.norm().si(), EPS, "norm() delegates to normL2()");
+        assertEquals(7.0, w2.normL1().si(), EPS, "L1 = |3| + |4| = 7");
+        assertEquals(5.0, w2.normL2().si(), EPS);
+        assertEquals(Math.cbrt(27.0 + 64.0), w2.normLp(3).si(), EPS);
+        assertEquals(4.0, w2.normLinf().si(), EPS);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -580,6 +611,8 @@ public class Vector2Test
     {
         Vector2.Row<Length> r1 = row(1000.0, 2000.0, Length.Unit.m);
         Vector2.Row<Length> r2 = row(1.0, 2.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
+        Vector2.Row<Length> r3 = row(2000.0, 2000.0, Length.Unit.m);
+        Vector2.Row<Length> r4 = row(1000.0, 3000.0, Length.Unit.m);
         Vector2.Col<Length> c1 = col(1.0, 2.0, Length.Unit.m);
 
         assertEquals(r1, r1, "reflexive");
@@ -587,8 +620,11 @@ public class Vector2Test
         assertEquals(r1, r2, "equal SI values despite different original display units");
         assertEquals(r1.hashCode(), r2.hashCode(), "hash equal for equal SI");
         assertNotEquals(r1, c1, "Row not equal to Col (different classes)");
+        assertNotEquals(c1, r1, "Col not equal to Row (different classes)");
         assertNotEquals(r1, null);
         assertNotEquals(r1, "not a vector");
+        assertNotEquals(r1, r3);
+        assertNotEquals(r1, r4);
     }
 
     /**
@@ -942,22 +978,22 @@ public class Vector2Test
         assertArrayEquals(v.getSiArray(), v2.asVector2Col().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, v2.getDisplayUnit());
         assertEquals(2000.0, v2.si(0), 1E-10);
-        
+
         var mNxM = v.asMatrixNxM();
         assertArrayEquals(v.getSiArray(), mNxM.asVector2Col().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
         assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
-        
+
         var mQT = v.asQuantityTable();
         assertArrayEquals(v.getSiArray(), mQT.asVector2Col().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mQT.getDisplayUnit());
         assertEquals(2000.0, mQT.si(0, 0), 1E-10);
-        
+
         var vNcol = v.asVectorNCol();
         assertArrayEquals(v.getSiArray(), vNcol.asVector2Col().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, vNcol.getDisplayUnit());
         assertEquals(2000.0, vNcol.si(0), 1E-10);
-        
+
         assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
         assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
@@ -981,22 +1017,22 @@ public class Vector2Test
         assertArrayEquals(v.getSiArray(), v2.asVector2Row().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, v2.getDisplayUnit());
         assertEquals(2000.0, v2.si(0), 1E-10);
-        
+
         var mNxM = v.asMatrixNxM();
         assertArrayEquals(v.getSiArray(), mNxM.asVector2Row().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
         assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
-        
+
         var mQT = v.asQuantityTable();
         assertArrayEquals(v.getSiArray(), mQT.asVector2Row().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mQT.getDisplayUnit());
         assertEquals(2000.0, mQT.si(0, 0), 1E-10);
-        
+
         var vNrow = v.asVectorNRow();
         assertArrayEquals(v.getSiArray(), vNrow.asVector2Row().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, vNrow.getDisplayUnit());
         assertEquals(2000.0, vNrow.si(0), 1E-10);
-        
+
         assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
         assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
