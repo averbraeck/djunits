@@ -37,13 +37,13 @@ public class VectorFormatter extends Formatter<VectorFormatContext>
     }
 
     /**
-     * Format a vector according to a number of vector format settings. Note that this method might not be thread-safe for setting the
-     * default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format a vector according to a number of vector format settings. Note that this method might not be thread-safe for
+     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param vector the vector to format
      * @param vectorFormat the format to apply to the vector
      * @return a String with a formatted vector, matching the vector format settings as closely as possible
      */
-    public static String format(final Vector<?, ?, ?, ?, ?> vector, final VectorFormat vectorFormat)
+    public static String format(final Vector<?, ?, ?, ?, ?> vector, final VectorFormat<?> vectorFormat)
     {
         VectorFormatContext ctx = vectorFormat.ctx;
         Locale savedLocale = Locale.getDefault();
@@ -59,13 +59,13 @@ public class VectorFormatter extends Formatter<VectorFormatContext>
     }
 
     /**
-     * Format an absolute vector according to a number of vector format settings. Note that this method might not be thread-safe for
-     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format an absolute vector according to a number of vector format settings. Note that this method might not be thread-safe
+     * for setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param absVector the absolute vector to format
      * @param vectorFormat the format to apply to the vector
      * @return a String with a formatted vector, matching the vector format settings as closely as possible
      */
-    public static String format(final AbsVector<?, ?, ?, ?, ?> absVector, final VectorFormat vectorFormat)
+    public static String format(final AbsVector<?, ?, ?, ?, ?> absVector, final VectorFormat<?> vectorFormat)
     {
         VectorFormatContext ctx = vectorFormat.ctx;
         Locale savedLocale = Locale.getDefault();
@@ -91,35 +91,18 @@ public class VectorFormatter extends Formatter<VectorFormatContext>
     {
         formatUnit();
         StringBuilder s = new StringBuilder();
-        s.append(vector().isRowVector() ? this.ctx.rowVectorPrefix : this.ctx.colVectorPrefix);
-        if (vector().isRowVector() || this.ctx.colAsRow)
+        s.append(this.ctx.vectorPrefix);
+        s.append(this.ctx.startSymbol);
+        boolean first = true;
+        for (double si : vector().unsafeSiArray())
         {
-            s.append(this.ctx.rowStartSymbol);
-            boolean first = true;
-            for (double si : vector().unsafeSiArray())
-            {
-                if (!first)
-                    s.append(this.ctx.rowSeparatorSymbol);
-                first = false;
-                double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
-                s.append(formatValue(value));
-            }
-            s.append(this.ctx.rowEndSymbol);
+            if (!first)
+                s.append(this.ctx.separatorSymbol);
+            first = false;
+            double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
+            s.append(formatValue(value));
         }
-        else // format as column vector
-        {
-            s.append(this.ctx.colStartSymbol);
-            boolean first = true;
-            for (double si : vector().unsafeSiArray())
-            {
-                if (!first)
-                    s.append(this.ctx.colSeparatorSymbol);
-                first = false;
-                double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
-                s.append(formatValue(value));
-            }
-            s.append(this.ctx.colEndSymbol);
-        }
+        s.append(this.ctx.endSymbol);
         s.append(this.ctx.unitPrefix);
         s.append(this.unitStr);
         s.append(this.ctx.unitPostfix);

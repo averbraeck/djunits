@@ -13,38 +13,19 @@ package org.djunits.formatter;
 @SuppressWarnings("checkstyle:visibilitymodifier")
 class VectorFormatContext extends FormatContext implements Cloneable
 {
-    /** The defaults (which can be changed). */
-    @SuppressWarnings("checkstyle:staticvariablename")
-    static VectorFormatContext DEFAULT = new VectorFormatContext();
-
     // Vector formatting, contains default values
 
-    /** Start symbol for row vector. */
-    String rowStartSymbol = "[";
+    /** Start symbol for vector. */
+    String startSymbol;
 
-    /** End symbol for row vector. */
-    String rowEndSymbol = "]";
+    /** End symbol for vector. */
+    String endSymbol;
 
-    /** Separator symbol for row vector. */
-    String rowSeparatorSymbol = ", ";
+    /** Separator symbol between values. */
+    String separatorSymbol = ", ";
 
-    /** Start symbol for column vector. */
-    String colStartSymbol = "[\n";
-
-    /** End symbol for column vector. */
-    String colEndSymbol = "]";
-
-    /** Separator symbol for column vector. */
-    String colSeparatorSymbol = "\n";
-
-    /** Print column vector as row vector. */
-    boolean colAsRow = true;
-
-    /** Prefix to use for a column vector. */
-    String colVectorPrefix = "Col";
-
-    /** Prefix to use for a row vector. */
-    String rowVectorPrefix = "Row";
+    /** Prefix to use for the entire vector. */
+    String vectorPrefix;
 
     @Override
     protected VectorFormatContext clone()
