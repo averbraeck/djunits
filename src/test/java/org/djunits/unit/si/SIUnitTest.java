@@ -25,12 +25,12 @@ import org.junit.jupiter.api.Test;
  * These tests validate construction (array and 9-arg), parsing of SI-dimension strings (including tricky cases for {@code sr}
  * vs {@code s} and {@code mol} vs {@code m}), exponent algebra ({@link SIUnit#plus(SIUnit)}, {@link SIUnit#minus(SIUnit)},
  * {@link SIUnit#invert()}, {@link SIUnit#pow(int)}), formatting variants (plain/with separator/with power marker and HTML),
- * immutability around rendering, {@link SIUnit#siAbbreviations()} defensive copies, {@link org.djunits.unit.Unit}
- * getters, and a smoke test for {@link SIUnit#ofSi(double)}. <br>
- * Fractional dimensionality is intentionally <em>not</em> tested here (feature removed / not in production).
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * immutability around rendering, {@link SIUnit#siAbbreviations()} defensive copies, {@link org.djunits.unit.Unit} getters, and
+ * a smoke test for {@link SIUnit#ofSi(double)}. <br>
+ * Fractional dimensionality is intentionally <em>not</em> tested here (feature removed / not in production). Copyright (c)
+ * 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See for project
+ * information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public final class SIUnitTest
@@ -75,11 +75,11 @@ public final class SIUnitTest
         assertEquals("", dimless.getStoredName());
 
         // Plain toString() renders bracketed exponents
-        assertEquals("[0, 0, 0, 0, 0, 0, 0, 0, 0]", dimless.toString());
+        assertEquals("[0, 0, 0, 0, 0, 0, 0, 0, 0]", dimless.toArrayString());
 
         // HTML rendering for dimensionless is empty
-        assertEquals("", dimless.toHTMLString(true, false));
-        assertEquals("", dimless.toHTMLString(true, true));
+        assertEquals("", dimless.formatHtml(true, false));
+        assertEquals("", dimless.formatHtml(true, true));
     }
 
     /**
@@ -116,7 +116,7 @@ public final class SIUnitTest
         assertEquals(1, dims[3]);
         assertEquals(-1, dims[4]);
 
-        assertEquals("[0, 0, 0, 1, -1, 0, 0, 0, 0]", u.toString());
+        assertEquals("[0, 0, 0, 1, -1, 0, 0, 0, 0]", u.toArrayString());
     }
 
     /**
@@ -129,7 +129,7 @@ public final class SIUnitTest
     {
         // angle, solidAngle, mass, length, time, current, temperature, amount, luminous
         SIUnit u = new SIUnit(0, 0, 1, 1, -2, 0, 0, 0, 0); // Newton (kg·m·s^-2)
-        assertEquals("[0, 0, 1, 1, -2, 0, 0, 0, 0]", u.toString());
+        assertEquals("[0, 0, 1, 1, -2, 0, 0, 0, 0]", u.toArrayString());
     }
 
     /**
@@ -145,18 +145,22 @@ public final class SIUnitTest
         SIUnit a3 = SIUnit.of(" m / s ^ 2 "); // spaces/slashes/carets are stripped
         assertEquals(a1, a2);
         assertEquals(a1, a3);
-        assertEquals("[0, 0, 0, 1, -2, 0, 0, 0, 0]", a1.toString());
+        assertEquals("[0, 0, 0, 1, -2, 0, 0, 0, 0]", a1.toArrayString());
+        assertEquals("m/s2", a1.toString());
 
         // Disambiguation: sr vs s
-        assertEquals("[0, 1, 0, 0, 0, 0, 0, 0, 0]", SIUnit.of("sr").toString()); // solid angle
-        assertEquals("[0, 0, 0, 0, 1, 0, 0, 0, 0]", SIUnit.of("s").toString()); // second
+        assertEquals("[0, 1, 0, 0, 0, 0, 0, 0, 0]", SIUnit.of("sr").toArrayString()); // solid angle
+        assertEquals("[0, 0, 0, 0, 1, 0, 0, 0, 0]", SIUnit.of("s").toArrayString()); // second
+        assertEquals("sr", SIUnit.of("sr").toString()); // solid angle
+        assertEquals("s", SIUnit.of("s").toString()); // second
 
         // Disambiguation: mol vs m
-        assertEquals("[0, 0, 0, 0, 0, 0, 0, 1, 0]", SIUnit.of("mol").toString());
-        assertEquals("[0, 0, 0, 1, 0, 0, 0, 0, 0]", SIUnit.of("m").toString());
+        assertEquals("[0, 0, 0, 0, 0, 0, 0, 1, 0]", SIUnit.of("mol").toArrayString());
+        assertEquals("[0, 0, 0, 1, 0, 0, 0, 0, 0]", SIUnit.of("m").toArrayString());
 
         // Division cancellation example
-        assertEquals("[0, 0, 0, 0, 1, 0, 0, 0, 0]", SIUnit.of("kgm2s2/kgm2s").toString());
+        assertEquals("[0, 0, 0, 0, 1, 0, 0, 0, 0]", SIUnit.of("kgm2s2/kgm2s").toArrayString());
+        assertEquals("s", SIUnit.of("kgm2s2/kgm2s").toString());
 
         // Null string -> NPE
         assertThrows(NullPointerException.class, () -> SIUnit.of((String) null));
@@ -184,7 +188,8 @@ public final class SIUnitTest
         SIUnit si9b = SIUnit.of("cd9mol8K7A6s5m4kg3sr2rad1");
         assertEquals(si9, si9a);
         assertEquals(si9, si9b);
-        assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9]", si9.toString());
+        assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9]", si9.toArrayString());
+        assertEquals("radsr2kg3m4s5A6K7mol8cd9", si9.toString());
     }
 
     /**
@@ -201,7 +206,7 @@ public final class SIUnitTest
         // m + s^-1 == m.s^-1
         SIUnit invS = s.invert();
         SIUnit speed1 = m.plus(invS);
-        assertEquals("[0, 0, 0, 1, -1, 0, 0, 0, 0]", speed1.toString());
+        assertEquals("[0, 0, 0, 1, -1, 0, 0, 0, 0]", speed1.toArrayString());
 
         // m - s == m.s^-1
         SIUnit speed2 = m.minus(s);
@@ -212,7 +217,7 @@ public final class SIUnitTest
 
         // pow(2): (m.s^-1)^2 = m^2.s^-2
         SIUnit sq = speed1.pow(2);
-        assertEquals("[0, 0, 0, 2, -2, 0, 0, 0, 0]", sq.toString());
+        assertEquals("[0, 0, 0, 2, -2, 0, 0, 0, 0]", sq.toArrayString());
 
         // pow(0): -> DIMLESS
         assertEquals(SIUnit.DIMLESS, speed1.pow(0));
@@ -237,56 +242,56 @@ public final class SIUnitTest
         SIUnit newton = new SIUnit(0, 0, 1, 1, -2, 0, 0, 0, 0);
 
         // divided=false (compact) and separator toggle
-        assertEquals("kgms-2", newton.toString(false, false));
-        assertEquals("kg.m.s-2", newton.toString(false, true));
+        assertEquals("kgms-2", newton.format(false, false));
+        assertEquals("kg.m.s-2", newton.format(false, true));
 
         // divided=true (slash form)
-        assertEquals("kgm/s2", newton.toString(true, false));
-        assertEquals("kg.m/s2", newton.toString(true, true));
+        assertEquals("kgm/s2", newton.format(true, false));
+        assertEquals("kg.m/s2", newton.format(true, true));
 
         // caret powers
-        assertEquals("kgm/s^2", newton.toString(true, false, true));
-        assertEquals("kg.m/s^2", newton.toString(true, true, true));
-        assertEquals("kgms^-2", newton.toString(false, false, true));
-        assertEquals("kg.m.s^-2", newton.toString(false, true, true));
+        assertEquals("kgm/s^2", newton.format(true, false, true));
+        assertEquals("kg.m/s^2", newton.format(true, true, true));
+        assertEquals("kgms^-2", newton.format(false, false, true));
+        assertEquals("kg.m.s^-2", newton.format(false, true, true));
 
         // HTML
-        assertEquals("kgm/s<sup>2</sup>", newton.toHTMLString(true, false));
-        assertEquals("kg.m/s<sup>2</sup>", newton.toHTMLString(true, true));
-        assertEquals("kgms<sup>-2</sup>", newton.toHTMLString(false, false));
-        assertEquals("kg.m.s<sup>-2</sup>", newton.toHTMLString(false, true));
+        assertEquals("kgm/s<sup>2</sup>", newton.formatHtml(true, false));
+        assertEquals("kg.m/s<sup>2</sup>", newton.formatHtml(true, true));
+        assertEquals("kgms<sup>-2</sup>", newton.formatHtml(false, false));
+        assertEquals("kg.m.s<sup>-2</sup>", newton.formatHtml(false, true));
 
         // A single negative exponent, s^-3
         SIUnit sNeg3 = SIUnit.of("s-3");
-        assertEquals("1/s3", sNeg3.toString(true, false));
-        assertEquals("1/s3", sNeg3.toString(true, true));
-        assertEquals("s-3", sNeg3.toString(false, false));
-        assertEquals("s-3", sNeg3.toString(false, true));
+        assertEquals("1/s3", sNeg3.format(true, false));
+        assertEquals("1/s3", sNeg3.format(true, true));
+        assertEquals("s-3", sNeg3.format(false, false));
+        assertEquals("s-3", sNeg3.format(false, true));
 
         // caret and HTML for s^-3
-        assertEquals("1/s^3", sNeg3.toString(true, false, true));
-        assertEquals("1/s^3", sNeg3.toString(true, true, true));
-        assertEquals("s^-3", sNeg3.toString(false, false, true));
-        assertEquals("s^-3", sNeg3.toString(false, true, true));
-        assertEquals("1/s<sup>3</sup>", sNeg3.toHTMLString(true, false));
-        assertEquals("1/s<sup>3</sup>", sNeg3.toHTMLString(true, true));
-        assertEquals("s<sup>-3</sup>", sNeg3.toHTMLString(false, false));
-        assertEquals("s<sup>-3</sup>", sNeg3.toHTMLString(false, true));
+        assertEquals("1/s^3", sNeg3.format(true, false, true));
+        assertEquals("1/s^3", sNeg3.format(true, true, true));
+        assertEquals("s^-3", sNeg3.format(false, false, true));
+        assertEquals("s^-3", sNeg3.format(false, true, true));
+        assertEquals("1/s<sup>3</sup>", sNeg3.formatHtml(true, false));
+        assertEquals("1/s<sup>3</sup>", sNeg3.formatHtml(true, true));
+        assertEquals("s<sup>-3</sup>", sNeg3.formatHtml(false, false));
+        assertEquals("s<sup>-3</sup>", sNeg3.formatHtml(false, true));
 
         // Mixed example: kg m^2 / (s^3 A)
         SIUnit mixed = SIUnit.of("kgm2/s3A");
-        assertEquals("kgm2/s3A", mixed.toString(true, false));
-        assertEquals("kg.m2/s3.A", mixed.toString(true, true));
-        assertEquals("kgm2s-3A-1", mixed.toString(false, false));
-        assertEquals("kg.m2.s-3.A-1", mixed.toString(false, true));
-        assertEquals("kgm^2/s^3A", mixed.toString(true, false, true));
-        assertEquals("kg.m^2/s^3.A", mixed.toString(true, true, true));
-        assertEquals("kgm^2s^-3A^-1", mixed.toString(false, false, true));
-        assertEquals("kg.m^2.s^-3.A^-1", mixed.toString(false, true, true));
-        assertEquals("kgm<sup>2</sup>/s<sup>3</sup>A", mixed.toHTMLString(true, false));
-        assertEquals("kg.m<sup>2</sup>/s<sup>3</sup>.A", mixed.toHTMLString(true, true));
-        assertEquals("kgm<sup>2</sup>s<sup>-3</sup>A<sup>-1</sup>", mixed.toHTMLString(false, false));
-        assertEquals("kg.m<sup>2</sup>.s<sup>-3</sup>.A<sup>-1</sup>", mixed.toHTMLString(false, true));
+        assertEquals("kgm2/s3A", mixed.format(true, false));
+        assertEquals("kg.m2/s3.A", mixed.format(true, true));
+        assertEquals("kgm2s-3A-1", mixed.format(false, false));
+        assertEquals("kg.m2.s-3.A-1", mixed.format(false, true));
+        assertEquals("kgm^2/s^3A", mixed.format(true, false, true));
+        assertEquals("kg.m^2/s^3.A", mixed.format(true, true, true));
+        assertEquals("kgm^2s^-3A^-1", mixed.format(false, false, true));
+        assertEquals("kg.m^2.s^-3.A^-1", mixed.format(false, true, true));
+        assertEquals("kgm<sup>2</sup>/s<sup>3</sup>A", mixed.formatHtml(true, false));
+        assertEquals("kg.m<sup>2</sup>/s<sup>3</sup>.A", mixed.formatHtml(true, true));
+        assertEquals("kgm<sup>2</sup>s<sup>-3</sup>A<sup>-1</sup>", mixed.formatHtml(false, false));
+        assertEquals("kg.m<sup>2</sup>.s<sup>-3</sup>.A<sup>-1</sup>", mixed.formatHtml(false, true));
     }
 
     /**
@@ -376,7 +381,7 @@ public final class SIUnitTest
         assertFalse(si1.equals(SIUnit.of("kgm2/s2")));
         assertFalse(si1.equals(null));
 
-        assertEquals("[0, 0, 1, 1, -2, 0, 0, 0, 0]", si1.toString());
+        assertEquals("[0, 0, 1, 1, -2, 0, 0, 0, 0]", si1.toArrayString());
 
         // Negative hashCode comparison (not required by contract, but indicative)
         assertNotEquals(si1.hashCode(), SIUnit.of("kg").hashCode());
@@ -394,10 +399,10 @@ public final class SIUnitTest
 
         // Call a few renderers
         String t1 = u.toString();
-        String t2 = u.toString(true, false);
-        String t3 = u.toString(false, true);
-        String t4 = u.toString(true, true, true);
-        String h1 = u.toHTMLString(true, true);
+        String t2 = u.format(true, false);
+        String t3 = u.format(false, true);
+        String t4 = u.format(true, true, true);
+        String h1 = u.formatHtml(true, true);
 
         assertNotNull(t1);
         assertNotNull(t2);
