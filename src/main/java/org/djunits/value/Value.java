@@ -67,17 +67,16 @@ public interface Value<V extends Value<V, Q>, Q extends Quantity<Q>> extends Ser
     boolean isRelative();
 
     /**
-     * Return a concise description of this value.
-     * @return a String with the value contents, without the type, with the unit attached.
+     * Return a description of this value, applying the default format for the value type.
+     * @return a String with the value contents, using the default format.
      */
-    @Override
-    String toString();
+    String format();
 
     /**
-     * Return a concise description of this value with the values expressed in the specified unit.
+     * Return a description of this value with the values expressed in the specified unit.
      * @param displayUnit the unit into which the values are converted for display
      * @return a String with the value contents expressed in the specified unit
      */
-    String toString(Unit<?, Q> displayUnit);
+    String format(Unit<?, Q> displayUnit);
 
 }
