@@ -433,35 +433,49 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
                 getReference().getId(), otherReference.getId()));
     }
 
+    /**********************************************************************************/
+    /*************************** STRING AND FORMATTING METHODS ************************/
+    /**********************************************************************************/
+
     /**
-     * Concise description of this value.
-     * @return a String with the value, non-verbose, with the unit attached.
+     * Description of this quantity with default formatting.
+     * @return a String with the value of the quantity, with the unit attached.
      */
     @Override
     public String toString()
     {
-        return toString(QuantityFormat.defaults());
+        return format();
     }
 
     /**
-     * String representation of this absolute quantity after applying the format.
-     * @param format the format to apply for the absolute quantity
-     * @return a String representation of this absolute quantity, formatted according to the given format
+     * Concise description of this quantity.
+     * @return a String with the value of the quantity, with the unit attached.
      */
-    public String toString(final QuantityFormat format)
+    @Override
+    public String format()
+    {
+        return format(QuantityFormat.defaults());
+    }
+
+    /**
+     * String representation of this quantity after applying the format.
+     * @param format the format to apply for the quantity
+     * @return a String representation of this quantity, formatted according to the given format
+     */
+    public String format(final QuantityFormat format)
     {
         return QuantityFormatter.format(this, format);
     }
 
     /**
-     * String representation of the value expressed in the specified unit.
-     * @param targetUnit the unit into which the values are converted for display
-     * @return printable string with the value contents expressed in the specified unit
+     * String representation of this quantity, expressed in the specified unit.
+     * @param targetUnit the unit into which the quantity is converted for display
+     * @return printable string with the quantity value expressed in the specified unit
      */
     @Override
-    public String toString(final Unit<?, Q> targetUnit)
+    public String format(final Unit<?, Q> targetUnit)
     {
-        return toString(QuantityFormat.defaults().setDisplayUnit(targetUnit));
+        return format(QuantityFormat.defaults().setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/

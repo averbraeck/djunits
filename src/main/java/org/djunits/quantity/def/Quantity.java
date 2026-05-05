@@ -421,13 +421,23 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     /**********************************************************************************/
 
     /**
-     * Concise description of this quantity.
+     * Description of this quantity with default formatting.
      * @return a String with the value of the quantity, with the unit attached.
      */
     @Override
     public String toString()
     {
-        return toString(QuantityFormat.defaults());
+        return format();
+    }
+
+    /**
+     * Concise description of this quantity.
+     * @return a String with the value of the quantity, with the unit attached.
+     */
+    @Override
+    public String format()
+    {
+        return format(QuantityFormat.defaults());
     }
 
     /**
@@ -435,7 +445,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @param format the format to apply for the quantity
      * @return a String representation of this quantity, formatted according to the given format
      */
-    public String toString(final QuantityFormat format)
+    public String format(final QuantityFormat format)
     {
         return QuantityFormatter.format(this, format);
     }
@@ -446,9 +456,9 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @return printable string with the quantity value expressed in the specified unit
      */
     @Override
-    public String toString(final Unit<?, Q> targetUnit)
+    public String format(final Unit<?, Q> targetUnit)
     {
-        return toString(QuantityFormat.defaults().setDisplayUnit(targetUnit));
+        return format(QuantityFormat.defaults().setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/
