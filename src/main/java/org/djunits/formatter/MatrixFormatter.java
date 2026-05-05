@@ -37,8 +37,8 @@ public class MatrixFormatter extends Formatter<MatrixFormatContext>
     }
 
     /**
-     * Format a matrix according to a number of MatrixFormat settings. Note that this method might not be thread-safe for setting
-     * the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
+     * Format a matrix according to a number of MatrixFormat settings. Note that this method might not be thread-safe for
+     * setting the default Locale. If another thread changes the Locale while formatting, outcomes could vary.
      * @param matrix the matrix to format
      * @param matrixFormat the format to apply to the matrix
      * @return a String with a formatted matrix, matching the MatrixFormat settings as closely as possible
