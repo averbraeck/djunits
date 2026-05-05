@@ -123,8 +123,8 @@ public class VectorFormatTest
         assertTrue(s2.startsWith("Col["));
         assertTrue(s2.endsWith("] J"));
 
-        String s3 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("C").setSeparatorSymbol(" ")
-                .setStartSymbol("(").setEndSymbol(")"));
+        String s3 = ev.format(
+                VectorFormat.Row.defaults().setVectorPrefix("C").setSeparatorSymbol(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -132,8 +132,8 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("C("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("C").setSeparatorSymbol(" ")
-                .setStartSymbol("(").setEndSymbol(")").setDisplayUnit("kJ"));
+        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("C").setSeparatorSymbol(" ").setStartSymbol("(")
+                .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
         assertTrue(s4.contains("5.432"));
@@ -141,7 +141,6 @@ public class VectorFormatTest
         assertTrue(s4.startsWith("C("));
         assertTrue(s4.endsWith(") kJ"));
     }
-
 
     /**
      * Test format settings for the row-as-column vector.
@@ -160,8 +159,8 @@ public class VectorFormatTest
         assertTrue(s2.startsWith("Row["));
         assertTrue(s2.endsWith("] J"));
 
-        String s3 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("R").setSeparatorSymbol(" ")
-                .setStartSymbol("(").setEndSymbol(")"));
+        String s3 = ev.format(
+                VectorFormat.Col.defaults().setVectorPrefix("R").setSeparatorSymbol(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -170,8 +169,8 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("R("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("R").setSeparatorSymbol(" ")
-                .setStartSymbol("(").setEndSymbol(")").setDisplayUnit("kJ"));
+        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("R").setSeparatorSymbol(" ").setStartSymbol("(")
+                .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
         assertTrue(s4.contains("5.432"));
@@ -179,6 +178,117 @@ public class VectorFormatTest
         assertTrue(s2.contains("\n"));
         assertTrue(s4.startsWith("R("));
         assertTrue(s4.endsWith(") kJ"));
+    }
+
+    /**
+     * Test the setting and resetting of defaults for a Row vector.
+     */
+    @Test
+    public void testDefaultsRow()
+    {
+        Vector3.Row<Energy> evRow = Vector3.Row.of(1200.345, 123.456, 5432.104, Energy.Unit.J);
+        Vector3.Col<Energy> evCol = Vector3.Col.of(1200.345, 123.456, 5432.104, Energy.Unit.J);
+
+        try
+        {
+            // VARIABLE_LENGTH
+            String s1 = evRow.toString();
+            assertTrue(s1.contains("1200.345"));
+            assertTrue(s1.contains("123.456"));
+            assertTrue(s1.contains("5432.10"));
+            assertTrue(s1.contains(","));
+            assertTrue(s1.startsWith("["));
+            assertTrue(s1.endsWith("] J"));
+
+            VectorFormat.Row.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+                    .setVectorPrefix("Row");
+
+            s1 = evRow.toString();
+            assertTrue(s1.contains("1,200.3,"));
+            assertTrue(s1.contains("123.5,"));
+            assertTrue(s1.contains("5,432.1"));
+            assertTrue(s1.startsWith("Row["));
+            assertTrue(s1.endsWith("] J"));
+
+            // Col vector should be unaffected
+            String s2 = evCol.toString();
+            assertTrue(s2.contains("1200.345"));
+            assertTrue(s2.contains("123.456"));
+            assertTrue(s2.contains("5432.10"));
+            assertTrue(s2.startsWith("["));
+            assertTrue(s2.endsWith("] J"));
+
+            VectorFormat.Row.resetDefaults();
+            s1 = evRow.toString();
+            assertTrue(s1.contains("1200.345"));
+            assertTrue(s1.contains("123.456"));
+            assertTrue(s1.contains("5432.10"));
+            assertTrue(s1.contains(","));
+            assertTrue(s1.startsWith("["));
+            assertTrue(s1.endsWith("] J"));
+        }
+        finally
+        {
+            VectorFormat.Row.resetDefaults();
+        }
+    }
+
+    /**
+     * Test the setting and resetting of defaults for a Col vector.
+     */
+    @Test
+    public void testDefaultsCol()
+    {
+        Vector3.Row<Energy> evRow = Vector3.Row.of(1200.345, 123.456, 5432.104, Energy.Unit.J);
+        Vector3.Col<Energy> evCol = Vector3.Col.of(1200.345, 123.456, 5432.104, Energy.Unit.J);
+
+        try
+        {
+            // VARIABLE_LENGTH
+            String s1 = evCol.toString();
+            assertTrue(s1.contains("1200.345\n"));
+            assertTrue(s1.contains("123.456\n"));
+            assertTrue(s1.contains("5432.10"));
+            assertFalse(s1.contains(","));
+            assertTrue(s1.contains("\n"));
+            assertTrue(s1.startsWith("["));
+            assertTrue(s1.endsWith("] J"));
+
+            VectorFormat.Col.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+                    .setVectorPrefix("Col");
+
+            s1 = evCol.toString();
+            assertTrue(s1.contains("1,200.3\n"));
+            assertTrue(s1.contains("123.5\n"));
+            assertTrue(s1.contains("5,432.1"));
+            assertTrue(s1.contains("\n"));
+            assertTrue(s1.startsWith("Col["));
+            assertTrue(s1.endsWith("] J"));
+
+            // Row vector should be unaffected
+            String s2 = evRow.toString();
+            assertTrue(s2.contains("1200.345"));
+            assertTrue(s2.contains("123.456"));
+            assertTrue(s2.contains("5432.10"));
+            assertTrue(s2.contains(","));
+            assertFalse(s2.contains("\n"));
+            assertTrue(s2.startsWith("["));
+            assertTrue(s2.endsWith("] J"));
+
+            VectorFormat.Col.resetDefaults();
+            s1 = evCol.toString();
+            assertTrue(s1.contains("1200.345\n"));
+            assertTrue(s1.contains("123.456\n"));
+            assertTrue(s1.contains("5432.10"));
+            assertFalse(s1.contains(","));
+            assertTrue(s1.contains("\n"));
+            assertTrue(s1.startsWith("["));
+            assertTrue(s1.endsWith("] J"));
+        }
+        finally
+        {
+            VectorFormat.Col.resetDefaults();
+        }
     }
 
 }

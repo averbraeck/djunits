@@ -66,4 +66,50 @@ public class TableFormatTest
         assertTrue(s4.endsWith("| kJ"));
     }
 
+    /**
+     * Test the setting and resetting of defaults.
+     */
+    @Test
+    public void testDefaults()
+    {
+        QuantityTable<Energy> ev =
+                QuantityTable.of(new double[][] {{1200.345, 123.456, 5432.104}, {1, 2, 3}, {4, 5, 6}}, Energy.Unit.J);
+
+        try
+        {
+            // VARIABLE_LENGTH
+            String s1 = ev.toString();
+            assertTrue(s1.contains("1200.345"));
+            assertTrue(s1.contains("123.456"));
+            assertTrue(s1.contains("5432.10"));
+            assertFalse(s1.contains(","));
+            assertTrue(s1.startsWith("|"));
+            assertTrue(s1.endsWith("| J"));
+
+            TableFormat.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+                    .setFirstRowStartSymbol("/ ").setFirstRowEndSymbol(" \\\n").setLastRowStartSymbol("\\ ")
+                    .setLastRowEndSymbol(" /");
+            s1 = ev.toString();
+            assertTrue(s1.contains("1,200.3 "));
+            assertTrue(s1.contains("123.5 "));
+            assertTrue(s1.contains("5,432.1 "));
+            assertTrue(s1.contains("\\"));
+            assertTrue(s1.startsWith("/"));
+            assertTrue(s1.endsWith("/ J"));
+
+            TableFormat.resetDefaults();
+            s1 = ev.toString();
+            assertTrue(s1.contains("1200.345"));
+            assertTrue(s1.contains("123.456"));
+            assertTrue(s1.contains("5432.10"));
+            assertFalse(s1.contains(","));
+            assertTrue(s1.startsWith("|"));
+            assertTrue(s1.endsWith("| J"));
+        }
+        finally
+        {
+            TableFormat.resetDefaults();
+        }
+    }
+    
 }

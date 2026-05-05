@@ -42,12 +42,11 @@ public class MatrixFormatTest
         assertTrue(s2.startsWith("|"));
         assertTrue(s2.endsWith("| J"));
 
-        String s3 = ev.format(MatrixFormat.defaults().setMatrixPrefix("Mat ").setColSeparatorSymbol(" , ")
-                .setFirstRowStartSymbol("/").setFirstRowEndSymbol(" \\\n").setMiddleRowStartSymbol("    |")
-                .setMiddleRowEndSymbol(" | \n").setLastRowStartSymbol("    \\").setLastRowEndSymbol(" /")
-                .setMatrixPostfix(" unit ="));
+        String s3 = ev
+                .format(MatrixFormat.defaults().setMatrixPrefix("Mat ").setColSeparatorSymbol(" , ").setFirstRowStartSymbol("/")
+                        .setFirstRowEndSymbol(" \\\n").setMiddleRowStartSymbol("    |").setMiddleRowEndSymbol(" | \n")
+                        .setLastRowStartSymbol("    \\").setLastRowEndSymbol(" /").setMatrixPostfix(" unit ="));
         String[] s3Arr = s3.split("\\R");
-        System.out.println(s3);
         assertTrue(s3Arr[0].contains("1200.345"));
         assertTrue(s3Arr[0].contains("123.456"));
         assertTrue(s3Arr[0].contains("5432.10"));
@@ -67,4 +66,50 @@ public class MatrixFormatTest
         assertTrue(s4.endsWith("| kJ"));
     }
 
+    /**
+     * Test the setting and resetting of defaults.
+     */
+    @Test
+    public void testDefaults()
+    {
+        Matrix3x3<Energy> ev =
+                Matrix3x3.of(new double[][] {{1200.345, 123.456, 5432.104}, {1, 2, 3}, {4, 5, 6}}, Energy.Unit.J);
+
+        try
+        {
+            // VARIABLE_LENGTH
+            String s1 = ev.toString();
+            assertTrue(s1.contains("1200.345"));
+            assertTrue(s1.contains("123.456"));
+            assertTrue(s1.contains("5432.10"));
+            assertFalse(s1.contains(","));
+            assertTrue(s1.startsWith("|"));
+            assertTrue(s1.endsWith("| J"));
+
+            MatrixFormat.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+                    .setFirstRowStartSymbol("/ ").setFirstRowEndSymbol(" \\\n").setLastRowStartSymbol("\\ ")
+                    .setLastRowEndSymbol(" /");
+            s1 = ev.toString();
+            assertTrue(s1.contains("1,200.3 "));
+            assertTrue(s1.contains("123.5 "));
+            assertTrue(s1.contains("5,432.1 "));
+            assertTrue(s1.contains("\\"));
+            assertTrue(s1.startsWith("/"));
+            assertTrue(s1.endsWith("/ J"));
+
+            MatrixFormat.resetDefaults();
+            s1 = ev.toString();
+            assertTrue(s1.contains("1200.345"));
+            assertTrue(s1.contains("123.456"));
+            assertTrue(s1.contains("5432.10"));
+            assertFalse(s1.contains(","));
+            assertTrue(s1.startsWith("|"));
+            assertTrue(s1.endsWith("| J"));
+        }
+        finally
+        {
+            MatrixFormat.resetDefaults();
+        }
+    }
+    
 }
