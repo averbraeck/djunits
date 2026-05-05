@@ -114,12 +114,6 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
         return new Temperature(temperature, reference);
     }
 
-    @Override
-    public SIUnit siUnit()
-    {
-        return Temperature.Unit.SI_UNIT;
-    }
-
     /**
      * Returns a Temperature representation of a textual representation of a value with a unit. The String representation that
      * can be parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are

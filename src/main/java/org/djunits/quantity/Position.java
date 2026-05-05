@@ -4,7 +4,6 @@ import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
-import org.djunits.unit.si.SIUnit;
 
 /**
  * Position is the absolute equivalent of Length, and can, e.g., represent an absolute offset relative to a defined origin.
@@ -66,12 +65,6 @@ public class Position extends AbsQuantity<Position, Length, Position.Reference>
     public Position instantiate(final Length length, final Reference reference)
     {
         return new Position(length, reference);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Length.Unit.SI_UNIT;
     }
 
     /**

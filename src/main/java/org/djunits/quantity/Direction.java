@@ -5,7 +5,6 @@ import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
-import org.djunits.unit.si.SIUnit;
 
 /**
  * Direction is the absolute equivalent of Angle, and can, e.g., represent an angle relative to a defined "zero" angle such as
@@ -68,12 +67,6 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     public Direction instantiate(final Angle angle, final Reference reference)
     {
         return new Direction(angle, reference);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Angle.Unit.SI_UNIT;
     }
 
     /**

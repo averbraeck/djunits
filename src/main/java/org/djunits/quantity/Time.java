@@ -4,7 +4,6 @@ import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
-import org.djunits.unit.si.SIUnit;
 
 /**
  * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero. Note that built-in time
@@ -67,12 +66,6 @@ public class Time extends AbsQuantity<Time, Duration, Time.Reference>
     public Time instantiate(final Duration duration, final Reference reference)
     {
         return new Time(duration, reference);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Duration.Unit.SI_UNIT;
     }
 
     /**
