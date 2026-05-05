@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -919,14 +920,14 @@ public final class VectorNTest
     @Test
     public void testColOfQuantityListEmpty()
     {
-        assertThrows(IllegalArgumentException.class, () -> VectorN.Col.of(List.of()));
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Col.of(new ArrayList<Length>()));
     }
 
     /** Row.of(List) with empty list. */
     @Test
     public void testRowOfQuantityListEmpty()
     {
-        assertThrows(IllegalArgumentException.class, () -> VectorN.Row.of(List.of()));
+        assertThrows(IllegalArgumentException.class, () -> VectorN.Row.of(new ArrayList<Length>()));
     }
 
     /** Col.of(List) with null element. */
