@@ -106,19 +106,19 @@ final class UnitTest
         assertNotNull(m.getTextualAbbreviation());
         assertFalse(m.getTextualAbbreviation().isBlank());
         assertEquals(UnitSystem.SI_BASE, m.getUnitSystem());
-        assertTrue(m.getScale().isBaseScale());
+        assertTrue(m.getScale().isIdentityScale());
 
         // Mass: kilogram is SI base (kilo-default)
         Mass.Unit kg = Mass.Unit.kg;
         assertEquals("kg", kg.getId());
         assertEquals(UnitSystem.SI_BASE, kg.getUnitSystem());
-        assertTrue(kg.getScale().isBaseScale());
+        assertTrue(kg.getScale().isIdentityScale());
 
         // Frequency: Hertz is SI derived
         Frequency.Unit hz = Frequency.Unit.Hz;
         assertEquals("Hz", hz.getId());
         assertEquals(UnitSystem.SI_DERIVED, hz.getUnitSystem());
-        assertTrue(hz.getScale().isBaseScale()); // 1.0 linear factor
+        assertTrue(hz.getScale().isIdentityScale()); // 1.0 linear factor
 
         // Base unit getters (class-level SI singletons)
         assertSame(Length.Unit.SI, m.getBaseUnit());
@@ -378,7 +378,7 @@ final class UnitTest
     void testCustomUnitJerk()
     {
         // The SI/base jerk unit uses identity scale (allowed for prefix generation).
-        assertTrue(Jerk.Unit.BASE.getScale().isBaseScale());
+        assertTrue(Jerk.Unit.BASE.getScale().isIdentityScale());
 
         // Kilo-jerk (k m/s^3) must exist after generation (registered via Units.register in ctor)
         Jerk.Unit kBase = Jerk.Unit.SI.deriveUnit("km/s3", "km/s^3", "kilojerk", 1.0e3, UnitSystem.SI_DERIVED);
@@ -426,19 +426,19 @@ final class UnitTest
         AbstractUnit<Length.Unit, Length> nonLinear = new Length.Unit("m#", "m#", "meter-hack", new Scale()
         {
             @Override
-            public double toBaseValue(final double value)
+            public double toIdentityScale(final double value)
             {
                 return Math.log(1 + Math.max(0.0, value));
             }
 
             @Override
-            public double fromBaseValue(final double si)
+            public double fromIdentityScale(final double si)
             {
                 return Math.expm1(si);
             }
 
             @Override
-            public boolean isBaseScale()
+            public boolean isIdentityScale()
             {
                 return false;
             }
@@ -650,7 +650,7 @@ final class UnitTest
     void testPerKiloUnitGenerationAndSemantics()
     {
         // Base is per kilogram, identity scale to 1/kg
-        assertTrue(PerMass.Unit.PER_KILOGRAM.getScale().isBaseScale());
+        assertTrue(PerMass.Unit.PER_KILOGRAM.getScale().isIdentityScale());
         assertEquals("/kg", PerMass.Unit.PER_KILOGRAM.getId());
         assertEquals("per kilogram", PerMass.Unit.PER_KILOGRAM.getStoredName());
 

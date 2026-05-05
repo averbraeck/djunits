@@ -62,7 +62,7 @@ public class ElectricPotentialUnitTest extends AbstractLinearUnitTest<ElectricPo
         Units.unregister(myEPU);
 
         myEPU = ElectricPotential.Unit.SI.deriveUnit("ft.lbfph/uA", "foot pound-force per hour per microA",
-                Power.Unit.ft_lbf_h.getScale().toBaseValue(1.0) / ElectricCurrent.Unit.muA.getScale().toBaseValue(1.0),
+                Power.Unit.ft_lbf_h.getScale().toIdentityScale(1.0) / ElectricCurrent.Unit.muA.getScale().toIdentityScale(1.0),
                 UnitSystem.IMPERIAL);
         assertTrue(null != myEPU, "Can create a new ElectricPotential.Unit");
         checkUnitRatioNameAndAbbreviation(myEPU, 376.6, 0.1, "foot pound-force per hour per microA", "ft.lbfph/uA");

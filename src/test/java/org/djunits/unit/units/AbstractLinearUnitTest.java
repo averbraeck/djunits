@@ -25,7 +25,7 @@ public abstract class AbstractLinearUnitTest<U extends Unit<U, ?>> extends Abstr
     protected final void checkUnitRatioNameAndAbbreviation(final U u, final double expectedRatio, final double precision,
             final String expectedName, final String expectedAbbreviation)
     {
-        assertEquals(expectedRatio, u.getScale().toBaseValue(1.0), precision,
+        assertEquals(expectedRatio, u.getScale().toIdentityScale(1.0), precision,
                 String.format("one %s is about %f reference unit", u.getId(), expectedRatio));
         assertEquals(expectedName, u.getName(), String.format("Name of %s is %s", u.getId(), expectedName));
         assertEquals(expectedAbbreviation, u.getDisplayAbbreviation(),
@@ -39,7 +39,7 @@ public abstract class AbstractLinearUnitTest<U extends Unit<U, ?>> extends Abstr
      */
     public final double getMultiplicationFactorTo(final U fromUnit, final U toUnit)
     {
-        return fromUnit.getScale().toBaseValue(1.0) / toUnit.getScale().toBaseValue(1.0);
+        return fromUnit.getScale().toIdentityScale(1.0) / toUnit.getScale().toIdentityScale(1.0);
     }
 
 }

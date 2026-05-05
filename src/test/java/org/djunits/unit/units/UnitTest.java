@@ -30,13 +30,13 @@ public class UnitTest
         assertNotEquals(null, Length.Unit.SI);
         assertNotEquals(Length.Unit.m, Length.Unit.dm);
         assertNotEquals(Length.Unit.m, Duration.Unit.s);
-        assertEquals(0.3048, Length.Unit.ft.getScale().toBaseValue(1.0), 1.0E-6);
+        assertEquals(0.3048, Length.Unit.ft.getScale().toIdentityScale(1.0), 1.0E-6);
         assertEquals(Duration.Unit.min, Units.resolve(Duration.Unit.class, "min"));
         assertEquals(Duration.Unit.h, Units.resolve(Duration.Unit.class, "h"));
 
-        assertEquals(1.0, Speed.Unit.m_s.getScale().toBaseValue(1.0), 1.0E-6);
-        assertEquals(0.277777777, Speed.Unit.km_h.getScale().toBaseValue(1.0), 1.0E-6);
-        assertEquals(0.0000771604938, Acceleration.Unit.km_h2.getScale().toBaseValue(1.0), 1.0E-12);
+        assertEquals(1.0, Speed.Unit.m_s.getScale().toIdentityScale(1.0), 1.0E-6);
+        assertEquals(0.277777777, Speed.Unit.km_h.getScale().toIdentityScale(1.0), 1.0E-6);
+        assertEquals(0.0000771604938, Acceleration.Unit.km_h2.getScale().toIdentityScale(1.0), 1.0E-12);
 
         // these two should be similar except for the abbreviations
         Length.Unit xx1 = new Length.Unit("xx1Id", "xx11t", "xxName1", new LinearScale(1.0E-13), UnitSystem.OTHER);

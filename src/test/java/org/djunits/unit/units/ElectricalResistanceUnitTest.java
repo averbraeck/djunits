@@ -63,7 +63,7 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
         Units.unregister(myERU);
 
         ElectricalResistance.Unit abOhm = ElectricalResistance.Unit.ohm.deriveUnit("abOO", "abOhm(CGS)",
-                ElectricPotential.Unit.abV.getScale().toBaseValue(1.0) / ElectricCurrent.Unit.abA.getScale().toBaseValue(1.0),
+                ElectricPotential.Unit.abV.getScale().toIdentityScale(1.0) / ElectricCurrent.Unit.abA.getScale().toIdentityScale(1.0),
                 UnitSystem.CGS);
         assertTrue(null != abOhm, "Can create Abohm unit");
         checkUnitRatioNameAndAbbreviation(abOhm, 1e-9, 1e-12, "abOhm(CGS)", "abOO");

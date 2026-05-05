@@ -51,10 +51,10 @@ public class UnitlessTest
         assertTrue(base.getScale() instanceof LinearScale, "BASE scale should be LinearScale");
         LinearScale ls = (LinearScale) base.getScale();
         assertEquals(1.0, ls.getScaleFactorToBaseUnit(), 1e-12);
-        assertTrue(ls.isBaseScale(), "BASE LinearScale should be base scale (factor == 1.0)");
+        assertTrue(ls.isIdentityScale(), "BASE LinearScale should be base scale (factor == 1.0)");
 
         // Simple round-trip through the scale (identity behavior at factor 1.0).
-        assertEquals(123.456, ls.fromBaseValue(ls.toBaseValue(123.456)), 1e-12);
+        assertEquals(123.456, ls.fromIdentityScale(ls.toIdentityScale(123.456)), 1e-12);
     }
 
     /**
@@ -75,11 +75,11 @@ public class UnitlessTest
         assertTrue(percent.getScale() instanceof LinearScale);
         LinearScale ls = (LinearScale) percent.getScale();
         assertEquals(0.01, ls.getScaleFactorToBaseUnit(), 1e-12);
-        assertFalse(ls.isBaseScale(), "Percent scale (0.01) is not base scale");
+        assertFalse(ls.isIdentityScale(), "Percent scale (0.01) is not base scale");
 
         // 100% -> 1.0 SI ; 1.0 SI -> 100%
-        assertEquals(1.0, ls.toBaseValue(100.0), 1e-12);
-        assertEquals(100.0, ls.fromBaseValue(1.0), 1e-12);
+        assertEquals(1.0, ls.toIdentityScale(100.0), 1e-12);
+        assertEquals(100.0, ls.fromIdentityScale(1.0), 1e-12);
     }
 
     /**
@@ -132,7 +132,7 @@ public class UnitlessTest
 
         LinearScale pls = (LinearScale) permille.getScale();
         assertEquals(1.0 * 0.001, pls.getScaleFactorToBaseUnit(), 1e-12);
-        assertEquals(1.0, pls.toBaseValue(1000.0), 1e-12);
+        assertEquals(1.0, pls.toIdentityScale(1000.0), 1e-12);
 
         // Compose on an already scaled Unitless: 0.01 (percent) x 2 -> 0.02.
         Unitless percent = new Unitless("%", "percent", 0.01, UnitSystem.OTHER);
@@ -175,19 +175,19 @@ public class UnitlessTest
             private static final long serialVersionUID = 1L;
 
             @Override
-            public double toBaseValue(final double value)
+            public double toIdentityScale(final double value)
             {
                 return value;
             }
 
             @Override
-            public double fromBaseValue(final double value)
+            public double fromIdentityScale(final double value)
             {
                 return value;
             }
 
             @Override
-            public boolean isBaseScale()
+            public boolean isIdentityScale()
             {
                 return true;
             }

@@ -25,9 +25,9 @@ public class ScaleTest
     {
         IdentityScale sscale = IdentityScale.SCALE;
         assertEquals(1.0, sscale.getScaleFactorToBaseUnit(), 0.0001);
-        assertEquals(1.0, sscale.toBaseValue(1.0), 0.0001);
-        assertEquals(1.0, sscale.fromBaseValue(1.0), 0.0001);
-        assertEquals(2.5, sscale.toBaseValue(2.5), 0.0001);
+        assertEquals(1.0, sscale.toIdentityScale(1.0), 0.0001);
+        assertEquals(1.0, sscale.fromIdentityScale(1.0), 0.0001);
+        assertEquals(2.5, sscale.toIdentityScale(2.5), 0.0001);
         assertEquals("IdentityScale []", sscale.toString());
 
         IdentityScale s1 = IdentityScale.SCALE;
@@ -39,9 +39,9 @@ public class ScaleTest
 
         LinearScale kiloscale = new LinearScale(1000.0); // kilo
         assertEquals(1000.0, kiloscale.getScaleFactorToBaseUnit(), 0.0001);
-        assertEquals(1000.0, kiloscale.toBaseValue(1.0), 0.0001);
-        assertEquals(1.0E-3, kiloscale.fromBaseValue(1.0), 0.0001);
-        assertEquals(2500.0, kiloscale.toBaseValue(2.5), 0.0001);
+        assertEquals(1000.0, kiloscale.toIdentityScale(1.0), 0.0001);
+        assertEquals(1.0E-3, kiloscale.fromIdentityScale(1.0), 0.0001);
+        assertEquals(2500.0, kiloscale.toIdentityScale(2.5), 0.0001);
         assertTrue(kiloscale.toString().contains("LinearScale"));
         assertTrue(kiloscale.toString().contains("1000.0"));
 
@@ -58,10 +58,10 @@ public class ScaleTest
 
         GradeScale gscale = new GradeScale(1.0); // fraction -> angle
         assertEquals(1.0, gscale.getConversionFactorToGrade(), 0.0001);
-        assertEquals(Math.PI / 4, gscale.toBaseValue(1), 0.0001);
-        assertEquals(0.0, gscale.toBaseValue(0.0), 0.0001);
-        assertEquals(0.1, gscale.fromBaseValue(Math.toRadians(5.71)), 0.01); // 10% = 5.71 degree
-        assertEquals(0.0, gscale.fromBaseValue(0.0), 0.0001);
+        assertEquals(Math.PI / 4, gscale.toIdentityScale(1), 0.0001);
+        assertEquals(0.0, gscale.toIdentityScale(0.0), 0.0001);
+        assertEquals(0.1, gscale.fromIdentityScale(Math.toRadians(5.71)), 0.01); // 10% = 5.71 degree
+        assertEquals(0.0, gscale.fromIdentityScale(0.0), 0.0001);
         assertTrue(gscale.toString().contains("GradeScale"));
         assertTrue(gscale.toString().contains("1.0"));
 
@@ -89,17 +89,17 @@ public class ScaleTest
     {
         // Identity
         IdentityScale id = IdentityScale.SCALE;
-        assertEquals(123.456, id.fromBaseValue(id.toBaseValue(123.456)), 1e-12);
-        assertEquals(-987.0, id.fromBaseValue(id.toBaseValue(-987.0)), 1e-12);
+        assertEquals(123.456, id.fromIdentityScale(id.toIdentityScale(123.456)), 1e-12);
+        assertEquals(-987.0, id.fromIdentityScale(id.toIdentityScale(-987.0)), 1e-12);
 
         // Linear (kilo)
         LinearScale kilo = new LinearScale(1000.0);
-        assertEquals(123.456, kilo.fromBaseValue(kilo.toBaseValue(123.456)), 1e-9);
-        assertEquals(-1.25, kilo.fromBaseValue(kilo.toBaseValue(-1.25)), 1e-12);
+        assertEquals(123.456, kilo.fromIdentityScale(kilo.toIdentityScale(123.456)), 1e-9);
+        assertEquals(-1.25, kilo.fromIdentityScale(kilo.toIdentityScale(-1.25)), 1e-12);
 
         // Monotonicity and additivity for linear
         double a = 2.0, b = -3.5;
-        assertEquals(kilo.toBaseValue(a + b), kilo.toBaseValue(a) + kilo.toBaseValue(b), 1e-12);
+        assertEquals(kilo.toIdentityScale(a + b), kilo.toIdentityScale(a) + kilo.toIdentityScale(b), 1e-12);
     }
 
     /**
@@ -110,17 +110,17 @@ public class ScaleTest
     {
         // k = 1.0 → grade 0.1 corresponds to atan(0.1) rad
         GradeScale unitGrade = new GradeScale(1.0);
-        assertEquals(Math.atan(0.1), unitGrade.toBaseValue(0.1), 1e-12);
-        assertEquals(-Math.atan(0.2), unitGrade.toBaseValue(-0.2), 1e-12);
+        assertEquals(Math.atan(0.1), unitGrade.toIdentityScale(0.1), 1e-12);
+        assertEquals(-Math.atan(0.2), unitGrade.toIdentityScale(-0.2), 1e-12);
 
         // Round-trips for a couple of angles
         double theta = Math.toRadians(30.0); // ≈ 0.523599 rad; grade = tan(theta) ≈ 0.57735
-        assertEquals(theta, unitGrade.toBaseValue(unitGrade.fromBaseValue(theta)), 1e-12);
+        assertEquals(theta, unitGrade.toIdentityScale(unitGrade.fromIdentityScale(theta)), 1e-12);
 
         // k = 0.01 → "percent grade": 10% should be grade=0.10 -> angle atan(0.10)
         GradeScale percent = new GradeScale(0.01);
-        assertEquals(Math.atan(0.10), percent.toBaseValue(10.0), 1e-12); // 10%
-        assertEquals(10.0, percent.fromBaseValue(Math.atan(0.10)), 1e-9);
+        assertEquals(Math.atan(0.10), percent.toIdentityScale(10.0), 1e-12); // 10%
+        assertEquals(10.0, percent.fromIdentityScale(Math.atan(0.10)), 1e-9);
     }
 
     /**
@@ -184,16 +184,16 @@ public class ScaleTest
         LinearScale lin = new LinearScale(2.0);
 
         // Finite extremes should not overflow (but may reach Infinity for toBaseValue)
-        assertTrue(Double.isInfinite(lin.toBaseValue(Double.MAX_VALUE)) || lin.toBaseValue(Double.MAX_VALUE) > 0);
-        assertTrue(Double.isInfinite(lin.toBaseValue(-Double.MAX_VALUE)) || lin.toBaseValue(-Double.MAX_VALUE) < 0);
+        assertTrue(Double.isInfinite(lin.toIdentityScale(Double.MAX_VALUE)) || lin.toIdentityScale(Double.MAX_VALUE) > 0);
+        assertTrue(Double.isInfinite(lin.toIdentityScale(-Double.MAX_VALUE)) || lin.toIdentityScale(-Double.MAX_VALUE) < 0);
 
         // NaN passthrough — if undesired, make it assertThrows and guard in implementation
-        assertTrue(Double.isNaN(lin.toBaseValue(Double.NaN)));
-        assertTrue(Double.isNaN(lin.fromBaseValue(Double.NaN)));
+        assertTrue(Double.isNaN(lin.toIdentityScale(Double.NaN)));
+        assertTrue(Double.isNaN(lin.fromIdentityScale(Double.NaN)));
 
         // Zero sign — not necessarily preserved; assert numeric equality
-        assertEquals(0.0, lin.toBaseValue(0.0), 0.0);
-        assertEquals(0.0, lin.fromBaseValue(0.0), 0.0);
+        assertEquals(0.0, lin.toIdentityScale(0.0), 0.0);
+        assertEquals(0.0, lin.fromIdentityScale(0.0), 0.0);
     }
 
     /**
@@ -260,17 +260,17 @@ public class ScaleTest
         assertEquals(1000.0 / 3600.0, kmPerHourToSI.getScaleFactorToBaseUnit(), 1e-12);
 
         // 90 km/h = 25 m/s
-        assertEquals(25.0, kmPerHourToSI.toBaseValue(90.0), 1e-12);
+        assertEquals(25.0, kmPerHourToSI.toIdentityScale(90.0), 1e-12);
 
         // Round-trip using the SAME scale
         double v = 13.37; // km/h
-        double si = kmPerHourToSI.toBaseValue(v); // -> m/s
-        double back = kmPerHourToSI.fromBaseValue(si);
+        double si = kmPerHourToSI.toIdentityScale(v); // -> m/s
+        double back = kmPerHourToSI.fromIdentityScale(si);
         assertEquals(v, back, 1e-12);
 
         // Additivity for linear
         double a = 12.0, b = -7.5;
-        assertEquals(kmPerHourToSI.toBaseValue(a + b), kmPerHourToSI.toBaseValue(a) + kmPerHourToSI.toBaseValue(b), 1e-12);
+        assertEquals(kmPerHourToSI.toIdentityScale(a + b), kmPerHourToSI.toIdentityScale(a) + kmPerHourToSI.toIdentityScale(b), 1e-12);
     }
 
     /**
@@ -280,17 +280,17 @@ public class ScaleTest
     public void testIsBaseScale()
     {
         // IdentityScale is base
-        assertTrue(IdentityScale.SCALE.isBaseScale());
+        assertTrue(IdentityScale.SCALE.isIdentityScale());
 
         // LinearScale: base iff factor == 1
-        assertTrue(new LinearScale(1.0).isBaseScale());
-        assertFalse(new LinearScale(1000.0).isBaseScale());
-        assertTrue(new LinearScale(3600.0, 3600.0).isBaseScale());
-        assertFalse(new LinearScale(1000.0, 3600.0).isBaseScale());
+        assertTrue(new LinearScale(1.0).isIdentityScale());
+        assertFalse(new LinearScale(1000.0).isIdentityScale());
+        assertTrue(new LinearScale(3600.0, 3600.0).isIdentityScale());
+        assertFalse(new LinearScale(1000.0, 3600.0).isIdentityScale());
 
         // GradeScale: not base (mapping grade↔angle), unless you define it otherwise
-        assertFalse(new GradeScale(0.01).isBaseScale());
-        assertFalse(new GradeScale(1.0).isBaseScale());
+        assertFalse(new GradeScale(0.01).isIdentityScale());
+        assertFalse(new GradeScale(1.0).isIdentityScale());
     }
 
 }
