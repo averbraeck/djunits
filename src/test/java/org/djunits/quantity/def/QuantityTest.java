@@ -417,11 +417,11 @@ public class QuantityTest
     public void testLargeMagnitudeFixed()
     {
         Area a = new Area(12_345_678.9, Area.Unit.m2);
-        String s1 = a.format(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
+        String s1 = a.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
         assertEquals("12,345,678.9 m2", s1);
-        String s2 = a.format(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+        String s2 = a.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
         assertEquals("  12345678.9 m2", s2);
-        String s3 = a.format(QuantityFormat.defaults().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+        String s3 = a.format(QuantityFormat.defaults().setFixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
         assertEquals(" 12345678.90 m2", s3);
     }
 
@@ -433,7 +433,7 @@ public class QuantityTest
     public void testCombinedFormat()
     {
         Length l = new Length(20400.0, Length.Unit.m);
-        String s = l.format(QuantityFormat.defaults().scaleSiPrefixes().setDecimals(3).textual());
+        String s = l.format(QuantityFormat.defaults().setScaleSiPrefixes().setDecimals(3).setTextual());
         assertEquals("20.4 km", s);
     }
 

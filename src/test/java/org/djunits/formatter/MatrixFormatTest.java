@@ -86,7 +86,7 @@ public class MatrixFormatTest
             assertTrue(s1.startsWith("|"));
             assertTrue(s1.endsWith("| J"));
 
-            MatrixFormat.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+            MatrixFormat.changeDefaults().setFixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
                     .setFirstRowStartSymbol("/ ").setFirstRowEndSymbol(" \\\n").setLastRowStartSymbol("\\ ")
                     .setLastRowEndSymbol(" /");
             s1 = ev.toString();
@@ -111,5 +111,5 @@ public class MatrixFormatTest
             MatrixFormat.resetDefaults();
         }
     }
-    
+
 }

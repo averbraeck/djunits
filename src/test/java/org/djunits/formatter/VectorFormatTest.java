@@ -200,7 +200,7 @@ public class VectorFormatTest
             assertTrue(s1.startsWith("["));
             assertTrue(s1.endsWith("] J"));
 
-            VectorFormat.Row.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+            VectorFormat.Row.changeDefaults().setFixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
                     .setVectorPrefix("Row");
 
             s1 = evRow.toString();
@@ -254,7 +254,7 @@ public class VectorFormatTest
             assertTrue(s1.startsWith("["));
             assertTrue(s1.endsWith("] J"));
 
-            VectorFormat.Col.changeDefaults().fixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
+            VectorFormat.Col.changeDefaults().setFixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
                     .setVectorPrefix("Col");
 
             s1 = evCol.toString();

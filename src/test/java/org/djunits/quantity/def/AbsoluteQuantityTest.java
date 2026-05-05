@@ -360,7 +360,7 @@ public class AbsoluteQuantityTest
     public void testDefaultToString()
     {
         Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH);
-        assertEquals("    12.346 deg", d.format(QuantityFormat.defaults().fixedWithSciFallback().textual()));
+        assertEquals("    12.346 deg", d.format(QuantityFormat.defaults().setFixedWithSciFallback().setTextual()));
     }
 
     /**
@@ -371,9 +371,9 @@ public class AbsoluteQuantityTest
     public void testToStringWithTargetUnit()
     {
         Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST);
-        assertEquals("     3.142 rad", d.format(QuantityFormat.defaults().textual().fixedWithSciFallback()));
+        assertEquals("     3.142 rad", d.format(QuantityFormat.defaults().setTextual().setFixedWithSciFallback()));
         assertEquals("   180.000 deg",
-                d.format(QuantityFormat.defaults().setDisplayUnit(Angle.Unit.deg).textual().fixedWithSciFallback()));
+                d.format(QuantityFormat.defaults().setDisplayUnit(Angle.Unit.deg).setTextual().setFixedWithSciFallback()));
 
         Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST);
         assertTrue(d2.format(Angle.Unit.rad).contains("3.14159"));
@@ -390,13 +390,14 @@ public class AbsoluteQuantityTest
         try
         {
             Position p = new Position(12_345_678.9, Length.Unit.m, pref);
-            String s1 = p.format(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
+            String s1 =
+                    p.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
             assertEquals("12,345,678.9 m", s1);
             String s2 =
-                    p.format(QuantityFormat.defaults().fixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+                    p.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
             assertEquals("  12345678.9 m", s2);
             String s3 =
-                    p.format(QuantityFormat.defaults().fixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+                    p.format(QuantityFormat.defaults().setFixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
             assertEquals(" 12345678.90 m", s3);
         }
         finally
@@ -416,11 +417,12 @@ public class AbsoluteQuantityTest
         try
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
-            String s1 = pos.format(QuantityFormat.defaults().fixedWithSciFallback().scaleSiPrefixes().setDecimals(3).textual());
+            String s1 = pos.format(
+                    QuantityFormat.defaults().setFixedWithSciFallback().setScaleSiPrefixes().setDecimals(3).setTextual());
             assertEquals("    20.400 km", s1);
 
-            String s2 = pos.format(QuantityFormat.defaults().fixedWithSciFallback().scaleSiPrefixes().setDecimals(3).textual()
-                    .reference().setPrefix(" (").setPostfix(")"));
+            String s2 = pos.format(QuantityFormat.defaults().setFixedWithSciFallback().setScaleSiPrefixes().setDecimals(3)
+                    .setTextual().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
             assertEquals("    20.400 km (TEST)", s2);
         }
         finally
@@ -440,7 +442,7 @@ public class AbsoluteQuantityTest
         try
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
-            String s = pos.format(QuantityFormat.defaults().fixedWithSciFallback().setLocale(Locale.GERMANY));
+            String s = pos.format(QuantityFormat.defaults().setFixedWithSciFallback().setLocale(Locale.GERMANY));
             assertEquals(" 20400,000 m", s);
         }
         finally
