@@ -61,7 +61,7 @@ import org.junit.jupiter.api.Test;
  * license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
-public class AbsoluteQuantityTest
+public class AbsQuantityTest
 {
     /** Saved default locale (FORMAT category) to restore after the test run. */
     private static Locale savedLocale;
@@ -77,6 +77,12 @@ public class AbsoluteQuantityTest
 
     /** An unrelated reference "X" serving as a distinct root (no path to {@link #refA}/{@link #refB}/{@link #refC}). */
     private Position.Reference refX;
+
+    /** An unrelated reference "Y" serving as a distinct root (no DIRECT path to {@link #refA}/{@link #refB}/{@link #refC}). */
+    private Position.Reference refY;
+
+    /** An unrelated reference "Z" serving as a distinct root (no path to {@link #refA}/{@link #refB}/{@link #refC}). */
+    private Position.Reference refZ;
 
     /**
      * Pin the default {@link Locale} for predictable formatting/parsing behavior.
@@ -104,6 +110,8 @@ public class AbsoluteQuantityTest
      * <li>{@code B}: A + 2 m</li>
      * <li>{@code C}: B + 1 m (i.e., A + 3 m)</li>
      * <li>{@code X}: unrelated root</li>
+     * <li>{@code Y}: related indirect root</li>
+     * <li>{@code Z}: unrelated indirect root</li>
      * </ul>
      */
     @BeforeEach
@@ -113,6 +121,8 @@ public class AbsoluteQuantityTest
         this.refB = new Position.Reference("B", "origin B", Length.ofSi(2), this.refA);
         this.refC = new Position.Reference("C", "origin C", Length.ofSi(3), this.refA);
         this.refX = new Position.Reference("X", "origin X");
+        this.refY = new Position.Reference("Y", "origin Y", Length.ofSi(1), this.refC);
+        this.refZ = new Position.Reference("Z", "origin Z", Length.ofSi(1), this.refX);
     }
 
     /**
@@ -125,6 +135,8 @@ public class AbsoluteQuantityTest
         this.refB.unregister();
         this.refA.unregister();
         this.refX.unregister();
+        this.refY.unregister();
+        this.refZ.unregister();
     }
 
     /**
@@ -227,6 +239,7 @@ public class AbsoluteQuantityTest
         assertEquals(0, aA.compareTo(pos(1, this.refA, Length.Unit.m)));
 
         Position aB = pos(1, this.refB, Length.Unit.m);
+        assertTrue(aA.ne(aB));
         assertThrows(IllegalArgumentException.class, () -> aA.lt(aB));
         assertThrows(IllegalArgumentException.class, () -> aA.le(aB));
         assertThrows(IllegalArgumentException.class, () -> aA.gt(aB));
@@ -340,12 +353,29 @@ public class AbsoluteQuantityTest
         assertEquals(7.0, pAtoC.getQuantity().si(), 1e-12);
         assertSame(this.refC, pAtoC.getReference());
 
+        // B -> C: same offset B = +2, C = +3 relative to A; pB = 8 m -> 7 m
+        Position pBtoC = pB.relativeTo(this.refC);
+        assertEquals(7.0, pBtoC.getQuantity().si(), 1e-12);
+        assertSame(this.refC, pBtoC.getReference());
+
         // Unrelated roots should fail
         assertThrows(IllegalArgumentException.class, () -> pA.relativeTo(this.refX));
+
+        // Unrelated roots should fail
+        assertThrows(IllegalArgumentException.class, () -> pA.relativeTo(this.refY));
+
+        // Unrelated roots should fail
+        assertThrows(IllegalArgumentException.class, () -> pA.relativeTo(this.refZ));
 
         // Branch where current reference has no offsetReference and other is not reachable:
         Position pX = pos(1, this.refX, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> pX.relativeTo(this.refA));
+        
+        Position pY = pos(1, this.refY, Length.Unit.m);
+        assertThrows(IllegalArgumentException.class, () -> pY.relativeTo(this.refA));
+
+        Position pZ = pos(1, this.refZ, Length.Unit.m);
+        assertThrows(IllegalArgumentException.class, () -> pZ.relativeTo(this.refA));
     }
 
     // ----------------------------------------------------------------------
@@ -565,6 +595,16 @@ public class AbsoluteQuantityTest
         assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, bB));
     }
 
+    /**
+     * Verifies correct working of {@link AbsQuantity#siUnit()}.
+     */
+    @Test
+    void siUnit()
+    {
+        Position c = pos(3, this.refA, Length.Unit.km);
+        assertEquals("m", c.siUnit().toString());
+    }
+    
     // ----------------------------------------------------------------------
     // equals / hashCode
     // ----------------------------------------------------------------------
