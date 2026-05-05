@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * ScaleTest tests the different types of conversion scales for units. <p>
+ * ScaleTest tests the different types of conversion scales for units.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -270,14 +271,15 @@ public class ScaleTest
 
         // Additivity for linear
         double a = 12.0, b = -7.5;
-        assertEquals(kmPerHourToSI.toIdentityScale(a + b), kmPerHourToSI.toIdentityScale(a) + kmPerHourToSI.toIdentityScale(b), 1e-12);
+        assertEquals(kmPerHourToSI.toIdentityScale(a + b), kmPerHourToSI.toIdentityScale(a) + kmPerHourToSI.toIdentityScale(b),
+                1e-12);
     }
 
     /**
-     * isBaseScale() checks across scale classes.
+     * isIdentityScale() checks across scale classes.
      */
     @Test
-    public void testIsBaseScale()
+    public void isIdentityScale()
     {
         // IdentityScale is base
         assertTrue(IdentityScale.SCALE.isIdentityScale());
