@@ -105,7 +105,7 @@ public class TableFormatter extends Formatter<TableFormatContext>
                 if (c > 0)
                     s.append(this.ctx.colSeparatorSymbol);
                 double si = table().si(r, c);
-                double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
+                double value = this.useSi ? si : this.unit.getScale().fromIdentityScale(si);
                 s.append(formatValue(value));
             }
             if (r == 0)

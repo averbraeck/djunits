@@ -94,7 +94,7 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
     String format()
     {
         formatUnit();
-        double value = this.useSi ? quantity().si : this.unit.getScale().fromBaseValue(quantity().si());
+        double value = this.useSi ? quantity().si : this.unit.getScale().fromIdentityScale(quantity().si());
         return formatValue(value) + this.ctx.unitPrefix + this.unitStr + this.ctx.unitPostfix;
     }
 

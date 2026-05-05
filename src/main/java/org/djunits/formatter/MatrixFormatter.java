@@ -105,7 +105,7 @@ public class MatrixFormatter extends Formatter<MatrixFormatContext>
                 if (c > 0)
                     s.append(this.ctx.colSeparatorSymbol);
                 double si = matrix().si(r, c);
-                double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
+                double value = this.useSi ? si : this.unit.getScale().fromIdentityScale(si);
                 s.append(formatValue(value));
             }
             if (r == 0)

@@ -99,7 +99,7 @@ public class VectorFormatter extends Formatter<VectorFormatContext>
             if (!first)
                 s.append(this.ctx.separatorSymbol);
             first = false;
-            double value = this.useSi ? si : this.unit.getScale().fromBaseValue(si);
+            double value = this.useSi ? si : this.unit.getScale().fromIdentityScale(si);
             s.append(formatValue(value));
         }
         s.append(this.ctx.endSymbol);
