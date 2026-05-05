@@ -467,4 +467,12 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
                 "Matrix multiplication (M x N) x (N x P): this.cols (%d) != vector.rows (%d)", cols(), vector.rows());
     }
 
+    // -------------------------------- TOSTRING / FORMAT METHODS -------------------------------
+
+    @Override
+    public String toString()
+    {
+        return format();
+    }
+    
 }
