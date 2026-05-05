@@ -204,6 +204,8 @@ public class AbsQuantityTest
         Position p = pos(1500, this.refA, Length.Unit.m);
         assertEquals(1500.0, p.getInUnit(), 1e-12);
         assertEquals(1.5, p.getInUnit(Length.Unit.km), 1e-12);
+        var psiu = pos(1.234, this.refA, Length.Unit.km).siUnit();
+        assertEquals("m", psiu.toString());
     }
 
     // ----------------------------------------------------------------------

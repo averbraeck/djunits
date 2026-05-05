@@ -64,6 +64,16 @@ class DirectionTest
 
         // siUnit delegates to Angle SI
         assertEquals("rad", dEast90.siUnit().format(true, false));
+        
+        // instantiate from relative
+        Direction d2 = dEast90.instantiate(Angle.of(120.0, "deg"), Direction.Reference.NORTH);
+        assertEquals(120.0, d2.getInUnit(), 1E-6);
+        assertEquals("NORTH", d2.getReference().toString());
+        
+        // instantiate from reference
+        Direction d3 = Direction.Reference.NORTH.instantiate(Angle.of(120.0, "deg"));
+        assertEquals(120.0, d3.getInUnit(), 1E-6);
+        assertEquals("NORTH", d3.getReference().toString());
     }
 
     /**

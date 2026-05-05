@@ -74,9 +74,23 @@ class TemperatureTest
         Temperature t5 = new Temperature(d20, Temperature.Reference.KELVIN);
         assertEquals(20.0, t5.si(), 1E-12);
 
+        // ofSi
+        Temperature tSi = Temperature.ofSi(20.0, Temperature.Reference.FAHRENHEIT);
+        assertEquals(20.0, tSi.si(), 1E-12); // 20 K relative to the reference point of 0 deg F
+
         Temperature t6 = new Temperature(d20);
         assertEquals(20.0, t6.si(), 1E-12);
         assertEquals(Temperature.Reference.KELVIN, t6.getReference());
+
+        // instantiate from relative
+        Temperature t1i = t1.instantiate(TemperatureDifference.of(20.0, "degF"), Temperature.Reference.FAHRENHEIT);
+        assertEquals(20.0, t1i.getInUnit(), 1E-6);
+        assertEquals("FAHRENHEIT", t1i.getReference().toString());
+
+        // instantiate from reference
+        Temperature t2i = Temperature.Reference.FAHRENHEIT.instantiate(TemperatureDifference.of(20.0, "degF"));
+        assertEquals(20.0, t2i.getInUnit(), 1E-6);
+        assertEquals("FAHRENHEIT", t2i.getReference().toString());
     }
 
     /**

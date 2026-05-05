@@ -14,7 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * TimeTest tests the Time absolute quantity class and its Reference handling.<p>
+ * TimeTest tests the Time absolute quantity class and its Reference handling.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information https://djunits.org. The DJUNITS project is distributed under a https://djunits.org/docs/license.html
  * three-clause BSD-style license.
@@ -73,6 +74,10 @@ class TimeTest
         assertEquals(42.0, t4.si(), 1E-12);
         assertEquals(Time.Reference.GPS, t4.getReference());
 
+        // ofSi
+        Time tSi = Time.ofSi(20.0, Time.Reference.UNIX);
+        assertEquals(20.0, tSi.si(), 1E-12); // 20 s relative to the reference point UNIX
+
         // instantiate(...) should honor both the value and the reference
         Time t5 = t1.instantiate(Duration.ofSi(123.0), Time.Reference.UNIX);
         assertEquals(123.0, t5.si(), 1E-12);
@@ -80,6 +85,16 @@ class TimeTest
 
         // siUnit delegates to Duration SI
         assertEquals("s", t1.siUnit().format(true, false));
+
+        // instantiate from relative
+        Time t1i = t1.instantiate(Duration.of(20.0, "h"), Time.Reference.GPS);
+        assertEquals(20.0, t1i.getInUnit(), 1E-6);
+        assertEquals("GPS", t1i.getReference().toString());
+
+        // instantiate from reference
+        Time t2i = Time.Reference.GPS.instantiate(Duration.of(20.0, "h"));
+        assertEquals(20.0, t2i.getInUnit(), 1E-6);
+        assertEquals("GPS", t2i.getReference().toString());
     }
 
     // =================================================================
@@ -140,7 +155,7 @@ class TimeTest
         // Built-ins are independent (no chain defined) → conversion not possible
         Time tGregorian = new Time(0.0, Duration.Unit.s, Time.Reference.GREGORIAN);
         assertThrows(IllegalArgumentException.class, () -> tGregorian.relativeTo(Time.Reference.UNIX));
-        
+
         // clean up
         Time.Reference.get("UNIX_PLUS10").unregister();
     }
@@ -183,7 +198,7 @@ class TimeTest
         Duration cross = tUnix20.subtract(tUnixPlus1015);
         assertEquals(-5.0, cross.si(), 1E-12);
         assertEquals(Duration.Unit.s, cross.getDisplayUnit());
-        
+
         // clean up
         Time.Reference.get("UNIX_PLUS10").unregister();
     }
@@ -239,8 +254,8 @@ class TimeTest
     // =================================================================
 
     /**
-     * Test the static operations inherited from AbsQuantity: interpolate, min, max, sum, and mean, using the same
-     * reference. Mixed references should throw.
+     * Test the static operations inherited from AbsQuantity: interpolate, min, max, sum, and mean, using the same reference.
+     * Mixed references should throw.
      */
     @Test
     void testStaticOperations()

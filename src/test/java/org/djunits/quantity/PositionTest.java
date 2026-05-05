@@ -69,9 +69,23 @@ class PositionTest
         // (Length, reference)
         Position p3 = new Position(Length.ofSi(5.0), origin);
         assertEquals(5.0, p3.si(), 1E-12);
-        
+
+        // ofSi
+        Position pSi = Position.ofSi(200.0, origin);
+        assertEquals(200.0, pSi.si(), 1E-12);
+
         // siUnit textual representation must match the SIUnit.of string used in Unit ("m")
         assertEquals("m", p2.siUnit().format(true, false));
+
+        // instantiate from relative
+        Position p1i = p1.instantiate(Length.of(120.0, "mi"), origin);
+        assertEquals(120.0, p1i.getInUnit(), 1E-6);
+        assertEquals("ORIGIN", p1i.getReference().toString());
+
+        // instantiate from reference
+        Position p2i = origin.instantiate(Length.of(120.0, "mi"));
+        assertEquals(120.0, p2i.getInUnit(), 1E-6);
+        assertEquals("ORIGIN", p2i.getReference().toString());
 
         // clean up
         Position.Reference.get("ORIGIN").unregister();
