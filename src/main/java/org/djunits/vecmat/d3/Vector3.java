@@ -338,6 +338,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      */
     public static class Col<Q extends Quantity<Q>>
             extends Vector3<Q, Vector3.Col<Q>, Vector3.Col<SIQuantity>, Vector3.Col<?>, Vector3.Row<Q>>
+            implements Vector.Col<Vector3.Col<Q>, Q>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -556,6 +557,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      */
     public static class Row<Q extends Quantity<Q>>
             extends Vector3<Q, Vector3.Row<Q>, Vector3.Row<SIQuantity>, Vector3.Row<?>, Vector3.Col<Q>>
+            implements Vector.Row<Vector3.Row<Q>, Q>
     {
         /** */
         private static final long serialVersionUID = 600L;

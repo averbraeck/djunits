@@ -23,6 +23,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  */
 public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector1<SIQuantity>, Vector1<?>, Vector1<Q>>
+        implements Vector.Row<Vector1<Q>, Q>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -42,7 +43,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     }
 
     /**
-     * Return a column or row vector with x and y values in SI or BASE units.
+     * Return a 1-vector with x value in SI or BASE units.
      * @param xSiNew the x value in SI or BASE units
      * @return a new column or row vector with adapted x and y values
      */

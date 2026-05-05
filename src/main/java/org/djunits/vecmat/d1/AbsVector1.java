@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the corresponding relative quantity type
  */
 public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
-        extends AbsVector<A, Q, AbsVector1<A, Q>, Vector1<Q>, AbsVector1<A, Q>>
+        extends AbsVector<A, Q, AbsVector1<A, Q>, Vector1<Q>, AbsVector1<A, Q>> implements AbsVector.Row<AbsVector1<A, Q>, Q>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -122,7 +122,6 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     {
         return new AbsVector1<>(Vector1.of(dataInUnit, unit), reference);
     }
-
 
     /**
      * Create an AbsVector1 without needing generics.

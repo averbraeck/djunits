@@ -51,6 +51,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      */
     public static class Col<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
             extends AbsVector3<A, Q, AbsVector3.Col<A, Q>, Vector3.Col<Q>, AbsVector3.Row<A, Q>>
+            implements AbsVector.Col<AbsVector3.Col<A, Q>, Q>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -253,6 +254,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      */
     public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
             extends AbsVector3<A, Q, AbsVector3.Row<A, Q>, Vector3.Row<Q>, AbsVector3.Col<A, Q>>
+            implements AbsVector.Row<AbsVector3.Row<A, Q>, Q>
     {
         /** */
         private static final long serialVersionUID = 600L;

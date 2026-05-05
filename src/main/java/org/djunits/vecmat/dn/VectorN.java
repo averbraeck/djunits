@@ -182,8 +182,8 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      */
-    public static class Col<Q extends Quantity<Q>>
-            extends VectorN<Q, Col<Q>, VectorN.Col<SIQuantity>, VectorN.Col<?>, VectorN.Row<Q>>
+    public static class Col<Q extends Quantity<Q>> extends
+            VectorN<Q, Col<Q>, VectorN.Col<SIQuantity>, VectorN.Col<?>, VectorN.Row<Q>> implements Vector.Col<VectorN.Col<Q>, Q>
     {
         /** */
         private static final long serialVersionUID = 600L;
@@ -386,8 +386,8 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
      * @author Alexander Verbraeck
      * @param <Q> the quantity type
      */
-    public static class Row<Q extends Quantity<Q>>
-            extends VectorN<Q, Row<Q>, VectorN.Row<SIQuantity>, VectorN.Row<?>, VectorN.Col<Q>>
+    public static class Row<Q extends Quantity<Q>> extends
+            VectorN<Q, Row<Q>, VectorN.Row<SIQuantity>, VectorN.Row<?>, VectorN.Col<Q>> implements Vector.Row<VectorN.Row<Q>, Q>
     {
         /** */
         private static final long serialVersionUID = 600L;
