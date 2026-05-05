@@ -11,6 +11,9 @@ package org.djunits.formatter;
  */
 public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext>
 {
+    /** The defaults (which can be changed). */
+    @SuppressWarnings("checkstyle:staticvariablename")
+    private static QuantityFormatContext DEFAULT = new QuantityFormatContext();
 
     /**
      * Construct a QuantityFormat object with a given context. Note that the context can be an existing context that is being
@@ -28,7 +31,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      */
     public static QuantityFormat defaults()
     {
-        return new QuantityFormat(QuantityFormatContext.DEFAULT.clone());
+        return new QuantityFormat(DEFAULT.clone());
     }
 
     /**
@@ -37,7 +40,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      */
     public static QuantityFormat changeDefaults()
     {
-        return new QuantityFormat(QuantityFormatContext.DEFAULT);
+        return new QuantityFormat(DEFAULT);
     }
 
     /**
@@ -45,7 +48,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      */
     public static void resetDefaults()
     {
-        QuantityFormatContext.DEFAULT = new QuantityFormatContext();
+        DEFAULT = new QuantityFormatContext();
     }
 
     /**

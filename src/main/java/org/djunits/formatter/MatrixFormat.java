@@ -1,5 +1,7 @@
 package org.djunits.formatter;
 
+import org.djunits.formatter.FormatContext.FloatFormatMode;
+
 /**
  * MatrixFormat stores the settings that influence both the value part and the unit part of an output string when formatting a
  * matrix.
@@ -11,10 +13,25 @@ package org.djunits.formatter;
  */
 public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
 {
+    /** The defaults (which can be changed). */
+    @SuppressWarnings("checkstyle:staticvariablename")
+    private static MatrixFormatContext DEFAULT = makeDefault();
+
+    /**
+     * Make the default format context for a matrix.
+     * @return a new default context for a matrix
+     */
+    private static MatrixFormatContext makeDefault()
+    {
+        var mfc = new MatrixFormatContext();
+        mfc.formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+        return mfc;
+    }
+
     /**
      * Construct a MatrixFormat object with a given context. Note that the context can be an existing context that is being
      * modified or a default context.
-     * @param ctx the quantity format context to use
+     * @param ctx the matrix format context to use
      */
     protected MatrixFormat(final MatrixFormatContext ctx)
     {
@@ -27,7 +44,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      */
     public static MatrixFormat defaults()
     {
-        return new MatrixFormat(MatrixFormatContext.DEFAULT.clone());
+        return new MatrixFormat(DEFAULT.clone());
     }
 
     /**
@@ -36,7 +53,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      */
     public static MatrixFormat changeDefaults()
     {
-        return new MatrixFormat(MatrixFormatContext.DEFAULT);
+        return new MatrixFormat(DEFAULT);
     }
 
     /**
@@ -44,7 +61,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      */
     public static void resetDefaults()
     {
-        MatrixFormatContext.DEFAULT = new MatrixFormatContext();
+        DEFAULT = makeDefault();
     }
 
     /**

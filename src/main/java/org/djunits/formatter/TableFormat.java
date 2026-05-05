@@ -1,5 +1,7 @@
 package org.djunits.formatter;
 
+import org.djunits.formatter.FormatContext.FloatFormatMode;
+
 /**
  * TableFormat stores the settings that influence both the value part and the unit part of an output string when formatting a
  * table.
@@ -11,10 +13,25 @@ package org.djunits.formatter;
  */
 public class TableFormat extends Format<TableFormat, TableFormatContext>
 {
+    /** The defaults (which can be changed). */
+    @SuppressWarnings("checkstyle:staticvariablename")
+    private static TableFormatContext DEFAULT = makeDefault();
+
+    /**
+     * Make the default format context for a table.
+     * @return a new default context for a table
+     */
+    private static TableFormatContext makeDefault()
+    {
+        var tfc = new TableFormatContext();
+        tfc.formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+        return tfc;
+    }
+
     /**
      * Construct a TableFormat object with a given context. Note that the context can be an existing context that is being
      * modified or a default context.
-     * @param ctx the quantity format context to use
+     * @param ctx the table format context to use
      */
     protected TableFormat(final TableFormatContext ctx)
     {
@@ -27,7 +44,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      */
     public static TableFormat defaults()
     {
-        return new TableFormat(TableFormatContext.DEFAULT.clone());
+        return new TableFormat(DEFAULT.clone());
     }
 
     /**
@@ -36,7 +53,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      */
     public static TableFormat changeDefaults()
     {
-        return new TableFormat(TableFormatContext.DEFAULT);
+        return new TableFormat(DEFAULT);
     }
 
     /**
@@ -44,7 +61,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      */
     public static void resetDefaults()
     {
-        TableFormatContext.DEFAULT = new TableFormatContext();
+        DEFAULT = new TableFormatContext();
     }
 
     /**
