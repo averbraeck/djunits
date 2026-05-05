@@ -118,6 +118,7 @@ public class TableFormatter extends Formatter<TableFormatContext>
         s.append(this.ctx.tablePostfix);
         s.append(this.ctx.unitPrefix);
         s.append(this.unitStr);
+        s.append(this.ctx.unitPostfix);
         return s.toString();
     }
 

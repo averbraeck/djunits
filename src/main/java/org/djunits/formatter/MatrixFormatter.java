@@ -118,6 +118,7 @@ public class MatrixFormatter extends Formatter<MatrixFormatContext>
         s.append(this.ctx.matrixPostfix);
         s.append(this.ctx.unitPrefix);
         s.append(this.unitStr);
+        s.append(this.ctx.unitPostfix);
         return s.toString();
     }
 
