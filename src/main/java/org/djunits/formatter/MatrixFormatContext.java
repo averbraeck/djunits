@@ -13,10 +13,6 @@ package org.djunits.formatter;
 @SuppressWarnings("checkstyle:visibilitymodifier")
 class MatrixFormatContext extends FormatContext implements Cloneable
 {
-    /** The defaults (which can be changed). */
-    @SuppressWarnings("checkstyle:staticvariablename")
-    static MatrixFormatContext DEFAULT = new MatrixFormatContext();
-
     // Matrix formatting, contains default values
 
     /** End symbol for first row. */

@@ -13,10 +13,6 @@ package org.djunits.formatter;
 @SuppressWarnings("checkstyle:visibilitymodifier")
 class QuantityFormatContext extends FormatContext implements Cloneable
 {
-    /** The defaults (which can be changed). */
-    @SuppressWarnings("checkstyle:staticvariablename")
-    static QuantityFormatContext DEFAULT = new QuantityFormatContext();
-
     // Quantity formatting from QuantityFormat, contains default values
 
     /** Use closest SI prefix. E.g., turn 20400 m into "20.4 km". */

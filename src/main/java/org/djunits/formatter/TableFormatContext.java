@@ -13,10 +13,6 @@ package org.djunits.formatter;
 @SuppressWarnings("checkstyle:visibilitymodifier")
 class TableFormatContext extends FormatContext implements Cloneable
 {
-    /** The defaults (which can be changed). */
-    @SuppressWarnings("checkstyle:staticvariablename")
-    static TableFormatContext DEFAULT = new TableFormatContext();
-
     // Table formatting, contains default values
 
     /** End symbol for first row. */
