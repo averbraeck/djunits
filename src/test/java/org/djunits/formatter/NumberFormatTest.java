@@ -26,17 +26,17 @@ public class NumberFormatTest
     public void testVariableLength()
     {
         Length l1 = new Length(1234.5678, Length.Unit.m);
-        String s1 = l1.toString(QuantityFormat.defaults().variableLength());
+        String s1 = l1.format(QuantityFormat.defaults().variableLength().setGroupingSeparator(true));
         assertTrue(s1.contains("1,234.5678"));
 
         Length l2 = new Length(12_345_678.90123, Length.Unit.km);
-        String s2 = l2.toString(QuantityFormat.defaults().variableLength());
+        String s2 = l2.format(QuantityFormat.defaults().variableLength().setGroupingSeparator(true));
         assertTrue(s2.contains("12,345,678.90123"));
 
         Length length = new Length(1234.567890123456789, Length.Unit.m);
         for (int i = 0; i < 10; i++)
         {
-            String s = length.toString(QuantityFormat.defaults().variableLength().setGroupingSeparator(false).upperE(true));
+            String s = length.format(QuantityFormat.defaults().variableLength().setGroupingSeparator(false).upperE(true));
             if (i <= 6)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
             else
@@ -47,7 +47,7 @@ public class NumberFormatTest
         length = new Length(1.234567890123456789, Length.Unit.m);
         for (int i = 0; i < 10; i++)
         {
-            String s = length.toString(QuantityFormat.defaults().variableLength().setGroupingSeparator(false).upperE(true));
+            String s = length.format(QuantityFormat.defaults().variableLength().setGroupingSeparator(false).upperE(true));
             if (i <= 7)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
             else
@@ -63,7 +63,7 @@ public class NumberFormatTest
     public void testFixedFloat()
     {
         Length l = new Length(1.23456, Length.Unit.m);
-        String s = l.toString(QuantityFormat.defaults().fixedFloat().setDecimals(2).setWidth(8));
+        String s = l.format(QuantityFormat.defaults().fixedFloat().setDecimals(2).setWidth(8));
         assertEquals("    1.23 m", s);
     }
 
@@ -74,7 +74,7 @@ public class NumberFormatTest
     public void testScientificAlways()
     {
         Length l = new Length(1234.0, Length.Unit.m);
-        String s = l.toString(QuantityFormat.defaults().scientific().setDecimals(2));
+        String s = l.format(QuantityFormat.defaults().scientific().setDecimals(2));
         assertTrue(s.contains("E"));
     }
 
@@ -85,23 +85,23 @@ public class NumberFormatTest
     public void testEngineeringAlways()
     {
         Length l = new Length(1234.0, Length.Unit.mi);
-        String s1 = l.toString(QuantityFormat.defaults().engineering().setDecimals(1).upperE(false));
+        String s1 = l.format(QuantityFormat.defaults().engineering().setDecimals(1).upperE(false));
         assertTrue(s1.contains("e+3"));
-        String s2 = l.toString(QuantityFormat.defaults().engineering().setDecimals(1).upperE(true));
+        String s2 = l.format(QuantityFormat.defaults().engineering().setDecimals(1).upperE(true));
         assertTrue(s2.contains("E+3"));
 
         Length l5 = new Length(12345.6789, Length.Unit.mi);
-        String s5 = l5.toString(QuantityFormat.defaults().engineering().setDecimals(2).upperE(true));
+        String s5 = l5.format(QuantityFormat.defaults().engineering().setDecimals(2).upperE(true));
         assertTrue(s5.contains("E+3"));
         assertTrue(s5.contains("12.35"));
 
         Length l6 = new Length(123456.7891, Length.Unit.mi);
-        String s6 = l6.toString(QuantityFormat.defaults().engineering().setDecimals(2).upperE(true));
+        String s6 = l6.format(QuantityFormat.defaults().engineering().setDecimals(2).upperE(true));
         assertTrue(s6.contains("E+3"));
         assertTrue(s6.contains("123.46"));
 
         Length l7 = new Length(1234567.8912, Length.Unit.mi);
-        String s7 = l7.toString(QuantityFormat.defaults().engineering().setDecimals(2).upperE(true));
+        String s7 = l7.format(QuantityFormat.defaults().engineering().setDecimals(2).upperE(true));
         assertTrue(s7.contains("E+6"));
         assertTrue(s7.contains("1.23"));
     }
@@ -113,9 +113,9 @@ public class NumberFormatTest
     public void testGroupingSeparator()
     {
         Length l = new Length(12345.0, Length.Unit.m);
-        String s1 = l.toString(QuantityFormat.defaults().setGroupingSeparator(false));
-        assertTrue(!s1.contains(","));
-        String s2 = l.toString(QuantityFormat.defaults().setGroupingSeparator(true));
+        String s1 = l.format(QuantityFormat.defaults().setGroupingSeparator(false));
+        assertFalse(s1.contains(","));
+        String s2 = l.format(QuantityFormat.defaults().setGroupingSeparator(true));
         assertTrue(s2.contains(","));
     }
 
@@ -127,16 +127,16 @@ public class NumberFormatTest
     {
         Length l = new Length(1_000_000.0, Length.Unit.in);
 
-        String s1S = l.toString(QuantityFormat.defaults().scientific().upperE(false).setDecimals(1));
+        String s1S = l.format(QuantityFormat.defaults().scientific().upperE(false).setDecimals(1));
         assertTrue(s1S.contains("e"));
 
-        String s2S = l.toString(QuantityFormat.defaults().scientific().upperE(true).setDecimals(1));
+        String s2S = l.format(QuantityFormat.defaults().scientific().upperE(true).setDecimals(1));
         assertTrue(s2S.contains("E"));
 
-        String s1E = l.toString(QuantityFormat.defaults().engineering().upperE(false).setDecimals(1));
+        String s1E = l.format(QuantityFormat.defaults().engineering().upperE(false).setDecimals(1));
         assertTrue(s1E.contains("e"));
 
-        String s2E = l.toString(QuantityFormat.defaults().engineering().upperE(true).setDecimals(1));
+        String s2E = l.format(QuantityFormat.defaults().engineering().upperE(true).setDecimals(1));
         assertTrue(s2E.contains("E"));
     }
 
@@ -150,7 +150,7 @@ public class NumberFormatTest
         Length length = new Length(1234.567890123456789, Length.Unit.m);
         for (int i = 0; i < 10; i++)
         {
-            String s = length.toString(QuantityFormat.defaults().fixedWithSciFallback().setGroupingSeparator(false).setWidth(10)
+            String s = length.format(QuantityFormat.defaults().fixedWithSciFallback().setGroupingSeparator(false).setWidth(10)
                     .setDecimals(3).upperE(true));
             if (i < 3)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
@@ -175,7 +175,7 @@ public class NumberFormatTest
         Length length = new Length(1234.567890123456789, Length.Unit.m);
         for (int i = 0; i < 10; i++)
         {
-            String s = length.toString(QuantityFormat.defaults().fixedWithEngFallback().setGroupingSeparator(false).setWidth(10)
+            String s = length.format(QuantityFormat.defaults().fixedWithEngFallback().setGroupingSeparator(false).setWidth(10)
                     .setDecimals(3).upperE(true));
             if (i < 3)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
@@ -199,7 +199,7 @@ public class NumberFormatTest
     public void testFormatString()
     {
         Speed speed = new Speed(90.0, Speed.Unit.km_h);
-        String s = speed.toString(QuantityFormat.defaults().setFormatString("%6.2f"));
+        String s = speed.format(QuantityFormat.defaults().setFormatString("%6.2f"));
         assertEquals(" 90.00 km/h", s);
     }
 
