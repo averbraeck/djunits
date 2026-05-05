@@ -3,6 +3,8 @@ package org.djunits.formatter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
 import org.djunits.quantity.Energy;
@@ -12,6 +14,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Temperature;
 import org.djunits.quantity.def.PerMass;
 import org.djunits.unit.si.SIUnit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,6 +27,15 @@ import org.junit.jupiter.api.Test;
  */
 public class QuantityFormatTest
 {
+    /**
+     * Setup correct locale for test.
+     */
+    @BeforeEach
+    final void setup()
+    {
+        Locale.setDefault(Locale.US);
+    }
+
     /**
      * Test prefix separator between number and unit, and postfix after the unit.
      */

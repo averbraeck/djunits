@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
 import org.djunits.quantity.Energy;
@@ -11,6 +13,7 @@ import org.djunits.quantity.Temperature;
 import org.djunits.quantity.TemperatureDifference;
 import org.djunits.vecmat.table.AbsQuantityTable;
 import org.djunits.vecmat.table.QuantityTable;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -23,6 +26,15 @@ import org.junit.jupiter.api.Test;
  */
 public class TableFormatTest
 {
+    /**
+     * Setup correct locale for test.
+     */
+    @BeforeEach
+    final void setup()
+    {
+        Locale.setDefault(Locale.US);
+    }
+
     /**
      * Test format settings for the matrix.
      */

@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Speed;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -18,6 +21,15 @@ import org.junit.jupiter.api.Test;
  */
 public class NumberFormatTest
 {
+    /**
+     * Setup correct locale for test.
+     */
+    @BeforeEach
+    final void setup()
+    {
+        Locale.setDefault(Locale.US);
+    }
+
     /**
      * Test variable-length formatting.
      */

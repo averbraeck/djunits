@@ -3,6 +3,8 @@ package org.djunits.formatter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.djunits.quantity.Angle;
 import org.djunits.quantity.Direction;
 import org.djunits.quantity.Energy;
@@ -12,6 +14,7 @@ import org.djunits.vecmat.d2.AbsVector2;
 import org.djunits.vecmat.d2.Vector2;
 import org.djunits.vecmat.d3.AbsVector3;
 import org.djunits.vecmat.d3.Vector3;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,6 +27,15 @@ import org.junit.jupiter.api.Test;
  */
 public class VectorFormatTest
 {
+    /**
+     * Setup correct locale for test.
+     */
+    @BeforeEach
+    final void setup()
+    {
+        Locale.setDefault(Locale.US);
+    }
+
     /**
      * Test format settings for the row vector.
      */

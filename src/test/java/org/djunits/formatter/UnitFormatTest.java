@@ -2,10 +2,13 @@ package org.djunits.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.djunits.quantity.Area;
 import org.djunits.quantity.Energy;
 import org.djunits.quantity.Temperature;
 import org.djunits.quantity.TemperatureDifference;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -18,6 +21,15 @@ import org.junit.jupiter.api.Test;
  */
 public class UnitFormatTest
 {
+    /**
+     * Setup correct locale for test.
+     */
+    @BeforeEach
+    final void setup()
+    {
+        Locale.setDefault(Locale.US);
+    }
+
     /**
      * Test display unit.
      */
