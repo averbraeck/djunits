@@ -224,7 +224,7 @@ public class SIQuantityTest
         assertTrue(def.endsWith(" m"), "Default toString must end with the display unit");
 
         // explicit unit
-        String asKg = q.toString(SIUnit.of("kg"));
+        String asKg = q.format(SIUnit.of("kg"));
         assertFalse(asKg.endsWith(" kg"));
         assertTrue(asKg.endsWith(" m"));
     }
