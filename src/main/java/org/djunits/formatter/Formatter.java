@@ -174,7 +174,8 @@ public abstract class Formatter<C extends FormatContext>
         BigDecimal bd = BigDecimal.valueOf(val).stripTrailingZeros();
         int left = bd.precision() - bd.scale(); // # digits left of decimal point
         DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance(Locale.getDefault());
-        DecimalFormat plain = new DecimalFormat("#,##0.############################", sym);
+        DecimalFormat plain = this.ctx.groupingSeparator ? new DecimalFormat("#,##0.############################", sym)
+                : new DecimalFormat("###0.############################", sym);
         DecimalFormat sci = new DecimalFormat("0.################E0", sym);
 
         // Heuristic similar to %g
