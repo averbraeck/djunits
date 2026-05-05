@@ -82,6 +82,17 @@ public class TableFormatTest
         assertTrue(s4.contains("5.432"));
         assertFalse(s4.contains(","));
         assertTrue(s4.endsWith("| kJ"));
+        
+        QuantityTable<Energy> evkj =
+                QuantityTable.of(new double[][] {{1.2, 1.3, 5.4}, {1, 2, 3}, {4, 5, 6}}, Energy.Unit.kJ);
+        String skj = evkj.format(Energy.Unit.J);
+        assertTrue(skj.contains("1200"));
+        assertTrue(skj.contains("1300"));
+        assertTrue(skj.contains("5400"));
+        assertFalse(skj.contains(","));
+        assertTrue(skj.startsWith("|"));
+        assertTrue(skj.endsWith("| J"));
+        
     }
 
     /**
