@@ -61,7 +61,8 @@ public static final Duration.Unit fn =
     Duration.Unit.day.deriveUnit("fn", "Fortnight", 14.0, UnitSystem.OTHER);
 public static final Speed.Unit fr_fn = 
     Speed.Unit.SI.deriveUnit("fr/fn", "Furlongs per Fortnight",
-    fr.getScale().toBaseValue(1.0) / fn.getScale().toBaseValue(1.0), UnitSystem.OTHER);
+    fr.getScale().toIdentityScale(1.0) / fn.getScale().toIdentityScale(1.0), 
+    UnitSystem.OTHER);
 ```
 
 The first two definitions use the `deriveUnit` method that defines a unit in terms of an already existing unit using a linear factor. It is no problem that the Furlong is defined with respect to a foot (instead of the SI unit for length; the meter). The (combined) factor to the SI unit will be calculated once (at the time of construction of the `fr` unit) by the `deriveUnit` method onto the `ft` unit. The `fr_fn` speed unit is also constructed using the `deriveUnit` method of `Speed.Unit.SI`. In this case the factor is computed from the scales of the just created length and duration units. Again, the factor to map Furlongs per Fortnight to and from the SI unit meters per second, will be automatically calculated once. These units can now be used in any piece of code, e.g.:
