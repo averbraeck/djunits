@@ -46,13 +46,13 @@ public class LinearScale implements Scale
     }
 
     @Override
-    public double toBaseValue(final double value)
+    public double toIdentityScale(final double value)
     {
         return value * this.scaleFactorToBaseUnit;
     }
 
     @Override
-    public double fromBaseValue(final double value)
+    public double fromIdentityScale(final double value)
     {
         return value / this.scaleFactorToBaseUnit;
     }
@@ -67,7 +67,7 @@ public class LinearScale implements Scale
     }
 
     @Override
-    public boolean isBaseScale()
+    public boolean isIdentityScale()
     {
         return this.scaleFactorToBaseUnit == 1.0;
     }
