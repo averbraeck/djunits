@@ -324,7 +324,7 @@ public class SIUnit implements Unit<SIUnit, SIQuantity>
      * @param powerPostfix the postfix for the power, e.g., "&lt;/sup&gt;"
      * @return a formatted string for this SIUnit
      */
-    public String toString(final boolean divided, final String separator, final String powerPrefix, final String powerPostfix)
+    public String format(final boolean divided, final String separator, final String powerPrefix, final String powerPostfix)
     {
         StringBuffer s = new StringBuffer();
         boolean first = true;
@@ -400,9 +400,9 @@ public class SIUnit implements Unit<SIUnit, SIQuantity>
      * @param separator if true, add a period between successive units, e.g. kg.m.s-2 instead of kgms-2
      * @return a formatted string describing this SIUnit
      */
-    public String toString(final boolean divided, final boolean separator)
+    public String format(final boolean divided, final boolean separator)
     {
-        return toString(divided, separator ? "." : "", "", "");
+        return format(divided, separator ? "." : "", "", "");
     }
 
     /**
@@ -412,9 +412,9 @@ public class SIUnit implements Unit<SIUnit, SIQuantity>
      * @param power if true, add a ^ sign before the power, e.g., "kg.m^2/s^3" instead of "kg.m2/s3"
      * @return a formatted string describing this SIUnit
      */
-    public String toString(final boolean divided, final boolean separator, final boolean power)
+    public String format(final boolean divided, final boolean separator, final boolean power)
     {
-        return toString(divided, separator ? "." : "", power ? "^" : "", "");
+        return format(divided, separator ? "." : "", power ? "^" : "", "");
     }
 
     /**
@@ -423,21 +423,21 @@ public class SIUnit implements Unit<SIUnit, SIQuantity>
      * @param separator if true, add a period between successive units, e.g. kg.m.s<sup>-2</sup>
      * @return a formatted string describing this SIUnit
      */
-    public String toHTMLString(final boolean divided, final boolean separator)
+    public String formatHtml(final boolean divided, final boolean separator)
     {
-        return toString(divided, separator ? "." : "", "<sup>", "</sup>");
+        return format(divided, separator ? "." : "", "<sup>", "</sup>");
     }
 
     @Override
     public String toString()
     {
-        return Arrays.toString(this.dimensions);
+        return format(true, false);
     }
 
     @Override
     public String getId()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
@@ -467,37 +467,37 @@ public class SIUnit implements Unit<SIUnit, SIQuantity>
     @Override
     public String getTextualAbbreviation()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
     public String getDisplayAbbreviation()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
     public String getName()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
     public String getStoredTextualAbbreviation()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
     public String getStoredDisplayAbbreviation()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
     public String getStoredName()
     {
-        return toString(true, false);
+        return format(true, false);
     }
 
     @Override
