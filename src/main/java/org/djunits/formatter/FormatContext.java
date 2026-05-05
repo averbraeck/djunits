@@ -21,7 +21,7 @@ abstract class FormatContext implements Cloneable
     // Number formatting, contains default values
 
     /** Format mode. */
-    FloatFormatMode formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+    FloatFormatMode formatMode = FloatFormatMode.VARIABLE_LENGTH;
 
     /** Scientific notation: upper case E or lower case e. */
     boolean upperE = true;
