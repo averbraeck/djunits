@@ -9,6 +9,7 @@ import org.djunits.quantity.Energy;
 import org.djunits.quantity.LinearObjectDensity;
 import org.djunits.quantity.Mass;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Temperature;
 import org.djunits.quantity.def.PerMass;
 import org.djunits.unit.si.SIUnit;
 import org.junit.jupiter.api.Test;
@@ -463,6 +464,33 @@ public class QuantityFormatTest
         assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s5.contains(" deg"));
         assertTrue(s5.endsWith(" [EAST]"));
+    }
+
+    /**
+     * Test formatting as SI.
+     */
+    @Test
+    public void testSiFormatting()
+    {
+        Energy energy = new Energy(1.2345, Energy.Unit.kJ);
+        Temperature temp = new Temperature(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+
+        String s1 = energy.format(QuantityFormat.defaults().setSiUnits());
+        assertEquals("1234.5 kgm2/s2", s1);
+
+        String s2C = temp.format(QuantityFormat.defaults().setSiUnits());
+        assertEquals("20 K", s2C);
+
+        String s3C = temp.format(
+                QuantityFormat.defaults().setSiUnits().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        assertEquals("20 K (CELSIUS)", s3C);
+
+        String s2K = temp.relativeTo(Temperature.Reference.KELVIN).format(QuantityFormat.defaults().setSiUnits());
+        assertEquals("293.15 K", s2K);
+
+        String s3K = temp.relativeTo(Temperature.Reference.KELVIN).format(
+                QuantityFormat.defaults().setSiUnits().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        assertEquals("293.15 K (KELVIN)", s3K);
     }
 
     /**

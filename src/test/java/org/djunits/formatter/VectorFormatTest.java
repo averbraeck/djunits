@@ -3,7 +3,14 @@ package org.djunits.formatter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.djunits.quantity.Angle;
+import org.djunits.quantity.Direction;
 import org.djunits.quantity.Energy;
+import org.djunits.quantity.Temperature;
+import org.djunits.quantity.TemperatureDifference;
+import org.djunits.vecmat.d2.AbsVector2;
+import org.djunits.vecmat.d2.Vector2;
+import org.djunits.vecmat.d3.AbsVector3;
 import org.djunits.vecmat.d3.Vector3;
 import org.junit.jupiter.api.Test;
 
@@ -178,6 +185,209 @@ public class VectorFormatTest
         assertTrue(s2.contains("\n"));
         assertTrue(s4.startsWith("R("));
         assertTrue(s4.endsWith(") kJ"));
+    }
+
+    /**
+     * Test prefix separator between number and unit, and postfix after the unit for an absolute column vector.
+     */
+    @Test
+    public void testAbsVectorColPrefixPostfix()
+    {
+        AbsVector3.Col<Direction, Angle> dir =
+                AbsVector3.Col.of(new double[] {1.2345, 0.23456, 0.55404}, Angle.Unit.rad, Direction.Reference.EAST);
+
+        String s1 = dir.toString();
+        assertTrue(s1.contains("1.235"));
+        assertTrue(s1.endsWith(" rad"));
+
+        String s2 = dir.format(Angle.Unit.deg);
+        double deg = 1.2345 * 180.0 / Math.PI;
+        assertTrue(s2.contains(String.valueOf(deg).substring(0, 5)));
+        assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
+
+        String s3 = dir.format(VectorFormat.Col.defaults().setUnitPrefix("  "));
+        assertTrue(s3.contains("1.235"));
+        assertTrue(s3.endsWith("  rad"));
+
+        String s4 = dir.format(VectorFormat.Col.defaults().setUnitPrefix(", unit="));
+        assertTrue(s4.contains("1.235"));
+        assertTrue(s4.endsWith(", unit=rad"));
+
+        String s5 = dir.format(VectorFormat.Col.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        assertTrue(s5.contains("1.235"));
+        assertTrue(s5.endsWith(" (rad)"));
+
+        String s6 =
+                dir.format(VectorFormat.Col.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        assertTrue(s6.contains("1.235"));
+        assertTrue(s6.endsWith(" rad (EAST)"));
+    }
+
+    /**
+     * Test prefix separator between number and unit, and postfix after the unit for an absolute row vector.
+     */
+    @Test
+    public void testAbsVectorRowPrefixPostfix()
+    {
+        AbsVector3.Row<Direction, Angle> dir =
+                AbsVector3.Row.of(new double[] {1.2345, 0.23456, 0.55404}, Angle.Unit.rad, Direction.Reference.EAST);
+
+        String s1 = dir.toString();
+        assertTrue(s1.contains("1.2345"));
+        assertTrue(s1.endsWith(" rad"));
+
+        String s2 = dir.format(Angle.Unit.deg);
+        double deg = 1.2345 * 180.0 / Math.PI;
+        assertTrue(s2.contains(String.valueOf(deg).substring(0, 7)));
+        assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
+
+        String s3 = dir.format(VectorFormat.Row.defaults().setUnitPrefix("  "));
+        assertTrue(s3.contains("1.2345"));
+        assertTrue(s3.endsWith("  rad"));
+
+        String s4 = dir.format(VectorFormat.Row.defaults().setUnitPrefix(", unit="));
+        assertTrue(s4.contains("1.2345"));
+        assertTrue(s4.endsWith(", unit=rad"));
+
+        String s5 = dir.format(VectorFormat.Row.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        assertTrue(s5.contains("1.2345"));
+        assertTrue(s5.endsWith(" (rad)"));
+
+        String s6 =
+                dir.format(VectorFormat.Row.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        assertTrue(s6.contains("1.2345"));
+        assertTrue(s6.endsWith(" rad (EAST)"));
+    }
+
+    /**
+     * Test absolute column vector formatting with prefix separator between number and reference, and postfix after the
+     * reference.
+     */
+    @Test
+    public void testAbsReferencePrefixPostfixCol()
+    {
+        AbsVector3.Col<Direction, Angle> n =
+                AbsVector3.Col.of(new double[] {30, 40, 50}, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsVector3.Col<Direction, Angle> e =
+                AbsVector3.Col.of(new double[] {30, 40, 50}, Angle.Unit.deg, Direction.Reference.EAST);
+
+        String s1a = n.format(VectorFormat.Col.defaults().setTextual());
+        assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s1a.endsWith(" deg"));
+
+        String s1b = n.format(VectorFormat.Col.defaults().setTextual());
+        assertTrue(s1b.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s1b.endsWith(" deg"));
+
+        String s2 = n.format(VectorFormat.Col.defaults().setNoReference().setTextual());
+        assertTrue(s2.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s2.endsWith(" deg"));
+
+        String s3 = n.format(VectorFormat.Col.defaults().setPrintReference(false).setTextual());
+        assertTrue(s3.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s3.endsWith(" deg"));
+
+        String s4n = n.format(VectorFormat.Col.defaults().setPrintReference().setTextual());
+        assertTrue(s4n.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s4n.contains(" deg"));
+        assertTrue(s4n.endsWith(" (NORTH)"));
+
+        String s4e = e.format(VectorFormat.Col.defaults().setPrintReference(true).setTextual());
+        assertTrue(s4e.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s4e.contains(" deg"));
+        assertTrue(s4e.endsWith(" (EAST)"));
+
+        String s5 = e.format(
+                VectorFormat.Col.defaults().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
+        assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s5.contains(" deg"));
+        assertTrue(s5.endsWith(" [EAST]"));
+    }
+
+    /**
+     * Test absolute row vector formatting with prefix separator between number and reference, and postfix after the reference.
+     */
+    @Test
+    public void testAbsReferencePrefixPostfixRow()
+    {
+        AbsVector3.Row<Direction, Angle> n =
+                AbsVector3.Row.of(new double[] {30, 40, 50}, Angle.Unit.deg, Direction.Reference.NORTH);
+        AbsVector3.Row<Direction, Angle> e =
+                AbsVector3.Row.of(new double[] {30, 40, 50}, Angle.Unit.deg, Direction.Reference.EAST);
+
+        String s1a = n.format(VectorFormat.Row.defaults().setTextual());
+        assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s1a.endsWith(" deg"));
+
+        String s1b = n.format(VectorFormat.Row.defaults().setTextual());
+        assertTrue(s1b.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s1b.endsWith(" deg"));
+
+        String s2 = n.format(VectorFormat.Row.defaults().setNoReference().setTextual());
+        assertTrue(s2.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s2.endsWith(" deg"));
+
+        String s3 = n.format(VectorFormat.Row.defaults().setPrintReference(false).setTextual());
+        assertTrue(s3.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s3.endsWith(" deg"));
+
+        String s4n = n.format(VectorFormat.Row.defaults().setPrintReference().setTextual());
+        assertTrue(s4n.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s4n.contains(" deg"));
+        assertTrue(s4n.endsWith(" (NORTH)"));
+
+        String s4e = e.format(VectorFormat.Row.defaults().setPrintReference(true).setTextual());
+        assertTrue(s4e.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s4e.contains(" deg"));
+        assertTrue(s4e.endsWith(" (EAST)"));
+
+        String s5 = e.format(
+                VectorFormat.Row.defaults().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
+        assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
+        assertTrue(s5.contains(" deg"));
+        assertTrue(s5.endsWith(" [EAST]"));
+    }
+
+    /**
+     * Test formatting as SI for column vector.
+     */
+    @Test
+    public void testSiFormattingCol()
+    {
+        Vector2.Col<Energy> energy = Vector2.Col.of(1.2345, 6.789, Energy.Unit.kJ);
+        AbsVector2.Col<Temperature, TemperatureDifference> temp =
+                AbsVector2.Col.of(20.0, 30.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+
+        String s1 = energy.format(VectorFormat.Col.defaults().setSiUnits().setEndSymbol(" |"));
+        assertTrue(s1.endsWith(" | kgm2/s2"));
+
+        String s2C = temp.format(VectorFormat.Col.defaults().setSiUnits().setEndSymbol(" |"));
+        assertTrue(s2C.endsWith(" | K"));
+
+        String s3C = temp.format(VectorFormat.Col.defaults().setSiUnits().setEndSymbol(" |").setPrintReference()
+                .setReferencePrefix(" (").setReferencePostfix(")"));
+        assertTrue(s3C.endsWith(" | K (CELSIUS)"));
+    }
+
+    /**
+     * Test formatting as SI for row vector.
+     */
+    @Test
+    public void testSiFormattingRow()
+    {
+        Vector2.Row<Energy> energy = Vector2.Row.of(1.2345, 6.789, Energy.Unit.kJ);
+        AbsVector2.Row<Temperature, TemperatureDifference> temp =
+                AbsVector2.Row.of(20.0, 30.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+
+        String s1 = energy.format(VectorFormat.Row.defaults().setSiUnits().setEndSymbol(" |"));
+        assertTrue(s1.endsWith(" | kgm2/s2"));
+
+        String s2C = temp.format(VectorFormat.Row.defaults().setSiUnits().setEndSymbol(" |"));
+        assertTrue(s2C.endsWith(" | K"));
+
+        String s3C = temp.format(VectorFormat.Row.defaults().setSiUnits().setEndSymbol(" |").setPrintReference()
+                .setReferencePrefix(" (").setReferencePostfix(")"));
+        assertTrue(s3C.endsWith(" | K (CELSIUS)"));
     }
 
     /**
