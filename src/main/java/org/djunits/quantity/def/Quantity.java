@@ -78,7 +78,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      */
     public final double getInUnit()
     {
-        return getDisplayUnit().getScale().fromBaseValue(si());
+        return getDisplayUnit().getScale().fromIdentityScale(si());
     }
 
     /**
@@ -88,7 +88,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      */
     public final double getInUnit(final Unit<?, Q> targetUnit)
     {
-        return targetUnit.getScale().fromBaseValue(si());
+        return targetUnit.getScale().fromIdentityScale(si());
     }
 
     /**

@@ -73,7 +73,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      */
     public final double getInUnit()
     {
-        return getDisplayUnit().getScale().fromBaseValue(si());
+        return getDisplayUnit().getScale().fromIdentityScale(si());
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      */
     public final double getInUnit(final Unit<?, Q> targetUnit)
     {
-        return targetUnit.getScale().fromBaseValue(si());
+        return targetUnit.getScale().fromIdentityScale(si());
     }
 
     /**
