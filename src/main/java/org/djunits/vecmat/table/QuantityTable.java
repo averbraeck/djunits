@@ -308,9 +308,9 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @return a String with the quantity table, with the unit attached.
      */
     @Override
-    public String toString()
+    public String format()
     {
-        return toString(TableFormat.defaults());
+        return format(TableFormat.defaults());
     }
 
     /**
@@ -318,7 +318,7 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @param format the format to apply for the quantity table
      * @return a String representation of this quantity table, formatted according to the given format
      */
-    public String toString(final TableFormat format)
+    public String format(final TableFormat format)
     {
         return TableFormatter.format(this, format);
     }
@@ -329,9 +329,9 @@ public class QuantityTable<Q extends Quantity<Q>>
      * @return printable string with the quantity table's values expressed in the specified unit
      */
     @Override
-    public String toString(final Unit<?, Q> targetUnit)
+    public String format(final Unit<?, Q> targetUnit)
     {
-        return toString(TableFormat.defaults().setDisplayUnit(targetUnit));
+        return format(TableFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }

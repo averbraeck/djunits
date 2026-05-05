@@ -256,34 +256,34 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
     // ----------------------------------------- STRING AND FORMATTING METHODS ----------------------------------------
 
     /**
-     * Concise description of this absolute quantity table.
-     * @return a String with the absolute quantity table, with the unit attached.
+     * Concise description of this quantity table.
+     * @return a String with the quantity table, with the unit and possibly the reference attached.
      */
     @Override
-    public String toString()
+    public String format()
     {
-        return toString(TableFormat.defaults());
+        return format(TableFormat.defaults());
     }
 
     /**
-     * String representation of this absolute quantity table after applying the format.
-     * @param format the format to apply for the absolute quantity table
-     * @return a String representation of this absolute quantity table, formatted according to the given format
+     * String representation of this quantity table after applying the format.
+     * @param format the format to apply for the quantity table
+     * @return a String representation of this quantity table, formatted according to the given format
      */
-    public String toString(final TableFormat format)
+    public String format(final TableFormat format)
     {
         return TableFormatter.format(this, format);
     }
 
     /**
-     * String representation of this absolute quantity table, expressed in the specified unit.
-     * @param targetUnit the unit into which the values of the absolute quantity table are converted for display
-     * @return printable string with the absolute quantity table's values expressed in the specified unit
+     * String representation of this quantity table, expressed in the specified unit.
+     * @param targetUnit the unit into which the values of the quantity table are converted for display
+     * @return printable string with the quantity table's values expressed in the specified unit
      */
     @Override
-    public String toString(final Unit<?, Q> targetUnit)
+    public String format(final Unit<?, Q> targetUnit)
     {
-        return toString(TableFormat.defaults().setDisplayUnit(targetUnit));
+        return format(TableFormat.defaults().setDisplayUnit(targetUnit));
     }
 
 }
