@@ -444,9 +444,32 @@ public class QuantityTest
     @DisplayName("Locale format affects decimal separator")
     public void testLocaleFormat()
     {
-        Length l = new Length(1.5, Length.Unit.m);
-        String s = l.format(QuantityFormat.defaults().setLocale(Locale.GERMANY));
-        assertEquals("1,5 m", s);
+        try
+        {
+            Length l = new Length(1.5, Length.Unit.m);
+            String sDe = l.format(QuantityFormat.defaults().setLocale(Locale.GERMANY));
+            assertEquals("1,5 m", sDe);
+            Locale.setDefault(Locale.forLanguageTag("DE"));
+            Length lDe = Length.valueOf("1,5 m");
+            assertEquals(l, lDe);
+            String sDe2 = l.toString();
+            assertEquals("1,5 m", sDe2);
+            Locale.setDefault(Locale.US);
+
+            // choose a Locale for which we do not have a resource bundle
+            String sNo = l.format(QuantityFormat.defaults().setLocale(Locale.forLanguageTag("no-NO")));
+            assertEquals("1,5 m", sNo);
+            Locale.setDefault(Locale.forLanguageTag("no-NO"));
+            Length lNo = Length.valueOf("1,5 m");
+            assertEquals(l, lNo);
+            String sNo2 = l.toString();
+            assertEquals("1,5 m", sNo2);
+            Locale.setDefault(Locale.US);
+        }
+        finally
+        {
+            Locale.setDefault(Locale.US);
+        }
     }
 
     // ----------------------------------------------------------------------
