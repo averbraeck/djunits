@@ -14,13 +14,13 @@ The `Quantity` abstract class can easily be extended for creating new scalar qua
 ```java
 public class Jerk extends Quantity<Jerk>
 {
-    public Jerk(final double value, final Jerk.Unit unit)
+    public Jerk(final double valueInUnit, final Jerk.Unit unit)
     {
-        super(value, unit);
+        super(valueInUnit, unit);
     }
 
     @Override
-    public Jerk instantiate(final double siValue)
+    public Jerk instantiateSi(final double siValue)
     {
         return new Jerk(siValue, Jerk.Unit.SI);
     }
@@ -34,7 +34,7 @@ A method that *can* be implemented is the `ofSi()` static method as a quick gene
 ```java
 public static Jerk ofSi(final double valueSi)
 {
-    return new Jerk(valueSi, JerkUnit.SI);
+    return new Jerk(valueSi, Jerk.Unit.SI);
 }
 ```
 
@@ -150,41 +150,47 @@ Jerk jerk2 = jerk1.scaleBy(2.0);
 System.out.println("jerk2 = jerk1.scaleBy(2.0)         : " + jerk2);
 Jerk jerk3 = new Jerk(4.0, Jerk.Unit.in_s3);
 System.out.println("jerk3 = Jerk(4.0, Jerk.Unit.in_s3  : " + jerk3);
-System.out.println("jerk3 expressed in Jerk.Unit.SI    : " 
-    + jerk3.toString(Jerk.Unit.SI));
-System.out.println("jerk3 expressed in Jerk.Unit.ft_s3 : " 
-    + jerk3.toString(Jerk.Unit.ft_s3));
+System.out.println("jerk3 expressed in Jerk.Unit.SI    : "
+        + jerk3.format(QuantityFormat.defaults()
+          .setDisplayUnit(Jerk.Unit.SI).setFormatString("%.5g")));
+System.out.println("jerk3 expressed in Jerk.Unit.ft_s3 : "
+        + jerk3.format(QuantityFormat.defaults()
+          .setDisplayUnit(Jerk.Unit.ft_s3).setFormatString("%.5g")));
 ```
 
 This will print:
 
 ```
-jerk1 = Jerk(1.2, Jerk.Unit.SI)    : 1.20000000 m/s3
-jerk2 = jerk1.scaleBy(2.0)         : 2.40000000 m/s3
-jerk3 = Jerk(4.0, Jerk.Unit.in_s3  : 4.00000000 in/s3
-jerk3 expressed in Jerk.Unit.SI    : 0.10160000 m/s3
-jerk3 expressed in Jerk.Unit.ft_s3 : 0.33333333 ft/s3
+jerk1 = Jerk(1.2, Jerk.Unit.SI)    : 1.2 m/s3
+jerk2 = jerk1.scaleBy(2.0)         : 2.4 m/s3
+jerk3 = Jerk(4.0, Jerk.Unit.in_s3  : 4 in/s3
+jerk3 expressed in Jerk.Unit.SI    : 0.10160 m/s3
+jerk3 expressed in Jerk.Unit.ft_s3 : 0.33333 ft/s3
 ```
 
 The usage of the newly defined quantity also includes vectors, matrices and quantity tables, without adding one extra line of code. The example below uses the `Jerk` in a 2x2 matrix, that is multiplied in an entry-by-entry way by a `Duration` to get an `Acceleration` matrix of size 2x2:
 
 ```java
-double[][] jmd = new double[][] {{1, 2}, {3, 4}};<Jerk> jerkMatrix2 = Matrix2x2.of(jmd, Jerk.Unit.in_s3);
+double[][] jmd = new double[][] {{1, 2}, {3, 4}};
+Matrix2x2<Jerk> jerkMatrix2 = Matrix2x2.of(jmd, Jerk.Unit.in_s3);
 System.out.println("\nJerk matrix:\n" + jerkMatrix2);
 
+// multiply the JerkMatrix by a scalar Duration and get 
+// a Matrix2x2<Acceleration, Acceleration.Unit>
 Duration d = Duration.of(3.0, "s");
-Matrix2x2<Acceleration> mAcc = 
-    jerkMatrix2.multiplyEntries(d).as(Acceleration.Unit.ft_s2);
-System.out.println("Acceleration matrix:\n" + mAcc);
+Matrix2x2<Acceleration> mAcc = jerkMatrix2.multiplyEntries(d)
+    .as(Acceleration.Unit.ft_s2);
+System.out.println("\nAcceleration matrix:\n" + mAcc);
 ```
 
 This will print:
 
 ```
 Jerk matrix:
-[1.00000000, 2.00000000
- 3.00000000, 4.00000000] in/s3
+|      1.000       2.000 |
+|      3.000       4.000 | in/s3
+
 Acceleration matrix:
-[0.25000000, 0.50000000
- 0.75000000, 1.00000000] ft/s2
+|      0.250       0.500 |
+|      0.750       1.000 | ft/s2
 ```
