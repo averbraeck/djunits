@@ -217,7 +217,14 @@ public final class Units
      */
     public static ResourceBundle bundle(final Locale locale)
     {
-        return ResourceBundle.getBundle(BUNDLE_BASE, locale, new Utf8Control());
+        try
+        {
+            return ResourceBundle.getBundle(BUNDLE_BASE, locale, new Utf8Control());
+        }
+        catch (MissingResourceException e)
+        {
+            return ResourceBundle.getBundle(BUNDLE_BASE, Locale.US, new Utf8Control());
+        }
     }
 
     /**
