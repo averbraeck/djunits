@@ -13,7 +13,7 @@ in their code, by catching many common errors with the use of quantities and uni
   miles is correctly added to a distance in kilometers.
 * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
   (that may have another unit).
-* DJUNITS handles Scalars, Vectors and Matrices, as well as quantity tables.
+* DJUNITS handles Quantities, Vectors and Matrices, as well as quantity tables.
 * DJUNITS stores everything in immutable objects, except for the display unit that can be changed. 
 * DJUNITS stores the data for vectors and matrices as float or double values, and using dense or sparse storage.
 
@@ -33,7 +33,7 @@ The main authors/contributors of the DJUNITS project are Alexander Verbraeck, Pe
 Values in DJUNITS are either absolute or relative.
 
 An absolute value is a value measured from a standard reference. Examples are time with a reference point 1-1-1970 (UNIX epoch) or 
-a reference point 1-1-0000 (Gregorian calendar time). As an other example, geographical directions, a direction can use North and East 
+a reference point 1-1-0001 (Gregorian calendar time). As an other example, geographical directions, a direction can use North and East 
 as reference points. Adding two absolute values together makes no sense. Subtracting one absolute value from another does make sense 
 (and results in a relative value). Subtracting East from North should result in an angle of ±90° or ±π/2 rad (depending on the unit used 
 to express the result). An absolute quantity always needs a reference to be useful. Values subtracted from each other need to know 
@@ -97,7 +97,7 @@ Speed speed2 = new Speed(10, Speed.Unit.m_s);
 System.out.println("speed2:     " + speed2);
 Speed diff = speed1.subtract(speed2);
 
-// Default display unit will be SI unit for speed:
+// Display unit after 'subtract' will be the unit of speed1:
 System.out.println("difference: " + diff);
 
 // Change default display unit; internal SI value is unaltered:
@@ -108,23 +108,23 @@ System.out.println("difference: " + diff);
 System.out.println("error-prone " + diff.getInUnit(Speed.Unit.kt) + " kt");
 
 // Safer, the unit is provided by the system and localizable:
-System.out.println("difference: " + diff.toString(Speed.Unit.kt));
-System.out.println("difference: " + diff.toString(Speed.Unit.km_h));
+System.out.println("difference: " + diff.format(Speed.Unit.kt));
+System.out.println("difference: " + diff.format(Speed.Unit.km_h));
 ```
 
 This would create the following output:
 
 ```
-speed1:     30.0000000 mi/h
-speed2:     10.0000000 m/s
-difference: 7.63063708 mi/h
-difference: 0.00211962 mi/s
+speed1:     30 mi/h
+speed2:     10 m/s
+difference: 7.630637079455975 mi/h
+difference: 0.002119621410959993 mi/s
 error-prone 6.630842332613389 kt
-difference: 6.63084233 kt
-difference: 12.2803200 km/h
+difference: 6.630842332613389 kt
+difference: 12.280319999999996 km/h
 ```
 
-It is possible to use units without the Quantity.Unit. The `of()` methods are helper methods to easily use a unit, e.g.,
+It is possible to specify a quantity without using the inner `Unit` class. The `of()` methods are helper methods to easily use a unit, e.g.,
 `Length.of(12.0, "m")` instead of `new Length(12.0, Length.Unit.m)`.
 
 
@@ -143,7 +143,7 @@ Area area = distance.multiply(distance);
 Volume vol = area.multiply(distance);
 ```
 
-DJUNITS knows that the result of multiplication of a speed and a time is a distance. The value of the distance in the above case is 2500 m.
+DJUNITS knows that the result of multiplication of a speed and a time is a distance. The value of the distance in the above case is 25,000 m.
 
 There is never a need for multiplication or division with an absolute operand. It just does not make sense to multiply 
 23 September 2025, 3 PM (an absolute Time) by 2.
@@ -198,10 +198,9 @@ This would print:
 ```
 
 
-## Scalars, Vectors and Matrices
+## Quantities, Vectors and Matrices
 
-Simple values are referred to as quantities or scalars. DJUNITS also handles groups of values (these must all be of the same quantity) such as vectors or 
-matrices. Efficient classes have been created for the 'small' vectors and matrices of size 1 to 3. The following vector and matrix classes exist:
+Quantities are values of a quantity type such as Speed, and a value, e.g., 40, expressed in the default unit (m/s) or in another unit, e.g., km/h. DJUNITS also handles groups of values of the same quantity type, such as vectors or matrices. Efficient classes have been created for the 'small' vectors and matrices of size 1 to 3. The following vector and matrix classes exist:
 
 * `Vector1` for a vector with just one entry
 * `Vector2.Row` and `Vector2.Col` for a row and column vector of size 2
@@ -213,7 +212,7 @@ matrices. Efficient classes have been created for the 'small' vectors and matric
 * `MatrixNxN` for a square matrix of any size
 * `MatrixNxM` for a non-square or square matrix of any size
 
-The storage for larger vectors and matrices (`VectorN`, `MatrixNxN`, `MatrixNxM`) come in four varieties:
+The storage for larger vectors and matrices (`VectorN`, `MatrixNxN`, `MatrixNxM`) comes in four varieties:
 
 * Dense, Double
 * Dense, Float
