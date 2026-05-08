@@ -54,10 +54,10 @@ A `QuantityTable` contains the following methods to obtain its values:
 
 ### SI-based value methods
 
-- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the quantity table. 
+- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI values of the entries in the quantity table. 
 - `double[] getSiArray()` returns the values of the quantity table in SI-units as a row-major `double[]` array with the same length as the quantity table. This means that for a quantity table with n rows and m columns, the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>].
-- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column.
-- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. 
+- `double si(int row, int col)` returns the SI value of the entry at the 0-based row and column.
+- `double msi(int mRow, int mCol)` returns the SI value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. 
 
 
 ### Quantity-based value methods
@@ -74,8 +74,8 @@ A `QuantityTable` contains the following methods to obtain its values:
 - `VectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit`. 
 - `Q[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
 - `Q[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
-- `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI-values. 
-- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI-values. Note that the resulting `double[]` array is 0-based.
+- `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI values. 
+- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based.
 
 
 ### Retrieving quantity table columns
@@ -84,8 +84,8 @@ A `QuantityTable` contains the following methods to obtain its values:
 - `VectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit`. 
 - `Q[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
 - `Q[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. Note that the resulting `Q[]` array is 0-based.
-- `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI-values. 
-- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI-values. Note that the resulting `double[]` array is 0-based.
+- `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI values. 
+- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based.
 
 
 ## Mathematical operations for `QuantityTable`
@@ -95,7 +95,7 @@ A `QuantityTable` implements several mathematical operations. The most important
 - `Q mean()` returns the mean quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`.
-- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
+- `Q median()` returns the median quantity value of the entries of the `QuantityTable` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `M negate()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
 - `M abs()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
@@ -130,9 +130,9 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `QuantityTable.of(double[][] gridInUnit, Unit unit)` <br>
   creates a `QuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
 - `QuantityTable.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit)` <br>
-  creates a `QuantityTable` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+  creates a `QuantityTable` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
 - `QuantityTable.ofSi(double[][] gridSi, Unit displayUnit)` <br>
-  creates a `QuantityTable` based on a grid (array of arrays) with with SI-values for the quantities. The grid cannot be 'ragged'.
+  creates a `QuantityTable` based on a grid (array of arrays) with with SI values for the quantities. The grid cannot be 'ragged'.
 - `QuantityTable.of(Q[] data, int rows, int cols)` <br>
   creates a `QuantityTable` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.
 - `QuantityTable.of(Q[][] grid)` <br>

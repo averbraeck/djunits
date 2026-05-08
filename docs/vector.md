@@ -68,8 +68,8 @@ A `Vector` contains the following methods to obtain its values:
 
 - `double[] getSiArray()` returns a safe copy of the values of the vector in SI-units as a `double[]` array with the same length as the vector.
 - `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the original `Vector`.
-- `double si(int index)` returns the SI-value of the entry at the 0-based `index`. 
-- `double msi(int mIndex)` returns the SI-value of the entry at the 1-based `mIndex`. 
+- `double si(int index)` returns the SI value of the entry at the 0-based `index`. 
+- `double msi(int mIndex)` returns the SI value of the entry at the 1-based `mIndex`. 
 - `Q get(int index)` returns the quantity representation of the entry at the 0-based `index`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
 - `Q mget(int mIndex)` returns the quantity representation of the entry at the 1-based `mIndex`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
 
@@ -81,7 +81,7 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q mean()` returns the mean quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Vector` as a strongly typed `Quantity`.
-- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
+- `Q median()` returns the median quantity value of the entries of the `Vector` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI values. When the size of the vector is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Vector` as a strongly typed `Quantity`.
 - `V negate()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $-x_i$. 
 - `V abs()` returns a `Vector` of the same type and size where all entries $x_i$ have been set to $|x_i|$. 
@@ -100,15 +100,15 @@ A `Vector` implements several mathematical operations. The most important ones a
 For a `Vector1`, there is no distinction between a row and column vector. Several methods exist to instantiate a `Vector1`:
 
 - `new Vector1<Q>(double xSi, Unit displayUnit)` <br>
-  creates a `Vector1` based on an SI-value for the quantity with a displayUnit.
+  creates a `Vector1` based on an SI value for the quantity with a displayUnit.
 - `Vector1.of(double xInUnit, Unit unit)` <br>
   creates a `Vector1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`.
 - `Vector1.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Vector1` based on an array of length 1 with values expressed in the given unit.
 - `Vector1.ofSi(double xSi, Unit displayUnit)` <br>
-  creates a `Vector1` based on an SI-value for a quantity with a displayUnit.
+  creates a `Vector1` based on an SI value for a quantity with a displayUnit.
 - `Vector1.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Vector1` based on an array of length 1 with SI-values for a quantity with a displayUnit.
+  creates a `Vector1` based on an array of length 1 with SI values for a quantity with a displayUnit.
 - `Vector1.of(Q x)` <br>
   creates a `Vector1` based on a provided quantity.
 - `Vector1.of(Q[] data)` <br>
@@ -120,15 +120,15 @@ For a `Vector1`, there is no distinction between a row and column vector. Severa
 For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` exist. Several methods exist to instantiate a `Vector2`. Below, the instantiation methods are given for `Vector2.Col`. The instantiation methods for a `Vector2.Row` are analogous.
 
 - `new Vector2.Col<Q>(double xSi, double ySi, Unit displayUnit)` <br>
-  creates a `Vector2.Col` based on two SI-values for the quantities with a displayUnit.
+  creates a `Vector2.Col` based on two SI values for the quantities with a displayUnit.
 - `Vector2.Col.of(double xInUnit, double yInUnit, Unit unit)` <br>
   creates a `Vector2.Col` based on two values expressed in the given unit.
 - `Vector2.Col.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Vector2.Col` based on an array of length 2 with values expressed in the given unit.
 - `Vector2.Col.ofSi(double xSi, double ySi, Unit displayUnit)` <br>
-  creates a `Vector2.Col` based on two SI-values for the quantities with a displayUnit.
+  creates a `Vector2.Col` based on two SI values for the quantities with a displayUnit.
 - `Vector2.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Vector2.Col` based on an array of length 2 with SI-values for the quantities with a displayUnit.
+  creates a `Vector2.Col` based on an array of length 2 with SI values for the quantities with a displayUnit.
 - `Vector2.Col.of(Q x, Q y)` <br>
   creates a `Vector2.Col` containing the two provided quantities.
 - `Vector2.Col.of(Q[] data)` <br>
@@ -140,15 +140,15 @@ For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` ex
 For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` exist. Several methods exist to instantiate a `Vector3`. Below, the instantiation methods are given for `Vector3.Col`. The instantiation methods for a `Vector3.Row` are analogous.
 
 - `new Vector3.Col<Q>(double xSi, double ySi, double zSi, Unit displayUnit)` <br>
-  creates a `Vector3.Col` based on three SI-values for the quantities with a displayUnit.
+  creates a `Vector3.Col` based on three SI values for the quantities with a displayUnit.
 - `Vector3.Col.of(double xInUnit, double yInUnit, double zInUnit, Unit unit)` <br>
   creates a `Vector3.Col` based on three values expressed in the given unit.
 - `Vector3.Col.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Vector3.Col` based on an array of length 3 with values expressed in the given unit.
 - `Vector3.Col.ofSi(double xSi, double ySi, double zSi, Unit displayUnit)` <br>
-  creates a `Vector3.Col` based on three SI-values for the quantities with a displayUnit.
+  creates a `Vector3.Col` based on three SI values for the quantities with a displayUnit.
 - `Vector3.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Vector3.Col` based on an array of length 3 with SI-values for the quantities with a displayUnit.
+  creates a `Vector3.Col` based on an array of length 3 with SI values for the quantities with a displayUnit.
 - `Vector3.Col.of(Q x, Q y, Q z)` <br>
   creates a `Vector3.Col` containing the three provided quantities.
 - `Vector3.Col.of(Q[] data)` <br>
@@ -166,7 +166,7 @@ The `VectorN` class is used for storing row and column vectors of any length. Da
 - `VectorN.Col.of(double[] dataInUnit, Unit unit)` <br>
   creates a `VectorN.Col` based on an array with values expressed in the given unit. The vector will have the same number of elements as the array.
 - `VectorN.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `VectorN.Col` based on an array with SI-values for the quantities. The vector will have the same number of elements as the array.
+  creates a `VectorN.Col` based on an array with SI values for the quantities. The vector will have the same number of elements as the array.
 - `VectorN.Col.of(Q[] data)` <br>
   creates a `VectorN.Col` based on an array with quantities. The vector will have the same number of elements as the array.
 - `VectorN.Col.of(List<Q> data)` <br>

@@ -64,10 +64,10 @@ A `AbsMatrix` contains the following methods to obtain its values:
 
 ### SI-based value methods
 
-- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the matrix, relative to the reference point. 
-- `double[] getSiArray()` returns the values of the matrix in SI-units as a row-major `double[]` array with the same length as the matrix. This means that for an n x m matrix (n rows, m columns), the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>]. The SI-values are relative to the reference point of the absolute matrix.
-- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column. The SI-value is relative to the reference point of the absolute matrix.
-- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The SI-value is relative to the reference point of the absolute matrix.
+- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI values of the entries in the matrix, relative to the reference point. 
+- `double[] getSiArray()` returns the values of the matrix in SI-units as a row-major `double[]` array with the same length as the matrix. This means that for an n x m matrix (n rows, m columns), the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>]. The SI values are relative to the reference point of the absolute matrix.
+- `double si(int row, int col)` returns the SI value of the entry at the 0-based row and column. The SI value is relative to the reference point of the absolute matrix.
+- `double msi(int mRow, int mCol)` returns the SI value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The SI value is relative to the reference point of the absolute matrix.
 
 
 ### Absolute quantity-based value methods
@@ -85,8 +85,8 @@ A `AbsMatrix` contains the following methods to obtain its values:
 - `AbsVector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is an `AbsVectorN.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
 - `A[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the absolute quantities in the array have the same `displayUnit` and the same `Reference` as the original matrix. 
 - `A[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. Note that the resulting `Temperature[]` array is 0-based.
-- `double[] getRowSi(int row)` retrieves the SI-values of the 0-based `row` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI-values are relative to the reference point of the absolute matrix.
-- `double[] mgetRowSi(int mRow)` retrieves the SI-values of the 1-based `mRow` as a `double[]` array. When the matrix is an `AbsMatrixNxM`, the array returned is of type `double[matrix.cols()]`. The SI-values are relative to the reference point of the absolute matrix. Note that the resulting `double[]` array is 0-based.
+- `double[] getRowSi(int row)` retrieves the SI values of the 0-based `row` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI values are relative to the reference point of the absolute matrix.
+- `double[] mgetRowSi(int mRow)` retrieves the SI values of the 1-based `mRow` as a `double[]` array. When the matrix is an `AbsMatrixNxM`, the array returned is of type `double[matrix.cols()]`. The SI values are relative to the reference point of the absolute matrix. Note that the resulting `double[]` array is 0-based.
 
 
 ### Retrieving matrix columns
@@ -95,8 +95,8 @@ A `AbsMatrix` contains the following methods to obtain its values:
 - `AbsVector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is an `AbsVectorN.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
 - `A[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. 
 - `A[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. Note that the resulting `Temperature[]` array is 0-based.
-- `double[] getColumnSi(int col)` retrieves the SI-values of the 0-based `col` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI-values are relative to the reference point of the absolute matrix. 
-- `double[] mgetColumnSi(int mCol)` retrieves the SI-values of the 1-based `mCol` as a `double[]` array. When the matrix is an `AbsMatrixNxM`, the array returned is of type `double[matrix.cols()]`. The SI-values are relative to the reference point of the absolute matrix. Note that the resulting `double[]` array is 0-based.
+- `double[] getColumnSi(int col)` retrieves the SI values of the 0-based `col` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI values are relative to the reference point of the absolute matrix. 
+- `double[] mgetColumnSi(int mCol)` retrieves the SI values of the 1-based `mCol` as a `double[]` array. When the matrix is an `AbsMatrixNxM`, the array returned is of type `double[matrix.cols()]`. The SI values are relative to the reference point of the absolute matrix. Note that the resulting `double[]` array is 0-based.
 
 
 ## Mathematical operations for all matrices
@@ -106,7 +106,7 @@ A `AbsMatrix` implements several mathematical operations. The most important one
 - `A mean()` returns the mean quantity value of the entries of the `AbsMatrix` as a strongly typed `AbsQuantity`.
 - `A min()` returns the minimum quantity value of the entries of the `AbsMatrix` as a strongly typed `AbsQuantity`.
 - `A max()` returns the maximum quantity value of the entries of the `AbsMatrix` as a strongly typed `AbsQuantity`.
-- `A median()` returns the median quantity value of the entries of the `AbsMatrix` as a strongly typed `AbsQuantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
+- `A median()` returns the median quantity value of the entries of the `AbsMatrix` as a strongly typed `AbsQuantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
 
 
 ## Extra operations for square matrices
@@ -116,7 +116,7 @@ Square matrices have a number of additional operations:
 - `int order()` returns the number of rows or columns of the square matrix.
 - `AbsVector getDiagonalVector()` returns the absolute quantities on the diagonal as an absolute column vector of the same quantity and size as the square matrix. The `displayUnit` and `reference` will be the same as that of the matrix.
 - `A[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` and `reference` of the quantities will be the same as that of the matrix.
-- `double[] getDiagonalSi()` returns the SI-values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N. The SI values will be relative to the reference point of the matrix.
+- `double[] getDiagonalSi()` returns the SI values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N. The SI values will be relative to the reference point of the matrix.
 - `boolean isSymmetric()` returns whether the matrix is symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine symmetry.
 - `boolean isSymmetric(final Q tolerance)` returns whether the matrix is symmetric or not, using a provided tolerance.
 - `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that $A^T=-A$, or $a_{ij}=-a_{ji}$ for all entries $a_{ij}$.
@@ -130,7 +130,7 @@ Square matrices have a number of additional operations:
 Several methods exist to instantiate an `AbsMatrix1x1`:
 
 - `new AbsMatrix1x1<Q>(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrix1x1` based on an array of length 1 with SI-values for a quantity with a displayUnit  and a reference point.
+  creates an `AbsMatrix1x1` based on an array of length 1 with SI values for a quantity with a displayUnit  and a reference point.
 - `AbsMatrix1x1.of(double xInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`,  and a reference point.
 - `AbsMatrix1x1.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
@@ -138,7 +138,7 @@ Several methods exist to instantiate an `AbsMatrix1x1`:
 - `AbsMatrix1x1.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on a 1x1 grid (array of arrays) of values expressed in the given unit, and a reference point.
 - `AbsMatrix1x1.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrix1x1` based on an array of length 1 with SI-values for a quantity and a displayUnit, and a reference point.
+  creates an `AbsMatrix1x1` based on an array of length 1 with SI values for a quantity and a displayUnit, and a reference point.
 - `AbsMatrix1x1.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on a 1x1 grid (array of arrays) of SI values and a displayUnit, and a reference point.
 - `AbsMatrix1x1.of(Q[] data, Reference reference)` <br>
@@ -164,13 +164,13 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
 - `new AbsMatrix2x2<Q>(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrix2x2` based on a row-major array of length 4 with SI-values for a quantity with a displayUnit and a reference.
+  creates an `AbsMatrix2x2` based on a row-major array of length 4 with SI values for a quantity with a displayUnit and a reference.
 - `AbsMatrix2x2.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a row-major array of length 4 with values expressed in the given unit, and a reference.
 - `AbsMatrix2x2.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a 2x2 grid (array of arrays) of values expressed in the given unit, and a reference.
 - `AbsMatrix2x2.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrix2x2` based on a row-major array of length 4 with SI-values for a quantity and a displayUnit and a reference.
+  creates an `AbsMatrix2x2` based on a row-major array of length 4 with SI values for a quantity and a displayUnit and a reference.
 - `AbsMatrix2x2.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a 2x2 grid (array of arrays) of SI values and a displayUnit and a reference.
 - `AbsMatrix2x2.of(Q[] data, Reference reference)` <br>
@@ -194,13 +194,13 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
 - `new AbsMatrix3x3<Q>(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrix3x3` based on a row-major array of length 9 with SI-values for a quantity with a displayUnit and a reference.
+  creates an `AbsMatrix3x3` based on a row-major array of length 9 with SI values for a quantity with a displayUnit and a reference.
 - `AbsMatrix3x3.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a row-major array of length 9 with values expressed in the given unit, and a reference.
 - `AbsMatrix3x3.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a 3x3 grid (array of arrays) of values expressed in the given unit, and a reference.
 - `AbsMatrix3x3.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrix3x3` based on a row-major array of length 9 with SI-values for a quantity and a displayUnit and a reference.
+  creates an `AbsMatrix3x3` based on a row-major array of length 9 with SI values for a quantity and a displayUnit and a reference.
 - `AbsMatrix3x3.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a 3x3 grid (array of arrays) of SI values and a displayUnit and a reference.
 - `AbsMatrix3x3.of(Q[] data, Reference reference)` <br>
@@ -237,9 +237,9 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `AbsMatrixNxN.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a grid (array of arrays) with values expressed in the given unit. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
 - `AbsMatrixNxN.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrixNxN` based on a row-major array with SI-values for the quantities. The number of elements in the array needs to be a perfect square.
+  creates an `AbsMatrixNxN` based on a row-major array with SI values for the quantities. The number of elements in the array needs to be a perfect square.
 - `AbsMatrixNxN.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrixNxN` based on a grid (array of arrays) with with SI-values for the quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
+  creates an `AbsMatrixNxN` based on a grid (array of arrays) with with SI values for the quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
 - `AbsMatrixNxN.of(Q[] data, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a row-major array with quantities. The number of elements in the array needs to be a perfect square.
 - `AbsMatrixNxN.of(Q[][] grid, Reference reference)` <br>
@@ -274,9 +274,9 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `AbsMatrixNxM.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
 - `AbsMatrixNxM.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrixNxM` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+  creates an `AbsMatrixNxM` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
 - `AbsMatrixNxM.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsMatrixNxM` based on a grid (array of arrays) with with SI-values for the quantities. The grid cannot be 'ragged'.
+  creates an `AbsMatrixNxM` based on a grid (array of arrays) with with SI values for the quantities. The grid cannot be 'ragged'.
 - `AbsMatrixNxM.of(Q[] data, int rows, int cols, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.
 - `AbsMatrixNxM.of(Q[][] grid, Reference reference)` <br>

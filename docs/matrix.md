@@ -68,10 +68,10 @@ A `Matrix` contains the following methods to obtain its values:
 
 ### SI-based value methods
 
-- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the matrix. 
+- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI values of the entries in the matrix. 
 - `double[] getSiArray()` returns the values of the matrix in SI-units as a row-major `double[]` array with the same length as the matrix. This means that for an n x m matrix (n rows, m columns), the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>].
-- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column.
-- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. 
+- `double si(int row, int col)` returns the SI value of the entry at the 0-based row and column.
+- `double msi(int mRow, int mCol)` returns the SI value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. 
 
 
 ### Quantity-based value methods
@@ -88,8 +88,8 @@ A `Matrix` contains the following methods to obtain its values:
 - `Vector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Row` of the same `Quantity`, and with the same `displayUnit`. 
 - `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
 - `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
-- `double[] getRowSi(int row)` retrieves the SI-values of the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
-- `double[] mgetRowSi(int mRow)` retrieves the SI-values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
+- `double[] getRowSi(int row)` retrieves the SI values of the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
+- `double[] mgetRowSi(int mRow)` retrieves the SI values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
 
 ### Retrieving matrix columns
@@ -98,8 +98,8 @@ A `Matrix` contains the following methods to obtain its values:
 - `Vector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Col` of the same `Quantity`, and with the same `displayUnit`. 
 - `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
 - `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
-- `double[] getColumnSi(int col)` retrieves the SI-values of the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
-- `double[] mgetColumnSi(int mCol)` retrieves the SI-values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
+- `double[] getColumnSi(int col)` retrieves the SI values of the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
+- `double[] mgetColumnSi(int mCol)` retrieves the SI values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
 
 ## Mathematical operations for all matrices
@@ -109,7 +109,7 @@ A `Matrix` implements several mathematical operations. The most important ones a
 - `Q mean()` returns the mean quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `Q min()` returns the minimum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `Q max()` returns the maximum quantity value of the entries of the `Matrix` as a strongly typed `Quantity`.
-- `Q median()` returns the median quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
+- `Q median()` returns the median quantity value of the entries of the `Matrix` as a strongly typed `Quantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI values. When the number of entries in the matrix is even, the average of the two values that together make up the middle is returned. 
 - `Q sum()` returns the sum of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `M negate()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
 - `M abs()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
@@ -123,13 +123,13 @@ Square matrices have a number of additional operations:
 - `int order()` returns the number of rows or columns of the square matrix.
 - `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal entries. It results in a quantity with the same `displayUnit` as the original matrix.
 - `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be $U^n$ where $n$ is the order of the matrix, and $U$ is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
-- `double determinantSi()` returns the SI-value of the determinant of the square matrix as a `double` value.
+- `double determinantSi()` returns the SI value of the determinant of the square matrix as a `double` value.
 - `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. When the unit of the original matrix is $U$, the unit of of the inverse matrix is $U^{-1}$. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.
 - `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as $adj(M)$. When the unit of the original matrix is $U$, the unit of $adj(M)$ is $U^{(n-1)}$. The adjugate of a square matrix $A$ is the matrix $\mathrm{adj}(A)$ satisfying $A \cdot \mathrm{adj}(A) = \det(A) \cdot I$.
 - `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to $\sqrt(\mathrm{trace}(A^*\cdot A))$. It results in a quantity with the same unit as the original matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
 - `Vector getDiagonalVector()` returns the quantities on the diagonal as a column vector of the same quantity and size as the square matrix. The `displayUnit` will be the same as that of the matrix.
 - `Q[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` of the quantities will be the same as that of the matrix.
-- `double[] getDiagonalSi()` returns the SI-values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.
+- `double[] getDiagonalSi()` returns the SI values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.
 - `boolean isSymmetric()` returns whether the matrix is symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine symmetry.
 - `boolean isSymmetric(final Q tolerance)` returns whether the matrix is symmetric or not, using a provided tolerance.
 - `boolean isSkewSymmetric()` returns whether the matrix is skew-symmetric or not. A small tolerance of of 10<sup>-12</sup> times the largest absolute SI-quantity in the matrix is used to determine skew-symmetry. Skew-symmetry means that $A^T=-A$, or $a_{ij}=-a_{ji}$ for all entries $a_{ij}$.
@@ -143,7 +143,7 @@ Square matrices have a number of additional operations:
 Several methods exist to instantiate a `Matrix1x1`:
 
 - `new Matrix1x1<Q>(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Matrix1x1` based on an array of length 1 with SI-values for a quantity with a displayUnit.
+  creates a `Matrix1x1` based on an array of length 1 with SI values for a quantity with a displayUnit.
 - `Matrix1x1.of(double xInUnit, Unit unit)` <br>
   creates a `Matrix1x1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`.
 - `Matrix1x1.of(double[] dataInUnit, Unit unit)` <br>
@@ -151,7 +151,7 @@ Several methods exist to instantiate a `Matrix1x1`:
 - `Matrix1x1.of(double[][] gridInUnit, Unit unit)` <br>
   creates a `Matrix1x1` based on a 1x1 grid (array of arrays) of values expressed in the given unit.
 - `Matrix1x1.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Matrix1x1` based on an array of length 1 with SI-values for a quantity and a displayUnit.
+  creates a `Matrix1x1` based on an array of length 1 with SI values for a quantity and a displayUnit.
 - `Matrix1x1.ofSi(double[][] gridSi, Unit displayUnit)` <br>
   creates a `Matrix1x1` based on a 1x1 grid (array of arrays) of SI values and a displayUnit.
 - `Matrix1x1.of(Q[] data)` <br>
@@ -169,13 +169,13 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
 - `new Matrix2x2<Q>(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Matrix2x2` based on a row-major array of length 4 with SI-values for a quantity with a displayUnit.
+  creates a `Matrix2x2` based on a row-major array of length 4 with SI values for a quantity with a displayUnit.
 - `Matrix2x2.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Matrix2x2` based on a row-major array of length 4 with values expressed in the given unit.
 - `Matrix2x2.of(double[][] gridInUnit, Unit unit)` <br>
   creates a `Matrix2x2` based on a 2x2 grid (array of arrays) of values expressed in the given unit.
 - `Matrix2x2.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Matrix2x2` based on a row-major array of length 4 with SI-values for a quantity and a displayUnit.
+  creates a `Matrix2x2` based on a row-major array of length 4 with SI values for a quantity and a displayUnit.
 - `Matrix2x2.ofSi(double[][] gridSi, Unit displayUnit)` <br>
   creates a `Matrix2x2` based on a 2x2 grid (array of arrays) of SI values and a displayUnit.
 - `Matrix2x2.of(Q[] data)` <br>
@@ -193,13 +193,13 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
 - `new Matrix3x3<Q>(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Matrix3x3` based on a row-major array of length 9 with SI-values for a quantity with a displayUnit.
+  creates a `Matrix3x3` based on a row-major array of length 9 with SI values for a quantity with a displayUnit.
 - `Matrix3x3.of(double[] dataInUnit, Unit unit)` <br>
   creates a `Matrix3x3` based on a row-major array of length 9 with values expressed in the given unit.
 - `Matrix3x3.of(double[][] gridInUnit, Unit unit)` <br>
   creates a `Matrix3x3` based on a 3x3 grid (array of arrays) of values expressed in the given unit.
 - `Matrix3x3.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `Matrix3x3` based on a row-major array of length 9 with SI-values for a quantity and a displayUnit.
+  creates a `Matrix3x3` based on a row-major array of length 9 with SI values for a quantity and a displayUnit.
 - `Matrix3x3.ofSi(double[][] gridSi, Unit displayUnit)` <br>
   creates a `Matrix3x3` based on a 3x3 grid (array of arrays) of SI values and a displayUnit.
 - `Matrix3x3.of(Q[] data)` <br>
@@ -230,9 +230,9 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `MatrixNxN.of(double[][] gridInUnit, Unit unit)` <br>
   creates a `MatrixNxN` based on a grid (array of arrays) with values expressed in the given unit. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
 - `MatrixNxN.ofSi(double[] dataSi, Unit displayUnit)` <br>
-  creates a `MatrixNxN` based on a row-major array with SI-values for the quantities. The number of elements in the array needs to be a perfect square.
+  creates a `MatrixNxN` based on a row-major array with SI values for the quantities. The number of elements in the array needs to be a perfect square.
 - `MatrixNxN.ofSi(double[][] gridSi, Unit displayUnit)` <br>
-  creates a `MatrixNxN` based on a grid (array of arrays) with with SI-values for the quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
+  creates a `MatrixNxN` based on a grid (array of arrays) with with SI values for the quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
 - `MatrixNxN.of(Q[] data)` <br>
   creates a `MatrixNxN` based on a row-major array with quantities. The number of elements in the array needs to be a perfect square.
 - `MatrixNxN.of(Q[][] grid)` <br>
@@ -261,9 +261,9 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `MatrixNxM.of(double[][] gridInUnit, Unit unit)` <br>
   creates a `MatrixNxM` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
 - `MatrixNxM.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit)` <br>
-  creates a `MatrixNxM` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+  creates a `MatrixNxM` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
 - `MatrixNxM.ofSi(double[][] gridSi, Unit displayUnit)` <br>
-  creates a `MatrixNxM` based on a grid (array of arrays) with with SI-values for the quantities. The grid cannot be 'ragged'.
+  creates a `MatrixNxM` based on a grid (array of arrays) with with SI values for the quantities. The grid cannot be 'ragged'.
 - `MatrixNxM.of(Q[] data, int rows, int cols)` <br>
   creates a `MatrixNxM` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.
 - `MatrixNxM.of(Q[][] grid)` <br>

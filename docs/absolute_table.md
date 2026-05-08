@@ -44,10 +44,10 @@ A `AbsQuantityTable` contains the following methods to obtain its values:
 
 ### SI-based value methods
 
-- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI-values of the entries in the quantity table. The SI-values are relative to the reference point of the quantity table.
-- `double[] getSiArray()` returns the values of the quantity table in SI-units as a row-major `double[]` array with the same length as the quantity table. This means that for a quantity table with n rows and m columns, the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>]. The SI-values are relative to the reference point of the quantity table.
-- `double si(int row, int col)` returns the SI-value of the entry at the 0-based row and column.  The SI-value is relative to the reference point of the quantity table.
-- `double msi(int mRow, int mCol)` returns the SI-value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`.  The SI-value is relative to the reference point of the quantity table.
+- `double[][] getSiGrid()` returns a 2-dimensional `double[][]` array with the SI values of the entries in the quantity table. The SI values are relative to the reference point of the quantity table.
+- `double[] getSiArray()` returns the values of the quantity table in SI-units as a row-major `double[]` array with the same length as the quantity table. This means that for a quantity table with n rows and m columns, the data is stored as [a<sub>11</sub>, a<sub>12</sub>, ..., a<sub>1m</sub>, a<sub>21</sub>, a<sub>22</sub>, ..., a<sub>2m</sub>, ..., a<sub>n1</sub>, a<sub>n2</sub>, ..., a<sub>nm</sub>]. The SI values are relative to the reference point of the quantity table.
+- `double si(int row, int col)` returns the SI value of the entry at the 0-based row and column.  The SI value is relative to the reference point of the quantity table.
+- `double msi(int mRow, int mCol)` returns the SI value of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`.  The SI value is relative to the reference point of the quantity table.
 
 
 ### Quantity-based value methods
@@ -65,8 +65,8 @@ A `AbsQuantityTable` contains the following methods to obtain its values:
 - `AbsVectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit` and reference point as the original `AbsQuantityTable`.
 - `A[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original quantity table. 
 - `A[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original matrix. Note that the resulting `A[]` array is 0-based.
-- `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI-values. The values are relative to the reference point of the quantity table.
-- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI-values. Note that the resulting `double[]` array is 0-based. The values are relative to the reference point of the quantity table.
+- `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI values. The values are relative to the reference point of the quantity table.
+- `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based. The values are relative to the reference point of the quantity table.
 
 
 ### Retrieving quantity table columns
@@ -75,8 +75,8 @@ A `AbsQuantityTable` contains the following methods to obtain its values:
 - `AbsVectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit` and reference point as the original `AbsQuantityTable`.
 - `A[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original quantity table. 
 - `A[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original quantity table. Note that the resulting `A[]` array is 0-based.
-- `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI-values. The values are relative to the reference point of the quantity table.
-- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI-values. Note that the resulting `double[]` array is 0-based. The values are relative to the reference point of the quantity table.
+- `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI values. The values are relative to the reference point of the quantity table.
+- `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based. The values are relative to the reference point of the quantity table.
 
 
 ## Mathematical operations for `AbsQuantityTable`
@@ -86,7 +86,7 @@ A `AbsQuantityTable` implements several mathematical operations. The most import
 - `A mean()` returns the mean quantity value of the entries of the `AbsQuantityTable` as a strongly typed `AbsQuantity`.
 - `A min()` returns the minimum quantity value of the entries of the `AbsQuantityTable` as a strongly typed `AbsQuantity`.
 - `A max()` returns the maximum quantity value of the entries of the `AbsQuantityTable` as a strongly typed `AbsQuantity`.
-- `A median()` returns the median quantity value of the entries of the `AbsQuantityTable` as a strongly typed `AbsQuantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI-values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
+- `A median()` returns the median quantity value of the entries of the `AbsQuantityTable` as a strongly typed `AbsQuantity`. The median value is the value  of the middle entry when all entries have been sorted on their SI values. When the number of entries in the quantity table is even, the average of the two values that together make up the middle is returned. 
 
 
 ## Transforming the `AbsQuantityTable`
@@ -117,9 +117,9 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `AbsQuantityTable.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The data is relative to the provided reference point. The grid cannot be 'ragged'.
 - `AbsQuantityTable.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsQuantityTable` based on a row-major array with SI-values for the quantities. The length of the array needs to be equal to `rows * cols`.
+  creates an `AbsQuantityTable` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
 - `AbsQuantityTable.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
-  creates an `AbsQuantityTable` based on a grid (array of arrays) with with SI-values for the quantities, a display unit and a reference point. The grid cannot be 'ragged'.
+  creates an `AbsQuantityTable` based on a grid (array of arrays) with with SI values for the quantities, a display unit and a reference point. The grid cannot be 'ragged'.
 - `AbsQuantityTable.of(Q[] data, int rows, int cols, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a row-major array with quantities, and a reference point for the values. The length of the array needs to be equal to `rows * cols`.
 - `AbsQuantityTable.of(Q[][] grid, Reference reference)` <br>
