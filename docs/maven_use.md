@@ -23,7 +23,7 @@ Older versions of DJUNITS libraries are stored on a server at TU Delft at [https
 DJUNITS is directly dependent on the following libraries:
 
 * **jakarta.annotation-api** for manipulating annotations using java versions later than Java-8.
-* **djutils-base** for a number of common operations such as logging. djutils-base has a few dependencies itself.
+* **djutils-base** for a number of common operations such as logging. djutils-base has a few dependencies itself, see [https://djutils.org/manual/djutils-base/#dependencies](https://djutils.org/manual/djutils-base/#dependencies)
 
 For testing, the following libraries are used:
 
