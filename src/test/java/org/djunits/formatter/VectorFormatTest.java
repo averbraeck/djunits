@@ -61,7 +61,7 @@ public class VectorFormatTest
         assertTrue(s2.endsWith("] J"));
 
         String s3 = ev.format(
-                VectorFormat.Row.defaults().setVectorPrefix("R").setSeparatorSymbol(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Row.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -69,7 +69,7 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("R("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("R").setSeparatorSymbol(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -106,7 +106,7 @@ public class VectorFormatTest
         assertTrue(s2.contains("\n"));
 
         String s3 = ev.format(
-                VectorFormat.Col.defaults().setVectorPrefix("C").setSeparatorSymbol(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Col.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -115,7 +115,7 @@ public class VectorFormatTest
         assertTrue(s3.endsWith(") J"));
         assertFalse(s3.contains("\n"));
 
-        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("C").setSeparatorSymbol(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -143,7 +143,7 @@ public class VectorFormatTest
         assertTrue(s2.endsWith("] J"));
 
         String s3 = ev.format(
-                VectorFormat.Row.defaults().setVectorPrefix("C").setSeparatorSymbol(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Row.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -151,7 +151,7 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("C("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("C").setSeparatorSymbol(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -179,7 +179,7 @@ public class VectorFormatTest
         assertTrue(s2.endsWith("] J"));
 
         String s3 = ev.format(
-                VectorFormat.Col.defaults().setVectorPrefix("R").setSeparatorSymbol(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Col.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -188,7 +188,7 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("R("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("R").setSeparatorSymbol(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));

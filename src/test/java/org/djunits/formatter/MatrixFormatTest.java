@@ -63,9 +63,9 @@ public class MatrixFormatTest
         assertTrue(s2.endsWith("| J"));
 
         String s3 = ev
-                .format(MatrixFormat.defaults().setMatrixPrefix("Mat ").setColSeparatorSymbol(" , ").setFirstRowStartSymbol("/")
-                        .setFirstRowEndSymbol(" \\\n").setMiddleRowStartSymbol("    |").setMiddleRowEndSymbol(" | \n")
-                        .setLastRowStartSymbol("    \\").setLastRowEndSymbol(" /").setMatrixPostfix(" unit ="));
+                .format(MatrixFormat.defaults().setMatrixPrefix("Mat ").setColSeparator(" , ").setFirstRowStart("/")
+                        .setFirstRowEnd(" \\\n").setMiddleRowStart("    |").setMiddleRowEnd(" | \n")
+                        .setLastRowStart("    \\").setLastRowEnd(" /").setMatrixPostfix(" unit ="));
         String[] s3Arr = s3.split("\\R");
         assertTrue(s3Arr[0].contains("1200.345"));
         assertTrue(s3Arr[0].contains("123.456"));
@@ -78,7 +78,7 @@ public class MatrixFormatTest
         assertTrue(s3Arr[2].startsWith("    \\"));
         assertTrue(s3Arr[2].endsWith("/ unit = J"));
 
-        String s4 = ev.format(MatrixFormat.defaults().setColSeparatorSymbol(" ").setDisplayUnit("kJ"));
+        String s4 = ev.format(MatrixFormat.defaults().setColSeparator(" ").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
         assertTrue(s4.contains("5.432"));
@@ -175,13 +175,13 @@ public class MatrixFormatTest
         AbsMatrix1x1<Temperature, TemperatureDifference> temp =
                 AbsMatrix1x1.of(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
 
-        String s1 = energy.format(MatrixFormat.defaults().setSiUnits().setFirstRowEndSymbol(" |"));
+        String s1 = energy.format(MatrixFormat.defaults().setSiUnits().setFirstRowEnd(" |"));
         assertEquals("|   1234.500 | kgm2/s2", s1);
 
-        String s2C = temp.format(MatrixFormat.defaults().setSiUnits().setFirstRowEndSymbol(" |"));
+        String s2C = temp.format(MatrixFormat.defaults().setSiUnits().setFirstRowEnd(" |"));
         assertEquals("|     20.000 | K", s2C);
 
-        String s3C = temp.format(MatrixFormat.defaults().setSiUnits().setFirstRowEndSymbol(" |").setPrintReference()
+        String s3C = temp.format(MatrixFormat.defaults().setSiUnits().setFirstRowEnd(" |").setPrintReference()
                 .setReferencePrefix(" (").setReferencePostfix(")"));
         assertEquals("|     20.000 | K (CELSIUS)", s3C);
     }
@@ -207,8 +207,8 @@ public class MatrixFormatTest
             assertTrue(s1.endsWith("| J"));
 
             MatrixFormat.changeDefaults().setFixedWithSciFallback().setDecimals(1).setWidth(10).setGroupingSeparator(true)
-                    .setFirstRowStartSymbol("/ ").setFirstRowEndSymbol(" \\\n").setLastRowStartSymbol("\\ ")
-                    .setLastRowEndSymbol(" /");
+                    .setFirstRowStart("/ ").setFirstRowEnd(" \\\n").setLastRowStart("\\ ")
+                    .setLastRowEnd(" /");
             s1 = ev.toString();
             assertTrue(s1.contains("1,200.3 "));
             assertTrue(s1.contains("123.5 "));
