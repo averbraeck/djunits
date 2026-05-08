@@ -123,7 +123,7 @@ public class Time extends AbsQuantity<Time, Duration, Time.Reference>
     public static final class Reference extends AbstractReference<Reference, Time, Duration>
     {
         /** Gregorian. */
-        public static final Reference GREGORIAN = new Reference("GREGORIAN", "Gregorian time origin (1-1-0000)");
+        public static final Reference GREGORIAN = new Reference("GREGORIAN", "Gregorian time origin (1-1-0001)");
 
         /** Unix. */
         public static final Reference UNIX = new Reference("UNIX", "UNIX epoch, 1-1-1970, 00:00 GMT");
