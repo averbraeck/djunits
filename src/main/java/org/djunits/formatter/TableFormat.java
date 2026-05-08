@@ -69,7 +69,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param startSymbol new startSymbol for a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setMiddleRowStartSymbol(final String startSymbol)
+    public TableFormat setMiddleRowStart(final String startSymbol)
     {
         this.ctx.middleRowStartSymbol = startSymbol;
         return this;
@@ -80,7 +80,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param endSymbol new endSymbol for a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setMiddleRowEndSymbol(final String endSymbol)
+    public TableFormat setMiddleRowEnd(final String endSymbol)
     {
         this.ctx.middleRowEndSymbol = endSymbol;
         return this;
@@ -91,7 +91,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param startSymbol new start symbol for the first row in a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setFirstRowStartSymbol(final String startSymbol)
+    public TableFormat setFirstRowStart(final String startSymbol)
     {
         this.ctx.firstRowStartSymbol = startSymbol;
         return this;
@@ -102,7 +102,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param endSymbol new end symbol for the first row in a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setFirstRowEndSymbol(final String endSymbol)
+    public TableFormat setFirstRowEnd(final String endSymbol)
     {
         this.ctx.firstRowEndSymbol = endSymbol;
         return this;
@@ -113,7 +113,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param startSymbol new start symbol for the last row in a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setLastRowStartSymbol(final String startSymbol)
+    public TableFormat setLastRowStart(final String startSymbol)
     {
         this.ctx.lastRowStartSymbol = startSymbol;
         return this;
@@ -124,7 +124,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param endSymbol new end symbol for the last row in a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setLastRowEndSymbol(final String endSymbol)
+    public TableFormat setLastRowEnd(final String endSymbol)
     {
         this.ctx.lastRowEndSymbol = endSymbol;
         return this;
@@ -135,7 +135,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * @param separatorSymbol new separatorSymbol for a table
      * @return TableFormat object for fluent design
      */
-    public TableFormat setColSeparatorSymbol(final String separatorSymbol)
+    public TableFormat setColSeparator(final String separatorSymbol)
     {
         this.ctx.colSeparatorSymbol = separatorSymbol;
         return this;

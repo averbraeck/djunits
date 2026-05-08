@@ -69,7 +69,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param startSymbol new startSymbol for a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setMiddleRowStartSymbol(final String startSymbol)
+    public MatrixFormat setMiddleRowStart(final String startSymbol)
     {
         this.ctx.middleRowStartSymbol = startSymbol;
         return this;
@@ -80,7 +80,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param endSymbol new endSymbol for a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setMiddleRowEndSymbol(final String endSymbol)
+    public MatrixFormat setMiddleRowEnd(final String endSymbol)
     {
         this.ctx.middleRowEndSymbol = endSymbol;
         return this;
@@ -91,7 +91,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param startSymbol new start symbol for the first row in a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setFirstRowStartSymbol(final String startSymbol)
+    public MatrixFormat setFirstRowStart(final String startSymbol)
     {
         this.ctx.firstRowStartSymbol = startSymbol;
         return this;
@@ -102,7 +102,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param endSymbol new end symbol for the first row in a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setFirstRowEndSymbol(final String endSymbol)
+    public MatrixFormat setFirstRowEnd(final String endSymbol)
     {
         this.ctx.firstRowEndSymbol = endSymbol;
         return this;
@@ -113,7 +113,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param startSymbol new start symbol for the last row in a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setLastRowStartSymbol(final String startSymbol)
+    public MatrixFormat setLastRowStart(final String startSymbol)
     {
         this.ctx.lastRowStartSymbol = startSymbol;
         return this;
@@ -124,7 +124,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param endSymbol new end symbol for the last row in a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setLastRowEndSymbol(final String endSymbol)
+    public MatrixFormat setLastRowEnd(final String endSymbol)
     {
         this.ctx.lastRowEndSymbol = endSymbol;
         return this;
@@ -135,7 +135,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * @param separatorSymbol new separatorSymbol for a matrix
      * @return MatrixFormat object for fluent design
      */
-    public MatrixFormat setColSeparatorSymbol(final String separatorSymbol)
+    public MatrixFormat setColSeparator(final String separatorSymbol)
     {
         this.ctx.colSeparatorSymbol = separatorSymbol;
         return this;

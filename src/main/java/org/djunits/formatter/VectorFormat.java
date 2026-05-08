@@ -48,11 +48,11 @@ public abstract class VectorFormat<F extends VectorFormat<F>> extends Format<F, 
     }
 
     /**
-     * Set the separator symbol to use for a vector, e.g., ", ".
-     * @param separatorSymbol new separatorSymbol for a vector
+     * Set the separator symbol between cells to use for a vector, e.g., ", ".
+     * @param separatorSymbol new separator symbol between cells for a vector
      * @return VectorFormat object for fluent design
      */
-    public F setSeparatorSymbol(final String separatorSymbol)
+    public F setCellSeparator(final String separatorSymbol)
     {
         this.ctx.separatorSymbol = separatorSymbol;
         return self();
