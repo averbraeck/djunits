@@ -82,7 +82,7 @@ Several functions can be applied to a quantity, yielding a new quantity with the
 
 - `Q abs()` returns a quantity with the absolute value of the SI value.
 - `Q divideBy(double factor)` returns a new quantity with an SI value of `si/factor`.
-- `Q interpolate(Q zero, Q one, double ratio)` returns a value between quantity `zero` and quantity `one` where the SI value is `zero.si * (1.0 - ratio) + one * ratio`. So, when `ratio` is zero, the outcome will be the value of the `zero` quantity, and when `ratio` is one, the outcome will be the value of the `one` quantity.
+- `Q interpolate(Q zero, Q one, double ratio)` returns a value between quantity `zero` and quantity `one` where the SI value is `zero.si * (1.0 - ratio) + one * ratio`. So, when `ratio` is zero, the outcome will be the value of the `zero` quantity, and when `ratio` is one, the outcome will be the value of the `one` quantity. The value of `ratio` has to be between zero and one, so extrapolation is not possible with this method.
 - `Q max(Q q1, Q... quantities)` returns the maximum value (using the SI value) of the provided quantities.
 - `Q mean(Q q1, Q... quantities)` returns the mean value (using the SI value) of the provided quantities.
 - `Q min(Q q1, Q... quantities)` returns the minimum value (using the SI value) of the provided quantities.
