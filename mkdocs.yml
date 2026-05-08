@@ -43,6 +43,7 @@ nav:
   - Absolute Matrix: absolute_matrix.md
   - Absolute Table: absolute_table.md
   - Data Storage: storage.md
+  - Formatting: formatting.md
   - Localization: localization.md
   - Migrating v5-v6: migration.md
   - Code generation: code_generation.md
