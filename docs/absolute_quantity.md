@@ -1,7 +1,7 @@
 # Absolute quantity
 
 An absolute quantity contains a value measured from a given reference point. Examples are time with a reference point 1-1-1970 (UNIX epoch) or 
-a reference point 1-1-0000 (Gregorian calendar time). As an other example, a geographical direction can be defined relative to North or East 
+a reference point 1-1-0001 (Gregorian calendar time). As an other example, a geographical direction can be defined relative to North or East 
 as a reference point. Therefore, an absolute quantity is a quantity _relative to a defined reference point_. Every absolute quantity has its 
 own type of reference point: a `Time` has a `Time.Reference`, and a `Position` has a `Position.Reference`. Multiple instances of
 reference points can be defined, such as `EAST` and `NORTH` in the `Direction` example. References can be defined relative to each other:
@@ -13,7 +13,7 @@ Absolute quantities therefore have three fields as compared to two fields for a 
 - the relative value in SI or BASE units relative to the reference point (e.g., an `Angle` of &pi;/4 rad).
 - the display unit to use (e.g., `Angle.Unit.deg`).
 
-The above example results in a north-easterly direction, since a positive `Angle` is defined clockwise. 
+The above example results in a north-easterly direction, since a positive `Angle` is defined clockwise when viewed from above. 
 
 The relation between (relative) quantities and absolute quantities is sketched in the class diagram below. Note that whereas the absolute quantities are inherited from the `AbsQuantity` class, we inherit a relative quantity in DJUNITS from the class `Quantity`, without a 'relative' prefix.
 
@@ -22,20 +22,21 @@ The relation between (relative) quantities and absolute quantities is sketched i
 
 ## Operations on absolute quantities
 
-Adding two absolute values together makes no sense. Subtracting one absolute value from another does make sense 
-(and results in a relative value). Subtracting East from North should result in a relative angle of ±90° or ±π/2 rad (depending on the unit used 
-to express the result). An absolute quantity always needs a reference to be useful. Values subtracted from each other need to know 
-their reference to be able to carry out the subtraction. Therefore, the reference is explicitly stored with an absolute quantity.
+Adding two absolute quantities together makes no sense. Subtracting one absolute quantity from another does make sense 
+(and results in a relative quantity). Subtracting East from North should result in a relative angle of ±90° or ±π/2 rad (depending on 
+the unit used to express the result). An absolute quantity always needs a reference to be useful. Values subtracted from each 
+other need to know their reference to be able to carry out the subtraction. Therefore, the reference is explicitly stored with 
+an absolute quantity.
 
-A relative value expresses the difference between two (absolute or relative) values. The angle in the example above is a relative 
-value. Relative values can be added together and subtracted from each other (resulting in relative values). Adding a relative 
-value to an absolute value results in an absolute value. Subtracting a relative value from an absolute value also results in 
-an absolute value.
+A relative quantity typically expresses a difference between two (absolute or relative) quantity values. The angle in the example above is 
+a relative quantity. Relative quantities can be added together and subtracted from each other (resulting in relative quantities). 
+Adding a relative quantity to an absolute quantity results in an absolute quantity. Subtracting a relative quantity from an absolute 
+quantity also results in an absolute quantity.
 
 In the geographical example, directions are absolute and angles are relative. Similarly, when applied to lengths, positions are 
 absolute and distances are relative.
 
-Generally, if adding a value to itself makes no sense, the value is absolute; otherwise it is relative.
+Generally, if adding a quantity to itself makes no sense, the quantity is absolute; otherwise it is relative.
 
 | Operation   | Operands              | Result      |
 | ----------- | --------------------- | ----------- |
@@ -82,32 +83,41 @@ mentioned in the constructor.
 
 ```java
 Temperature t = new Temperature(0.0, Temperature.Unit.degF);
-System.out.println("Temperature t  = " + t + ", si = " + t.si());
-System.out.println("t in Kelvin    = " + t.toString(Temperature.Unit.K));
-System.out.println("t in Celsius   = " + t.toString(Temperature.Unit.degC));
+System.out.println("Temperature t = " + t);
 
 // add 32 degrees Fahrenheit - should be 0 Celsius
-System.out.println("\nadd 32 degrees Fahrenheit - should be 0 Celsius");
+System.out.println("\nAdd 32 degrees Fahrenheit - should be 0 Celsius");
 TemperatureDifference t32 = new TemperatureDifference(32.0, Temperature.Unit.degF);
 Temperature t2 = t.add(t32);
 System.out.println("Temperature t2 = " + t2);
-System.out.println("t2 in Kelvin   = "
-    + t2.relativeTo(Temperature.Reference.KELVIN).toString(Temperature.Unit.K));
-System.out.println("t2 in Celsius  = " 
-    + t2.relativeTo(Temperature.Reference.CELSIUS).toString(Temperature.Unit.degC));
+System.out.println("t2 in Kelvin   = " + t2.relativeTo(Temperature.Reference.KELVIN)
+    .format(Temperature.Unit.K));
+System.out.println("t2 in Celsius  = " + t2.relativeTo(Temperature.Reference.CELSIUS)
+    .format(Temperature.Unit.degC));
+
+// show that absolute values can be shown relative to different reference points
+System.out.println("\nTemperature t  = " + t + ", si = " + t.si());
+System.out.println("t in Kelvin    = " + t.format(QuantityFormat.defaults()
+    .setDisplayUnit(Temperature.Unit.K)
+    .setPrintReference().setReferencePrefix(" (relative to 0 ")));
+System.out.println("t in Celsius   = " + t.format(QuantityFormat.defaults()
+    .setDisplayUnit(Temperature.Unit.degC)
+    .setPrintReference().setReferencePrefix(" (relative to 0 ")));
 ```
 
 This prints:
 
 ```
-Temperature t  = 0.00000000 °F (FAHRENHEIT), si = 0.0
-t in Kelvin    = 0.00000000 K (FAHRENHEIT)
-t in Celsius   = 0.00000000 °C (FAHRENHEIT)
+Temperature t = 0 °F
 
-add 32 degrees Fahrenheit - should be 0 Celsius
-Temperature t2 = 32.0000000 °F (FAHRENHEIT)
-t2 in Kelvin   = 491.670000 K (KELVIN)
-t2 in Celsius  = 0.00000000 °C (CELSIUS)
+Add 32 degrees Fahrenheit - should be 0 Celsius
+Temperature t2 = 32 °F
+t2 in Kelvin   = 273.15 K
+t2 in Celsius  = 0 °C
+
+Temperature t  = 0 °F, si = 0.0
+t in Kelvin    = 0 K (relative to 0 FAHRENHEIT)
+t in Celsius   = 0 °C (relative to 0 FAHRENHEIT)
 ```
 
 Note that a Celsius temperature difference can be defined relative to 0 degrees Fahrenheit. Of course, this is typically not done;
