@@ -90,5 +90,5 @@ The program will print the following output:
 
 ## Defining a completely new Unit
 
-Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the [Define quantity section](define_quantity).
+Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the [Define quantity section](define_quantity.md).
 
