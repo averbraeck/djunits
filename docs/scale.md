@@ -6,7 +6,7 @@ A `Scale` takes care of converting values as displayed for the user to and from 
 
 * A `LinearScale` is used for most units. A linear scale is a scale that is both additive and multiplicative. I.e. `toIdentityScale(a * b + c) == a * toIdentityScale(b) + toIdentityScale(c)`.
 * The `IdentityScale` is a special case of a LinearScale where `toIdentityScale(a) == a`.
-* The `GradeScale` is used to express grades and angles in percentages.
+* The `GradeScale` is used to express grades and angles in percentages. The `GradeScale` is neither additive nor multiplicative.
 
 The `Scale` interface prescribes that a scale must implement these three methods:
 

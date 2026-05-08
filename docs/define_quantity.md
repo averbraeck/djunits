@@ -1,6 +1,6 @@
 # Defining a new Quantity
 
-Scalar quantities are the foundation of DJUNITS. A quantity wraps a value (double precision floating point) and a corresponding unit. DJUNTIS contains class files for many different quantities, but users can create not-builtin quantities using the `SIQuantity` class. The instructions below show how to create a new quantity: the [Jerk](https://en.wikipedia.org/wiki/Jerk_(physics)). Jerk expresses change in acceleration per time unit. The Jerk has m/s<sup>3</sup> as the SI unit.
+Scalar quantities are the foundation of DJUNITS. A quantity wraps a value (double precision floating point) and a corresponding unit. DJUNITS contains class files for many different quantities, but users can create not-builtin quantities using the `SIQuantity` class. The instructions below show how to create a new quantity: the [Jerk](https://en.wikipedia.org/wiki/Jerk_(physics)). Jerk expresses change in acceleration per time unit. The Jerk has m/s<sup>3</sup> as the SI unit.
 
 To create a Jerk quantity that can be constructed from a value in, e.g. ft/s<sup>3</sup>, a `Jerk` class and `Jerk.Unit` class need to be written.
 
@@ -37,6 +37,25 @@ public static Jerk ofSi(final double valueSi)
     return new Jerk(valueSi, Jerk.Unit.SI);
 }
 ```
+
+
+## Multiplication and division methods
+
+Often, extra methods are implemented for common multiplications and divisions involving the just defined type and other types. E.g., when we multiply the `Jerk` by a `Duration`, we get an `Acceleration`. If we divide it by an `Acceleration`, we get a `Frequency` (m/s<sup>3</sup> / m/s<sup>2</sup> = 1/s). Such additional methods can be defined as follows:
+
+```java
+public Acceleration multiply(final Duration v)
+{
+    return Acceleration.ofSi(this.si() * v.si());
+}
+
+public Frequency divide(final Acceleration v)
+{
+    return Frequency.ofSi(this.si() / v.si());
+}
+```
+
+Due to the fact that all values are internally stored in standard (if possible SI) units, no scale factors are needed. This reduces the chances for errors considerably and is the main reason for using the SI system in science and engineering as much as possible. With these additional methods defined, the Java compiler will know the result type of the common multiplications and divisions and catch programmer errors at compile time.
 
 
 ## Building the new Unit for the Jerk Quantity
@@ -117,26 +136,7 @@ public Jerk.Unit deriveUnit(final String textualAbbreviation,
 }
 ```
 
-The difference between the two constructors is whether there is a separate textual abbreviation (e.g. using `mu` for &mu; in micro) from the display abbreviation. The `siUnit()` method indicates the unit using a combination of the base SI unit symbols: rad, sr, kg, m, s, A, K, mol, cd with their powers. In this case, the `SIUnit` is defined from the String `m/s3`. The `getBaseUnit()` method returns the unit belonging to the SI or BASE value. The `ofSi(si)` method allows a unit to instantiate its corresponding quantity. This is heavily used in underlying methods of the `Quantity` and `AbstractUnit`, as well as in vector and matrix operations. Finally, the `deriveUnit` method has to be defined to allow a linearly scaled unit to be defined in a easy way.
-
-
-## Multiplication and division methods
-
-Often, extra methods are implemented for common multiplications and divisions involving the just defined type and other types. E.g., when we multiply the `Jerk` by a `Duration`, we get an `Acceleration`. If we divide it by an `Acceleration`, we get a `Frequency` (m/s<sup>3</sup> / m/s<sup>2</sup> = 1/s). Such additional methods can be defined as follows:
-
-```java
-public Acceleration multiply(final Duration v)
-{
-    return Acceleration.ofSi(this.si() * v.si());
-}
-
-public Frequency divide(final Acceleration v)
-{
-    return Frequency.ofSi(this.si() / v.si());
-}
-```
-
-Due to the fact that all values are internally stored in standard (if possible SI) units, no scale factors are needed. This reduces the chances for errors considerably and is the main reason for using the SI system in science and engineering as much as possible. With these additional methods defined, the Java compiler will know the result type of the common multiplications and divisions and catch programmer errors at compile time.
+The difference between the two constructors is whether there is a separate textual abbreviation (e.g. using `mu` for &mu; in micro) from the display abbreviation. The `siUnit()` method defines the unit using a combination of the base SI unit symbols: rad, sr, kg, m, s, A, K, mol, cd with their powers. In this case, the `SIUnit` is defined from the String `m/s3`. The `getBaseUnit()` method returns the unit belonging to the SI or BASE value. The `ofSi(si)` method allows a unit to instantiate its corresponding quantity. This is heavily used in underlying methods of the `Quantity` and `AbstractUnit`, as well as in vector and matrix operations. Finally, the `deriveUnit` method has to be defined to allow a linearly scaled unit to be defined in a easy way.
 
 
 ## Example usage of the new quantity
