@@ -115,7 +115,7 @@ Quantities have a `toString()` method that returns a String representation of th
 - `String format(Unit displayUnit)` returns the localized string representation of a quantity, using the provided unit. 
 - `String format(QuantityFormat format)` formats the quantity using the provided format parameters.
 
-See the section [Formatting](../formatting.md) for more information on how to use the `QuantityFormat` options.
+See the section [Formatting](formatting.md) for more information on how to use the `QuantityFormat` options.
 
 
 ## Examples of Quantity operations
