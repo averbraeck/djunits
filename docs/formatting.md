@@ -149,12 +149,12 @@ outputs:
 
 Quantity formatting is done using the `QuantityFormat` class. Since `QuantityFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
 
-The `QuantityFormat` class has one additional setting, which is the formatting using SI prefixes. Using SI prefixes means that 1200 J will be displayed as 1.2 kJ, and 1.34&sdot;10<sup>-6</sup> m will be displayed as 1.34 \micro;m. 
+The `QuantityFormat` class has one additional setting, which is the formatting using SI prefixes. Using SI prefixes means that 1200 J will be displayed as 1.2 kJ, and 1.34&sdot;10<sup>-6</sup> m will be displayed as 1.34 &micro;m. 
 
 - `setScaleSiPrefixes()` turns on the scaling of SI prefixes. By default, any 10th power between -30 and +32 (inclusive) will be translated to the nearest SI unit. So, 1200 m will be turned into 1.2 km, and 1.45E-9 s will be transformed into 1.45 ns. 
 - `setScaleSiPrefixes(minPrefixPower, maxPrefixPower)` turns on the scaling of SI prefixes if the 10th power is between `minPrefixPower` and `maxPrefixPower`, inclusive. This can be used to prevent transformations that are not often used. For length, for instance, units above the km are not often used -- we typically do not use Mm, Gm, etc. But &micro;m, nm, pm, are often used. By calling `setScaleSiPrefixes(-30, 3)`, the intended prefixes are used. 1,000,000 m will remain in meters in this case. 
 
-> **Note** that the unit will have to be translated into the SI unit to make this work. In other words, an energy in `meV` will not be automatically translated into `J` an SI prefix. In a future version of djunits, this might be done automatically.:
+> **Note** that the unit will have to be translated into the SI unit to make this work. In other words, an energy in `MeV` will not be automatically translated into `J` an SI prefix. In a future version of djunits, this might be done automatically.:
 
 ```java
 Energy energy = new Energy(13.34, "GeV");
@@ -168,17 +168,70 @@ prints:
 2.1373036297559995 nJ
 ```
 
-> **Note** that the `setScaleSiPrefixes()` also works for the `kg`, which already starts with a 10<sup>3</sup> power as the default unit. The scaling in `setScaleSiPrefixes(minPrefixPower, maxPrefixPower)` is treated relative to the `g`, so if you want to print `kg`, but no `Mg`, and you do not want to go below the pg, use `setScaleSiPrefixes(-12, 3)`. The scaling also works for 'per' units, such as 'per mol', 'per kg', etc.
+> **Note** that the `setScaleSiPrefixes()` also works for the `kg`, which already starts with a 10<sup>3</sup> power as the default unit. The scaling in `setScaleSiPrefixes(minPrefixPower, maxPrefixPower)` is treated relative to the `g`, so if you want to print `kg`, but no `Mg`, and you do not want to go below the `pg`, use `setScaleSiPrefixes(-12, 3)`. The scaling also works for 'per' units, such as 'per mol', 'per kg', etc.
 
 
 ## Vector formatting
 
+Vector formatting is done using the `VectorFormat.Col` class that formats a (row or column) vector as a column using one line per cell, or the `VectorFormat.Row` class that formats a (row or column) vector as a row, using one line. Since `VectorFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
+
+> **Note** that the `VectorFormat.Col` and `VectorFormat.Row` class can both be used for row vectors and column vectors. This means that a row vector can be formatted as a column vector and vice versa. It's just formatting, and the vector itself is not and does not need to be transposed to format it in the other 'direction'.
+
 
 ## Matrix fomatting
+
+Matrix formatting is done using the `MatrixFormat` class. Since `MatrixFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
 
 
 ## QuantityTable formatting
 
+Quantity table formatting is done using the `TableFormat` class. Since `TableFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
+
 
 ## Changing default values
 
+
+## Technical implementation
+
+The format settings are stored in a `FormatContext`. `FormatContext` contains the settings for value, unit, locale and reference. The class is extended into a separate `FormatContext` classes for quantity (`QuantityFormatContext`), vector (`VectorFormatContext`), matrix (`MatrixFormatContext`), and quantity table (`TableFormatContext`). Each `FormatContext` is filled with the default values of the different settings. The diagram below shows the relationships between the `Format`, `FormatContext` and `Formatter` for quantity and matrix.
+
+![](images/format.png)
+
+The `Format` is accessible to the user to set the preferences for formatting. These are stored in an instance of `FormatContext`. The `Formatter` uses the `FormatContext` to decide how to format the object. The abstract class `Formatter` takes care of formatting numbers, units and reference points, as well as setting the correct locale. Since, e.g., `QuantityFormatter` extends the `Formatter`, these functions are available to the `QuantityFormatter` as well. 
+
+Below, the inner working of `QuantityFormatter` is explained. The other formatters work in a similar way. The `QuantityFormatter` has a field `DEFAULT`, which is an instance of the context, and contains the **current** default values, which can have been changed by the user:
+
+```java
+private static QuantityFormatContext DEFAULT = new QuantityFormatContext();
+```
+
+When calling `QuantityFormat.defaults()`, a **clone** of this `DEFAULT` object instance is returned (that is why `FormatContext implements Cloneable`). The `set` operations for numbers, units, reference points, locale, and quantity change field values in the clone of the default object instance. This object is subsequently used by the `Formatter` object to apply these options when building a string that is the result of the `format` operation. 
+
+Each `Format` class has its own `DEFAULT` object (and `VectorFormat` has two, one for `Row` and one for `Col`). Default settings for each `Format` object can differ: where `QuantityFormat` and `VectorFormat.Row` format the value with a variable length, `VectorFormat.Col`, `MatrixFormat` and `TableFormat` have a fixed length for the value to align the values. This is done with a static initializer:
+
+```java
+private static TableFormatContext DEFAULT = makeDefault();
+
+private static TableFormatContext makeDefault()
+{
+    var tfc = new TableFormatContext();
+    tfc.formatMode = FloatFormatMode.FIXED_WITH_SCI_FALLBACK;
+    return tfc;
+}
+```
+
+As was shown above, the default settings can be changed. This is done by giving access to the `DEFAULT` object itself. Any `set` method now changes the values of the `DEFAULT` object. When this object is cloned in the next `Format.defaults()` call, the changed values are used. The `FormatContext` classes themselves contains the 'default' default values, which can be reset using the method `Format.resetDefaults()`. The `resetDefaults()` method restores the original values into the `DEFAULT` object. For the `TableFormat`, this looks as follows:
+
+```java
+public static TableFormat defaults()
+{
+    return new TableFormat(DEFAULT.clone());
+}
+
+public static TableFormat changeDefaults()
+{
+    return new TableFormat(DEFAULT);
+}
+```
+
+> **Note** that the `VectorFormat` class has **two** inner classes, `VectorFormat.Col` and `VectorFormat.Row`. Each of these inner classes has its own `DEFAULT` object, and its own `makeDefaults()` method. This means that defaults for row vector formatting and column vector formatting can be maintained and used independent of each other.
