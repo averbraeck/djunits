@@ -81,7 +81,7 @@ When `setSiUnits()` is applied, the number(s) will be shown relative to the SI u
 - `setPowerPrefix(String)` and `setPowerPostfix(String)` provide a prefix and postfix string for all powers. As an example, suppose we want to precede powers with a caret, the we use `setPowerPrefix("^")`. The energy unit will be formatted as `kgm^2/s^2` after applying this setting. Another example is HTML formatting of the powers: `setPowerPrefix("<sup>").setPowerPostfix("</sup>")`. The energy unit will be formatted as `kgm<sup>2</sup>/s<sup>2</sup>` after applying this setting, and be displayed as <code>kgm<sup>2</sup>/s<sup>2</sup></code>. The default values for the prefix and postfix are an empty string. 
 - `setDotSeparator(String)` sets a separator that will used between different SI units. Suppose that the dot separator is set to a center dot: `setDotSeparator("\u22C5")`, then the energy unit will be formated as <code>kg&sdot;m/s2</code>. The default value for the dot separator is the empty string. 
 
-The settings can be combined to format, e.g., as a HTML string:
+The settings can be combined to format quantities, e.g., as a HTML string:
 
 ```java
 var q = Energy.of(1.23, "kJ");
@@ -90,12 +90,36 @@ var s = q.format(QuantityFormat.defaults().setSiUnits().setDotSeparator("&sdot;"
 System.out.println(s);
 ```
 
-This will output: `1230 kg&amp;sdot;m<sup>2</sup>&amp;sdot;s<sup>-2</sup>`, which will be rendered in a browser as: 1230 kg&sdot;m<sup>2</sup>&sdot;s<sup>-2</sup>.
+This will output: `1230 kg&sdot;m<sup>2</sup>&sdot;s<sup>-2</sup>`, which will be rendered in a browser as: 1230 kg&sdot;m<sup>2</sup>&sdot;s<sup>-2</sup>.
 
 
 ## Locale formatting
 
+The locale for formatting a quantity-related object can be changed, without changing the locale for the entire program and without explicitly setting the locale in the code:
 
-## Reference formatting for absolute quantities
+- `setLocale(Locale)` changes the locale for this format string only.
+
+The following example shows the effect of using a locale setting:
+
+```java
+Locale.setDefault(Locale.GERMANY);
+Length l = Length.of(12.43, "mi");
+String sDE = l.format(QuantityFormat.defaults().setDisplayUnit("m").setGroupingSeparator(true));
+System.out.println(sDE);
+String sUS = l.format(QuantityFormat.defaults().setLocale(Locale.US)
+    .setDisplayUnit("m").setGroupingSeparator(true));
+System.out.println(sUS);
+Locale.setDefault(Locale.US);
+```
+
+which outputs:
+
+```
+20.004,14592 m
+20,004.14592 m
+```
 
 
+## Reference formatting (absolute)
+
+For quantities, vectors, matrices and tables that use an absolute quantity, the reference point that is used can be formatted. Note that including the reference point is by default set to false. 
