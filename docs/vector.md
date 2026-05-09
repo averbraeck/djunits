@@ -195,3 +195,18 @@ Speed : Col[5.0, 10.0, 30.0, 60.0, 200.0] km/h
 ```
 
 The output shows that the vectors are column vectors, although they are printed row-wise. 
+
+
+## Formatting and printing vectors
+
+All vectors have a `toString()` method that returns a single-line String representation for row vectors and a multi-line String representation of column vectors using a (localized) floating point representation of the values of the vector using the display unit, followed by a space and the (localized) unit. Formatting options are available through the `format` method:
+
+- `String toString()` returns the localized string representation of the vector, using its current display unit. Row vectors will be printed on one row, and column vectors will have one cell per line, and therefore result in a multi-line String.
+- `String format()` formats the vector according to the current locale, and using its current display unit. Row vectors will be formatted in a single-line String, and column vectors will have one cell per line, and therefore result in a multi-line String.
+- `String format(Unit displayUnit)` returns the localized string representation of the vector, using the provided unit. Row vectors will be formatted in a single-line String, and column vectors will have one cell per line, and therefore result in a multi-line String.
+- `String format(VectorFormat format)` formats the vector using the provided format parameters.
+
+The `VectorFormat` class has two variants: a `VectorFormat.Row` class that formats the vector on one row, and the `VectorFormat.Col` class that uses one line per cell. See the section [Formatting](formatting.md) for more information on how to use the `VectorFormat` options.
+
+> **Note** that the `VectorFormat.Col` and `VectorFormat.Row` class can both be used for row vectors and column vectors. This means that a row vector can be formatted as a column vector and vice versa. It's just formatting, and the vector itself is not and does not need to be transposed to format it in the other 'direction'.
+

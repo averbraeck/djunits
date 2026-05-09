@@ -296,32 +296,45 @@ The above code prints the following:
 
 ```
 Matrix1 (4x2):
-[1.00000000, 2.00000000
- 3.00000000, 4.00000000
- 5.00000000, 6.00000000
- 7.00000000, 8.00000000] m
+|      1.000       2.000 |
+|      3.000       4.000 |
+|      5.000       6.000 |
+|      7.000       8.000 | m
 Matrix2 (2x4):
-[1.00000000, 2.00000000, 3.00000000, 4.00000000
- 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
+|      1.000       2.000       3.000       4.000 |
+|      5.000       6.000       7.000       8.000 | m
 Multiplication (4x4):
-[11.0000000, 14.0000000, 17.0000000, 20.0000000
- 23.0000000, 30.0000000, 37.0000000, 44.0000000
- 35.0000000, 46.0000000, 57.0000000, 68.0000000
- 47.0000000, 62.0000000, 77.0000000, 92.0000000] m2
+|     11.000      14.000      17.000      20.000 |
+|     23.000      30.000      37.000      44.000 |
+|     35.000      46.000      57.000      68.000 |
+|     47.000      62.000      77.000      92.000 | m2
 
 Matrix1 (2x4):
-[1.00000000, 2.00000000, 3.00000000, 4.00000000
- 5.00000000, 6.00000000, 7.00000000, 8.00000000] m
+|      1.000       2.000       3.000       4.000 |
+|      5.000       6.000       7.000       8.000 | m
 Matrix2 (4x2):
-[1.00000000, 2.00000000
- 3.00000000, 4.00000000
- 5.00000000, 6.00000000
- 7.00000000, 8.00000000] m
+|      1.000       2.000 |
+|      3.000       4.000 |
+|      5.000       6.000 |
+|      7.000       8.000 | m
 Multiplication (2x2):
-[0.50000000, 0.60000000
- 1.14000000, 1.40000000] a
+|      0.500       0.600 |
+|      1.140       1.400 | a
 ```
 
 As can be seen, the multiplication of a 2x4 `Length` with a 4x2 `Length` matrix results in a 2x2 `Area` matrix. The 2x2 matrix can be 'cast' to a true `Matrix2x2` class with more efficient storage and operations. When printing the content of a matrix, `Area` units such as `are` can be used.
 
 Similarly, when multiplying in the opposite way, a 4x2 `Length` with a 2x4 `Length` matrix results in a 4x4 `Area` matrix. This matrix is of type `MatrixNxM` and could be cast to a `MatrixNxN` with the `asMatrixNxN()` method, since it is a square matrix. This cast would open the matrix for operations such as inverse, trace and determinant, which are not defined for the `MatrixNxM`. 
+
+
+## Formatting and printing matrices
+
+Matrices have a `toString()` method that returns a multi-line String representation of the matrix using a (localized) floating point representation of the values of the matrix using the display unit, followed by a space and the (localized) unit on the last line of the matrix. Formatting options are available through the `format` method:
+
+- `String toString()` returns the localized string representation of the matrix, using its current display unit. 
+- `String format()` formats the matrix according to the current locale, and using its current display unit.
+- `String format(Unit displayUnit)` returns the localized string representation of the matrix, using the provided unit. 
+- `String format(MatrixFormat format)` formats the matrix using the provided format parameters.
+
+See the section [Formatting](formatting.md) for more information on how to use the `MatrixFormat` options.
+

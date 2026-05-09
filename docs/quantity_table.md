@@ -138,3 +138,15 @@ The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, 
 - `QuantityTable.of(Q[][] grid)` <br>
   creates a `QuantityTable` based on a grid (array of arrays) with with quantities. The grid cannot be 'ragged'.
 
+
+## Formatting and printing quantity tables
+
+Quantity tables have a `toString()` method that returns a multi-line String representation of the table using a (localized) floating point representation of the values of the table using the display unit, followed by a space and the (localized) unit on the last line of the table. Formatting options are available through the `format` method:
+
+- `String toString()` returns the localized string representation of the quantity table, using its current display unit. 
+- `String format()` formats the quantity table according to the current locale, and using its current display unit.
+- `String format(Unit displayUnit)` returns the localized string representation of the quantity table, using the provided unit. 
+- `String format(TableFormat format)` formats the quantity table using the provided format parameters.
+
+See the section [Formatting](formatting.md) for more information on how to use the `TableFormat` options.
+
