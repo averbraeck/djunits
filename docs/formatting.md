@@ -177,10 +177,39 @@ Vector formatting is done using the `VectorFormat.Col` class that formats a (row
 
 > **Note** that the `VectorFormat.Col` and `VectorFormat.Row` class can both be used for row vectors and column vectors. This means that a row vector can be formatted as a column vector and vice versa. It's just formatting, and the vector itself is not and does not need to be transposed to format it in the other 'direction'.
 
+For formatting vectors, the following methods are available:
 
-## Matrix fomatting
+- `setStartSymbol(String)` sets the start symbol of the vector itself. For all vectors, `[` is default.
+- `setEndSymbol(String)` sets the end symbol of the vector itself. For all vectors, `]` is default.
+- `setCellSeparator(String)` sets the separator between cells in the vector. For row formatting, `, ` is default, whereas "\n" is default for column formatting.
+- `setVectorPrefix(String)` sets a prefix to use before the start symbol. It is an empty string by default, but can be used to indicate that a vector that is formatted as a row vector is actually a column vector by setting the prefix to `Col`.
+
+The default values for vector `Row` and `Col` formatting are as follows:
+
+| Format               | Row value       | Col value               |
+| -------------------- | --------------- | ----------------------- |
+| formatMode           | VARIABLE_LENGTH | FIXED_WITH_SCI_FALLBACK |
+| startSymbol          | "["             | "[\n"                   |
+| endSymbol            | "]"             | "]"                     |
+| separatorSymbol      | ", "            | "\n"                    |
+| vectorPrefix         | ""              | ""                      |
+
+
+
+## Matrix formatting
 
 Matrix formatting is done using the `MatrixFormat` class. Since `MatrixFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
+
+An attempt has been made to enable formatting of a matrix in such a way that the matrix can be recognized:
+
+```
+|     11.000      14.000      17.000      20.000 |
+|     23.000      30.000      37.000      44.000 |
+|     35.000      46.000      57.000      68.000 |
+|     47.000      62.000      77.000      92.000 | m2
+```
+
+
 
 
 ## QuantityTable formatting
@@ -205,7 +234,7 @@ Below, the inner working of `QuantityFormatter` is explained. The other formatte
 private static QuantityFormatContext DEFAULT = new QuantityFormatContext();
 ```
 
-When calling `QuantityFormat.defaults()`, a **clone** of this `DEFAULT` object instance is returned (that is why `FormatContext implements Cloneable`). The `set` operations for numbers, units, reference points, locale, and quantity change field values in the clone of the default object instance. This object is subsequently used by the `Formatter` object to apply these options when building a string that is the result of the `format` operation. 
+When calling `QuantityFormat.defaults()`, a **clone** of this `DEFAULT` object instance is returned (that is why `FormatContext implements Cloneable`). The `set` operations for numbers, units, reference points, locale, and quantity change field values in the clone of the context object instance. This object is subsequently used by the `Formatter` object when building a string that is the result of the `format` operation. 
 
 Each `Format` class has its own `DEFAULT` object (and `VectorFormat` has two, one for `Row` and one for `Col`). Default settings for each `Format` object can differ: where `QuantityFormat` and `VectorFormat.Row` format the value with a variable length, `VectorFormat.Col`, `MatrixFormat` and `TableFormat` have a fixed length for the value to align the values. This is done with a static initializer:
 
