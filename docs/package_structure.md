@@ -2,11 +2,11 @@
 
 DJUNITS is divided into a number of packages:
 
-* **org.djunits.formatter** Formatting methods that can help in formatting quantities. This includes the `EngineeringFormatter` that renders floating point values in a prescribed number of characters (minimum 10), transiting to mantissa + exponent notation when normal notation would cause loss of precision. The exponent in mantissa + exponent notation is always a multiple of 3 to ease interpretation using SI prefixes (nano, micro, Mega, etc.).
+* **org.djunits.formatter** Formatters that take care of formatting quantities, vectors, matrices and quantity tables. A rich set of formatting options is available to render the quantity object for the screen, HTML, or other packages.
 
 * **org.djunits.quantity** A (physical) quantity is a property of a material or system that can be quantified by measurement. A physical quantity can be expressed as the combination of a value (magnitude) and a unit. For example, the physical quantity `Energy` can be quantified as `x joule` where x is the value and joule is the unit. Several dozen quanties have been predefined with their operations. Each quantity class has an inner class for the definition of the corresponding unit: the quantity class `Force` has a corresponding unit class: `Force.Unit`.
 
-* **org.djunits.quantity.def** The abstract definitions of `Quantity` and `AbsoluteQuantity`. The class `AbstractReference` provides the reference point for an `AbsoluteQuantity`.
+* **org.djunits.quantity.def** The abstract definitions of `Quantity` and `AbsoluteQuantity`. The `Reference` interface provides the reference point for an `AbsoluteQuantity`.
      
 * **org.djunits.unit** Here, the unit definitions are stored. The most important classes and interfaces are `Unit` to define a unit, and `AbstractUnit` as a generic superclass for all units. The `Unitless` unit for the `Dimensionless` quantity is also stored here.
 
