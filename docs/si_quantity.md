@@ -12,7 +12,7 @@ System.out.println(entropyWater);
 This would print:
 
 ```
-70.0000000 kgm2/s2Kmol
+70 kgm2/s2Kmol
 ```
 
 We could also have specified it as: `new SIQuantity(70.0, SIUnit.of("kgm2/s2Kmol"));`. The `SIUnit.of()` method takes any integer power of `rad`, `sr`, `kg`, `m`, `s`, `A`, `K`, `mol`, and `cd` in the numerator and denominator. In this case, the SI unit is equivalent to a J/K&middot;mol. Suppose we multiply our molar entropy with 1 K and 1 mol, we should get an Energy of 70 J:
@@ -26,7 +26,7 @@ System.out.println(energy);
 This prints:
 
 ```
-70.0000000 J
+70 J
 ```
 
 Note that this can only be done because the SI unit of 'energy' (kgm2/s2) match the SI unit of the results of our calculation (also kgm2/s2). When the units do not match, e.g. using `entropyWater.as(Energy.Unit.J)`, this results in:
@@ -65,10 +65,10 @@ SIUnit acc1 = new SIUnit(new int[] {0, 0, 0, 1, -2, 0, 0, 0, 0});
 SIUnit acc2 = new SIUnit(0, 0, 0, 1, -2, 0, 0, 0, 0);
 SIUnit acc3 = SIUnit.of("m/s2");
 
-System.out.println("acc1 = " + acc1);
-System.out.println("acc1 = " + acc1.toString(true, true));
-System.out.println("acc1 == acc2 : " + acc1.equals(acc2));
-System.out.println("acc1 == acc3 : " + acc1.equals(acc3));
+System.out.println("acc1 = " + acc1.toArrayString());
+System.out.println("acc1 = " + acc1.format(true, true));
+System.out.println("acc1 equals acc2 : " + acc1.equals(acc2));
+System.out.println("acc1 equals acc3 : " + acc1.equals(acc3));
 ```
 
 All three methods are equivalent and lead to the same unit:
@@ -76,7 +76,7 @@ All three methods are equivalent and lead to the same unit:
 ```
 acc1 = [0, 0, 0, 1, -2, 0, 0, 0, 0]
 acc1 = m/s2
-acc1 == acc2 : true
-acc1 == acc3 : true
+acc1 equals acc2 : true
+acc1 equals acc3 : true
 ```
 
