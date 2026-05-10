@@ -63,11 +63,11 @@ If the underlying relative matrix is needed, where all values are of type `Q` an
 An `AbsVector` contains the following methods to obtain its values:
 
 - `double[] getSiArray()` returns a safe copy of the values of the vector in SI-units as a `double[]` array with the same length as the vector. All returned SI values are relative to the reference point.
-- `A[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` and `Reference` as the original `AbsVector`.
+- `A[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` and `Reference` as the `AbsVector`.
 - `double si(int index)` returns the SI value of the entry at the 0-based `index`. The returned SI value is relative to the reference point.
 - `double msi(int mIndex)` returns the SI value of the entry at the 1-based `mIndex`. The returned SI value is relative to the reference point.
-- `A get(int index)` returns the absolute quantity representation of the entry at the 0-based `index`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsVector`.
-- `A mget(int mIndex)` returns the absolute quantity representation of the entry at the 1-based `mIndex`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsVector`.
+- `A get(int index)` returns the absolute quantity representation of the entry at the 0-based `index`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the `AbsVector`.
+- `A mget(int mIndex)` returns the absolute quantity representation of the entry at the 1-based `mIndex`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the `AbsVector`.
 - `getRelativeVecMat()` returns the 'embedded' relative vector or matrix, whose values are relative to the reference point of the `AbsVector`. The size and type of the returned vector are congruent with the type of the `AbsVector`.
 
 

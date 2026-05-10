@@ -23,7 +23,7 @@ All Hadamard operations result in a new instance of a `QuantityTable` with a new
 
 The result of a Hadamard operation on, e.g. a `QuantityTable<Duration>` will typically be a `QuantityTable<SIQuantity>` since the inverse operation, multiplication or division will result in a `QuantityTable` with a unit that is unknown beforehand and cannot be determined by the compiler. In the above example of `invertEntries` for a `Duration` quantity table, the resulting quantity table can be transformed into a proper `QuantityTable<Frequency>` using the `as(Frequency.Unit.Hz)` method. Note that the resulting `QuantityTable<Frequency>` is a new instance of the table, and the original `QuantityTable` remains unchanged.
 
-The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the original matrix.
+The `transpose()` method returns the transposed quantity table, where rows and columns have been swapped. A transposed quantity table has the same `displayUnit` as the matrix.
 
 Furthermore, a quantity table is additive, which means that two tables of the same size and same quantity can be added to and subtracted from each other. Quantity tables also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods, scaling the entries of the quantity table by `factor`, respectively `1.0 / factor`.
 
@@ -62,18 +62,18 @@ A `QuantityTable` contains the following methods to obtain its values:
 
 ### Quantity-based value methods
 
-- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed row-major quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the original `QuantityTable`.
-- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the original `QuantityTable`.
-- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the original `QuantityTable`.
+- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the `QuantityTable`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed row-major quantity array that represents the quantity table. The quantities in the array will all have the same `displayUnit` as the `QuantityTable`.
+- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the `QuantityTable`.
+- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the `QuantityTable`.
 
 
 ### Retrieving quantity table rows
 
 - `VectorN.Row getRowVector(int row)` retrieves the quantity table row at the 0-based `row` as a row-vector with the same `displayUnit`. 
 - `VectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit`. 
-- `Q[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
-- `Q[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
+- `Q[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` the quantity table. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` as the quantity table. Note that the resulting `Q[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI values. 
 - `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based.
 
@@ -82,8 +82,8 @@ A `QuantityTable` contains the following methods to obtain its values:
 
 - `VectorN.Col getColumnVector(int col)` retrieves the quantity table column at the 0-based `col` as a column-vector with the same `displayUnit`. 
 - `VectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit`. 
-- `Q[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. 
-- `Q[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` as the original quantity table. Note that the resulting `Q[]` array is 0-based.
+- `Q[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` as the quantity table. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` as the quantity table. Note that the resulting `Q[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI values. 
 - `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based.
 
@@ -99,7 +99,7 @@ A `QuantityTable` implements several mathematical operations. The most important
 - `Q sum()` returns the sum of the entries of the `QuantityTable` as a strongly typed `Quantity`.
 - `M negate()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
 - `M abs()` returns a `QuantityTable` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
-- `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the quantity table.
+- `int nonZeroCount()` and `int nnz()` both return the number of non-zero entries in the quantity table.
 
 
 ## Transforming the `QuantityTable`

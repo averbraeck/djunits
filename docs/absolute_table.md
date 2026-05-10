@@ -52,29 +52,29 @@ A `AbsQuantityTable` contains the following methods to obtain its values:
 
 ### Quantity-based value methods
 
-- `A[][] getScalarGrid()` returns a 2-dimensional strongly typed absolute quantity array that represents the quantity table. The absolute quantities in the array will all have the same `displayUnit` and reference point as the original `AbsQuantityTable`.
-- `A[] getScalarArray()` returns a 1-dimensional strongly typed row-major absolute quantity array that represents the quantity table. The absolute quantities in the array will all have the same `displayUnit` and reference point as the original `AbsQuantityTable`.
-- `A get(int row, int col)` returns the absolute quantity representation of the entry at the 0-based row and column. The returned `AbsQuantity` will have the same `displayUnit` and reference point as the original `AbsQuantityTable`.
-- `A mget(int mRow, int mCol)` returns the absolute quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `AbsQuantity` will have the same `displayUnit` and reference point as the original `AbsQuantityTable`.
+- `A[][] getScalarGrid()` returns a 2-dimensional strongly typed absolute quantity array that represents the quantity table. The absolute quantities in the array will all have the same `displayUnit` and reference point as the `AbsQuantityTable`.
+- `A[] getScalarArray()` returns a 1-dimensional strongly typed row-major absolute quantity array that represents the quantity table. The absolute quantities in the array will all have the same `displayUnit` and reference point as the `AbsQuantityTable`.
+- `A get(int row, int col)` returns the absolute quantity representation of the entry at the 0-based row and column. The returned `AbsQuantity` will have the same `displayUnit` and reference point as the `AbsQuantityTable`.
+- `A mget(int mRow, int mCol)` returns the absolute quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `AbsQuantity` will have the same `displayUnit` and reference point as the `AbsQuantityTable`.
 - `getRelativeVecMat()` returns the 'embedded' relative vector or matrix, whose values are relative to the reference point of the `AbsVector`. The size and type of the returned vector are congruent with the type of the `AbsVector`.
 
 
 ### Retrieving quantity table rows
 
-- `AbsVectorN.Row getRowVector(int row)` retrieves the quantity table row at the 0-based `row` as a row-vector with the same `displayUnit` and reference point as the original `AbsQuantityTable`.
-- `AbsVectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit` and reference point as the original `AbsQuantityTable`.
-- `A[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original quantity table. 
-- `A[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original matrix. Note that the resulting `A[]` array is 0-based.
+- `AbsVectorN.Row getRowVector(int row)` retrieves the quantity table row at the 0-based `row` as a row-vector with the same `displayUnit` and reference point as the `AbsQuantityTable`.
+- `AbsVectorN.Row mgetRowVector(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a row-vector with the same `displayUnit` and reference point as the `AbsQuantityTable`.
+- `A[] getRowScalars(int row)` retrieves the quantity table row at the 0-based `row` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the quantity table. 
+- `A[] mgetRowScalars(int mRow)` retrieves the quantity table row at the 1-based `mRow` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the matrix. Note that the resulting `A[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the quantity table row at the 0-based `row` as a `double[]` array with SI values. The values are relative to the reference point of the quantity table.
 - `double[] mgetRowSi(int mRow)` retrieves the quantity table row at the 1-based `mRow` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based. The values are relative to the reference point of the quantity table.
 
 
 ### Retrieving quantity table columns
 
-- `AbsVectorN.Col getColumnVector(int col)` retrieves the quantity table column at the 0-based `col` as a column-vector with the same `displayUnit` and reference point as the original `AbsQuantityTable`. 
-- `AbsVectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit` and reference point as the original `AbsQuantityTable`.
-- `A[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original quantity table. 
-- `A[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the original quantity table. Note that the resulting `A[]` array is 0-based.
+- `AbsVectorN.Col getColumnVector(int col)` retrieves the quantity table column at the 0-based `col` as a column-vector with the same `displayUnit` and reference point as the `AbsQuantityTable`. 
+- `AbsVectorN.Col mgetColumnVector(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a column-vector with the same `displayUnit` and reference point as the `AbsQuantityTable`.
+- `A[] getColumnScalars(int col)` retrieves the quantity table column at the 0-based `col` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the quantity table. 
+- `A[] mgetColumnScalars(int mCol)` retrieves the quantity table column at the 1-based `mCol` as an array of quantities, where the quantities in the array have the same `displayUnit` and reference point as the quantity table. Note that the resulting `A[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the quantity table column at the 0-based `col` as a `double[]` array with SI values. The values are relative to the reference point of the quantity table.
 - `double[] mgetColumnSi(int mCol)` retrieves the quantity table column at the 1-based `mCol` as a `double[]` array with SI values. Note that the resulting `double[]` array is 0-based. The values are relative to the reference point of the quantity table.
 

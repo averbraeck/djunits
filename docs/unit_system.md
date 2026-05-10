@@ -8,7 +8,7 @@ The SI-base units are the seven units from which all other SI units can be deriv
 
 All SI-derived units are defined in terms of one or more SI base units. E.g. the unit for electrical charge (coulomb) is defined in terms of the SI-base unit for electrical current (ampere) and the SI-base unit for time (second). An electrical current of 1 ampere transfers one coulomb of electrical charge every second. Mathematically: `1 C = 1 A * 1 s`. Any change in the definition of one of the underlying base units (i.c. ampere or second) affects the value of such a derived unit to ensure that the equation is true in every version of the SI system.
 
-The SI-accepted units are conveniance units that are commonly used. E.g. minute, hour and day for time, liter for volume, electronvolt for energy, and degree, minute and second for angles.
+The SI-accepted units are convenience units that are commonly used. E.g. minute, hour and day for time, liter for volume, electronvolt for energy, and arcdegree, arcminute and arcsecond for angles.
 
 The CGS-EMU system extends the CGS system with units for electromagnetic quantities. The CGS-ESU system extends the CGS system with units for electrostatic quantities. See [Centimetre–gram–second system of units](https://en.wikipedia.org/wiki/Centimetre%E2%80%93gram%E2%80%93second_system_of_units).
 

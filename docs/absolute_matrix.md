@@ -24,7 +24,7 @@ The `AbsMatrix` classes **do not implement** the `Hadamard` interface for entry-
 
 If an `AbsMatrixNxM` is internally of a size congruent with a specific matrix or vector type, e.g. `AbsVector2.Row` or `AbsMatrix3x3`, it can be obtained as such using methods such as `asAbsVector2Row()` or `asAbsMatrix3x3()`. The same holds for `AbsMatrixNxN` that can be transformed to a strongly typed `AbsMatrix1x1`, `AbsMatrix2x2`, or `AbsMatrix3x3` (or `AbsMatrixNxM`). Many such methods exist to carry out a transformation between vectors and matrices of various sizes. These methods will check the consistency of the matrix size with the desired matrix size at runtime. All absolute matrices, irrespective of their size, can be transformed to an `AbsQuantityTable` using the `asAbsQuantityTable()` method.
 
-The `transpose()` method returns the transposed matrix, where rows and columns have been swapped. A transposed matrix has the same `displayUnit` as the original matrix.
+The `transpose()` method returns the transposed matrix, where rows and columns have been swapped. A transposed matrix has the same `displayUnit` as the matrix.
 
 The generic methods of an `AbsMatrix` are:
 
@@ -72,10 +72,10 @@ A `AbsMatrix` contains the following methods to obtain its values:
 
 ### Absolute quantity-based value methods
 
-- `A[][] getScalarGrid()` returns a 2-dimensional strongly typed absolute quantity array that represents the matrix. The absolute quantities in the array will all have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
-- `A[] getScalarArray()` returns a 1-dimensional strongly typed row-major absolute quantity array that represents the matrix. The absolute quantities in the array will all have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
-- `A get(int row, int col)` returns the absolute quantity of the entry at the 0-based row and column. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
-- `A mget(int mRow, int mCol)` returns the absolute quantity of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the original `AbsMatrix`.
+- `A[][] getScalarGrid()` returns a 2-dimensional strongly typed absolute quantity array that represents the matrix. The absolute quantities in the array will all have the same `displayUnit` and `Reference` as the `AbsMatrix`.
+- `A[] getScalarArray()` returns a 1-dimensional strongly typed row-major absolute quantity array that represents the matrix. The absolute quantities in the array will all have the same `displayUnit` and `Reference` as the `AbsMatrix`.
+- `A get(int row, int col)` returns the absolute quantity of the entry at the 0-based row and column. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the `AbsMatrix`.
+- `A mget(int mRow, int mCol)` returns the absolute quantity of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `AbsQuantity` will have the same `displayUnit` and `Reference` as the `AbsMatrix`.
 - `getRelativeVecMat()` returns the 'embedded' relative vector or matrix, whose values are relative to the reference point of the `AbsVector`. The size and type of the returned vector are congruent with the type of the `AbsVector`.
 
 
@@ -83,8 +83,8 @@ A `AbsMatrix` contains the following methods to obtain its values:
 
 - `AbsVector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is an `AbsMatrix3x3`, the vector returned is an `AbsVector3.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
 - `AbsVector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is an `AbsVectorN.Row` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
-- `A[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the absolute quantities in the array have the same `displayUnit` and the same `Reference` as the original matrix. 
-- `A[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. Note that the resulting `Temperature[]` array is 0-based.
+- `A[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the absolute quantities in the array have the same `displayUnit` and the same `Reference` as the matrix. 
+- `A[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the matrix. Note that the resulting `Temperature[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the SI values of the 0-based `row` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI values are relative to the reference point of the absolute matrix.
 - `double[] mgetRowSi(int mRow)` retrieves the SI values of the 1-based `mRow` as a `double[]` array. When the matrix is an `AbsMatrixNxM`, the array returned is of type `double[matrix.cols()]`. The SI values are relative to the reference point of the absolute matrix. Note that the resulting `double[]` array is 0-based.
 
@@ -93,8 +93,8 @@ A `AbsMatrix` contains the following methods to obtain its values:
 
 - `AbsVector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is an `AbsMatrix3x3`, the vector returned is an `AbsVector3.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
 - `AbsVector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is an `AbsMatrixNxM`, the vector returned is an `AbsVectorN.Col` of the same `AbsQuantity`, and with the same `displayUnit` and `Reference`. 
-- `A[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. 
-- `A[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the original matrix. Note that the resulting `Temperature[]` array is 0-based.
+- `A[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of absolute quantities. When the matrix is an `AbsMatrix2x2<Position, Length>`, the array returned is of type `Position[2]`, where the quantities in the array have the same `displayUnit` and `Reference` as the matrix. 
+- `A[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of absolute quantities. When the matrix is an `AbsMatrixNxM<Temperature, TemperatureDifference>`, the array returned is of type `Temperature[matrix.cols()]`, where the quantities in the array have the same `displayUnit` and `Reference` as the matrix. Note that the resulting `Temperature[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the SI values of the 0-based `col` as a `double[]` array. When the matrix is an `AbsMatrix3x3`, the array returned is of type `double[3]`. The SI values are relative to the reference point of the absolute matrix. 
 - `double[] mgetColumnSi(int mCol)` retrieves the SI values of the 1-based `mCol` as a `double[]` array. When the matrix is an `AbsMatrixNxM`, the array returned is of type `double[matrix.cols()]`. The SI values are relative to the reference point of the absolute matrix. Note that the resulting `double[]` array is 0-based.
 

@@ -36,7 +36,7 @@ If a `MatrixNxM` is internally of a size congruent with a specific matrix or vec
 
 If matrix calculations result in a special matrix type, for example multiplying a 3x4 matrix by a 4x3 matrix resulting in a 3x3 matrix, the resulting `MatrixNxM` from the calculation can be obtained as a `Matrix3x3` using the method `asMatrix3x3()`. This allows it, for example, to be added to another `Matrix3x3`. 
 
-The `transpose()` method returns the transposed matrix, where rows and columns have been swapped. A transposed matrix has the same `displayUnit` as the original matrix.
+The `transpose()` method returns the transposed matrix, where rows and columns have been swapped. A transposed matrix has the same `displayUnit` as the matrix.
 
 Furthermore, a matrix is `Additive`, which means that matrices of the same type, size, and quantity can be added to and subtracted from each other. Matrices also implement the `Scalable` interface, which exposes the `scaleBy(double factor)` and `divideBy(double factor)` methods.
 
@@ -76,18 +76,18 @@ A `Matrix` contains the following methods to obtain its values:
 
 ### Quantity-based value methods
 
-- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed row-major quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the original `Matrix`.
-- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the original `Matrix`.
-- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the original `Matrix`.
+- `Q[][] getScalarGrid()` returns a 2-dimensional strongly typed quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the `Matrix`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed row-major quantity array that represents the matrix. The quantities in the array will all have the same `displayUnit` as the `Matrix`.
+- `Q get(int row, int col)` returns the quantity representation of the entry at the 0-based row and column. The returned `Quantity` will have the same `displayUnit` as the `Matrix`.
+- `Q mget(int mRow, int mCol)` returns the quantity representation of the entry at the 1-based row indicated by `mRow` and 1-based column indicated by `mCol`. The returned `Quantity` will have the same `displayUnit` as the `Matrix`.
 
 
 ### Retrieving matrix rows
 
 - `Vector getRowVector(int row)` retrieves the matrix row at the 0-based `row` as a row-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Row` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetRowVector(int mRow)` retrieves the matrix row at the 1-based `mRow` as a row-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Row` of the same `Quantity`, and with the same `displayUnit`. 
-- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
-- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
+- `Q[] getRowScalars(int row)` retrieves the matrix row at the 0-based `row` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the matrix. 
+- `Q[] mgetRowScalars(int mRow)` retrieves the matrix row at the 1-based `mRow` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getRowSi(int row)` retrieves the SI values of the 0-based `row` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
 - `double[] mgetRowSi(int mRow)` retrieves the SI values of the 1-based `mRow` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
@@ -96,8 +96,8 @@ A `Matrix` contains the following methods to obtain its values:
 
 - `Vector getColumnVector(int col)` retrieves the matrix column at the 0-based `col` as a column-vector. When the matrix is a `Matrix3x3`, the vector returned is a `Vector3.Col` of the same `Quantity`, and with the same `displayUnit`. 
 - `Vector mgetColumnVector(int mCol)` retrieves the matrix column at the 1-based `mCol` as a column-vector. When the matrix is a `MatrixNxM`, the vector returned is a `VectorN.Col` of the same `Quantity`, and with the same `displayUnit`. 
-- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the original matrix. 
-- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the original matrix. Note that the resulting `Q[]` array is 0-based.
+- `Q[] getColumnScalars(int col)` retrieves the matrix column at the 0-based `col` as an array of quantities. When the matrix is a `Matrix2x2<Length>`, the array returned is of type `Length[2]`, where the quantities in the array have the same `displayUnit` as the matrix. 
+- `Q[] mgetColumnScalars(int mCol)` retrieves the matrix column at the 1-based `mCol` as an array of quantities. When the matrix is a `MatrixNxM<Area>`, the array returned is of type `Area[matrix.cols()]`, where the quantities in the array have the same `displayUnit` as the matrix. Note that the resulting `Q[]` array is 0-based.
 - `double[] getColumnSi(int col)` retrieves the SI values of the 0-based `col` as a `double[]` array. When the matrix is a `Matrix3x3`, the array returned is of type `double[3]`. 
 - `double[] mgetColumnSi(int mCol)` retrieves the SI values of the 1-based `mCol` as a `double[]` array. When the matrix is a `MatrixNxM`, the array returned is of type `double[matrix.cols()]`. Note that the resulting `double[]` array is 0-based.
 
@@ -113,7 +113,7 @@ A `Matrix` implements several mathematical operations. The most important ones a
 - `Q sum()` returns the sum of the entries of the `Matrix` as a strongly typed `Quantity`.
 - `M negate()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $-x_{ij}$. 
 - `M abs()` returns a `Matrix` of the same type and size where all entries $x_{ij}$ have been set to $|x_{ij}|$. 
-- `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the matrix.
+- `int nonZeroCount()` and `int nnz()` both return the number of non-zero entries in the matrix.
 
 
 ## Extra operations for square matrices
@@ -121,12 +121,12 @@ A `Matrix` implements several mathematical operations. The most important ones a
 Square matrices have a number of additional operations:
 
 - `int order()` returns the number of rows or columns of the square matrix.
-- `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal entries. It results in a quantity with the same `displayUnit` as the original matrix.
+- `Q trace()` returns  the trace of the matrix, which is the sum of the diagonal entries. It results in a quantity with the same `displayUnit` as the matrix.
 - `SIQuantity determinant()` returns the determinant of the square matrix as an `SIQuantity`. The unit of the determinant will be $U^n$ where $n$ is the order of the matrix, and $U$ is the SI-unit of the matrix. The `SIUnit` of the determinant of a 4x4 `Energy` matrix is kg<sup>4</sup>&middot;m<sup>8</sup>/s<sup>8</sup>.
 - `double determinantSi()` returns the SI value of the determinant of the square matrix as a `double` value.
 - `inverse()` returns the inverse of the square matrix, if the matrix is non-singular. When the unit of the original matrix is $U$, the unit of of the inverse matrix is $U^{-1}$. If the matrix is singular, a `NonInvertibleMatrixException` will be thrown.
 - `adjugate()` returns the adjugate (classical adjoint) matrix for this matrix, often denoted as $adj(M)$. When the unit of the original matrix is $U$, the unit of $adj(M)$ is $U^{(n-1)}$. The adjugate of a square matrix $A$ is the matrix $\mathrm{adj}(A)$ satisfying $A \cdot \mathrm{adj}(A) = \det(A) \cdot I$.
-- `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to $\sqrt(\mathrm{trace}(A^*\cdot A))$. It results in a quantity with the same unit as the original matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
+- `normFrobenius()` returns the Frobenius norm of the matrix, which is equal to $\sqrt(\mathrm{trace}(A^*\cdot A))$. It results in a quantity with the same unit as the matrix. See [Frobenius norm on Wikipedia](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm) for more information.
 - `Vector getDiagonalVector()` returns the quantities on the diagonal as a column vector of the same quantity and size as the square matrix. The `displayUnit` will be the same as that of the matrix.
 - `Q[] getDiagonalScalars()` returns the quantities on the diagonal as an array of quantities. When the matrix has order N, the array will have length N. The `displayUnit` of the quantities will be the same as that of the matrix.
 - `double[] getDiagonalSi()` returns the SI values of the quantities on the diagonal as a `double[]` array. When the matrix has order N, the array will have length N.

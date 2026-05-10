@@ -45,12 +45,12 @@ The generic methods of a `Vector` are:
 - `int size()` returns the size of the vector; the number of rows for a column vector, or the number of columns for a row vector.
 - `boolean isColumnVector()` returns whether this vector is a column vector.
 - `boolean isRowVector()` returns whether this vector is a row vector. Note that a `Vector1` is both a column vector and and row vector.
-- `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector.
-- `getDisplayUnit()` returns the display unit of the entire `Vector`.
-- `setDisplayUnit(unit)` sets a new display unit for the entire `Vector` based on a strongly typed `unit`.
-- `setDisplayUnit(string)` sets a new display unit for the entire `Vector` based on a `String` representation of the unit.
+- `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector. The iterator is guaranteed to yield the entries ordered by increasing index, and it will yield 0-values for the 0-entries of a sparse vector.
+- `getDisplayUnit()` returns the display unit that applies to the entire `Vector`.
+- `setDisplayUnit(Unit)` sets a new display unit for the entire `Vector` based on a strongly typed `unit`.
+- `setDisplayUnit(String)` sets a new display unit for the entire `Vector` based on a `String` representation of the unit.
 - `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Vector` only stores relative quantities.
-- `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Vector` only stores relative quantities.
+- `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Vector` only stores relative quantities, whereas `AbsVector` stores absolute quantities.
 - `transpose()` returns a new `Vector` where the rows and columns are swapped.
 - `v1.add(v2)` returns a new `Vector` where all entries of `v2` have been added to the corresponding entries of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
 - `v1.subtract(v2)` returns a new `Vector` where all entries of `v2` have been subtracted from the corresponding entries of `v1`. The `displayUnit` is taken from `v1`. The number of rows and columns of `v1` and `v2` have to be equal, of course.
@@ -67,11 +67,11 @@ Quantity-based methods return a value `Q` that is consistent with the quantity s
 A `Vector` contains the following methods to obtain its values:
 
 - `double[] getSiArray()` returns a safe copy of the values of the vector in SI-units as a `double[]` array with the same length as the vector.
-- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the original `Vector`.
+- `Q[] getScalarArray()` returns a 1-dimensional strongly typed quantity array that represents the vector. The quantities in the array will all have the same `displayUnit` as the `Vector`.
 - `double si(int index)` returns the SI value of the entry at the 0-based `index`. 
 - `double msi(int mIndex)` returns the SI value of the entry at the 1-based `mIndex`. 
-- `Q get(int index)` returns the quantity representation of the entry at the 0-based `index`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
-- `Q mget(int mIndex)` returns the quantity representation of the entry at the 1-based `mIndex`. The returned `Quantity` will have the same `displayUnit` as the original `Vector`.
+- `Q get(int index)` returns the quantity representation of the entry at the 0-based `index`. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
+- `Q mget(int mIndex)` returns the quantity representation of the entry at the 1-based `mIndex`. The returned `Quantity` will have the same `displayUnit` as the `Vector`.
 
 
 ## Mathematical operations
@@ -90,7 +90,7 @@ A `Vector` implements several mathematical operations. The most important ones a
 - `Q normLp(int p)` returns the L<sub>p</sub>-norm of the vector's entries, expressed as a quantity. The L<sub>p</sub>-norm is defined as $L_p={(x_1^p+x_2^p+...+x_n^p)}^{(1/p)}$
 - `Q normLinf()` returns the L<sub>&infin;</sub>-norm of this vector's entries, expressed as a quantity. The L<sub>&infin;</sub>-norm is defined as $L_{\infty}=max(|x_1|,|x_2|,...,|x_n|)$.
 - `Q norm()` returns the default norm for the vector's entries. The default norm is defined as the L2-norm.
-- `double nonZeroCount()` and `double nnz()` both return the number of non-zero entries in the vector.
+- `int nonZeroCount()` and `int nnz()` both return the number of non-zero entries in the vector.
 
 
 ## Vector definition and storage
@@ -130,10 +130,9 @@ For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` ex
 - `Vector2.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
   creates a `Vector2.Col` based on an array of length 2 with SI values for the quantities with a displayUnit.
 - `Vector2.Col.of(Q x, Q y)` <br>
-  creates a `Vector2.Col` containing the two provided quantities.
+  creates a `Vector2.Col` containing the two provided quantities. The `x` quantity provides the display unit of the vector.
 - `Vector2.Col.of(Q[] data)` <br>
-  creates a `Vector2.Col` based on an array of length 2 containing the provided quantities.
-
+  creates a `Vector2.Col` based on an array of length 2 containing the provided quantities. The quantity at `data[0]` provides the display unit of the vector.
 
 ### Creating a `Vector3`
 
@@ -150,9 +149,9 @@ For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` ex
 - `Vector3.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
   creates a `Vector3.Col` based on an array of length 3 with SI values for the quantities with a displayUnit.
 - `Vector3.Col.of(Q x, Q y, Q z)` <br>
-  creates a `Vector3.Col` containing the three provided quantities.
+  creates a `Vector3.Col` containing the three provided quantities. The `x` quantity provides the display unit of the vector.
 - `Vector3.Col.of(Q[] data)` <br>
-  creates a `Vector3.Col` based on an array of length 3 containing the provided quantities.
+  creates a `Vector3.Col` based on an array of length 3 containing the provided quantities. The quantity at `data[0]` provides the display unit of the vector.
 
 
 ### Creating a `VectorN`
@@ -160,28 +159,28 @@ For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` ex
 The `VectorN` class is used for storing row and column vectors of any length. Data can be stored as single-precision `float` variable, or as double-preciding `double` values. Both dense (store every number) and sparse (only store non-zero values) is possible. For a `VectorN`, a row vector subclass `VectorN.Row` and a column vector subclass `VectorN.Col` exist. Several methods exist to instantiate a `VectorN`. Below, the instantiation methods are given for `VectorN.Col`. The instantiation methods for a `VectorN.Row` are analogous.
 
 - `new VectorN.Col<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
-  creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+  creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [Data Storage](storage.md) section. 
 - `VectorN.Col.of(DataGridSi dataSi, Unit displayUnit)` <br>
-  creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
+  creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [Data Storage](storage.md) section. 
 - `VectorN.Col.of(double[] dataInUnit, Unit unit)` <br>
   creates a `VectorN.Col` based on an array with values expressed in the given unit. The vector will have the same number of elements as the array.
 - `VectorN.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
   creates a `VectorN.Col` based on an array with SI values for the quantities. The vector will have the same number of elements as the array.
 - `VectorN.Col.of(Q[] data)` <br>
-  creates a `VectorN.Col` based on an array with quantities. The vector will have the same number of elements as the array.
+  creates a `VectorN.Col` based on an array with quantities. The vector will have the same number of elements as the array. The quantity at `data[0]` provides the display unit of the vector.
 - `VectorN.Col.of(List<Q> data)` <br>
-  creates a `VectorN.Col` based on a list with quantities. The vector will have the same number of elements as the list.
+  creates a `VectorN.Col` based on a list with quantities. The vector will have the same number of elements as the list. The quantity at `data.get(0)` provides the display unit of the vector.
 
 
 ## Example for Vector instantiation and usage
 
-The example below shows the instantiation and usage of a column vector with 5 entries `VectorN.Col`:
+The example below shows the instantiation and usage of a row vector with 5 entries `VectorN.Row`:
 
 ```java
-VectorN.Col<Length> lv1 = VectorN.Col.of(
+VectorN.Row<Length> lv1 = VectorN.Row.of(
     new double[] {10, 20.0, 60, 120.0, 400.0}, Length.Unit.km);
 Duration duration = Duration.of(2.0, "h");
-VectorN.Col<Speed> sv1 = 
+VectorN.Row<Speed> sv1 = 
     lv1.divideEntries(duration).as(Speed.Unit.km_h);
 System.out.println("Length: " + lv1);
 System.out.println("Speed : " + sv1);
@@ -190,8 +189,8 @@ System.out.println("Speed : " + sv1);
 Executing the code results in:
 
 ```
-Length: Col[10.0, 20.0, 60.0, 120.0, 400.0] km
-Speed : Col[5.0, 10.0, 30.0, 60.0, 200.0] km/h
+Length: [10, 20, 60, 120, 400] km
+Speed : [5, 10, 30, 60, 200] km/h
 ```
 
 The output shows that the vectors are column vectors, although they are printed row-wise. 

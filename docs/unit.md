@@ -28,7 +28,7 @@ The String representation of units follows a strict naming convention:
 - Upper and lower case are important. There is a `Length.Unit` `nm` (nanometer), and `NM` (Nautical Mile).
 - SI-prefixes (from quecto to Quetta) are used for most of the SI-derived units, so there is a `hm`, `μK`, `ns`, `TW`, and `GeV`. 
 - When the abbreviation is built from SI-units, the order is: rad, sr, kg, m, s, A, K, mol, cd; so `Power` is expressed in `kgm2/s3`.
-- When there are SI-units with powers, no additional signs such as `^` for the subscripts are used; `Speed` is expressed in `m/s2`.
+- When there are SI-units with powers, no additional symbols such as `^` for the subscripts are used; `Speed` is expressed in `m/s2`.
 - When there are SI-units with positive and negative powers, a slash is used for division; `ElectricPotential` is expressed in `kgm2/s3A`.
 - Maximally one slash is allowed in the string representation, where all powers after the slash are negated.
 - Periods in the unit abbreviations are used where confusion is possible (but may also be used where confusion is not possible). Example: for `Power` the `sn.m/s` (sthene-meter per second) has a period to help realize it is not a 'second-something'. Similarly, the foot-pound force per hour is expressed as `ft.lbf/h` to help readability.
@@ -41,11 +41,11 @@ The static definition of variable names for the units in the unit class also fol
 - The `.` `/`, `(`, `)`, and all other non-alphabetic and non-number symbols are replaced by an underscore: `km/h` for speed becomes `km_h` as the static constant name. The `Power` unit foot-pound force per hour (`ft.lbf/h`) is defined in Java as `ft_lbf_h`.
 - An underscore at the end of the variable is removed. The British Thermal Unit `BTU(ISO)` and `BTU(IT)` become `BTU_ISO` and `BTU_IT` as Java names; metric horsepower becomes `hp_M`. 
 - If there are two consecutive underscores, one is removed. 
-- Greek letters are written with their name. The &Omega; for ohm becomes `ohm`. Micro-ohm &mu;&Omega; becomes `muohm` for the variable name.
+- Greek letters are written with their name. The &Omega; for ohm becomes `ohm`. Micro-ohm &mu;&Omega; becomes `muohm` for the unit name.
 - The degree symbol is transformed to `deg` in the temperature unit definition. &deg;C becomes `degC` in Java.
 - The angstrom (&Aring;) is denoted with an `A` in Java. 
 
-Note that the static names for the units do **not** follow Java conventions.
+Note that the static names for the units do **not** follow Java conventions. Following Java conventions for the abbreviations would have resulted in name clashes, such as the `nm` for nanometer, and `NM` for Nautical Mile; `mJ` for millijoule and `MJ` for megajoule. Also, following the standard upper/lower case naming of variables makes them easier to recognize. For example, `KEV` versus `keV` and `LM` versus `lm`. 
 
 
 ## Adding a unit instance to an existing unit
@@ -90,5 +90,5 @@ The program will print the following output:
 
 ## Defining a completely new Unit
 
-Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit will be discussed in the [Define quantity section](define_quantity.md).
+Of course it is also possible to define a completely new unit type from scratch. Since a unit can only be defined in conjunction with a quantity, defining a new unit is discussed in the [Define quantity section](define_quantity.md).
 
