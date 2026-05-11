@@ -49,14 +49,14 @@ Helper methods for the formatting are:
 
 The usage of these settings by the different formats is as follows:
 
-| Format               | Width   | Decimals | Grouping       | UpperE       |
-| -------------------- | ------- | -------- | -------------- | ------------ |
-| FixedFloat           | Used    | Used     | Used           | Ignored      |
-| Scientific           | Used    | Used     | Ignored        | Used         |
-| Engineering          | Used    | Used     | Ignored        | Used         |
-| FixedWithSciFallback | Used    | Used     | Used for fixed | Used for Sci |
-| FixedWithEngFallback | Used    | Used     | Used for fixed | Used for Eng |
-| FormatString         | Ignored | Ignored  | Ignored        | Ignored      |
+| Format               | Width   | Decimals | Grouping       | UpperE               |
+| -------------------- | ------- | -------- | -------------- | -------------------- |
+| FixedFloat           | Used    | Used     | Used           | Ignored              |
+| Scientific           | Used    | Used     | Ignored        | Used                 |
+| Engineering          | Used    | Used     | Ignored        | Used                 |
+| FixedWithSciFallback | Used    | Used     | Used for fixed | Used for Scientific  |
+| FixedWithEngFallback | Used    | Used     | Used for fixed | Used for Engineering |
+| FormatString         | Ignored | Ignored  | Ignored        | Ignored              |
 
 
 ## Unit formatting settings
@@ -200,7 +200,7 @@ The default values for vector `Row` and `Col` formatting are as follows:
 
 Matrix formatting is done using the `MatrixFormat` class. Since `MatrixFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
 
-An attempt has been made to enable formatting of a matrix in such a way that the matrix can be recognized:
+By default, matrices are formatted in such a way that they can be recognized as a matrix:
 
 ```
 |     11.000      14.000      17.000      20.000 |
@@ -209,15 +209,91 @@ An attempt has been made to enable formatting of a matrix in such a way that the
 |     47.000      62.000      77.000      92.000 | m2
 ```
 
+For formatting matrices, the following methods are available:
 
+- `setFirstRowStart(String)` sets the start symbol of the left bracket on the first row. The default is `|`.
+- `setFirstRowEnd(String)` sets the end symbol of the right bracket on the first row. The default is `|\n`.
+- `setMiddleRowStart(String)` sets the start symbol of the left bracket for middle rows. The default is `|`.
+- `setMiddleRowEnd(String)` sets the end symbol of the right bracket for middle rows. The default is `|\n`.
+- `setLastRowStart(String)` sets the start symbol of the left bracket on the last row. The default is `|`.
+- `setLastRowEnd(String)` sets the end symbol of the right bracket on the last row. The default is `|`.
+- `setCellSeparator(String)` sets the separator between cells in the matrix rows. It is a single space by default.
+- `setMatrixPrefix(String)` sets a prefix to use before the first matrix row and before the row start symbol. It is an empty string by default.
+- `setMatrixPostfix(String)` sets a postfix to use after the last matrix row and after the row end symbol, but before the unit. It is an empty string by default.
 
 
 ## QuantityTable formatting
 
 Quantity table formatting is done using the `TableFormat` class. Since `TableFormat` extends `Format`, all above settings for formatting the number, unit, locale, and absolute references can be used as well. 
 
+For formatting tables, the following methods are available:
+
+- `setFirstRowStart(String)` sets the start symbol of the table on the first row. The default is `|`.
+- `setFirstRowEnd(String)` sets the end symbol of the table on the first row. The default is `|\n`.
+- `setMiddleRowStart(String)` sets the start symbol of the table for middle rows. The default is `|`.
+- `setMiddleRowEnd(String)` sets the end symbol of the table for middle rows. The default is `|\n`.
+- `setLastRowStart(String)` sets the start symbol of the table on the last row. The default is `|`.
+- `setLastRowEnd(String)` sets the end symbol of the table on the last row. The default is `|`.
+- `setCellSeparator(String)` sets the separator between cells in the table rows. It is a single space by default.
+- `setTablePrefix(String)` sets a prefix to use before the first table row and before the row start symbol. It is an empty string by default.
+- `setTablePostfix(String)` sets a postfix to use after the last table row and after the row end symbol, but before the unit. It is an empty string by default.
+
+
+## Reusing a Format
+
+A format can be stored and reused. When you have a format you want to reuse for multiple `format()` statements, you can store it in a variable. Suppose you want a format to print column vectors as row vectors, but start the vector with `Col` to indicate it actually a row vector. Similarly, you want to format row vectors starting with the text `Row`. Then, you can store and use the formats as follows:
+
+```java
+public static final VectorFormat.Row COLFORMAT = VectorFormat.Row.defaults().setVectorPrefix("Col");
+public static final VectorFormat.Row ROWFORMAT = VectorFormat.Row.defaults().setVectorPrefix("Row");
+
+public void test()
+{
+    var mvc = Vector3.Col.of(1, 2, 3, Mass.Unit.kg);
+    var mvr = Vector3.Row.of(4, 5, 6, Mass.Unit.kg);
+    System.out.println("mvc = " + mvc.format(COLFORMAT));
+    System.out.println("mvr = " + mvr.format(ROWFORMAT));
+}
+```
+
+which outputs:
+
+```
+mvc = Col[1, 2, 3] kg
+mvr = Row[4, 5, 6] kg
+```
+
 
 ## Changing default values
+
+If you want to change the default values for **all** subsequent calls of one of the formatters (`QuantityFormat`, `VectorFormat.Row`, `VectorFormat.Col`, `MatrixFormat` or `TableFormat`), you can use the static method `changeDefaults()` on the `Format`, and then set the options to your liking. Suppose you want to change the format of column vectors to **always** print as row vectors, but start the vector with `C` to indicate it actually a row vector. Similarly, you **always** want to format row vectors starting with the text `R`. Then, you can set the default formats as follows:
+
+```java
+public static void main(String[] args)
+{
+    VectorFormat.Col.changeDefaults().setVectorPrefix("C").setCellSeparator(", ")
+        .setStartSymbol("[").setVariableLength();
+    VectorFormat.Row.changeDefaults().setVectorPrefix("R");
+    test();
+}
+
+private static void test()
+{
+    var mvc = Vector3.Col.of(1, 2, 3, Mass.Unit.kg);
+    var mvr = Vector3.Row.of(4, 5, 6, Mass.Unit.kg);
+    System.out.println("mvc = " + mvc);
+    System.out.println("mvr = " + mvr);
+}
+```
+
+which outputs:
+
+```
+mvc = C[1, 2, 3] kg
+mvr = R[4, 5, 6] kg
+```
+
+Note that we had to change the default column formatting with newlines to a version without newlines. Also, the value formatting that by default is fixed with scientific fallback was changed to variable length.
 
 
 ## Technical implementation
