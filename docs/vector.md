@@ -193,8 +193,6 @@ Length: [10, 20, 60, 120, 400] km
 Speed : [5, 10, 30, 60, 200] km/h
 ```
 
-The output shows that the vectors are column vectors, although they are printed row-wise. 
-
 
 ## Formatting and printing vectors
 
@@ -205,7 +203,7 @@ All vectors have a `toString()` method that returns a single-line String represe
 - `String format(Unit displayUnit)` returns the localized string representation of the vector, using the provided unit. Row vectors will be formatted in a single-line String, and column vectors will have one cell per line, and therefore result in a multi-line String.
 - `String format(VectorFormat format)` formats the vector using the provided format parameters.
 
-The `VectorFormat` class has two variants: a `VectorFormat.Row` class that formats the vector on one row, and the `VectorFormat.Col` class that uses one line per cell. See the section [Formatting](formatting.md) for more information on how to use the `VectorFormat` options.
+The `VectorFormat` class has two variants: a `VectorFormat.Row` class that by default formats the vector on one row, and the `VectorFormat.Col` class that by default uses one line per cell. See the section [Formatting](formatting.md) for more information on how to use the `VectorFormat` options.
 
 > **Note** that the `VectorFormat.Col` and `VectorFormat.Row` class can both be used for row vectors and column vectors. This means that a row vector can be formatted as a column vector and vice versa. It's just formatting, and the vector itself is not and does not need to be transposed to format it in the other 'direction'.
 
