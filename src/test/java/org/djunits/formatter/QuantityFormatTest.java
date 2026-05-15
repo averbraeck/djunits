@@ -52,15 +52,15 @@ public class QuantityFormatTest
         assertTrue(s2.contains("1.2"));
         assertTrue(s2.endsWith(" kJ"));
 
-        String s3 = energy.format(QuantityFormat.defaults().setUnitPrefix("  "));
+        String s3 = energy.format(QuantityFormat.instance().setUnitPrefix("  "));
         assertTrue(s3.contains("1200"));
         assertTrue(s3.endsWith("  J"));
 
-        String s4 = energy.format(QuantityFormat.defaults().setUnitPrefix(", unit="));
+        String s4 = energy.format(QuantityFormat.instance().setUnitPrefix(", unit="));
         assertTrue(s4.contains("1200"));
         assertTrue(s4.endsWith(", unit=J"));
 
-        String s5 = energy.format(QuantityFormat.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        String s5 = energy.format(QuantityFormat.instance().setUnitPrefix(" (").setUnitPostfix(")"));
         assertTrue(s5.contains("1200"));
         assertTrue(s5.endsWith(" (J)"));
     }
@@ -84,66 +84,66 @@ public class QuantityFormatTest
         Energy em6 = new Energy(0.000001234567, Energy.Unit.J);
         Energy em7 = new Energy(0.0000001234567, Energy.Unit.J);
 
-        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        String s0 = e0.format(QuantityFormat.instance().setAutoSiPrefix().setFixedWithSciFallback());
         assertTrue(s0.contains("0.0"));
         assertTrue(s0.endsWith(" J"));
 
-        String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s4 = e4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
         assertTrue(s4.endsWith(" kJ"));
 
-        String s5 = e5.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s5 = e5.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s5.contains("12.003"));
         assertTrue(s5.endsWith(" kJ"));
 
-        String s6 = e6.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s6 = e6.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s6.contains("120.03"));
         assertTrue(s6.endsWith(" kJ"));
 
-        String s7 = e7.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s7 = e7.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s7.contains("1.2"));
         assertTrue(s7.endsWith(" MJ"));
 
-        String s8 = e8.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s8 = e8.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s8.contains("12.003"));
         assertTrue(s8.endsWith(" MJ"));
 
-        String m2 = em2.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m2 = em2.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m2.contains("12.34"));
         assertTrue(m2.endsWith(" mJ"));
 
-        String m3 = em3.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m3 = em3.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m3.contains("1.2"));
         assertTrue(m3.endsWith(" mJ"));
 
-        String m4 = em4.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m4 = em4.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m4.contains("123.45"));
         assertTrue(m4.endsWith(" muJ"));
 
-        String m5 = em5.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m5 = em5.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m5.contains("12.34"));
         assertTrue(m5.endsWith(" muJ"));
 
-        String m6 = em6.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m6 = em6.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m6.contains("1.23"));
         assertTrue(m6.endsWith(" muJ"));
 
-        String m7 = em7.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m7 = em7.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" nJ"));
 
         // test with limits
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 0)).endsWith(" J"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 1)).endsWith(" J"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 2)).endsWith(" J"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" kJ"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" J"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 3)).endsWith(" J"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 3)).endsWith(" J"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 3)).endsWith(" mJ"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-4, 3)).endsWith(" mJ"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-8, 3)).endsWith(" J"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" nJ"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 0)).endsWith(" J"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 1)).endsWith(" J"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 2)).endsWith(" J"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 3)).endsWith(" kJ"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 3)).endsWith(" J"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-1, 3)).endsWith(" J"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-2, 3)).endsWith(" J"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 3)).endsWith(" mJ"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-4, 3)).endsWith(" mJ"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-8, 3)).endsWith(" J"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-9, 3)).endsWith(" nJ"));
     }
 
     /**
@@ -165,69 +165,69 @@ public class QuantityFormatTest
         Mass em6 = new Mass(0.000001234567, Mass.Unit.kg);
         Mass em7 = new Mass(0.0000001234567, Mass.Unit.kg);
 
-        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        String s0 = e0.format(QuantityFormat.instance().setAutoSiPrefix().setFixedWithSciFallback());
         assertTrue(s0.contains("0.0"));
         assertTrue(s0.endsWith(" kg"));
 
-        String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s4 = e4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
         assertTrue(s4.endsWith(" Mg"));
 
-        String s5 = e5.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s5 = e5.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s5.contains("12.003"));
         assertTrue(s5.endsWith(" Mg"));
 
-        String s6 = e6.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s6 = e6.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s6.contains("120.03"));
         assertTrue(s6.endsWith(" Mg"));
 
-        String s7 = e7.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s7 = e7.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s7.contains("1.2"));
         assertTrue(s7.endsWith(" Gg"));
 
-        String s8 = e8.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s8 = e8.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s8.contains("12.003"));
         assertTrue(s8.endsWith(" Gg"));
 
-        String m2 = em2.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m2 = em2.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m2.contains("12.34"));
         assertTrue(m2.endsWith(" g"));
 
-        String m3 = em3.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m3 = em3.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m3.contains("1.2"));
         assertTrue(m3.endsWith(" g"));
 
-        String m4 = em4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m4 = em4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m4.contains("123.45"));
         assertTrue(m4.endsWith(" mg"));
 
-        String m5 = em5.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m5 = em5.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m5.contains("12.34"));
         assertTrue(m5.endsWith(" mg"));
 
-        String m6 = em6.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m6 = em6.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m6.contains("1.23"));
         assertTrue(m6.endsWith(" mg"));
 
-        String m7 = em7.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m7 = em7.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" mug"));
 
         // test with limits
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 0)).endsWith(" kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 1)).endsWith(" kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 2)).endsWith(" kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 6)).endsWith(" Mg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" g"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(3, 3)).endsWith(" kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 3)).endsWith(" g"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 3)).endsWith(" g"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 3)).endsWith(" g"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-4, 3)).endsWith(" g"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-5, 3)).endsWith(" kg"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-6, 3).setTextual()).endsWith(" mug"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3).setTextual()).endsWith(" mug"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 0)).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 1)).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 2)).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 3)).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 6)).endsWith(" Mg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 3)).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(3, 3)).endsWith(" kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-1, 3)).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-2, 3)).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 3)).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-4, 3)).endsWith(" g"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-5, 3)).endsWith(" kg"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-6, 3).setTextual()).endsWith(" mug"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-9, 3).setTextual()).endsWith(" mug"));
     }
 
     /**
@@ -251,74 +251,74 @@ public class QuantityFormatTest
         LinearObjectDensity em6 = new LinearObjectDensity(0.000001234567, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity em7 = new LinearObjectDensity(0.0000001234567, LinearObjectDensity.Unit.per_m);
 
-        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        String s0 = e0.format(QuantityFormat.instance().setAutoSiPrefix().setFixedWithSciFallback());
         assertTrue(s0.contains("0.0"));
         assertTrue(s0.endsWith(" /m"));
 
-        String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s4 = e4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
         assertTrue(s4.endsWith(" /mm"));
 
-        String s5 = e5.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String s5 = e5.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(s5.contains("12.003"));
         assertTrue(s5.endsWith(" /mm"));
 
-        String s6 = e6.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String s6 = e6.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(s6.contains("120.03"));
         assertTrue(s6.endsWith(" /mm"));
 
-        String s7 = e7.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String s7 = e7.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(s7.contains("1.2"));
         assertTrue(s7.endsWith(" /mum"));
 
-        String s8 = e8.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String s8 = e8.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(s8.contains("12.003"));
         assertTrue(s8.endsWith(" /mum"));
 
-        String m0 = em0.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m0 = em0.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m0.contains("1.23"));
         assertTrue(m0.endsWith(" /m"));
 
-        String m1 = em1.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m1 = em1.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m1.contains("123.45"));
         assertTrue(m1.endsWith(" /km"));
 
-        String m2 = em2.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m2 = em2.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m2.contains("12.34"));
         assertTrue(m2.endsWith(" /km"));
 
-        String m3 = em3.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m3 = em3.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m3.contains("1.23"));
         assertTrue(m3.endsWith(" /km"));
 
-        String m4 = em4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m4 = em4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m4.contains("123.45"));
         assertTrue(m4.endsWith(" /Mm"));
 
-        String m5 = em5.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m5 = em5.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m5.contains("12.34"));
         assertTrue(m5.endsWith(" /Mm"));
 
-        String m6 = em6.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m6 = em6.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m6.contains("1.23"));
         assertTrue(m6.endsWith(" /Mm"));
 
-        String m7 = em7.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m7 = em7.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" /Gm"));
 
         // test with limits
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 0)).endsWith(" /m"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 0)).endsWith(" /m"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 0)).endsWith(" /m"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 0)).endsWith(" /mm"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 0)).endsWith(" /m"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 1)).endsWith(" /m"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 2)).endsWith(" /m"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /km"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 4)).endsWith(" /km"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 8)).endsWith(" /m"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 9)).endsWith(" /Gm"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 0)).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-1, 0)).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-2, 0)).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-3, 0)).endsWith(" /mm"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 0)).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 1)).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 2)).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 3)).endsWith(" /km"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 4)).endsWith(" /km"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-3, 8)).endsWith(" /m"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-3, 9)).endsWith(" /Gm"));
     }
 
     /**
@@ -342,75 +342,75 @@ public class QuantityFormatTest
         PerMass em6 = new PerMass(0.000001234567, PerMass.Unit.per_kg);
         PerMass em7 = new PerMass(0.0000001234567, PerMass.Unit.per_kg);
 
-        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        String s0 = e0.format(QuantityFormat.instance().setAutoSiPrefix().setFixedWithSciFallback());
         assertTrue(s0.contains("0.0"));
         assertTrue(s0.endsWith(" /kg"));
 
-        String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s4 = e4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
         assertTrue(s4.endsWith(" /g"));
 
-        String s5 = e5.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s5 = e5.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s5.contains("12.003"));
         assertTrue(s5.endsWith(" /g"));
 
-        String s6 = e6.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s6 = e6.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s6.contains("120.03"));
         assertTrue(s6.endsWith(" /g"));
 
-        String s7 = e7.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s7 = e7.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s7.contains("1.2"));
         assertTrue(s7.endsWith(" /mg"));
 
-        String s8 = e8.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s8 = e8.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s8.contains("12.003"));
         assertTrue(s8.endsWith(" /mg"));
 
-        String m0 = em0.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m0 = em0.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m0.contains("1.23"));
         assertTrue(m0.endsWith(" /kg"));
 
-        String m1 = em1.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m1 = em1.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m1.contains("123.45"));
         assertTrue(m1.endsWith(" /Mg"));
 
-        String m2 = em2.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m2 = em2.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m2.contains("12.34"));
         assertTrue(m2.endsWith(" /Mg"));
 
-        String m3 = em3.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m3 = em3.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m3.contains("1.23"));
         assertTrue(m3.endsWith(" /Mg"));
 
-        String m4 = em4.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m4 = em4.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m4.contains("123.45"));
         assertTrue(m4.endsWith(" /Gg"));
 
-        String m5 = em5.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m5 = em5.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m5.contains("12.34"));
         assertTrue(m5.endsWith(" /Gg"));
 
-        String m6 = em6.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String m6 = em6.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(m6.contains("1.23"));
         assertTrue(m6.endsWith(" /Gg"));
 
-        String m7 = em7.format(QuantityFormat.defaults().setAutoSiPrefix().setTextual());
+        String m7 = em7.format(QuantityFormat.instance().setAutoSiPrefix().setTextual());
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" /Tg"));
 
         // test with limits
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 0)).endsWith(" /g"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 1)).endsWith(" /g"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 2)).endsWith(" /g"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /g"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(3, 6)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 4)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 5)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 6)).endsWith(" /Mg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 7)).endsWith(" /Mg"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(0, 11)).endsWith(" /kg"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(0, 12)).endsWith(" /Tg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 0)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 1)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 2)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 3)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(3, 6)).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 3)).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 4)).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 5)).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 6)).endsWith(" /Mg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 7)).endsWith(" /Mg"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(0, 11)).endsWith(" /kg"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(0, 12)).endsWith(" /Tg"));
     }
 
     /**
@@ -421,7 +421,7 @@ public class QuantityFormatTest
     {
         SIQuantity siq = new SIQuantity(1200.345, SIUnit.of("m/s3"));
 
-        String s1 = siq.format(QuantityFormat.defaults().setAutoSiPrefix());
+        String s1 = siq.format(QuantityFormat.instance().setAutoSiPrefix());
         assertTrue(s1.contains("1200"));
         assertTrue(s1.endsWith(" m/s3"));
     }
@@ -443,19 +443,19 @@ public class QuantityFormatTest
         assertTrue(s2.contains(String.valueOf(deg).substring(0, 7)));
         assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
 
-        String s3 = dir.format(QuantityFormat.defaults().setUnitPrefix("  "));
+        String s3 = dir.format(QuantityFormat.instance().setUnitPrefix("  "));
         assertTrue(s3.contains("1.23456"));
         assertTrue(s3.endsWith("  rad"));
 
-        String s4 = dir.format(QuantityFormat.defaults().setUnitPrefix(", unit="));
+        String s4 = dir.format(QuantityFormat.instance().setUnitPrefix(", unit="));
         assertTrue(s4.contains("1.23456"));
         assertTrue(s4.endsWith(", unit=rad"));
 
-        String s5 = dir.format(QuantityFormat.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        String s5 = dir.format(QuantityFormat.instance().setUnitPrefix(" (").setUnitPostfix(")"));
         assertTrue(s5.contains("1.23456"));
         assertTrue(s5.endsWith(" (rad)"));
 
-        String s6 = dir.format(QuantityFormat.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        String s6 = dir.format(QuantityFormat.instance().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
         assertTrue(s6.contains("1.23456"));
         assertTrue(s6.endsWith(" rad (EAST)"));
     }
@@ -469,34 +469,34 @@ public class QuantityFormatTest
         Direction n = new Direction(30.0, Angle.Unit.deg, Direction.Reference.NORTH);
         Direction e = new Direction(30.0, Angle.Unit.deg, Direction.Reference.EAST);
 
-        String s1a = n.format(QuantityFormat.defaults().setTextual());
+        String s1a = n.format(QuantityFormat.instance().setTextual());
         assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1a.endsWith(" deg"));
 
-        String s1b = n.format(QuantityFormat.defaults().setTextual());
+        String s1b = n.format(QuantityFormat.instance().setTextual());
         assertTrue(s1b.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1b.endsWith(" deg"));
 
-        String s2 = n.format(QuantityFormat.defaults().setNoReference().setTextual());
+        String s2 = n.format(QuantityFormat.instance().setNoReference().setTextual());
         assertTrue(s2.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s2.endsWith(" deg"));
 
-        String s3 = n.format(QuantityFormat.defaults().setPrintReference(false).setTextual());
+        String s3 = n.format(QuantityFormat.instance().setPrintReference(false).setTextual());
         assertTrue(s3.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s3.endsWith(" deg"));
 
-        String s4n = n.format(QuantityFormat.defaults().setPrintReference().setTextual());
+        String s4n = n.format(QuantityFormat.instance().setPrintReference().setTextual());
         assertTrue(s4n.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4n.contains(" deg"));
         assertTrue(s4n.endsWith(" (NORTH)"));
 
-        String s4e = e.format(QuantityFormat.defaults().setPrintReference(true).setTextual());
+        String s4e = e.format(QuantityFormat.instance().setPrintReference(true).setTextual());
         assertTrue(s4e.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4e.contains(" deg"));
         assertTrue(s4e.endsWith(" (EAST)"));
 
         String s5 = e.format(
-                QuantityFormat.defaults().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
+                QuantityFormat.instance().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
         assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s5.contains(" deg"));
         assertTrue(s5.endsWith(" [EAST]"));
@@ -511,21 +511,21 @@ public class QuantityFormatTest
         Energy energy = new Energy(1.2345, Energy.Unit.kJ);
         Temperature temp = new Temperature(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
 
-        String s1 = energy.format(QuantityFormat.defaults().setSiUnits());
+        String s1 = energy.format(QuantityFormat.instance().setSiUnits());
         assertEquals("1234.5 kgm2/s2", s1);
 
-        String s2C = temp.format(QuantityFormat.defaults().setSiUnits());
+        String s2C = temp.format(QuantityFormat.instance().setSiUnits());
         assertEquals("20 K", s2C);
 
         String s3C = temp.format(
-                QuantityFormat.defaults().setSiUnits().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+                QuantityFormat.instance().setSiUnits().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
         assertEquals("20 K (CELSIUS)", s3C);
 
-        String s2K = temp.relativeTo(Temperature.Reference.KELVIN).format(QuantityFormat.defaults().setSiUnits());
+        String s2K = temp.relativeTo(Temperature.Reference.KELVIN).format(QuantityFormat.instance().setSiUnits());
         assertEquals("293.15 K", s2K);
 
         String s3K = temp.relativeTo(Temperature.Reference.KELVIN).format(
-                QuantityFormat.defaults().setSiUnits().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+                QuantityFormat.instance().setSiUnits().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
         assertEquals("293.15 K (KELVIN)", s3K);
     }
 

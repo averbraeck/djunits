@@ -52,7 +52,7 @@ public class TableFormatTest
         assertTrue(s1.startsWith("|"));
         assertTrue(s1.endsWith("| J"));
 
-        String s2 = ev.format(TableFormat.defaults());
+        String s2 = ev.format(TableFormat.instance());
         assertTrue(s2.contains("1200.345"));
         assertTrue(s2.contains("123.456"));
         assertTrue(s2.contains("5432.10"));
@@ -61,7 +61,7 @@ public class TableFormatTest
         assertTrue(s2.endsWith("| J"));
 
         String s3 =
-                ev.format(TableFormat.defaults().setTablePrefix("Mat ").setColSeparator(" , ").setFirstRowStart("/")
+                ev.format(TableFormat.instance().setTablePrefix("Mat ").setColSeparator(" , ").setFirstRowStart("/")
                         .setFirstRowEnd(" \\\n").setMiddleRowStart("    |").setMiddleRowEnd(" | \n")
                         .setLastRowStart("    \\").setLastRowEnd(" /").setTablePostfix(" unit ="));
         String[] s3Arr = s3.split("\\R");
@@ -76,7 +76,7 @@ public class TableFormatTest
         assertTrue(s3Arr[2].startsWith("    \\"));
         assertTrue(s3Arr[2].endsWith("/ unit = J"));
 
-        String s4 = ev.format(TableFormat.defaults().setColSeparator(" ").setDisplayUnit("kJ"));
+        String s4 = ev.format(TableFormat.instance().setColSeparator(" ").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
         assertTrue(s4.contains("5.432"));
@@ -113,19 +113,19 @@ public class TableFormatTest
         assertTrue(s2.contains(String.valueOf(deg).substring(0, 5)));
         assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
 
-        String s3 = dir.format(TableFormat.defaults().setUnitPrefix("  "));
+        String s3 = dir.format(TableFormat.instance().setUnitPrefix("  "));
         assertTrue(s3.contains("1.235"));
         assertTrue(s3.endsWith("  rad"));
 
-        String s4 = dir.format(TableFormat.defaults().setUnitPrefix(", unit="));
+        String s4 = dir.format(TableFormat.instance().setUnitPrefix(", unit="));
         assertTrue(s4.contains("1.235"));
         assertTrue(s4.endsWith(", unit=rad"));
 
-        String s5 = dir.format(TableFormat.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        String s5 = dir.format(TableFormat.instance().setUnitPrefix(" (").setUnitPostfix(")"));
         assertTrue(s5.contains("1.235"));
         assertTrue(s5.endsWith(" (rad)"));
 
-        String s6 = dir.format(TableFormat.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+        String s6 = dir.format(TableFormat.instance().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
         assertTrue(s6.contains("1.235"));
         assertTrue(s6.endsWith(" rad (EAST)"));
     }
@@ -142,34 +142,34 @@ public class TableFormatTest
         AbsQuantityTable<Direction, Angle> e = AbsQuantityTable.of(new double[][] {{30, 40, 50}, {10, 11, 12}, {40, 50, 60}},
                 Angle.Unit.deg, Direction.Reference.EAST);
 
-        String s1a = n.format(TableFormat.defaults().setTextual());
+        String s1a = n.format(TableFormat.instance().setTextual());
         assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1a.endsWith(" deg"));
 
-        String s1b = n.format(TableFormat.defaults().setTextual());
+        String s1b = n.format(TableFormat.instance().setTextual());
         assertTrue(s1b.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1b.endsWith(" deg"));
 
-        String s2 = n.format(TableFormat.defaults().setNoReference().setTextual());
+        String s2 = n.format(TableFormat.instance().setNoReference().setTextual());
         assertTrue(s2.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s2.endsWith(" deg"));
 
-        String s3 = n.format(TableFormat.defaults().setPrintReference(false).setTextual());
+        String s3 = n.format(TableFormat.instance().setPrintReference(false).setTextual());
         assertTrue(s3.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s3.endsWith(" deg"));
 
-        String s4n = n.format(TableFormat.defaults().setPrintReference().setTextual());
+        String s4n = n.format(TableFormat.instance().setPrintReference().setTextual());
         assertTrue(s4n.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4n.contains(" deg"));
         assertTrue(s4n.endsWith(" (NORTH)"));
 
-        String s4e = e.format(TableFormat.defaults().setPrintReference(true).setTextual());
+        String s4e = e.format(TableFormat.instance().setPrintReference(true).setTextual());
         assertTrue(s4e.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4e.contains(" deg"));
         assertTrue(s4e.endsWith(" (EAST)"));
 
         String s5 = e.format(
-                TableFormat.defaults().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
+                TableFormat.instance().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
         assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s5.contains(" deg"));
         assertTrue(s5.endsWith(" [EAST]"));
@@ -185,13 +185,13 @@ public class TableFormatTest
         AbsQuantityTable<Temperature, TemperatureDifference> temp =
                 AbsQuantityTable.of(new double[][] {{20.0}}, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
 
-        String s1 = energy.format(TableFormat.defaults().setSiUnits().setFirstRowEnd(" |"));
+        String s1 = energy.format(TableFormat.instance().setSiUnits().setFirstRowEnd(" |"));
         assertEquals("|   1234.500 | kgm2/s2", s1);
 
-        String s2C = temp.format(TableFormat.defaults().setSiUnits().setFirstRowEnd(" |"));
+        String s2C = temp.format(TableFormat.instance().setSiUnits().setFirstRowEnd(" |"));
         assertEquals("|     20.000 | K", s2C);
 
-        String s3C = temp.format(TableFormat.defaults().setSiUnits().setFirstRowEnd(" |").setPrintReference()
+        String s3C = temp.format(TableFormat.instance().setSiUnits().setFirstRowEnd(" |").setPrintReference()
                 .setReferencePrefix(" (").setReferencePostfix(")"));
         assertEquals("|     20.000 | K (CELSIUS)", s3C);
     }

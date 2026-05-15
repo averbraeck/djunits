@@ -392,7 +392,7 @@ public class AbsQuantityTest
     public void testDefaultToString()
     {
         Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH);
-        assertEquals("    12.346 deg", d.format(QuantityFormat.defaults().setFixedWithSciFallback().setTextual()));
+        assertEquals("    12.346 deg", d.format(QuantityFormat.instance().setFixedWithSciFallback().setTextual()));
     }
 
     /**
@@ -403,9 +403,9 @@ public class AbsQuantityTest
     public void testToStringWithTargetUnit()
     {
         Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST);
-        assertEquals("     3.142 rad", d.format(QuantityFormat.defaults().setTextual().setFixedWithSciFallback()));
+        assertEquals("     3.142 rad", d.format(QuantityFormat.instance().setTextual().setFixedWithSciFallback()));
         assertEquals("   180.000 deg",
-                d.format(QuantityFormat.defaults().setDisplayUnit(Angle.Unit.deg).setTextual().setFixedWithSciFallback()));
+                d.format(QuantityFormat.instance().setDisplayUnit(Angle.Unit.deg).setTextual().setFixedWithSciFallback()));
 
         Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST);
         assertTrue(d2.format(Angle.Unit.rad).contains("3.14159"));
@@ -423,13 +423,13 @@ public class AbsQuantityTest
         {
             Position p = new Position(12_345_678.9, Length.Unit.m, pref);
             String s1 =
-                    p.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
+                    p.format(QuantityFormat.instance().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
             assertEquals("12,345,678.9 m", s1);
             String s2 =
-                    p.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+                    p.format(QuantityFormat.instance().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
             assertEquals("  12345678.9 m", s2);
             String s3 =
-                    p.format(QuantityFormat.defaults().setFixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+                    p.format(QuantityFormat.instance().setFixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
             assertEquals(" 12345678.90 m", s3);
         }
         finally
@@ -450,10 +450,10 @@ public class AbsQuantityTest
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
             String s1 = pos.format(
-                    QuantityFormat.defaults().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
+                    QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
             assertEquals("    20.400 km", s1);
 
-            String s2 = pos.format(QuantityFormat.defaults().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3)
+            String s2 = pos.format(QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3)
                     .setTextual().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
             assertEquals("    20.400 km (TEST)", s2);
         }
@@ -474,7 +474,7 @@ public class AbsQuantityTest
         try
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
-            String s = pos.format(QuantityFormat.defaults().setFixedWithSciFallback().setLocale(Locale.GERMANY));
+            String s = pos.format(QuantityFormat.instance().setFixedWithSciFallback().setLocale(Locale.GERMANY));
             assertEquals(" 20400,000 m", s);
         }
         finally

@@ -417,11 +417,11 @@ public class QuantityTest
     public void testLargeMagnitudeFixed()
     {
         Area a = new Area(12_345_678.9, Area.Unit.m2);
-        String s1 = a.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
+        String s1 = a.format(QuantityFormat.instance().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
         assertEquals("12,345,678.9 m2", s1);
-        String s2 = a.format(QuantityFormat.defaults().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
+        String s2 = a.format(QuantityFormat.instance().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(false));
         assertEquals("  12345678.9 m2", s2);
-        String s3 = a.format(QuantityFormat.defaults().setFixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
+        String s3 = a.format(QuantityFormat.instance().setFixedFloat().setDecimals(2).setWidth(12).setGroupingSeparator(false));
         assertEquals(" 12345678.90 m2", s3);
     }
 
@@ -433,7 +433,7 @@ public class QuantityTest
     public void testCombinedFormat()
     {
         Length l = new Length(20400.0, Length.Unit.m);
-        String s = l.format(QuantityFormat.defaults().setAutoSiPrefix().setDecimals(3).setTextual());
+        String s = l.format(QuantityFormat.instance().setAutoSiPrefix().setDecimals(3).setTextual());
         assertEquals("20.4 km", s);
     }
 
@@ -447,7 +447,7 @@ public class QuantityTest
         try
         {
             Length l = new Length(1.5, Length.Unit.m);
-            String sDe = l.format(QuantityFormat.defaults().setLocale(Locale.GERMANY));
+            String sDe = l.format(QuantityFormat.instance().setLocale(Locale.GERMANY));
             assertEquals("1,5 m", sDe);
             Locale.setDefault(Locale.forLanguageTag("DE"));
             Length lDe = Length.valueOf("1,5 m");
@@ -457,7 +457,7 @@ public class QuantityTest
             Locale.setDefault(Locale.US);
 
             // choose a Locale for which we do not have a resource bundle
-            String sNo = l.format(QuantityFormat.defaults().setLocale(Locale.forLanguageTag("no-NO")));
+            String sNo = l.format(QuantityFormat.instance().setLocale(Locale.forLanguageTag("no-NO")));
             assertEquals("1,5 m", sNo);
             Locale.setDefault(Locale.forLanguageTag("no-NO"));
             Length lNo = Length.valueOf("1,5 m");

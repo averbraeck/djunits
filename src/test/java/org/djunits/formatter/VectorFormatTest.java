@@ -52,7 +52,7 @@ public class VectorFormatTest
         assertTrue(s1.startsWith("["));
         assertTrue(s1.endsWith("] J"));
 
-        String s2 = ev.format(VectorFormat.Row.defaults());
+        String s2 = ev.format(VectorFormat.Row.instance());
         assertTrue(s2.contains("1200.345"));
         assertTrue(s2.contains("123.456"));
         assertTrue(s2.contains("5432.10"));
@@ -61,7 +61,7 @@ public class VectorFormatTest
         assertTrue(s2.endsWith("] J"));
 
         String s3 = ev.format(
-                VectorFormat.Row.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Row.instance().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -69,7 +69,7 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("R("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Row.instance().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -96,7 +96,7 @@ public class VectorFormatTest
         assertTrue(s1.endsWith("] J"));
         assertTrue(s1.contains("\n"));
 
-        String s2 = ev.format(VectorFormat.Col.defaults());
+        String s2 = ev.format(VectorFormat.Col.instance());
         assertTrue(s2.contains("1200.345"));
         assertTrue(s2.contains("123.456"));
         assertTrue(s2.contains("5432.10"));
@@ -106,7 +106,7 @@ public class VectorFormatTest
         assertTrue(s2.contains("\n"));
 
         String s3 = ev.format(
-                VectorFormat.Col.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Col.instance().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -115,7 +115,7 @@ public class VectorFormatTest
         assertTrue(s3.endsWith(") J"));
         assertFalse(s3.contains("\n"));
 
-        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Col.instance().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -134,7 +134,7 @@ public class VectorFormatTest
     {
         Vector3.Col<Energy> ev = Vector3.Col.of(1200.345, 123.456, 5432.104, Energy.Unit.J);
 
-        String s2 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("Col"));
+        String s2 = ev.format(VectorFormat.Row.instance().setVectorPrefix("Col"));
         assertTrue(s2.contains("1200.345"));
         assertTrue(s2.contains("123.456"));
         assertTrue(s2.contains("5432.10"));
@@ -143,7 +143,7 @@ public class VectorFormatTest
         assertTrue(s2.endsWith("] J"));
 
         String s3 = ev.format(
-                VectorFormat.Row.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Row.instance().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -151,7 +151,7 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("C("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Row.defaults().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Row.instance().setVectorPrefix("C").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -169,7 +169,7 @@ public class VectorFormatTest
     {
         Vector3.Row<Energy> ev = Vector3.Row.of(1200.345, 123.456, 5432.104, Energy.Unit.J);
 
-        String s2 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("Row"));
+        String s2 = ev.format(VectorFormat.Col.instance().setVectorPrefix("Row"));
         assertTrue(s2.contains("1200.345"));
         assertTrue(s2.contains("123.456"));
         assertTrue(s2.contains("5432.10"));
@@ -179,7 +179,7 @@ public class VectorFormatTest
         assertTrue(s2.endsWith("] J"));
 
         String s3 = ev.format(
-                VectorFormat.Col.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
+                VectorFormat.Col.instance().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(").setEndSymbol(")"));
         assertTrue(s3.contains("1200.345"));
         assertTrue(s3.contains("123.456"));
         assertTrue(s3.contains("5432.10"));
@@ -188,7 +188,7 @@ public class VectorFormatTest
         assertTrue(s3.startsWith("R("));
         assertTrue(s3.endsWith(") J"));
 
-        String s4 = ev.format(VectorFormat.Col.defaults().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(")
+        String s4 = ev.format(VectorFormat.Col.instance().setVectorPrefix("R").setCellSeparator(" ").setStartSymbol("(")
                 .setEndSymbol(")").setDisplayUnit("kJ"));
         assertTrue(s4.contains("1.200"));
         assertTrue(s4.contains("0.123"));
@@ -217,20 +217,20 @@ public class VectorFormatTest
         assertTrue(s2.contains(String.valueOf(deg).substring(0, 5)));
         assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
 
-        String s3 = dir.format(VectorFormat.Col.defaults().setUnitPrefix("  "));
+        String s3 = dir.format(VectorFormat.Col.instance().setUnitPrefix("  "));
         assertTrue(s3.contains("1.235"));
         assertTrue(s3.endsWith("  rad"));
 
-        String s4 = dir.format(VectorFormat.Col.defaults().setUnitPrefix(", unit="));
+        String s4 = dir.format(VectorFormat.Col.instance().setUnitPrefix(", unit="));
         assertTrue(s4.contains("1.235"));
         assertTrue(s4.endsWith(", unit=rad"));
 
-        String s5 = dir.format(VectorFormat.Col.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        String s5 = dir.format(VectorFormat.Col.instance().setUnitPrefix(" (").setUnitPostfix(")"));
         assertTrue(s5.contains("1.235"));
         assertTrue(s5.endsWith(" (rad)"));
 
         String s6 =
-                dir.format(VectorFormat.Col.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+                dir.format(VectorFormat.Col.instance().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
         assertTrue(s6.contains("1.235"));
         assertTrue(s6.endsWith(" rad (EAST)"));
     }
@@ -253,20 +253,20 @@ public class VectorFormatTest
         assertTrue(s2.contains(String.valueOf(deg).substring(0, 7)));
         assertTrue(s2.endsWith(Angle.Unit.deg.getDisplayAbbreviation()));
 
-        String s3 = dir.format(VectorFormat.Row.defaults().setUnitPrefix("  "));
+        String s3 = dir.format(VectorFormat.Row.instance().setUnitPrefix("  "));
         assertTrue(s3.contains("1.2345"));
         assertTrue(s3.endsWith("  rad"));
 
-        String s4 = dir.format(VectorFormat.Row.defaults().setUnitPrefix(", unit="));
+        String s4 = dir.format(VectorFormat.Row.instance().setUnitPrefix(", unit="));
         assertTrue(s4.contains("1.2345"));
         assertTrue(s4.endsWith(", unit=rad"));
 
-        String s5 = dir.format(VectorFormat.Row.defaults().setUnitPrefix(" (").setUnitPostfix(")"));
+        String s5 = dir.format(VectorFormat.Row.instance().setUnitPrefix(" (").setUnitPostfix(")"));
         assertTrue(s5.contains("1.2345"));
         assertTrue(s5.endsWith(" (rad)"));
 
         String s6 =
-                dir.format(VectorFormat.Row.defaults().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
+                dir.format(VectorFormat.Row.instance().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
         assertTrue(s6.contains("1.2345"));
         assertTrue(s6.endsWith(" rad (EAST)"));
     }
@@ -283,34 +283,34 @@ public class VectorFormatTest
         AbsVector3.Col<Direction, Angle> e =
                 AbsVector3.Col.of(new double[] {30, 40, 50}, Angle.Unit.deg, Direction.Reference.EAST);
 
-        String s1a = n.format(VectorFormat.Col.defaults().setTextual());
+        String s1a = n.format(VectorFormat.Col.instance().setTextual());
         assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1a.endsWith(" deg"));
 
-        String s1b = n.format(VectorFormat.Col.defaults().setTextual());
+        String s1b = n.format(VectorFormat.Col.instance().setTextual());
         assertTrue(s1b.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1b.endsWith(" deg"));
 
-        String s2 = n.format(VectorFormat.Col.defaults().setNoReference().setTextual());
+        String s2 = n.format(VectorFormat.Col.instance().setNoReference().setTextual());
         assertTrue(s2.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s2.endsWith(" deg"));
 
-        String s3 = n.format(VectorFormat.Col.defaults().setPrintReference(false).setTextual());
+        String s3 = n.format(VectorFormat.Col.instance().setPrintReference(false).setTextual());
         assertTrue(s3.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s3.endsWith(" deg"));
 
-        String s4n = n.format(VectorFormat.Col.defaults().setPrintReference().setTextual());
+        String s4n = n.format(VectorFormat.Col.instance().setPrintReference().setTextual());
         assertTrue(s4n.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4n.contains(" deg"));
         assertTrue(s4n.endsWith(" (NORTH)"));
 
-        String s4e = e.format(VectorFormat.Col.defaults().setPrintReference(true).setTextual());
+        String s4e = e.format(VectorFormat.Col.instance().setPrintReference(true).setTextual());
         assertTrue(s4e.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4e.contains(" deg"));
         assertTrue(s4e.endsWith(" (EAST)"));
 
         String s5 = e.format(
-                VectorFormat.Col.defaults().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
+                VectorFormat.Col.instance().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
         assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s5.contains(" deg"));
         assertTrue(s5.endsWith(" [EAST]"));
@@ -327,34 +327,34 @@ public class VectorFormatTest
         AbsVector3.Row<Direction, Angle> e =
                 AbsVector3.Row.of(new double[] {30, 40, 50}, Angle.Unit.deg, Direction.Reference.EAST);
 
-        String s1a = n.format(VectorFormat.Row.defaults().setTextual());
+        String s1a = n.format(VectorFormat.Row.instance().setTextual());
         assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1a.endsWith(" deg"));
 
-        String s1b = n.format(VectorFormat.Row.defaults().setTextual());
+        String s1b = n.format(VectorFormat.Row.instance().setTextual());
         assertTrue(s1b.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s1b.endsWith(" deg"));
 
-        String s2 = n.format(VectorFormat.Row.defaults().setNoReference().setTextual());
+        String s2 = n.format(VectorFormat.Row.instance().setNoReference().setTextual());
         assertTrue(s2.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s2.endsWith(" deg"));
 
-        String s3 = n.format(VectorFormat.Row.defaults().setPrintReference(false).setTextual());
+        String s3 = n.format(VectorFormat.Row.instance().setPrintReference(false).setTextual());
         assertTrue(s3.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s3.endsWith(" deg"));
 
-        String s4n = n.format(VectorFormat.Row.defaults().setPrintReference().setTextual());
+        String s4n = n.format(VectorFormat.Row.instance().setPrintReference().setTextual());
         assertTrue(s4n.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4n.contains(" deg"));
         assertTrue(s4n.endsWith(" (NORTH)"));
 
-        String s4e = e.format(VectorFormat.Row.defaults().setPrintReference(true).setTextual());
+        String s4e = e.format(VectorFormat.Row.instance().setPrintReference(true).setTextual());
         assertTrue(s4e.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s4e.contains(" deg"));
         assertTrue(s4e.endsWith(" (EAST)"));
 
         String s5 = e.format(
-                VectorFormat.Row.defaults().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
+                VectorFormat.Row.instance().setPrintReference().setReferencePrefix(" [").setReferencePostfix("]").setTextual());
         assertTrue(s5.contains("30") || s1a.contains("29.9999999"));
         assertTrue(s5.contains(" deg"));
         assertTrue(s5.endsWith(" [EAST]"));
@@ -370,13 +370,13 @@ public class VectorFormatTest
         AbsVector2.Col<Temperature, TemperatureDifference> temp =
                 AbsVector2.Col.of(20.0, 30.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
 
-        String s1 = energy.format(VectorFormat.Col.defaults().setSiUnits().setEndSymbol(" |"));
+        String s1 = energy.format(VectorFormat.Col.instance().setSiUnits().setEndSymbol(" |"));
         assertTrue(s1.endsWith(" | kgm2/s2"));
 
-        String s2C = temp.format(VectorFormat.Col.defaults().setSiUnits().setEndSymbol(" |"));
+        String s2C = temp.format(VectorFormat.Col.instance().setSiUnits().setEndSymbol(" |"));
         assertTrue(s2C.endsWith(" | K"));
 
-        String s3C = temp.format(VectorFormat.Col.defaults().setSiUnits().setEndSymbol(" |").setPrintReference()
+        String s3C = temp.format(VectorFormat.Col.instance().setSiUnits().setEndSymbol(" |").setPrintReference()
                 .setReferencePrefix(" (").setReferencePostfix(")"));
         assertTrue(s3C.endsWith(" | K (CELSIUS)"));
     }
@@ -391,13 +391,13 @@ public class VectorFormatTest
         AbsVector2.Row<Temperature, TemperatureDifference> temp =
                 AbsVector2.Row.of(20.0, 30.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
 
-        String s1 = energy.format(VectorFormat.Row.defaults().setSiUnits().setEndSymbol(" |"));
+        String s1 = energy.format(VectorFormat.Row.instance().setSiUnits().setEndSymbol(" |"));
         assertTrue(s1.endsWith(" | kgm2/s2"));
 
-        String s2C = temp.format(VectorFormat.Row.defaults().setSiUnits().setEndSymbol(" |"));
+        String s2C = temp.format(VectorFormat.Row.instance().setSiUnits().setEndSymbol(" |"));
         assertTrue(s2C.endsWith(" | K"));
 
-        String s3C = temp.format(VectorFormat.Row.defaults().setSiUnits().setEndSymbol(" |").setPrintReference()
+        String s3C = temp.format(VectorFormat.Row.instance().setSiUnits().setEndSymbol(" |").setPrintReference()
                 .setReferencePrefix(" (").setReferencePostfix(")"));
         assertTrue(s3C.endsWith(" | K (CELSIUS)"));
     }

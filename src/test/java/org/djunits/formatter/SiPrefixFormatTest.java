@@ -54,7 +54,7 @@ public class SiPrefixFormatTest
         for (int i = -40; i <= 40; i++)
         {
             int p = i;
-            String s = energy.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.defaults().setAutoSiPrefix());
+            String s = energy.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.floor(p / 3.0));
             if (!SIPrefixes.FACTORS.containsKey(f3))
             {
@@ -96,7 +96,7 @@ public class SiPrefixFormatTest
         for (int i = -40; i <= 40; i++)
         {
             int p = i - 1;
-            String s = energy.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.defaults().setAutoSiPrefix());
+            String s = energy.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.floor(p / 3.0));
             if (!SIPrefixes.FACTORS.containsKey(f3))
             {
@@ -138,7 +138,7 @@ public class SiPrefixFormatTest
         for (int i = -40; i <= 40; i++)
         {
             int p = i;
-            String s = energy.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.defaults().setAutoSiPrefix());
+            String s = energy.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.floor(p / 3.0));
             if (!SIPrefixes.FACTORS.containsKey(f3))
             {
@@ -180,7 +180,7 @@ public class SiPrefixFormatTest
         for (int i = -40; i <= 40; i++)
         {
             int p = i + 3;
-            String s = mass.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.defaults().setAutoSiPrefix());
+            String s = mass.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.floor(p / 3.0));
             if (!SIPrefixes.FACTORS.containsKey(f3))
             {
@@ -220,15 +220,15 @@ public class SiPrefixFormatTest
         // Test two values to show the principle. lod 5 = 10^5/m = 100/mm. lod3 = 0.01/m = 10/km
         LinearObjectDensity lod5 = new LinearObjectDensity(100_000, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity lod3 = new LinearObjectDensity(0.01, LinearObjectDensity.Unit.per_m);
-        assertEquals("    10.000 /km", lod3.format(QuantityFormat.defaults().setAutoSiPrefix()));
-        assertEquals("   100.000 /mm", lod5.format(QuantityFormat.defaults().setAutoSiPrefix()));
+        assertEquals("    10.000 /km", lod3.format(QuantityFormat.instance().setAutoSiPrefix()));
+        assertEquals("   100.000 /mm", lod5.format(QuantityFormat.instance().setAutoSiPrefix()));
 
         // now test 81 exponents
         LinearObjectDensity lod = LinearObjectDensity.ONE; // 1.0 /m
         for (int i = -40; i <= 40; i++)
         {
             int p = -i;
-            String s = lod.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.defaults().setAutoSiPrefix());
+            String s = lod.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.ceil(p / 3.0));
             if (i < -30 || i > 32)
             {
@@ -273,15 +273,15 @@ public class SiPrefixFormatTest
         // Test two values to show the principle. pm5 = 10^5/kg = 100/g. pm3 = 0.01/kg = 10/Mg
         PerMass pm5 = new PerMass(100_000, PerMass.Unit.per_kg);
         PerMass pm3 = new PerMass(0.01, PerMass.Unit.per_kg);
-        assertEquals("    10.000 /Mg", pm3.format(QuantityFormat.defaults().setAutoSiPrefix()));
-        assertEquals("   100.000 /g", pm5.format(QuantityFormat.defaults().setAutoSiPrefix()));
+        assertEquals("    10.000 /Mg", pm3.format(QuantityFormat.instance().setAutoSiPrefix()));
+        assertEquals("   100.000 /g", pm5.format(QuantityFormat.instance().setAutoSiPrefix()));
 
         // now test 81 exponents
         PerMass pm = PerMass.ONE; // 1.0 /kg
         for (int i = -40; i <= 40; i++)
         {
             int p = -i + 3;
-            String s = pm.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.defaults().setAutoSiPrefix());
+            String s = pm.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.ceil(p / 3.0));
             if (!SIPrefixes.FACTORS.containsKey(f3))
             {
