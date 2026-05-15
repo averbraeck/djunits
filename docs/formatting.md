@@ -167,7 +167,7 @@ prints:
 2.1373036297559995 nJ
 ```
 
-> **Note** that the `setAutoSiPrefix()` also works for the `kg`, which already starts with a 10<sup>3</sup> power as the default unit. The scaling in `setAutoSiPrefix(minExponent, maxExponent)` is treated relative to the `g`, so if you want to print `kg`, but no `Mg`, and you do not want to go below the `pg`, use `setAutoSiPrefix(-12, 3)`. The scaling also works for 'per' units, such as 'per mol', 'per kg', etc.
+> **Note** that the `setAutoSiPrefix()` also works for the `kg`, which already starts with a 10<sup>3</sup> power as the default unit. The scaling in `setAutoSiPrefix(minExponent, maxExponent)` is treated relative to the `g`, so if you want to print `kg`, but no `Mg`, and you do not want to go below the `pg`, use `setAutoSiPrefix(-12, 3)`. The scaling also works for 'per' units, such as 'per mol', 'per kg', etc. If you want to use the `/m` for `LinearObjectDensity` between the `/nm` and `/km`, use `setAutoSiPrefix(-12, 3)`. The exponent looks at the `k` which corresponds to an exponent of `3` and the `n` which corresponds to an exponent of `-12`. 
 
 
 ## Vector formatting
