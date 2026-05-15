@@ -151,15 +151,14 @@ Quantity formatting is done using the `QuantityFormat` class. Since `QuantityFor
 
 The `QuantityFormat` class has one additional setting, which is the formatting using SI prefixes. Using SI prefixes means that 1200 J will be displayed as 1.2 kJ, and 1.34&sdot;10<sup>-6</sup> m will be displayed as 1.34 &micro;m. 
 
-- `setScaleSiPrefixes()` turns on the scaling of SI prefixes. By default, any 10th power between -30 and +32 (inclusive) will be translated to the nearest SI unit. So, 1200 m will be turned into 1.2 km, and 1.45E-9 s will be transformed into 1.45 ns. 
-- `setScaleSiPrefixes(minPrefixPower, maxPrefixPower)` turns on the scaling of SI prefixes if the 10th power is between `minPrefixPower` and `maxPrefixPower`, inclusive. This can be used to prevent transformations that are not often used. For length, for instance, units above the km are not often used -- we typically do not use Mm, Gm, etc. But &micro;m, nm, pm, are often used. By calling `setScaleSiPrefixes(-30, 3)`, the intended prefixes are used. 1,000,000 m will remain in meters in this case. 
+- `setAutoSiPrefix()` turns on the scaling of SI prefixes. By default, any 10th power between -30 and +32 (inclusive) will be translated to the nearest SI unit. So, 1200 m will be turned into 1.2 km, and 1.45E-9 s will be transformed into 1.45 ns. 
+- `setAutoSiPrefix(minExponent, maxExponent)` turns on the scaling of SI prefixes if the 10th power is between `minExponent` and `maxExponent`, inclusive. This can be used to prevent transformations that are not often used. For length, for instance, units above the km are not often used -- we typically do not use Mm, Gm, etc. But &micro;m, nm, pm, are often used. By calling `setAutoSiPrefix(-30, 3)`, the intended prefixes are used. 1,000,000 m will remain in meters in this case. 
 
-> **Note** that the unit will have to be translated into the SI unit to make this work. In other words, an energy in `MeV` will not be automatically translated into `J` an SI prefix. In a future version of djunits, this might be done automatically.:
+> **Note** that the unit will automatically be translated into the SI unit to make this work. In other words, an energy in `MeV` is automatically translated into `J` if automatic SI prefixes are turned on:
 
 ```java
 Energy energy = new Energy(13.34, "GeV");
-System.out.println(energy.as(Energy.Unit.J).format(QuantityFormat.defaults()
-    .setScaleSiPrefixes()));
+System.out.println(energy.format(QuantityFormat.defaults().setAutoSiPrefix()));
 ```
 
 prints:
@@ -168,7 +167,7 @@ prints:
 2.1373036297559995 nJ
 ```
 
-> **Note** that the `setScaleSiPrefixes()` also works for the `kg`, which already starts with a 10<sup>3</sup> power as the default unit. The scaling in `setScaleSiPrefixes(minPrefixPower, maxPrefixPower)` is treated relative to the `g`, so if you want to print `kg`, but no `Mg`, and you do not want to go below the `pg`, use `setScaleSiPrefixes(-12, 3)`. The scaling also works for 'per' units, such as 'per mol', 'per kg', etc.
+> **Note** that the `setAutoSiPrefix()` also works for the `kg`, which already starts with a 10<sup>3</sup> power as the default unit. The scaling in `setAutoSiPrefix(minExponent, maxExponent)` is treated relative to the `g`, so if you want to print `kg`, but no `Mg`, and you do not want to go below the `pg`, use `setAutoSiPrefix(-12, 3)`. The scaling also works for 'per' units, such as 'per mol', 'per kg', etc.
 
 
 ## Vector formatting
