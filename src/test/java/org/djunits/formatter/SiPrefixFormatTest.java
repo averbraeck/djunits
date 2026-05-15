@@ -2,6 +2,7 @@ package org.djunits.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
@@ -336,4 +337,32 @@ public class SiPrefixFormatTest
                 () -> LinearObjectDensity.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
         assertThrows(IllegalArgumentException.class, () -> PerMass.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
     }
+
+    /**
+     * Test extreme settings for {@link QuantityFormat#setAutoSiPrefix()} method.
+     */
+    @Test
+    public void testExtremeValues()
+    {
+        String ep100 = Energy.ONE.scaleBy(1E+100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(ep100.endsWith(" J"));
+        String em100 = Energy.ONE.scaleBy(1E-100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(em100.endsWith(" J"));
+
+        String mp100 = Mass.ONE.scaleBy(1E+100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(mp100.endsWith(" kg"));
+        String mm100 = Mass.ONE.scaleBy(1E-100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(mm100.endsWith(" kg"));
+
+        String lp100 = LinearObjectDensity.ONE.scaleBy(1E+100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(lp100.endsWith(" /m"));
+        String lm100 = LinearObjectDensity.ONE.scaleBy(1E-100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(lm100.endsWith(" /m"));
+
+        String pp100 = PerMass.ONE.scaleBy(1E+100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(pp100.endsWith(" /kg"));
+        String pm100 = PerMass.ONE.scaleBy(1E-100).format(QuantityFormat.instance().setAutoSiPrefix(-150, 150));
+        assertTrue(pm100.endsWith(" /kg"));
+    }
+
 }
