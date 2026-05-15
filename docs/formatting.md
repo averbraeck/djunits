@@ -2,12 +2,12 @@
 
 ## Introduction
 
-All quantities, vectors, matrices and quantity tables, both relative and absolute, can be formatted in a flexible way. All quantity-related types have a `format()` method that takes a `Format` object as a parameter. The `Format` object specifies the format that needs to be applied to the quantity-related type. Specific formatters exist for quantities, vectors, matrices and quantity tables. The format has default values that are called with the method `defaults()`. Changes are applied to the settings to specify the format. As an example, let's take a length in miles, and format it in meters as a floating point variable with a thousands separator:
+All quantities, vectors, matrices and quantity tables, both relative and absolute, can be formatted in a flexible way. All quantity-related types have a `format()` method that takes a `Format` object as a parameter. The `Format` object specifies the format that needs to be applied to the quantity-related type. Specific formatters exist for quantities, vectors, matrices and quantity tables. The format has default values that are called with the method `instance()`. Changes are applied to the settings to specify the format. As an example, let's take a length in miles, and format it in meters as a floating point variable with a thousands separator:
 
 ```java
 Length l = Length.of(12.43, "mi");
 Length l = Length.of(12.43, "mi");
-String s = l.format(QuantityFormat.defaults().setDisplayUnit("m")
+String s = l.format(QuantityFormat.instance().setDisplayUnit("m")
     .setGroupingSeparator(true));
 System.out.println(s);
 ```
@@ -85,7 +85,7 @@ The settings can be combined to format quantities, e.g., as a HTML string:
 
 ```java
 var q = Energy.of(1.23, "kJ");
-var s = q.format(QuantityFormat.defaults().setSiUnits().setDotSeparator("&sdot;")
+var s = q.format(QuantityFormat.instance().setSiUnits().setDotSeparator("&sdot;")
     .setPowerPrefix("<sup>").setPowerPostfix("</sup>").setDivider(false));
 System.out.println(s);
 ```
@@ -104,9 +104,9 @@ The following example shows the effect of using a locale setting:
 ```java
 Locale.setDefault(Locale.GERMANY);
 Length l = Length.of(12.43, "mi");
-String sDE = l.format(QuantityFormat.defaults().setDisplayUnit("m").setGroupingSeparator(true));
+String sDE = l.format(QuantityFormat.instance().setDisplayUnit("m").setGroupingSeparator(true));
 System.out.println(sDE);
-String sUS = l.format(QuantityFormat.defaults().setLocale(Locale.US)
+String sUS = l.format(QuantityFormat.instance().setLocale(Locale.US)
     .setDisplayUnit("m").setGroupingSeparator(true));
 System.out.println(sUS);
 Locale.setDefault(Locale.US);
@@ -135,7 +135,7 @@ As an example, suppose we want to show that the absolute temperatures are relati
 ```java
 Temperature t = new Temperature(0.0, Temperature.Unit.degF);
 System.out.println(t.relativeTo(Temperature.Reference.CELSIUS).format(
-    QuantityFormat.defaults().setDisplayUnit("K").setPrintReference()
+    QuantityFormat.instance().setDisplayUnit("K").setPrintReference()
         .setReferencePrefix(" (relative to 0 ")));
 ```
 
@@ -152,13 +152,13 @@ Quantity formatting is done using the `QuantityFormat` class. Since `QuantityFor
 The `QuantityFormat` class has one additional setting, which is the formatting using SI prefixes. Using SI prefixes means that 1200 J will be displayed as 1.2 kJ, and 1.34&sdot;10<sup>-6</sup> m will be displayed as 1.34 &micro;m. 
 
 - `setAutoSiPrefix()` turns on the scaling of SI prefixes. By default, any 10th power between -30 and +32 (inclusive) will be translated to the nearest SI unit. So, 1200 m will be turned into 1.2 km, and 1.45E-9 s will be transformed into 1.45 ns. 
-- `setAutoSiPrefix(minExponent, maxExponent)` turns on the scaling of SI prefixes if the 10th power is between `minExponent` and `maxExponent`, inclusive. This can be used to prevent transformations that are not often used. For length, for instance, units above the km are not often used -- we typically do not use Mm, Gm, etc. But &micro;m, nm, pm, are often used. By calling `setAutoSiPrefix(-30, 3)`, the intended prefixes are used. 1,000,000 m will remain in meters in this case. 
+- `setAutoSiPrefix(minExponent, maxExponent)` turns on the scaling of SI prefixes if the 10th power is between `minExponent` and `maxExponent`, inclusive. This can be used to prevent transformations that are not often used. For length, for instance, units above the km are not often used -- we typically do not use Mm, Gm, etc. But &micro;m, nm, pm, are often used. By calling `setAutoSiPrefix(-30, 3)`, the intended prefixes are used. 1,000,000 m will remain to be formatted in meters in this case. 
 
 > **Note** that the unit will automatically be translated into the SI unit to make this work. In other words, an energy in `MeV` is automatically translated into `J` if automatic SI prefixes are turned on:
 
 ```java
 Energy energy = new Energy(13.34, "GeV");
-System.out.println(energy.format(QuantityFormat.defaults().setAutoSiPrefix()));
+System.out.println(energy.format(QuantityFormat.instance().setAutoSiPrefix()));
 ```
 
 prints:
@@ -243,8 +243,8 @@ For formatting tables, the following methods are available:
 A format can be stored and reused. When you have a format you want to reuse for multiple `format()` statements, you can store it in a variable. Suppose you want a format to print column vectors as row vectors, but start the vector with `Col` to indicate it actually a row vector. Similarly, you want to format row vectors starting with the text `Row`. Then, you can store and use the formats as follows:
 
 ```java
-public static final VectorFormat.Row COLFORMAT = VectorFormat.Row.defaults().setVectorPrefix("Col");
-public static final VectorFormat.Row ROWFORMAT = VectorFormat.Row.defaults().setVectorPrefix("Row");
+public static final VectorFormat.Row COLFORMAT = VectorFormat.Row.instance().setVectorPrefix("Col");
+public static final VectorFormat.Row ROWFORMAT = VectorFormat.Row.instance().setVectorPrefix("Row");
 
 public void test()
 {
@@ -309,7 +309,7 @@ Below, the inner working of `QuantityFormatter` is explained. The other formatte
 private static QuantityFormatContext DEFAULT = new QuantityFormatContext();
 ```
 
-When calling `QuantityFormat.defaults()`, a **clone** of this `DEFAULT` object instance is returned (that is why `FormatContext implements Cloneable`). The `set` operations for numbers, units, reference points, locale, and quantity change field values in the clone of the context object instance. This object is subsequently used by the `QuantityFormatter` object when building a string that is the result of the `format` operation. 
+When calling `QuantityFormat.instance()`, a **clone** of this `DEFAULT` object instance is returned (that is why `FormatContext implements Cloneable`). The `set` operations for numbers, units, reference points, locale, and quantity change field values in the clone of the context object instance. This object is subsequently used by the `QuantityFormatter` object when building a string that is the result of the `format` operation. 
 
 Each `Format` class has its own `DEFAULT` object (and `VectorFormat` has two, one for `Row` and one for `Col`). Default settings for each `Format` object can differ: where `QuantityFormat` and `VectorFormat.Row` format the value with a variable length, `VectorFormat.Col`, `MatrixFormat` and `TableFormat` have a fixed length for the value to align the values. This is done with a static initializer:
 
@@ -324,10 +324,10 @@ private static TableFormatContext makeDefault()
 }
 ```
 
-As was shown above, the default settings can be changed. This is done by giving access to the `DEFAULT` object itself. Any `set` method now changes the values of the `DEFAULT` object. When this object is cloned in the next `Format.defaults()` call, the changed values are used. The `FormatContext` classes themselves contains the 'default' default values, which can be reset using the method `Format.resetDefaults()`. The `resetDefaults()` method restores the original values into the `DEFAULT` object. For the `TableFormat`, this looks as follows:
+As was shown above, the default settings can be changed. This is done by giving access to the `DEFAULT` object itself. Any `set` method now changes the values of the `DEFAULT` object. When this object is cloned in the next `Format.instance()` call, the changed values are used. The `FormatContext` classes themselves contains the 'default' default values, which can be reset using the method `Format.resetDefaults()`. The `resetDefaults()` method restores the original values into the `DEFAULT` object. For the `TableFormat`, this looks as follows:
 
 ```java
-public static TableFormat defaults()
+public static TableFormat instance()
 {
     return new TableFormat(DEFAULT.clone());
 }

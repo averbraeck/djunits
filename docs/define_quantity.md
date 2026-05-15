@@ -151,10 +151,10 @@ System.out.println("jerk2 = jerk1.scaleBy(2.0)         : " + jerk2);
 Jerk jerk3 = new Jerk(4.0, Jerk.Unit.in_s3);
 System.out.println("jerk3 = Jerk(4.0, Jerk.Unit.in_s3  : " + jerk3);
 System.out.println("jerk3 expressed in Jerk.Unit.SI    : "
-        + jerk3.format(QuantityFormat.defaults()
+        + jerk3.format(QuantityFormat.instance()
           .setDisplayUnit(Jerk.Unit.SI).setFormatString("%.5g")));
 System.out.println("jerk3 expressed in Jerk.Unit.ft_s3 : "
-        + jerk3.format(QuantityFormat.defaults()
+        + jerk3.format(QuantityFormat.instance()
           .setDisplayUnit(Jerk.Unit.ft_s3).setFormatString("%.5g")));
 ```
 

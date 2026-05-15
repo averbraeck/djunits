@@ -97,10 +97,10 @@ System.out.println("t2 in Celsius  = " + t2.relativeTo(Temperature.Reference.CEL
 
 // show that absolute values can be shown relative to different reference points
 System.out.println("\nTemperature t  = " + t + ", si = " + t.si());
-System.out.println("t in Kelvin    = " + t.format(QuantityFormat.defaults()
+System.out.println("t in Kelvin    = " + t.format(QuantityFormat.instance()
     .setDisplayUnit(Temperature.Unit.K)
     .setPrintReference().setReferencePrefix(" (relative to 0 ")));
-System.out.println("t in Celsius   = " + t.format(QuantityFormat.defaults()
+System.out.println("t in Celsius   = " + t.format(QuantityFormat.instance()
     .setDisplayUnit(Temperature.Unit.degC)
     .setPrintReference().setReferencePrefix(" (relative to 0 ")));
 ```
