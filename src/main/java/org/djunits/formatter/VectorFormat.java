@@ -113,7 +113,7 @@ public abstract class VectorFormat<F extends VectorFormat<F>> extends Format<F, 
          * Return an instance of VectorFormat.Col for row vectors, initialized with the default values.
          * @return an instance of VectorFormat.Col for row vectors, initialized with the default values
          */
-        public static VectorFormat.Col defaults()
+        public static VectorFormat.Col instance()
         {
             return new VectorFormat.Col(DEFAULT.clone());
         }
@@ -180,7 +180,7 @@ public abstract class VectorFormat<F extends VectorFormat<F>> extends Format<F, 
          * Return an instance of VectorFormat.Row for row vectors, initialized with the default values.
          * @return an instance of VectorFormat.Row for row vectors, initialized with the default values
          */
-        public static VectorFormat.Row defaults()
+        public static VectorFormat.Row instance()
         {
             return new VectorFormat.Row(DEFAULT.clone());
         }

@@ -42,7 +42,7 @@ public class MatrixFormat extends Format<MatrixFormat, MatrixFormatContext>
      * Return an instance of MatrixFormat, initialized with the default values.
      * @return an instance of MatrixFormat, initialized with the default values
      */
-    public static MatrixFormat defaults()
+    public static MatrixFormat instance()
     {
         return new MatrixFormat(DEFAULT.clone());
     }

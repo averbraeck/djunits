@@ -42,7 +42,7 @@ public class TableFormat extends Format<TableFormat, TableFormatContext>
      * Return an instance of TableFormat, initialized with the default values.
      * @return an instance of TableFormat, initialized with the default values
      */
-    public static TableFormat defaults()
+    public static TableFormat instance()
     {
         return new TableFormat(DEFAULT.clone());
     }

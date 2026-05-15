@@ -32,7 +32,7 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * Return an instance of QuantityFormat, initialized with the default values.
      * @return an instance of QuantityFormat, initialized with the default values
      */
-    public static QuantityFormat defaults()
+    public static QuantityFormat instance()
     {
         return new QuantityFormat(DEFAULT.clone());
     }
