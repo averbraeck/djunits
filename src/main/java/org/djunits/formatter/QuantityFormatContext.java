@@ -15,14 +15,14 @@ class QuantityFormatContext extends FormatContext implements Cloneable
 {
     // Quantity formatting from QuantityFormat, contains default values
 
-    /** Use closest SI prefix. E.g., turn 20400 m into "20.4 km". */
-    boolean scaleSiPrefixes = false;
+    /** if true use automatic allocation of the unit to its closest SI prefix. E.g., turn 20400 m into "20.4 km". */
+    boolean autoSiPrefix = false;
 
-    /** minimum 10th power to use SI prefixes for. */
-    int minimumPrefixPower = -30;
+    /** minimum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive). */
+    int autoSiMinExponent = -30;
 
-    /** maximum 10th power to use SI prefixes for. */
-    int maximumPrefixPower = 32;
+    /** maximum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive). */
+    int autoSiMaxExponent = 32;
 
     @Override
     protected QuantityFormatContext clone()

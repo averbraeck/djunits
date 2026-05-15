@@ -1,5 +1,8 @@
 package org.djunits.formatter;
 
+import org.djunits.quantity.LinearObjectDensity;
+import org.djunits.quantity.Mass;
+
 /**
  * QuantityFormat stores the settings that influence both the value part and the unit part of an output string when formatting a
  * quantity.
@@ -52,26 +55,30 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
     }
 
     /**
-     * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
+     * Turn on the automatic allocation of the unit to its closest SI prefix. E.g., turn 20400 m into "20.4 km".
      * @return QuantityFormat object for fluent design
      */
-    public QuantityFormat setScaleSiPrefixes()
+    public QuantityFormat setAutoSiPrefix()
     {
-        this.ctx.scaleSiPrefixes = true;
+        this.ctx.autoSiPrefix = true;
         return this;
     }
 
     /**
-     * Use closest SI prefix. E.g., turn 20400 m into "20.4 km".
-     * @param minPrefixPower minimum 10th power to use SI prefixes for
-     * @param maxPrefixPower maximum 10th power to use SI prefixes for
+     * Turn on the automatic allocation of the unit to its closest SI prefix, in case the exponent of the 10-power in scientific
+     * notation is between minExponent and maxExponent, inclusive. E.g., format 20400 m as "20.4 km" after calling
+     * setAutoSiPrefix(-9,9) but format it as 20400 m after calling setAutoSiPrefix(-9,0). Note that the kg for {@link Mass} is
+     * associated with an exponent of 3, and the g with an exponent of 0. For the {@link LinearObjectDensity} that is expressed
+     * in /m, /km is associated with an exponent of 3 and /mm with an exponent of -3.
+     * @param minExponent minimum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive)
+     * @param maxExponent maximum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive)
      * @return QuantityFormat object for fluent design
      */
-    public QuantityFormat setScaleSiPrefixes(final int minPrefixPower, final int maxPrefixPower)
+    public QuantityFormat setAutoSiPrefix(final int minExponent, final int maxExponent)
     {
-        this.ctx.scaleSiPrefixes = true;
-        this.ctx.minimumPrefixPower = minPrefixPower;
-        this.ctx.maximumPrefixPower = maxPrefixPower;
+        this.ctx.autoSiPrefix = true;
+        this.ctx.autoSiMinExponent = minExponent;
+        this.ctx.autoSiMaxExponent = maxExponent;
         return this;
     }
 

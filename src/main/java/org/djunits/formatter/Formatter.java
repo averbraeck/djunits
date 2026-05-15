@@ -246,7 +246,7 @@ public abstract class Formatter<C extends FormatContext>
     String formatFixedSciFallback(final double val)
     {
         String s = formatFixedFloat(val);
-        if (s.length() <= this.ctx.width)
+        if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
             return s;
         return formatScientific(val);
     }
@@ -259,7 +259,7 @@ public abstract class Formatter<C extends FormatContext>
     String formatFixedEngFallback(final double val)
     {
         String s = formatFixedFloat(val);
-        if (s.length() <= this.ctx.width)
+        if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
             return s;
         return formatEngineering(val);
     }

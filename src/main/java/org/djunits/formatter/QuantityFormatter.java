@@ -110,68 +110,76 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
             formatted = checkUnitString();
         if (!formatted)
             formatted = checkDisplayUnit();
-        checkScaleSiPrefixes();
+        checkAutoSiPrefix();
         if (this.unitStr == null)
             this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getDisplayAbbreviation();
     }
 
     /**
-     * Apply the display unit if present.
-     * @return whether display unit formatting was applied
+     * Prepare for automatic SI scaling if it has been turned on, and if it is possible to apply.
+     * @return whether automatic SI prefix scaling was applied or not
      * @param <Q> the quantity type
      */
-    @SuppressWarnings("unchecked")
-    private <Q extends Quantity<Q>> boolean checkScaleSiPrefixes()
+    @SuppressWarnings({"unchecked", "checkstyle:needbraces"})
+    private <Q extends Quantity<Q>> boolean checkAutoSiPrefix()
     {
-        Q q = (Q) quantity();
-        if (this.ctx.scaleSiPrefixes && this.unit.getSiPrefix() != null)
-        {
-            PrefixType type = this.unit.getSiPrefix().getType();
-            double si = q.si();
-            double log10si = Math.log10(si);
-            int power = log10si > 0 ? 3 * (int) (Math.log10(si) / 3.0) : 3 * (int) (Math.log10(si) / 3.0 - 1);
-            if (power >= this.ctx.minimumPrefixPower && power <= this.ctx.maximumPrefixPower)
-            {
-                switch (type)
-                {
-                    case UNIT:
-                    {
-                        SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(power, SIPrefixes.getSiPrefix(""));
-                        String key = prefix.getDefaultTextualPrefix() + q.getDisplayUnit().getBaseUnit().getId();
-                        this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
-                        return true;
-                    }
-                    case KILO:
-                    {
-                        power += 3;
-                        SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(power, SIPrefixes.getSiPrefix(""));
-                        String key = prefix.getDefaultTextualPrefix() + q.getDisplayUnit().getBaseUnit().getId().substring(1);
-                        this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
-                        return true;
-                    }
-                    case PER_UNIT:
-                    {
-                        SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(-power, SIPrefixes.getSiPrefix(""));
-                        String key =
-                                "/" + prefix.getDefaultTextualPrefix() + q.getDisplayUnit().getBaseUnit().getId().substring(1);
-                        this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
-                        return true;
-                    }
-                    case PER_KILO:
-                    {
-                        power -= 3;
-                        SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(-power, SIPrefixes.getSiPrefix(""));
-                        String key =
-                                "/" + prefix.getDefaultTextualPrefix() + q.getDisplayUnit().getBaseUnit().getId().substring(2);
-                        this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
-                        return true;
-                    }
-                    default:
-                        // silently ignore
-                }
-            }
-        }
-        return false;
-    }
+        if (!this.ctx.autoSiPrefix)
+            return false;
 
+        Q q = (Q) quantity();
+
+        // Reset to base unit if needed
+        if (this.unit.getSiPrefix() == null)
+        {
+            q.setDisplayUnit(q.getDisplayUnit().getBaseUnit());
+            this.unit = q.getDisplayUnit();
+        }
+
+        PrefixType type = this.unit.getSiPrefix().getType();
+
+        double si = q.si();
+        if (si == 0.0)
+            return false;
+
+        double log10 = Math.log10(Math.abs(si));
+        int exponent = (int) (3 * Math.floor(log10 / 3.0));
+
+        // normalize per type
+        boolean invert = false;
+        String baseId = this.unit.getId();
+
+        switch (type)
+        {
+            case UNIT:
+                break;
+
+            case KILO:
+                exponent += 3;
+                baseId = baseId.substring(1);
+                break;
+
+            case PER_UNIT:
+                invert = true;
+                baseId = "/" + baseId.substring(1);
+                break;
+
+            case PER_KILO:
+                exponent -= 3;
+                invert = true;
+                baseId = "/" + baseId.substring(2);
+                break;
+
+            default:
+                return false;
+        }
+
+        if (exponent < this.ctx.autoSiMinExponent || exponent > this.ctx.autoSiMaxExponent)
+            return false;
+        int lookupExponent = invert ? -exponent : exponent;
+        SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(lookupExponent, SIPrefixes.getSiPrefix(""));
+        String prefixText = prefix.getDefaultTextualPrefix();
+        String key = invert ? "/" + prefixText + baseId.substring(1) : prefixText + baseId;
+        this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
+        return true;
+    }
 }
