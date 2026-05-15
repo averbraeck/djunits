@@ -135,6 +135,10 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
             this.unit = q.getDisplayUnit();
         }
 
+        // If, e.g., SIQuantity, do not format as SI unit
+        if (this.unit.getSiPrefix() == null)
+            return false;
+
         PrefixType type = this.unit.getSiPrefix().getType();
 
         double si = q.si();
