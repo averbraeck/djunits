@@ -274,9 +274,6 @@ class TemperatureTest
         assertEquals(c, AbsQuantity.max(a, b, c));
         assertEquals(a, AbsQuantity.min(a, b, c));
 
-        Temperature sum = AbsQuantity.sum(a, b, c);
-        assertEquals(60.0, sum.si(), 1E-12);
-
         Temperature mean = AbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
@@ -284,7 +281,7 @@ class TemperatureTest
         assertEquals(20.0, mid.si(), 1E-12);
 
         Temperature d = new Temperature(5.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, d));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, d));
     }
 
     /**

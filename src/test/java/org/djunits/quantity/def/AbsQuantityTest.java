@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  * <li>Stringification and SI-prefix formatting</li>
  * <li>Static helpers: {@link AbsQuantity#interpolate(AbsQuantity, AbsQuantity, double)},
  * {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])}, {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])},
- * {@link AbsQuantity#sum(AbsQuantity, AbsQuantity[])}, {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])}</li>
+ * {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])}</li>
  * <li>Arithmetic with relative quantities: {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} and
  * {@link AbsQuantity#subtract(AbsQuantity)}</li>
  * <li>{@code equals}/{@code hashCode} contract</li>
@@ -372,7 +372,7 @@ public class AbsQuantityTest
         // Branch where current reference has no offsetReference and other is not reachable:
         Position pX = pos(1, this.refX, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> pX.relativeTo(this.refA));
-        
+
         Position pY = pos(1, this.refY, Length.Unit.m);
         assertThrows(IllegalArgumentException.class, () -> pY.relativeTo(this.refA));
 
@@ -449,8 +449,8 @@ public class AbsQuantityTest
         try
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
-            String s1 = pos.format(
-                    QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
+            String s1 = pos
+                    .format(QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
             assertEquals("    20.400 km", s1);
 
             String s2 = pos.format(QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3)
@@ -569,21 +569,12 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies {@link AbsQuantity#sum(AbsQuantity, AbsQuantity[])} and {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])} for
-     * identical references, and ensures that the reference and display unit of the first argument are preserved. Mixing
-     * references must throw.
+     * Verifies {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])} for identical references, and ensures that the reference
+     * and display unit of the first argument are preserved. Mixing references must throw.
      */
     @Test
-    void sumMean()
+    void mean()
     {
-        Position a = pos(1, this.refA, Length.Unit.cm);
-        Position b = pos(2, this.refA, Length.Unit.m);
-        Position c = pos(3, this.refA, Length.Unit.km);
-        Position sum = AbsQuantity.sum(a, b, c); // SI: 1 + 2 + 3 = 6
-        assertEquals(3002.01, sum.si(), 1e-12);
-        assertSame(this.refA, sum.getReference());
-        assertSame(a.getDisplayUnit(), sum.getDisplayUnit());
-
         Position ma = pos(1, this.refA, Length.Unit.m);
         Position mb = pos(2, this.refA, Length.Unit.m);
         Position mc = pos(3, this.refA, Length.Unit.m);
@@ -592,8 +583,8 @@ public class AbsQuantityTest
         assertSame(this.refA, mean.getReference());
         assertSame(ma.getDisplayUnit(), mean.getDisplayUnit());
 
+        Position a = pos(1, this.refA, Length.Unit.cm);
         Position bB = pos(2, this.refB, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, bB));
         assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, bB));
     }
 
@@ -606,7 +597,7 @@ public class AbsQuantityTest
         Position c = pos(3, this.refA, Length.Unit.km);
         assertEquals("m", c.siUnit().toString());
     }
-    
+
     // ----------------------------------------------------------------------
     // equals / hashCode
     // ----------------------------------------------------------------------

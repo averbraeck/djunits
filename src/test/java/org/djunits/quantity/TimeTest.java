@@ -267,9 +267,6 @@ class TimeTest
         assertEquals(c, AbsQuantity.max(a, b, c));
         assertEquals(a, AbsQuantity.min(a, b, c));
 
-        Time sum = AbsQuantity.sum(a, b, c);
-        assertEquals(60.0, sum.si(), 1E-12);
-
         Time mean = AbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
@@ -278,6 +275,6 @@ class TimeTest
 
         // Mixed references → should throw
         Time d = new Time(5.0, Duration.Unit.s, Time.Reference.GPS);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, d));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, d));
     }
 }

@@ -270,9 +270,6 @@ class PositionTest
         assertEquals(c, AbsQuantity.max(a, b, c));
         assertEquals(a, AbsQuantity.min(a, b, c));
 
-        Position sum = AbsQuantity.sum(a, b, c);
-        assertEquals(60.0, sum.si(), 1E-12);
-
         Position mean = AbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
@@ -282,7 +279,7 @@ class PositionTest
         // mismatched references in static ops must throw
         Position.Reference.add("RS2", "Ref S2");
         Position d = new Position(5.0, Length.Unit.m, Position.Reference.get("RS2"));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.sum(a, d));
+        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, d));
         
         // clean up
         Position.Reference.get("RS").unregister();
