@@ -70,7 +70,8 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * notation is between minExponent and maxExponent, inclusive. E.g., format 20400 m as "20.4 km" after calling
      * setAutoSiPrefix(-9,9) but format it as 20400 m after calling setAutoSiPrefix(-9,0). Note that the kg for {@link Mass} is
      * associated with an exponent of 3, and the g with an exponent of 0. For the {@link LinearObjectDensity} that is expressed
-     * in /m, /km is associated with an exponent of 3 and /mm with an exponent of -3.
+     * in /m, /km is associated with an exponent of 3 and /mm with an exponent of -3. Note that the minimum and maximum
+     * exponents are clamped between -30 and 30.
      * @param minExponent minimum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive)
      * @param maxExponent maximum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive)
      * @return QuantityFormat object for fluent design
@@ -81,8 +82,8 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
         Throw.when(minExponent > maxExponent, IllegalArgumentException.class, "minExponent %d > maxExponent %d", minExponent,
                 maxExponent);
         this.ctx.autoSiPrefix = true;
-        this.ctx.autoSiMinExponent = minExponent;
-        this.ctx.autoSiMaxExponent = maxExponent;
+        this.ctx.autoSiMinExponent = Math.min(30, Math.max(-30, minExponent));
+        this.ctx.autoSiMaxExponent = Math.min(30, Math.max(-30, maxExponent));
         return this;
     }
 
