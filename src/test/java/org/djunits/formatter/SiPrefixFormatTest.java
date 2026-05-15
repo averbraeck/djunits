@@ -1,6 +1,7 @@
 package org.djunits.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Locale;
 
@@ -230,7 +231,7 @@ public class SiPrefixFormatTest
             int p = -i;
             String s = lod.scaleBy(Math.pow(10.0, i)).format(QuantityFormat.instance().setAutoSiPrefix());
             int f3 = (int) (3 * Math.ceil(p / 3.0));
-            if (i < -30 || i > 32)
+            if (!SIPrefixes.FACTORS.containsKey(f3))
             {
                 // scientific notation
                 String exp = (i >= 0 ? "+" + i : Integer.toString(i));
@@ -316,4 +317,23 @@ public class SiPrefixFormatTest
         }
     }
 
+    /**
+     * Test exception when min &gt; max in {@link QuantityFormat#setAutoSiPrefix()} method.
+     */
+    @Test
+    public void testAutoSiException()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Energy.ONE.format(QuantityFormat.instance().setAutoSiPrefix(3, -3)));
+        assertThrows(IllegalArgumentException.class, () -> Mass.ONE.format(QuantityFormat.instance().setAutoSiPrefix(3, -3)));
+        assertThrows(IllegalArgumentException.class,
+                () -> LinearObjectDensity.ONE.format(QuantityFormat.instance().setAutoSiPrefix(3, -3)));
+        assertThrows(IllegalArgumentException.class,
+                () -> PerMass.ONE.format(QuantityFormat.instance().setAutoSiPrefix(3, -3)));
+
+        assertThrows(IllegalArgumentException.class, () -> Energy.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
+        assertThrows(IllegalArgumentException.class, () -> Mass.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
+        assertThrows(IllegalArgumentException.class,
+                () -> LinearObjectDensity.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
+        assertThrows(IllegalArgumentException.class, () -> PerMass.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
+    }
 }
