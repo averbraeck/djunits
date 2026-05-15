@@ -262,7 +262,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
     @Override
     public String format()
     {
-        return format(TableFormat.defaults());
+        return format(TableFormat.instance());
     }
 
     /**
@@ -283,7 +283,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
     @Override
     public String format(final Unit<?, Q> targetUnit)
     {
-        return format(TableFormat.defaults().setDisplayUnit(targetUnit));
+        return format(TableFormat.instance().setDisplayUnit(targetUnit));
     }
 
 }

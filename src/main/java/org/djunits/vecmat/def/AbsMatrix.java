@@ -47,7 +47,7 @@ public abstract class AbsMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
     @Override
     public String format()
     {
-        return format(MatrixFormat.defaults());
+        return format(MatrixFormat.instance());
     }
 
     /**
@@ -68,7 +68,7 @@ public abstract class AbsMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
     @Override
     public String format(final Unit<?, Q> targetUnit)
     {
-        return format(MatrixFormat.defaults().setDisplayUnit(targetUnit));
+        return format(MatrixFormat.instance().setDisplayUnit(targetUnit));
     }
 
 }

@@ -437,7 +437,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     @Override
     public String format()
     {
-        return format(QuantityFormat.defaults());
+        return format(QuantityFormat.instance());
     }
 
     /**
@@ -458,7 +458,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     @Override
     public String format(final Unit<?, Q> targetUnit)
     {
-        return format(QuantityFormat.defaults().setDisplayUnit(targetUnit));
+        return format(QuantityFormat.instance().setDisplayUnit(targetUnit));
     }
 
     /**********************************************************************************/

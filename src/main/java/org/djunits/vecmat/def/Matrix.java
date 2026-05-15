@@ -71,7 +71,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
     @Override
     public String format()
     {
-        return format(MatrixFormat.defaults());
+        return format(MatrixFormat.instance());
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
     @Override
     public String format(final Unit<?, Q> targetUnit)
     {
-        return format(MatrixFormat.defaults().setDisplayUnit(targetUnit));
+        return format(MatrixFormat.instance().setDisplayUnit(targetUnit));
     }
 
 }

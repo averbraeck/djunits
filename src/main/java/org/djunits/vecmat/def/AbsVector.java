@@ -198,7 +198,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
         @Override
         default String format()
         {
-            return format(VectorFormat.Col.defaults());
+            return format(VectorFormat.Col.instance());
         }
 
         /**
@@ -219,7 +219,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
         @Override
         default String format(final Unit<?, Q> targetUnit)
         {
-            return format(VectorFormat.Col.defaults().setDisplayUnit(targetUnit));
+            return format(VectorFormat.Col.instance().setDisplayUnit(targetUnit));
         }
     }
 
@@ -237,7 +237,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
         @Override
         default String format()
         {
-            return format(VectorFormat.Row.defaults());
+            return format(VectorFormat.Row.instance());
         }
 
         /**
@@ -258,7 +258,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
         @Override
         default String format(final Unit<?, Q> targetUnit)
         {
-            return format(VectorFormat.Row.defaults().setDisplayUnit(targetUnit));
+            return format(VectorFormat.Row.instance().setDisplayUnit(targetUnit));
         }
     }
 
