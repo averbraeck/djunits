@@ -142,12 +142,11 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
             return false;
 
         double log10 = Math.log10(Math.abs(si));
+        boolean invert = type.equals(PrefixType.PER_UNIT) || type.equals(PrefixType.PER_KILO);
         int exponent = (int) (3 * Math.floor(log10 / 3.0));
 
         // normalize per type
-        boolean invert = false;
         String baseId = this.unit.getId();
-
         switch (type)
         {
             case UNIT:
@@ -159,13 +158,11 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
                 break;
 
             case PER_UNIT:
-                invert = true;
                 baseId = "/" + baseId.substring(1);
                 break;
 
             case PER_KILO:
                 exponent -= 3;
-                invert = true;
                 baseId = "/" + baseId.substring(2);
                 break;
 
@@ -173,13 +170,14 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
                 return false;
         }
 
-        if (exponent < this.ctx.autoSiMinExponent || exponent > this.ctx.autoSiMaxExponent)
-            return false;
         int lookupExponent = invert ? -exponent : exponent;
+        if (lookupExponent < this.ctx.autoSiMinExponent || lookupExponent > this.ctx.autoSiMaxExponent)
+            return false;
         SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(lookupExponent, SIPrefixes.getSiPrefix(""));
         String prefixText = prefix.getDefaultTextualPrefix();
         String key = invert ? "/" + prefixText + baseId.substring(1) : prefixText + baseId;
         this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
         return true;
     }
+        
 }

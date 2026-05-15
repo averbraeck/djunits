@@ -239,29 +239,63 @@ public abstract class Formatter<C extends FormatContext>
     }
 
     /**
-     * Format a value using fixed length, but when it does not fit, fall back to scientific notation.
+     * Format a value using fixed length, but when it does not fit or when underflow would happen, fall back to scientific
+     * notation.
      * @param val the value to format
      * @return a formatted value using fixed length, but when it does not fit, fall back to scientific notation.
      */
     String formatFixedSciFallback(final double val)
     {
-        String s = formatFixedFloat(val);
-        if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
-            return s;
-        return formatScientific(val);
+        String fixed = formatFixedFloat(val);
+
+        // 1. prevent overflow where string is longer than width
+        if (fixed.length() > this.ctx.width)
+        {
+            return formatScientific(val);
+        }
+
+        // 2. prevent underflow and formatting of, e.g., 0.000123 as "0.000"
+        if (val != 0.0 && Math.abs(val) < Math.pow(10, -this.ctx.decimals))
+        {
+            return formatScientific(val);
+        }
+
+        return fixed;
+
+        // String s = formatFixedFloat(val);
+        // if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
+        // return s;
+        // return formatScientific(val);
     }
 
     /**
-     * Format a value using fixed length, but when it does not fit, fall back to engineering notation.
+     * Format a value using fixed length, but when it does not fit or when underflow would happen, fall back to engineering
+     * notation.
      * @param val the value to format
      * @return a formatted value using fixed length, but when it does not fit, fall back to engineering notation.
      */
     String formatFixedEngFallback(final double val)
     {
-        String s = formatFixedFloat(val);
-        if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
-            return s;
-        return formatEngineering(val);
+        String fixed = formatFixedFloat(val);
+
+        // 1. prevent overflow where string is longer than width
+        if (fixed.length() > this.ctx.width)
+        {
+            return formatEngineering(val);
+        }
+
+        // 2. prevent underflow and formatting of, e.g., 0.000123 as "0.000"
+        if (val != 0.0 && Math.abs(val) < Math.pow(10, -this.ctx.decimals))
+        {
+            return formatEngineering(val);
+        }
+
+        return fixed;
+
+        // String s = formatFixedFloat(val);
+        // if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
+        // return s;
+        // return formatEngineering(val);
     }
 
     /**

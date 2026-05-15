@@ -22,7 +22,7 @@ class QuantityFormatContext extends FormatContext implements Cloneable
     int autoSiMinExponent = -30;
 
     /** maximum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive). */
-    int autoSiMaxExponent = 32;
+    int autoSiMaxExponent = +30;
 
     @Override
     protected QuantityFormatContext clone()
