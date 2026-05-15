@@ -433,7 +433,7 @@ public class QuantityTest
     public void testCombinedFormat()
     {
         Length l = new Length(20400.0, Length.Unit.m);
-        String s = l.format(QuantityFormat.defaults().setScaleSiPrefixes().setDecimals(3).setTextual());
+        String s = l.format(QuantityFormat.defaults().setAutoSiPrefix().setDecimals(3).setTextual());
         assertEquals("20.4 km", s);
     }
 

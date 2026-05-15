@@ -450,10 +450,10 @@ public class AbsQuantityTest
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
             String s1 = pos.format(
-                    QuantityFormat.defaults().setFixedWithSciFallback().setScaleSiPrefixes().setDecimals(3).setTextual());
+                    QuantityFormat.defaults().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
             assertEquals("    20.400 km", s1);
 
-            String s2 = pos.format(QuantityFormat.defaults().setFixedWithSciFallback().setScaleSiPrefixes().setDecimals(3)
+            String s2 = pos.format(QuantityFormat.defaults().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3)
                     .setTextual().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
             assertEquals("    20.400 km (TEST)", s2);
         }
