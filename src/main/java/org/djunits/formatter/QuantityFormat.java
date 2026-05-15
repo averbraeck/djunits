@@ -2,6 +2,7 @@ package org.djunits.formatter;
 
 import org.djunits.quantity.LinearObjectDensity;
 import org.djunits.quantity.Mass;
+import org.djutils.exceptions.Throw;
 
 /**
  * QuantityFormat stores the settings that influence both the value part and the unit part of an output string when formatting a
@@ -73,9 +74,12 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      * @param minExponent minimum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive)
      * @param maxExponent maximum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive)
      * @return QuantityFormat object for fluent design
+     * @throws IllegalArgumentException when minExponent &gt; maxExponent
      */
     public QuantityFormat setAutoSiPrefix(final int minExponent, final int maxExponent)
     {
+        Throw.when(minExponent > maxExponent, IllegalArgumentException.class, "minExponent %d > maxExponent %d", minExponent,
+                maxExponent);
         this.ctx.autoSiPrefix = true;
         this.ctx.autoSiMinExponent = minExponent;
         this.ctx.autoSiMaxExponent = maxExponent;

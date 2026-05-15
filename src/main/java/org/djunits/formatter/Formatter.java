@@ -261,11 +261,6 @@ public abstract class Formatter<C extends FormatContext>
         }
 
         return fixed;
-
-        // String s = formatFixedFloat(val);
-        // if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
-        // return s;
-        // return formatScientific(val);
     }
 
     /**
@@ -291,11 +286,6 @@ public abstract class Formatter<C extends FormatContext>
         }
 
         return fixed;
-
-        // String s = formatFixedFloat(val);
-        // if (s.length() <= this.ctx.width && !s.strip().equals("0.0") || val == 0.0)
-        // return s;
-        // return formatEngineering(val);
     }
 
     /**
