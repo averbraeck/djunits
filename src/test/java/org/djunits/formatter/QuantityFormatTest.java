@@ -71,6 +71,7 @@ public class QuantityFormatTest
     @Test
     public void testSiScalingUnit()
     {
+        Energy e0 = new Energy(0.0, Energy.Unit.J);
         Energy e4 = new Energy(1200.345, Energy.Unit.J);
         Energy e5 = new Energy(12003.45, Energy.Unit.J);
         Energy e6 = new Energy(120034.5, Energy.Unit.J);
@@ -82,6 +83,10 @@ public class QuantityFormatTest
         Energy em5 = new Energy(0.00001234567, Energy.Unit.J);
         Energy em6 = new Energy(0.000001234567, Energy.Unit.J);
         Energy em7 = new Energy(0.0000001234567, Energy.Unit.J);
+
+        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        assertTrue(s0.contains("0.0"));
+        assertTrue(s0.endsWith(" J"));
 
         String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
@@ -147,6 +152,7 @@ public class QuantityFormatTest
     @Test
     public void testSiScalingKilo()
     {
+        Mass e0 = new Mass(0.0, Mass.Unit.kg);
         Mass e4 = new Mass(1200.345, Mass.Unit.kg);
         Mass e5 = new Mass(12003.45, Mass.Unit.kg);
         Mass e6 = new Mass(120034.5, Mass.Unit.kg);
@@ -158,6 +164,10 @@ public class QuantityFormatTest
         Mass em5 = new Mass(0.00001234567, Mass.Unit.kg);
         Mass em6 = new Mass(0.000001234567, Mass.Unit.kg);
         Mass em7 = new Mass(0.0000001234567, Mass.Unit.kg);
+
+        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        assertTrue(s0.contains("0.0"));
+        assertTrue(s0.endsWith(" kg"));
 
         String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
@@ -207,13 +217,16 @@ public class QuantityFormatTest
         assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 0)).endsWith(" kg"));
         assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 1)).endsWith(" kg"));
         assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 2)).endsWith(" kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" Mg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 3)).endsWith(" kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 3)).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 6)).endsWith(" Mg"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(3, 3)).endsWith(" kg"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 3)).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 3)).endsWith(" g"));
         assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 3)).endsWith(" g"));
         assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-4, 3)).endsWith(" g"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-8, 3)).endsWith(" kg"));
+        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-5, 3)).endsWith(" kg"));
+        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-6, 3).setTextual()).endsWith(" mug"));
         assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3).setTextual()).endsWith(" mug"));
     }
 
@@ -223,6 +236,7 @@ public class QuantityFormatTest
     @Test
     public void testSiScalingPer()
     {
+        LinearObjectDensity e0 = new LinearObjectDensity(0.0, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity e4 = new LinearObjectDensity(1200.345, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity e5 = new LinearObjectDensity(12003.45, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity e6 = new LinearObjectDensity(120034.5, LinearObjectDensity.Unit.per_m);
@@ -236,6 +250,10 @@ public class QuantityFormatTest
         LinearObjectDensity em5 = new LinearObjectDensity(0.00001234567, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity em6 = new LinearObjectDensity(0.000001234567, LinearObjectDensity.Unit.per_m);
         LinearObjectDensity em7 = new LinearObjectDensity(0.0000001234567, LinearObjectDensity.Unit.per_m);
+
+        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        assertTrue(s0.contains("0.0"));
+        assertTrue(s0.endsWith(" /m"));
 
         String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
@@ -290,17 +308,17 @@ public class QuantityFormatTest
         assertTrue(m7.endsWith(" /Gm"));
 
         // test with limits
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 0)).endsWith(" /m"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 1)).endsWith(" /m"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 2)).endsWith(" /m"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" /mm"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /m"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 3)).endsWith(" /m"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 3)).endsWith(" /m"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 3)).endsWith(" /km"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-4, 3)).endsWith(" /km"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-8, 3)).endsWith(" /m"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" /Gm"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 0)).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 0)).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 0)).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 0)).endsWith(" /mm"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 0)).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 1)).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 2)).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /km"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 4)).endsWith(" /km"));
+        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 8)).endsWith(" /m"));
+        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 9)).endsWith(" /Gm"));
     }
 
     /**
@@ -309,6 +327,7 @@ public class QuantityFormatTest
     @Test
     public void testSiScalingPerKilo()
     {
+        PerMass e0 = new PerMass(0.0, PerMass.Unit.per_kg);
         PerMass e4 = new PerMass(1200.345, PerMass.Unit.per_kg);
         PerMass e5 = new PerMass(12003.45, PerMass.Unit.per_kg);
         PerMass e6 = new PerMass(120034.5, PerMass.Unit.per_kg);
@@ -322,6 +341,10 @@ public class QuantityFormatTest
         PerMass em5 = new PerMass(0.00001234567, PerMass.Unit.per_kg);
         PerMass em6 = new PerMass(0.000001234567, PerMass.Unit.per_kg);
         PerMass em7 = new PerMass(0.0000001234567, PerMass.Unit.per_kg);
+
+        String s0 = e0.format(QuantityFormat.defaults().setAutoSiPrefix().setFixedWithSciFallback());
+        assertTrue(s0.contains("0.0"));
+        assertTrue(s0.endsWith(" /kg"));
 
         String s4 = e4.format(QuantityFormat.defaults().setAutoSiPrefix());
         assertTrue(s4.contains("1.2"));
@@ -376,17 +399,18 @@ public class QuantityFormatTest
         assertTrue(m7.endsWith(" /Tg"));
 
         // test with limits
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 0)).endsWith(" /kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 1)).endsWith(" /kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 2)).endsWith(" /kg"));
-        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 0)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 1)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 2)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.defaults().setAutoSiPrefix(3, 6)).endsWith(" /kg"));
         assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(0, 3)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-1, 3)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-2, 3)).endsWith(" /kg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 3)).endsWith(" /Mg"));
-        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-4, 3)).endsWith(" /Mg"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-8, 3)).endsWith(" /kg"));
-        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(-9, 3)).endsWith(" /Tg"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 4)).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 5)).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 6)).endsWith(" /Mg"));
+        assertTrue(em3.format(QuantityFormat.defaults().setAutoSiPrefix(-3, 7)).endsWith(" /Mg"));
+        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(0, 11)).endsWith(" /kg"));
+        assertTrue(em7.format(QuantityFormat.defaults().setAutoSiPrefix(0, 12)).endsWith(" /Tg"));
     }
 
     /**
