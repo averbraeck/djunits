@@ -601,32 +601,6 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Return the sum of one or more quantities.
-     * @param quantity1 the first quantity
-     * @param quantities the other quantities
-     * @return the sum of the quantities
-     * @param <A> the absolute quantity type
-     * @param <Q> the relative quantity type
-     * @param <R> the reference type to use for the absolute quantity
-     * @throws IllegalArgumentException when absolute quantities have a different reference point
-     */
-    @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A sum(final A quantity1,
-            final A... quantities)
-    {
-        double sum = quantity1.si();
-        for (A absq : quantities)
-        {
-            Throw.when(!quantity1.getReference().equals(absq.getReference()), IllegalArgumentException.class,
-                    "sum operation not applicable to quantities with a different reference: %s <> %s",
-                    quantity1.getReference().getId(), absq.getReference().getId());
-            sum += absq.si();
-        }
-        return quantity1.instantiate(quantity1.getQuantity().instantiateSi(sum).setDisplayUnit(quantity1.getDisplayUnit()),
-                quantity1.getReference());
-    }
-
-    /**
      * Return the mean of one or more quantities.
      * @param quantity1 the first quantity
      * @param quantities the other quantities
@@ -640,9 +614,16 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> A mean(final A quantity1, final A... quantities)
     {
-        // the possible exception is thrown by sum()
         int n = 1 + quantities.length;
-        return quantity1.instantiate(sum(quantity1, quantities).getQuantity().divideBy(n), quantity1.getReference());
+        Q relSum = quantity1.getQuantity();
+        for (A absq : quantities)
+        {
+            Throw.when(!quantity1.getReference().equals(absq.getReference()), IllegalArgumentException.class,
+                    "mean operation not applicable to quantities with a different reference: %s <> %s",
+                    quantity1.getReference().getId(), absq.getReference().getId());
+            relSum = relSum.add(absq.getQuantity());
+        }
+        return quantity1.instantiate(relSum.divideBy(n), quantity1.getReference());
     }
 
 }
