@@ -28,7 +28,7 @@ public class SIPrefix
 
     /**
      * Construct an SI prefix.
-     * @param defaultTextualPrefix the prefix abbreviation, duch as "M" for mega and "da" for deca
+     * @param defaultTextualPrefix the prefix abbreviation, such as "M" for mega and "da" for deca
      * @param prefixName the prefix name such as "mega" or "deca"
      * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
      * @param defaultDisplayPrefix "\u03BC" for micro
@@ -51,7 +51,7 @@ public class SIPrefix
 
     /**
      * Construct an SI prefix with the defaultDisplayPrefix equal to the defaultTextualPrefix.
-     * @param defaultTextualPrefix the prefix abbreviation, duch as "M" for mega and "da" for deca
+     * @param defaultTextualPrefix the prefix abbreviation, such as "M" for mega and "da" for deca
      * @param prefixName the prefix name such as "mega" or "deca"
      * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
      * @param type the prefix type, e.g., KILO
