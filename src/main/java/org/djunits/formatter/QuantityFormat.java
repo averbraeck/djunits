@@ -2,6 +2,7 @@ package org.djunits.formatter;
 
 import org.djunits.quantity.LinearObjectDensity;
 import org.djunits.quantity.Mass;
+import org.djunits.unit.si.SIPrefixes;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -79,6 +80,31 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
      */
     public QuantityFormat setAutoSiPrefix(final int minExponent, final int maxExponent)
     {
+        Throw.when(minExponent > maxExponent, IllegalArgumentException.class, "minExponent %d > maxExponent %d", minExponent,
+                maxExponent);
+        this.ctx.autoSiPrefix = true;
+        this.ctx.autoSiMinExponent = Math.min(30, Math.max(-30, minExponent));
+        this.ctx.autoSiMaxExponent = Math.min(30, Math.max(-30, maxExponent));
+        return this;
+    }
+
+    /**
+     * Turn on the automatic allocation of the unit to its closest SI prefix, in case the exponent of the 10-power in scientific
+     * notation is between minExponent and maxExponent, inclusive. E.g., format 20400 m as "20.4 km" after calling
+     * setAutoSiPrefix("mu", "M") but format it as 20400 m after calling setAutoSiPrefix("mu", ""). Note that the kg for
+     * {@link Mass} is associated with the SI prefix "k", and the g with an SI prefix "". For the {@link LinearObjectDensity}
+     * that is expressed in /m, /km is associated with an SI prefix "k" and /mm with an SI prefix "m". Note that the minimum and
+     * maximum exponents are clamped between q (-30) and Q (30).
+     * @param minSiPrefix minimum SI prefix to use (inclusive)
+     * @param maxSiPrefix maximum SI prefix to use (inclusive)
+     * @return QuantityFormat object for fluent design
+     * @throws IllegalArgumentException when minSiPrefix &gt; maxSiPrefix
+     * @throws IllegalArgumentException when the <code>minSiPrefix</code> or <code>maxSiPrefix</code> does not exist
+     */
+    public QuantityFormat setAutoSiPrefix(final String minSiPrefix, final String maxSiPrefix)
+    {
+        int minExponent = SIPrefixes.getSiPrefix(minSiPrefix).getExponent();
+        int maxExponent = SIPrefixes.getSiPrefix(maxSiPrefix).getExponent();
         Throw.when(minExponent > maxExponent, IllegalArgumentException.class, "minExponent %d > maxExponent %d", minExponent,
                 maxExponent);
         this.ctx.autoSiPrefix = true;
