@@ -23,6 +23,9 @@ class QuantityFormatContext extends FormatContext implements Cloneable
 
     /** maximum exponent for the 10-power in scientific notation to use SI prefixes for (inclusive). */
     int autoSiMaxExponent = +30;
+    
+    /** Allow c, d, da and h prefixes? */
+    boolean allowExponents12 = false;
 
     @Override
     protected QuantityFormatContext clone()
