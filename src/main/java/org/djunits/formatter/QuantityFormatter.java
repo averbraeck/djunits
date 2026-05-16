@@ -146,33 +146,40 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
             return false;
 
         double log10 = Math.log10(Math.abs(si));
-        boolean invert = type.equals(PrefixType.PER_UNIT) || type.equals(PrefixType.PER_KILO);
-        int exponent = (int) (3 * Math.floor(log10 / 3.0));
-
-        // normalize per type
+        boolean invert = false;
         String baseId = this.unit.getId();
+        
+        // normalize per type
         switch (type)
         {
             case UNIT:
                 break;
 
             case KILO:
-                exponent += 3;
+                log10 += 3.0;
                 baseId = baseId.substring(1);
                 break;
 
             case PER_UNIT:
+                invert = true;
                 baseId = "/" + baseId.substring(1);
                 break;
 
             case PER_KILO:
-                exponent -= 3;
+                log10 -= 3.0;
+                invert = true;
                 baseId = "/" + baseId.substring(2);
                 break;
 
             default:
                 return false;
         }
+
+        int exponent;
+        if (this.ctx.allowExponents12 && Math.abs(Math.floor(log10)) < 3.0)
+            exponent = (int) Math.floor(log10);
+        else
+            exponent = (int) (3 * Math.floor(log10 / 3.0));
 
         int lookupExponent = invert ? -exponent : exponent;
         if (lookupExponent < this.ctx.autoSiMinExponent || lookupExponent > this.ctx.autoSiMaxExponent)
