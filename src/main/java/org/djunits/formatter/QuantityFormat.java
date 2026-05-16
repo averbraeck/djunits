@@ -113,4 +113,24 @@ public class QuantityFormat extends Format<QuantityFormat, QuantityFormatContext
         return this;
     }
 
+    /**
+     * Set whether it is allowed to use prefixes c, d, da, h in the autoSiPrefix.
+     * @param allowed to indicate whether it is allowed or not to use prefixes c, d, da, h in the autoSiPrefix
+     * @return QuantityFormat object for fluent design
+     */
+    public QuantityFormat setAllowExponents12(final boolean allowed)
+    {
+        this.ctx.allowExponents12 = allowed;
+        return this;
+    }
+    
+    /**
+     * Set that it is allowed to use prefixes c, d, da, h in the autoSiPrefix.
+     * @return QuantityFormat object for fluent design
+     */
+    public QuantityFormat setAllowExponents12()
+    {
+        return setAllowExponents12(true);
+    }
+
 }
