@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,7 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * TemperatureTest tests the Temperature absolute quantity class and its Reference handling.<p>
+ * TemperatureTest tests the Temperature absolute quantity class and its Reference handling.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information https://djunits.org. The DJUNITS project is distributed under a https://djunits.org/docs/license.html
  * three-clause BSD-style license.
@@ -148,7 +150,7 @@ class TemperatureTest
 
         Temperature t50Plus10 = new Temperature(50.0, Temperature.Unit.K, r10);
         assertEquals(60.0, t50Plus10.relativeTo(Temperature.Reference.KELVIN).si(), 1E-12);
-        
+
         // clean up
         Temperature.Reference.get("K+10").unregister();
     }
@@ -172,7 +174,8 @@ class TemperatureTest
         assertEquals(Temperature.Reference.KELVIN, Temperature.Unit.degR.getReference());
 
         var doubleKelvin = Temperature.Unit.K.deriveUnit("K2", "K2", "Kelvin*2", 2.0, UnitSystem.OTHER);
-        assertEquals(2.0 * Temperature.Unit.K.getScale().toIdentityScale(1.0), doubleKelvin.getScale().toIdentityScale(1.0), 1E-12);
+        assertEquals(2.0 * Temperature.Unit.K.getScale().toIdentityScale(1.0), doubleKelvin.getScale().toIdentityScale(1.0),
+                1E-12);
 
         assertThrows(RuntimeException.class, () ->
         { Temperature.Unit.K.deriveUnit("BAD", "BAD", "BAD", Double.NaN, UnitSystem.SI_DERIVED); });
@@ -261,8 +264,8 @@ class TemperatureTest
     // =========================================================================
 
     /**
-     * Test the aggregate static operations defined in AbsQuantity: max, min, sum, mean, and interpolate. Also test
-     * reference mismatch errors.
+     * Test the aggregate static operations defined in AbsQuantity: max, min, sum, mean, and interpolate. Also test reference
+     * mismatch errors.
      */
     @Test
     void testStaticOperations()
@@ -297,4 +300,30 @@ class TemperatureTest
         assertSame(Temperature.Reference.FAHRENHEIT, Temperature.Unit.degF.getReference());
     }
 
+    /**
+     * Test for temperatures below absolute zero.
+     */
+    @Test
+    void testNegativeTemperature()
+    {
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(TemperatureDifference.ofSi(-0.1)));
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(-0.1, Temperature.Unit.K));
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(-0.1, "K"));
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(-273.2, Temperature.Unit.degC));
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(-500, "degF"));
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(-0.1, "K", Temperature.Reference.KELVIN));
+        assertNotNull(new Temperature(-0.1, "K", Temperature.Reference.CELSIUS));
+        assertNotNull(new Temperature(-273.15, "degC", Temperature.Reference.CELSIUS));
+        assertThrows(IllegalArgumentException.class, () -> new Temperature(-273.16, "degC", Temperature.Reference.CELSIUS));
+        assertNotNull(new Temperature(-0.1, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.ofSi(-1.0));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.of(-0.1, "K", Temperature.Reference.KELVIN));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.valueOf("-0.1 K", Temperature.Reference.KELVIN));
+        assertNotNull(Temperature.valueOf("-273.15 degC", Temperature.Reference.CELSIUS));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.valueOf("-273.16 degC", Temperature.Reference.CELSIUS));
+
+        Temperature t1 = new Temperature(10, "K");
+        TemperatureDifference t2 = TemperatureDifference.of(20, "K");
+        assertThrows(IllegalArgumentException.class, () -> t1.subtract(t2));
+    }
 }
