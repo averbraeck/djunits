@@ -383,4 +383,217 @@ public class SiPrefixFormatTest
         assertTrue(pm100.endsWith(" /kg"));
     }
 
+    /**
+     * Test allowExponents12 setting for UNIT SI prefixes.
+     */
+    @Test
+    public void testAllowExponents12Unit()
+    {
+        Energy e1 = new Energy(1.200345, Energy.Unit.J);
+        Energy e2 = new Energy(12.00345, Energy.Unit.J);
+        Energy e3 = new Energy(120.0345, Energy.Unit.J);
+        Energy e4 = new Energy(1200.345, Energy.Unit.J);
+        Energy em1 = new Energy(0.1234567, Energy.Unit.J);
+        Energy em2 = new Energy(0.01234567, Energy.Unit.J);
+        Energy em3 = new Energy(0.001234567, Energy.Unit.J);
+        Energy em4 = new Energy(0.0001234567, Energy.Unit.J);
+
+        var fmt = QuantityFormat.instance().setAllowExponents12().setFixedWithSciFallback().setDecimals(3);
+        assertEquals("     1.200 J", e1.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("    12.003 J", e2.format(fmt.setAutoSiPrefix("m", "")));
+        assertEquals("     1.200 daJ", e2.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.200 daJ", e2.format(fmt.setAutoSiPrefix("", "da")));
+
+        assertEquals("   120.035 J", e3.format(fmt.setAutoSiPrefix("m", "")));
+        assertEquals("   120.035 J", e3.format(fmt.setAutoSiPrefix("m", "da")));
+        assertEquals("     1.200 hJ", e3.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.200 hJ", e3.format(fmt.setAutoSiPrefix("", "h")));
+
+        assertEquals("  1200.345 J", e4.format(fmt.setAutoSiPrefix("m", "")));
+        assertEquals("  1200.345 J", e4.format(fmt.setAutoSiPrefix("m", "h")));
+        assertEquals("     1.200 kJ", e4.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.200 kJ", e4.format(fmt.setAutoSiPrefix("", "k")));
+        
+        assertEquals("     0.123 J", em1.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     1.235 dJ", em1.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 dJ", em1.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 dJ", em1.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("     0.012 J", em2.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     0.012 J", em2.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 cJ", em2.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 cJ", em2.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("     0.001 J", em3.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     0.001 J", em3.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 mJ", em3.format(fmt.setAutoSiPrefix("m", "")));
+        assertEquals("     1.235 mJ", em3.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals(" 1.235E-04 J", em4.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals(" 1.235E-04 J", em4.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals(" 1.235E-04 J", em4.format(fmt.setAutoSiPrefix("m", "")));
+        assertEquals("   123.457 muJ", em4.format(fmt.setAutoSiPrefix("mu", "").setTextual()));
+        assertEquals("   123.457 muJ", em4.format(fmt.setAutoSiPrefix("mu", "k").setTextual()));
+    }
+
+    /**
+     * Test allowExponents12 setting for KILO SI prefixes.
+     */
+    @Test
+    public void testAllowExponents12Kilo()
+    {
+        Mass m1 = new Mass(1.200345, Mass.Unit.kg);
+        Mass mm1 = new Mass(0.1234567, Mass.Unit.kg);
+        Mass mm2 = new Mass(0.01234567, Mass.Unit.kg);
+        Mass mm3 = new Mass(0.001234567, Mass.Unit.kg);
+        Mass mm4 = new Mass(0.0001234567, Mass.Unit.kg);
+        Mass mm5 = new Mass(0.00001234567, Mass.Unit.kg);
+        Mass mm6 = new Mass(0.000001234567, Mass.Unit.kg);
+
+        var fmt = QuantityFormat.instance().setAllowExponents12().setFixedWithSciFallback().setDecimals(3);
+        assertEquals("     1.200 kg", m1.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("     0.123 kg", mm1.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     0.123 kg", mm1.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals("     1.235 hg", mm1.format(fmt.setAutoSiPrefix("d", "h")));
+        assertEquals("     1.235 hg", mm1.format(fmt.setAutoSiPrefix("", "k")));
+        
+        assertEquals("     0.012 kg", mm2.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     0.012 kg", mm2.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 dag", mm2.format(fmt.setAutoSiPrefix("c", "da")));
+        assertEquals("     1.235 dag", mm2.format(fmt.setAutoSiPrefix("c", "h")));
+        assertEquals("     1.235 dag", mm2.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("     0.001 kg", mm3.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals("     1.235 g", mm3.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 g", mm3.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     1.235 g", mm3.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals(" 1.235E-04 kg", mm4.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals(" 1.235E-04 kg", mm4.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals(" 1.235E-04 kg", mm4.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     1.235 dg", mm4.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.235 dg", mm4.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 dg", mm4.format(fmt.setAutoSiPrefix("c", "k")));
+        
+        assertEquals(" 1.235E-05 kg", mm5.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals(" 1.235E-05 kg", mm5.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals(" 1.235E-05 kg", mm5.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 cg", mm5.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.235 cg", mm5.format(fmt.setAutoSiPrefix("c", "k")));
+        
+        assertEquals(" 1.235E-06 kg", mm6.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals(" 1.235E-06 kg", mm6.format(fmt.setAutoSiPrefix("d", "da")));
+        assertEquals(" 1.235E-06 kg", mm6.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 mg", mm6.format(fmt.setAutoSiPrefix("m", "k")));
+    }
+
+
+    /**
+     * Test allowExponents12 setting for PER_UNIT SI prefixes.
+     */
+    @Test
+    public void testAllowExponents12PerUnit()
+    {
+        LinearObjectDensity lod1 = new LinearObjectDensity(1.200345, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lod2 = new LinearObjectDensity(12.00345, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lod3 = new LinearObjectDensity(120.0345, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lod4 = new LinearObjectDensity(1200.345, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lodm1 = new LinearObjectDensity(0.1234567, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lodm2 = new LinearObjectDensity(0.01234567, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lodm3 = new LinearObjectDensity(0.001234567, LinearObjectDensity.Unit.per_m);
+        LinearObjectDensity lodm4 = new LinearObjectDensity(0.0001234567, LinearObjectDensity.Unit.per_m);
+
+        var fmt = QuantityFormat.instance().setAllowExponents12().setFixedWithSciFallback().setDecimals(3);
+        assertEquals("     1.200 /m", lod1.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("    12.003 /m", lod2.format(fmt.setAutoSiPrefix("", "k")));
+        assertEquals("     1.200 /dm", lod2.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.200 /dm", lod2.format(fmt.setAutoSiPrefix("d", "")));
+
+        assertEquals("   120.035 /m", lod3.format(fmt.setAutoSiPrefix("", "k")));
+        assertEquals("   120.035 /m", lod3.format(fmt.setAutoSiPrefix("d", "k")));
+        assertEquals("     1.200 /cm", lod3.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.200 /cm", lod3.format(fmt.setAutoSiPrefix("c", "h")));
+
+        assertEquals("  1200.345 /m", lod4.format(fmt.setAutoSiPrefix("", "k")));
+        assertEquals("  1200.345 /m", lod4.format(fmt.setAutoSiPrefix("c", "k")));
+        assertEquals("     1.200 /mm", lod4.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.200 /mm", lod4.format(fmt.setAutoSiPrefix("m", "")));
+        
+        assertEquals("     0.123 /m", lodm1.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     1.235 /dam", lodm1.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals("     1.235 /dam", lodm1.format(fmt.setAutoSiPrefix("", "h")));
+        assertEquals("     1.235 /dam", lodm1.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("     0.012 /m", lodm2.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     0.012 /m", lodm2.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals("     1.235 /hm", lodm2.format(fmt.setAutoSiPrefix("", "h")));
+        assertEquals("     1.235 /hm", lodm2.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("     0.001 /m", lodm3.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals("     0.001 /m", lodm3.format(fmt.setAutoSiPrefix("", "h")));
+        assertEquals("     1.235 /km", lodm3.format(fmt.setAutoSiPrefix("", "k")));
+        assertEquals("     1.235 /km", lodm3.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals(" 1.235E-04 /m", lodm4.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals(" 1.235E-04 /m", lodm4.format(fmt.setAutoSiPrefix("", "h")));
+        assertEquals(" 1.235E-04 /m", lodm4.format(fmt.setAutoSiPrefix("", "k")));
+        assertEquals("   123.457 /Mm", lodm4.format(fmt.setAutoSiPrefix("", "M")));
+        assertEquals("   123.457 /Mm", lodm4.format(fmt.setAutoSiPrefix("m", "M")));
+    }
+
+    /**
+     * Test allowExponents12 setting for PER_KILO SI prefixes.
+     */
+    @Test
+    public void testAllowExponents12PerKilo()
+    {
+        PerMass pm1 = new PerMass(1.234567, PerMass.Unit.per_kg);
+        PerMass pmm1 = new PerMass(12.34567, PerMass.Unit.per_kg);
+        PerMass pmm2 = new PerMass(123.4567, PerMass.Unit.per_kg);
+        PerMass pmm3 = new PerMass(1234.567, PerMass.Unit.per_kg);
+        PerMass pmm4 = new PerMass(12345.67, PerMass.Unit.per_kg);
+        PerMass pmm5 = new PerMass(123456.7, PerMass.Unit.per_kg);
+        PerMass pmm6 = new PerMass(1234567.0, PerMass.Unit.per_kg);
+
+        var fmt = QuantityFormat.instance().setAllowExponents12().setFixedWithSciFallback().setDecimals(3);
+        assertEquals("     1.235 /kg", pm1.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("    12.346 /kg", pmm1.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("    12.346 /kg", pmm1.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals("     1.235 /hg", pmm1.format(fmt.setAutoSiPrefix("d", "h")));
+        assertEquals("     1.235 /hg", pmm1.format(fmt.setAutoSiPrefix("", "k")));
+        
+        assertEquals("   123.457 /kg", pmm2.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("   123.457 /kg", pmm2.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 /dag", pmm2.format(fmt.setAutoSiPrefix("c", "da")));
+        assertEquals("     1.235 /dag", pmm2.format(fmt.setAutoSiPrefix("c", "h")));
+        assertEquals("     1.235 /dag", pmm2.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals("  1234.567 /kg", pmm3.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals("     1.235 /g", pmm3.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 /g", pmm3.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     1.235 /g", pmm3.format(fmt.setAutoSiPrefix("m", "k")));
+        
+        assertEquals(" 12345.670 /kg", pmm4.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals(" 12345.670 /kg", pmm4.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals(" 12345.670 /kg", pmm4.format(fmt.setAutoSiPrefix("", "")));
+        assertEquals("     1.235 /dg", pmm4.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.235 /dg", pmm4.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 /dg", pmm4.format(fmt.setAutoSiPrefix("c", "k")));
+        
+        assertEquals("123456.700 /kg", pmm5.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals("123456.700 /kg", pmm5.format(fmt.setAutoSiPrefix("", "da")));
+        assertEquals("123456.700 /kg", pmm5.format(fmt.setAutoSiPrefix("d", "")));
+        assertEquals("     1.235 /cg", pmm5.format(fmt.setAutoSiPrefix("m", "k")));
+        assertEquals("     1.235 /cg", pmm5.format(fmt.setAutoSiPrefix("c", "k")));
+        
+        assertEquals(" 1.235E+06 /kg", pmm6.format(fmt.setAutoSiPrefix("k", "k")));
+        assertEquals(" 1.235E+06 /kg", pmm6.format(fmt.setAutoSiPrefix("d", "da")));
+        assertEquals(" 1.235E+06 /kg", pmm6.format(fmt.setAutoSiPrefix("c", "")));
+        assertEquals("     1.235 /mg", pmm6.format(fmt.setAutoSiPrefix("m", "k")));
+    }
+
 }

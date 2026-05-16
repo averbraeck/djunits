@@ -156,7 +156,6 @@ public class QuantityFormatTest
         assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("m", "k")).endsWith(" mJ"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("mu", "k")).endsWith(" J"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("n", "k")).endsWith(" nJ"));
-
     }
 
     /**
