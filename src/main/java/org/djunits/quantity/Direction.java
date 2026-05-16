@@ -1,21 +1,21 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.Direction.Reference;
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Units;
 
 /**
  * Direction is the absolute equivalent of Angle, and can, e.g., represent an angle relative to a defined "zero" angle such as
- * NORTH or EAST.
+ * NORTH or EAST. The relative operations such as gt, lt, eq and ne are not available in the Direction class.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Direction extends AbsQuantity<Direction, Angle, Reference>
+public class Direction extends AbsBasic<Direction, Angle, Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
