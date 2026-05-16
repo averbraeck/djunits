@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
  * {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])}, {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])},
  * {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])}</li>
  * <li>Arithmetic with relative quantities: {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} and
- * {@link AbsQuantity#subtract(AbsQuantity)}</li>
+ * {@link AbsQuantity#subtract(AbsBasic)}</li>
  * <li>{@code equals}/{@code hashCode} contract</li>
  * </ul>
  * <p>
@@ -488,7 +488,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#subtract(AbsQuantity)} aligns references and returns the relative difference.
+     * Verifies {@link AbsQuantity#subtract(AbsBasic)} aligns references and returns the relative difference.
      * <p>
      * <strong>Case:</strong> {@code pA = 10@A}, {@code pB = 8@B} represent the same absolute point; the difference is 0.
      */
