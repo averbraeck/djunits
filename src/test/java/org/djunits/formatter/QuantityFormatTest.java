@@ -132,7 +132,7 @@ public class QuantityFormatTest
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" nJ"));
 
-        // test with limits
+        // test with limits using numbers
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 0)).endsWith(" J"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 1)).endsWith(" J"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 2)).endsWith(" J"));
@@ -144,6 +144,19 @@ public class QuantityFormatTest
         assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-4, 3)).endsWith(" mJ"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-8, 3)).endsWith(" J"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-9, 3)).endsWith(" nJ"));
+        
+        // test with limits using strings
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "")).endsWith(" J"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "da")).endsWith(" J"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "h")).endsWith(" J"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "k")).endsWith(" kJ"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "k")).endsWith(" J"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("d", "k")).endsWith(" J"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("c", "k")).endsWith(" J"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("m", "k")).endsWith(" mJ"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("mu", "k")).endsWith(" J"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("n", "k")).endsWith(" nJ"));
+
     }
 
     /**
@@ -213,7 +226,7 @@ public class QuantityFormatTest
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" mug"));
 
-        // test with limits
+        // test with limits using numbers
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 0)).endsWith(" kg"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 1)).endsWith(" kg"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-9, 2)).endsWith(" kg"));
@@ -228,6 +241,21 @@ public class QuantityFormatTest
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-5, 3)).endsWith(" kg"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-6, 3).setTextual()).endsWith(" mug"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-9, 3).setTextual()).endsWith(" mug"));
+
+        // test with limits using strings
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "")).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "da")).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "h")).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "k")).endsWith(" kg"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("n", "M")).endsWith(" Mg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "k")).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("k", "k")).endsWith(" kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("d", "k")).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("c", "k")).endsWith(" g"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("m", "k")).endsWith(" g"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("m", "k")).endsWith(" kg"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("mu", "k").setTextual()).endsWith(" mug"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("n", "k").setTextual()).endsWith(" mug"));
     }
 
     /**
@@ -307,7 +335,7 @@ public class QuantityFormatTest
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" /Gm"));
 
-        // test with limits
+        // test with limits using numbers
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 0)).endsWith(" /m"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-1, 0)).endsWith(" /m"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(-2, 0)).endsWith(" /m"));
@@ -319,6 +347,18 @@ public class QuantityFormatTest
         assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(0, 4)).endsWith(" /km"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-3, 8)).endsWith(" /m"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(-3, 9)).endsWith(" /Gm"));
+
+        // test with limits using strings
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("", "")).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("d", "")).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("c", "")).endsWith(" /m"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("m", "")).endsWith(" /mm"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "")).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "da")).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "h")).endsWith(" /m"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "k")).endsWith(" /km"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("m", "M")).endsWith(" /m"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("m", "G")).endsWith(" /Gm"));
     }
 
     /**
@@ -398,7 +438,7 @@ public class QuantityFormatTest
         assertTrue(m7.contains("123.45"));
         assertTrue(m7.endsWith(" /Tg"));
 
-        // test with limits
+        // test with limits using numbers
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 0)).endsWith(" /g"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 1)).endsWith(" /g"));
         assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix(0, 2)).endsWith(" /g"));
@@ -411,6 +451,18 @@ public class QuantityFormatTest
         assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix(-3, 7)).endsWith(" /Mg"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(0, 11)).endsWith(" /kg"));
         assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix(0, 12)).endsWith(" /Tg"));
+
+        // test with limits using strings
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("", "")).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("", "da")).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("", "h")).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("", "k")).endsWith(" /g"));
+        assertTrue(e4.format(QuantityFormat.instance().setAutoSiPrefix("k", "M")).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("", "k")).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("m", "k")).endsWith(" /kg"));
+        assertTrue(em3.format(QuantityFormat.instance().setAutoSiPrefix("m", "M")).endsWith(" /Mg"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("", "G")).endsWith(" /kg"));
+        assertTrue(em7.format(QuantityFormat.instance().setAutoSiPrefix("", "T")).endsWith(" /Tg"));
     }
 
     /**

@@ -336,6 +336,24 @@ public class SiPrefixFormatTest
         assertThrows(IllegalArgumentException.class,
                 () -> LinearObjectDensity.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
         assertThrows(IllegalArgumentException.class, () -> PerMass.ONE.format(QuantityFormat.instance().setAutoSiPrefix(2, 1)));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Energy.ONE.format(QuantityFormat.instance().setAutoSiPrefix("k", "m")));
+        assertThrows(IllegalArgumentException.class,
+                () -> Mass.ONE.format(QuantityFormat.instance().setAutoSiPrefix("k", "m")));
+        assertThrows(IllegalArgumentException.class,
+                () -> LinearObjectDensity.ONE.format(QuantityFormat.instance().setAutoSiPrefix("k", "m")));
+        assertThrows(IllegalArgumentException.class,
+                () -> PerMass.ONE.format(QuantityFormat.instance().setAutoSiPrefix("k", "m")));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> Energy.ONE.format(QuantityFormat.instance().setAutoSiPrefix("h", "da")));
+        assertThrows(IllegalArgumentException.class,
+                () -> Mass.ONE.format(QuantityFormat.instance().setAutoSiPrefix("h", "da")));
+        assertThrows(IllegalArgumentException.class,
+                () -> LinearObjectDensity.ONE.format(QuantityFormat.instance().setAutoSiPrefix("h", "da")));
+        assertThrows(IllegalArgumentException.class,
+                () -> PerMass.ONE.format(QuantityFormat.instance().setAutoSiPrefix("h", "da")));
     }
 
     /**
