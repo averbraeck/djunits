@@ -47,15 +47,12 @@ public class SIPrefixTest
     public void testSiprefixConstructorAndGetters()
     {
         // Nulls must fail
-        assertThrows(NullPointerException.class, () -> new SIPrefix(null, "mega", 1.0E6, "M", PrefixType.UNIT));
-        assertThrows(NullPointerException.class, () -> new SIPrefix("M", null, 1.0E6, "M", PrefixType.UNIT));
-        assertThrows(NullPointerException.class, () -> new SIPrefix("M", "mega", 1.0E6, null, PrefixType.UNIT));
-
-        // Zero factor must fail
-        assertThrows(RuntimeException.class, () -> new SIPrefix("X", "x", 0.0, "X", PrefixType.UNIT));
+        assertThrows(NullPointerException.class, () -> new SIPrefix(null, "mega", 6, "M", PrefixType.UNIT));
+        assertThrows(NullPointerException.class, () -> new SIPrefix("M", null, 6, "M", PrefixType.UNIT));
+        assertThrows(NullPointerException.class, () -> new SIPrefix("M", "mega", 6, null, PrefixType.UNIT));
 
         // Valid construction (textual==display when using 3-arg constructor)
-        SIPrefix mega = new SIPrefix("M", "mega", 1.0E6, PrefixType.UNIT);
+        SIPrefix mega = new SIPrefix("M", "mega", 6, PrefixType.UNIT);
         assertEquals("M", mega.getDefaultTextualPrefix());
         assertEquals("M", mega.getDefaultDisplayPrefix());
         assertEquals("mega", mega.getPrefixName());
@@ -230,6 +227,16 @@ public class SIPrefixTest
         assertEquals(1.0E1, unit.get("da").getFactor(), 0.0);
         assertEquals(1.0E24, unit.get("Y").getFactor(), 0.0);
         assertEquals(1.0E-24, unit.get("y").getFactor(), 0.0);
+
+        // Representative exponents
+        assertEquals(3, unit.get("k").getExponent());
+        assertEquals(6, unit.get("M").getExponent());
+        assertEquals(9, unit.get("G").getExponent());
+        assertEquals(-3, unit.get("m").getExponent());
+        assertEquals(-2, unit.get("c").getExponent());
+        assertEquals(1, unit.get("da").getExponent());
+        assertEquals(24, unit.get("Y").getExponent());
+        assertEquals(-24, unit.get("y").getExponent());
     }
 
     /**
@@ -253,9 +260,17 @@ public class SIPrefixTest
         assertEquals(1.0E-27, per.get("/R").getFactor(), 0.0);
         assertEquals(1.0E-30, per.get("/Q").getFactor(), 0.0);
 
+        // 2022 additions (reciprocal)
+        assertEquals(30, per.get("/q").getExponent());
+        assertEquals(27, per.get("/r").getExponent());
+        assertEquals(-27, per.get("/R").getExponent());
+        assertEquals(-30, per.get("/Q").getExponent());
+
         // Reciprocal values: per nano is 1e9, per kilo is 1e-3
         assertEquals(1.0E9, per.get("/n").getFactor(), 0.0);
         assertEquals(1.0E-3, per.get("/k").getFactor(), 0.0);
+        assertEquals(9, per.get("/n").getExponent());
+        assertEquals(-3, per.get("/k").getExponent());
 
         // Micro display reciprocal "/μ"
         SIPrefix perMicro = per.get("/mu");
@@ -290,6 +305,8 @@ public class SIPrefixTest
         // Representative positive/negative offsets around kilo
         assertEquals(1.0E3, kilo.get("M").getFactor(), 0.0); // mega relative to kilo
         assertEquals(1.0E-6, kilo.get("m").getFactor(), 0.0); // milli relative to kilo
+        assertEquals(3, kilo.get("M").getExponent());
+        assertEquals(-6, kilo.get("m").getExponent());
 
         // PER_KILO: "/" is 1e3; "/k" is identity
         assertEquals(1.0E3, perKilo.get("/").getFactor(), 0.0);
@@ -346,13 +363,13 @@ public class SIPrefixTest
     public void testMapsAreUnmodifiable()
     {
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.UNIT_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
+                () -> SIPrefixes.UNIT_PREFIXES.put("X", new SIPrefix("X", "x", 2, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.PER_UNIT_PREFIXES.put("/X", new SIPrefix("/X", "per x", 0.5, PrefixType.UNIT)));
+                () -> SIPrefixes.PER_UNIT_PREFIXES.put("/X", new SIPrefix("/X", "per x", 0, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.KILO_PREFIXES.put("X", new SIPrefix("X", "x", 2.0, PrefixType.UNIT)));
+                () -> SIPrefixes.KILO_PREFIXES.put("X", new SIPrefix("X", "x", 2, PrefixType.UNIT)));
         assertThrows(UnsupportedOperationException.class,
-                () -> SIPrefixes.PER_KILO_PREFIXES.put("/X", new SIPrefix("/X", "per x", 2.0, PrefixType.UNIT)));
+                () -> SIPrefixes.PER_KILO_PREFIXES.put("/X", new SIPrefix("/X", "per x", 2, PrefixType.UNIT)));
     }
 
     /**
