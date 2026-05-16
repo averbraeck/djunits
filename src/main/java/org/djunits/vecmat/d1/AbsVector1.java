@@ -1,6 +1,6 @@
 package org.djunits.vecmat.d1;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -19,7 +19,7 @@ import org.djutils.exceptions.Throw;
  * @param <A> the absolute quantity type
  * @param <Q> the corresponding relative quantity type
  */
-public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+public class AbsVector1<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
         extends AbsVector<A, Q, AbsVector1<A, Q>, Vector1<Q>, AbsVector1<A, Q>> implements AbsVector.Row<AbsVector1<A, Q>, Q>
 {
     /** */
@@ -71,7 +71,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final double xInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsVector1<>(Vector1.of(xInUnit, unit), reference);
@@ -86,7 +86,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final Q x, final R reference)
     {
         return new AbsVector1<>(Vector1.of(x), reference);
@@ -100,7 +100,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final A absX)
     {
         Throw.whenNull(absX, "absX");
@@ -117,7 +117,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> of(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> of(
             final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsVector1<>(Vector1.of(dataInUnit, unit), reference);
@@ -133,7 +133,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
             final double xSi, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsVector1<>(Vector1.ofSi(xSi, displayUnit), reference);
@@ -149,7 +149,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
             final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsVector1<>(Vector1.ofSi(dataSi, displayUnit), reference);
@@ -164,7 +164,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final Q[] data, final R reference)
     {
         return new AbsVector1<>(Vector1.of(data), reference);
@@ -178,7 +178,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final A[] absData)
     {
         Throw.whenNull(absData, "absData");
@@ -195,7 +195,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final Vector1<Q> relativeVector, final R reference)
     {
         Throw.whenNull(relativeVector, "relativeVector");

@@ -1,6 +1,6 @@
 package org.djunits.vecmat.dn;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -19,7 +19,7 @@ import org.djutils.exceptions.Throw;
  * @param <A> the absolute quantity type
  * @param <Q> the corresponding relative quantity type
  */
-public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+public class AbsMatrixNxN<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
         extends AbsSquareMatrix<A, Q, AbsMatrixNxN<A, Q>, MatrixNxN<Q>>
 {
     /** */
@@ -84,7 +84,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not a square
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(
             final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(dataInUnit, unit), reference);
@@ -101,7 +101,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not a square
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
             final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.ofSi(dataSi, displayUnit), reference);
@@ -117,7 +117,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not a square
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final Q[] data, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(data), reference);
@@ -133,7 +133,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not a perfect square
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final A[] absData)
     {
         Throw.whenNull(absData, "absData");
@@ -155,7 +155,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the data object is not a square grid
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
             final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.ofSi(gridSi, displayUnit), reference);
@@ -173,7 +173,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the data object is not a square grid
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(
             final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(gridInUnit, unit), reference);
@@ -189,7 +189,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the data object is not a square grid
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final Q[][] grid, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(grid), reference);
@@ -205,7 +205,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not a perfect square
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final A[][] absGrid)
     {
         Throw.whenNull(absGrid, "absGrid");
@@ -222,7 +222,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(final MatrixNxN<Q> relativeMatrix, final R reference)
     {
         return new AbsMatrixNxN<>(relativeMatrix, reference);

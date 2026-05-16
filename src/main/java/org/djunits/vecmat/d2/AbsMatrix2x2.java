@@ -1,6 +1,6 @@
 package org.djunits.vecmat.d2;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -18,7 +18,7 @@ import org.djutils.exceptions.Throw;
  * @param <A> the absolute quantity type
  * @param <Q> the corresponding relative quantity type
  */
-public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+public class AbsMatrix2x2<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
         extends AbsSquareMatrix<A, Q, AbsMatrix2x2<A, Q>, Matrix2x2<Q>>
 {
     /** */
@@ -82,7 +82,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(
             final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsMatrix2x2<>(Matrix2x2.of(dataInUnit, unit), reference);
@@ -98,7 +98,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> ofSi(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> ofSi(
             final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrix2x2<>(Matrix2x2.ofSi(dataSi, displayUnit), reference);
@@ -113,7 +113,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(final Q[] data, final R reference)
     {
         return new AbsMatrix2x2<>(Matrix2x2.of(data), reference);
@@ -127,7 +127,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(final A[] absData)
     {
         Throw.whenNull(absData, "absData");
@@ -156,7 +156,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> ofSi(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> ofSi(
             final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrix2x2<>(Matrix2x2.ofSi(gridSi, displayUnit), reference);
@@ -173,7 +173,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(
             final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsMatrix2x2<>(Matrix2x2.of(gridInUnit, unit), reference);
@@ -188,7 +188,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(final Q[][] grid, final R reference)
     {
         return new AbsMatrix2x2<>(Matrix2x2.of(grid), reference);
@@ -202,7 +202,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(final A[][] absGrid)
     {
         Throw.whenNull(absGrid, "absData");
@@ -237,7 +237,7 @@ public class AbsMatrix2x2<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrix2x2<A, Q> of(final Matrix2x2<Q> relativeMatrix, final R reference)
     {
         return new AbsMatrix2x2<>(relativeMatrix, reference);

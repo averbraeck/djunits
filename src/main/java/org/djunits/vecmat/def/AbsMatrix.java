@@ -2,7 +2,7 @@ package org.djunits.vecmat.def;
 
 import org.djunits.formatter.MatrixFormat;
 import org.djunits.formatter.MatrixFormatter;
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -20,7 +20,7 @@ import org.djunits.unit.Unit;
  * @param <MQ> the relative matrix type
  * @param <MAT> the type of the transposed version of the absolute matrix
  */
-public abstract class AbsMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>, MA extends AbsMatrix<A, Q, MA, MQ, MAT>,
+public abstract class AbsMatrix<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>, MA extends AbsMatrix<A, Q, MA, MQ, MAT>,
         MQ extends Matrix<Q, MQ, ?, ?, ?>, MAT extends AbsMatrix<A, Q, MAT, ?, MA>> extends AbsTable<A, Q, MA, MQ, MAT>
 {
     /** */

@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 import org.djunits.formatter.VectorFormat;
 import org.djunits.formatter.VectorFormatter;
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -26,7 +26,7 @@ import org.djutils.exceptions.Throw;
  * @param <VQ> the relative vector or matrix type
  * @param <VAT> the type of the transposed version of the absolute vector
  */
-public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>, VA extends AbsVector<A, Q, VA, VQ, VAT>,
+public abstract class AbsVector<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>, VA extends AbsVector<A, Q, VA, VQ, VAT>,
         VQ extends Vector<Q, VQ, ?, ?, ?>, VAT extends AbsVector<A, Q, VAT, ?, VA>> extends AbsVectorMatrix<A, Q, VA, VQ, VAT>
         implements Iterable<A>
 {

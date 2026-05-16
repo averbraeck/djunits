@@ -2,7 +2,7 @@ package org.djunits.vecmat.def;
 
 import java.util.Objects;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -43,7 +43,7 @@ import org.djutils.exceptions.Throw;
  * @param <VMQ> the relative vector or matrix type
  * @param <VMAT> the type of the transposed version of the absolute vector or matrix
  */
-public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>,
+public abstract class AbsVectorMatrix<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>,
         VMA extends AbsVectorMatrix<A, Q, VMA, VMQ, VMAT>, VMQ extends VectorMatrix<Q, VMQ, ?, ?, ?>,
         VMAT extends AbsVectorMatrix<A, Q, VMAT, ?, VMA>> implements Value<VMA, Q>
 {

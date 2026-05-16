@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 
@@ -20,7 +20,7 @@ import org.djunits.quantity.def.Reference;
  * @param <MA> the absolute matrix type
  * @param <MQ> the relative matrix type
  */
-public abstract class AbsSquareMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>,
+public abstract class AbsSquareMatrix<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>,
         MA extends AbsSquareMatrix<A, Q, MA, MQ>, MQ extends SquareMatrix<Q, MQ, ?, ?>> extends AbsMatrix<A, Q, MA, MQ, MA>
 {
     /** */

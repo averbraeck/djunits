@@ -2,7 +2,7 @@ package org.djunits.vecmat.dn;
 
 import java.util.List;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -25,7 +25,7 @@ import org.djutils.exceptions.Throw;
  * @param <VQ> the relative vector or matrix type
  * @param <VAT> the type of the transposed version of the absolute vector
  */
-public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>,
+public abstract class AbsVectorN<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>,
         VA extends AbsVectorN<A, Q, VA, VQ, VAT>, VQ extends VectorN<Q, VQ, ?, ?, ?>, VAT extends AbsVectorN<A, Q, VAT, ?, VA>>
         extends AbsVector<A, Q, VA, VQ, VAT>
 {
@@ -52,7 +52,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
      */
-    public static class Col<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+    public static class Col<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
             extends AbsVectorN<A, Q, AbsVectorN.Col<A, Q>, VectorN.Col<Q>, AbsVectorN.Row<A, Q>>
             implements AbsVector.Col<AbsVectorN.Col<A, Q>, Q>
     {
@@ -93,7 +93,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final double[] dataInUnit, final Unit<?, Q> unit,
                         final R reference)
         {
@@ -110,7 +110,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit,
                         final R reference)
         {
@@ -127,7 +127,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final Q[] data, final R reference)
         {
             return new AbsVectorN.Col<>(VectorN.Col.of(data), reference);
@@ -141,7 +141,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final A[] absData)
         {
             Throw.whenNull(absData, "absData");
@@ -162,7 +162,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final List<Q> data, final R reference)
         {
             return new AbsVectorN.Col<>(VectorN.Col.of(data), reference);
@@ -176,7 +176,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final List<A> absData)
         {
             Throw.whenNull(absData, "absData");
@@ -195,7 +195,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> of(final VectorN.Col<Q> relativeVector, final R reference)
         {
             Throw.whenNull(relativeVector, "relativeVector");
@@ -213,7 +213,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
      * @param <A> the absolute quantity type
      * @param <Q> the corresponding relative quantity type
      */
-    public static class Row<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
+    public static class Row<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
             extends AbsVectorN<A, Q, AbsVectorN.Row<A, Q>, VectorN.Row<Q>, AbsVectorN.Col<A, Q>>
             implements AbsVector.Row<AbsVectorN.Row<A, Q>, Q>
     {
@@ -254,7 +254,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final double[] dataInUnit, final Unit<?, Q> unit,
                         final R reference)
         {
@@ -271,7 +271,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit,
                         final R reference)
         {
@@ -288,7 +288,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final Q[] data, final R reference)
         {
             return new AbsVectorN.Row<>(VectorN.Row.of(data), reference);
@@ -302,7 +302,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final A[] absData)
         {
             Throw.whenNull(absData, "absData");
@@ -323,7 +323,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final List<Q> data, final R reference)
         {
             return new AbsVectorN.Row<>(VectorN.Row.of(data), reference);
@@ -337,7 +337,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final List<A> absData)
         {
             Throw.whenNull(absData, "absData");
@@ -356,7 +356,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <Q> the quantity type
          * @param <R> the reference type
          */
-        public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> of(final VectorN.Row<Q> relativeVector, final R reference)
         {
             Throw.whenNull(relativeVector, "relativeVector");
