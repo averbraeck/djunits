@@ -20,9 +20,12 @@ public class SIPrefix
     /** The prefix name such as "mega" or "deca". */
     private final String prefixName;
 
+    /** The exponent that the SI prefix represents, such as 6 for mega. */
+    private final int exponent;
+
     /** The factor that the SI prefix represents, such as 1.0E6 for mega. */
     private final double factor;
-    
+
     /** The type of SI prefix. */
     private final PrefixType type;
 
@@ -30,21 +33,21 @@ public class SIPrefix
      * Construct an SI prefix.
      * @param defaultTextualPrefix the prefix abbreviation, such as "M" for mega and "da" for deca
      * @param prefixName the prefix name such as "mega" or "deca"
-     * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
+     * @param exponent the exponent that the SI prefix represents, such as 6 for mega
      * @param defaultDisplayPrefix "\u03BC" for micro
      * @param type the prefix type, e.g., KILO
      */
-    public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor,
+    public SIPrefix(final String defaultTextualPrefix, final String prefixName, final int exponent,
             final String defaultDisplayPrefix, final PrefixType type)
     {
         Throw.whenNull(defaultTextualPrefix, "SIPrefix.defaultTextualPrefix cannot be null");
         Throw.whenNull(prefixName, "SIPrefix.prefixName cannot be null");
         Throw.whenNull(defaultDisplayPrefix, "SIPrefix.defaultDisplayPrefix cannot be null");
         Throw.whenNull(type, "SIPrefix.type cannot be null");
-        Throw.when(factor == 0, IllegalArgumentException.class, "SIPrefix.factor cannot be 0");
         this.defaultTextualPrefix = defaultTextualPrefix;
         this.prefixName = prefixName;
-        this.factor = factor;
+        this.exponent = exponent;
+        this.factor = Math.pow(10.0, exponent);
         this.defaultDisplayPrefix = defaultDisplayPrefix;
         this.type = type;
     }
@@ -53,12 +56,12 @@ public class SIPrefix
      * Construct an SI prefix with the defaultDisplayPrefix equal to the defaultTextualPrefix.
      * @param defaultTextualPrefix the prefix abbreviation, such as "M" for mega and "da" for deca
      * @param prefixName the prefix name such as "mega" or "deca"
-     * @param factor the factor that the SI prefix represents, such as 1.0E6 for mega
+     * @param exponent the exponent that the SI prefix represents, such as 6 for mega
      * @param type the prefix type, e.g., KILO
      */
-    public SIPrefix(final String defaultTextualPrefix, final String prefixName, final double factor, final PrefixType type)
+    public SIPrefix(final String defaultTextualPrefix, final String prefixName, final int exponent, final PrefixType type)
     {
-        this(defaultTextualPrefix, prefixName, factor, defaultTextualPrefix, type);
+        this(defaultTextualPrefix, prefixName, exponent, defaultTextualPrefix, type);
     }
 
     /**
@@ -77,6 +80,15 @@ public class SIPrefix
     public String getPrefixName()
     {
         return this.prefixName;
+    }
+
+    /**
+     * Retrieve the exponent.
+     * @return the exponent
+     */
+    public int getExponent()
+    {
+        return this.exponent;
     }
 
     /**
@@ -109,8 +121,9 @@ public class SIPrefix
     @Override
     public String toString()
     {
-        return "SIPrefix [defaultTextualPrefix=" + this.defaultTextualPrefix + ", defaultDisplayPrefix="
-                + this.defaultDisplayPrefix + ", prefixName=" + this.prefixName + ", factor=" + this.factor + "]";
+        return "SIPrefix [type=" + this.type + ", defaultTextualPrefix=" + this.defaultTextualPrefix + ", defaultDisplayPrefix="
+                + this.defaultDisplayPrefix + ", prefixName=" + this.prefixName + ", exponent=" + this.exponent + ", factor="
+                + this.factor + "]";
     }
 
 }
