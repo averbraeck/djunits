@@ -10,10 +10,11 @@ import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
+import org.djutils.exceptions.Throw;
 
 /**
  * Temperature is the absolute equivalent of Temperature, and represents a true temperature rather than a temperature
- * difference.
+ * difference. The Temperature class checks that it does not store values below 0 K.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -26,14 +27,30 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
     private static final long serialVersionUID = 600L;
 
     /**
+     * Check that the absolute temperature is not below 0 K.
+     * @param temperature the temperature to check
+     * @param reference the reference to which the temperature is relative
+     * @return the temperature when it is at or above absolute zero
+     * @throws IllegalArgumentException when temperature is below 0 K
+     */
+    private static TemperatureDifference checkTemperature(final TemperatureDifference temperature,
+            final Temperature.Reference reference) throws IllegalArgumentException
+    {
+        Throw.when(temperature.si() + reference.getOffset().si() < 0, IllegalArgumentException.class,
+                "Temperature %s is below absolute zero", temperature.toString());
+        return temperature;
+    }
+
+    /**
      * Instantiate a Temperature quantity with a unit and a reference point.
      * @param valueInUnit the temperature value, expressed in a temperature unit
      * @param unit the temperature unit in which the value is expressed, relative to the reference point
      * @param reference the reference point of this absolute temperature
+     * @throws IllegalArgumentException when temperature is below 0 K
      */
     public Temperature(final double valueInUnit, final Temperature.Unit unit, final Reference reference)
     {
-        super(new TemperatureDifference(valueInUnit, unit), reference);
+        super(checkTemperature(new TemperatureDifference(valueInUnit, unit), reference), reference);
     }
 
     /**
@@ -75,7 +92,7 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
      */
     public Temperature(final TemperatureDifference temperature, final Reference reference)
     {
-        super(temperature, reference);
+        super(checkTemperature(temperature, reference), reference);
     }
 
     /**
