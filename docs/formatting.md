@@ -43,9 +43,9 @@ The method `setVariableLength()` formats the number in a left-aligned manner wit
 | 12.3                 | `[12.3 m]` |
 | 12.34567             | `[12.346 m]` |
 | 12345.67             | `[12346 m]` |
-| 12345678.9           | `[1.2346E7 m]` |
-| 123456789123         | `[1.2346E11 m]` |
- 
+| 12345678.9           | `[1.2346E+07 m]` |
+| 123456789123         | `[1.2346E+11 m]` |
+
 - `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. Note that the integer parameter has to be negative. When the threshold is, e.g., -3, numbers with an absolute value **smaller** than 10^-3 are formatted using scientific notation. Numbers that are larger use floating point notation, where the number of significant digits does not count the leading zeros. Suppose `maxSigDigits = 5` and `sciThreshold = -3`:
 
 | Number               | Formatted |
@@ -54,7 +54,7 @@ The method `setVariableLength()` formats the number in a left-aligned manner wit
 | 0.1234567            | `[0.12346 m]` |
 | 0.01234567           | `[0.012346 m]` |
 | 0.001234567          | `[0.0012346 m]` |
-| 0.0001234567         | `[1.2346E-4 m]` |
+| 0.0001234567         | `[1.2346E-04 m]` | 
 
 - The grouping separator can be turned on or off with `setGroupingSeparator(boolean)`. By default, grouping is set to `false`.
 
