@@ -36,7 +36,7 @@ abstract class FormatContext implements Cloneable
     boolean groupingSeparator = false;
 
     /** Maximum number of significant digits to show for variable length format. */
-    int maxSigDigits = 6;
+    int maxSigDigits = 10;
 
     /** Scientific threshold for scientific notation (has to be negative); only used for variable length format. */
     int sciThreshold = -3;
