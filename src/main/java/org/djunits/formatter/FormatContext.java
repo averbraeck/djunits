@@ -30,7 +30,7 @@ abstract class FormatContext implements Cloneable
     int decimals = 3;
 
     /** Fixed width of the numerical output. */
-    int width = 10;
+    int width = 12;
 
     /** Use grouping separator (e.g., thousands) or not. */
     boolean groupingSeparator = false;

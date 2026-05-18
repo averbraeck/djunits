@@ -173,23 +173,6 @@ public abstract class Formatter<C extends FormatContext>
      */
     String formatVariableLength(final double val)
     {
-        // BigDecimal bd = BigDecimal.valueOf(val).stripTrailingZeros();
-        // int left = bd.precision() - bd.scale(); // # digits left of decimal point
-        // DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance(Locale.getDefault());
-        // DecimalFormat plain = this.ctx.groupingSeparator ? new DecimalFormat("#,##0.############################", sym)
-        // : new DecimalFormat("###0.############################", sym);
-        // DecimalFormat sci = new DecimalFormat("0.################E0", sym);
-        //
-        // // Heuristic similar to %g
-        // if (left > 10 || left < -6)
-        // {
-        // return sci.format(bd);
-        // }
-        // else
-        // {
-        // return plain.format(bd);
-        // }
-
         if (val == 0.0 || val == -0.0)
             return "0";
         if (Double.isNaN(val))
@@ -270,7 +253,7 @@ public abstract class Formatter<C extends FormatContext>
         String gs = this.ctx.groupingSeparator ? "%,." : "%.";
         String mantFmt = gs + this.ctx.decimals + "f";
         String mant = String.format(mantFmt, mantissa);
-        String result = mant + (this.ctx.upperE ? "E" : "e") + String.format("%+d", engExp);
+        String result = mant + (this.ctx.upperE ? "E" : "e") + String.format("%+03d", engExp);
         return pad(result, this.ctx.width);
     }
 
