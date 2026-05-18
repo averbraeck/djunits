@@ -220,7 +220,7 @@ Helper methods for the formatting are:
 
 - `setWidth(width)` sets the total fixed width of the output. If the output does not fit the width, it can be overruled. The default value is `10`.
 - `setDecimals(decimals)` sets the exact number of decimals for the output. The default value is `3`.
-- `setMaxSigDigits(digits)` sets the maximum number of significant digits for the variable length format, to avoid trailing `.0001` or `.9999`. The default value is `5`.
+- `setMaxSigDigits(digits)` sets the maximum number of significant digits for the variable length format, to avoid trailing `.0001` or `.9999`. The default value is `6`.
 - `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. The default value is `-3`.
 - `setGroupingSeparator(boolean)` sets the grouping separator (e.g., thousands separator) on or off. The default value is `false`.
 - `setUpperE(boolean)` sets the exponent symbol to `E` if `true` and to `e` if `false`. 
