@@ -38,23 +38,27 @@ The method `setVariableLength()` formats the number in a left-aligned manner wit
 
 - `setMaxSigDigits(int)` indicates the maximum number of significant digits. When the maximum number of significant digits is 5, numbers are formatted in such a way that at most 5 significant digits are used:
 
-| Number               | Formatted |
-| -------------------- | --------- |
-| 12.3                 | `[12.3 m]` |
-| 12.34567             | `[12.346 m]` |
-| 12345.67             | `[12346 m]` |
-| 12345678.9           | `[1.2346E+07 m]` |
-| 123456789123         | `[1.2346E+11 m]` |
+```
+| Number               | Formatted      |
+| -------------------- | -------------- |
+| 12.3                 | [12.3 m]       |
+| 12.34567             | [12.346 m]     |
+| 12345.67             | [12346 m]      |
+| 12345678.9           | [1.2346E+07 m] |
+| 123456789123         | [1.2346E+11 m] |
+```
 
 - `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. Note that the integer parameter has to be negative. When the threshold is, e.g., -3, numbers with an absolute value **smaller** than 10^-3 are formatted using scientific notation. Numbers that are larger use floating point notation, where the number of significant digits does not count the leading zeros. Suppose `maxSigDigits = 5` and `sciThreshold = -3`:
 
-| Number               | Formatted |
-| -------------------- | --------- |
-| 0.123                | `[0.123 m]` |
-| 0.1234567            | `[0.12346 m]` |
-| 0.01234567           | `[0.012346 m]` |
-| 0.001234567          | `[0.0012346 m]` |
-| 0.0001234567         | `[1.2346E-04 m]` | 
+```
+| Number               | Formatted      |
+| -------------------- | -------------- |
+| 0.123                | [0.123 m]      |
+| 0.1234567            | [0.12346 m]    |
+| 0.01234567           | [0.012346 m]   |
+| 0.001234567          | [0.0012346 m]  |
+| 0.0001234567         | [1.2346E-04 m] | 
+```
 
 - The grouping separator can be turned on or off with `setGroupingSeparator(boolean)`. By default, grouping is set to `false`.
 
@@ -69,96 +73,107 @@ The method `setFixedFloat()` formats the number using a fixed number of position
 
 Of course, numbers have to be in the same order of magnitude to make this format viable. Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.Df` without a grouping separator, and `%,D.Wf` with the grouping separator. Note that when a small number (e.g., `0.00012345`) is formatted with, e.g. a width of 10 and 3 decimals, it will return `0.000`. Suppose `width = 10` and `decimals = 3`:
 
-| Number               | Formatted       |
-| -------------------- | --------------- |
-| 12.3                 | `[    12.300 m]` |
-| 12.34567             | `[    12.346 m]` |
-| 12345.67             | `[ 12345.670 m]` |
-| 12345678.9           | `[12345678.900 m]` |
-| 123456789123         | `[123456789123.000 m]` |
-| 0.123                | `[     0.123 m]` |
-| 0.1234567            | `[     0.123 m]` |
-| 0.01234567           | `[     0.012 m]` |
-| 0.001234567          | `[     0.001 m]` |
-| 0.0001234567         | `[     0.000 m]` |
-
+```
+| Number               | Formatted            |
+| -------------------- | -------------------- |
+| 12.3                 | [    12.300 m]       |
+| 12.34567             | [    12.346 m]       |
+| 12345.67             | [ 12345.670 m]       |
+| 12345678.9           | [12345678.900 m]     |
+| 123456789123         | [123456789123.000 m] |
+| 0.123                | [     0.123 m]       |
+| 0.1234567            | [     0.123 m]       |
+| 0.01234567           | [     0.012 m]       |
+| 0.001234567          | [     0.001 m]       |
+| 0.0001234567         | [     0.000 m]       |
+```
 
 `setScientific()` formats the number using scientific formatting in the form of `x.yyyyE+zz` or `x.yyyyE-zz`. This is an ideal format for numbers with varying magnitudes. For matrices and column vectors, the numbers (and decimal points) will be aligned. The number of decimals can be set with the `setDecimals()`. The total width is set with `setWidth()`, which can lead to extra spacing on the left. There is a choice for an `E` or `e` symbol using the method `setUpperE(boolean)`. Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.DE` with `upperE` set to true, and `%W.De` with `upperE` set to false.
 
-| Number               | Formatted       |
-| -------------------- | --------------- |
-| 12.3                 | `[ 1.230E+01 m]` |
-| 12.34567             | `[ 1.235E+01 m]` |
-| 12345.67             | `[ 1.235E+04 m]` |
-| 12345678.9           | `[ 1.235E+07 m]` |
-| 123456789123         | `[ 1.235E+11 m]` |
-| 0.123                | `[ 1.230E-01 m]` |
-| 0.1234567            | `[ 1.235E-01 m]` |
-| 0.01234567           | `[ 1.235E-02 m]` |
-| 0.001234567          | `[ 1.235E-03 m]` |
-| 0.0001234567         | `[ 1.235E-04 m]` |
+```
+| Number               | Formatted      |
+| -------------------- | -------------- |
+| 12.3                 | [ 1.230E+01 m] |
+| 12.34567             | [ 1.235E+01 m] |
+| 12345.67             | [ 1.235E+04 m] |
+| 12345678.9           | [ 1.235E+07 m] |
+| 123456789123         | [ 1.235E+11 m] |
+| 0.123                | [ 1.230E-01 m] |
+| 0.1234567            | [ 1.235E-01 m] |
+| 0.01234567           | [ 1.235E-02 m] |
+| 0.001234567          | [ 1.235E-03 m] |
+| 0.0001234567         | [ 1.235E-04 m] |
+```
 
 `setEngineering()` formats the number using engineering formatting in the form of `x.yyyyE+zz` or `x.yyyyE-zz`, where the value of `zz` is always a multiple of three. You can therefore easily interpret the number in 'micro', 'milli', 'kilo', 'mega' terms. This is an ideal format for numbers with varying magnitudes that have to be interpreted using SI-prefixes. For matrices and column vectors, the numbers (and decimal points) will be aligned. The number of decimals can be set with the `setDecimals()`. The total width is set with `setWidth()`, which can lead to extra spacing on the left. There is a choice for an `E` or `e` symbol using the method `setUpperE(boolean)`. Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.DE` with `upperE` set to true, and `%W.De` with `upperE` set to false.
 
-| Number               | Formatted       |
-| -------------------- | --------------- |
-| 12.3                 | `[ 12.300E+0 m]` |
-| 12.34567             | `[ 12.346E+0 m]` |
-| 12345.67             | `[ 12.346E+3 m]` |
-| 12345678.9           | `[ 12.346E+6 m]` |
-| 123456789123         | `[123.457E+9 m]` |
-| 0.123                | `[  0.123E+0 m]` |
-| 0.1234567            | `[  0.123E+0 m]` |
-| 0.01234567           | `[  0.012E+0 m]` |
-| 0.001234567          | `[  1.235E-3 m]` |
-| 0.0001234567         | `[  0.123E-3 m]` |
+```
+| Number               | Formatted      |
+| -------------------- | -------------- |
+| 12.3                 | [ 12.300E+0 m] |
+| 12.34567             | [ 12.346E+0 m] |
+| 12345.67             | [ 12.346E+3 m] |
+| 12345678.9           | [ 12.346E+6 m] |
+| 123456789123         | [123.457E+9 m] |
+| 0.123                | [  0.123E+0 m] |
+| 0.1234567            | [  0.123E+0 m] |
+| 0.01234567           | [  0.012E+0 m] |
+| 0.001234567          | [  1.235E-3 m] |
+| 0.0001234567         | [  0.123E-3 m] |
+```
 
 `setFixedWithSciFallback()` formats the number using `setFixedFloat()` if it fits the set width and will use `setScientific()` when the resulting string does not fit the set width. This will enable aligned columns for vectors or matrices, but uses precision when space allows. Widths and decimals that can store all numbers are w.d = 9.1, 10.2, 11.3 etc. For width 9 and 1 decimal, the largest number in terms of size is `-1.2E+300`.
 
-| Number               | Formatted       |
-| -------------------- | --------------- |
-| 12.3                 | `[    12.300 m]` |
-| 12.34567             | `[    12.346 m]` |
-| 12345.67             | `[ 12345.670 m]` |
-| 12345678.9           | `[ 1.235E+07 m]` |
-| 123456789123         | `[ 1.235E+11 m]` |
-| 0.123                | `[     0.123 m]` |
-| 0.1234567            | `[     0.123 m]` |
-| 0.01234567           | `[     0.012 m]` |
-| 0.001234567          | `[     0.001 m]` |
-| 0.0001234567         | `[ 1.235E-04 m]` |
+```
+| Number               | Formatted      |
+| -------------------- | -------------- |
+| 12.3                 | [    12.300 m] |
+| 12.34567             | [    12.346 m] |
+| 12345.67             | [ 12345.670 m] |
+| 12345678.9           | [ 1.235E+07 m] |
+| 123456789123         | [ 1.235E+11 m] |
+| 0.123                | [     0.123 m] |
+| 0.1234567            | [     0.123 m] |
+| 0.01234567           | [     0.012 m] |
+| 0.001234567          | [     0.001 m] |
+| 0.0001234567         | [ 1.235E-04 m] |
+```
 
 
 `setFixedWithEngFallback()` formats the number using `setFixedFloat()` if it fits the set width and will use `setEngineering()` when the resulting string does not fit the set width. This will enable aligned columns for vectors or matrices, but uses precision when space allows. Widths and decimals that can store all numbers are w.d = 9.1, 10.2, 11.3 etc. For width 9 and 1 decimal, the largest number in terms of size is `-1.2E+300`.
 
-| Number               | Formatted       |
-| -------------------- | --------------- |
-| 12.3                 | `[    12.300 m]` |
-| 12.34567             | `[    12.346 m]` |
-| 12345.67             | `[ 12345.670 m]` |
-| 12345678.9           | `[ 12.346E+6 m]` |
-| 123456789123         | `[123.457E+9 m]` |
-| 0.123                | `[     0.123 m]` |
-| 0.1234567            | `[     0.123 m]` |
-| 0.01234567           | `[     0.012 m]` |
-| 0.001234567          | `[     0.001 m]` |
-| 0.0001234567         | `[  0.123E-3 m]` |
+```
+| Number               | Formatted      |
+| -------------------- | -------------- |
+| 12.3                 | [    12.300 m] |
+| 12.34567             | [    12.346 m] |
+| 12345.67             | [ 12345.670 m] |
+| 12345678.9           | [ 12.346E+6 m] |
+| 123456789123         | [123.457E+9 m] |
+| 0.123                | [     0.123 m] |
+| 0.1234567            | [     0.123 m] |
+| 0.01234567           | [     0.012 m] |
+| 0.001234567          | [     0.001 m] |
+| 0.0001234567         | [  0.123E-3 m] |
+```
 
 
 `setFormatString(String)` allows for a user-defined format string for formatting numbers. It will ignore any settings of `setWidth()`, `setDecimals()`, `setGroupingSeparator()`, or `setUpperE()`. Suppose you want a left-aligned 12-wide, 6 significant digit format that falls back to scientific notation according to the Java format rules, you would specify: `setFormatString("%-12.6G")` (note that the .6 means 6 **significant** digits in the `%g` format, whereas it denotes the number of decimals in the `%f` format in Java). The formatting would look as follows:
 
-| Number               | Formatted       |
-| -------------------- | --------------- |
-| 12.3                 | `[12.3000      m]` |
-| 12.34567             | `[12.3457      m]` |
-| 12345.67             | `[12345.7      m]` |
-| 12345678.9           | `[1.23457E+07  m]` |
-| 123456789123         | `[1.23457E+11  m]` |
-| 0.123                | `[0.123000     m]` |
-| 0.1234567            | `[0.123457     m]` |
-| 0.01234567           | `[0.0123457    m]` |
-| 0.001234567          | `[0.00123457   m]` |
-| 0.0001234567         | `[0.000123457  m]` |
+```
+| Number               | Formatted        |
+| -------------------- | ---------------- |
+| 12.3                 | [12.3000      m] |
+| 12.34567             | [12.3457      m] |
+| 12345.67             | [12345.7      m] |
+| 12345678.9           | [1.23457E+07  m] |
+| 123456789123         | [1.23457E+11  m] |
+| 0.123                | [0.123000     m] |
+| 0.1234567            | [0.123457     m] |
+| 0.01234567           | [0.0123457    m] |
+| 0.001234567          | [0.00123457   m] |
+| 0.0001234567         | [0.000123457  m] |
+```
 
 Helper methods for the formatting are:
 
