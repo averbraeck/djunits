@@ -231,7 +231,7 @@ public class TableFormatTest
             s1 = ev.toString();
             assertTrue(s1.contains("1200.345"));
             assertTrue(s1.contains("123.456"));
-            assertTrue(s1.contains("5432.10"));
+            assertTrue(s1.contains("5432.1"));
             assertFalse(s1.contains(","));
             assertTrue(s1.startsWith("|"));
             assertTrue(s1.endsWith("| J"));

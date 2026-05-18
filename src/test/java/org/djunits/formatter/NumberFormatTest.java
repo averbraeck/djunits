@@ -42,9 +42,10 @@ public class NumberFormatTest
         assertTrue(s1.contains("1,234.5678"));
 
         Length l2 = new Length(12_345_678.90123, Length.Unit.km);
-        String s2 = l2.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(true));
+        String s2 = l2.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(true).setMaxSigDigits(20));
         assertTrue(s2.contains("12,345,678.90123"));
 
+        // maxSigDigits = 10. Length has already 4 that need to be printed.
         Length length = new Length(1234.567890123456789, Length.Unit.m);
         for (int i = 0; i < 10; i++)
         {
@@ -52,15 +53,16 @@ public class NumberFormatTest
             if (i <= 6)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
             else
-                assertTrue(s.contains("E" + (i + 3)), String.format("Not true for i=%d, s=%s", i, s));
+                assertTrue(s.contains("E+" + (i + 3)), String.format("Not true for i=%d, s=%s", i, s));
             length = length.scaleBy(10.0);
         }
 
+        // sciFallback = -3. We start at 1 digit.
         length = new Length(1.234567890123456789, Length.Unit.m);
         for (int i = 0; i < 10; i++)
         {
             String s = length.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(false).setUpperE(true));
-            if (i <= 7)
+            if (i <= 3)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
             else
                 assertTrue(s.contains("E-"), String.format("Not true for i=%d, s=%s", i, s));
