@@ -392,7 +392,7 @@ public class AbsQuantityTest
     public void testDefaultToString()
     {
         Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH);
-        assertEquals("    12.346 deg", d.format(QuantityFormat.instance().setFixedWithSciFallback().setTextual()));
+        assertEquals("      12.346 deg", d.format(QuantityFormat.instance().setFixedWithSciFallback().setTextual()));
     }
 
     /**
@@ -403,8 +403,8 @@ public class AbsQuantityTest
     public void testToStringWithTargetUnit()
     {
         Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST);
-        assertEquals("     3.142 rad", d.format(QuantityFormat.instance().setTextual().setFixedWithSciFallback()));
-        assertEquals("   180.000 deg",
+        assertEquals("       3.142 rad", d.format(QuantityFormat.instance().setTextual().setFixedWithSciFallback()));
+        assertEquals("     180.000 deg",
                 d.format(QuantityFormat.instance().setDisplayUnit(Angle.Unit.deg).setTextual().setFixedWithSciFallback()));
 
         Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST);
@@ -451,11 +451,11 @@ public class AbsQuantityTest
             Position pos = new Position(20400.0, Length.Unit.m, pref);
             String s1 = pos
                     .format(QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
-            assertEquals("    20.400 km", s1);
+            assertEquals("      20.400 km", s1);
 
             String s2 = pos.format(QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3)
                     .setTextual().setPrintReference().setReferencePrefix(" (").setReferencePostfix(")"));
-            assertEquals("    20.400 km (TEST)", s2);
+            assertEquals("      20.400 km (TEST)", s2);
         }
         finally
         {
@@ -475,7 +475,7 @@ public class AbsQuantityTest
         {
             Position pos = new Position(20400.0, Length.Unit.m, pref);
             String s = pos.format(QuantityFormat.instance().setFixedWithSciFallback().setLocale(Locale.GERMANY));
-            assertEquals(" 20400,000 m", s);
+            assertEquals("   20400,000 m", s);
         }
         finally
         {

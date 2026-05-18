@@ -100,23 +100,23 @@ public class NumberFormatTest
     {
         Length l = new Length(1234.0, Length.Unit.mi);
         String s1 = l.format(QuantityFormat.instance().setEngineering().setDecimals(1).setUpperE(false));
-        assertTrue(s1.contains("e+3"));
+        assertTrue(s1.contains("e+03"));
         String s2 = l.format(QuantityFormat.instance().setEngineering().setDecimals(1).setUpperE(true));
-        assertTrue(s2.contains("E+3"));
+        assertTrue(s2.contains("E+03"));
 
         Length l5 = new Length(12345.6789, Length.Unit.mi);
         String s5 = l5.format(QuantityFormat.instance().setEngineering().setDecimals(2).setUpperE(true));
-        assertTrue(s5.contains("E+3"));
+        assertTrue(s5.contains("E+03"));
         assertTrue(s5.contains("12.35"));
 
         Length l6 = new Length(123456.7891, Length.Unit.mi);
         String s6 = l6.format(QuantityFormat.instance().setEngineering().setDecimals(2).setUpperE(true));
-        assertTrue(s6.contains("E+3"));
+        assertTrue(s6.contains("E+03"));
         assertTrue(s6.contains("123.46"));
 
         Length l7 = new Length(1234567.8912, Length.Unit.mi);
         String s7 = l7.format(QuantityFormat.instance().setEngineering().setDecimals(2).setUpperE(true));
-        assertTrue(s7.contains("E+6"));
+        assertTrue(s7.contains("E+06"));
         assertTrue(s7.contains("1.23"));
     }
 
@@ -196,9 +196,9 @@ public class NumberFormatTest
             else
             {
                 if (i < 6)
-                    assertTrue(s.contains("E+6"), String.format("Not true for i=%d, s=%s", i, s));
+                    assertTrue(s.contains("E+06"), String.format("Not true for i=%d, s=%s", i, s));
                 else if (i < 9)
-                    assertTrue(s.contains("E+9"), String.format("Not true for i=%d, s=%s", i, s));
+                    assertTrue(s.contains("E+09"), String.format("Not true for i=%d, s=%s", i, s));
                 else
                     assertTrue(s.contains("E+12"), String.format("Not true for i=%d, s=%s", i, s));
             }

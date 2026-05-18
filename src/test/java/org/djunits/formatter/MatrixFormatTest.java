@@ -176,14 +176,14 @@ public class MatrixFormatTest
                 AbsMatrix1x1.of(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
 
         String s1 = energy.format(MatrixFormat.instance().setSiUnits().setFirstRowEnd(" |"));
-        assertEquals("|   1234.500 | kgm2/s2", s1);
+        assertEquals("|     1234.500 | kgm2/s2", s1);
 
         String s2C = temp.format(MatrixFormat.instance().setSiUnits().setFirstRowEnd(" |"));
-        assertEquals("|     20.000 | K", s2C);
+        assertEquals("|       20.000 | K", s2C);
 
         String s3C = temp.format(MatrixFormat.instance().setSiUnits().setFirstRowEnd(" |").setPrintReference()
                 .setReferencePrefix(" (").setReferencePostfix(")"));
-        assertEquals("|     20.000 | K (CELSIUS)", s3C);
+        assertEquals("|       20.000 | K (CELSIUS)", s3C);
     }
 
     /**
