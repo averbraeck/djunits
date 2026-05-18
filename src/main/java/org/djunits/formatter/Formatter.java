@@ -1,6 +1,8 @@
 package org.djunits.formatter;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -171,22 +173,56 @@ public abstract class Formatter<C extends FormatContext>
      */
     String formatVariableLength(final double val)
     {
-        BigDecimal bd = BigDecimal.valueOf(val).stripTrailingZeros();
-        int left = bd.precision() - bd.scale(); // # digits left of decimal point
-        DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance(Locale.getDefault());
-        DecimalFormat plain = this.ctx.groupingSeparator ? new DecimalFormat("#,##0.############################", sym)
-                : new DecimalFormat("###0.############################", sym);
-        DecimalFormat sci = new DecimalFormat("0.################E0", sym);
+        // BigDecimal bd = BigDecimal.valueOf(val).stripTrailingZeros();
+        // int left = bd.precision() - bd.scale(); // # digits left of decimal point
+        // DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance(Locale.getDefault());
+        // DecimalFormat plain = this.ctx.groupingSeparator ? new DecimalFormat("#,##0.############################", sym)
+        // : new DecimalFormat("###0.############################", sym);
+        // DecimalFormat sci = new DecimalFormat("0.################E0", sym);
+        //
+        // // Heuristic similar to %g
+        // if (left > 10 || left < -6)
+        // {
+        // return sci.format(bd);
+        // }
+        // else
+        // {
+        // return plain.format(bd);
+        // }
 
-        // Heuristic similar to %g
-        if (left > 10 || left < -6)
-        {
-            return sci.format(bd);
-        }
-        else
-        {
-            return plain.format(bd);
-        }
+        if (val == 0.0 || val == -0.0)
+            return "0";
+        if (Double.isNaN(val))
+            return "NaN";
+        if (Double.isInfinite(val))
+            return val > 0 ? "+Inf" : "-Inf";
+
+        double abs = Math.abs(val);
+        int exponent = (int) Math.floor(Math.log10(abs));
+
+        // Step 1: round to significant digits
+        BigDecimal bd = BigDecimal.valueOf(val).round(new MathContext(this.ctx.maxSigDigits, RoundingMode.HALF_UP));
+
+        // Step 2: decide format
+        boolean useScientific = exponent >= this.ctx.maxSigDigits || exponent < this.ctx.sciThreshold;
+
+        // Step 3. Locate-dependent formatting that can use a grouping separator
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+        DecimalFormat df = new DecimalFormat();
+        df.setDecimalFormatSymbols(symbols);
+        df.setGroupingUsed(this.ctx.groupingSeparator);
+        df.setMaximumFractionDigits(340); // unlimited, no re-rounding!
+        df.setMinimumFractionDigits(0);
+        df.setMinimumIntegerDigits(1);
+
+        // Step 4: format
+        BigDecimal mantissa = bd.movePointLeft(exponent).round(new MathContext(this.ctx.maxSigDigits, RoundingMode.HALF_UP))
+                .stripTrailingZeros();
+        String mantissaStr = df.format(mantissa);
+        if (!useScientific)
+            return df.format(bd);
+        String expStr = String.format("%+03d", exponent);
+        return mantissaStr + (this.ctx.upperE ? "E" : "e") + expStr;
     }
 
     /**

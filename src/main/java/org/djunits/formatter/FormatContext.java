@@ -35,6 +35,12 @@ abstract class FormatContext implements Cloneable
     /** Use grouping separator (e.g., thousands) or not. */
     boolean groupingSeparator = false;
 
+    /** Maximum number of significant digits to show for variable length format. */
+    int maxSigDigits = 6;
+
+    /** Scientific threshold for scientific notation (has to be negative); only used for variable length format. */
+    int sciThreshold = -3;
+
     /** Number format string. */
     String formatString = null;
 

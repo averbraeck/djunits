@@ -163,6 +163,29 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
     }
 
     /**
+     * Set the maximum number of significant digits for the variable length format.
+     * @param digits the maximum number of significant digits
+     * @return the the object instance for fluent design
+     */
+    public F setMaxSigDigits(final int digits)
+    {
+        this.ctx.maxSigDigits = digits;
+        return self();
+    }
+
+    /**
+     * Set the fraction threshold for scientific notation. The threshold has to be a negative number, denoting the 10th power
+     * below which scientific notation is used. This setting is only used for the variable length format.
+     * @param threshold the fraction threshold for scientific notation (negative number)
+     * @return the the object instance for fluent design
+     */
+    public F setSciThreshold(final int threshold)
+    {
+        this.ctx.sciThreshold = threshold;
+        return self();
+    }
+
+    /**
      * Set the format string to use.
      * @param formatString the format string to use
      * @return the the object instance for fluent design
