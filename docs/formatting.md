@@ -57,7 +57,7 @@ The method `setVariableLength()` formats the number in a left-aligned manner wit
 | 0.1234567            | [0.12346 m]    |
 | 0.01234567           | [0.012346 m]   |
 | 0.001234567          | [0.0012346 m]  |
-| 0.0001234567         | [1.2346E-04 m] | 
+| 0.0001234567         | [1.2346E-04 m] |
 ```
 
 - `setGroupingSeparator(boolean)` turns the grouping separator on or off. By default, grouping is set to `false`.
@@ -68,25 +68,25 @@ The method `setVariableLength()` formats the number in a left-aligned manner wit
 
 The method `setFixedFloat()` formats the number using a fixed number of positions and a fixed number of decimals. This is an ideal format for matrices and column vectors, since the numbers (and decimal points) will be aligned. The following methods control the output:
 
-- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `10`.
+- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `12`.
 - `setDecimals(int)` sets the number of decimals. The default number of decimals is `3`.
 - `setGroupingSeparator(boolean)` turns the grouping separator on or off. By default, grouping is set to `false`.
 
-Of course, numbers have to be in the same order of magnitude to make this format viable. Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.Df` without a grouping separator, and `%,D.Wf` with the grouping separator. Suppose `width = 10` and `decimals = 3`:
+Of course, numbers have to be in the same order of magnitude to make this format viable. Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.Df` without a grouping separator, and `%,D.Wf` with the grouping separator. Suppose `width = 12` and `decimals = 3`:
 
 ```
 | Number               | Formatted            |
 | -------------------- | -------------------- |
-| 12.3                 | [    12.300 m]       |
-| 12.34567             | [    12.346 m]       |
-| 12345.67             | [ 12345.670 m]       |
+| 12.3                 | [      12.300 m]     |
+| 12.34567             | [      12.346 m]     |
+| 12345.67             | [   12345.670 m]     |
 | 12345678.9           | [12345678.900 m]     |
 | 123456789123         | [123456789123.000 m] |
-| 0.123                | [     0.123 m]       |
-| 0.1234567            | [     0.123 m]       |
-| 0.01234567           | [     0.012 m]       |
-| 0.001234567          | [     0.001 m]       |
-| 0.0001234567         | [     0.000 m]       |
+| 0.123                | [       0.123 m]     |
+| 0.1234567            | [       0.123 m]     |
+| 0.01234567           | [       0.012 m]     |
+| 0.001234567          | [       0.001 m]     |
+| 0.0001234567         | [       0.000 m]     |
 ```
 
 > **Note** that when a small number (e.g., `0.00012345`) is formatted with, e.g. a width of 10 and 3 decimals, it will return `0.000`. See the example table above.
@@ -98,26 +98,27 @@ Of course, numbers have to be in the same order of magnitude to make this format
 
 `setScientific()` formats the number using scientific formatting in the form of `x.yyyyE+zz` or `x.yyyyE-zz`. This is an ideal format for numbers with varying magnitudes. For matrices and column vectors, the numbers (and decimal points) will be aligned. The following methods control the output:
 
-- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `10`.
+- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `12`.
 - `setDecimals(int)` sets the number of decimals. The default number of decimals is `3`.
 - `setUpperE(boolean)` sets sets the exponent symbol to `E` if `true` and to `e` if `false`. The default value is `true`.
 
 Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.DE` with `upperE` set to true, and `%W.De` with `upperE` set to false.
 
 ```
-| Number               | Formatted      |
-| -------------------- | -------------- |
-| 12.3                 | [ 1.230E+01 m] |
-| 12.34567             | [ 1.235E+01 m] |
-| 12345.67             | [ 1.235E+04 m] |
-| 12345678.9           | [ 1.235E+07 m] |
-| 123456789123         | [ 1.235E+11 m] |
-| 0.123                | [ 1.230E-01 m] |
-| 0.1234567            | [ 1.235E-01 m] |
-| 0.01234567           | [ 1.235E-02 m] |
-| 0.001234567          | [ 1.235E-03 m] |
-| 0.0001234567         | [ 1.235E-04 m] |
+| Number               | Formatted        |
+| -------------------- | ---------------- |
+| 12.3                 | [   1.230E+01 m] |
+| 12.34567             | [   1.235E+01 m] |
+| 12345.67             | [   1.235E+04 m] |
+| 12345678.9           | [   1.235E+07 m] |
+| 123456789123         | [   1.235E+11 m] |
+| 0.123                | [   1.230E-01 m] |
+| 0.1234567            | [   1.235E-01 m] |
+| 0.01234567           | [   1.235E-02 m] |
+| 0.001234567          | [   1.235E-03 m] |
+| 0.0001234567         | [   1.235E-04 m] |
 ```
+
 
 ### Engineering formatting
 
@@ -130,43 +131,45 @@ Technically, if `W` is the width and `D` is the number of decimals, the Java for
 Technically, if `W` is the width and `D` is the number of decimals, the Java format used is `%W.DE` with `upperE` set to true, and `%W.De` with `upperE` set to false.
 
 ```
-| Number               | Formatted      |
-| -------------------- | -------------- |
-| 12.3                 | [ 12.300E+0 m] |
-| 12.34567             | [ 12.346E+0 m] |
-| 12345.67             | [ 12.346E+3 m] |
-| 12345678.9           | [ 12.346E+6 m] |
-| 123456789123         | [123.457E+9 m] |
-| 0.123                | [  0.123E+0 m] |
-| 0.1234567            | [  0.123E+0 m] |
-| 0.01234567           | [  0.012E+0 m] |
-| 0.001234567          | [  1.235E-3 m] |
-| 0.0001234567         | [  0.123E-3 m] |
+| Number               | Formatted        |
+| -------------------- | ---------------- |
+| 12.3                 | [  12.300E+00 m] |
+| 12.34567             | [  12.346E+00 m] |
+| 12345.67             | [  12.346E+03 m] |
+| 12345678.9           | [  12.346E+06 m] |
+| 123456789123         | [ 123.457E+09 m] |
+| 0.123                | [   0.123E+00 m] |
+| 0.1234567            | [   0.123E+00 m] |
+| 0.01234567           | [   0.012E+00 m] |
+| 0.001234567          | [   1.235E-03 m] |
+| 0.0001234567         | [   0.123E-03 m] |
 ```
+
+> **Note** that 12 positions are needed with 3 decimals for engineering formatting: 1 for the optional negative sign, 3 for the value between 0 and 999, 1 for the decimal point, 3 for the fraction, 4 for the E+xx or E-xx exponent. Total: 1+3+1+3+4=12 positions.
 
 
 ### Fixed-size formatting with scientific fallback
 
 `setFixedWithSciFallback()` formats the number using `setFixedFloat()` if it fits the set width and will use `setScientific()` when the resulting string does not fit the set width. This will enable aligned columns for vectors or matrices, but uses precision when space allows. Widths and decimals that can store all numbers are w.d = 9.1, 10.2, 11.3 etc. For width 9 and 1 decimal, the largest number in terms of size is `-1.2E+300`. The following methods control the output:
 
-- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `10`.
+- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `12`.
 - `setDecimals(int)` sets the number of decimals. The default number of decimals is `3`.
 - `setGroupingSeparator(boolean)` turns the grouping separator on or off. By default, grouping is set to `false`.
 - `setUpperE(boolean)` sets sets the exponent symbol to `E` if `true` and to `e` if `false`. The default value is `true`.
 
 ```
-| Number               | Formatted      |
-| -------------------- | -------------- |
-| 12.3                 | [    12.300 m] |
-| 12.34567             | [    12.346 m] |
-| 12345.67             | [ 12345.670 m] |
-| 12345678.9           | [ 1.235E+07 m] |
-| 123456789123         | [ 1.235E+11 m] |
-| 0.123                | [     0.123 m] |
-| 0.1234567            | [     0.123 m] |
-| 0.01234567           | [     0.012 m] |
-| 0.001234567          | [     0.001 m] |
-| 0.0001234567         | [ 1.235E-04 m] |
+| Number               | Formatted        |
+| -------------------- | ---------------- |
+| 12.3                 | [      12.300 m] |
+| 12.34567             | [      12.346 m] |
+| 12345.67             | [   12345.670 m] |
+| 12345678.9           | [12345678.900 m] |
+| 123456789123         | [   1.235E+11 m] |
+| 0.123                | [       0.123 m] |
+| 0.1234567            | [       0.123 m] |
+| 0.01234567           | [       0.012 m] |
+| 0.001234567          | [       0.001 m] |
+| 0.0001234567         | [   1.235E-04 m] |
 ```
 
 
@@ -174,24 +177,24 @@ Technically, if `W` is the width and `D` is the number of decimals, the Java for
 
 `setFixedWithEngFallback()` formats the number using `setFixedFloat()` if it fits the set width and will use `setEngineering()` when the resulting string does not fit the set width. This will enable aligned columns for vectors or matrices, but uses precision when space allows. Widths and decimals that can store all numbers are w.d = 9.1, 10.2, 11.3 etc. For width 9 and 1 decimal, the largest number in terms of size is `-1.2E+300`. The following methods control the output:
 
-- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `10`.
+- `setWidth(int)` sets the total width of the number, including decimals, decimal point, exponent for scientific notation, minus sign, and grouping separators. The default width is `12`.
 - `setDecimals(int)` sets the number of decimals. The default number of decimals is `3`.
 - `setGroupingSeparator(boolean)` turns the grouping separator on or off. By default, grouping is set to `false`.
 - `setUpperE(boolean)` sets sets the exponent symbol to `E` if `true` and to `e` if `false`. The default value is `true`.
 
 ```
-| Number               | Formatted      |
-| -------------------- | -------------- |
-| 12.3                 | [    12.300 m] |
-| 12.34567             | [    12.346 m] |
-| 12345.67             | [ 12345.670 m] |
-| 12345678.9           | [ 12.346E+6 m] |
-| 123456789123         | [123.457E+9 m] |
-| 0.123                | [     0.123 m] |
-| 0.1234567            | [     0.123 m] |
-| 0.01234567           | [     0.012 m] |
-| 0.001234567          | [     0.001 m] |
-| 0.0001234567         | [  0.123E-3 m] |
+| Number               | Formatted        |
+| -------------------- | ---------------- |
+| 12.3                 | [      12.300 m] |
+| 12.34567             | [      12.346 m] |
+| 12345.67             | [   12345.670 m] |
+| 12345678.9           | [12345678.900 m] |
+| 123456789123         | [ 123.457E+09 m] |
+| 0.123                | [       0.123 m] |
+| 0.1234567            | [       0.123 m] |
+| 0.01234567           | [       0.012 m] |
+| 0.001234567          | [       0.001 m] |
+| 0.0001234567         | [   0.123E-03 m] |
 ```
 
 
@@ -218,7 +221,7 @@ Technically, if `W` is the width and `D` is the number of decimals, the Java for
 
 Helper methods for the formatting are:
 
-- `setWidth(width)` sets the total fixed width of the output. If the output does not fit the width, it can be overruled. The default value is `10`.
+- `setWidth(width)` sets the total fixed width of the output. If the output does not fit the width, it can be overruled. The default value is `12`.
 - `setDecimals(decimals)` sets the exact number of decimals for the output. The default value is `3`.
 - `setMaxSigDigits(digits)` sets the maximum number of significant digits for the variable length format, to avoid trailing `.0001` or `.9999`. The default value is `10`.
 - `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. The default value is `-3`.
@@ -227,15 +230,15 @@ Helper methods for the formatting are:
 
 The usage of these settings by the different formats is as follows:
 
-| Format               | Width   | Decimals | MaxSigDigits | Grouping       | UpperE               |
-| -------------------- | ------- | -------- | ------------ | -------------- | -------------------- |
-| VariableLength       | Ignored | Ignored  | Used         | Used           | Used                 |
-| FixedFloat           | Used    | Used     | Ignored      | Used           | Ignored              |
-| Scientific           | Used    | Used     | Ignored      | Ignored        | Used                 |
-| Engineering          | Used    | Used     | Ignored      | Ignored        | Used                 |
-| FixedWithSciFallback | Used    | Used     | Ignored      | Used for Fixed | Used for Scientific  |
-| FixedWithEngFallback | Used    | Used     | Ignored      | Used for Fixed | Used for Engineering |
-| FormatString         | Ignored | Ignored  | Ignored      | Ignored        | Ignored              |
+| Format               | Width   | Decimals | MaxSigDigits | SciThreshold | Grouping       | UpperE       |
+| -------------------- | ------- | -------- | ------------ | ------------ | -------------- | ------------ |
+| VariableLength       | Ignored | Ignored  | Used         | Used         | Used           | Used         |
+| FixedFloat           | Used    | Used     | Ignored      | Ignored      | Used           | Ignored      |
+| Scientific           | Used    | Used     | Ignored      | Ignored      | Ignored        | Used         |
+| Engineering          | Used    | Used     | Ignored      | Ignored      | Ignored        | Used         |
+| FixedWithSciFallback | Used    | Used     | Ignored      | Ignored      | Used for Fixed | Used for Sci |
+| FixedWithEngFallback | Used    | Used     | Ignored      | Ignored      | Used for Fixed | Used for Eng |
+| FormatString         | Ignored | Ignored  | Ignored      | Ignored      | Ignored        | Ignored      |
 
 
 ## Unit formatting settings
