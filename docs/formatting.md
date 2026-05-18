@@ -36,7 +36,7 @@ The following settings for formatting the number part (entries in a vector, tabl
 
 The method `setVariableLength()` formats the number in a left-aligned manner without a fixed length. This format ignores the `setWidth()` and `setDecimals()` settings, but it has several settings to control the output:
 
-- `setMaxSigDigits(int)` indicates the maximum number of significant digits. When the maximum number of significant digits is 5, numbers are formatted in such a way that at most 5 significant digits are used:
+- `setMaxSigDigits(int)` indicates the maximum number of significant digits. The default value is `10`. When the maximum number of significant digits is 5, numbers are formatted in such a way that at most 5 significant digits are used:
 
 ```
 | Number               | Formatted      |
@@ -48,7 +48,7 @@ The method `setVariableLength()` formats the number in a left-aligned manner wit
 | 123456789123         | [1.2346E+11 m] |
 ```
 
-- `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. Note that the integer parameter has to be negative. When the threshold is, e.g., -3, numbers with an absolute value **smaller** than 10^-3 are formatted using scientific notation. Numbers that are larger use floating point notation, where the number of significant digits does not count the leading zeros. Suppose `maxSigDigits = 5` and `sciThreshold = -3`:
+- `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. Note that the integer parameter has to be negative. The default value is `-3`. When the threshold is, e.g., -3, numbers with an absolute value **smaller** than 10^-3 are formatted using scientific notation. Numbers that are larger use floating point notation, where the number of significant digits does not count the leading zeros. Suppose `maxSigDigits = 5` and `sciThreshold = -3`:
 
 ```
 | Number               | Formatted      |
@@ -220,7 +220,7 @@ Helper methods for the formatting are:
 
 - `setWidth(width)` sets the total fixed width of the output. If the output does not fit the width, it can be overruled. The default value is `10`.
 - `setDecimals(decimals)` sets the exact number of decimals for the output. The default value is `3`.
-- `setMaxSigDigits(digits)` sets the maximum number of significant digits for the variable length format, to avoid trailing `.0001` or `.9999`. The default value is `6`.
+- `setMaxSigDigits(digits)` sets the maximum number of significant digits for the variable length format, to avoid trailing `.0001` or `.9999`. The default value is `10`.
 - `setSciThreshold(int)` indicates when a fraction with an absolute value less than 1 should be formatted using scientific notation. The default value is `-3`.
 - `setGroupingSeparator(boolean)` sets the grouping separator (e.g., thousands separator) on or off. The default value is `false`.
 - `setUpperE(boolean)` sets the exponent symbol to `E` if `true` and to `e` if `false`. 
