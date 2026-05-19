@@ -173,12 +173,12 @@ public abstract class Formatter<C extends FormatContext>
      */
     String formatVariableLength(final double val)
     {
-        if (val == 0.0 || val == -0.0)
+        if (val == 0.0)
             return "0";
         if (Double.isNaN(val))
             return "NaN";
         if (Double.isInfinite(val))
-            return val > 0 ? "+Inf" : "-Inf";
+            return val > 0 ? "Inf" : "-Inf";
 
         double abs = Math.abs(val);
         int exponent = (int) Math.floor(Math.log10(abs));
@@ -238,20 +238,13 @@ public abstract class Formatter<C extends FormatContext>
      */
     String formatEngineering(final double val)
     {
-        if (val == 0.0)
-        {
-            return formatFixedFloat(0.0);
-        }
-
         double abs = Math.abs(val);
         int exp = (int) Math.floor(Math.log10(abs));
         int engExp = exp - (exp % 3);
-
         double mantissa = val / Math.pow(10, engExp);
 
-        // Mantissa formatted as fixed
-        String gs = this.ctx.groupingSeparator ? "%,." : "%.";
-        String mantFmt = gs + this.ctx.decimals + "f";
+        // Mantissa formatted as fixed; no grouping separator (always < 1000)
+        String mantFmt = "%." + this.ctx.decimals + "f";
         String mant = String.format(mantFmt, mantissa);
         String result = mant + (this.ctx.upperE ? "E" : "e") + String.format("%+03d", engExp);
         return pad(result, this.ctx.width);
