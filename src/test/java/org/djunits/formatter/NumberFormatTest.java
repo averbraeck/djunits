@@ -50,10 +50,15 @@ public class NumberFormatTest
         for (int i = 0; i < 10; i++)
         {
             String s = length.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(false).setUpperE(true));
+            String t =
+                    length.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(false).setUpperE(false));
             if (i <= 6)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
             else
+            {
                 assertTrue(s.contains("E+" + (i + 3)), String.format("Not true for i=%d, s=%s", i, s));
+                assertTrue(t.contains("e+" + (i + 3)), String.format("Not true for i=%d, s=%s", i, s));
+            }
             length = length.scaleBy(10.0);
         }
 
@@ -62,12 +67,40 @@ public class NumberFormatTest
         for (int i = 0; i < 10; i++)
         {
             String s = length.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(false).setUpperE(true));
+            String t =
+                    length.format(QuantityFormat.instance().setVariableLength().setGroupingSeparator(false).setUpperE(false));
             if (i <= 3)
                 assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
             else
+            {
                 assertTrue(s.contains("E-"), String.format("Not true for i=%d, s=%s", i, s));
+                assertTrue(t.contains("e-"), String.format("Not true for i=%d, s=%s", i, s));
+            }
             length = length.divideBy(10.0);
         }
+
+        // Test 0.0 and -0.0
+        Length lp0 = Length.ofSi(0.0);
+        assertEquals("0 m", lp0.format(QuantityFormat.instance().setVariableLength()));
+        Length lm0 = lp0.negate();
+        assertEquals("0 m", lm0.format(QuantityFormat.instance().setVariableLength()));
+
+        // Test NaN
+        Length lnan = Length.ofSi(Double.NaN);
+        assertEquals("NaN m", lnan.format(QuantityFormat.instance().setVariableLength()));
+
+        // test inf and -inf
+        Length linf = Length.ofSi(Double.POSITIVE_INFINITY);
+        assertEquals("Inf m", linf.format(QuantityFormat.instance().setVariableLength()));
+        Length minf = Length.ofSi(Double.NEGATIVE_INFINITY);
+        assertEquals("-Inf m", minf.format(QuantityFormat.instance().setVariableLength()));
+
+        // test underflow with sciThreashold
+        Length l03 = Length.ofSi(0.001234321);
+        assertEquals("1.234E-03 m", l03.format(QuantityFormat.instance().setMaxSigDigits(4).setSciThreshold(-1)));
+        assertEquals("1.234E-03 m", l03.format(QuantityFormat.instance().setMaxSigDigits(4).setSciThreshold(-2)));
+        assertEquals("0.001234 m", l03.format(QuantityFormat.instance().setMaxSigDigits(4).setSciThreshold(-3)));
+        assertEquals("0.001234 m", l03.format(QuantityFormat.instance().setMaxSigDigits(4).setSciThreshold(-4)));
     }
 
     /**
@@ -99,25 +132,22 @@ public class NumberFormatTest
     public void testEngineeringAlways()
     {
         Length l = new Length(1234.0, Length.Unit.mi);
-        String s1 = l.format(QuantityFormat.instance().setEngineering().setDecimals(1).setUpperE(false));
-        assertTrue(s1.contains("e+03"));
-        String s2 = l.format(QuantityFormat.instance().setEngineering().setDecimals(1).setUpperE(true));
-        assertTrue(s2.contains("E+03"));
+        String s1 = l.format(QuantityFormat.instance().setEngineering().setWidth(9).setDecimals(1).setUpperE(false));
+        assertEquals("  1.2e+03 mi", s1);
+        String s2 = l.format(QuantityFormat.instance().setEngineering().setWidth(9).setDecimals(1).setUpperE(true));
+        assertEquals("  1.2E+03 mi", s2);
 
         Length l5 = new Length(12345.6789, Length.Unit.mi);
-        String s5 = l5.format(QuantityFormat.instance().setEngineering().setDecimals(2).setUpperE(true));
-        assertTrue(s5.contains("E+03"));
-        assertTrue(s5.contains("12.35"));
+        String s5 = l5.format(QuantityFormat.instance().setEngineering().setWidth(12).setDecimals(2).setUpperE(true));
+        assertEquals("   12.35E+03 mi", s5);
 
         Length l6 = new Length(123456.7891, Length.Unit.mi);
-        String s6 = l6.format(QuantityFormat.instance().setEngineering().setDecimals(2).setUpperE(true));
-        assertTrue(s6.contains("E+03"));
-        assertTrue(s6.contains("123.46"));
+        String s6 = l6.format(QuantityFormat.instance().setEngineering().setWidth(12).setDecimals(2).setUpperE(true));
+        assertEquals("  123.46E+03 mi", s6);
 
         Length l7 = new Length(1234567.8912, Length.Unit.mi);
-        String s7 = l7.format(QuantityFormat.instance().setEngineering().setDecimals(2).setUpperE(true));
-        assertTrue(s7.contains("E+06"));
-        assertTrue(s7.contains("1.23"));
+        String s7 = l7.format(QuantityFormat.instance().setEngineering().setWidth(12).setDecimals(3).setUpperE(true));
+        assertEquals("   1.235E+06 mi", s7);
     }
 
     /**
@@ -204,6 +234,29 @@ public class NumberFormatTest
             }
             length = length.scaleBy(10.0);
         }
+
+        length = new Length(1.234567890123456789, Length.Unit.m);
+        for (int i = 0; i < 10; i++)
+        {
+            String s = length.format(QuantityFormat.instance().setFixedWithEngFallback().setGroupingSeparator(false)
+                    .setWidth(10).setDecimals(3).setUpperE(true));
+            if (i <= 3)
+                assertFalse(s.contains("E"), String.format("Not false for i=%d, s=%s", i, s));
+            else
+            {
+                if (i < 6)
+                    assertTrue(s.contains("E-03"), String.format("Not true for i=%d, s=%s", i, s));
+                else if (i < 9)
+                    assertTrue(s.contains("E-06"), String.format("Not true for i=%d, s=%s", i, s));
+                else
+                    assertTrue(s.contains("E-09"), String.format("Not true for i=%d, s=%s", i, s));
+            }
+            length = length.divideBy(10.0);
+        }
+        
+        // value = 0.0
+        Length l0 = Length.ofSi(0.0);
+        assertEquals("       0.000 m", l0.format(QuantityFormat.instance().setFixedWithEngFallback()));
     }
 
     /**
