@@ -51,14 +51,8 @@ class LinearDensityTest
         assertEquals(Double.MAX_VALUE, LinearDensity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, LinearDensity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        LinearDensity two = new LinearDensity(2.0, LinearDensity.Unit.kg_m);
-        LinearDensity copy = new LinearDensity(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        LinearDensity fromStr = new LinearDensity(1.5, "kg/m");
+        LinearDensity fromStr = LinearDensity.of(1.5, "kg/m");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf

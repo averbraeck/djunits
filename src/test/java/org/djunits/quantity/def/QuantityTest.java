@@ -170,7 +170,7 @@ public class QuantityTest
         assertTrue(l.isRelative());
         assertFalse(l.isAbsolute());
 
-        Temperature t = new Temperature(23.0, "degC");
+        Temperature t = Temperature.of(23.0, "degC");
         assertFalse(t.isRelative());
         assertTrue(t.isAbsolute());
     }

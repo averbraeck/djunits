@@ -52,14 +52,8 @@ class FlowVolumeTest
         assertEquals(Double.MAX_VALUE, FlowVolume.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, FlowVolume.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        FlowVolume litersPerMin = new FlowVolume(2.0, FlowVolume.Unit.L_min); // 2 L/min = 2e-3/60 m3/s
-        FlowVolume copy = new FlowVolume(litersPerMin);
-        assertEquals(litersPerMin.si(), copy.si(), 1E-15);
-        assertEquals(litersPerMin.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        FlowVolume qStr = new FlowVolume(1.5, "m3/s");
+        FlowVolume qStr = FlowVolume.of(1.5, "m3/s");
         assertEquals(1.5, qStr.si(), 1E-12);
 
         // Time-based SI-accepted variants

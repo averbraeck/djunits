@@ -52,14 +52,8 @@ class EquivalentDoseTest
         assertEquals(Double.MAX_VALUE, EquivalentDose.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, EquivalentDose.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        EquivalentDose milli = new EquivalentDose(2.0, EquivalentDose.Unit.mSv); // 2 mSv = 0.002 Sv
-        EquivalentDose copy = new EquivalentDose(milli);
-        assertEquals(milli.si(), copy.si(), 1E-12);
-        assertEquals(milli.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        EquivalentDose dStr = new EquivalentDose(1.5, "Sv");
+        EquivalentDose dStr = EquivalentDose.of(1.5, "Sv");
         assertEquals(1.5, dStr.si(), 1E-12);
 
         // SI prefixes via resolved units

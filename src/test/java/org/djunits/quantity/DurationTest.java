@@ -53,13 +53,8 @@ class DurationTest
         assertEquals(Double.MAX_VALUE, Duration.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Duration.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Duration twoMin = new Duration(2.0, Duration.Unit.min);
-        Duration copy = new Duration(twoMin);
-        assertEquals(twoMin.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        Duration dStr = new Duration(1.5, "s");
+        Duration dStr = Duration.of(1.5, "s");
         assertEquals(1.5, dStr.si(), 1E-12);
 
         // SI prefixes via generated units

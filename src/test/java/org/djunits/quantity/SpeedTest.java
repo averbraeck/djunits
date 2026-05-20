@@ -51,14 +51,8 @@ class SpeedTest
         assertEquals(Double.MAX_VALUE, Speed.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Speed.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Speed two = new Speed(2.0, Speed.Unit.m_s);
-        Speed copy = new Speed(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Speed fromStr = new Speed(1.5, "m/s");
+        Speed fromStr = Speed.of(1.5, "m/s");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of; valueOf is class-specific (NumberParser)

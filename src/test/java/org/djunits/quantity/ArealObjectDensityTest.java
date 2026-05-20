@@ -52,13 +52,8 @@ class ArealObjectDensityTest
         assertEquals(Double.MAX_VALUE, ArealObjectDensity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ArealObjectDensity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI value and display unit
-        ArealObjectDensity d2 = new ArealObjectDensity(2.5, ArealObjectDensity.Unit.per_m2);
-        ArealObjectDensity copy = new ArealObjectDensity(d2);
-        assertEquals(d2.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        ArealObjectDensity dStr = new ArealObjectDensity(3.0, "/m2");
+        ArealObjectDensity dStr = ArealObjectDensity.of(3.0, "/m2");
         assertEquals(3.0, dStr.si(), 1E-12);
 
         // Parsing valueOf and of(value, unitString)

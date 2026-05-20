@@ -65,10 +65,10 @@ class TemperatureTest
         assertEquals(50.0, t2.getInUnit(), 1E-12);
         assertEquals(Temperature.Reference.CELSIUS, t2.getReference());
 
-        Temperature t3 = new Temperature(32.0, "degF", Temperature.Reference.FAHRENHEIT);
+        Temperature t3 = Temperature.of(32.0, "degF", Temperature.Reference.FAHRENHEIT);
         assertEquals(32.0, t3.getInUnit(), 1E-12);
 
-        Temperature t4 = new Temperature(10.0, "degC");
+        Temperature t4 = Temperature.of(10.0, "degC");
         assertEquals(10.0, t4.getInUnit(), 1E-12);
         assertEquals(Temperature.Reference.CELSIUS, t4.getReference());
 
@@ -308,13 +308,13 @@ class TemperatureTest
     {
         assertThrows(IllegalArgumentException.class, () -> new Temperature(TemperatureDifference.ofSi(-0.1)));
         assertThrows(IllegalArgumentException.class, () -> new Temperature(-0.1, Temperature.Unit.K));
-        assertThrows(IllegalArgumentException.class, () -> new Temperature(-0.1, "K"));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.of(-0.1, "K"));
         assertThrows(IllegalArgumentException.class, () -> new Temperature(-273.2, Temperature.Unit.degC));
-        assertThrows(IllegalArgumentException.class, () -> new Temperature(-500, "degF"));
-        assertThrows(IllegalArgumentException.class, () -> new Temperature(-0.1, "K", Temperature.Reference.KELVIN));
-        assertNotNull(new Temperature(-0.1, "K", Temperature.Reference.CELSIUS));
-        assertNotNull(new Temperature(-273.15, "degC", Temperature.Reference.CELSIUS));
-        assertThrows(IllegalArgumentException.class, () -> new Temperature(-273.16, "degC", Temperature.Reference.CELSIUS));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.of(-500, "degF"));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.of(-0.1, "K", Temperature.Reference.KELVIN));
+        assertNotNull(Temperature.of(-0.1, "K", Temperature.Reference.CELSIUS));
+        assertNotNull(Temperature.of(-273.15, "degC", Temperature.Reference.CELSIUS));
+        assertThrows(IllegalArgumentException.class, () -> Temperature.of(-273.16, "degC", Temperature.Reference.CELSIUS));
         assertNotNull(new Temperature(-0.1, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT));
         assertThrows(IllegalArgumentException.class, () -> Temperature.ofSi(-1.0));
         assertThrows(IllegalArgumentException.class, () -> Temperature.of(-0.1, "K", Temperature.Reference.KELVIN));
@@ -322,7 +322,7 @@ class TemperatureTest
         assertNotNull(Temperature.valueOf("-273.15 degC", Temperature.Reference.CELSIUS));
         assertThrows(IllegalArgumentException.class, () -> Temperature.valueOf("-273.16 degC", Temperature.Reference.CELSIUS));
 
-        Temperature t1 = new Temperature(10, "K");
+        Temperature t1 = Temperature.of(10, "K");
         TemperatureDifference t2 = TemperatureDifference.of(20, "K");
         assertThrows(IllegalArgumentException.class, () -> t1.subtract(t2));
     }

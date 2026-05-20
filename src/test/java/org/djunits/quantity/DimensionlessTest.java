@@ -53,13 +53,10 @@ class DimensionlessTest
         assertEquals(Double.MAX_VALUE, Dimensionless.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Dimensionless.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
         Dimensionless three = new Dimensionless(3.0, Unitless.BASE);
-        Dimensionless copy = new Dimensionless(three);
-        assertEquals(three.si(), copy.si(), 1E-12);
 
         // Construct with abbreviation string; Unitless.BASE uses " " (space)
-        Dimensionless fromAbbrev = new Dimensionless(2.5, " ");
+        Dimensionless fromAbbrev = Dimensionless.of(2.5, " ");
         assertEquals(2.5, fromAbbrev.si(), 1E-12);
 
         // Parsing valueOf and of(value, unitString) — use a space as the unit id/display

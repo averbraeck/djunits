@@ -52,14 +52,8 @@ class ElectricPotentialTest
         assertEquals(Double.MAX_VALUE, ElectricPotential.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricPotential.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricPotential kilo = new ElectricPotential(2.0, ElectricPotential.Unit.kV); // 2 kV = 2000 V
-        ElectricPotential copy = new ElectricPotential(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        ElectricPotential vStr = new ElectricPotential(1.5, "V");
+        ElectricPotential vStr = ElectricPotential.of(1.5, "V");
         assertEquals(1.5, vStr.si(), 1E-12);
 
         // SI prefixes via generated/resolved units

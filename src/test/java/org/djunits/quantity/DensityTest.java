@@ -52,20 +52,15 @@ class DensityTest
         assertEquals(Double.MAX_VALUE, Density.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Density.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Density gramPerCm3 = new Density(1.0, Density.Unit.g_cm3); // 1 g/cm3 == 1000 kg/m3
-        Density copy = new Density(gramPerCm3);
-        assertEquals(gramPerCm3.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        Density dStr = new Density(1000.0, "kg/m3");
+        Density dStr = Density.of(1000.0, "kg/m3");
         assertEquals(1000.0, dStr.si(), 1E-12);
 
         // g/cm3 conversion: 1 g/cm3 == 1000 kg/m3
         Density oneGPerCm3 = new Density(1.0, Density.Unit.g_cm3);
         assertEquals(1000.0, oneGPerCm3.si(), 1E-9);
 
-        Density twoPointFiveGPerCm3 = new Density(2.5, "g/cm3");
+        Density twoPointFiveGPerCm3 = Density.of(2.5, "g/cm3");
         assertEquals(2500.0, twoPointFiveGPerCm3.si(), 1E-9);
 
         // Parsing valueOf and of(value, unitString)

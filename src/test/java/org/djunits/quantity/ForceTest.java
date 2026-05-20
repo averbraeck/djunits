@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * ForceTest tests the Force quantity class.<p>
+ * ForceTest tests the Force quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -52,20 +53,14 @@ class ForceTest
         assertEquals(Double.MAX_VALUE, Force.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Force.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Force kilo = new Force(2.0, "kN"); // 2 kN = 2000 N
-        Force copy = new Force(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Force fStr = new Force(1.5, "N");
+        Force fStr = Force.of(1.5, "N");
         assertEquals(1.5, fStr.si(), 1E-12);
 
         // SI prefixes via generated units (resolved by abbreviation)
-        assertEquals(1E-3, new Force(1.0, "mN").si(), 1E-12); // milli-newton
-        assertEquals(1E3, new Force(1.0, "kN").si(), 1E-9); // kilo-newton
-        assertEquals(1E6, new Force(1.0, "MN").si(), 1E-6); // mega-newton
+        assertEquals(1E-3, Force.of(1.0, "mN").si(), 1E-12); // milli-newton
+        assertEquals(1E3, Force.of(1.0, "kN").si(), 1E-9); // kilo-newton
+        assertEquals(1E6, Force.of(1.0, "MN").si(), 1E-6); // mega-newton
 
         // Special units
         // 1 dyn = 1e-5 N

@@ -37,7 +37,7 @@ class DirectionTest
         assertEquals(Math.PI / 2.0, dEast90.si(), 1E-12);
 
         // Construct with value + abbreviation + reference
-        Direction dEast180 = new Direction(180.0, "deg", Direction.Reference.EAST);
+        Direction dEast180 = Direction.of(180.0, "deg", Direction.Reference.EAST);
         assertEquals(Math.PI, dEast180.si(), 1E-12);
 
         // Construct with Angle + reference

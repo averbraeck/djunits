@@ -46,9 +46,7 @@ class AccelerationTest
 
         var q2 = new Acceleration(2.0, Acceleration.Unit.km_h2);
         assertEquals(2.0 * 1000.0 / (3600.0 * 3600.0), q2.si(), 1E-10);
-        var q3 = new Acceleration(q2);
-        assertEquals(q2.si(), q3.si());
-        var q4 = new Acceleration(4.0, "m/s2");
+        var q4 = Acceleration.of(4.0, "m/s2");
         assertEquals(4.0, q4.si());
         assertEquals(-10.1, q4.instantiateSi(-10.1).si());
         assertEquals("m/s2", q4.siUnit().format(true, false));

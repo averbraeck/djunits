@@ -51,14 +51,8 @@ class PressureTest
         assertEquals(Double.MAX_VALUE, Pressure.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Pressure.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Pressure two = new Pressure(2.0, Pressure.Unit.Pa);
-        Pressure copy = new Pressure(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Pressure fromStr = new Pressure(1.5, "Pa");
+        Pressure fromStr = Pressure.of(1.5, "Pa");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

@@ -70,14 +70,8 @@ class VolumetricObjectDensityTest
         assertEquals(Double.MAX_VALUE, VolumetricObjectDensity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, VolumetricObjectDensity.NEG_MAXVALUE.si());
 
-        // Copy constructor
-        VolumetricObjectDensity two = new VolumetricObjectDensity(2.0, VolumetricObjectDensity.Unit.per_m3);
-        VolumetricObjectDensity copy = new VolumetricObjectDensity(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Abbreviation constructor
-        VolumetricObjectDensity s = new VolumetricObjectDensity(1.5, "/m3");
+        VolumetricObjectDensity s = VolumetricObjectDensity.of(1.5, "/m3");
         assertEquals(1.5, s.si(), 1E-12);
 
         // valueOf

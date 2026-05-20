@@ -51,14 +51,8 @@ class RadioActivityTest
         assertEquals(Double.MAX_VALUE, RadioActivity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, RadioActivity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        RadioActivity two = new RadioActivity(2.0, RadioActivity.Unit.Bq);
-        RadioActivity copy = new RadioActivity(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        RadioActivity fromStr = new RadioActivity(1.5, "Bq");
+        RadioActivity fromStr = RadioActivity.of(1.5, "Bq");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

@@ -57,14 +57,8 @@ class AngleTest
         assertEquals(Double.MAX_VALUE, Angle.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Angle.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Angle deg90 = new Angle(90.0, Angle.Unit.deg);
-        Angle copy = new Angle(deg90);
-        assertEquals(deg90.si(), copy.si(), 1E-12);
-        // display unit equality is handled by Quantity base class; SI is sufficient
-
         // Construct with abbreviation
-        Angle aDeg = new Angle(180.0, "deg");
+        Angle aDeg = Angle.of(180.0, "deg");
         assertEquals(Math.PI, aDeg.si(), 1E-12);
 
         // Unicode degree sign as display abbreviation should also parse via Units.resolve used by constructor/of

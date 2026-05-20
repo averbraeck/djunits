@@ -51,14 +51,8 @@ class MassTest
         assertEquals(Double.MAX_VALUE, Mass.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Mass.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Mass two = new Mass(2.0, Mass.Unit.kg);
-        Mass copy = new Mass(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Mass fromStr = new Mass(1.5, "kg");
+        Mass fromStr = Mass.of(1.5, "kg");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

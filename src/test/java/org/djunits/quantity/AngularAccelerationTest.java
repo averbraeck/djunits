@@ -52,13 +52,8 @@ class AngularAccelerationTest
         assertEquals(Double.MAX_VALUE, AngularAcceleration.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, AngularAcceleration.NEG_MAXVALUE.si());
 
-        // Copy constructor: SI value and display unit
-        AngularAcceleration degAA = new AngularAcceleration(180.0, AngularAcceleration.Unit.deg_s2);
-        AngularAcceleration copy = new AngularAcceleration(degAA);
-        assertEquals(degAA.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        AngularAcceleration aDeg = new AngularAcceleration(180.0, "deg/s2");
+        AngularAcceleration aDeg = AngularAcceleration.of(180.0, "deg/s2");
         assertEquals(Math.PI, aDeg.si(), 1E-12);
 
         // Unicode degree sign for display abbreviation via of(value, unitString)

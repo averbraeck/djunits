@@ -52,14 +52,8 @@ class ElectricChargeTest
         assertEquals(Double.MAX_VALUE, ElectricCharge.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricCharge.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricCharge mAh = new ElectricCharge(2.0, ElectricCharge.Unit.mAh); // 2 mAh = 7.2 C
-        ElectricCharge copy = new ElectricCharge(mAh);
-        assertEquals(mAh.si(), copy.si(), 1E-12);
-        assertEquals(mAh.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        ElectricCharge qStr = new ElectricCharge(1.5, "C");
+        ElectricCharge qStr = ElectricCharge.of(1.5, "C");
         assertEquals(1.5, qStr.si(), 1E-12);
 
         // SI prefixes via generated/resolved units

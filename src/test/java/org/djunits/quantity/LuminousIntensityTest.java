@@ -51,14 +51,8 @@ class LuminousIntensityTest
         assertEquals(Double.MAX_VALUE, LuminousIntensity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, LuminousIntensity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        LuminousIntensity two = new LuminousIntensity(2.0, LuminousIntensity.Unit.cd);
-        LuminousIntensity copy = new LuminousIntensity(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        LuminousIntensity fromStr = new LuminousIntensity(1.5, "cd");
+        LuminousIntensity fromStr = LuminousIntensity.of(1.5, "cd");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * AreaTest tests the Area quantity class.<p>
+ * AreaTest tests the Area quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -52,17 +53,12 @@ class AreaTest
         assertEquals(Double.MAX_VALUE, Area.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Area.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI (and display unit)
-        Area km2 = new Area(1.0, Area.Unit.km2);
-        Area copy = new Area(km2);
-        assertEquals(km2.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        Area aKm2 = new Area(2.0, "km2");
+        Area aKm2 = Area.of(2.0, "km2");
         assertEquals(2.0 * 1.0E6, aKm2.si(), 1E-9);
 
         // "mum2" textual abbreviation vs "μm2" display abbreviation both resolvable
-        Area aMum2Text = new Area(1.0, "mum2");
+        Area aMum2Text = Area.of(1.0, "mum2");
         assertEquals(1.0E-12, aMum2Text.si(), 1E-24);
 
         // SI multiples and submultiples

@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * ElectricalInductanceTest tests the ElectricalInductance quantity class.<p>
+ * ElectricalInductanceTest tests the ElectricalInductance quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -52,21 +53,15 @@ class ElectricalInductanceTest
         assertEquals(Double.MAX_VALUE, ElectricalInductance.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricalInductance.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricalInductance milli = new ElectricalInductance(2.0, "mH"); // 2 mH = 0.002 H
-        ElectricalInductance copy = new ElectricalInductance(milli);
-        assertEquals(milli.si(), copy.si(), 1E-12);
-        assertEquals(milli.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        ElectricalInductance lStr = new ElectricalInductance(1.5, "H");
+        ElectricalInductance lStr = ElectricalInductance.of(1.5, "H");
         assertEquals(1.5, lStr.si(), 1E-12);
 
         // SI prefixes via generated units
-        assertEquals(1E-3, new ElectricalInductance(1.0, "mH").si(), 1E-15);
-        assertEquals(1E-6, new ElectricalInductance(1.0, "muH").si(), 1E-18);
-        assertEquals(1E-9, new ElectricalInductance(1.0, "nH").si(), 1E-21);
-        assertEquals(1E-12, new ElectricalInductance(1.0, "pH").si(), 1E-24);
+        assertEquals(1E-3, ElectricalInductance.of(1.0, "mH").si(), 1E-15);
+        assertEquals(1E-6, ElectricalInductance.of(1.0, "muH").si(), 1E-18);
+        assertEquals(1E-9, ElectricalInductance.of(1.0, "nH").si(), 1E-21);
+        assertEquals(1E-12, ElectricalInductance.of(1.0, "pH").si(), 1E-24);
 
         // Parsing valueOf and of(value, unitString)
         ElectricalInductance p1 = ElectricalInductance.valueOf("2 H");

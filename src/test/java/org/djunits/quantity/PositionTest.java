@@ -63,7 +63,7 @@ class PositionTest
         assertEquals(origin, p1.getReference());
 
         // (value, abbreviation, reference)
-        Position p2 = new Position(25.0, "m", origin);
+        Position p2 = Position.of(25.0, "m", origin);
         assertEquals(25.0, p2.getInUnit(), 1E-12);
 
         // (Length, reference)

@@ -52,14 +52,8 @@ class FrequencyTest
         assertEquals(Double.MAX_VALUE, Frequency.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Frequency.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Frequency kilo = new Frequency(2.0, Frequency.Unit.kHz); // 2 kHz = 2000 Hz
-        Frequency copy = new Frequency(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Frequency fStr = new Frequency(1.5, "Hz");
+        Frequency fStr = Frequency.of(1.5, "Hz");
         assertEquals(1.5, fStr.si(), 1E-12);
 
         // SI prefixes via resolved units

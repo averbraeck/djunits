@@ -51,14 +51,8 @@ class MomentumTest
         assertEquals(Double.MAX_VALUE, Momentum.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Momentum.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Momentum two = new Momentum(2.0, Momentum.Unit.kgm_s);
-        Momentum copy = new Momentum(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Momentum fromStr = new Momentum(1.5, "kgm/s");
+        Momentum fromStr = Momentum.of(1.5, "kgm/s");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

@@ -32,10 +32,10 @@ import org.junit.jupiter.api.Test;
  * dedicated {@code SIUnit} test suite. Here we only verify interactions required by {@code SIQuantity}.
  * <p>
  * <strong>Locale pinning:</strong> The tests pin {@code Locale.Category.FORMAT} to {@link Locale#US} for deterministic number
- * parsing/formatting and restore it afterwards.
- * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
- * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
- * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
+ * parsing/formatting and restore it afterwards. Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX
+ * Delft, the Netherlands. All rights reserved. See for project information
+ * <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is distributed under a
+ * <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck (specifications); Test implementation by Copilot.
  */
 public class SIQuantityTest
@@ -95,23 +95,9 @@ public class SIQuantityTest
     @Test
     void constructorWithStringAbbreviation()
     {
-        SIQuantity mass = new SIQuantity(2.0, "kg");
+        SIQuantity mass = SIQuantity.of(2.0, "kg");
         assertEquals(2.0, mass.si(), 1e-12);
         assertEquals(SIUnit.of("kg"), mass.getDisplayUnit(), "Resolved SIUnit must match the abbreviation");
-    }
-
-    /**
-     * Verifies the copy constructor {@code new SIQuantity(SIQuantity)} produces an equal instance: same SI value and same
-     * display unit.
-     */
-    @Test
-    void copyConstructor()
-    {
-        SIQuantity source = new SIQuantity(3.0, SIUnit.of("m/s2"));
-        SIQuantity copy = new SIQuantity(source);
-        assertEquals(source, copy, "Copy must be equal to source");
-        assertEquals(source.hashCode(), copy.hashCode(), "Equal objects must share hashCode");
-        assertSame(source.getDisplayUnit(), copy.getDisplayUnit(), "Display unit object is preserved");
     }
 
     // ----------------------------------------------------------------------
@@ -119,8 +105,8 @@ public class SIQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link SIQuantity#instantiateSi(double)} creates a new instance with the same display unit as the receiver at call
-     * time (i.e., reflects the current {@code getDisplayUnit()} value).
+     * Verifies {@link SIQuantity#instantiateSi(double)} creates a new instance with the same display unit as the receiver at
+     * call time (i.e., reflects the current {@code getDisplayUnit()} value).
      */
     @Test
     void instantiateUsesCurrentDisplayUnit()
@@ -153,7 +139,7 @@ public class SIQuantityTest
      * (camel case with internal capitals).
      * <p>
      * Expected: {@code "SIQuantity"} becomes {@code "S i quantity"}.
-         */
+     */
     @Test
     void getNamePrettyFormatting()
     {
@@ -234,8 +220,8 @@ public class SIQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies fluent {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)} returns {@code this} and that
-     * equals/hashCode include both SI bits and the display unit.
+     * Verifies fluent {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)} returns {@code this} and that equals/hashCode
+     * include both SI bits and the display unit.
      */
     @Test
     void displayUnitFluentAndEquality()

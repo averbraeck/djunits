@@ -52,14 +52,8 @@ class IlluminanceTest
         assertEquals(Double.MAX_VALUE, Illuminance.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Illuminance.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Illuminance kilo = new Illuminance(2.0, Illuminance.Unit.klx); // 2 klx = 2000 lx
-        Illuminance copy = new Illuminance(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Illuminance eStr = new Illuminance(1.5, "lx");
+        Illuminance eStr = Illuminance.of(1.5, "lx");
         assertEquals(1.5, eStr.si(), 1E-12);
 
         // SI prefixes via resolved/derived units

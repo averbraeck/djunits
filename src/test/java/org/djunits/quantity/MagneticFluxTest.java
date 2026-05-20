@@ -51,14 +51,8 @@ class MagneticFluxTest
         assertEquals(Double.MAX_VALUE, MagneticFlux.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, MagneticFlux.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        MagneticFlux two = new MagneticFlux(2.0, MagneticFlux.Unit.Wb);
-        MagneticFlux copy = new MagneticFlux(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        MagneticFlux fromStr = new MagneticFlux(1.5, "Wb");
+        MagneticFlux fromStr = MagneticFlux.of(1.5, "Wb");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

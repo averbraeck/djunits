@@ -52,14 +52,8 @@ class ElectricalCapacitanceTest
         assertEquals(Double.MAX_VALUE, ElectricalCapacitance.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricalCapacitance.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricalCapacitance milli = new ElectricalCapacitance(2.0, ElectricalCapacitance.Unit.mF); // 2 mF = 0.002 F
-        ElectricalCapacitance copy = new ElectricalCapacitance(milli);
-        assertEquals(milli.si(), copy.si(), 1E-12);
-        assertEquals(milli.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        ElectricalCapacitance cStr = new ElectricalCapacitance(1.5, "F");
+        ElectricalCapacitance cStr = ElectricalCapacitance.of(1.5, "F");
         assertEquals(1.5, cStr.si(), 1E-12);
 
         // SI prefixes via generated / resolved units

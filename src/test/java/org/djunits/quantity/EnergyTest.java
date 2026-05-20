@@ -52,14 +52,8 @@ class EnergyTest
         assertEquals(Double.MAX_VALUE, Energy.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Energy.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Energy kilo = new Energy(2.0, Energy.Unit.kJ); // 2 kJ = 2000 J
-        Energy copy = new Energy(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Energy eStr = new Energy(1.5, "J");
+        Energy eStr = Energy.of(1.5, "J");
         assertEquals(1.5, eStr.si(), 1E-12);
 
         // SI prefixes via generated/resolved units

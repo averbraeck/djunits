@@ -52,13 +52,8 @@ class CatalyticActivityTest
         assertEquals(Double.MAX_VALUE, CatalyticActivity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, CatalyticActivity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        CatalyticActivity milli = new CatalyticActivity(2.0, CatalyticActivity.Unit.mkat); // 2 mkat = 2e-3 kat
-        CatalyticActivity copy = new CatalyticActivity(milli);
-        assertEquals(milli.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        CatalyticActivity cStr = new CatalyticActivity(1.5, "kat");
+        CatalyticActivity cStr = CatalyticActivity.of(1.5, "kat");
         assertEquals(1.5, cStr.si(), 1E-12);
 
         // SI prefixes via resolved units

@@ -62,14 +62,8 @@ class VolumeTest
         assertEquals(Double.MAX_VALUE, Volume.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Volume.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Volume two = new Volume(2.0, Volume.Unit.m3);
-        Volume copy = new Volume(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Volume fromStr = new Volume(1.5, "m3");
+        Volume fromStr = Volume.of(1.5, "m3");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of (class-specific NumberParser)

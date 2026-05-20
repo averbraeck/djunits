@@ -52,14 +52,8 @@ class FlowMassTest
         assertEquals(Double.MAX_VALUE, FlowMass.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, FlowMass.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        FlowMass poundsPerSec = new FlowMass(2.0, FlowMass.Unit.lb_s); // 2 lb/s = 2 * CONST_LB kg/s
-        FlowMass copy = new FlowMass(poundsPerSec);
-        assertEquals(poundsPerSec.si(), copy.si(), 1E-12);
-        assertEquals(poundsPerSec.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        FlowMass fmStr = new FlowMass(1.5, "kg/s");
+        FlowMass fmStr = FlowMass.of(1.5, "kg/s");
         assertEquals(1.5, fmStr.si(), 1E-12);
 
         // Derived unit conversion: 1 lb/s -> CONST_LB kg/s

@@ -52,13 +52,8 @@ class AngularVelocityTest
         assertEquals(Double.MAX_VALUE, AngularVelocity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, AngularVelocity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI (and display unit of source)
-        AngularVelocity degPerS = new AngularVelocity(180.0, AngularVelocity.Unit.deg_s);
-        AngularVelocity copy = new AngularVelocity(degPerS);
-        assertEquals(degPerS.si(), copy.si(), 1E-12);
-
         // Construct with abbreviation string
-        AngularVelocity wDeg = new AngularVelocity(180.0, "deg/s");
+        AngularVelocity wDeg = AngularVelocity.of(180.0, "deg/s");
         assertEquals(Math.PI, wDeg.si(), 1E-12);
 
         // Arcminute per second: 60'/s == 1 deg/s

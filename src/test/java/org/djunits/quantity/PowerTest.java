@@ -51,14 +51,8 @@ class PowerTest
         assertEquals(Double.MAX_VALUE, Power.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Power.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Power two = new Power(2.0, Power.Unit.W);
-        Power copy = new Power(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Power fromStr = new Power(1.5, "W");
+        Power fromStr = Power.of(1.5, "W");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

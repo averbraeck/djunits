@@ -52,14 +52,8 @@ class ElectricCurrentTest
         assertEquals(Double.MAX_VALUE, ElectricCurrent.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricCurrent.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricCurrent milli = new ElectricCurrent(2.0, ElectricCurrent.Unit.mA); // 2 mA = 0.002 A
-        ElectricCurrent copy = new ElectricCurrent(milli);
-        assertEquals(milli.si(), copy.si(), 1E-12);
-        assertEquals(milli.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        ElectricCurrent iStr = new ElectricCurrent(1.5, "A");
+        ElectricCurrent iStr = ElectricCurrent.of(1.5, "A");
         assertEquals(1.5, iStr.si(), 1E-12);
 
         // SI prefixes via generated/resolved units

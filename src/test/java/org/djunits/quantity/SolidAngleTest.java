@@ -51,14 +51,8 @@ class SolidAngleTest
         assertEquals(Double.MAX_VALUE, SolidAngle.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, SolidAngle.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        SolidAngle two = new SolidAngle(2.0, SolidAngle.Unit.sr);
-        SolidAngle copy = new SolidAngle(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        SolidAngle fromStr = new SolidAngle(1.5, "sr");
+        SolidAngle fromStr = SolidAngle.of(1.5, "sr");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

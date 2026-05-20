@@ -51,14 +51,8 @@ class LuminousFluxTest
         assertEquals(Double.MAX_VALUE, LuminousFlux.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, LuminousFlux.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        LuminousFlux two = new LuminousFlux(2.0, LuminousFlux.Unit.lm);
-        LuminousFlux copy = new LuminousFlux(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        LuminousFlux fromStr = new LuminousFlux(1.5, "lm");
+        LuminousFlux fromStr = LuminousFlux.of(1.5, "lm");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

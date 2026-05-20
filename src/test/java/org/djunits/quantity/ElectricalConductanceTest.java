@@ -52,14 +52,8 @@ class ElectricalConductanceTest
         assertEquals(Double.MAX_VALUE, ElectricalConductance.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricalConductance.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricalConductance milli = new ElectricalConductance(2.0, ElectricalConductance.Unit.mS); // 2 mS = 0.002 S
-        ElectricalConductance copy = new ElectricalConductance(milli);
-        assertEquals(milli.si(), copy.si(), 1E-12);
-        assertEquals(milli.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        ElectricalConductance gStr = new ElectricalConductance(1.5, "S");
+        ElectricalConductance gStr = ElectricalConductance.of(1.5, "S");
         assertEquals(1.5, gStr.si(), 1E-12);
 
         // SI prefixes via resolved units

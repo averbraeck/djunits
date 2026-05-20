@@ -46,9 +46,7 @@ class AbsorbedDoseTest
 
         var q2 = new AbsorbedDose(2.0, AbsorbedDose.Unit.mGy);
         assertEquals(0.002, q2.si());
-        var q3 = new AbsorbedDose(q2);
-        assertEquals(0.002, q3.si());
-        var q4 = new AbsorbedDose(4.0, "muGy");
+        var q4 = AbsorbedDose.of(4.0, "muGy");
         assertEquals(4.0E-6, q4.si());
         assertEquals(-10.1, q4.instantiateSi(-10.1).si());
         assertEquals("m2/s2", q4.siUnit().format(true, false));

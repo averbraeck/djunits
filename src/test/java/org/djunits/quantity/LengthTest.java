@@ -52,14 +52,8 @@ class LengthTest
         assertEquals(Double.MAX_VALUE, Length.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Length.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        Length kilo = new Length(2.0, Length.Unit.km); // 2 km = 2000 m
-        Length copy = new Length(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        Length lStr = new Length(1.5, "m");
+        Length lStr = Length.of(1.5, "m");
         assertEquals(1.5, lStr.si(), 1E-12);
 
         // SI prefixes via resolved units

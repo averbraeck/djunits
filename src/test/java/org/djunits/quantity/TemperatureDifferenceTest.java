@@ -49,14 +49,8 @@ class TemperatureDifferenceTest
         assertEquals(Double.MAX_VALUE, TemperatureDifference.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, TemperatureDifference.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        TemperatureDifference two = new TemperatureDifference(2.0, Temperature.Unit.SI);
-        TemperatureDifference copy = new TemperatureDifference(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string ("K")
-        TemperatureDifference fromStr = new TemperatureDifference(1.5, "K");
+        TemperatureDifference fromStr = TemperatureDifference.of(1.5, "K");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of

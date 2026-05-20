@@ -61,7 +61,7 @@ class TimeTest
         assertEquals(10.0, t1.si(), 1E-12);
         assertEquals(Time.Reference.UNIX, t1.getReference());
 
-        Time t2 = new Time(250.0, "ms", Time.Reference.UNIX);
+        Time t2 = Time.of(250.0, "ms", Time.Reference.UNIX);
         t2.setDisplayUnit(Duration.Unit.ms);
         assertEquals(250.0, t2.getInUnit(), 1E-12);
         assertEquals(Time.Reference.UNIX, t2.getReference());

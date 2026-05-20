@@ -61,14 +61,8 @@ class TorqueTest
         assertEquals(Double.MAX_VALUE, Torque.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, Torque.NEG_MAXVALUE.si());
 
-        // Copy constructor
-        Torque two = new Torque(2.0, Torque.Unit.Nm);
-        Torque copy = new Torque(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct from abbreviation string
-        Torque s = new Torque(1.5, "Nm");
+        Torque s = Torque.of(1.5, "Nm");
         assertEquals(1.5, s.si(), 1E-12);
 
         // Parsing helpers

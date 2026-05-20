@@ -52,14 +52,8 @@ class ElectricalResistanceTest
         assertEquals(Double.MAX_VALUE, ElectricalResistance.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, ElectricalResistance.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        ElectricalResistance kilo = new ElectricalResistance(2.0, ElectricalResistance.Unit.kohm); // 2 kΩ = 2000 Ω
-        ElectricalResistance copy = new ElectricalResistance(kilo);
-        assertEquals(kilo.si(), copy.si(), 1E-9);
-        assertEquals(kilo.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string (id)
-        ElectricalResistance rStr = new ElectricalResistance(1.5, "ohm"); // base Ω
+        ElectricalResistance rStr = ElectricalResistance.of(1.5, "ohm"); // base Ω
         assertEquals(1.5, rStr.si(), 1E-12);
 
         // SI prefixes via resolved units

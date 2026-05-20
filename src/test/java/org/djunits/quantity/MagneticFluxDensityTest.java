@@ -51,14 +51,8 @@ class MagneticFluxDensityTest
         assertEquals(Double.MAX_VALUE, MagneticFluxDensity.POS_MAXVALUE.si());
         assertEquals(-Double.MAX_VALUE, MagneticFluxDensity.NEG_MAXVALUE.si());
 
-        // Copy constructor preserves SI and display unit
-        MagneticFluxDensity two = new MagneticFluxDensity(2.0, MagneticFluxDensity.Unit.T);
-        MagneticFluxDensity copy = new MagneticFluxDensity(two);
-        assertEquals(two.si(), copy.si(), 1E-12);
-        assertEquals(two.getDisplayUnit(), copy.getDisplayUnit());
-
         // Construct with abbreviation string
-        MagneticFluxDensity fromStr = new MagneticFluxDensity(1.5, "T");
+        MagneticFluxDensity fromStr = MagneticFluxDensity.of(1.5, "T");
         assertEquals(1.5, fromStr.si(), 1E-12);
 
         // Parsing via valueOf and of
