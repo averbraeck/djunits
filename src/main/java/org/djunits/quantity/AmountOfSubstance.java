@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class AmountOfSubstance extends Quantity<AmountOfSubstance>
 {
     /** Constant with value zero. */
-    public static final AmountOfSubstance ZERO = AmountOfSubstance.ofSi(0.0);
+    public static final AmountOfSubstance ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final AmountOfSubstance ONE = AmountOfSubstance.ofSi(1.0);
+    public static final AmountOfSubstance ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final AmountOfSubstance NaN = AmountOfSubstance.ofSi(Double.NaN);
+    public static final AmountOfSubstance NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final AmountOfSubstance POSITIVE_INFINITY = AmountOfSubstance.ofSi(Double.POSITIVE_INFINITY);
+    public static final AmountOfSubstance POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final AmountOfSubstance NEGATIVE_INFINITY = AmountOfSubstance.ofSi(Double.NEGATIVE_INFINITY);
+    public static final AmountOfSubstance NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final AmountOfSubstance POS_MAXVALUE = AmountOfSubstance.ofSi(Double.MAX_VALUE);
+    public static final AmountOfSubstance POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final AmountOfSubstance NEG_MAXVALUE = AmountOfSubstance.ofSi(-Double.MAX_VALUE);
+    public static final AmountOfSubstance NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

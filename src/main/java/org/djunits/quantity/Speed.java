@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Speed extends Quantity<Speed>
 {
     /** Constant with value zero. */
-    public static final Speed ZERO = Speed.ofSi(0.0);
+    public static final Speed ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Speed ONE = Speed.ofSi(1.0);
+    public static final Speed ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Speed NaN = Speed.ofSi(Double.NaN);
+    public static final Speed NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Speed POSITIVE_INFINITY = Speed.ofSi(Double.POSITIVE_INFINITY);
+    public static final Speed POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Speed NEGATIVE_INFINITY = Speed.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Speed NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Speed POS_MAXVALUE = Speed.ofSi(Double.MAX_VALUE);
+    public static final Speed POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Speed NEG_MAXVALUE = Speed.ofSi(-Double.MAX_VALUE);
+    public static final Speed NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

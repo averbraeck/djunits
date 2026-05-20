@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Pressure extends Quantity<Pressure>
 {
     /** Constant with value zero. */
-    public static final Pressure ZERO = Pressure.ofSi(0.0);
+    public static final Pressure ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Pressure ONE = Pressure.ofSi(1.0);
+    public static final Pressure ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Pressure NaN = Pressure.ofSi(Double.NaN);
+    public static final Pressure NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Pressure POSITIVE_INFINITY = Pressure.ofSi(Double.POSITIVE_INFINITY);
+    public static final Pressure POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Pressure NEGATIVE_INFINITY = Pressure.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Pressure NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Pressure POS_MAXVALUE = Pressure.ofSi(Double.MAX_VALUE);
+    public static final Pressure POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Pressure NEG_MAXVALUE = Pressure.ofSi(-Double.MAX_VALUE);
+    public static final Pressure NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

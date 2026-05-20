@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class SolidAngle extends Quantity<SolidAngle>
 {
     /** Constant with value zero. */
-    public static final SolidAngle ZERO = SolidAngle.ofSi(0.0);
+    public static final SolidAngle ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final SolidAngle ONE = SolidAngle.ofSi(1.0);
+    public static final SolidAngle ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final SolidAngle NaN = SolidAngle.ofSi(Double.NaN);
+    public static final SolidAngle NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final SolidAngle POSITIVE_INFINITY = SolidAngle.ofSi(Double.POSITIVE_INFINITY);
+    public static final SolidAngle POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final SolidAngle NEGATIVE_INFINITY = SolidAngle.ofSi(Double.NEGATIVE_INFINITY);
+    public static final SolidAngle NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final SolidAngle POS_MAXVALUE = SolidAngle.ofSi(Double.MAX_VALUE);
+    public static final SolidAngle POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final SolidAngle NEG_MAXVALUE = SolidAngle.ofSi(-Double.MAX_VALUE);
+    public static final SolidAngle NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

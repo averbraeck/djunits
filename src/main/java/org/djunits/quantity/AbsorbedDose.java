@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class AbsorbedDose extends Quantity<AbsorbedDose>
 {
     /** Constant with value zero. */
-    public static final AbsorbedDose ZERO = AbsorbedDose.ofSi(0.0);
+    public static final AbsorbedDose ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final AbsorbedDose ONE = AbsorbedDose.ofSi(1.0);
+    public static final AbsorbedDose ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final AbsorbedDose NaN = AbsorbedDose.ofSi(Double.NaN);
+    public static final AbsorbedDose NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final AbsorbedDose POSITIVE_INFINITY = AbsorbedDose.ofSi(Double.POSITIVE_INFINITY);
+    public static final AbsorbedDose POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final AbsorbedDose NEGATIVE_INFINITY = AbsorbedDose.ofSi(Double.NEGATIVE_INFINITY);
+    public static final AbsorbedDose NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final AbsorbedDose POS_MAXVALUE = AbsorbedDose.ofSi(Double.MAX_VALUE);
+    public static final AbsorbedDose POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final AbsorbedDose NEG_MAXVALUE = AbsorbedDose.ofSi(-Double.MAX_VALUE);
+    public static final AbsorbedDose NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

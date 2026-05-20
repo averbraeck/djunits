@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class ElectricalCapacitance extends Quantity<ElectricalCapacitance>
 {
     /** Constant with value zero. */
-    public static final ElectricalCapacitance ZERO = ElectricalCapacitance.ofSi(0.0);
+    public static final ElectricalCapacitance ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ElectricalCapacitance ONE = ElectricalCapacitance.ofSi(1.0);
+    public static final ElectricalCapacitance ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ElectricalCapacitance NaN = ElectricalCapacitance.ofSi(Double.NaN);
+    public static final ElectricalCapacitance NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ElectricalCapacitance POSITIVE_INFINITY = ElectricalCapacitance.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricalCapacitance POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ElectricalCapacitance NEGATIVE_INFINITY = ElectricalCapacitance.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricalCapacitance NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ElectricalCapacitance POS_MAXVALUE = ElectricalCapacitance.ofSi(Double.MAX_VALUE);
+    public static final ElectricalCapacitance POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ElectricalCapacitance NEG_MAXVALUE = ElectricalCapacitance.ofSi(-Double.MAX_VALUE);
+    public static final ElectricalCapacitance NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

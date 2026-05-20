@@ -22,38 +22,38 @@ import org.djunits.unit.system.UnitSystem;
 public class Angle extends Quantity<Angle>
 {
     /** Constant with value zero radians. */
-    public static final Angle ZERO = Angle.ofSi(0.0);
+    public static final Angle ZERO = ofSi(0.0);
 
     /** Constant with value pi radians. */
-    public static final Angle PI = Angle.ofSi(Math.PI);
+    public static final Angle PI = ofSi(Math.PI);
 
     /** Constant with value pi/2 radians. */
-    public static final Angle HALF_PI = Angle.ofSi(Math.PI / 2.0);
+    public static final Angle HALF_PI = ofSi(Math.PI / 2.0);
 
     /** Constant with value 2 pi radians. */
-    public static final Angle TWO_PI = Angle.ofSi(Math.PI * 2.0);
+    public static final Angle TWO_PI = ofSi(Math.PI * 2.0);
 
     /** Constant with value tau radians. */
-    public static final Angle TAU = Angle.ofSi(Math.PI * 2.0);
+    public static final Angle TAU = ofSi(Math.PI * 2.0);
 
     /** Constant with value one radian. */
-    public static final Angle ONE = Angle.ofSi(1.0);
+    public static final Angle ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Angle NaN = Angle.ofSi(Double.NaN);
+    public static final Angle NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Angle POSITIVE_INFINITY = Angle.ofSi(Double.POSITIVE_INFINITY);
+    public static final Angle POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Angle NEGATIVE_INFINITY = Angle.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Angle NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Angle POS_MAXVALUE = Angle.ofSi(Double.MAX_VALUE);
+    public static final Angle POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Angle NEG_MAXVALUE = Angle.ofSi(-Double.MAX_VALUE);
+    public static final Angle NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

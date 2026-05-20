@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Energy extends Quantity<Energy>
 {
     /** Constant with value zero. */
-    public static final Energy ZERO = Energy.ofSi(0.0);
+    public static final Energy ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Energy ONE = Energy.ofSi(1.0);
+    public static final Energy ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Energy NaN = Energy.ofSi(Double.NaN);
+    public static final Energy NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Energy POSITIVE_INFINITY = Energy.ofSi(Double.POSITIVE_INFINITY);
+    public static final Energy POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Energy NEGATIVE_INFINITY = Energy.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Energy NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Energy POS_MAXVALUE = Energy.ofSi(Double.MAX_VALUE);
+    public static final Energy POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Energy NEG_MAXVALUE = Energy.ofSi(-Double.MAX_VALUE);
+    public static final Energy NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Density extends Quantity<Density>
 {
     /** Constant with value zero. */
-    public static final Density ZERO = Density.ofSi(0.0);
+    public static final Density ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Density ONE = Density.ofSi(1.0);
+    public static final Density ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Density NaN = Density.ofSi(Double.NaN);
+    public static final Density NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Density POSITIVE_INFINITY = Density.ofSi(Double.POSITIVE_INFINITY);
+    public static final Density POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Density NEGATIVE_INFINITY = Density.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Density NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Density POS_MAXVALUE = Density.ofSi(Double.MAX_VALUE);
+    public static final Density POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Density NEG_MAXVALUE = Density.ofSi(-Double.MAX_VALUE);
+    public static final Density NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

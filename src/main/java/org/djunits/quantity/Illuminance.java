@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Illuminance extends Quantity<Illuminance>
 {
     /** Constant with value zero. */
-    public static final Illuminance ZERO = Illuminance.ofSi(0.0);
+    public static final Illuminance ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Illuminance ONE = Illuminance.ofSi(1.0);
+    public static final Illuminance ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Illuminance NaN = Illuminance.ofSi(Double.NaN);
+    public static final Illuminance NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Illuminance POSITIVE_INFINITY = Illuminance.ofSi(Double.POSITIVE_INFINITY);
+    public static final Illuminance POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Illuminance NEGATIVE_INFINITY = Illuminance.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Illuminance NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Illuminance POS_MAXVALUE = Illuminance.ofSi(Double.MAX_VALUE);
+    public static final Illuminance POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Illuminance NEG_MAXVALUE = Illuminance.ofSi(-Double.MAX_VALUE);
+    public static final Illuminance NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

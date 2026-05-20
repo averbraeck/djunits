@@ -15,26 +15,26 @@ import org.djunits.unit.si.SIUnit;
 public class Dimensionless extends Quantity<Dimensionless>
 {
     /** Constant with value zero. */
-    public static final Dimensionless ZERO = Dimensionless.ofSi(0.0);
+    public static final Dimensionless ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Dimensionless ONE = Dimensionless.ofSi(1.0);
+    public static final Dimensionless ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Dimensionless NaN = Dimensionless.ofSi(Double.NaN);
+    public static final Dimensionless NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Dimensionless POSITIVE_INFINITY = Dimensionless.ofSi(Double.POSITIVE_INFINITY);
+    public static final Dimensionless POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Dimensionless NEGATIVE_INFINITY = Dimensionless.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Dimensionless NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Dimensionless POS_MAXVALUE = Dimensionless.ofSi(Double.MAX_VALUE);
+    public static final Dimensionless POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Dimensionless NEG_MAXVALUE = Dimensionless.ofSi(-Double.MAX_VALUE);
+    public static final Dimensionless NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

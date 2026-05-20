@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class ArealObjectDensity extends Quantity<ArealObjectDensity>
 {
     /** Constant with value zero. */
-    public static final ArealObjectDensity ZERO = ArealObjectDensity.ofSi(0.0);
+    public static final ArealObjectDensity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ArealObjectDensity ONE = ArealObjectDensity.ofSi(1.0);
+    public static final ArealObjectDensity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ArealObjectDensity NaN = ArealObjectDensity.ofSi(Double.NaN);
+    public static final ArealObjectDensity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ArealObjectDensity POSITIVE_INFINITY = ArealObjectDensity.ofSi(Double.POSITIVE_INFINITY);
+    public static final ArealObjectDensity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ArealObjectDensity NEGATIVE_INFINITY = ArealObjectDensity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ArealObjectDensity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ArealObjectDensity POS_MAXVALUE = ArealObjectDensity.ofSi(Double.MAX_VALUE);
+    public static final ArealObjectDensity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ArealObjectDensity NEG_MAXVALUE = ArealObjectDensity.ofSi(-Double.MAX_VALUE);
+    public static final ArealObjectDensity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

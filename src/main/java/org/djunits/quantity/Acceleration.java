@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Acceleration extends Quantity<Acceleration>
 {
     /** Constant with value zero. */
-    public static final Acceleration ZERO = Acceleration.ofSi(0.0);
+    public static final Acceleration ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Acceleration ONE = Acceleration.ofSi(1.0);
+    public static final Acceleration ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Acceleration NaN = Acceleration.ofSi(Double.NaN);
+    public static final Acceleration NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Acceleration POSITIVE_INFINITY = Acceleration.ofSi(Double.POSITIVE_INFINITY);
+    public static final Acceleration POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Acceleration NEGATIVE_INFINITY = Acceleration.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Acceleration NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Acceleration POS_MAXVALUE = Acceleration.ofSi(Double.MAX_VALUE);
+    public static final Acceleration POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Acceleration NEG_MAXVALUE = Acceleration.ofSi(-Double.MAX_VALUE);
+    public static final Acceleration NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class EquivalentDose extends Quantity<EquivalentDose>
 {
     /** Constant with value zero. */
-    public static final EquivalentDose ZERO = EquivalentDose.ofSi(0.0);
+    public static final EquivalentDose ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final EquivalentDose ONE = EquivalentDose.ofSi(1.0);
+    public static final EquivalentDose ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final EquivalentDose NaN = EquivalentDose.ofSi(Double.NaN);
+    public static final EquivalentDose NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final EquivalentDose POSITIVE_INFINITY = EquivalentDose.ofSi(Double.POSITIVE_INFINITY);
+    public static final EquivalentDose POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final EquivalentDose NEGATIVE_INFINITY = EquivalentDose.ofSi(Double.NEGATIVE_INFINITY);
+    public static final EquivalentDose NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final EquivalentDose POS_MAXVALUE = EquivalentDose.ofSi(Double.MAX_VALUE);
+    public static final EquivalentDose POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final EquivalentDose NEG_MAXVALUE = EquivalentDose.ofSi(-Double.MAX_VALUE);
+    public static final EquivalentDose NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

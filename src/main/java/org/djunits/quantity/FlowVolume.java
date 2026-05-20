@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class FlowVolume extends Quantity<FlowVolume>
 {
     /** Constant with value zero. */
-    public static final FlowVolume ZERO = FlowVolume.ofSi(0.0);
+    public static final FlowVolume ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final FlowVolume ONE = FlowVolume.ofSi(1.0);
+    public static final FlowVolume ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final FlowVolume NaN = FlowVolume.ofSi(Double.NaN);
+    public static final FlowVolume NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final FlowVolume POSITIVE_INFINITY = FlowVolume.ofSi(Double.POSITIVE_INFINITY);
+    public static final FlowVolume POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final FlowVolume NEGATIVE_INFINITY = FlowVolume.ofSi(Double.NEGATIVE_INFINITY);
+    public static final FlowVolume NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final FlowVolume POS_MAXVALUE = FlowVolume.ofSi(Double.MAX_VALUE);
+    public static final FlowVolume POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final FlowVolume NEG_MAXVALUE = FlowVolume.ofSi(-Double.MAX_VALUE);
+    public static final FlowVolume NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

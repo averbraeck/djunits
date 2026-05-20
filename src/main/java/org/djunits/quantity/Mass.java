@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Mass extends Quantity<Mass>
 {
     /** Constant with value zero. */
-    public static final Mass ZERO = Mass.ofSi(0.0);
+    public static final Mass ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Mass ONE = Mass.ofSi(1.0);
+    public static final Mass ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Mass NaN = Mass.ofSi(Double.NaN);
+    public static final Mass NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Mass POSITIVE_INFINITY = Mass.ofSi(Double.POSITIVE_INFINITY);
+    public static final Mass POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Mass NEGATIVE_INFINITY = Mass.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Mass NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Mass POS_MAXVALUE = Mass.ofSi(Double.MAX_VALUE);
+    public static final Mass POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Mass NEG_MAXVALUE = Mass.ofSi(-Double.MAX_VALUE);
+    public static final Mass NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

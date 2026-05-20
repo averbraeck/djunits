@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Frequency extends Quantity<Frequency>
 {
     /** Constant with value zero. */
-    public static final Frequency ZERO = Frequency.ofSi(0.0);
+    public static final Frequency ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Frequency ONE = Frequency.ofSi(1.0);
+    public static final Frequency ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Frequency NaN = Frequency.ofSi(Double.NaN);
+    public static final Frequency NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Frequency POSITIVE_INFINITY = Frequency.ofSi(Double.POSITIVE_INFINITY);
+    public static final Frequency POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Frequency NEGATIVE_INFINITY = Frequency.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Frequency NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Frequency POS_MAXVALUE = Frequency.ofSi(Double.MAX_VALUE);
+    public static final Frequency POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Frequency NEG_MAXVALUE = Frequency.ofSi(-Double.MAX_VALUE);
+    public static final Frequency NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

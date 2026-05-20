@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Torque extends Quantity<Torque>
 {
     /** Constant with value zero. */
-    public static final Torque ZERO = Torque.ofSi(0.0);
+    public static final Torque ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Torque ONE = Torque.ofSi(1.0);
+    public static final Torque ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Torque NaN = Torque.ofSi(Double.NaN);
+    public static final Torque NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Torque POSITIVE_INFINITY = Torque.ofSi(Double.POSITIVE_INFINITY);
+    public static final Torque POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Torque NEGATIVE_INFINITY = Torque.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Torque NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Torque POS_MAXVALUE = Torque.ofSi(Double.MAX_VALUE);
+    public static final Torque POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Torque NEG_MAXVALUE = Torque.ofSi(-Double.MAX_VALUE);
+    public static final Torque NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

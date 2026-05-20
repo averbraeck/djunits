@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class FlowMass extends Quantity<FlowMass>
 {
     /** Constant with value zero. */
-    public static final FlowMass ZERO = FlowMass.ofSi(0.0);
+    public static final FlowMass ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final FlowMass ONE = FlowMass.ofSi(1.0);
+    public static final FlowMass ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final FlowMass NaN = FlowMass.ofSi(Double.NaN);
+    public static final FlowMass NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final FlowMass POSITIVE_INFINITY = FlowMass.ofSi(Double.POSITIVE_INFINITY);
+    public static final FlowMass POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final FlowMass NEGATIVE_INFINITY = FlowMass.ofSi(Double.NEGATIVE_INFINITY);
+    public static final FlowMass NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final FlowMass POS_MAXVALUE = FlowMass.ofSi(Double.MAX_VALUE);
+    public static final FlowMass POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final FlowMass NEG_MAXVALUE = FlowMass.ofSi(-Double.MAX_VALUE);
+    public static final FlowMass NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

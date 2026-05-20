@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Length extends Quantity<Length>
 {
     /** Constant with value zero. */
-    public static final Length ZERO = Length.ofSi(0.0);
+    public static final Length ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Length ONE = Length.ofSi(1.0);
+    public static final Length ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Length NaN = Length.ofSi(Double.NaN);
+    public static final Length NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Length POSITIVE_INFINITY = Length.ofSi(Double.POSITIVE_INFINITY);
+    public static final Length POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Length NEGATIVE_INFINITY = Length.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Length NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Length POS_MAXVALUE = Length.ofSi(Double.MAX_VALUE);
+    public static final Length POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Length NEG_MAXVALUE = Length.ofSi(-Double.MAX_VALUE);
+    public static final Length NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

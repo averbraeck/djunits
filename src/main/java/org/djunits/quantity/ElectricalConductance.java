@@ -22,26 +22,26 @@ import org.djunits.unit.system.UnitSystem;
 public class ElectricalConductance extends Quantity<ElectricalConductance>
 {
     /** Constant with value zero. */
-    public static final ElectricalConductance ZERO = ElectricalConductance.ofSi(0.0);
+    public static final ElectricalConductance ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ElectricalConductance ONE = ElectricalConductance.ofSi(1.0);
+    public static final ElectricalConductance ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ElectricalConductance NaN = ElectricalConductance.ofSi(Double.NaN);
+    public static final ElectricalConductance NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ElectricalConductance POSITIVE_INFINITY = ElectricalConductance.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricalConductance POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ElectricalConductance NEGATIVE_INFINITY = ElectricalConductance.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricalConductance NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ElectricalConductance POS_MAXVALUE = ElectricalConductance.ofSi(Double.MAX_VALUE);
+    public static final ElectricalConductance POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ElectricalConductance NEG_MAXVALUE = ElectricalConductance.ofSi(-Double.MAX_VALUE);
+    public static final ElectricalConductance NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

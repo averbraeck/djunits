@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
 {
     /** Constant with value zero. */
-    public static final MagneticFluxDensity ZERO = MagneticFluxDensity.ofSi(0.0);
+    public static final MagneticFluxDensity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final MagneticFluxDensity ONE = MagneticFluxDensity.ofSi(1.0);
+    public static final MagneticFluxDensity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final MagneticFluxDensity NaN = MagneticFluxDensity.ofSi(Double.NaN);
+    public static final MagneticFluxDensity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final MagneticFluxDensity POSITIVE_INFINITY = MagneticFluxDensity.ofSi(Double.POSITIVE_INFINITY);
+    public static final MagneticFluxDensity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final MagneticFluxDensity NEGATIVE_INFINITY = MagneticFluxDensity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final MagneticFluxDensity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final MagneticFluxDensity POS_MAXVALUE = MagneticFluxDensity.ofSi(Double.MAX_VALUE);
+    public static final MagneticFluxDensity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final MagneticFluxDensity NEG_MAXVALUE = MagneticFluxDensity.ofSi(-Double.MAX_VALUE);
+    public static final MagneticFluxDensity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

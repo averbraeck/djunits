@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class RadioActivity extends Quantity<RadioActivity>
 {
     /** Constant with value zero. */
-    public static final RadioActivity ZERO = RadioActivity.ofSi(0.0);
+    public static final RadioActivity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final RadioActivity ONE = RadioActivity.ofSi(1.0);
+    public static final RadioActivity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final RadioActivity NaN = RadioActivity.ofSi(Double.NaN);
+    public static final RadioActivity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final RadioActivity POSITIVE_INFINITY = RadioActivity.ofSi(Double.POSITIVE_INFINITY);
+    public static final RadioActivity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final RadioActivity NEGATIVE_INFINITY = RadioActivity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final RadioActivity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final RadioActivity POS_MAXVALUE = RadioActivity.ofSi(Double.MAX_VALUE);
+    public static final RadioActivity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final RadioActivity NEG_MAXVALUE = RadioActivity.ofSi(-Double.MAX_VALUE);
+    public static final RadioActivity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

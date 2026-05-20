@@ -17,26 +17,26 @@ import org.djunits.unit.si.SIUnit;
 public class TemperatureDifference extends Quantity<TemperatureDifference>
 {
     /** Constant with value zero. */
-    public static final TemperatureDifference ZERO = TemperatureDifference.ofSi(0.0);
+    public static final TemperatureDifference ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final TemperatureDifference ONE = TemperatureDifference.ofSi(1.0);
+    public static final TemperatureDifference ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final TemperatureDifference NaN = TemperatureDifference.ofSi(Double.NaN);
+    public static final TemperatureDifference NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final TemperatureDifference POSITIVE_INFINITY = TemperatureDifference.ofSi(Double.POSITIVE_INFINITY);
+    public static final TemperatureDifference POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final TemperatureDifference NEGATIVE_INFINITY = TemperatureDifference.ofSi(Double.NEGATIVE_INFINITY);
+    public static final TemperatureDifference NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final TemperatureDifference POS_MAXVALUE = TemperatureDifference.ofSi(Double.MAX_VALUE);
+    public static final TemperatureDifference POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final TemperatureDifference NEG_MAXVALUE = TemperatureDifference.ofSi(-Double.MAX_VALUE);
+    public static final TemperatureDifference NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

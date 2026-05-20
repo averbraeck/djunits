@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class LinearObjectDensity extends Quantity<LinearObjectDensity>
 {
     /** Constant with value zero. */
-    public static final LinearObjectDensity ZERO = LinearObjectDensity.ofSi(0.0);
+    public static final LinearObjectDensity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final LinearObjectDensity ONE = LinearObjectDensity.ofSi(1.0);
+    public static final LinearObjectDensity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final LinearObjectDensity NaN = LinearObjectDensity.ofSi(Double.NaN);
+    public static final LinearObjectDensity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final LinearObjectDensity POSITIVE_INFINITY = LinearObjectDensity.ofSi(Double.POSITIVE_INFINITY);
+    public static final LinearObjectDensity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final LinearObjectDensity NEGATIVE_INFINITY = LinearObjectDensity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final LinearObjectDensity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final LinearObjectDensity POS_MAXVALUE = LinearObjectDensity.ofSi(Double.MAX_VALUE);
+    public static final LinearObjectDensity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final LinearObjectDensity NEG_MAXVALUE = LinearObjectDensity.ofSi(-Double.MAX_VALUE);
+    public static final LinearObjectDensity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

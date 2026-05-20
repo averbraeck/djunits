@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Force extends Quantity<Force>
 {
     /** Constant with value zero. */
-    public static final Force ZERO = Force.ofSi(0.0);
+    public static final Force ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Force ONE = Force.ofSi(1.0);
+    public static final Force ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Force NaN = Force.ofSi(Double.NaN);
+    public static final Force NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Force POSITIVE_INFINITY = Force.ofSi(Double.POSITIVE_INFINITY);
+    public static final Force POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Force NEGATIVE_INFINITY = Force.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Force NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Force POS_MAXVALUE = Force.ofSi(Double.MAX_VALUE);
+    public static final Force POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Force NEG_MAXVALUE = Force.ofSi(-Double.MAX_VALUE);
+    public static final Force NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

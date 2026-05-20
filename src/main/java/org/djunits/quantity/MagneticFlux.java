@@ -21,26 +21,26 @@ import org.djunits.unit.system.UnitSystem;
 public class MagneticFlux extends Quantity<MagneticFlux>
 {
     /** Constant with value zero. */
-    public static final MagneticFlux ZERO = MagneticFlux.ofSi(0.0);
+    public static final MagneticFlux ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final MagneticFlux ONE = MagneticFlux.ofSi(1.0);
+    public static final MagneticFlux ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final MagneticFlux NaN = MagneticFlux.ofSi(Double.NaN);
+    public static final MagneticFlux NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final MagneticFlux POSITIVE_INFINITY = MagneticFlux.ofSi(Double.POSITIVE_INFINITY);
+    public static final MagneticFlux POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final MagneticFlux NEGATIVE_INFINITY = MagneticFlux.ofSi(Double.NEGATIVE_INFINITY);
+    public static final MagneticFlux NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final MagneticFlux POS_MAXVALUE = MagneticFlux.ofSi(Double.MAX_VALUE);
+    public static final MagneticFlux POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final MagneticFlux NEG_MAXVALUE = MagneticFlux.ofSi(-Double.MAX_VALUE);
+    public static final MagneticFlux NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

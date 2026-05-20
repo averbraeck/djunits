@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class LuminousFlux extends Quantity<LuminousFlux>
 {
     /** Constant with value zero. */
-    public static final LuminousFlux ZERO = LuminousFlux.ofSi(0.0);
+    public static final LuminousFlux ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final LuminousFlux ONE = LuminousFlux.ofSi(1.0);
+    public static final LuminousFlux ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final LuminousFlux NaN = LuminousFlux.ofSi(Double.NaN);
+    public static final LuminousFlux NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final LuminousFlux POSITIVE_INFINITY = LuminousFlux.ofSi(Double.POSITIVE_INFINITY);
+    public static final LuminousFlux POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final LuminousFlux NEGATIVE_INFINITY = LuminousFlux.ofSi(Double.NEGATIVE_INFINITY);
+    public static final LuminousFlux NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final LuminousFlux POS_MAXVALUE = LuminousFlux.ofSi(Double.MAX_VALUE);
+    public static final LuminousFlux POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final LuminousFlux NEG_MAXVALUE = LuminousFlux.ofSi(-Double.MAX_VALUE);
+    public static final LuminousFlux NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

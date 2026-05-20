@@ -23,26 +23,26 @@ import org.djunits.unit.system.UnitSystem;
 public class ElectricalResistance extends Quantity<ElectricalResistance>
 {
     /** Constant with value zero. */
-    public static final ElectricalResistance ZERO = ElectricalResistance.ofSi(0.0);
+    public static final ElectricalResistance ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final ElectricalResistance ONE = ElectricalResistance.ofSi(1.0);
+    public static final ElectricalResistance ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final ElectricalResistance NaN = ElectricalResistance.ofSi(Double.NaN);
+    public static final ElectricalResistance NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final ElectricalResistance POSITIVE_INFINITY = ElectricalResistance.ofSi(Double.POSITIVE_INFINITY);
+    public static final ElectricalResistance POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final ElectricalResistance NEGATIVE_INFINITY = ElectricalResistance.ofSi(Double.NEGATIVE_INFINITY);
+    public static final ElectricalResistance NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final ElectricalResistance POS_MAXVALUE = ElectricalResistance.ofSi(Double.MAX_VALUE);
+    public static final ElectricalResistance POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final ElectricalResistance NEG_MAXVALUE = ElectricalResistance.ofSi(-Double.MAX_VALUE);
+    public static final ElectricalResistance NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

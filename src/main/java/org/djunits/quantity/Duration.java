@@ -23,26 +23,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Duration extends Quantity<Duration>
 {
     /** Constant with value zero. */
-    public static final Duration ZERO = Duration.ofSi(0.0);
+    public static final Duration ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Duration ONE = Duration.ofSi(1.0);
+    public static final Duration ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Duration NaN = Duration.ofSi(Double.NaN);
+    public static final Duration NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Duration POSITIVE_INFINITY = Duration.ofSi(Double.POSITIVE_INFINITY);
+    public static final Duration POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Duration NEGATIVE_INFINITY = Duration.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Duration NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Duration POS_MAXVALUE = Duration.ofSi(Double.MAX_VALUE);
+    public static final Duration POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Duration NEG_MAXVALUE = Duration.ofSi(-Double.MAX_VALUE);
+    public static final Duration NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

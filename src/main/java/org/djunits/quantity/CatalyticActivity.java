@@ -22,26 +22,26 @@ import org.djunits.unit.system.UnitSystem;
 public class CatalyticActivity extends Quantity<CatalyticActivity>
 {
     /** Constant with value zero. */
-    public static final CatalyticActivity ZERO = CatalyticActivity.ofSi(0.0);
+    public static final CatalyticActivity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final CatalyticActivity ONE = CatalyticActivity.ofSi(1.0);
+    public static final CatalyticActivity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final CatalyticActivity NaN = CatalyticActivity.ofSi(Double.NaN);
+    public static final CatalyticActivity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final CatalyticActivity POSITIVE_INFINITY = CatalyticActivity.ofSi(Double.POSITIVE_INFINITY);
+    public static final CatalyticActivity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final CatalyticActivity NEGATIVE_INFINITY = CatalyticActivity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final CatalyticActivity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final CatalyticActivity POS_MAXVALUE = CatalyticActivity.ofSi(Double.MAX_VALUE);
+    public static final CatalyticActivity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final CatalyticActivity NEG_MAXVALUE = CatalyticActivity.ofSi(-Double.MAX_VALUE);
+    public static final CatalyticActivity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

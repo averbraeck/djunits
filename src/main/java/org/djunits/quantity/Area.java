@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class Area extends Quantity<Area>
 {
     /** Constant with value zero. */
-    public static final Area ZERO = Area.ofSi(0.0);
+    public static final Area ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final Area ONE = Area.ofSi(1.0);
+    public static final Area ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final Area NaN = Area.ofSi(Double.NaN);
+    public static final Area NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final Area POSITIVE_INFINITY = Area.ofSi(Double.POSITIVE_INFINITY);
+    public static final Area POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final Area NEGATIVE_INFINITY = Area.ofSi(Double.NEGATIVE_INFINITY);
+    public static final Area NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final Area POS_MAXVALUE = Area.ofSi(Double.MAX_VALUE);
+    public static final Area POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final Area NEG_MAXVALUE = Area.ofSi(-Double.MAX_VALUE);
+    public static final Area NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

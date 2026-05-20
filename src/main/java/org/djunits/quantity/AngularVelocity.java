@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class AngularVelocity extends Quantity<AngularVelocity>
 {
     /** Constant with value zero. */
-    public static final AngularVelocity ZERO = AngularVelocity.ofSi(0.0);
+    public static final AngularVelocity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final AngularVelocity ONE = AngularVelocity.ofSi(1.0);
+    public static final AngularVelocity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final AngularVelocity NaN = AngularVelocity.ofSi(Double.NaN);
+    public static final AngularVelocity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final AngularVelocity POSITIVE_INFINITY = AngularVelocity.ofSi(Double.POSITIVE_INFINITY);
+    public static final AngularVelocity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final AngularVelocity NEGATIVE_INFINITY = AngularVelocity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final AngularVelocity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final AngularVelocity POS_MAXVALUE = AngularVelocity.ofSi(Double.MAX_VALUE);
+    public static final AngularVelocity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final AngularVelocity NEG_MAXVALUE = AngularVelocity.ofSi(-Double.MAX_VALUE);
+    public static final AngularVelocity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;

@@ -20,26 +20,26 @@ import org.djunits.unit.system.UnitSystem;
 public class LuminousIntensity extends Quantity<LuminousIntensity>
 {
     /** Constant with value zero. */
-    public static final LuminousIntensity ZERO = LuminousIntensity.ofSi(0.0);
+    public static final LuminousIntensity ZERO = ofSi(0.0);
 
     /** Constant with value one. */
-    public static final LuminousIntensity ONE = LuminousIntensity.ofSi(1.0);
+    public static final LuminousIntensity ONE = ofSi(1.0);
 
     /** Constant with value NaN. */
     @SuppressWarnings("checkstyle:constantname")
-    public static final LuminousIntensity NaN = LuminousIntensity.ofSi(Double.NaN);
+    public static final LuminousIntensity NaN = ofSi(Double.NaN);
 
     /** Constant with value POSITIVE_INFINITY. */
-    public static final LuminousIntensity POSITIVE_INFINITY = LuminousIntensity.ofSi(Double.POSITIVE_INFINITY);
+    public static final LuminousIntensity POSITIVE_INFINITY = ofSi(Double.POSITIVE_INFINITY);
 
     /** Constant with value NEGATIVE_INFINITY. */
-    public static final LuminousIntensity NEGATIVE_INFINITY = LuminousIntensity.ofSi(Double.NEGATIVE_INFINITY);
+    public static final LuminousIntensity NEGATIVE_INFINITY = ofSi(Double.NEGATIVE_INFINITY);
 
     /** Constant with value MAX_VALUE. */
-    public static final LuminousIntensity POS_MAXVALUE = LuminousIntensity.ofSi(Double.MAX_VALUE);
+    public static final LuminousIntensity POS_MAXVALUE = ofSi(Double.MAX_VALUE);
 
     /** Constant with value -MAX_VALUE. */
-    public static final LuminousIntensity NEG_MAXVALUE = LuminousIntensity.ofSi(-Double.MAX_VALUE);
+    public static final LuminousIntensity NEG_MAXVALUE = ofSi(-Double.MAX_VALUE);
 
     /** */
     private static final long serialVersionUID = 600L;
