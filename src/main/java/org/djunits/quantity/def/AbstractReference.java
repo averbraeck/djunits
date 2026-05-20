@@ -24,8 +24,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, A, Q>, A 
      * Master registry: per concrete Reference subclass we keep a map of id to reference. This prevents name collisions between
      * different absolute quantities.
      */
-    @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected static final Map<Class<?>, Map<String, Reference<?, ?, ?>>> REFERENCES = new LinkedHashMap<>();
+    private static final Map<Class<?>, Map<String, Reference<?, ?, ?>>> REFERENCES = new LinkedHashMap<>();
 
     /** The id. */
     private final String id;
