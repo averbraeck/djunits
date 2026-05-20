@@ -127,7 +127,7 @@ public abstract class Formatter<C extends FormatContext>
         if (!formatted)
             formatted = checkUnitString();
         if (!formatted)
-            formatted = checkDisplayUnit();
+            checkDisplayUnit();
         if (this.unitStr == null)
             this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getDisplayAbbreviation();
     }
