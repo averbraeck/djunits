@@ -177,7 +177,7 @@ public class Dimensionless extends Quantity<Dimensionless>
     @Override
     public Dimensionless reciprocal()
     {
-        return Dimensionless.ofSi(1.0 / this.si());
+        return ofSi(1.0 / this.si());
     }
 
 }
