@@ -104,7 +104,7 @@ public final class Units
     {
         Throw.whenNull(unitClass, "unitClass");
         Throw.whenNull(abbreviation, "abbreviation");
-        Throw.when(!(Unit.class.isAssignableFrom(unitClass)), IllegalArgumentException.class,
+        Throw.when(!Unit.class.isAssignableFrom(unitClass), IllegalArgumentException.class,
                 "The provided unit class %s does not implement a unit", unitClass.getName());
 
         String quantityName = quantityName(unitClass);

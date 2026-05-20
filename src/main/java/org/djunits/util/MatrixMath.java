@@ -410,15 +410,15 @@ public final class MatrixMath
             double d = aSi[3], e = aSi[4], f = aSi[5];
             double g = aSi[6], h = aSi[7], i = aSi[8];
 
-            double A = (e * i - f * h);
+            double A = e * i - f * h;
             double B = -(d * i - f * g);
-            double C = (d * h - e * g);
+            double C = d * h - e * g;
             double D = -(b * i - c * h);
-            double E = (a * i - c * g);
+            double E = a * i - c * g;
             double F = -(a * h - b * g);
-            double G = (b * f - c * e);
+            double G = b * f - c * e;
             double H = -(a * f - c * d);
-            double I = (a * e - b * d);
+            double I = a * e - b * d;
 
             double det = a * A + b * B + c * C;
             if (Math.abs(det) <= DEFAULT_TOL * Math.max(1.0, Math2.maxAbs(aSi)))
@@ -483,15 +483,15 @@ public final class MatrixMath
             double d = aSi[3], e = aSi[4], f = aSi[5];
             double g = aSi[6], h = aSi[7], i = aSi[8];
             // Cofactor matrix (not transposed yet)
-            double C00 = (e * i - f * h);
+            double C00 = e * i - f * h;
             double C01 = -(d * i - f * g);
-            double C02 = (d * h - e * g);
+            double C02 = d * h - e * g;
             double C10 = -(b * i - c * h);
-            double C11 = (a * i - c * g);
+            double C11 = a * i - c * g;
             double C12 = -(a * h - b * g);
-            double C20 = (b * f - c * e);
+            double C20 = b * f - c * e;
             double C21 = -(a * f - c * d);
-            double C22 = (a * e - b * d);
+            double C22 = a * e - b * d;
             // Adjugate = Cofactor^T
             double[] adj = new double[] {C00, C10, C20, C01, C11, C21, C02, C12, C22};
             return adj;
