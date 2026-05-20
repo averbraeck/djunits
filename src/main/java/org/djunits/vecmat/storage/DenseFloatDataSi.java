@@ -19,6 +19,9 @@ import org.djutils.exceptions.Throw;
  */
 public class DenseFloatDataSi implements DataGridSi<DenseFloatDataSi>
 {
+    /** */
+    private static final long serialVersionUID = 601L;
+
     /** The data stored in row-major format. */
     private final float[] data;
 

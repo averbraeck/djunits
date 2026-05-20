@@ -21,6 +21,9 @@ import org.djutils.exceptions.Throw;
  */
 public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
 {
+    /** */
+    private static final long serialVersionUID = 601L;
+
     /** The data stored in row-major format. */
     private final double[] dataSi;
 

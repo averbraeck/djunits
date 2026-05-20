@@ -19,6 +19,9 @@ import org.djutils.exceptions.Throw;
  */
 public class SparseDoubleDataSi implements DataGridSi<SparseDoubleDataSi>
 {
+    /** */
+    private static final long serialVersionUID = 601L;
+
     /** The sparse data stored in row-major format, where only non-zero values are stored. */
     private double[] sparseData;
 
