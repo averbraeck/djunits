@@ -1,5 +1,7 @@
 package org.djunits.vecmat.storage;
 
+import java.io.Serializable;
+
 import org.djutils.exceptions.Throw;
 
 /**
@@ -13,7 +15,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <D> The datagrid type
  */
-public interface DataGridSi<D extends DataGridSi<D>>
+public interface DataGridSi<D extends DataGridSi<D>> extends Serializable
 {
     /**
      * Return the number of rows in the grid.
@@ -93,7 +95,7 @@ public interface DataGridSi<D extends DataGridSi<D>>
      * @return whether the data is dense
      */
     boolean isDense();
-    
+
     /**
      * Return whether the data is sparse.
      * @return whether the data is sparse
@@ -108,7 +110,7 @@ public interface DataGridSi<D extends DataGridSi<D>>
      * @return whether the data is double precision
      */
     boolean isDouble();
-    
+
     /**
      * Return whether the data is single precision.
      * @return whether the data is single precision
