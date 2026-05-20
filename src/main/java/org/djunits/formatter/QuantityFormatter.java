@@ -109,7 +109,7 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
         if (!formatted)
             formatted = checkUnitString();
         if (!formatted)
-            formatted = checkDisplayUnit();
+            checkDisplayUnit();
         checkAutoSiPrefix();
         if (this.unitStr == null)
             this.unitStr = this.ctx.textual ? this.unit.getTextualAbbreviation() : this.unit.getDisplayAbbreviation();
