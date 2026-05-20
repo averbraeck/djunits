@@ -2,7 +2,6 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 
 /**
@@ -50,26 +49,6 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
     public TemperatureDifference(final double valueInUnit, final Temperature.Unit unit)
     {
         super(valueInUnit, unit);
-    }
-
-    /**
-     * Instantiate a TemperatureDifference quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public TemperatureDifference(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Temperature.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct TemperatureDifference quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public TemperatureDifference(final TemperatureDifference value)
-    {
-        super(value.si(), Temperature.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**

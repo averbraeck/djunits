@@ -56,26 +56,6 @@ public class RadioActivity extends Quantity<RadioActivity>
     }
 
     /**
-     * Instantiate a RadioActivity quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public RadioActivity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(RadioActivity.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct RadioActivity quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public RadioActivity(final RadioActivity value)
-    {
-        super(value.si(), RadioActivity.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a RadioActivity instance based on an SI value.
      * @param si the si value
      * @return the RadioActivity instance based on an SI value

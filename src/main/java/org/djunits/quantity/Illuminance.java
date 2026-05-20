@@ -56,26 +56,6 @@ public class Illuminance extends Quantity<Illuminance>
     }
 
     /**
-     * Instantiate a Illuminance quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Illuminance(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Illuminance.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Illuminance quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Illuminance(final Illuminance value)
-    {
-        super(value.si(), Illuminance.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Illuminance instance based on an SI value.
      * @param si the si value
      * @return the Illuminance instance based on an SI value

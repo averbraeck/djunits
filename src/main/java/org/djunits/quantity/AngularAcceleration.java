@@ -4,7 +4,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -53,26 +52,6 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
     public AngularAcceleration(final double valueInUnit, final AngularAcceleration.Unit unit)
     {
         super(valueInUnit, unit);
-    }
-
-    /**
-     * Instantiate a AngularAcceleration quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public AngularAcceleration(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(AngularAcceleration.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct AngularAcceleration quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public AngularAcceleration(final AngularAcceleration value)
-    {
-        super(value.si(), AngularAcceleration.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**

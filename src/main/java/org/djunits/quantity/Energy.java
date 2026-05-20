@@ -56,26 +56,6 @@ public class Energy extends Quantity<Energy>
     }
 
     /**
-     * Instantiate a Energy quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Energy(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Energy.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Energy quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Energy(final Energy value)
-    {
-        super(value.si(), Energy.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Energy instance based on an SI value.
      * @param si the si value
      * @return the Energy instance based on an SI value
@@ -314,8 +294,7 @@ public class Energy extends Quantity<Energy>
         public static final Energy.Unit Wh = new Energy.Unit("Wh", "watt hour", 3600.0, UnitSystem.SI_DERIVED);
 
         /** microwatt hour. */
-        public static final Energy.Unit muWh =
-                Wh.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit muWh = Wh.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
 
         /** milliwatt hour. */
         public static final Energy.Unit mWh = Wh.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);

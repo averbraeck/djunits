@@ -56,26 +56,6 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
     }
 
     /**
-     * Instantiate a MagneticFluxDensity quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public MagneticFluxDensity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(MagneticFluxDensity.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct MagneticFluxDensity quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public MagneticFluxDensity(final MagneticFluxDensity value)
-    {
-        super(value.si(), MagneticFluxDensity.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a MagneticFluxDensity instance based on an SI value.
      * @param si the si value
      * @return the MagneticFluxDensity instance based on an SI value

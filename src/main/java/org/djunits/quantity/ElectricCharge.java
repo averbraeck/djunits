@@ -57,26 +57,6 @@ public class ElectricCharge extends Quantity<ElectricCharge>
     }
 
     /**
-     * Instantiate a ElectricCharge quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ElectricCharge(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ElectricCharge.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ElectricCharge quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ElectricCharge(final ElectricCharge value)
-    {
-        super(value.si(), ElectricCharge.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a ElectricCharge instance based on an SI value.
      * @param si the si value
      * @return the ElectricCharge instance based on an SI value

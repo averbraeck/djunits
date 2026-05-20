@@ -4,7 +4,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -53,26 +52,6 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
     public ArealObjectDensity(final double valueInUnit, final ArealObjectDensity.Unit unit)
     {
         super(valueInUnit, unit);
-    }
-
-    /**
-     * Instantiate a ArealObjectDensity quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ArealObjectDensity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ArealObjectDensity.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ArealObjectDensity quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ArealObjectDensity(final ArealObjectDensity value)
-    {
-        super(value.si(), ArealObjectDensity.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**

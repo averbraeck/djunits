@@ -58,26 +58,6 @@ public class Duration extends Quantity<Duration>
     }
 
     /**
-     * Instantiate a Duration quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Duration(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Duration.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Duration quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Duration(final Duration value)
-    {
-        super(value.si(), Duration.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Duration instance based on an SI value.
      * @param si the si value
      * @return the Duration instance based on an SI value

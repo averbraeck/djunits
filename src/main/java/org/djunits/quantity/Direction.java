@@ -4,7 +4,6 @@ import org.djunits.quantity.Direction.Reference;
 import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Units;
 
 /**
  * Direction is the absolute equivalent of Angle, and can, e.g., represent an angle relative to a defined "zero" angle such as
@@ -29,17 +28,6 @@ public class Direction extends AbsBasic<Direction, Angle, Reference>
     public Direction(final double valueInUnit, final Angle.Unit unit, final Reference reference)
     {
         super(new Angle(valueInUnit, unit), reference);
-    }
-
-    /**
-     * Instantiate a Direction quantity with a unit, expressed as a String, and a reference point.
-     * @param valueInUnit the angle value, expressed in the unit, relative to the reference point
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     * @param reference the reference point of this direction
-     */
-    public Direction(final double valueInUnit, final String abbreviation, final Reference reference)
-    {
-        this(valueInUnit, Units.resolve(Angle.Unit.class, abbreviation), reference);
     }
 
     /**

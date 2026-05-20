@@ -4,7 +4,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -53,26 +52,6 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
     public VolumetricObjectDensity(final double valueInUnit, final VolumetricObjectDensity.Unit unit)
     {
         super(valueInUnit, unit);
-    }
-
-    /**
-     * Instantiate a VolumetricObjectDensity quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public VolumetricObjectDensity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(VolumetricObjectDensity.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct VolumetricObjectDensity quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public VolumetricObjectDensity(final VolumetricObjectDensity value)
-    {
-        super(value.si(), VolumetricObjectDensity.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**

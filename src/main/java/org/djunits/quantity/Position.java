@@ -3,7 +3,6 @@ package org.djunits.quantity;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Units;
 
 /**
  * Position is the absolute equivalent of Length, and can, e.g., represent an absolute offset relative to a defined origin.
@@ -27,17 +26,6 @@ public class Position extends AbsQuantity<Position, Length, Position.Reference>
     public Position(final double valueInUnit, final Length.Unit unit, final Reference reference)
     {
         super(new Length(valueInUnit, unit), reference);
-    }
-
-    /**
-     * Instantiate a Position quantity with a unit, expressed as a String, and a reference point.
-     * @param valueInUnit the length value, expressed in the unit, relative to the reference point
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     * @param reference the reference point of this position
-     */
-    public Position(final double valueInUnit, final String abbreviation, final Reference reference)
-    {
-        this(valueInUnit, Units.resolve(Length.Unit.class, abbreviation), reference);
     }
 
     /**

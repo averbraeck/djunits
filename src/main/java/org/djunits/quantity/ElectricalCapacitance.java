@@ -56,26 +56,6 @@ public class ElectricalCapacitance extends Quantity<ElectricalCapacitance>
     }
 
     /**
-     * Instantiate a ElectricalCapacitance quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ElectricalCapacitance(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ElectricalCapacitance.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ElectricalCapacitance quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ElectricalCapacitance(final ElectricalCapacitance value)
-    {
-        super(value.si(), ElectricalCapacitance.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a ElectricalCapacitance instance based on an SI value.
      * @param si the si value
      * @return the ElectricalCapacitance instance based on an SI value

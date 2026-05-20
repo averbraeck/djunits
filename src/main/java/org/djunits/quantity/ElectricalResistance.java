@@ -58,26 +58,6 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
     }
 
     /**
-     * Instantiate a ElectricalResistance quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ElectricalResistance(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ElectricalResistance.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ElectricalResistance quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ElectricalResistance(final ElectricalResistance value)
-    {
-        super(value.si(), ElectricalResistance.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a ElectricalResistance instance based on an SI value.
      * @param si the si value
      * @return the ElectricalResistance instance based on an SI value

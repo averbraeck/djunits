@@ -56,26 +56,6 @@ public class Length extends Quantity<Length>
     }
 
     /**
-     * Instantiate a Length quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Length(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Length.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Length quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Length(final Length value)
-    {
-        super(value.si(), Length.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Length instance based on an SI value.
      * @param si the si value
      * @return the Length instance based on an SI value

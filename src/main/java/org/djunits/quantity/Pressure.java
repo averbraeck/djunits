@@ -56,26 +56,6 @@ public class Pressure extends Quantity<Pressure>
     }
 
     /**
-     * Instantiate a Pressure quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Pressure(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Pressure.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Pressure quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Pressure(final Pressure value)
-    {
-        super(value.si(), Pressure.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Pressure instance based on an SI value.
      * @param si the si value
      * @return the Pressure instance based on an SI value

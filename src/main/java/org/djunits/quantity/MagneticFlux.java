@@ -56,26 +56,6 @@ public class MagneticFlux extends Quantity<MagneticFlux>
     }
 
     /**
-     * Instantiate a MagneticFlux quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public MagneticFlux(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(MagneticFlux.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct MagneticFlux quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public MagneticFlux(final MagneticFlux value)
-    {
-        super(value.si(), MagneticFlux.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a MagneticFlux instance based on an SI value.
      * @param si the si value
      * @return the MagneticFlux instance based on an SI value

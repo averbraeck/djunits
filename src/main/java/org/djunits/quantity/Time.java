@@ -3,7 +3,6 @@ package org.djunits.quantity;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Units;
 
 /**
  * Time is the absolute equivalent of Duration, and can, e.g., represent a calendar date with a zero. Note that built-in time
@@ -28,17 +27,6 @@ public class Time extends AbsQuantity<Time, Duration, Time.Reference>
     public Time(final double valueInUnit, final Duration.Unit unit, final Reference reference)
     {
         super(new Duration(valueInUnit, unit), reference);
-    }
-
-    /**
-     * Instantiate a Time quantity with a unit, expressed as a String, and a reference point.
-     * @param valueInUnit the duration value, expressed in the unit, relative to the reference point
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     * @param reference the reference point of this time
-     */
-    public Time(final double valueInUnit, final String abbreviation, final Reference reference)
-    {
-        this(valueInUnit, Units.resolve(Duration.Unit.class, abbreviation), reference);
     }
 
     /**

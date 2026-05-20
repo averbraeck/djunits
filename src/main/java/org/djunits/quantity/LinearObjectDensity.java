@@ -56,26 +56,6 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
     }
 
     /**
-     * Instantiate a LinearObjectDensity quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public LinearObjectDensity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(LinearObjectDensity.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct LinearObjectDensity quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public LinearObjectDensity(final LinearObjectDensity value)
-    {
-        super(value.si(), LinearObjectDensity.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a LinearObjectDensity instance based on an SI value.
      * @param si the si value
      * @return the LinearObjectDensity instance based on an SI value

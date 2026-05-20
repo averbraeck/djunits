@@ -56,26 +56,6 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
     }
 
     /**
-     * Instantiate a ElectricCurrent quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ElectricCurrent(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ElectricCurrent.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ElectricCurrent quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ElectricCurrent(final ElectricCurrent value)
-    {
-        super(value.si(), ElectricCurrent.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a ElectricCurrent instance based on an SI value.
      * @param si the si value
      * @return the ElectricCurrent instance based on an SI value

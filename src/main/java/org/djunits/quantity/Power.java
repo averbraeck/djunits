@@ -56,26 +56,6 @@ public class Power extends Quantity<Power>
     }
 
     /**
-     * Instantiate a Power quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Power(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Power.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Power quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Power(final Power value)
-    {
-        super(value.si(), Power.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Power instance based on an SI value.
      * @param si the si value
      * @return the Power instance based on an SI value

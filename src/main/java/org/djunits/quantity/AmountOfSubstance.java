@@ -56,26 +56,6 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
     }
 
     /**
-     * Instantiate a AmountOfSubstance quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public AmountOfSubstance(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(AmountOfSubstance.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct AmountOfSubstance quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public AmountOfSubstance(final AmountOfSubstance value)
-    {
-        super(value.si(), AmountOfSubstance.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a AmountOfSubstance instance based on an SI value.
      * @param si the si value
      * @return the AmountOfSubstance instance based on an SI value

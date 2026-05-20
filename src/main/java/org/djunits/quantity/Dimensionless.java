@@ -2,7 +2,6 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 
 /**
@@ -48,26 +47,6 @@ public class Dimensionless extends Quantity<Dimensionless>
     public Dimensionless(final double valueInUnit, final Unitless unit)
     {
         super(valueInUnit, unit);
-    }
-
-    /**
-     * Instantiate a Dimensionless quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Dimensionless(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Unitless.class, abbreviation));
-    }
-
-    /**
-     * Construct Dimensionless quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Dimensionless(final Dimensionless value)
-    {
-        super(value.si(), Unitless.BASE);
-        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**

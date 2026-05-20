@@ -56,26 +56,6 @@ public class Mass extends Quantity<Mass>
     }
 
     /**
-     * Instantiate a Mass quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Mass(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Mass.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Mass quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Mass(final Mass value)
-    {
-        super(value.si(), Mass.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Mass instance based on an SI value.
      * @param si the si value
      * @return the Mass instance based on an SI value

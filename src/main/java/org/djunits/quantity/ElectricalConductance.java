@@ -57,26 +57,6 @@ public class ElectricalConductance extends Quantity<ElectricalConductance>
     }
 
     /**
-     * Instantiate a ElectricalConductance quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ElectricalConductance(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ElectricalConductance.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ElectricalConductance quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ElectricalConductance(final ElectricalConductance value)
-    {
-        super(value.si(), ElectricalConductance.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a ElectricalConductance instance based on an SI value.
      * @param si the si value
      * @return the ElectricalConductance instance based on an SI value

@@ -31,25 +31,6 @@ public class SIQuantity extends Quantity<SIQuantity>
         super(valueInUnit, unit);
     }
 
-    /**
-     * Instantiate a SI quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public SIQuantity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, SIUnit.of(abbreviation));
-    }
-
-    /**
-     * Construct SI quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public SIQuantity(final SIQuantity value)
-    {
-        super(value.si(), value.getDisplayUnit());
-    }
-
     @Override
     public SIQuantity instantiateSi(final double si)
     {

@@ -56,26 +56,6 @@ public class EquivalentDose extends Quantity<EquivalentDose>
     }
 
     /**
-     * Instantiate a EquivalentDose quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public EquivalentDose(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(EquivalentDose.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct EquivalentDose quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public EquivalentDose(final EquivalentDose value)
-    {
-        super(value.si(), EquivalentDose.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a EquivalentDose instance based on an SI value.
      * @param si the si value
      * @return the EquivalentDose instance based on an SI value

@@ -57,26 +57,6 @@ public class ElectricPotential extends Quantity<ElectricPotential>
     }
 
     /**
-     * Instantiate a ElectricPotential quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public ElectricPotential(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(ElectricPotential.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct ElectricPotential quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public ElectricPotential(final ElectricPotential value)
-    {
-        super(value.si(), ElectricPotential.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a ElectricPotential instance based on an SI value.
      * @param si the si value
      * @return the ElectricPotential instance based on an SI value

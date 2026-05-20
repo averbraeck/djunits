@@ -4,7 +4,6 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -53,26 +52,6 @@ public class AngularVelocity extends Quantity<AngularVelocity>
     public AngularVelocity(final double valueInUnit, final AngularVelocity.Unit unit)
     {
         super(valueInUnit, unit);
-    }
-
-    /**
-     * Instantiate a AngularVelocity quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public AngularVelocity(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(AngularVelocity.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct AngularVelocity quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public AngularVelocity(final AngularVelocity value)
-    {
-        super(value.si(), AngularVelocity.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
     }
 
     /**

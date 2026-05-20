@@ -5,7 +5,6 @@ import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
 import org.djunits.unit.UnitRuntimeException;
-import org.djunits.unit.Units;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIUnit;
@@ -61,28 +60,6 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
     public Temperature(final double valueInUnit, final Temperature.Unit unit)
     {
         this(valueInUnit, unit, unit.getReference());
-    }
-
-    /**
-     * Instantiate a Temperature quantity with a unit, expressed as a String, and a reference point.
-     * @param valueInUnit the temperature value, expressed in the unit, relative to the reference point
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     * @param reference the reference point of this absolute temperature
-     */
-    public Temperature(final double valueInUnit, final String abbreviation, final Reference reference)
-    {
-        this(valueInUnit, Units.resolve(Temperature.Unit.class, abbreviation), reference);
-    }
-
-    /**
-     * Instantiate a Temperature quantity with a unit, expressed as a String, and the reference point belonging to the unit.
-     * @param valueInUnit the temperature value, expressed in the unit, relative to the reference point
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Temperature(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Temperature.Unit.class, abbreviation),
-                Units.resolve(Temperature.Unit.class, abbreviation).getReference());
     }
 
     /**
@@ -175,8 +152,7 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
     }
 
     /**
-     * Returns a Temperature based on a value and the textual representation of the unit, which can be localized. Use the KELVIN
-     * reference.
+     * Returns a Temperature based on a value and the textual representation of the unit, which can be localized.
      * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit
@@ -185,7 +161,8 @@ public class Temperature extends AbsQuantity<Temperature, TemperatureDifference,
      */
     public static Temperature of(final double valueInUnit, final String unitString)
     {
-        return new Temperature(Quantity.of(valueInUnit, unitString, TemperatureDifference.ZERO), Reference.KELVIN);
+        TemperatureDifference temp = Quantity.of(valueInUnit, unitString, TemperatureDifference.ZERO);
+        return new Temperature(temp, temp.getDisplayUnit().getReference());
     }
 
     @Override

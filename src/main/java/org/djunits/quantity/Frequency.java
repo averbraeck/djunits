@@ -56,26 +56,6 @@ public class Frequency extends Quantity<Frequency>
     }
 
     /**
-     * Instantiate a Frequency quantity with a unit, expressed as a String.
-     * @param valueInUnit the value, expressed in the unit
-     * @param abbreviation the String abbreviation of the unit in which the value is expressed
-     */
-    public Frequency(final double valueInUnit, final String abbreviation)
-    {
-        this(valueInUnit, Units.resolve(Frequency.Unit.class, abbreviation));
-    }
-
-    /**
-     * Construct Frequency quantity.
-     * @param value Scalar from which to construct this instance
-     */
-    public Frequency(final Frequency value)
-    {
-        super(value.si(), Frequency.Unit.SI);
-        setDisplayUnit(value.getDisplayUnit());
-    }
-
-    /**
      * Return a Frequency instance based on an SI value.
      * @param si the si value
      * @return the Frequency instance based on an SI value
