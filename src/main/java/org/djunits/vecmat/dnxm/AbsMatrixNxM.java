@@ -1,6 +1,6 @@
 package org.djunits.vecmat.dnxm;
 
-import org.djunits.quantity.def.AbsBasic;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * @param <A> the absolute quantity type
  * @param <Q> the corresponding relative quantity type
  */
-public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
+public class AbsMatrixNxM<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
         extends AbsMatrix<A, Q, AbsMatrixNxM<A, Q>, MatrixNxM<Q>, AbsMatrixNxM<A, Q>>
 {
     /** */
@@ -88,7 +88,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
             final double[] dataInUnit, final int rows, final int cols, final Unit<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxM<A, Q>(MatrixNxM.of(dataInUnit, rows, cols, unit), reference);
@@ -108,7 +108,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> ofSi(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> ofSi(
             final double[] dataSi, final int rows, final int cols, final Unit<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrixNxM<A, Q>(MatrixNxM.ofSi(dataSi, rows, cols, displayUnit), reference);
@@ -128,7 +128,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
             final Q[] data, final int rows, final int cols, final R reference)
     {
         return new AbsMatrixNxM<A, Q>(MatrixNxM.of(data, rows, cols), reference);
@@ -147,7 +147,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(final A[] absData, final int rows, final int cols)
     {
         Throw.whenNull(absData, "absData");
@@ -167,7 +167,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> ofSi(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> ofSi(
             final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
     {
         Throw.whenNull(displayUnit, "displayUnit");
@@ -186,7 +186,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
             final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxM<>(MatrixNxM.of(gridInUnit, unit), reference);
@@ -204,7 +204,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(final Q[][] grid, final R reference)
     {
         return new AbsMatrixNxM<>(MatrixNxM.of(grid), reference);
@@ -221,7 +221,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(final A[][] absGrid)
     {
         Throw.whenNull(absGrid, "absGrid");
@@ -240,7 +240,7 @@ public class AbsMatrixNxM<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(final MatrixNxM<Q> relativeMatrix, final R reference)
     {
         return new AbsMatrixNxM<>(relativeMatrix, reference);

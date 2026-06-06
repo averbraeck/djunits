@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import org.djunits.quantity.def.AbsBasic;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -128,7 +128,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @param <A> the absolute quantity type
      * @param <Q> the quantity type
      */
-    public static <A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final A[] absData,
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final A[] absData,
             final int rows, final int cols)
     {
         Throw.whenNull(absData, "absData");
@@ -159,7 +159,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @param <A> the absolute quantity type
      * @param <Q> the quantity type
      */
-    public static <A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final List<A> absData,
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final List<A> absData,
             final int rows, final int cols)
     {
         Throw.whenNull(absData, "absData");
@@ -277,7 +277,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @param <A> the absolute quantity type
      * @param <Q> the quantity type
      */
-    public static <A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final A[][] absGrid)
+    public static <A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>> DenseDoubleDataSi of(final A[][] absGrid)
     {
         Throw.whenNull(absGrid, "absGrid");
         int rows = absGrid.length;

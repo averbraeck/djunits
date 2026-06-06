@@ -2,7 +2,7 @@ package org.djunits.vecmat.def;
 
 import java.lang.reflect.Array;
 
-import org.djunits.quantity.def.AbsBasic;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 
@@ -19,7 +19,7 @@ import org.djunits.quantity.def.Reference;
  * @param <MQ> the relative table type
  * @param <MAT> the type of the transposed version of the absolute table
  */
-public abstract class AbsTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>, MA extends AbsTable<A, Q, MA, MQ, MAT>,
+public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>, MA extends AbsTable<A, Q, MA, MQ, MAT>,
         MQ extends Table<Q, MQ, ?, ?, ?>, MAT extends AbsTable<A, Q, MAT, ?, MA>> extends AbsVectorMatrix<A, Q, MA, MQ, MAT>
 {
     /** */

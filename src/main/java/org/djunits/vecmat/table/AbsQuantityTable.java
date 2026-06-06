@@ -2,7 +2,7 @@ package org.djunits.vecmat.table;
 
 import org.djunits.formatter.TableFormat;
 import org.djunits.formatter.TableFormatter;
-import org.djunits.quantity.def.AbsBasic;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
@@ -22,7 +22,7 @@ import org.djutils.exceptions.Throw;
  * @param <A> the absolute quantity type
  * @param <Q> the corresponding relative quantity type
  */
-public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>>
+public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
         extends AbsTable<A, Q, AbsQuantityTable<A, Q>, QuantityTable<Q>, AbsQuantityTable<A, Q>>
 {
     /** */
@@ -90,7 +90,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final double[] dataInUnit, final int rows, final int cols,
                     final Unit<?, Q> unit, final R reference)
     {
@@ -111,7 +111,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> ofSi(final double[] dataSi, final int rows, final int cols,
                     final Unit<?, Q> displayUnit, final R reference)
     {
@@ -132,7 +132,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final Q[] data, final int rows, final int cols,
                     final R reference)
     {
@@ -152,7 +152,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final A[] absData, final int rows, final int cols)
     {
         Throw.whenNull(absData, "absData");
@@ -172,7 +172,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit,
                     final R reference)
     {
@@ -192,7 +192,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final double[][] gridInUnit, final Unit<?, Q> unit,
                     final R reference)
     {
@@ -211,7 +211,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final Q[][] grid, final R reference)
     {
         return new AbsQuantityTable<>(QuantityTable.of(grid), reference);
@@ -228,7 +228,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final A[][] absGrid)
     {
         Throw.whenNull(absGrid, "absGrid");
@@ -247,7 +247,7 @@ public class AbsQuantityTable<A extends AbsBasic<A, Q, ?>, Q extends Quantity<Q>
      * @param <R> the reference type
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final QuantityTable<Q> relativeTable, final R reference)
     {
         return new AbsQuantityTable<>(relativeTable, reference);
