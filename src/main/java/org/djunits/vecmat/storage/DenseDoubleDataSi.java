@@ -8,6 +8,7 @@ import org.djunits.quantity.def.AbsBasic;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.Unit;
+import org.djunits.util.SuppressFBWarnings;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -42,6 +43,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols, or when the number of rows
      *             or columns is not positive
      */
+    @SuppressFBWarnings(justification = "explicitly documented that no safe copy is made")
     public DenseDoubleDataSi(final double[] dataSi, final int rows, final int cols)
     {
         Throw.whenNull(dataSi, "dataSi");
@@ -349,6 +351,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
     }
 
     @Override
+    @SuppressFBWarnings(justification = "name of the method indicates unsafe access")
     public double[] unsafeSiArray()
     {
         return this.dataSi;
