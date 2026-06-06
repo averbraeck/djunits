@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -267,19 +267,19 @@ class PositionTest
         Position b = new Position(20.0, Length.Unit.m, rs);
         Position c = new Position(30.0, Length.Unit.m, rs);
 
-        assertEquals(c, AbsQuantity.max(a, b, c));
-        assertEquals(a, AbsQuantity.min(a, b, c));
+        assertEquals(c, ComparableAbsQuantity.max(a, b, c));
+        assertEquals(a, ComparableAbsQuantity.min(a, b, c));
 
-        Position mean = AbsQuantity.mean(a, b, c);
+        Position mean = ComparableAbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
-        Position mid = AbsQuantity.interpolate(a, c, 0.5);
+        Position mid = ComparableAbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
         // mismatched references in static ops must throw
         Position.Reference.add("RS2", "Ref S2");
         Position d = new Position(5.0, Length.Unit.m, Position.Reference.get("RS2"));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, d));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, d));
         
         // clean up
         Position.Reference.get("RS").unregister();

@@ -29,21 +29,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for the abstract {@link AbsQuantity} API using {@link Position} and its nested
+ * Unit tests for the abstract {@link ComparableAbsQuantity} API using {@link Position} and its nested
  * {@link org.djunits.quantity.Position.Reference}.
  * <p>
  * <strong>Goals and coverage:</strong>
  * <ul>
  * <li>Reference-aware comparisons and {@link Comparable} rules</li>
- * <li>Reference transformations via {@link AbsQuantity#relativeTo(Reference)}</li>
- * <li>Parsing helpers: {@link AbsQuantity#valueOf(String, AbsQuantity, Reference)} and
- * {@link AbsQuantity#of(double, String, AbsQuantity, Reference)}</li>
+ * <li>Reference transformations via {@link ComparableAbsQuantity#relativeTo(Reference)}</li>
+ * <li>Parsing helpers: {@link ComparableAbsQuantity#valueOf(String, ComparableAbsQuantity, Reference)} and
+ * {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)}</li>
  * <li>Stringification and SI-prefix formatting</li>
- * <li>Static helpers: {@link AbsQuantity#interpolate(AbsQuantity, AbsQuantity, double)},
- * {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])}, {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])},
- * {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])}</li>
- * <li>Arithmetic with relative quantities: {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} and
- * {@link AbsQuantity#subtract(AbsBasic)}</li>
+ * <li>Static helpers: {@link ComparableAbsQuantity#interpolate(ComparableAbsQuantity, ComparableAbsQuantity, double)},
+ * {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])}, {@link ComparableAbsQuantity#min(ComparableAbsQuantity, ComparableAbsQuantity[])},
+ * {@link ComparableAbsQuantity#mean(ComparableAbsQuantity, ComparableAbsQuantity[])}</li>
+ * <li>Arithmetic with relative quantities: {@link ComparableAbsQuantity#add(Quantity)} and {@link ComparableAbsQuantity#subtract(Quantity)} and
+ * {@link ComparableAbsQuantity#subtract(AbsQuantity)}</li>
  * <li>{@code equals}/{@code hashCode} contract</li>
  * </ul>
  * <p>
@@ -156,7 +156,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies that the constructor of {@link Position} (as a representative of {@link AbsQuantity}) rejects {@code null} for
+     * Verifies that the constructor of {@link Position} (as a representative of {@link ComparableAbsQuantity}) rejects {@code null} for
      * either the relative quantity or the reference.
      */
     @Test
@@ -167,7 +167,7 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies that {@link AbsQuantity#getDisplayUnit()} and {@link AbsQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate
+     * Verifies that {@link ComparableAbsQuantity#getDisplayUnit()} and {@link ComparableAbsQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate
      * correctly to the inner relative quantity and that the setter is fluent.
      */
     @Test
@@ -181,7 +181,7 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies the accessors {@link AbsQuantity#getQuantity()} and {@link AbsQuantity#getReference()}.
+     * Verifies the accessors {@link ComparableAbsQuantity#getQuantity()} and {@link ComparableAbsQuantity#getReference()}.
      */
     @Test
     void quantityAndReferenceAccessors()
@@ -196,7 +196,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#getInUnit()} and {@link AbsQuantity#getInUnit(org.djunits.unit.Unit)}.
+     * Verifies {@link ComparableAbsQuantity#getInUnit()} and {@link ComparableAbsQuantity#getInUnit(org.djunits.unit.Unit)}.
      */
     @Test
     void getInUnitVariants()
@@ -250,7 +250,7 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies zero-comparison helpers (lt0/le0/gt0/ge0/eq0/ne0) for {@link AbsQuantity}.
+     * Verifies zero-comparison helpers (lt0/le0/gt0/ge0/eq0/ne0) for {@link ComparableAbsQuantity}.
      */
     @Test
     void zeroComparisons()
@@ -275,41 +275,41 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies successful parsing via {@link AbsQuantity#valueOf(String, AbsQuantity, Reference)} and error branches for
+     * Verifies successful parsing via {@link ComparableAbsQuantity#valueOf(String, ComparableAbsQuantity, Reference)} and error branches for
      * {@code null} parameters, empty text, and unknown units.
      */
     @Test
     void valueOfParses()
     {
         Position ex = pos(0, this.refA, Length.Unit.m); // example
-        Position p = AbsQuantity.valueOf("12.5 m", ex, this.refA);
+        Position p = ComparableAbsQuantity.valueOf("12.5 m", ex, this.refA);
         assertEquals(12.5, p.si(), 1e-12);
         assertSame(this.refA, p.getReference());
 
-        assertThrows(NullPointerException.class, () -> AbsQuantity.valueOf(null, ex, this.refA));
-        assertThrows(NullPointerException.class, () -> AbsQuantity.valueOf("1 m", null, this.refA));
-        assertThrows(NullPointerException.class, () -> AbsQuantity.valueOf("1 m", ex, null));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.valueOf("", ex, this.refA));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.valueOf("5 ???", ex, this.refA));
+        assertThrows(NullPointerException.class, () -> ComparableAbsQuantity.valueOf(null, ex, this.refA));
+        assertThrows(NullPointerException.class, () -> ComparableAbsQuantity.valueOf("1 m", null, this.refA));
+        assertThrows(NullPointerException.class, () -> ComparableAbsQuantity.valueOf("1 m", ex, null));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.valueOf("", ex, this.refA));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.valueOf("5 ???", ex, this.refA));
     }
 
     /**
-     * Verifies successful parsing via {@link AbsQuantity#of(double, String, AbsQuantity, Reference)} and error branches for
+     * Verifies successful parsing via {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)} and error branches for
      * {@code null} parameters, empty unit string, and unknown units.
      */
     @Test
     void ofParses()
     {
         Position ex = pos(0, this.refA, Length.Unit.m);
-        Position p = AbsQuantity.of(2.0, "km", ex, this.refA);
+        Position p = ComparableAbsQuantity.of(2.0, "km", ex, this.refA);
         assertEquals(2000.0, p.si(), 1e-12);
         assertSame(this.refA, p.getReference());
 
-        assertThrows(NullPointerException.class, () -> AbsQuantity.of(1.0, null, ex, this.refA));
-        assertThrows(NullPointerException.class, () -> AbsQuantity.of(1.0, "m", null, this.refA));
-        assertThrows(NullPointerException.class, () -> AbsQuantity.of(1.0, "m", ex, null));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.of(1.0, "", ex, this.refA));
-        assertThrows(UnitRuntimeException.class, () -> AbsQuantity.of(1.0, "???", ex, this.refA));
+        assertThrows(NullPointerException.class, () -> ComparableAbsQuantity.of(1.0, null, ex, this.refA));
+        assertThrows(NullPointerException.class, () -> ComparableAbsQuantity.of(1.0, "m", null, this.refA));
+        assertThrows(NullPointerException.class, () -> ComparableAbsQuantity.of(1.0, "m", ex, null));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.of(1.0, "", ex, this.refA));
+        assertThrows(UnitRuntimeException.class, () -> ComparableAbsQuantity.of(1.0, "???", ex, this.refA));
     }
 
     // ----------------------------------------------------------------------
@@ -317,7 +317,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#relativeTo(Reference)} for:
+     * Verifies {@link ComparableAbsQuantity#relativeTo(Reference)} for:
      * <ul>
      * <li>identity transform (same reference)</li>
      * <li>direct parent/child transform (A ⇄ B)</li>
@@ -488,7 +488,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#subtract(AbsBasic)} aligns references and returns the relative difference.
+     * Verifies {@link ComparableAbsQuantity#subtract(AbsQuantity)} aligns references and returns the relative difference.
      * <p>
      * <strong>Case:</strong> {@code pA = 10@A}, {@code pB = 8@B} represent the same absolute point; the difference is 0.
      */
@@ -503,7 +503,7 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies {@link AbsQuantity#add(Quantity)} and {@link AbsQuantity#subtract(Quantity)} adjust the inner relative quantity
+     * Verifies {@link ComparableAbsQuantity#add(Quantity)} and {@link ComparableAbsQuantity#subtract(Quantity)} adjust the inner relative quantity
      * while preserving the absolute reference and the display unit.
      */
     @Test
@@ -526,7 +526,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link AbsQuantity#interpolate(AbsQuantity, AbsQuantity, double)}. For:
+     * Verifies {@link ComparableAbsQuantity#interpolate(ComparableAbsQuantity, ComparableAbsQuantity, double)}. For:
      * <ul>
      * <li>valid ratio in [0, 1]</li>
      * <li>ratio out of bounds raising {@link IllegalArgumentException}</li>
@@ -538,20 +538,20 @@ public class AbsQuantityTest
     {
         Position z = pos(0, this.refA, Length.Unit.m);
         Position o = pos(1000, this.refA, Length.Unit.m);
-        Position mid = AbsQuantity.interpolate(z, o, 0.5);
+        Position mid = ComparableAbsQuantity.interpolate(z, o, 0.5);
         assertEquals(500.0, mid.si(), 1e-12);
         assertSame(this.refA, mid.getReference());
         assertSame(z.getDisplayUnit(), mid.getDisplayUnit());
 
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.interpolate(z, o, -0.01));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.interpolate(z, o, 1.01));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.interpolate(z, o, -0.01));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.interpolate(z, o, 1.01));
 
         Position oB = pos(1000, this.refB, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.interpolate(z, oB, 0.5));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.interpolate(z, oB, 0.5));
     }
 
     /**
-     * Verifies {@link AbsQuantity#max(AbsQuantity, AbsQuantity[])} and {@link AbsQuantity#min(AbsQuantity, AbsQuantity[])} for
+     * Verifies {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])} and {@link ComparableAbsQuantity#min(ComparableAbsQuantity, ComparableAbsQuantity[])} for
      * identical references and that mixing references raises an {@link IllegalArgumentException}.
      */
     @Test
@@ -560,16 +560,16 @@ public class AbsQuantityTest
         Position a = pos(1, this.refA, Length.Unit.m);
         Position b = pos(3, this.refA, Length.Unit.m);
         Position c = pos(-2, this.refA, Length.Unit.m);
-        assertSame(b, AbsQuantity.max(a, b, c));
-        assertSame(c, AbsQuantity.min(a, b, c));
+        assertSame(b, ComparableAbsQuantity.max(a, b, c));
+        assertSame(c, ComparableAbsQuantity.min(a, b, c));
 
         Position bB = pos(3, this.refB, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.max(a, bB));
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.min(a, bB));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.max(a, bB));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.min(a, bB));
     }
 
     /**
-     * Verifies {@link AbsQuantity#mean(AbsQuantity, AbsQuantity[])} for identical references, and ensures that the reference
+     * Verifies {@link ComparableAbsQuantity#mean(ComparableAbsQuantity, ComparableAbsQuantity[])} for identical references, and ensures that the reference
      * and display unit of the first argument are preserved. Mixing references must throw.
      */
     @Test
@@ -578,18 +578,18 @@ public class AbsQuantityTest
         Position ma = pos(1, this.refA, Length.Unit.m);
         Position mb = pos(2, this.refA, Length.Unit.m);
         Position mc = pos(3, this.refA, Length.Unit.m);
-        Position mean = AbsQuantity.mean(ma, mb, mc); // 6/3 = 2
+        Position mean = ComparableAbsQuantity.mean(ma, mb, mc); // 6/3 = 2
         assertEquals(2.0, mean.si(), 1e-12);
         assertSame(this.refA, mean.getReference());
         assertSame(ma.getDisplayUnit(), mean.getDisplayUnit());
 
         Position a = pos(1, this.refA, Length.Unit.cm);
         Position bB = pos(2, this.refB, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, bB));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, bB));
     }
 
     /**
-     * Verifies correct working of {@link AbsQuantity#siUnit()}.
+     * Verifies correct working of {@link ComparableAbsQuantity#siUnit()}.
      */
     @Test
     void siUnit()
@@ -628,7 +628,7 @@ public class AbsQuantityTest
     }
 
     /**
-     * Tests {@link AbsQuantity#getName()} using {@link Position} as the representative absolute quantity.
+     * Tests {@link ComparableAbsQuantity#getName()} using {@link Position} as the representative absolute quantity.
      * <p>
      * The "pretty name" algorithm mirrors {@link Quantity#getName()} and:
      * <ol>
@@ -748,7 +748,7 @@ public class AbsQuantityTest
      * Absolute quantity class for test.
      */
     static class AbsoluteExampleQuantityAQxyz extends
-            AbsQuantity<AbsoluteExampleQuantityAQxyz, RelativeExampleQuantityAQxyz, AbsoluteExampleQuantityAQxyz.Reference>
+            ComparableAbsQuantity<AbsoluteExampleQuantityAQxyz, RelativeExampleQuantityAQxyz, AbsoluteExampleQuantityAQxyz.Reference>
     {
         /** */
         private static final long serialVersionUID = 1L;

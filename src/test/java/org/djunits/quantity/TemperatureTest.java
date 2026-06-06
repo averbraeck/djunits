@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -274,17 +274,17 @@ class TemperatureTest
         Temperature b = new Temperature(20.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
         Temperature c = new Temperature(30.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
 
-        assertEquals(c, AbsQuantity.max(a, b, c));
-        assertEquals(a, AbsQuantity.min(a, b, c));
+        assertEquals(c, ComparableAbsQuantity.max(a, b, c));
+        assertEquals(a, ComparableAbsQuantity.min(a, b, c));
 
-        Temperature mean = AbsQuantity.mean(a, b, c);
+        Temperature mean = ComparableAbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
-        Temperature mid = AbsQuantity.interpolate(a, c, 0.5);
+        Temperature mid = ComparableAbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
         Temperature d = new Temperature(5.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, d));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, d));
     }
 
     /**

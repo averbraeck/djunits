@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -264,17 +264,17 @@ class TimeTest
         Time b = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX);
         Time c = new Time(30.0, Duration.Unit.s, Time.Reference.UNIX);
 
-        assertEquals(c, AbsQuantity.max(a, b, c));
-        assertEquals(a, AbsQuantity.min(a, b, c));
+        assertEquals(c, ComparableAbsQuantity.max(a, b, c));
+        assertEquals(a, ComparableAbsQuantity.min(a, b, c));
 
-        Time mean = AbsQuantity.mean(a, b, c);
+        Time mean = ComparableAbsQuantity.mean(a, b, c);
         assertEquals(20.0, mean.si(), 1E-12);
 
-        Time mid = AbsQuantity.interpolate(a, c, 0.5);
+        Time mid = ComparableAbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
         // Mixed references → should throw
         Time d = new Time(5.0, Duration.Unit.s, Time.Reference.GPS);
-        assertThrows(IllegalArgumentException.class, () -> AbsQuantity.mean(a, d));
+        assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, d));
     }
 }
