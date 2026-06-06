@@ -1,6 +1,6 @@
 package org.djunits.quantity;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
@@ -20,7 +20,7 @@ import org.djutils.exceptions.Throw;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Temperature extends AbsQuantity<Temperature, TemperatureDifference, Temperature.Reference>
+public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureDifference, Temperature.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;

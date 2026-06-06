@@ -1,7 +1,7 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.Direction.Reference;
-import org.djunits.quantity.def.AbsBasic;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 
@@ -14,7 +14,7 @@ import org.djunits.quantity.def.Quantity;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Direction extends AbsBasic<Direction, Angle, Reference>
+public class Direction extends AbsQuantity<Direction, Angle, Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;

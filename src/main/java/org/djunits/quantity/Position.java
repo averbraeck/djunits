@@ -1,6 +1,6 @@
 package org.djunits.quantity;
 
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
 import org.djunits.quantity.def.Quantity;
 
@@ -12,7 +12,7 @@ import org.djunits.quantity.def.Quantity;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Position extends AbsQuantity<Position, Length, Position.Reference>
+public class Position extends ComparableAbsQuantity<Position, Length, Position.Reference>
 {
     /** */
     private static final long serialVersionUID = 600L;
