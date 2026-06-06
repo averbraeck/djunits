@@ -19,7 +19,7 @@ The relation between (relative) quantities and absolute quantities is sketched i
 
 ![](images/absolute-quantity.png)
 
-> **Note** that the generic implementation of the functions of an absolute quantity are divided over the `AbsBasic` and `AbsQuantity` classes. `AbsBasic` contains the functions that are relevant for all absolute quantities. This does **not** include the comparators and static functions like `mean()`, `min()` and `max()`. The reason is that for the `Direction`, a `mean` or a `gt` function does not make sense. We cannot say that an absolute angle of 350 degrees is 'greater than' an angle of 0 degrees. Often, a normalization is used to accomplish this, but given the different reference points, normalization is not straightforward. Therefore, `Direction` does not implement `Comparable`, nor does it have the static functions like `max`, `min` and `mean`. 
+> **Note** that the generic implementation of the functions of an absolute quantity are divided over the `AbsQuantity` and `ComparableAbsQuantity` classes. `AbsQuantity` contains the functions that are relevant for all absolute quantities. This does **not** include the comparators and static functions like `lt()`, `gt()`, `min()` and `max()`. The reason is that for the `Direction`, a `mean` or a `gt` function does not make sense. We cannot say that an absolute angle of 350 degrees is 'greater than' an angle of 0 degrees. Often, a normalization is used to accomplish this, but given the different reference points, normalization is not straightforward. Therefore, `Direction` does not implement `Comparable`, nor does it have the static functions like `max`, `min` and `mean`. 
 
 
 ## Operations on absolute quantities
