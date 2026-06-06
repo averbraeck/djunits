@@ -181,49 +181,6 @@ public abstract class ComparableAbsQuantity<A extends ComparableAbsQuantity<A, Q
     }
 
     /**********************************************************************************/
-    /********************************** PARSING METHODS *******************************/
-    /**********************************************************************************/
-
-    /**
-     * Returns an absolute quantity for the textual representation of a value with a unit. The String representation that can be
-     * parsed is the double value in the unit, followed by a localized or English abbreviation of the unit. Spaces are allowed,
-     * but not required, between the value and the unit.
-     * @param text the textual representation to parse into the quantity
-     * @param example an example instance to deliver
-     * @param reference the reference point
-     * @return the absolute quantity representation of the value with its unit
-     * @throws IllegalArgumentException when the text cannot be parsed
-     * @throws NullPointerException when the text argument is null
-     * @param <A> the absolute quantity type
-     * @param <Q> the relative quantity type
-     * @param <R> the reference type to use for the absolute quantity
-     */
-    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> A valueOf(final String text, final A example, final R reference)
-    {
-        return AbsQuantity.valueOf(text, example, reference);
-    }
-
-    /**
-     * Returns an absolute quantity based on a value and the textual representation of the unit, which can be localized.
-     * @param valueInUnit the value, expressed in the unit as given by unitString
-     * @param unitString the textual representation of the unit
-     * @param example an absolute example instance to deliver
-     * @param reference the reference point
-     * @return the absolute quantity representation of the value in its unit
-     * @throws IllegalArgumentException when the unit cannot be parsed or is incorrect
-     * @throws NullPointerException when the unitString argument is null
-     * @param <A> the absolute quantity type
-     * @param <Q> the relative quantity type
-     * @param <R> the reference type to use for the absolute quantity
-     */
-    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
-            final double valueInUnit, final String unitString, final A example, final R reference)
-    {
-        return AbsQuantity.of(valueInUnit, unitString, example, reference);
-    }
-
-    /**********************************************************************************/
     /********************* STATIC OPERATIONS ON MULTIPLE QUANTITIES *******************/
     /**********************************************************************************/
 
