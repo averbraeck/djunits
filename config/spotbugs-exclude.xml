@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
 
-    <!-- Suppress constructor-throw warning for preconditions in construuctors -->
+    <!-- Suppress constructor-throw warning for preconditions in constructors -->
     <Match>
         <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+    </Match>
+
+    <!-- Exclude everything under test sources -->
+    <Match>
+        <Class name="~.*Test.*" />
     </Match>
 
 </FindBugsFilter>
