@@ -2,7 +2,7 @@ package org.djunits.formatter;
 
 import java.util.Locale;
 
-import org.djunits.quantity.def.AbsBasic;
+import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.unit.Units;
@@ -61,7 +61,7 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
      * @param quantityFormat the format to apply to the absolute quantity
      * @return a String with a formatted absolute quantity, matching the given format as closely as possible
      */
-    public static String format(final AbsBasic<?, ?, ?> absQuantity, final QuantityFormat quantityFormat)
+    public static String format(final AbsQuantity<?, ?, ?> absQuantity, final QuantityFormat quantityFormat)
     {
         QuantityFormatContext ctx = quantityFormat.ctx;
         Locale savedLocale = Locale.getDefault();

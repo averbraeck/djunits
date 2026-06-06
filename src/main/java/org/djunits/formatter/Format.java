@@ -3,7 +3,7 @@ package org.djunits.formatter;
 import java.util.Locale;
 
 import org.djunits.formatter.FormatContext.FloatFormatMode;
-import org.djunits.quantity.def.AbsQuantity;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.Unit;
 import org.djunits.vecmat.def.AbsMatrix;
@@ -15,7 +15,7 @@ import org.djunits.vecmat.table.QuantityTable;
 
 /**
  * Format is the abstract base class for the settings the format. It contains generic methods to influence the format of
- * {@link Quantity}, {@link AbsQuantity}, {@link Vector}, {@link AbsVector}, {@link Matrix}, {@link AbsMatrix},
+ * {@link Quantity}, {@link ComparableAbsQuantity}, {@link Vector}, {@link AbsVector}, {@link Matrix}, {@link AbsMatrix},
  * {@link QuantityTable} and {@link AbsQuantityTable}. The main methods to set the format in this class are about the way to
  * format the number, the unit, and the locale. Specific setter methods for quantities, vectors, matrices and tables can be
  * found in the extensions of this class, such as {@link QuantityFormat}.
