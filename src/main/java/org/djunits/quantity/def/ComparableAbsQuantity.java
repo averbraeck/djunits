@@ -3,8 +3,9 @@ package org.djunits.quantity.def;
 import org.djutils.exceptions.Throw;
 
 /**
- * AbsQuantity is an abstract class that stores the basic information about a absolute quantity. An absolute quantity wraps a
- * relative Quantity and has a reference point that acts as an origin or zero point.
+ * ComparableAbsQuantity is an abstract class that stores the basic information about an absolute quantity that is comparable.
+ * Note that two directions are not comparable based on the SI values, but, e.g., two temperatures are. All absolute quantities
+ * wrap a relative Quantity and have a reference point that acts as an origin or zero point.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -14,8 +15,8 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the relative quantity type
  * @param <R> the reference type to use for the absolute quantity
  */
-public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>>
-        extends AbsBasic<A, Q, R> implements Comparable<A>
+public abstract class ComparableAbsQuantity<A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+        R extends Reference<R, A, Q>> extends AbsQuantity<A, Q, R> implements Comparable<A>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -25,7 +26,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param quantity the relative quantity that indicates the 'distance' to the reference point
      * @param reference the reference point
      */
-    public AbsQuantity(final Q quantity, final R reference)
+    public ComparableAbsQuantity(final Q quantity, final R reference)
     {
         super(quantity, reference);
     }
@@ -35,9 +36,9 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     /**********************************************************************************/
 
     /**
-     * Test if this Quantity is less than another Quantity.
+     * Test if this absolute quantity is less than another absolute quantity.
      * @param other the right hand side operand of the comparison
-     * @return true if this is less than o; false otherwise
+     * @return true if this is less than other; false otherwise
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     public boolean lt(final A other)
@@ -49,9 +50,9 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is less than or equal to another Quantity.
+     * Test if this absolute quantity is less than or equal to another absolute quantity.
      * @param other the right hand side operand of the comparison
-     * @return true if this is less than or equal to o; false otherwise
+     * @return true if this is less than or equal to other; false otherwise
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     public boolean le(final A other)
@@ -63,9 +64,9 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is greater than another Quantity.
+     * Test if this absolute quantity is greater than another absolute quantity.
      * @param other the right hand side operand of the comparison
-     * @return true if this is greater than o; false otherwise
+     * @return true if this is greater than other; false otherwise
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     public boolean gt(final A other)
@@ -77,9 +78,9 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is greater than or equal to another Quantity.
+     * Test if this absolute quantity is greater than or equal to another absolute quantity.
      * @param other the right hand side operand of the comparison
-     * @return true if this is greater than or equal to o; false otherwise
+     * @return true if this is greater than or equal to other; false otherwise
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     public boolean ge(final A other)
@@ -91,9 +92,9 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is equal to another Quantity.
+     * Test if this absolute quantity is equal to another absolute quantity.
      * @param other the right hand side operand of the comparison
-     * @return true if this is equal to o; false otherwise
+     * @return true if this is equal to other; false otherwise
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     public boolean eq(final A other)
@@ -102,9 +103,9 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is not equal to another Quantity.
+     * Test if this absolute quantity is not equal to another absolute quantity.
      * @param other the right hand side operand of the comparison
-     * @return true if this is not equal to o; false otherwise
+     * @return true if this is not equal to other; false otherwise
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     public boolean ne(final A other)
@@ -113,7 +114,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is less than 0.0.
+     * Test if this absolute quantity is less than 0.0.
      * @return true if this is less than 0.0; false if this is not less than 0.0
      */
     public boolean lt0()
@@ -122,7 +123,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is less than or equal to 0.0.
+     * Test if this absolute quantity is less than or equal to 0.0.
      * @return true if this is less than or equal to 0.0; false if this is not less than or equal to 0.0
      */
     public boolean le0()
@@ -131,7 +132,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is greater than 0.0.
+     * Test if this absolute quantity is greater than 0.0.
      * @return true if this is greater than 0.0; false if this is not greater than 0.0
      */
     public boolean gt0()
@@ -140,7 +141,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is greater than or equal to 0.0.
+     * Test if this absolute quantity is greater than or equal to 0.0.
      * @return true if this is greater than or equal to 0.0; false if this is not greater than or equal to 0.0
      */
     public boolean ge0()
@@ -149,7 +150,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is equal to 0.0.
+     * Test if this absolute quantity is equal to 0.0.
      * @return true if this is equal to 0.0; false if this is not equal to 0.0
      */
     public boolean eq0()
@@ -158,7 +159,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * Test if this Quantity is not equal to 0.0.
+     * Test if this absolute quantity is not equal to 0.0.
      * @return true if this is not equal to 0.0; false if this is equal to 0.0
      */
     public boolean ne0()
@@ -197,10 +198,10 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> A valueOf(final String text, final A example, final R reference)
     {
-        return AbsBasic.valueOf(text, example, reference);
+        return AbsQuantity.valueOf(text, example, reference);
     }
 
     /**
@@ -216,10 +217,10 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
+    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
             final double valueInUnit, final String unitString, final A example, final R reference)
     {
-        return AbsBasic.of(valueInUnit, unitString, example, reference);
+        return AbsQuantity.of(valueInUnit, unitString, example, reference);
     }
 
     /**********************************************************************************/
@@ -237,7 +238,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param <R> the reference type to use for the absolute quantity
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> A interpolate(final A zero, final A one, final double ratio)
     {
         Throw.when(!zero.getReference().equals(one.getReference()), IllegalArgumentException.class,
@@ -262,8 +263,8 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A max(final A quantity1,
-            final A... quantities)
+    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> A max(final A quantity1, final A... quantities)
     {
         A maxA = quantity1;
         for (A absq : quantities)
@@ -290,8 +291,8 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A min(final A quantity1,
-            final A... quantities)
+    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+            R extends Reference<R, A, Q>> A min(final A quantity1, final A... quantities)
     {
         A minA = quantity1;
         for (A absq : quantities)
@@ -318,7 +319,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @throws IllegalArgumentException when absolute quantities have a different reference point
      */
     @SafeVarargs
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends ComparableAbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> A mean(final A quantity1, final A... quantities)
     {
         int n = 1 + quantities.length;

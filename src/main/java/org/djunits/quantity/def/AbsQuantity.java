@@ -17,11 +17,11 @@ import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
 
 /**
- * AbsBasic stores the basic information about a absolute quantity and implements the basic operations that hold for all
+ * AbsQuantity stores the basic information about a absolute quantity and implements the basic operations that hold for all
  * absolute quantities. An absolute quantity wraps a relative Quantity and has a reference point that acts as an origin or zero
- * point. Note that the absolute quantity {@link Direction} directly extends {@link AbsBasic} because of its circular scale. The
- * other absolute quantities {@link Position}, {@link Temperature} and {@link Time} extends {@link AbsQuantity} that extends
- * this class and implements comparators as well.
+ * point. Note that the absolute quantity {@link Direction} directly extends {@link AbsQuantity} because of its circular scale.
+ * The other absolute quantities {@link Position}, {@link Temperature} and {@link Time} extends {@link ComparableAbsQuantity}
+ * that extends this class and implements comparators as well.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -31,7 +31,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the relative quantity type
  * @param <R> the reference type to use for the absolute quantity
  */
-public abstract class AbsBasic<A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>>
+public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>>
         implements Value<A, Q>
 {
     /** */
@@ -48,7 +48,7 @@ public abstract class AbsBasic<A extends AbsBasic<A, Q, R>, Q extends Quantity<Q
      * @param quantity the relative quantity that indicates the 'distance' to the reference point
      * @param reference the reference point
      */
-    public AbsBasic(final Q quantity, final R reference)
+    public AbsQuantity(final Q quantity, final R reference)
     {
         Throw.whenNull(quantity, "quantity");
         Throw.whenNull(reference, "reference");
@@ -190,7 +190,7 @@ public abstract class AbsBasic<A extends AbsBasic<A, Q, R>, Q extends Quantity<Q
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbsBasic<?, ?, ?> other = (AbsBasic<?, ?, ?>) obj;
+        AbsQuantity<?, ?, ?> other = (AbsQuantity<?, ?, ?>) obj;
         return Objects.equals(this.quantity, other.quantity) && Objects.equals(this.reference, other.reference);
     }
 
@@ -212,7 +212,7 @@ public abstract class AbsBasic<A extends AbsBasic<A, Q, R>, Q extends Quantity<Q
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>,
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> A valueOf(final String text, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
@@ -251,7 +251,7 @@ public abstract class AbsBasic<A extends AbsBasic<A, Q, R>, Q extends Quantity<Q
      * @param <Q> the relative quantity type
      * @param <R> the reference type to use for the absolute quantity
      */
-    public static <A extends AbsBasic<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> A of(
             final double valueInUnit, final String unitString, final A example, final R reference)
     {
         Throw.whenNull(example, "Error parsing AbsQuantity: example is null");
