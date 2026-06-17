@@ -189,7 +189,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      * @param <V> the vector type
      * @param <Q> the quantity type
      */
-    public interface Col<V extends Value<V, Q>, Q extends Quantity<Q>> extends Value<V, Q>
+    public interface Col<V extends Value<Q>, Q extends Quantity<Q>> extends Value<Q>
     {
         /**
          * Concise description of this vector.
@@ -228,7 +228,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      * @param <V> the vector type
      * @param <Q> the quantity type
      */
-    public interface Row<V extends Value<V, Q>, Q extends Quantity<Q>> extends Value<V, Q>
+    public interface Row<V extends Value<Q>, Q extends Quantity<Q>> extends Value<Q>
     {
         /**
          * Concise description of this vector.

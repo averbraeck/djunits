@@ -30,7 +30,7 @@ import org.djutils.exceptions.Throw;
  * @param <Q> the quantity type
  */
 public abstract class Quantity<Q extends Quantity<Q>> extends Number
-        implements Value<Q, Q>, Comparable<Q>, Additive<Q>, Scalable<Q>
+        implements Value<Q>, Comparable<Q>, Additive<Q>, Scalable<Q>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -64,8 +64,12 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
         return this.displayUnit;
     }
 
+    /**
+     * TODO: TEMP: KEEP BRIEFLY.
+     * @param newUnit the new unit
+     * @return the quantity for fluent design
+     */
     @SuppressWarnings("unchecked")
-    @Override
     public Q setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         this.displayUnit = newUnit;

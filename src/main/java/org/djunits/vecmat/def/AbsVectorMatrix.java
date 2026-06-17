@@ -45,7 +45,7 @@ import org.djutils.exceptions.Throw;
  */
 public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>,
         VMA extends AbsVectorMatrix<A, Q, VMA, VMQ, VMAT>, VMQ extends VectorMatrix<Q, VMQ, ?, ?, ?>,
-        VMAT extends AbsVectorMatrix<A, Q, VMAT, ?, VMA>> implements Value<VMA, Q>
+        VMAT extends AbsVectorMatrix<A, Q, VMAT, ?, VMA>> implements Value<Q>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -75,8 +75,12 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
         return this.relativeVecMat.getDisplayUnit();
     }
 
+    /**
+     * TODO: TEMP: KEEP BRIEFLY.
+     * @param newUnit the new unit
+     * @return the quantity for fluent design
+     */
     @SuppressWarnings("unchecked")
-    @Override
     public VMA setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         this.relativeVecMat.setDisplayUnit(newUnit);

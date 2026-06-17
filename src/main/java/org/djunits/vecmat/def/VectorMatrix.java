@@ -39,7 +39,7 @@ import org.djutils.exceptions.Throw;
  */
 public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatrix<Q, VM, SI, H, VMT>,
         SI extends VectorMatrix<SIQuantity, SI, ?, ?, ?>, H extends VectorMatrix<?, ?, ?, ?, ?>,
-        VMT extends VectorMatrix<Q, VMT, ?, ?, VM>> implements Value<VM, Q>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
+        VMT extends VectorMatrix<Q, VMT, ?, ?, VM>> implements Value<Q>, Scalable<VM>, Additive<VM>, Hadamard<H, SI>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -63,8 +63,12 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
         return this.displayUnit;
     }
 
+    /**
+     * TODO: TEMP: KEEP BRIEFLY.
+     * @param newUnit the new unit
+     * @return the quantity for fluent design
+     */
     @SuppressWarnings("unchecked")
-    @Override
     public VM setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         Throw.whenNull(newUnit, "newUnit");

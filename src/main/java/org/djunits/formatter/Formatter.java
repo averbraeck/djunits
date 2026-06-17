@@ -30,7 +30,7 @@ public abstract class Formatter<C extends FormatContext>
     final C ctx;
 
     /** the value (quantity, vector, matrix) with a display unit. */
-    final Value<?, ?> value;
+    final Value<?> value;
 
     /** the unit to express the value in. */
     UnitInterface<?, ?> unit;
@@ -45,7 +45,7 @@ public abstract class Formatter<C extends FormatContext>
      * @param value the value to format
      * @param ctx the format context
      */
-    Formatter(final Value<?, ?> value, final C ctx)
+    Formatter(final Value<?> value, final C ctx)
     {
         this.ctx = ctx;
         this.value = value;

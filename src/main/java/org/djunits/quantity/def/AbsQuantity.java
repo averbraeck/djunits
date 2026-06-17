@@ -32,7 +32,7 @@ import org.djutils.exceptions.Throw;
  * @param <R> the reference type to use for the absolute quantity
  */
 public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>>
-        implements Value<A, Q>
+        implements Value<Q>
 {
     /** */
     private static final long serialVersionUID = 600L;
@@ -66,8 +66,12 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
         return this.quantity.getDisplayUnit();
     }
 
+    /**
+     * TODO: TEMP: KEEP BRIEFLY.
+     * @param newUnit the new unit
+     * @return the quantity for fluent design
+     */
     @SuppressWarnings("unchecked")
-    @Override
     public A setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         this.quantity.setDisplayUnit(newUnit);
