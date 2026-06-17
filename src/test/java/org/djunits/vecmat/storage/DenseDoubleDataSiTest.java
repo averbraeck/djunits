@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.djunits.quantity.Length;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -368,7 +368,7 @@ public class DenseDoubleDataSiTest
     }
 
     /**
-     * Verify {@link DenseDoubleDataSi#of(double[], int, int, Unit)} converts to SI and performs a safe copy.
+     * Verify {@link DenseDoubleDataSi#of(double[], int, int, UnitInterface)} converts to SI and performs a safe copy.
      */
     @Test
     @DisplayName("of(double[], rows, cols, Unit): unit conversion and safe copy")

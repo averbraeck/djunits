@@ -4,7 +4,7 @@ import org.djunits.formatter.MatrixFormat;
 import org.djunits.formatter.MatrixFormatter;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.MatrixMath;
 import org.djunits.vecmat.dnxm.MatrixNxM;
@@ -35,7 +35,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * Create a new matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public Matrix(final Unit<?, Q> displayUnit)
+    public Matrix(final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
     }
@@ -90,7 +90,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @return printable string with the matrix's values expressed in the specified unit
      */
     @Override
-    public String format(final Unit<?, Q> targetUnit)
+    public String format(final UnitInterface<?, Q> targetUnit)
     {
         return format(MatrixFormat.instance().setDisplayUnit(targetUnit));
     }

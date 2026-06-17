@@ -5,7 +5,7 @@ import org.djunits.formatter.MatrixFormatter;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 
 /**
  * AbsMatrix contains a number of standard operations on matrices that contain absolute quantities.
@@ -66,7 +66,7 @@ public abstract class AbsMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      * @return printable string with the matrix's values expressed in the specified unit
      */
     @Override
-    public String format(final Unit<?, Q> targetUnit)
+    public String format(final UnitInterface<?, Q> targetUnit)
     {
         return format(MatrixFormat.instance().setDisplayUnit(targetUnit));
     }

@@ -9,7 +9,7 @@ import org.djunits.quantity.Direction;
 import org.djunits.quantity.Position;
 import org.djunits.quantity.Temperature;
 import org.djunits.quantity.Time;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.value.Value;
@@ -61,14 +61,14 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     /**********************************************************************************/
 
     @Override
-    public Unit<?, Q> getDisplayUnit()
+    public UnitInterface<?, Q> getDisplayUnit()
     {
         return this.quantity.getDisplayUnit();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public A setDisplayUnit(final Unit<?, Q> newUnit)
+    public A setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         this.quantity.setDisplayUnit(newUnit);
         return (A) this;
@@ -88,7 +88,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param targetUnit the unit to convert the relative quantity value into
      * @return the value of the relative quantity in the target unit
      */
-    public final double getInUnit(final Unit<?, Q> targetUnit)
+    public final double getInUnit(final UnitInterface<?, Q> targetUnit)
     {
         return targetUnit.getScale().fromIdentityScale(si());
     }
@@ -226,7 +226,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
             double d = numberParser.parseDouble(text);
             String unitString = text.substring(numberParser.getTrailingPosition()).trim();
             @SuppressWarnings("unchecked")
-            Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+            UnitInterface<?, Q> unit = (UnitInterface<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
             Throw.when(unit == null, IllegalArgumentException.class, "Unit %s not found for quantity %s", unitString,
                     quantityClass);
             return example.instantiate(example.getQuantity().instantiate(d, unit), reference);
@@ -261,7 +261,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
                 quantityClass);
         Throw.whenNull(reference, "Error parsing AbsQuantity: reference is null");
         @SuppressWarnings("unchecked")
-        Unit<?, Q> unit = (Unit<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+        UnitInterface<?, Q> unit = (UnitInterface<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
         return example.instantiate(example.getQuantity().instantiate(valueInUnit, unit), reference);
     }
@@ -335,7 +335,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @return printable string with the quantity value expressed in the specified unit
      */
     @Override
-    public String format(final Unit<?, Q> targetUnit)
+    public String format(final UnitInterface<?, Q> targetUnit)
     {
         return format(QuantityFormat.instance().setDisplayUnit(targetUnit));
     }

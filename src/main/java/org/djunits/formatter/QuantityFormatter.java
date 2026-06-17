@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.PrefixType;
 import org.djunits.unit.si.SIPrefix;
@@ -187,7 +187,7 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
         SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(lookupExponent, SIPrefixes.getSiPrefix(""));
         String prefixText = prefix.getDefaultTextualPrefix();
         String key = invert ? "/" + prefixText + baseId.substring(1) : prefixText + baseId;
-        this.unit = (Unit<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
+        this.unit = (UnitInterface<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
         return true;
     }
         

@@ -14,7 +14,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.NonInvertibleMatrixException;
 import org.djunits.vecmat.d1.Matrix1x1;
@@ -79,7 +79,7 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link MatrixNxN#of(double[], Unit)} rejects nulls, wrong lengths, and converts to SI.
+     * Verify {@link MatrixNxN#of(double[], UnitInterface)} rejects nulls, wrong lengths, and converts to SI.
      */
     @Test
     @DisplayName("of(double[],U): nulls, length, SI conversion")
@@ -101,7 +101,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#of(double[][], Unit)} checks 4x4 shape and converts to SI.
+     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} checks 4x4 shape and converts to SI.
      */
     @Test
     @DisplayName("of(double[][],U): shape & SI conversion")
@@ -197,7 +197,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify that {@link VectorMatrix#setDisplayUnit(Unit)} only affects presentation (not SI storage).
+     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
      */
     @Test
     @DisplayName("setDisplayUnit() only changes presentation")
@@ -213,7 +213,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#format(Unit)} include unit abbreviation.
+     * Verify {@link VectorMatrix#toString()} and {@link VectorMatrix#format(UnitInterface)} include unit abbreviation.
      */
     @Test
     @DisplayName("toString()/toString(unit) include unit")
@@ -367,7 +367,7 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link MatrixNxN#as(Unit)} success (m↔km) and failure (dimension mismatch).
+     * Verify {@link MatrixNxN#as(UnitInterface)} success (m↔km) and failure (dimension mismatch).
      */
     @Test
     @DisplayName("as(targetUnit) success/failure")
@@ -713,7 +713,7 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link MatrixNxN#of(double[], Unit)} for null checks, non-square sizes, and SI conversion using different length
+     * Verify {@link MatrixNxN#of(double[], UnitInterface)} for null checks, non-square sizes, and SI conversion using different length
      * units.
      */
     @Test
@@ -740,7 +740,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#ofSi(double[], Unit)} for null checks, square validation, and display-unit handling.
+     * Verify {@link MatrixNxN#ofSi(double[], UnitInterface)} for null checks, square validation, and display-unit handling.
      */
     @Test
     @DisplayName("ofSi(double[], Unit): nulls, square check, display unit")
@@ -797,7 +797,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#ofSi(double[][], Unit)} for nulls, non-square grids, and SI handling.
+     * Verify {@link MatrixNxN#ofSi(double[][], UnitInterface)} for nulls, non-square grids, and SI handling.
      */
     @Test
     @DisplayName("ofSi(double[][], Unit): nulls, square grid validation, SI values")
@@ -816,7 +816,7 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#of(double[][], Unit)} for unit conversion and structural validation using {@link Duration}.
+     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} for unit conversion and structural validation using {@link Duration}.
      */
     @Test
     @DisplayName("of(double[][], Unit): square grid & unit conversion (ms/h)")

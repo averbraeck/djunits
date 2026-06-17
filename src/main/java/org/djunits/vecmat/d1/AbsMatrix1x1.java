@@ -3,7 +3,7 @@ package org.djunits.vecmat.d1;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.def.AbsSquareMatrix;
 import org.djutils.exceptions.Throw;
 
@@ -83,7 +83,7 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(
-            final double xInUnit, final Unit<?, Q> displayUnit, final R reference)
+            final double xInUnit, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrix1x1<>(Matrix1x1.of(xInUnit, displayUnit), reference);
     }
@@ -129,7 +129,7 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(
-            final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
+            final double[] dataInUnit, final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsMatrix1x1<>(Matrix1x1.of(dataInUnit, unit), reference);
     }
@@ -145,7 +145,7 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> ofSi(
-            final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
+            final double[] dataSi, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrix1x1<>(Matrix1x1.ofSi(dataSi, displayUnit), reference);
     }
@@ -193,7 +193,7 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> ofSi(
-            final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
+            final double[][] gridSi, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrix1x1<>(Matrix1x1.ofSi(gridSi, displayUnit), reference);
     }
@@ -210,7 +210,7 @@ public class AbsMatrix1x1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix1x1<A, Q> of(
-            final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
+            final double[][] gridInUnit, final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsMatrix1x1<>(Matrix1x1.of(gridInUnit, unit), reference);
     }

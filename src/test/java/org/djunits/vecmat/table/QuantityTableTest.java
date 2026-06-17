@@ -13,7 +13,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d1.Matrix1x1;
 import org.djunits.vecmat.d1.Vector1;
@@ -965,7 +965,7 @@ public class QuantityTableTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link QuantityTable#of(double[], int, int, Unit)} for null handling, size validation, and SI conversion using
+     * Verify {@link QuantityTable#of(double[], int, int, UnitInterface)} for null handling, size validation, and SI conversion using
      * {@link Length}.
      */
     @Test
@@ -991,7 +991,7 @@ public class QuantityTableTest
     }
 
     /**
-     * Verify {@link QuantityTable#ofSi(double[], int, int, Unit)} for null handling, size validation, and display unit
+     * Verify {@link QuantityTable#ofSi(double[], int, int, UnitInterface)} for null handling, size validation, and display unit
      * preservation.
      */
     @Test
@@ -1036,7 +1036,7 @@ public class QuantityTableTest
     }
 
     /**
-     * Verify {@link QuantityTable#ofSi(double[][], Unit)} for null handling, empty grids, ragged grids, and SI usage.
+     * Verify {@link QuantityTable#ofSi(double[][], UnitInterface)} for null handling, empty grids, ragged grids, and SI usage.
      */
     @Test
     @DisplayName("QuantityTable.ofSi(double[][], Unit): nulls, empty/ragged grids, SI values")
@@ -1060,7 +1060,7 @@ public class QuantityTableTest
     }
 
     /**
-     * Verify {@link QuantityTable#of(double[][], Unit)} for SI conversion using {@link Duration}.
+     * Verify {@link QuantityTable#of(double[][], UnitInterface)} for SI conversion using {@link Duration}.
      */
     @Test
     @DisplayName("QuantityTable.of(double[][], Unit): rectangular grid & SI conversion (ms/h)")

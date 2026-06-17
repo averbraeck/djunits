@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.util.ArrayMath;
 import org.djunits.value.Value;
 import org.djunits.vecmat.d1.AbsMatrix1x1;
@@ -70,14 +70,14 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     }
 
     @Override
-    public Unit<?, Q> getDisplayUnit()
+    public UnitInterface<?, Q> getDisplayUnit()
     {
         return this.relativeVecMat.getDisplayUnit();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public VMA setDisplayUnit(final Unit<?, Q> newUnit)
+    public VMA setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         this.relativeVecMat.setDisplayUnit(newUnit);
         return (VMA) this;

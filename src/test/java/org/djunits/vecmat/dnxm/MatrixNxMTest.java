@@ -13,7 +13,7 @@ import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.d1.Matrix1x1;
 import org.djunits.vecmat.d1.Vector1;
@@ -1475,7 +1475,7 @@ public class MatrixNxMTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Test {@link MatrixNxM#of(double[], int, int, Unit)} for nulls, invalid sizes, and SI conversion using {@link Length}.
+     * Test {@link MatrixNxM#of(double[], int, int, UnitInterface)} for nulls, invalid sizes, and SI conversion using {@link Length}.
      */
     @Test
     @DisplayName("of(double[], rows, cols, Unit): nulls, size checks, SI conversion (cm/km)")
@@ -1501,7 +1501,7 @@ public class MatrixNxMTest
     }
 
     /**
-     * Test {@link MatrixNxM#ofSi(double[], int, int, Unit)} for nulls, size errors, and display-unit handling.
+     * Test {@link MatrixNxM#ofSi(double[], int, int, UnitInterface)} for nulls, size errors, and display-unit handling.
      */
     @Test
     @DisplayName("ofSi(double[], rows, cols, Unit): nulls, size checks, display unit")
@@ -1545,7 +1545,7 @@ public class MatrixNxMTest
     }
 
     /**
-     * Test {@link MatrixNxM#ofSi(double[][], Unit)} for nulls, empty grids, ragged grids, and SI usage.
+     * Test {@link MatrixNxM#ofSi(double[][], UnitInterface)} for nulls, empty grids, ragged grids, and SI usage.
      */
     @Test
     @DisplayName("ofSi(double[][], Unit): nulls, empty/ragged grids, SI values")
@@ -1566,7 +1566,7 @@ public class MatrixNxMTest
     }
 
     /**
-     * Test {@link MatrixNxM#of(double[][], Unit)} for unit conversion using {@link Duration}.
+     * Test {@link MatrixNxM#of(double[][], UnitInterface)} for unit conversion using {@link Duration}.
      */
     @Test
     @DisplayName("of(double[][], Unit): rectangular grid and unit conversion (ms/h)")

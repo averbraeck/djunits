@@ -167,7 +167,7 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies that {@link ComparableAbsQuantity#getDisplayUnit()} and {@link ComparableAbsQuantity#setDisplayUnit(org.djunits.unit.Unit)} delegate
+     * Verifies that {@link ComparableAbsQuantity#getDisplayUnit()} and {@link ComparableAbsQuantity#setDisplayUnit(org.djunits.unit.UnitInterface)} delegate
      * correctly to the inner relative quantity and that the setter is fluent.
      */
     @Test
@@ -196,7 +196,7 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link ComparableAbsQuantity#getInUnit()} and {@link ComparableAbsQuantity#getInUnit(org.djunits.unit.Unit)}.
+     * Verifies {@link ComparableAbsQuantity#getInUnit()} and {@link ComparableAbsQuantity#getInUnit(org.djunits.unit.UnitInterface)}.
      */
     @Test
     void getInUnitVariants()

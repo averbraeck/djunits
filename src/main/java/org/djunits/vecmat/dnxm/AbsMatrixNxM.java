@@ -3,7 +3,7 @@ package org.djunits.vecmat.dnxm;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.def.AbsMatrix;
 import org.djunits.vecmat.dn.AbsVectorN;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -89,7 +89,7 @@ public class AbsMatrixNxM<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      *             or columns is not positive
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
-            final double[] dataInUnit, final int rows, final int cols, final Unit<?, Q> unit, final R reference)
+            final double[] dataInUnit, final int rows, final int cols, final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxM<A, Q>(MatrixNxM.of(dataInUnit, rows, cols, unit), reference);
     }
@@ -109,7 +109,7 @@ public class AbsMatrixNxM<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      *             or columns is not positive
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> ofSi(
-            final double[] dataSi, final int rows, final int cols, final Unit<?, Q> displayUnit, final R reference)
+            final double[] dataSi, final int rows, final int cols, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrixNxM<A, Q>(MatrixNxM.ofSi(dataSi, rows, cols, displayUnit), reference);
     }
@@ -168,7 +168,7 @@ public class AbsMatrixNxM<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> ofSi(
-            final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
+            final double[][] gridSi, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         return new AbsMatrixNxM<>(MatrixNxM.ofSi(gridSi, displayUnit), reference);
@@ -187,7 +187,7 @@ public class AbsMatrixNxM<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxM<A, Q> of(
-            final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
+            final double[][] gridInUnit, final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxM<>(MatrixNxM.of(gridInUnit, unit), reference);
     }

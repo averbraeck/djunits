@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.vecmat.def.Vector;
@@ -46,7 +46,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    protected VectorN(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+    protected VectorN(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
         Throw.whenNull(dataSi, "dataSi");
@@ -57,7 +57,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     public Iterator<Q> iterator()
     {
         final double[] si = this.dataSi.unsafeSiArray();
-        final Unit<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
+        final UnitInterface<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
     }
 
@@ -65,7 +65,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     public Q[] getScalarArray()
     {
         final double[] siArray = this.dataSi.unsafeSiArray();
-        final Unit<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
+        final UnitInterface<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         final Q first = frozenDisplayUnit.ofSi(siArray[0]).setDisplayUnit(frozenDisplayUnit);
         final Class<?> qClass = first.getClass();
         @SuppressWarnings("unchecked")
@@ -195,7 +195,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        public Col(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+        public Col(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.cols() != 1, IllegalArgumentException.class,
@@ -280,7 +280,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new column VectorN with a unit, based on a double[] array expressed in the given unit
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
         {
             double[] dataSi = new double[dataInUnit.length];
             for (int i = 0; i < dataInUnit.length; i++)
@@ -297,7 +297,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new column VectorN with a unit, based on a double[] array that contains SI data
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
         {
             return new VectorN.Col<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit.getBaseUnit())
                     .setDisplayUnit(displayUnit);
@@ -331,7 +331,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
         {
             return new VectorN.Col<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
         }
@@ -366,7 +366,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> VectorN.Col<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> VectorN.Col<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
@@ -399,7 +399,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @throws IllegalArgumentException when the number of rows or columns does not have a positive value or when the vector
          *             is initialized with more than one row
          */
-        public Row(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+        public Row(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
         {
             super(dataSi, displayUnit);
             Throw.when(dataSi.rows() != 1, IllegalArgumentException.class, "Row vector initialized with more than one row");
@@ -482,7 +482,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new row VectorN with a unit, based on a double[] array expressed in the given unit
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final double[] dataInUnit, final Unit<?, Q> unit)
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
         {
             double[] dataSi = new double[dataInUnit.length];
             for (int i = 0; i < dataInUnit.length; i++)
@@ -499,7 +499,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new row VectorN with a unit, based on a double[] array that contains SI data
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final double[] dataSi, final Unit<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
         {
             return new VectorN.Row<Q>(new DenseDoubleDataSi(dataSi.clone(), 1, dataSi.length), displayUnit);
         }
@@ -532,7 +532,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final Unit<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final UnitInterface<?, Q> displayUnit)
         {
             return new VectorN.Row<Q>(dataSi, displayUnit);
         }
@@ -567,7 +567,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> VectorN.Row<TQ> as(final Unit<?, TQ> targetUnit) throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> VectorN.Row<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,

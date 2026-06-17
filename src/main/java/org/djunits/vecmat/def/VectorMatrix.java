@@ -3,7 +3,7 @@ package org.djunits.vecmat.def;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.util.ArrayMath;
 import org.djunits.util.Math2;
@@ -45,27 +45,27 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     private static final long serialVersionUID = 600L;
 
     /** The display unit. */
-    private Unit<?, Q> displayUnit;
+    private UnitInterface<?, Q> displayUnit;
 
     /**
      * Create a new vector or matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public VectorMatrix(final Unit<?, Q> displayUnit)
+    public VectorMatrix(final UnitInterface<?, Q> displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         this.displayUnit = displayUnit;
     }
 
     @Override
-    public Unit<?, Q> getDisplayUnit()
+    public UnitInterface<?, Q> getDisplayUnit()
     {
         return this.displayUnit;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public VM setDisplayUnit(final Unit<?, Q> newUnit)
+    public VM setDisplayUnit(final UnitInterface<?, Q> newUnit)
     {
         Throw.whenNull(newUnit, "newUnit");
         this.displayUnit = newUnit;

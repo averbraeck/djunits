@@ -9,7 +9,7 @@ import org.djunits.formatter.VectorFormatter;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.value.Value;
 import org.djutils.exceptions.Throw;
 
@@ -217,7 +217,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
          * @return printable string with the vector's values expressed in the specified unit
          */
         @Override
-        default String format(final Unit<?, Q> targetUnit)
+        default String format(final UnitInterface<?, Q> targetUnit)
         {
             return format(VectorFormat.Col.instance().setDisplayUnit(targetUnit));
         }
@@ -256,7 +256,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
          * @return printable string with the vector's values expressed in the specified unit
          */
         @Override
-        default String format(final Unit<?, Q> targetUnit)
+        default String format(final UnitInterface<?, Q> targetUnit)
         {
             return format(VectorFormat.Row.instance().setDisplayUnit(targetUnit));
         }

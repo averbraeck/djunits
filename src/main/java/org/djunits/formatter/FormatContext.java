@@ -2,7 +2,7 @@ package org.djunits.formatter;
 
 import java.util.Locale;
 
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 
 /**
  * FormatContext contains a number of basic settings for formatting a quantity, vector, matrix or quantity table. The settings
@@ -47,7 +47,7 @@ abstract class FormatContext implements Cloneable
     // Unit formatting, contains default values
 
     /** Display unit to use. */
-    Unit<?, ?> displayUnit = null;
+    UnitInterface<?, ?> displayUnit = null;
 
     /** Display unit to use, based on a String representation. */
     String unitString = null;

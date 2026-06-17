@@ -5,7 +5,7 @@ import org.djunits.formatter.TableFormatter;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.def.AbsTable;
 import org.djunits.vecmat.dn.AbsVectorN;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
@@ -92,7 +92,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final double[] dataInUnit, final int rows, final int cols,
-                    final Unit<?, Q> unit, final R reference)
+                    final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsQuantityTable<A, Q>(QuantityTable.of(dataInUnit, rows, cols, unit), reference);
     }
@@ -113,7 +113,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
             R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> ofSi(final double[] dataSi, final int rows, final int cols,
-                    final Unit<?, Q> displayUnit, final R reference)
+                    final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsQuantityTable<A, Q>(QuantityTable.ofSi(dataSi, rows, cols, displayUnit), reference);
     }
@@ -173,7 +173,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> ofSi(final double[][] gridSi, final Unit<?, Q> displayUnit,
+            R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> ofSi(final double[][] gridSi, final UnitInterface<?, Q> displayUnit,
                     final R reference)
     {
         Throw.whenNull(displayUnit, "displayUnit");
@@ -193,7 +193,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final double[][] gridInUnit, final Unit<?, Q> unit,
+            R extends Reference<R, A, Q>> AbsQuantityTable<A, Q> of(final double[][] gridInUnit, final UnitInterface<?, Q> unit,
                     final R reference)
     {
         return new AbsQuantityTable<>(QuantityTable.of(gridInUnit, unit), reference);
@@ -281,7 +281,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
      * @return printable string with the quantity table's values expressed in the specified unit
      */
     @Override
-    public String format(final Unit<?, Q> targetUnit)
+    public String format(final UnitInterface<?, Q> targetUnit)
     {
         return format(TableFormat.instance().setDisplayUnit(targetUnit));
     }

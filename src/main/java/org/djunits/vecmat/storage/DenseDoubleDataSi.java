@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.util.SuppressFBWarnings;
 import org.djutils.exceptions.Throw;
 
@@ -82,7 +82,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @param <Q> the quantity type
      */
     public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final double[] dataInUnit, final int rows, final int cols,
-            final Unit<?, Q> unit)
+            final UnitInterface<?, Q> unit)
     {
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.whenNull(unit, "unit");
@@ -216,7 +216,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final double[][] gridInUnit, final Unit<?, Q> unit)
+    public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final double[][] gridInUnit, final UnitInterface<?, Q> unit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");

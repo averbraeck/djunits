@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -31,7 +31,7 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
      * Create a new Table with a unit.
      * @param displayUnit the display unit to use
      */
-    public Table(final Unit<?, Q> displayUnit)
+    public Table(final UnitInterface<?, Q> displayUnit)
     {
         super(displayUnit);
     }

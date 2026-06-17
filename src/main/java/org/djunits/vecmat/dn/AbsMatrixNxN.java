@@ -3,7 +3,7 @@ package org.djunits.vecmat.dn;
 import org.djunits.quantity.def.AbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.def.AbsSquareMatrix;
 import org.djunits.vecmat.storage.DenseDoubleDataSi;
 import org.djutils.exceptions.Throw;
@@ -85,7 +85,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not a square
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(
-            final double[] dataInUnit, final Unit<?, Q> unit, final R reference)
+            final double[] dataInUnit, final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(dataInUnit, unit), reference);
     }
@@ -102,7 +102,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @throws IllegalArgumentException when the size of the data object is not a square
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
-            final double[] dataSi, final Unit<?, Q> displayUnit, final R reference)
+            final double[] dataSi, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.ofSi(dataSi, displayUnit), reference);
     }
@@ -156,7 +156,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> ofSi(
-            final double[][] gridSi, final Unit<?, Q> displayUnit, final R reference)
+            final double[][] gridSi, final UnitInterface<?, Q> displayUnit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.ofSi(gridSi, displayUnit), reference);
     }
@@ -174,7 +174,7 @@ public class AbsMatrixNxN<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrixNxN<A, Q> of(
-            final double[][] gridInUnit, final Unit<?, Q> unit, final R reference)
+            final double[][] gridInUnit, final UnitInterface<?, Q> unit, final R reference)
     {
         return new AbsMatrixNxN<>(MatrixNxN.of(gridInUnit, unit), reference);
     }

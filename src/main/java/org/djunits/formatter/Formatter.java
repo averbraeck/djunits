@@ -8,7 +8,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 import org.djunits.quantity.def.Reference;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.value.Value;
 
@@ -33,7 +33,7 @@ public abstract class Formatter<C extends FormatContext>
     final Value<?, ?> value;
 
     /** the unit to express the value in. */
-    Unit<?, ?> unit;
+    UnitInterface<?, ?> unit;
 
     /** the formatted unit. */
     String unitStr = null;

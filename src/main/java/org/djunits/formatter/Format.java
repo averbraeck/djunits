@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.djunits.formatter.FormatContext.FloatFormatMode;
 import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.Unit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.vecmat.def.AbsMatrix;
 import org.djunits.vecmat.def.AbsVector;
 import org.djunits.vecmat.def.Matrix;
@@ -228,7 +228,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param unit the display unit to use
      * @return the object instance for fluent design
      */
-    public F setDisplayUnit(final Unit<?, ?> unit)
+    public F setDisplayUnit(final UnitInterface<?, ?> unit)
     {
         this.ctx.displayUnit = unit;
         return self();
