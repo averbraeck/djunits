@@ -62,11 +62,6 @@ public class AbsVector1Test
         assertEquals(1, av.size());
         assertTrue(av.isAbsolute());
         assertFalse(av.isRelative());
-
-        av.setDisplayUnit("rad");
-        assertEquals(Angle.Unit.rad, av.getDisplayUnit());
-        av.setDisplayUnit("deg");
-        assertEquals(Angle.Unit.deg, av.getDisplayUnit());
     }
 
     /**

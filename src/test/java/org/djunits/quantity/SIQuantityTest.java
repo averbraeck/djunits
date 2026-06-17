@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Locale;
 
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.si.SIUnit;
 import org.junit.jupiter.api.AfterAll;
@@ -220,7 +221,7 @@ public class SIQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies fluent {@link Quantity#setDisplayUnit(org.djunits.unit.Unit)} returns {@code this} and that equals/hashCode
+     * Verifies fluent {@link Quantity#setDisplayUnit(UnitInterface)} returns {@code this} and that equals/hashCode
      * include both SI bits and the display unit.
      */
     @Test

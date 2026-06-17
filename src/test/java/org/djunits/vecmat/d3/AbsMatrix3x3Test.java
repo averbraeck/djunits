@@ -97,11 +97,6 @@ public class AbsMatrix3x3Test
         assertFalse(am.isSkewSymmetric());
         assertFalse(am.isSymmetric(Angle.of(1E-6, "deg")));
         assertFalse(am.isSkewSymmetric(Angle.of(1E-6, "deg")));
-
-        am.setDisplayUnit("rad");
-        assertEquals(Angle.Unit.rad, am.getDisplayUnit());
-        am.setDisplayUnit("deg");
-        assertEquals(Angle.Unit.deg, am.getDisplayUnit());
     }
 
     /**

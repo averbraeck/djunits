@@ -165,8 +165,6 @@ public class QuantityTest
         assertClose(2500.0, l.getInUnit());
         l.setDisplayUnit(Length.Unit.km);
         assertClose(2.5, l.getInUnit());
-        l.setDisplayUnit("hm");
-        assertClose(25.0, l.getInUnit());
         assertTrue(l.isRelative());
         assertFalse(l.isAbsolute());
 

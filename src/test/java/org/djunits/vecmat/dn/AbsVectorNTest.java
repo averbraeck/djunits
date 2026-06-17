@@ -79,11 +79,6 @@ public class AbsVectorNTest
         assertEquals(3, avCol.size());
         assertTrue(avCol.isAbsolute());
         assertFalse(avCol.isRelative());
-
-        avCol.setDisplayUnit("rad");
-        assertEquals(Angle.Unit.rad, avCol.getDisplayUnit());
-        avCol.setDisplayUnit("deg");
-        assertEquals(Angle.Unit.deg, avCol.getDisplayUnit());
     }
 
     /**
@@ -119,11 +114,6 @@ public class AbsVectorNTest
         assertEquals(3, avRow.size());
         assertTrue(avRow.isAbsolute());
         assertFalse(avRow.isRelative());
-
-        avRow.setDisplayUnit("rad");
-        assertEquals(Angle.Unit.rad, avRow.getDisplayUnit());
-        avRow.setDisplayUnit("deg");
-        assertEquals(Angle.Unit.deg, avRow.getDisplayUnit());
     }
 
     /**

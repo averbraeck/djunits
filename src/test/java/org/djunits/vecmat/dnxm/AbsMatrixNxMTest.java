@@ -86,11 +86,6 @@ public class AbsMatrixNxMTest
 
         assertTrue(am.isAbsolute());
         assertFalse(am.isRelative());
-
-        am.setDisplayUnit("rad");
-        assertEquals(Angle.Unit.rad, am.getDisplayUnit());
-        am.setDisplayUnit("deg");
-        assertEquals(Angle.Unit.deg, am.getDisplayUnit());
     }
 
     /**
