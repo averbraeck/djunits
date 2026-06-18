@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class EquivalentDose extends Quantity<EquivalentDose>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a EquivalentDose quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a EquivalentDose quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public EquivalentDose(final double value, final EquivalentDose.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a EquivalentDose quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public EquivalentDose(final double valueInUnit, final EquivalentDose.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class EquivalentDose extends Quantity<EquivalentDose>
      */
     public static EquivalentDose ofSi(final double si)
     {
-        return new EquivalentDose(si, EquivalentDose.Unit.SI);
+        return new EquivalentDose(si, EquivalentDose.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a EquivalentDose quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the EquivalentDose instance based on an SI value with the given display unit
+     */
+    public static EquivalentDose ofSi(final double siValue, final EquivalentDose.Unit displayUnit)
+    {
+        return new EquivalentDose(siValue, displayUnit, true);
     }
 
     @Override
-    public EquivalentDose instantiateSi(final double si)
+    public EquivalentDose instantiateSi(final double siValue, final UnitInterface<EquivalentDose> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return EquivalentDose.Unit.SI_UNIT;
+        return new EquivalentDose(siValue, (EquivalentDose.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class EquivalentDose extends Quantity<EquivalentDose>
     public static EquivalentDose valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a EquivalentDose based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab EquivalentDose representation of the value in its unit
+     */
+    public static EquivalentDose of(final double valueInUnit, final EquivalentDose.Unit unit)
+    {
+        return new EquivalentDose(valueInUnit, unit);
     }
 
     /**
@@ -133,16 +164,17 @@ public class EquivalentDose extends Quantity<EquivalentDose>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<EquivalentDose.Unit, EquivalentDose>
+    public static class Unit extends AbstractUnit<EquivalentDose>
     {
         /** The dimensions of the equivalent dose: m2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2/s2");
 
         /** Sievert. */
-        public static final EquivalentDose.Unit Sv = new EquivalentDose.Unit("Sv", "sievert", 1.0, UnitSystem.SI_DERIVED);
+        public static final EquivalentDose.Unit Sv = new EquivalentDose.Unit("Sv", "Sv", "sievert", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final EquivalentDose.Unit SI = Sv.generateSiPrefixes(false, false);
+        public static final EquivalentDose.Unit SI = (Unit) Sv.generateSiPrefixes(false, false);
 
         /** mSv. */
         public static final EquivalentDose.Unit mSv = Units.resolve(EquivalentDose.Unit.class, "mSv");
@@ -151,7 +183,7 @@ public class EquivalentDose extends Quantity<EquivalentDose>
         public static final EquivalentDose.Unit muSv = Units.resolve(EquivalentDose.Unit.class, "muSv");
 
         /** rem. (stands for röntgen equivalent man). */
-        public static final EquivalentDose.Unit rem = Sv.deriveUnit("rem", "rem", 0.01, UnitSystem.CGS);
+        public static final EquivalentDose.Unit rem = Sv.deriveUnit("rem", "rem", "rem", 0.01, UnitSystem.CGS, null);
 
         /**
          * Create a new EquivalentDose unit.
@@ -162,7 +194,7 @@ public class EquivalentDose extends Quantity<EquivalentDose>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -170,13 +202,14 @@ public class EquivalentDose extends Quantity<EquivalentDose>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -192,22 +225,23 @@ public class EquivalentDose extends Quantity<EquivalentDose>
         }
 
         @Override
-        public EquivalentDose ofSi(final double si)
+        public EquivalentDose ofSi(final double si, final UnitInterface<EquivalentDose> displayUnit)
         {
-            return EquivalentDose.ofSi(si);
+            return new EquivalentDose(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public EquivalentDose.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new EquivalentDose.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

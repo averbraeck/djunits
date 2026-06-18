@@ -1,12 +1,16 @@
 package org.djunits.quantity;
 
-import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.djutils.exceptions.Throw;
@@ -41,25 +45,25 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     }
 
     /**
-     * Instantiate a Temperature quantity with a unit and a reference point.
-     * @param valueInUnit the temperature value, expressed in a temperature unit
-     * @param unit the temperature unit in which the value is expressed, relative to the reference point
+     * Instantiate a Temperature quantity with an SI or base value and a display unit.and a reference point.
+     * @param siValue the temperature value, expressed in a the SI unit (K), relative to 0 K
+     * @param displayUnit the display unit to use
      * @param reference the reference point of this absolute temperature
      * @throws IllegalArgumentException when temperature is below 0 K
      */
-    public Temperature(final double valueInUnit, final Temperature.Unit unit, final Reference reference)
+    public Temperature(final double siValue, final Temperature.Unit displayUnit, final Reference reference)
     {
-        super(checkTemperature(new TemperatureDifference(valueInUnit, unit), reference), reference);
+        super(checkTemperature(new TemperatureDifference(siValue, displayUnit), reference), reference);
     }
 
     /**
-     * Instantiate a Temperature quantity with a unit and the KELVIN reference point.
-     * @param valueInUnit the temperature value, expressed in a temperature unit
-     * @param unit the temperature unit in which the value is expressed, relative to the reference point
+     * Instantiate a Temperature quantity with an SI or base value and a display unit, relative to its own reference point.
+     * @param siValue the temperature value, expressed in K
+     * @param displayUnit the display unit to use
      */
-    public Temperature(final double valueInUnit, final Temperature.Unit unit)
+    public Temperature(final double siValue, final Temperature.Unit displayUnit)
     {
-        this(valueInUnit, unit, unit.getReference());
+        this(siValue, displayUnit, displayUnit.getReference());
     }
 
     /**
@@ -268,32 +272,33 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Temperature.Unit, TemperatureDifference>
+    public static class Unit extends AbstractUnit<TemperatureDifference>
     {
         /** The dimensions of temperature: K. */
         public static final SIUnit SI_UNIT = SIUnit.of("K");
 
         /** Kelvin. */
-        public static final Temperature.Unit K = new Temperature.Unit("K", "kelvin", 1.0, UnitSystem.SI_BASE);
+        public static final Temperature.Unit K = new Temperature.Unit("K", "K", "kelvin", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Temperature.Unit SI = K.generateSiPrefixes(false, false);
+        public static final Temperature.Unit SI = (Unit) K.generateSiPrefixes(false, false);
 
         /** Degree Celsius. */
         public static final Temperature.Unit degC =
-                new Temperature.Unit("degC", "\u00B0C", "degree Celsius", new LinearScale(1.0), UnitSystem.SI_DERIVED);
+                new Temperature.Unit("degC", "\u00B0C", "degree Celsius", new LinearScale(1.0), UnitSystem.SI_DERIVED, null);
 
         /** Degree Fahrenheit. */
-        public static final Temperature.Unit degF =
-                new Temperature.Unit("degF", "\u00B0F", "degree Fahrenheit", new LinearScale(5.0 / 9.0), UnitSystem.OTHER);
+        public static final Temperature.Unit degF = new Temperature.Unit("degF", "\u00B0F", "degree Fahrenheit",
+                new LinearScale(5.0 / 9.0), UnitSystem.OTHER, null);
 
         /** Degree Rankine. */
         public static final Temperature.Unit degR =
-                new Temperature.Unit("degR", "\u00B0R", "degree Rankine", new LinearScale(5.0 / 9.0), UnitSystem.OTHER);
+                new Temperature.Unit("degR", "\u00B0R", "degree Rankine", new LinearScale(5.0 / 9.0), UnitSystem.OTHER, null);
 
         /** Degree Reaumur. */
-        public static final Temperature.Unit degRe =
-                new Temperature.Unit("degRe", "\u00B0R\u00E9", "degree Reaumur", new LinearScale(4.0 / 5.0), UnitSystem.OTHER);
+        public static final Temperature.Unit degRe = new Temperature.Unit("degRe", "\u00B0R\u00E9", "degree Reaumur",
+                new LinearScale(4.0 / 5.0), UnitSystem.OTHER, null);
 
         /** the default reference for this unit (used for absolute quantities). */
         private Reference reference;
@@ -310,7 +315,7 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -318,13 +323,14 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         /**
@@ -387,19 +393,19 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
         }
 
         @Override
-        public TemperatureDifference ofSi(final double si)
+        public TemperatureDifference ofSi(final double si, final UnitInterface<TemperatureDifference> displayUnit)
         {
-            return TemperatureDifference.ofSi(si);
+            return new TemperatureDifference(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Temperature.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Temperature.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }

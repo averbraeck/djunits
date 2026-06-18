@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -47,13 +51,24 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a CatalyticActivity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a CatalyticActivity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public CatalyticActivity(final double value, final CatalyticActivity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a CatalyticActivity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public CatalyticActivity(final double valueInUnit, final CatalyticActivity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -63,19 +78,24 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
      */
     public static CatalyticActivity ofSi(final double si)
     {
-        return new CatalyticActivity(si, CatalyticActivity.Unit.SI);
+        return new CatalyticActivity(si, CatalyticActivity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a CatalyticActivity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the CatalyticActivity instance based on an SI value with the given display unit
+     */
+    public static CatalyticActivity ofSi(final double siValue, final CatalyticActivity.Unit displayUnit)
+    {
+        return new CatalyticActivity(siValue, displayUnit, true);
     }
 
     @Override
-    public CatalyticActivity instantiateSi(final double si)
+    public CatalyticActivity instantiateSi(final double siValue, final UnitInterface<CatalyticActivity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return CatalyticActivity.Unit.SI_UNIT;
+        return new CatalyticActivity(siValue, (CatalyticActivity.Unit) displayUnit, true);
     }
 
     /**
@@ -90,6 +110,17 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
     public static CatalyticActivity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a CatalyticActivity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab CatalyticActivity representation of the value in its unit
+     */
+    public static CatalyticActivity of(final double valueInUnit, final CatalyticActivity.Unit unit)
+    {
+        return new CatalyticActivity(valueInUnit, unit);
     }
 
     /**
@@ -164,16 +195,17 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<CatalyticActivity.Unit, CatalyticActivity>
+    public static class Unit extends AbstractUnit<CatalyticActivity>
     {
         /** The dimensions of catalytic activity: mol/s [rad, sr, kg, m, s, A, K, mol, cd]. */
         public static final SIUnit SI_UNIT = SIUnit.of("mol/s");
 
         /** katal. */
-        public static final CatalyticActivity.Unit kat = new CatalyticActivity.Unit("kat", "katal", 1.0, UnitSystem.SI_DERIVED);
+        public static final CatalyticActivity.Unit kat = new CatalyticActivity.Unit("kat", "kat", "katal", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final CatalyticActivity.Unit SI = kat.generateSiPrefixes(false, false);
+        public static final CatalyticActivity.Unit SI = (Unit) kat.generateSiPrefixes(false, false);
 
         /** mkat. */
         public static final CatalyticActivity.Unit mkat = Units.resolve(CatalyticActivity.Unit.class, "mkat");
@@ -193,7 +225,7 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -201,13 +233,14 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -222,24 +255,24 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
             return SI;
         }
 
-        /** {@inheritDoc} */
         @Override
-        public CatalyticActivity ofSi(final double si)
+        public CatalyticActivity ofSi(final double si, final UnitInterface<CatalyticActivity> displayUnit)
         {
-            return CatalyticActivity.ofSi(si);
+            return new CatalyticActivity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public CatalyticActivity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new CatalyticActivity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

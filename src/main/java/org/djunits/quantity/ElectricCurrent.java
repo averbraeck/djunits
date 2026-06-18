@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a ElectricCurrent quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a ElectricCurrent quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public ElectricCurrent(final double value, final ElectricCurrent.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a ElectricCurrent quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public ElectricCurrent(final double valueInUnit, final ElectricCurrent.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      */
     public static ElectricCurrent ofSi(final double si)
     {
-        return new ElectricCurrent(si, ElectricCurrent.Unit.SI);
+        return new ElectricCurrent(si, ElectricCurrent.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a ElectricCurrent quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the ElectricCurrent instance based on an SI value with the given display unit
+     */
+    public static ElectricCurrent ofSi(final double siValue, final ElectricCurrent.Unit displayUnit)
+    {
+        return new ElectricCurrent(siValue, displayUnit, true);
     }
 
     @Override
-    public ElectricCurrent instantiateSi(final double si)
+    public ElectricCurrent instantiateSi(final double siValue, final UnitInterface<ElectricCurrent> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return ElectricCurrent.Unit.SI_UNIT;
+        return new ElectricCurrent(siValue, (ElectricCurrent.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
     public static ElectricCurrent valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a ElectricCurrent based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab ElectricCurrent representation of the value in its unit
+     */
+    public static ElectricCurrent of(final double valueInUnit, final ElectricCurrent.Unit unit)
+    {
+        return new ElectricCurrent(valueInUnit, unit);
     }
 
     /**
@@ -184,16 +215,17 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<ElectricCurrent.Unit, ElectricCurrent>
+    public static class Unit extends AbstractUnit<ElectricCurrent>
     {
         /** The dimensions of electric current: A. */
         public static final SIUnit SI_UNIT = SIUnit.of("A");
 
         /** ampere. */
-        public static final ElectricCurrent.Unit A = new ElectricCurrent.Unit("A", "ampere", 1.0, UnitSystem.SI_BASE);
+        public static final ElectricCurrent.Unit A = new ElectricCurrent.Unit("A", "A", "ampere", IdentityScale.SCALE,
+                UnitSystem.SI_BASE, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final ElectricCurrent.Unit SI = A.generateSiPrefixes(false, false);
+        public static final ElectricCurrent.Unit SI = (Unit) A.generateSiPrefixes(false, false);
 
         /** microampere. */
         public static final ElectricCurrent.Unit muA = Units.resolve(ElectricCurrent.Unit.class, "muA");
@@ -208,10 +240,11 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
         public static final ElectricCurrent.Unit MA = Units.resolve(ElectricCurrent.Unit.class, "MA");
 
         /** statampere (GCS ESU). */
-        public static final ElectricCurrent.Unit statA = A.deriveUnit("statA", "statampere", 3.335641E-10, UnitSystem.CGS_ESU);
+        public static final ElectricCurrent.Unit statA =
+                A.deriveUnit("statA", "statA", "statampere", 3.335641E-10, UnitSystem.CGS_ESU, null);
 
         /** abampere (GCS EMU). */
-        public static final ElectricCurrent.Unit abA = A.deriveUnit("abA", "abampere", 10.0, UnitSystem.CGS_EMU);
+        public static final ElectricCurrent.Unit abA = A.deriveUnit("abA", "abA", "abampere", 10.0, UnitSystem.CGS_EMU, null);
 
         /**
          * Create a new ElectricCurrent unit.
@@ -222,7 +255,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -230,13 +263,14 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -252,22 +286,23 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
         }
 
         @Override
-        public ElectricCurrent ofSi(final double si)
+        public ElectricCurrent ofSi(final double si, final UnitInterface<ElectricCurrent> displayUnit)
         {
-            return ElectricCurrent.ofSi(si);
+            return new ElectricCurrent(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public ElectricCurrent.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new ElectricCurrent.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

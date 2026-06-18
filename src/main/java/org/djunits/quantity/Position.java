@@ -1,7 +1,7 @@
 package org.djunits.quantity;
 
-import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.Quantity;
 
 /**
@@ -18,14 +18,14 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Position quantity with a unit and a reference point.
-     * @param valueInUnit the length value, expressed in a length unit
-     * @param unit the length unit in which the value is expressed, relative to the reference point
+     * Instantiate a Position quantity with an SI or base value and a display unit.and a reference point.
+     * @param siValue the length value, expressed in the SI unit, relative to the reference point
+     * @param displayUnit the display unit to use
      * @param reference the reference point of this position
      */
-    public Position(final double valueInUnit, final Length.Unit unit, final Reference reference)
+    public Position(final double siValue, final Length.Unit displayUnit, final Reference reference)
     {
-        super(new Length(valueInUnit, unit), reference);
+        super(new Length(siValue, displayUnit), reference);
     }
 
     /**

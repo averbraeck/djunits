@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a ArealObjectDensity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a ArealObjectDensity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public ArealObjectDensity(final double value, final ArealObjectDensity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a ArealObjectDensity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public ArealObjectDensity(final double valueInUnit, final ArealObjectDensity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      */
     public static ArealObjectDensity ofSi(final double si)
     {
-        return new ArealObjectDensity(si, ArealObjectDensity.Unit.SI);
+        return new ArealObjectDensity(si, ArealObjectDensity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a ArealObjectDensity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the ArealObjectDensity instance based on an SI value with the given display unit
+     */
+    public static ArealObjectDensity ofSi(final double siValue, final ArealObjectDensity.Unit displayUnit)
+    {
+        return new ArealObjectDensity(siValue, displayUnit, true);
     }
 
     @Override
-    public ArealObjectDensity instantiateSi(final double si)
+    public ArealObjectDensity instantiateSi(final double siValue, final UnitInterface<ArealObjectDensity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return ArealObjectDensity.Unit.SI_UNIT;
+        return new ArealObjectDensity(siValue, (ArealObjectDensity.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
     public static ArealObjectDensity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a ArealObjectDensity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab ArealObjectDensity representation of the value in its unit
+     */
+    public static ArealObjectDensity of(final double valueInUnit, final ArealObjectDensity.Unit unit)
+    {
+        return new ArealObjectDensity(valueInUnit, unit);
     }
 
     /**
@@ -193,7 +222,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<ArealObjectDensity.Unit, ArealObjectDensity>
+    public static class Unit extends AbstractUnit<ArealObjectDensity>
     {
         /** The dimensions of the number of objects per unit of area: per square meter (/m2). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m2");
@@ -214,7 +243,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -222,13 +251,14 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -244,22 +274,23 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
         }
 
         @Override
-        public ArealObjectDensity ofSi(final double si)
+        public ArealObjectDensity ofSi(final double si, final UnitInterface<ArealObjectDensity> displayUnit)
         {
-            return ArealObjectDensity.ofSi(si);
+            return new ArealObjectDensity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public ArealObjectDensity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new ArealObjectDensity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

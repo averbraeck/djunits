@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -48,13 +52,24 @@ public class Duration extends Quantity<Duration>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Duration quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Duration quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Duration(final double value, final Duration.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Duration quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Duration(final double valueInUnit, final Duration.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -64,19 +79,24 @@ public class Duration extends Quantity<Duration>
      */
     public static Duration ofSi(final double si)
     {
-        return new Duration(si, Duration.Unit.SI);
+        return new Duration(si, Duration.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Duration quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Duration instance based on an SI value with the given display unit
+     */
+    public static Duration ofSi(final double siValue, final Duration.Unit displayUnit)
+    {
+        return new Duration(siValue, displayUnit, true);
     }
 
     @Override
-    public Duration instantiateSi(final double si)
+    public Duration instantiateSi(final double siValue, final UnitInterface<Duration> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Duration.Unit.SI_UNIT;
+        return new Duration(siValue, (Duration.Unit) displayUnit, true);
     }
 
     /**
@@ -91,6 +111,17 @@ public class Duration extends Quantity<Duration>
     public static Duration valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Duration based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Duration representation of the value in its unit
+     */
+    public static Duration of(final double valueInUnit, final Duration.Unit unit)
+    {
+        return new Duration(valueInUnit, unit);
     }
 
     /**
@@ -263,16 +294,17 @@ public class Duration extends Quantity<Duration>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Duration.Unit, Duration>
+    public static class Unit extends AbstractUnit<Duration>
     {
         /** The dimensions of duration: s. */
         public static final SIUnit SI_UNIT = SIUnit.of("s");
 
         /** second. */
-        public static final Duration.Unit s = new Duration.Unit("s", "second", 1.0, UnitSystem.SI_BASE);
+        public static final Duration.Unit s =
+                new Duration.Unit("s", "s", "second", IdentityScale.SCALE, UnitSystem.SI_BASE, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Duration.Unit SI = s.generateSiPrefixes(false, false);
+        public static final Duration.Unit SI = (Unit) s.generateSiPrefixes(false, false);
 
         /** picosecond. */
         public static final Duration.Unit ps = Units.resolve(Duration.Unit.class, "ps");
@@ -307,7 +339,7 @@ public class Duration extends Quantity<Duration>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -315,13 +347,14 @@ public class Duration extends Quantity<Duration>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -337,22 +370,30 @@ public class Duration extends Quantity<Duration>
         }
 
         @Override
-        public Duration ofSi(final double si)
+        public Duration ofSi(final double si, final UnitInterface<Duration> displayUnit)
         {
-            return Duration.ofSi(si);
+            return new Duration(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Duration.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Duration.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Duration.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

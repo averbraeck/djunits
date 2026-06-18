@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class Acceleration extends Quantity<Acceleration>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Acceleration quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Acceleration quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Acceleration(final double value, final Acceleration.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Acceleration quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Acceleration(final double valueInUnit, final Acceleration.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class Acceleration extends Quantity<Acceleration>
      */
     public static Acceleration ofSi(final double si)
     {
-        return new Acceleration(si, Acceleration.Unit.SI);
+        return new Acceleration(si, Acceleration.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Acceleration quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Acceleration instance based on an SI value with the given display unit
+     */
+    public static Acceleration ofSi(final double siValue, final Acceleration.Unit displayUnit)
+    {
+        return new Acceleration(siValue, displayUnit, true);
     }
 
     @Override
-    public Acceleration instantiateSi(final double si)
+    public Acceleration instantiateSi(final double siValue, final UnitInterface<Acceleration> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Acceleration.Unit.SI_UNIT;
+        return new Acceleration(siValue, (Acceleration.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class Acceleration extends Quantity<Acceleration>
     public static Acceleration valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Acceleration based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Acceleration representation of the value in its unit
+     */
+    public static Acceleration of(final double valueInUnit, final Acceleration.Unit unit)
+    {
+        return new Acceleration(valueInUnit, unit);
     }
 
     /**
@@ -182,7 +211,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Acceleration.Unit, Acceleration>
+    public static class Unit extends AbstractUnit<Acceleration>
     {
         /** Constant for standard gravity. */
         public static final double CONST_GRAVITY = 9.80665;
@@ -241,7 +270,7 @@ public class Acceleration extends Quantity<Acceleration>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -249,13 +278,14 @@ public class Acceleration extends Quantity<Acceleration>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -271,22 +301,23 @@ public class Acceleration extends Quantity<Acceleration>
         }
 
         @Override
-        public Acceleration ofSi(final double si)
+        public Acceleration ofSi(final double si, final UnitInterface<Acceleration> displayUnit)
         {
-            return Acceleration.ofSi(si);
+            return new Acceleration(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Acceleration.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Acceleration.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

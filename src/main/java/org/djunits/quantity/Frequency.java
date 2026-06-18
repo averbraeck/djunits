@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Frequency extends Quantity<Frequency>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Frequency quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Frequency quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Frequency(final double value, final Frequency.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Frequency quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Frequency(final double valueInUnit, final Frequency.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Frequency extends Quantity<Frequency>
      */
     public static Frequency ofSi(final double si)
     {
-        return new Frequency(si, Frequency.Unit.SI);
+        return new Frequency(si, Frequency.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Frequency quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Frequency instance based on an SI value with the given display unit
+     */
+    public static Frequency ofSi(final double siValue, final Frequency.Unit displayUnit)
+    {
+        return new Frequency(siValue, displayUnit, true);
     }
 
     @Override
-    public Frequency instantiateSi(final double si)
+    public Frequency instantiateSi(final double siValue, final UnitInterface<Frequency> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Frequency.Unit.SI_UNIT;
+        return new Frequency(siValue, (Frequency.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Frequency extends Quantity<Frequency>
     public static Frequency valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Frequency based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Frequency representation of the value in its unit
+     */
+    public static Frequency of(final double valueInUnit, final Frequency.Unit unit)
+    {
+        return new Frequency(valueInUnit, unit);
     }
 
     /**
@@ -199,16 +230,17 @@ public class Frequency extends Quantity<Frequency>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Frequency.Unit, Frequency>
+    public static class Unit extends AbstractUnit<Frequency>
     {
         /** The dimensions of frequency: /s. */
         public static final SIUnit SI_UNIT = SIUnit.of("/s");
 
         /** hertz. */
-        public static final Frequency.Unit Hz = new Frequency.Unit("Hz", "hertz", 1.0, UnitSystem.SI_DERIVED);
+        public static final Frequency.Unit Hz =
+                new Frequency.Unit("Hz", "Hz", "hertz", IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Frequency.Unit SI = Hz.generateSiPrefixes(false, false);
+        public static final Frequency.Unit SI = (Unit) Hz.generateSiPrefixes(false, false);
 
         /** kiloHertz. */
         public static final Frequency.Unit kHz = Units.resolve(Frequency.Unit.class, "kHz");
@@ -223,7 +255,8 @@ public class Frequency extends Quantity<Frequency>
         public static final Frequency.Unit THz = Units.resolve(Frequency.Unit.class, "THz");
 
         /** Revolutions per minute = 1/60 Hz. */
-        public static final Frequency.Unit rpm = Hz.deriveUnit("rpm", "revolutions per minute", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final Frequency.Unit rpm =
+                Hz.deriveUnit("rpm", "rpm", "revolutions per minute", 1.0 / 60.0, UnitSystem.OTHER, null);
 
         /**
          * Create a new Frequency unit.
@@ -234,7 +267,7 @@ public class Frequency extends Quantity<Frequency>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -242,13 +275,14 @@ public class Frequency extends Quantity<Frequency>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -264,22 +298,23 @@ public class Frequency extends Quantity<Frequency>
         }
 
         @Override
-        public Frequency ofSi(final double si)
+        public Frequency ofSi(final double si, final UnitInterface<Frequency> displayUnit)
         {
-            return Frequency.ofSi(si);
+            return new Frequency(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Frequency.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Frequency.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

@@ -3,6 +3,7 @@ package org.djunits.quantity;
 import java.util.Locale;
 
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -22,31 +23,68 @@ public class SIQuantity extends Quantity<SIQuantity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a SI quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a SIQuantity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public SIQuantity(final double value, final SIUnit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a SIQuantity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public SIQuantity(final double valueInUnit, final SIUnit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
+    }
+
+    /**
+     * Return a SIQuantity instance based on an SI value.
+     * @param si the si value
+     * @return the SIQuantity instance based on an SI value
+     */
+    public static SIQuantity ofSi(final double si)
+    {
+        return new SIQuantity(si, SIUnit.DIMLESS, true);
+    }
+
+    /**
+     * Instantiate a SIQuantity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the SIQuantity instance based on an SI value with the given display unit
+     */
+    public static SIQuantity ofSi(final double siValue, final SIUnit displayUnit)
+    {
+        return new SIQuantity(siValue, displayUnit, true);
     }
 
     @Override
-    public SIQuantity instantiateSi(final double si)
+    public SIQuantity instantiateSi(final double siValue, final UnitInterface<SIQuantity> displayUnit)
     {
-        return new SIQuantity(si, getDisplayUnit());
+        return new SIQuantity(siValue, (SIUnit) displayUnit, true);
+    }
+
+    /**
+     * Returns a SIQuantity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab SIQuantity representation of the value in its unit
+     */
+    public static SIQuantity of(final double valueInUnit, final SIUnit unit)
+    {
+        return new SIQuantity(valueInUnit, unit);
     }
 
     @Override
     public SIUnit getDisplayUnit()
     {
         return (SIUnit) super.getDisplayUnit();
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return getDisplayUnit();
     }
 
     /**

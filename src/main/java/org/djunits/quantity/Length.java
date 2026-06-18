@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Length extends Quantity<Length>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Length quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Length quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Length(final double value, final Length.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Length quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Length(final double valueInUnit, final Length.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Length extends Quantity<Length>
      */
     public static Length ofSi(final double si)
     {
-        return new Length(si, Length.Unit.SI);
+        return new Length(si, Length.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Length quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Length instance based on an SI value with the given display unit
+     */
+    public static Length ofSi(final double siValue, final Length.Unit displayUnit)
+    {
+        return new Length(siValue, displayUnit, true);
     }
 
     @Override
-    public Length instantiateSi(final double si)
+    public Length instantiateSi(final double siValue, final UnitInterface<Length> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Length.Unit.SI_UNIT;
+        return new Length(siValue, (Length.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Length extends Quantity<Length>
     public static Length valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Length based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Length representation of the value in its unit
+     */
+    public static Length of(final double valueInUnit, final Length.Unit unit)
+    {
+        return new Length(valueInUnit, unit);
     }
 
     /**
@@ -251,7 +282,7 @@ public class Length extends Quantity<Length>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Length.Unit, Length>
+    public static class Unit extends AbstractUnit<Length>
     {
         /** Constant for the foot. */
         public static final double CONST_FT = 0.3048;
@@ -281,10 +312,11 @@ public class Length extends Quantity<Length>
         public static final SIUnit SI_UNIT = SIUnit.of("m");
 
         /** meter. */
-        public static final Length.Unit m = new Length.Unit("m", "meter", 1.0, UnitSystem.SI_BASE);
+        public static final Length.Unit m =
+                new Length.Unit("m", "m", "meter", IdentityScale.SCALE, UnitSystem.SI_BASE, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Length.Unit SI = m.generateSiPrefixes(false, false);
+        public static final Length.Unit SI = (Unit) m.generateSiPrefixes(false, false);
 
         /** decameter. */
         public static final Length.Unit dam = Units.resolve(Length.Unit.class, "dam");
@@ -321,19 +353,19 @@ public class Length extends Quantity<Length>
 
         /** foot (international) = 0.3048 m = 1/3 yd = 12 inches. */
         public static final Length.Unit ft =
-                new Length.Unit("ft", "ft", "foot", new LinearScale(CONST_FT), UnitSystem.IMPERIAL);
+                new Length.Unit("ft", "ft", "foot", new LinearScale(CONST_FT), UnitSystem.IMPERIAL, null);
 
         /** inch (international) = 2.54 cm = 1/36 yd = 1/12 ft. */
         public static final Length.Unit in =
-                new Length.Unit("in", "in", "inch", new LinearScale(CONST_IN), UnitSystem.IMPERIAL);
+                new Length.Unit("in", "in", "inch", new LinearScale(CONST_IN), UnitSystem.IMPERIAL, null);
 
         /** yard (international) = 0.9144 m = 3 ft = 36 in. */
         public static final Length.Unit yd =
-                new Length.Unit("yd", "yd", "yard", new LinearScale(CONST_YD), UnitSystem.IMPERIAL);
+                new Length.Unit("yd", "yd", "yard", new LinearScale(CONST_YD), UnitSystem.IMPERIAL, null);
 
         /** mile (international) = 5280 ft = 1760 yd. */
         public static final Length.Unit mi =
-                new Length.Unit("mi", "mi", "mile", new LinearScale(CONST_MI), UnitSystem.IMPERIAL);
+                new Length.Unit("mi", "mi", "mile", new LinearScale(CONST_MI), UnitSystem.IMPERIAL, null);
 
         /** nautical mile (international) = 1852 m. */
         public static final Length.Unit NM = new Length.Unit("NM", "Nautical Mile", CONST_NM, UnitSystem.OTHER);
@@ -349,7 +381,7 @@ public class Length extends Quantity<Length>
 
         /** Angstrom = 10^-10 m. */
         public static final Length.Unit A =
-                new Length.Unit("A", "\u00C5", "angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER);
+                new Length.Unit("A", "\u00C5", "angstrom", new LinearScale(1.0E-10), UnitSystem.OTHER, null);
 
         /**
          * Create a new length unit.
@@ -360,7 +392,7 @@ public class Length extends Quantity<Length>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -368,13 +400,14 @@ public class Length extends Quantity<Length>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -390,22 +423,23 @@ public class Length extends Quantity<Length>
         }
 
         @Override
-        public Length ofSi(final double si)
+        public Length ofSi(final double si, final UnitInterface<Length> displayUnit)
         {
-            return Length.ofSi(si);
+            return new Length(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Length.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Length.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

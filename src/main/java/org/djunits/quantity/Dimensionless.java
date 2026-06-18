@@ -1,8 +1,8 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.si.SIUnit;
 
 /**
  * Dimensionless quantity.
@@ -40,13 +40,24 @@ public class Dimensionless extends Quantity<Dimensionless>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Dimensionless quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Dimensionless quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Dimensionless(final double value, final Unitless displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Dimensionless quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Dimensionless(final double valueInUnit, final Unitless unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -56,19 +67,24 @@ public class Dimensionless extends Quantity<Dimensionless>
      */
     public static Dimensionless ofSi(final double si)
     {
-        return new Dimensionless(si, Unitless.BASE);
+        return new Dimensionless(si, Unitless.BASE, true);
+    }
+
+    /**
+     * Instantiate a Dimensionless quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Dimensionless instance based on an SI value with the given display unit
+     */
+    public static Dimensionless ofSi(final double siValue, final Unitless displayUnit)
+    {
+        return new Dimensionless(siValue, displayUnit, true);
     }
 
     @Override
-    public Dimensionless instantiateSi(final double si)
+    public Dimensionless instantiateSi(final double siValue, final UnitInterface<Dimensionless> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Unitless.SI_UNIT;
+        return new Dimensionless(siValue, (Unitless) displayUnit, true);
     }
 
     /**
@@ -83,6 +99,17 @@ public class Dimensionless extends Quantity<Dimensionless>
     public static Dimensionless valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Dimensionless based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Dimensionless representation of the value in its unit
+     */
+    public static Dimensionless of(final double valueInUnit, final Unitless unit)
+    {
+        return new Dimensionless(valueInUnit, unit);
     }
 
     /**

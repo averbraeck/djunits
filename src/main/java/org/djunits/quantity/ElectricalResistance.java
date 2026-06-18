@@ -2,12 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -48,13 +51,24 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a ElectricalResistance quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a ElectricalResistance quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public ElectricalResistance(final double value, final ElectricalResistance.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a ElectricalResistance quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public ElectricalResistance(final double valueInUnit, final ElectricalResistance.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -64,19 +78,24 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
      */
     public static ElectricalResistance ofSi(final double si)
     {
-        return new ElectricalResistance(si, ElectricalResistance.Unit.SI);
+        return new ElectricalResistance(si, ElectricalResistance.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a ElectricalResistance quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the ElectricalResistance instance based on an SI value with the given display unit
+     */
+    public static ElectricalResistance ofSi(final double siValue, final ElectricalResistance.Unit displayUnit)
+    {
+        return new ElectricalResistance(siValue, displayUnit, true);
     }
 
     @Override
-    public ElectricalResistance instantiateSi(final double si)
+    public ElectricalResistance instantiateSi(final double siValue, final UnitInterface<ElectricalResistance> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return ElectricalResistance.Unit.SI_UNIT;
+        return new ElectricalResistance(siValue, (ElectricalResistance.Unit) displayUnit, true);
     }
 
     /**
@@ -91,6 +110,17 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
     public static ElectricalResistance valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a ElectricalResistance based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab ElectricalResistance representation of the value in its unit
+     */
+    public static ElectricalResistance of(final double valueInUnit, final ElectricalResistance.Unit unit)
+    {
+        return new ElectricalResistance(valueInUnit, unit);
     }
 
     /**
@@ -171,17 +201,17 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<ElectricalResistance.Unit, ElectricalResistance>
+    public static class Unit extends AbstractUnit<ElectricalResistance>
     {
         /** The dimensions of the electrical resistance: kgm2/s3A2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A2");
 
         /** Ohm. */
-        public static final ElectricalResistance.Unit ohm =
-                new ElectricalResistance.Unit("ohm", "\u03A9", "ohm", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+        public static final ElectricalResistance.Unit ohm = new ElectricalResistance.Unit("ohm", "\u03A9", "ohm",
+                IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final ElectricalResistance.Unit SI = ohm.generateSiPrefixes(false, false);
+        public static final ElectricalResistance.Unit SI = (Unit) ohm.generateSiPrefixes(false, false);
 
         /** micro-ohm. */
         public static final ElectricalResistance.Unit muohm = Units.resolve(ElectricalResistance.Unit.class, "muohm");
@@ -200,11 +230,11 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
 
         /** ab-ohm. */
         public static final ElectricalResistance.Unit abohm =
-                ohm.deriveUnit("abohm", "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU);
+                ohm.deriveUnit("abohm", "ab\u03A9", "abohm", 1.0E-9, UnitSystem.CGS_EMU, null);
 
         /** stat-ohm. */
         public static final ElectricalResistance.Unit statohm =
-                ohm.deriveUnit("stohm", "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU);
+                ohm.deriveUnit("stohm", "st\u03A9", "statohm", 8.987551787E11, UnitSystem.CGS_EMU, null);
 
         /**
          * Create a new ElectricalResistance unit.
@@ -215,7 +245,7 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -223,13 +253,14 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -245,22 +276,23 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
         }
 
         @Override
-        public ElectricalResistance ofSi(final double si)
+        public ElectricalResistance ofSi(final double si, final UnitInterface<ElectricalResistance> displayUnit)
         {
-            return ElectricalResistance.ofSi(si);
+            return new ElectricalResistance(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public ElectricalResistance.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new ElectricalResistance.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

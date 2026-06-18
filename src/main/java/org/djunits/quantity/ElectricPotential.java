@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -47,13 +51,24 @@ public class ElectricPotential extends Quantity<ElectricPotential>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a ElectricPotential quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a ElectricPotential quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public ElectricPotential(final double value, final ElectricPotential.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a ElectricPotential quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public ElectricPotential(final double valueInUnit, final ElectricPotential.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -63,19 +78,24 @@ public class ElectricPotential extends Quantity<ElectricPotential>
      */
     public static ElectricPotential ofSi(final double si)
     {
-        return new ElectricPotential(si, ElectricPotential.Unit.SI);
+        return new ElectricPotential(si, ElectricPotential.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a ElectricPotential quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the ElectricPotential instance based on an SI value with the given display unit
+     */
+    public static ElectricPotential ofSi(final double siValue, final ElectricPotential.Unit displayUnit)
+    {
+        return new ElectricPotential(siValue, displayUnit, true);
     }
 
     @Override
-    public ElectricPotential instantiateSi(final double si)
+    public ElectricPotential instantiateSi(final double siValue, final UnitInterface<ElectricPotential> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return ElectricPotential.Unit.SI_UNIT;
+        return new ElectricPotential(siValue, (ElectricPotential.Unit) displayUnit, true);
     }
 
     /**
@@ -90,6 +110,17 @@ public class ElectricPotential extends Quantity<ElectricPotential>
     public static ElectricPotential valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a ElectricPotential based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab ElectricPotential representation of the value in its unit
+     */
+    public static ElectricPotential of(final double valueInUnit, final ElectricPotential.Unit unit)
+    {
+        return new ElectricPotential(valueInUnit, unit);
     }
 
     /**
@@ -164,16 +195,17 @@ public class ElectricPotential extends Quantity<ElectricPotential>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<ElectricPotential.Unit, ElectricPotential>
+    public static class Unit extends AbstractUnit<ElectricPotential>
     {
         /** The dimensions of the electric potential: kgm2/s3A. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3A");
 
         /** Gray. */
-        public static final ElectricPotential.Unit V = new ElectricPotential.Unit("V", "volt", 1.0, UnitSystem.SI_DERIVED);
+        public static final ElectricPotential.Unit V = new ElectricPotential.Unit("V", "V", "volt", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final ElectricPotential.Unit SI = V.generateSiPrefixes(false, false);
+        public static final ElectricPotential.Unit SI = (Unit) V.generateSiPrefixes(false, false);
 
         /** microvolt. */
         public static final ElectricPotential.Unit muV = Units.resolve(ElectricPotential.Unit.class, "muV");
@@ -191,10 +223,11 @@ public class ElectricPotential extends Quantity<ElectricPotential>
         public static final ElectricPotential.Unit GV = Units.resolve(ElectricPotential.Unit.class, "GV");
 
         /** statvolt. */
-        public static final ElectricPotential.Unit statV = V.deriveUnit("statV", "statvolt", 299.792458, UnitSystem.CGS_ESU);
+        public static final ElectricPotential.Unit statV =
+                V.deriveUnit("statV", "statV", "statvolt", 299.792458, UnitSystem.CGS_ESU, null);
 
         /** abvolt. */
-        public static final ElectricPotential.Unit abV = V.deriveUnit("abV", "abvolt", 1.0E-8, UnitSystem.CGS_EMU);
+        public static final ElectricPotential.Unit abV = V.deriveUnit("abV", "abV", "abvolt", 1.0E-8, UnitSystem.CGS_EMU, null);
 
         /**
          * Create a new ElectricPotential unit.
@@ -205,7 +238,7 @@ public class ElectricPotential extends Quantity<ElectricPotential>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -213,13 +246,14 @@ public class ElectricPotential extends Quantity<ElectricPotential>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -235,22 +269,23 @@ public class ElectricPotential extends Quantity<ElectricPotential>
         }
 
         @Override
-        public ElectricPotential ofSi(final double si)
+        public ElectricPotential ofSi(final double si, final UnitInterface<ElectricPotential> displayUnit)
         {
-            return ElectricPotential.ofSi(si);
+            return new ElectricPotential(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public ElectricPotential.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new ElectricPotential.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

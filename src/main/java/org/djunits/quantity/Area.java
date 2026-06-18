@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class Area extends Quantity<Area>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Area quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Area quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Area(final double value, final Area.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Area quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Area(final double valueInUnit, final Area.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class Area extends Quantity<Area>
      */
     public static Area ofSi(final double si)
     {
-        return new Area(si, Area.Unit.SI);
+        return new Area(si, Area.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Area quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Area instance based on an SI value with the given display unit
+     */
+    public static Area ofSi(final double siValue, final Area.Unit displayUnit)
+    {
+        return new Area(siValue, displayUnit, true);
     }
 
     @Override
-    public Area instantiateSi(final double si)
+    public Area instantiateSi(final double siValue, final UnitInterface<Area> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Area.Unit.SI_UNIT;
+        return new Area(siValue, (Area.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class Area extends Quantity<Area>
     public static Area valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Area based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Area representation of the value in its unit
+     */
+    public static Area of(final double valueInUnit, final Area.Unit unit)
+    {
+        return new Area(valueInUnit, unit);
     }
 
     /**
@@ -228,7 +257,7 @@ public class Area extends Quantity<Area>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Area.Unit, Area>
+    public static class Unit extends AbstractUnit<Area>
     {
         /** The dimensions of Area: m2. */
         public static final SIUnit SI_UNIT = SIUnit.of("m2");
@@ -259,7 +288,7 @@ public class Area extends Quantity<Area>
 
         /** Square micrometer. */
         public static final Area.Unit mum2 =
-                m2.deriveUnit("mum2", "\u03BCm2", "square micrometer", 1.0E-12, UnitSystem.SI_BASE);
+                m2.deriveUnit("mum2", "\u03BCm2", "square micrometer", 1.0E-12, UnitSystem.SI_BASE, null);
 
         /** Square nanometer. */
         public static final Area.Unit nm2 = m2.deriveUnit("nm2", "square nanometer", 1.0E-18, UnitSystem.SI_BASE);
@@ -315,7 +344,7 @@ public class Area extends Quantity<Area>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -323,13 +352,14 @@ public class Area extends Quantity<Area>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -345,22 +375,30 @@ public class Area extends Quantity<Area>
         }
 
         @Override
-        public Area ofSi(final double si)
+        public Area ofSi(final double si, final UnitInterface<Area> displayUnit)
         {
-            return Area.ofSi(si);
+            return new Area(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Area.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Area.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Area.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

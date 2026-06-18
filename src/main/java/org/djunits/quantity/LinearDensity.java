@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class LinearDensity extends Quantity<LinearDensity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a LinearDensity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a LinearDensity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public LinearDensity(final double value, final LinearDensity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a LinearDensity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public LinearDensity(final double valueInUnit, final LinearDensity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class LinearDensity extends Quantity<LinearDensity>
      */
     public static LinearDensity ofSi(final double si)
     {
-        return new LinearDensity(si, LinearDensity.Unit.SI);
+        return new LinearDensity(si, LinearDensity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a LinearDensity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the LinearDensity instance based on an SI value with the given display unit
+     */
+    public static LinearDensity ofSi(final double siValue, final LinearDensity.Unit displayUnit)
+    {
+        return new LinearDensity(siValue, displayUnit, true);
     }
 
     @Override
-    public LinearDensity instantiateSi(final double si)
+    public LinearDensity instantiateSi(final double siValue, final UnitInterface<LinearDensity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return LinearDensity.Unit.SI_UNIT;
+        return new LinearDensity(siValue, (LinearDensity.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class LinearDensity extends Quantity<LinearDensity>
     public static LinearDensity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a LinearDensity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab LinearDensity representation of the value in its unit
+     */
+    public static LinearDensity of(final double valueInUnit, final LinearDensity.Unit unit)
+    {
+        return new LinearDensity(valueInUnit, unit);
     }
 
     /**
@@ -184,7 +213,7 @@ public class LinearDensity extends Quantity<LinearDensity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<LinearDensity.Unit, LinearDensity>
+    public static class Unit extends AbstractUnit<LinearDensity>
     {
         /** The dimensions of linear density: kg/m. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/m");
@@ -205,7 +234,7 @@ public class LinearDensity extends Quantity<LinearDensity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -213,13 +242,14 @@ public class LinearDensity extends Quantity<LinearDensity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -235,22 +265,23 @@ public class LinearDensity extends Quantity<LinearDensity>
         }
 
         @Override
-        public LinearDensity ofSi(final double si)
+        public LinearDensity ofSi(final double si, final UnitInterface<LinearDensity> displayUnit)
         {
-            return LinearDensity.ofSi(si);
+            return new LinearDensity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public LinearDensity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new LinearDensity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

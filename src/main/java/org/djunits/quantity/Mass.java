@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Mass extends Quantity<Mass>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Mass quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Mass quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Mass(final double value, final Mass.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Mass quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Mass(final double valueInUnit, final Mass.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Mass extends Quantity<Mass>
      */
     public static Mass ofSi(final double si)
     {
-        return new Mass(si, Mass.Unit.SI);
+        return new Mass(si, Mass.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Mass quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Mass instance based on an SI value with the given display unit
+     */
+    public static Mass ofSi(final double siValue, final Mass.Unit displayUnit)
+    {
+        return new Mass(siValue, displayUnit, true);
     }
 
     @Override
-    public Mass instantiateSi(final double si)
+    public Mass instantiateSi(final double siValue, final UnitInterface<Mass> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Mass.Unit.SI_UNIT;
+        return new Mass(siValue, (Mass.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Mass extends Quantity<Mass>
     public static Mass valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Mass based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Mass representation of the value in its unit
+     */
+    public static Mass of(final double valueInUnit, final Mass.Unit unit)
+    {
+        return new Mass(valueInUnit, unit);
     }
 
     /**
@@ -203,7 +234,7 @@ public class Mass extends Quantity<Mass>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Mass.Unit, Mass>
+    public static class Unit extends AbstractUnit<Mass>
     {
         /** Constant for pound (lb). */
         public static final double CONST_LB = 0.45359237;
@@ -221,10 +252,11 @@ public class Mass extends Quantity<Mass>
         public static final SIUnit SI_UNIT = SIUnit.of("kg");
 
         /** kilogram. */
-        public static final Mass.Unit kg = new Mass.Unit("kg", "kilogram", 1.0, UnitSystem.SI_BASE);
+        public static final Mass.Unit kg =
+                new Mass.Unit("kg", "kg", "kilogram", IdentityScale.SCALE, UnitSystem.SI_BASE, SIPrefixes.getSiPrefixKilo("k"));
 
         /** The SI or BASE unit. */
-        public static final Mass.Unit SI = kg.generateSiPrefixes(true, false);
+        public static final Mass.Unit SI = (Unit) kg.generateSiPrefixes(true, false);
 
         /** gram. */
         public static final Mass.Unit g = Units.resolve(Mass.Unit.class, "g");
@@ -260,7 +292,8 @@ public class Mass extends Quantity<Mass>
         public static final Mass.Unit eV = kg.deriveUnit("eV", "electronvolt", 1.782661907E-36, UnitSystem.OTHER);
 
         /** microelectronvolt. */
-        public static final Mass.Unit mueV = eV.deriveUnit("mueV", "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER);
+        public static final Mass.Unit mueV =
+                eV.deriveUnit("mueV", "\u03BCeV", "microelectronvolt", 1E-6, UnitSystem.OTHER, null);
 
         /** millielectronvolt (note, no dash between milli and electron; the SI style guide forbids spaces or hyphens). */
         public static final Mass.Unit meV = eV.deriveUnit("meV", "millielectronvolt", 1E-3, UnitSystem.OTHER);
@@ -283,7 +316,7 @@ public class Mass extends Quantity<Mass>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -291,13 +324,14 @@ public class Mass extends Quantity<Mass>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -313,22 +347,30 @@ public class Mass extends Quantity<Mass>
         }
 
         @Override
-        public Mass ofSi(final double si)
+        public Mass ofSi(final double si, final UnitInterface<Mass> displayUnit)
         {
-            return Mass.ofSi(si);
+            return new Mass(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Mass.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Mass.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Mass.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

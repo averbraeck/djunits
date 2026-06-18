@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Illuminance extends Quantity<Illuminance>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Illuminance quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Illuminance quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Illuminance(final double value, final Illuminance.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Illuminance quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Illuminance(final double valueInUnit, final Illuminance.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Illuminance extends Quantity<Illuminance>
      */
     public static Illuminance ofSi(final double si)
     {
-        return new Illuminance(si, Illuminance.Unit.SI);
+        return new Illuminance(si, Illuminance.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Illuminance quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Illuminance instance based on an SI value with the given display unit
+     */
+    public static Illuminance ofSi(final double siValue, final Illuminance.Unit displayUnit)
+    {
+        return new Illuminance(siValue, displayUnit, true);
     }
 
     @Override
-    public Illuminance instantiateSi(final double si)
+    public Illuminance instantiateSi(final double siValue, final UnitInterface<Illuminance> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Illuminance.Unit.SI_UNIT;
+        return new Illuminance(siValue, (Illuminance.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Illuminance extends Quantity<Illuminance>
     public static Illuminance valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Illuminance based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Illuminance representation of the value in its unit
+     */
+    public static Illuminance of(final double valueInUnit, final Illuminance.Unit unit)
+    {
+        return new Illuminance(valueInUnit, unit);
     }
 
     /**
@@ -143,16 +174,17 @@ public class Illuminance extends Quantity<Illuminance>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Illuminance.Unit, Illuminance>
+    public static class Unit extends AbstractUnit<Illuminance>
     {
         /** The dimensions of illuminance: srcd/m2. */
         public static final SIUnit SI_UNIT = SIUnit.of("srcd/m2");
 
         /** Lux. */
-        public static final Illuminance.Unit lx = new Illuminance.Unit("lx", "lux", 1.0, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit lx =
+                new Illuminance.Unit("lx", "lx", "lux", IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Illuminance.Unit SI = lx.generateSiPrefixes(false, false);
+        public static final Illuminance.Unit SI = (Unit) lx.generateSiPrefixes(false, false);
 
         /** mlux. */
         public static final Illuminance.Unit mlx = Units.resolve(Illuminance.Unit.class, "mlx");
@@ -161,13 +193,13 @@ public class Illuminance extends Quantity<Illuminance>
         public static final Illuminance.Unit mulx = Units.resolve(Illuminance.Unit.class, "mulx");
 
         /** klux. */
-        public static final Illuminance.Unit klx = lx.deriveUnit("klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED);
+        public static final Illuminance.Unit klx = lx.deriveUnit("klx", "klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED, null);
 
         /** phot. */
-        public static final Illuminance.Unit ph = klx.deriveUnit("ph", "phot", 10.0, UnitSystem.CGS);
+        public static final Illuminance.Unit ph = klx.deriveUnit("ph", "ph", "phot", 10.0, UnitSystem.CGS, null);
 
         /** nox. */
-        public static final Illuminance.Unit nx = mlx.deriveUnit("nx", "nox", 1.0, UnitSystem.OTHER);
+        public static final Illuminance.Unit nx = mlx.deriveUnit("nx", "nx", "nox", 1.0, UnitSystem.OTHER, null);
 
         /**
          * Create a new Illuminance unit.
@@ -178,7 +210,7 @@ public class Illuminance extends Quantity<Illuminance>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -186,13 +218,14 @@ public class Illuminance extends Quantity<Illuminance>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -208,22 +241,23 @@ public class Illuminance extends Quantity<Illuminance>
         }
 
         @Override
-        public Illuminance ofSi(final double si)
+        public Illuminance ofSi(final double si, final UnitInterface<Illuminance> displayUnit)
         {
-            return Illuminance.ofSi(si);
+            return new Illuminance(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Illuminance.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Illuminance.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

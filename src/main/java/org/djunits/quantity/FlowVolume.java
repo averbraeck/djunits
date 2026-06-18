@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class FlowVolume extends Quantity<FlowVolume>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a FlowVolume quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a FlowVolume quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public FlowVolume(final double value, final FlowVolume.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a FlowVolume quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public FlowVolume(final double valueInUnit, final FlowVolume.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class FlowVolume extends Quantity<FlowVolume>
      */
     public static FlowVolume ofSi(final double si)
     {
-        return new FlowVolume(si, FlowVolume.Unit.SI);
+        return new FlowVolume(si, FlowVolume.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a FlowVolume quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the FlowVolume instance based on an SI value with the given display unit
+     */
+    public static FlowVolume ofSi(final double siValue, final FlowVolume.Unit displayUnit)
+    {
+        return new FlowVolume(siValue, displayUnit, true);
     }
 
     @Override
-    public FlowVolume instantiateSi(final double si)
+    public FlowVolume instantiateSi(final double siValue, final UnitInterface<FlowVolume> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return FlowVolume.Unit.SI_UNIT;
+        return new FlowVolume(siValue, (FlowVolume.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class FlowVolume extends Quantity<FlowVolume>
     public static FlowVolume valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a FlowVolume based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab FlowVolume representation of the value in its unit
+     */
+    public static FlowVolume of(final double valueInUnit, final FlowVolume.Unit unit)
+    {
+        return new FlowVolume(valueInUnit, unit);
     }
 
     /**
@@ -192,7 +221,7 @@ public class FlowVolume extends Quantity<FlowVolume>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<FlowVolume.Unit, FlowVolume>
+    public static class Unit extends AbstractUnit<FlowVolume>
     {
         /** The dimensions of the flow volume is m3/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("m3/s");
@@ -271,7 +300,7 @@ public class FlowVolume extends Quantity<FlowVolume>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -279,13 +308,14 @@ public class FlowVolume extends Quantity<FlowVolume>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -301,22 +331,30 @@ public class FlowVolume extends Quantity<FlowVolume>
         }
 
         @Override
-        public FlowVolume ofSi(final double si)
+        public FlowVolume ofSi(final double si, final UnitInterface<FlowVolume> displayUnit)
         {
-            return FlowVolume.ofSi(si);
+            return new FlowVolume(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public FlowVolume.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new FlowVolume.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public FlowVolume.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a AmountOfSubstance quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a AmountOfSubstance quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public AmountOfSubstance(final double value, final AmountOfSubstance.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a AmountOfSubstance quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public AmountOfSubstance(final double valueInUnit, final AmountOfSubstance.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
      */
     public static AmountOfSubstance ofSi(final double si)
     {
-        return new AmountOfSubstance(si, AmountOfSubstance.Unit.SI);
+        return new AmountOfSubstance(si, AmountOfSubstance.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a AmountOfSubstance quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the AmountOfSubstance instance based on an SI value with the given display unit
+     */
+    public static AmountOfSubstance ofSi(final double siValue, final AmountOfSubstance.Unit displayUnit)
+    {
+        return new AmountOfSubstance(siValue, displayUnit, true);
     }
 
     @Override
-    public AmountOfSubstance instantiateSi(final double si)
+    public AmountOfSubstance instantiateSi(final double siValue, final UnitInterface<AmountOfSubstance> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return AmountOfSubstance.Unit.SI_UNIT;
+        return new AmountOfSubstance(siValue, (AmountOfSubstance.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
     public static AmountOfSubstance valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a AmountOfSubstance based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab AmountOfSubstance representation of the value in its unit
+     */
+    public static AmountOfSubstance of(final double valueInUnit, final AmountOfSubstance.Unit unit)
+    {
+        return new AmountOfSubstance(valueInUnit, unit);
     }
 
     /**
@@ -153,16 +184,17 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<AmountOfSubstance.Unit, AmountOfSubstance>
+    public static class Unit extends AbstractUnit<AmountOfSubstance>
     {
         /** The dimensions of AmountOfSubstance: mol. */
         public static final SIUnit SI_UNIT = SIUnit.of("mol");
 
         /** Mole. */
-        public static final AmountOfSubstance.Unit mol = new AmountOfSubstance.Unit("mol", "mole", 1.0, UnitSystem.SI_BASE);
+        public static final AmountOfSubstance.Unit mol = new AmountOfSubstance.Unit("mol", "mol", "mole", IdentityScale.SCALE,
+                UnitSystem.SI_BASE, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final AmountOfSubstance.Unit SI = mol.generateSiPrefixes(false, false);
+        public static final AmountOfSubstance.Unit SI = (Unit) mol.generateSiPrefixes(false, false);
 
         /** mmol. */
         public static final AmountOfSubstance.Unit mmol = Units.resolve(AmountOfSubstance.Unit.class, "mmol");
@@ -182,7 +214,7 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -190,13 +222,14 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -212,22 +245,23 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
         }
 
         @Override
-        public AmountOfSubstance ofSi(final double si)
+        public AmountOfSubstance ofSi(final double si, final UnitInterface<AmountOfSubstance> displayUnit)
         {
-            return AmountOfSubstance.ofSi(si);
+            return new AmountOfSubstance(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public AmountOfSubstance.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new AmountOfSubstance.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

@@ -2,12 +2,14 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.GradeScale;
 import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -59,13 +61,24 @@ public class Angle extends Quantity<Angle>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Angle quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Angle quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Angle(final double value, final Angle.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Angle quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Angle(final double valueInUnit, final Angle.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -75,19 +88,24 @@ public class Angle extends Quantity<Angle>
      */
     public static Angle ofSi(final double si)
     {
-        return new Angle(si, Angle.Unit.SI);
+        return new Angle(si, Angle.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Angle quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Angle instance based on an SI value with the given display unit
+     */
+    public static Angle ofSi(final double siValue, final Angle.Unit displayUnit)
+    {
+        return new Angle(siValue, displayUnit, true);
     }
 
     @Override
-    public Angle instantiateSi(final double si)
+    public Angle instantiateSi(final double siValue, final UnitInterface<Angle> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Angle.Unit.SI_UNIT;
+        return new Angle(siValue, (Angle.Unit) displayUnit, true);
     }
 
     /**
@@ -102,6 +120,17 @@ public class Angle extends Quantity<Angle>
     public static Angle valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Angle based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Angle representation of the value in its unit
+     */
+    public static Angle of(final double valueInUnit, final Angle.Unit unit)
+    {
+        return new Angle(valueInUnit, unit);
     }
 
     /**
@@ -197,7 +226,7 @@ public class Angle extends Quantity<Angle>
      */
     public static Angle normalize(final Angle angle)
     {
-        return new Angle(normalize(angle.si()), Angle.Unit.rad);
+        return new Angle(normalize(angle.si()), Angle.Unit.rad, true);
     }
 
     /******************************************************************************************************/
@@ -213,39 +242,44 @@ public class Angle extends Quantity<Angle>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Angle.Unit, Angle>
+    public static class Unit extends AbstractUnit<Angle>
     {
         /** The dimensions of Angle: rad. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad");
 
         /** radian. */
-        public static final Angle.Unit rad = new Angle.Unit("rad", "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED);
+        public static final Angle.Unit rad =
+                new Angle.Unit("rad", "rad", "radian", IdentityScale.SCALE, UnitSystem.SI_DERIVED, null);
 
         /** The SI or BASE unit. */
         public static final Angle.Unit SI = rad;
 
         /** percent (non-linear, 100% is 45 degrees; 90 degrees is infinite). */
-        public static final Angle.Unit percent = new Angle.Unit("%", "%", "percent", new GradeScale(0.01), UnitSystem.OTHER);
+        public static final Angle.Unit percent =
+                new Angle.Unit("%", "%", "percent", new GradeScale(0.01), UnitSystem.OTHER, null);
 
         /** degree. */
-        public static final Angle.Unit deg = rad.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final Angle.Unit deg =
+                rad.deriveUnit("deg", "\u00b0", "degree", Math.PI / 180.0, UnitSystem.SI_ACCEPTED, null);
 
         /** arcminute. */
-        public static final Angle.Unit arcmin = deg.deriveUnit("arcmin", "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER);
+        public static final Angle.Unit arcmin = deg.deriveUnit("arcmin", "'", "arcminute", 1.0 / 60.0, UnitSystem.OTHER, null);
 
         /** arcsecond. */
-        public static final Angle.Unit arcsec = deg.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER);
+        public static final Angle.Unit arcsec =
+                deg.deriveUnit("arcsec", "\"", "arcsecond", 1.0 / 3600.0, UnitSystem.OTHER, null);
 
         /** grad. */
-        public static final Angle.Unit grad = rad.deriveUnit("grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final Angle.Unit grad =
+                rad.deriveUnit("grad", "grad", "gradian", 2.0 * Math.PI / 400.0, UnitSystem.OTHER, null);
 
         /** centesimal arcminute. */
         public static final Angle.Unit cdm =
-                grad.deriveUnit("cdm", "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER);
+                grad.deriveUnit("cdm", "c'", "centesimal arcminute", 1.0 / 100.0, UnitSystem.OTHER, null);
 
         /** centesimal arcsecond. */
         public static final Angle.Unit cds =
-                grad.deriveUnit("cds", "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER);
+                grad.deriveUnit("cds", "c\"", "centesimal arcsecond", 1.0 / 10000.0, UnitSystem.OTHER, null);
 
         /**
          * Create a new Angle unit.
@@ -256,7 +290,7 @@ public class Angle extends Quantity<Angle>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -264,13 +298,14 @@ public class Angle extends Quantity<Angle>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -285,24 +320,24 @@ public class Angle extends Quantity<Angle>
             return SI;
         }
 
-        /** {@inheritDoc} */
         @Override
-        public Angle ofSi(final double si)
+        public Angle ofSi(final double si, final UnitInterface<Angle> displayUnit)
         {
-            return Angle.ofSi(si);
+            return new Angle(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Angle.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Angle.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

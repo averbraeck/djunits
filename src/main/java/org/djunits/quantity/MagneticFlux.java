@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class MagneticFlux extends Quantity<MagneticFlux>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a MagneticFlux quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a MagneticFlux quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public MagneticFlux(final double value, final MagneticFlux.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a MagneticFlux quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public MagneticFlux(final double valueInUnit, final MagneticFlux.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      */
     public static MagneticFlux ofSi(final double si)
     {
-        return new MagneticFlux(si, MagneticFlux.Unit.SI);
+        return new MagneticFlux(si, MagneticFlux.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a MagneticFlux quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the MagneticFlux instance based on an SI value with the given display unit
+     */
+    public static MagneticFlux ofSi(final double siValue, final MagneticFlux.Unit displayUnit)
+    {
+        return new MagneticFlux(siValue, displayUnit, true);
     }
 
     @Override
-    public MagneticFlux instantiateSi(final double si)
+    public MagneticFlux instantiateSi(final double siValue, final UnitInterface<MagneticFlux> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return MagneticFlux.Unit.SI_UNIT;
+        return new MagneticFlux(siValue, (MagneticFlux.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class MagneticFlux extends Quantity<MagneticFlux>
     public static MagneticFlux valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a MagneticFlux based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab MagneticFlux representation of the value in its unit
+     */
+    public static MagneticFlux of(final double valueInUnit, final MagneticFlux.Unit unit)
+    {
+        return new MagneticFlux(valueInUnit, unit);
     }
 
     /**
@@ -193,16 +224,17 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<MagneticFlux.Unit, MagneticFlux>
+    public static class Unit extends AbstractUnit<MagneticFlux>
     {
         /** The dimensions of the magnetic flux: kgm2/s2A. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2A");
 
         /** Weber. */
-        public static final MagneticFlux.Unit Wb = new MagneticFlux.Unit("Wb", "weber", 1.0, UnitSystem.SI_DERIVED);
+        public static final MagneticFlux.Unit Wb = new MagneticFlux.Unit("Wb", "Wb", "weber", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final MagneticFlux.Unit SI = Wb.generateSiPrefixes(false, false);
+        public static final MagneticFlux.Unit SI = (Unit) Wb.generateSiPrefixes(false, false);
 
         /** mWb. */
         public static final MagneticFlux.Unit mWb = Units.resolve(MagneticFlux.Unit.class, "mWb");
@@ -214,7 +246,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
         public static final MagneticFlux.Unit nWb = Units.resolve(MagneticFlux.Unit.class, "nWb");
 
         /** Maxwell. */
-        public static final MagneticFlux.Unit Mx = Wb.deriveUnit("Mx", "Maxwell", 1.0E-8, UnitSystem.CGS);
+        public static final MagneticFlux.Unit Mx = Wb.deriveUnit("Mx", "Mx", "Maxwell", 1.0E-8, UnitSystem.CGS, null);
 
         /**
          * Create a new MagneticFlux unit.
@@ -225,7 +257,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -233,13 +265,14 @@ public class MagneticFlux extends Quantity<MagneticFlux>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -255,22 +288,23 @@ public class MagneticFlux extends Quantity<MagneticFlux>
         }
 
         @Override
-        public MagneticFlux ofSi(final double si)
+        public MagneticFlux ofSi(final double si, final UnitInterface<MagneticFlux> displayUnit)
         {
-            return MagneticFlux.ofSi(si);
+            return new MagneticFlux(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public MagneticFlux.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new MagneticFlux.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

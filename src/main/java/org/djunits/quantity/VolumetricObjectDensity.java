@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a VolumetricObjectDensity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a VolumetricObjectDensity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public VolumetricObjectDensity(final double value, final VolumetricObjectDensity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a VolumetricObjectDensity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public VolumetricObjectDensity(final double valueInUnit, final VolumetricObjectDensity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      */
     public static VolumetricObjectDensity ofSi(final double si)
     {
-        return new VolumetricObjectDensity(si, VolumetricObjectDensity.Unit.SI);
+        return new VolumetricObjectDensity(si, VolumetricObjectDensity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a VolumetricObjectDensity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the VolumetricObjectDensity instance based on an SI value with the given display unit
+     */
+    public static VolumetricObjectDensity ofSi(final double siValue, final VolumetricObjectDensity.Unit displayUnit)
+    {
+        return new VolumetricObjectDensity(siValue, displayUnit, true);
     }
 
     @Override
-    public VolumetricObjectDensity instantiateSi(final double si)
+    public VolumetricObjectDensity instantiateSi(final double siValue, final UnitInterface<VolumetricObjectDensity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return VolumetricObjectDensity.Unit.SI_UNIT;
+        return new VolumetricObjectDensity(siValue, (VolumetricObjectDensity.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
     public static VolumetricObjectDensity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a VolumetricObjectDensity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab VolumetricObjectDensity representation of the value in its unit
+     */
+    public static VolumetricObjectDensity of(final double valueInUnit, final VolumetricObjectDensity.Unit unit)
+    {
+        return new VolumetricObjectDensity(valueInUnit, unit);
     }
 
     /**
@@ -206,7 +235,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<VolumetricObjectDensity.Unit, VolumetricObjectDensity>
+    public static class Unit extends AbstractUnit<VolumetricObjectDensity>
     {
         /** The dimensions of the number of objects per unit of volume: per cubic meter (/m3). */
         public static final SIUnit SI_UNIT = SIUnit.of("/m3");
@@ -227,7 +256,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -235,13 +264,14 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -257,22 +287,23 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
         }
 
         @Override
-        public VolumetricObjectDensity ofSi(final double si)
+        public VolumetricObjectDensity ofSi(final double si, final UnitInterface<VolumetricObjectDensity> displayUnit)
         {
-            return VolumetricObjectDensity.ofSi(si);
+            return new VolumetricObjectDensity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public VolumetricObjectDensity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new VolumetricObjectDensity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class AngularVelocity extends Quantity<AngularVelocity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a AngularVelocity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a AngularVelocity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public AngularVelocity(final double value, final AngularVelocity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a AngularVelocity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public AngularVelocity(final double valueInUnit, final AngularVelocity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class AngularVelocity extends Quantity<AngularVelocity>
      */
     public static AngularVelocity ofSi(final double si)
     {
-        return new AngularVelocity(si, AngularVelocity.Unit.SI);
+        return new AngularVelocity(si, AngularVelocity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a AngularVelocity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the AngularVelocity instance based on an SI value with the given display unit
+     */
+    public static AngularVelocity ofSi(final double siValue, final AngularVelocity.Unit displayUnit)
+    {
+        return new AngularVelocity(siValue, displayUnit, true);
     }
 
     @Override
-    public AngularVelocity instantiateSi(final double si)
+    public AngularVelocity instantiateSi(final double siValue, final UnitInterface<AngularVelocity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return AngularVelocity.Unit.SI_UNIT;
+        return new AngularVelocity(siValue, (AngularVelocity.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class AngularVelocity extends Quantity<AngularVelocity>
     public static AngularVelocity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a AngularVelocity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab AngularVelocity representation of the value in its unit
+     */
+    public static AngularVelocity of(final double valueInUnit, final AngularVelocity.Unit unit)
+    {
+        return new AngularVelocity(valueInUnit, unit);
     }
 
     /**
@@ -132,7 +161,7 @@ public class AngularVelocity extends Quantity<AngularVelocity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<AngularVelocity.Unit, AngularVelocity>
+    public static class Unit extends AbstractUnit<AngularVelocity>
     {
         /** The dimensions of AngularVelocity: rad/s. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s");
@@ -146,27 +175,27 @@ public class AngularVelocity extends Quantity<AngularVelocity>
 
         /** degree per second. */
         public static final AngularVelocity.Unit deg_s =
-                rad_s.deriveUnit("deg/s", "\u00b0/s", "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+                rad_s.deriveUnit("deg/s", "\u00b0/s", "degree per second", Math.PI / 180.0, UnitSystem.SI_ACCEPTED, null);
 
         /** arcminute per second. */
         public static final AngularVelocity.Unit arcmin_s =
-                deg_s.deriveUnit("arcmin/s", "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER);
+                deg_s.deriveUnit("arcmin/s", "'/s", "arcminute per second", 1.0 / 60.0, UnitSystem.OTHER, null);
 
         /** arcsecond per second. */
         public static final AngularVelocity.Unit arcsec_s =
-                deg_s.deriveUnit("arcsec/s", "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER);
+                deg_s.deriveUnit("arcsec/s", "\"/s", "arcsecond per second", 1.0 / 3600.0, UnitSystem.OTHER, null);
 
         /** grad per second. */
         public static final AngularVelocity.Unit grad_s =
-                rad_s.deriveUnit("grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+                rad_s.deriveUnit("grad/s", "grad/s", "gradian per second", 2.0 * Math.PI / 400.0, UnitSystem.OTHER, null);
 
         /** centesimal arcminute per second. */
         public static final AngularVelocity.Unit cdm_s =
-                grad_s.deriveUnit("cdm/s", "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER);
+                grad_s.deriveUnit("cdm/s", "c'/s", "centesimal arcminute per second", 1.0 / 100.0, UnitSystem.OTHER, null);
 
         /** centesimal arcsecond per second. */
         public static final AngularVelocity.Unit cds_s =
-                grad_s.deriveUnit("cds/s", "c\"/s", "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER);
+                grad_s.deriveUnit("cds/s", "c\"/s", "centesimal arcsecond per second", 1.0 / 10000.0, UnitSystem.OTHER, null);
 
         /**
          * Create a new AngularVelocity unit.
@@ -177,7 +206,7 @@ public class AngularVelocity extends Quantity<AngularVelocity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -185,13 +214,14 @@ public class AngularVelocity extends Quantity<AngularVelocity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -206,24 +236,24 @@ public class AngularVelocity extends Quantity<AngularVelocity>
             return SI;
         }
 
-        /** {@inheritDoc} */
         @Override
-        public AngularVelocity ofSi(final double si)
+        public AngularVelocity ofSi(final double si, final UnitInterface<AngularVelocity> displayUnit)
         {
-            return AngularVelocity.ofSi(si);
+            return new AngularVelocity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public AngularVelocity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new AngularVelocity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

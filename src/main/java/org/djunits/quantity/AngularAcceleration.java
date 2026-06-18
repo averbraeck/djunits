@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a AngularAcceleration quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a AngularAcceleration quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public AngularAcceleration(final double value, final AngularAcceleration.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a AngularAcceleration quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public AngularAcceleration(final double valueInUnit, final AngularAcceleration.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
      */
     public static AngularAcceleration ofSi(final double si)
     {
-        return new AngularAcceleration(si, AngularAcceleration.Unit.SI);
+        return new AngularAcceleration(si, AngularAcceleration.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a AngularAcceleration quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the AngularAcceleration instance based on an SI value with the given display unit
+     */
+    public static AngularAcceleration ofSi(final double siValue, final AngularAcceleration.Unit displayUnit)
+    {
+        return new AngularAcceleration(siValue, displayUnit, true);
     }
 
     @Override
-    public AngularAcceleration instantiateSi(final double si)
+    public AngularAcceleration instantiateSi(final double siValue, final UnitInterface<AngularAcceleration> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return AngularAcceleration.Unit.SI_UNIT;
+        return new AngularAcceleration(siValue, (AngularAcceleration.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
     public static AngularAcceleration valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a AngularAcceleration based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab AngularAcceleration representation of the value in its unit
+     */
+    public static AngularAcceleration of(final double valueInUnit, final AngularAcceleration.Unit unit)
+    {
+        return new AngularAcceleration(valueInUnit, unit);
     }
 
     /**
@@ -162,7 +191,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<AngularAcceleration.Unit, AngularAcceleration>
+    public static class Unit extends AbstractUnit<AngularAcceleration>
     {
         /** The dimensions of AngularAcceleration: rad/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("rad/s2");
@@ -175,28 +204,28 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
         public static final AngularAcceleration.Unit SI = rad_s2;
 
         /** degree per second squared. */
-        public static final AngularAcceleration.Unit deg_s2 =
-                rad_s2.deriveUnit("deg/s2", "\u00b0/s2", "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED);
+        public static final AngularAcceleration.Unit deg_s2 = rad_s2.deriveUnit("deg/s2", "\u00b0/s2",
+                "degree per second squared", Math.PI / 180.0, UnitSystem.SI_ACCEPTED, null);
 
         /** arcminute per second squared. */
         public static final AngularAcceleration.Unit arcmin_s2 =
-                deg_s2.deriveUnit("arcmin/s2", "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER);
+                deg_s2.deriveUnit("arcmin/s2", "'/s2", "arcminute per second squared", 1.0 / 60.0, UnitSystem.OTHER, null);
 
         /** arcsecond per second squared. */
         public static final AngularAcceleration.Unit arcsec_s2 =
-                deg_s2.deriveUnit("arcsec/s2", "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER);
+                deg_s2.deriveUnit("arcsec/s2", "\"/s2", "arcsecond per second squared", 1.0 / 3600.0, UnitSystem.OTHER, null);
 
         /** grad per second squared. */
-        public static final AngularAcceleration.Unit grad_s2 =
-                rad_s2.deriveUnit("grad/s2", "gradian per second squared", 2.0 * Math.PI / 400.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit grad_s2 = rad_s2.deriveUnit("grad/s2", "grad/s2",
+                "gradian per second squared", 2.0 * Math.PI / 400.0, UnitSystem.OTHER, null);
 
         /** centesimal arcminute per second squared. */
-        public static final AngularAcceleration.Unit cdm_s2 =
-                grad_s2.deriveUnit("cdm/s2", "c'/s2", "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER);
+        public static final AngularAcceleration.Unit cdm_s2 = grad_s2.deriveUnit("cdm/s2", "c'/s2",
+                "centesimal arcminute per second squared", 1.0 / 100.0, UnitSystem.OTHER, null);
 
         /** centesimal arcsecond per second squared. */
         public static final AngularAcceleration.Unit cds_s2 = grad_s2.deriveUnit("cds/s2", "c\"/s2",
-                "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER);
+                "centesimal arcsecond per second squared", 1.0 / 10000.0, UnitSystem.OTHER, null);
 
         /**
          * Create a new AngularAcceleration unit.
@@ -207,7 +236,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -215,13 +244,14 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -236,24 +266,24 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
             return SI;
         }
 
-        /** {@inheritDoc} */
         @Override
-        public AngularAcceleration ofSi(final double si)
+        public AngularAcceleration ofSi(final double si, final UnitInterface<AngularAcceleration> displayUnit)
         {
-            return AngularAcceleration.ofSi(si);
+            return new AngularAcceleration(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public AngularAcceleration.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new AngularAcceleration.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

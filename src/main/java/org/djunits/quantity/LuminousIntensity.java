@@ -2,10 +2,14 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +49,24 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a LuminousIntensity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a LuminousIntensity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public LuminousIntensity(final double value, final LuminousIntensity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a LuminousIntensity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public LuminousIntensity(final double valueInUnit, final LuminousIntensity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +76,24 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
      */
     public static LuminousIntensity ofSi(final double si)
     {
-        return new LuminousIntensity(si, LuminousIntensity.Unit.SI);
+        return new LuminousIntensity(si, LuminousIntensity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a LuminousIntensity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the LuminousIntensity instance based on an SI value with the given display unit
+     */
+    public static LuminousIntensity ofSi(final double siValue, final LuminousIntensity.Unit displayUnit)
+    {
+        return new LuminousIntensity(siValue, displayUnit, true);
     }
 
     @Override
-    public LuminousIntensity instantiateSi(final double si)
+    public LuminousIntensity instantiateSi(final double siValue, final UnitInterface<LuminousIntensity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return LuminousIntensity.Unit.SI_UNIT;
+        return new LuminousIntensity(siValue, (LuminousIntensity.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +108,17 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
     public static LuminousIntensity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a LuminousIntensity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab LuminousIntensity representation of the value in its unit
+     */
+    public static LuminousIntensity of(final double valueInUnit, final LuminousIntensity.Unit unit)
+    {
+        return new LuminousIntensity(valueInUnit, unit);
     }
 
     /**
@@ -142,16 +173,17 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<LuminousIntensity.Unit, LuminousIntensity>
+    public static class Unit extends AbstractUnit<LuminousIntensity>
     {
         /** The dimensions of the luminous flux emitted per unit solid angle: cd. */
         public static final SIUnit SI_UNIT = SIUnit.of("cd");
 
         /** Candela. */
-        public static final LuminousIntensity.Unit cd = new LuminousIntensity.Unit("cd", "candela", 1.0, UnitSystem.SI_DERIVED);
+        public static final LuminousIntensity.Unit cd = new LuminousIntensity.Unit("cd", "cd", "candela", IdentityScale.SCALE,
+                UnitSystem.SI_BASE, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final LuminousIntensity.Unit SI = cd.generateSiPrefixes(false, false);
+        public static final LuminousIntensity.Unit SI = (Unit) cd.generateSiPrefixes(false, false);
 
         /**
          * Create a new LuminousIntensity unit.
@@ -162,7 +194,7 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -170,13 +202,14 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -192,22 +225,23 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
         }
 
         @Override
-        public LuminousIntensity ofSi(final double si)
+        public LuminousIntensity ofSi(final double si, final UnitInterface<LuminousIntensity> displayUnit)
         {
-            return LuminousIntensity.ofSi(si);
+            return new LuminousIntensity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public LuminousIntensity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new LuminousIntensity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
     }
+
 }

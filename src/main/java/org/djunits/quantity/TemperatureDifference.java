@@ -1,8 +1,8 @@
 package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Unitless;
-import org.djunits.unit.si.SIUnit;
 
 /**
  * TemperatureDifference is a measure of (difference in) thermal state or average kinetic energy of particles, measured in
@@ -42,13 +42,24 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a TemperatureDifference quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a TemperatureDifference quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public TemperatureDifference(final double value, final Temperature.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a TemperatureDifference quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public TemperatureDifference(final double valueInUnit, final Temperature.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -58,26 +69,31 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
      */
     public static TemperatureDifference ofSi(final double si)
     {
-        return new TemperatureDifference(si, Temperature.Unit.SI);
+        return new TemperatureDifference(si, Temperature.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a TemperatureDifference quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the TemperatureDifference instance based on an SI value with the given display unit
+     */
+    public static TemperatureDifference ofSi(final double siValue, final Temperature.Unit displayUnit)
+    {
+        return new TemperatureDifference(siValue, displayUnit, true);
     }
 
     @Override
-    public TemperatureDifference instantiateSi(final double si)
+    public TemperatureDifference instantiateSi(final double siValue, final UnitInterface<TemperatureDifference> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Temperature.Unit.SI_UNIT;
+        return new TemperatureDifference(siValue, (Temperature.Unit) displayUnit, true);
     }
 
     /**
      * Returns a TemperatureDifference representation of a textual representation of a value with a unit. The String
      * representation that can be parsed is the double value in the unit, followed by a localized or English abbreviation of the
      * unit. Spaces are allowed, but not required, between the value and the unit.
-     * @param text the textual representation to parse into a Temperature
+     * @param text the textual representation to parse into a TemperatureDifference
      * @return the Scalar representation of the value in its unit
      * @throws IllegalArgumentException when the text cannot be parsed
      * @throws NullPointerException when the text argument is null
@@ -85,6 +101,17 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
     public static TemperatureDifference valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a TemperatureDifference based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab TemperatureDifference representation of the value in its unit
+     */
+    public static TemperatureDifference of(final double valueInUnit, final Temperature.Unit unit)
+    {
+        return new TemperatureDifference(valueInUnit, unit);
     }
 
     /**

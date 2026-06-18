@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class RadioActivity extends Quantity<RadioActivity>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a RadioActivity quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a RadioActivity quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public RadioActivity(final double value, final RadioActivity.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a RadioActivity quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public RadioActivity(final double valueInUnit, final RadioActivity.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class RadioActivity extends Quantity<RadioActivity>
      */
     public static RadioActivity ofSi(final double si)
     {
-        return new RadioActivity(si, RadioActivity.Unit.SI);
+        return new RadioActivity(si, RadioActivity.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a RadioActivity quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the RadioActivity instance based on an SI value with the given display unit
+     */
+    public static RadioActivity ofSi(final double siValue, final RadioActivity.Unit displayUnit)
+    {
+        return new RadioActivity(siValue, displayUnit, true);
     }
 
     @Override
-    public RadioActivity instantiateSi(final double si)
+    public RadioActivity instantiateSi(final double siValue, final UnitInterface<RadioActivity> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return RadioActivity.Unit.SI_UNIT;
+        return new RadioActivity(siValue, (RadioActivity.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class RadioActivity extends Quantity<RadioActivity>
     public static RadioActivity valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a RadioActivity based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab RadioActivity representation of the value in its unit
+     */
+    public static RadioActivity of(final double valueInUnit, final RadioActivity.Unit unit)
+    {
+        return new RadioActivity(valueInUnit, unit);
     }
 
     /**
@@ -133,16 +164,17 @@ public class RadioActivity extends Quantity<RadioActivity>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<RadioActivity.Unit, RadioActivity>
+    public static class Unit extends AbstractUnit<RadioActivity>
     {
         /** The dimensions of radioactivity: /s. */
         public static final SIUnit SI_UNIT = SIUnit.of("/s");
 
         /** Becquerel. */
-        public static final RadioActivity.Unit Bq = new RadioActivity.Unit("Bq", "becquerel", 1.0, UnitSystem.SI_DERIVED);
+        public static final RadioActivity.Unit Bq = new RadioActivity.Unit("Bq", "Bq", "becquerel", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final RadioActivity.Unit SI = Bq.generateSiPrefixes(false, false);
+        public static final RadioActivity.Unit SI = (Unit) Bq.generateSiPrefixes(false, false);
 
         /** kBq. */
         public static final RadioActivity.Unit kBq = Units.resolve(RadioActivity.Unit.class, "kBq");
@@ -163,7 +195,8 @@ public class RadioActivity extends Quantity<RadioActivity>
         public static final RadioActivity.Unit mCi = Ci.deriveUnit("mCi", "millicurie", 1.0E-3, UnitSystem.OTHER);
 
         /** microCurie. */
-        public static final RadioActivity.Unit muCi = Ci.deriveUnit("muCi", "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER);
+        public static final RadioActivity.Unit muCi =
+                Ci.deriveUnit("muCi", "\u03BCCi", "microcurie", 1.0E-6, UnitSystem.OTHER, null);
 
         /** nanoCurie. */
         public static final RadioActivity.Unit nCi = Ci.deriveUnit("nCi", "nanocurie", 1.0E-9, UnitSystem.OTHER);
@@ -180,7 +213,7 @@ public class RadioActivity extends Quantity<RadioActivity>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -188,13 +221,14 @@ public class RadioActivity extends Quantity<RadioActivity>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -210,22 +244,30 @@ public class RadioActivity extends Quantity<RadioActivity>
         }
 
         @Override
-        public RadioActivity ofSi(final double si)
+        public RadioActivity ofSi(final double si, final UnitInterface<RadioActivity> displayUnit)
         {
-            return RadioActivity.ofSi(si);
+            return new RadioActivity(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public RadioActivity.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
+                final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new RadioActivity.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public RadioActivity.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

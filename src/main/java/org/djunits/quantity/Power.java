@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Power extends Quantity<Power>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Power quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Power quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Power(final double value, final Power.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Power quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Power(final double valueInUnit, final Power.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Power extends Quantity<Power>
      */
     public static Power ofSi(final double si)
     {
-        return new Power(si, Power.Unit.SI);
+        return new Power(si, Power.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Power quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Power instance based on an SI value with the given display unit
+     */
+    public static Power ofSi(final double siValue, final Power.Unit displayUnit)
+    {
+        return new Power(siValue, displayUnit, true);
     }
 
     @Override
-    public Power instantiateSi(final double si)
+    public Power instantiateSi(final double siValue, final UnitInterface<Power> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Power.Unit.SI_UNIT;
+        return new Power(siValue, (Power.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Power extends Quantity<Power>
     public static Power valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Power based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Power representation of the value in its unit
+     */
+    public static Power of(final double valueInUnit, final Power.Unit unit)
+    {
+        return new Power(valueInUnit, unit);
     }
 
     /**
@@ -223,16 +254,17 @@ public class Power extends Quantity<Power>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Power.Unit, Power>
+    public static class Unit extends AbstractUnit<Power>
     {
         /** The dimensions of power: kgm2/s3. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s3");
 
         /** Watt. */
-        public static final Power.Unit W = new Power.Unit("W", "watt", 1.0, UnitSystem.SI_DERIVED);
+        public static final Power.Unit W =
+                new Power.Unit("W", "W", "watt", IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Power.Unit SI = W.generateSiPrefixes(false, false);
+        public static final Power.Unit SI = (Unit) W.generateSiPrefixes(false, false);
 
         /** microwatt. */
         public static final Power.Unit muW = Units.resolve(Power.Unit.class, "muW");
@@ -285,7 +317,7 @@ public class Power extends Quantity<Power>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -293,13 +325,14 @@ public class Power extends Quantity<Power>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -315,22 +348,30 @@ public class Power extends Quantity<Power>
         }
 
         @Override
-        public Power ofSi(final double si)
+        public Power ofSi(final double si, final UnitInterface<Power> displayUnit)
         {
-            return Power.ofSi(si);
+            return new Power(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Power.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Power.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Power.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Pressure extends Quantity<Pressure>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Pressure quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Pressure quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Pressure(final double value, final Pressure.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Pressure quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Pressure(final double valueInUnit, final Pressure.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Pressure extends Quantity<Pressure>
      */
     public static Pressure ofSi(final double si)
     {
-        return new Pressure(si, Pressure.Unit.SI);
+        return new Pressure(si, Pressure.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Pressure quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Pressure instance based on an SI value with the given display unit
+     */
+    public static Pressure ofSi(final double siValue, final Pressure.Unit displayUnit)
+    {
+        return new Pressure(siValue, displayUnit, true);
     }
 
     @Override
-    public Pressure instantiateSi(final double si)
+    public Pressure instantiateSi(final double siValue, final UnitInterface<Pressure> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Pressure.Unit.SI_UNIT;
+        return new Pressure(siValue, (Pressure.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Pressure extends Quantity<Pressure>
     public static Pressure valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Pressure based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Pressure representation of the value in its unit
+     */
+    public static Pressure of(final double valueInUnit, final Pressure.Unit unit)
+    {
+        return new Pressure(valueInUnit, unit);
     }
 
     /**
@@ -153,16 +184,17 @@ public class Pressure extends Quantity<Pressure>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Pressure.Unit, Pressure>
+    public static class Unit extends AbstractUnit<Pressure>
     {
         /** The dimensions of pressure: kg/m.s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kg/ms2");
 
         /** Pascal. */
-        public static final Pressure.Unit Pa = new Pressure.Unit("Pa", "pascal", 1.0, UnitSystem.SI_DERIVED);
+        public static final Pressure.Unit Pa =
+                new Pressure.Unit("Pa", "Pa", "pascal", IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Pressure.Unit SI = Pa.generateSiPrefixes(false, false);
+        public static final Pressure.Unit SI = (Unit) Pa.generateSiPrefixes(false, false);
 
         /** hectopascal. */
         public static final Pressure.Unit hPa = Units.resolve(Pressure.Unit.class, "hPa");
@@ -230,7 +262,7 @@ public class Pressure extends Quantity<Pressure>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -238,13 +270,14 @@ public class Pressure extends Quantity<Pressure>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -260,22 +293,30 @@ public class Pressure extends Quantity<Pressure>
         }
 
         @Override
-        public Pressure ofSi(final double si)
+        public Pressure ofSi(final double si, final UnitInterface<Pressure> displayUnit)
         {
-            return Pressure.ofSi(si);
+            return new Pressure(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Pressure.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Pressure.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Pressure.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

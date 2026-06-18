@@ -2,10 +2,12 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +47,24 @@ public class Volume extends Quantity<Volume>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Volume quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Volume quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Volume(final double value, final Volume.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Volume quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Volume(final double valueInUnit, final Volume.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +74,24 @@ public class Volume extends Quantity<Volume>
      */
     public static Volume ofSi(final double si)
     {
-        return new Volume(si, Volume.Unit.SI);
+        return new Volume(si, Volume.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Volume quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Volume instance based on an SI value with the given display unit
+     */
+    public static Volume ofSi(final double siValue, final Volume.Unit displayUnit)
+    {
+        return new Volume(siValue, displayUnit, true);
     }
 
     @Override
-    public Volume instantiateSi(final double si)
+    public Volume instantiateSi(final double siValue, final UnitInterface<Volume> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Volume.Unit.SI_UNIT;
+        return new Volume(siValue, (Volume.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +106,17 @@ public class Volume extends Quantity<Volume>
     public static Volume valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Volume based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Volume representation of the value in its unit
+     */
+    public static Volume of(final double valueInUnit, final Volume.Unit unit)
+    {
+        return new Volume(valueInUnit, unit);
     }
 
     /**
@@ -208,7 +237,7 @@ public class Volume extends Quantity<Volume>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Volume.Unit, Volume>
+    public static class Unit extends AbstractUnit<Volume>
     {
         /** Constant for the cubic inch. */
         public static final double CONST_CUBIC_INCH = cubed(Length.Unit.CONST_IN);
@@ -323,7 +352,7 @@ public class Volume extends Quantity<Volume>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -331,13 +360,14 @@ public class Volume extends Quantity<Volume>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -353,21 +383,28 @@ public class Volume extends Quantity<Volume>
         }
 
         @Override
-        public Volume ofSi(final double si)
+        public Volume ofSi(final double si, final UnitInterface<Volume> displayUnit)
         {
-            return Volume.ofSi(si);
+            return new Volume(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Volume.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Volume.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
+        }
+
+        @Override
+        public Volume.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
         }
 
         /**

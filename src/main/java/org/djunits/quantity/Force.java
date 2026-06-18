@@ -2,10 +2,14 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -45,13 +49,24 @@ public class Force extends Quantity<Force>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Force quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Force quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Force(final double value, final Force.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Force quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Force(final double valueInUnit, final Force.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -61,19 +76,24 @@ public class Force extends Quantity<Force>
      */
     public static Force ofSi(final double si)
     {
-        return new Force(si, Force.Unit.SI);
+        return new Force(si, Force.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Force quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Force instance based on an SI value with the given display unit
+     */
+    public static Force ofSi(final double siValue, final Force.Unit displayUnit)
+    {
+        return new Force(siValue, displayUnit, true);
     }
 
     @Override
-    public Force instantiateSi(final double si)
+    public Force instantiateSi(final double siValue, final UnitInterface<Force> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Force.Unit.SI_UNIT;
+        return new Force(siValue, (Force.Unit) displayUnit, true);
     }
 
     /**
@@ -88,6 +108,17 @@ public class Force extends Quantity<Force>
     public static Force valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Force based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Force representation of the value in its unit
+     */
+    public static Force of(final double valueInUnit, final Force.Unit unit)
+    {
+        return new Force(valueInUnit, unit);
     }
 
     /**
@@ -212,16 +243,17 @@ public class Force extends Quantity<Force>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Force.Unit, Force>
+    public static class Unit extends AbstractUnit<Force>
     {
         /** The dimensions of force: kgm/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm/s2");
 
         /** Gray. */
-        public static final Force.Unit N = new Force.Unit("N", "newton", 1.0, UnitSystem.SI_DERIVED);
+        public static final Force.Unit N =
+                new Force.Unit("N", "N", "newton", IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Force.Unit SI = N.generateSiPrefixes(false, false);
+        public static final Force.Unit SI = (Unit) N.generateSiPrefixes(false, false);
 
         /** Dyne. */
         public static final Force.Unit dyn = N.deriveUnit("dyn", "dyne", 1E-5, UnitSystem.CGS);
@@ -254,7 +286,7 @@ public class Force extends Quantity<Force>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -262,13 +294,14 @@ public class Force extends Quantity<Force>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -284,22 +317,30 @@ public class Force extends Quantity<Force>
         }
 
         @Override
-        public Force ofSi(final double si)
+        public Force ofSi(final double si, final UnitInterface<Force> displayUnit)
         {
-            return Force.ofSi(si);
+            return new Force(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Force.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Force.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Force.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

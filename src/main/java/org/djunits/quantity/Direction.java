@@ -20,14 +20,14 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Direction quantity with a unit and a reference point.
-     * @param valueInUnit the angle value, expressed in a angle unit
-     * @param unit the angle unit in which the value is expressed, relative to the reference point
+     * Instantiate a Direction quantity with an SI or base value and a display unit.and a reference point.
+     * @param siValue the angle value, expressed in the SI unit, relative to the reference point
+     * @param displayUnit the angle display unit
      * @param reference the reference point of this direction
      */
-    public Direction(final double valueInUnit, final Angle.Unit unit, final Reference reference)
+    public Direction(final double siValue, final Angle.Unit displayUnit, final Reference reference)
     {
-        super(new Angle(valueInUnit, unit), reference);
+        super(new Angle(siValue, displayUnit), reference);
     }
 
     /**

@@ -2,11 +2,15 @@ package org.djunits.quantity;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -46,13 +50,24 @@ public class Energy extends Quantity<Energy>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Energy quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Energy quantity with an SI or base value and a display unit.
+     * @param value the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, use value in unit when false
+     */
+    public Energy(final double value, final Energy.Unit displayUnit, final boolean useSi)
+    {
+        super(value, displayUnit, useSi);
+    }
+
+    /**
+     * Instantiate a Energy quantity expressed in the given unit.
+     * @param valueInUnit the quantity value expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
      */
     public Energy(final double valueInUnit, final Energy.Unit unit)
     {
-        super(valueInUnit, unit);
+        this(valueInUnit, unit, false);
     }
 
     /**
@@ -62,19 +77,24 @@ public class Energy extends Quantity<Energy>
      */
     public static Energy ofSi(final double si)
     {
-        return new Energy(si, Energy.Unit.SI);
+        return new Energy(si, Energy.Unit.SI, true);
+    }
+
+    /**
+     * Instantiate a Energy quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @return the Energy instance based on an SI value with the given display unit
+     */
+    public static Energy ofSi(final double siValue, final Energy.Unit displayUnit)
+    {
+        return new Energy(siValue, displayUnit, true);
     }
 
     @Override
-    public Energy instantiateSi(final double si)
+    public Energy instantiateSi(final double siValue, final UnitInterface<Energy> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return Energy.Unit.SI_UNIT;
+        return new Energy(siValue, (Energy.Unit) displayUnit, true);
     }
 
     /**
@@ -89,6 +109,17 @@ public class Energy extends Quantity<Energy>
     public static Energy valueOf(final String text)
     {
         return Quantity.valueOf(text, ZERO);
+    }
+
+    /**
+     * Returns a Energy based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the given unit
+     * @param unit the unit of the value, also acts as the display unit
+     * @return ab Energy representation of the value in its unit
+     */
+    public static Energy of(final double valueInUnit, final Energy.Unit unit)
+    {
+        return new Energy(valueInUnit, unit);
     }
 
     /**
@@ -233,16 +264,17 @@ public class Energy extends Quantity<Energy>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<Energy.Unit, Energy>
+    public static class Unit extends AbstractUnit<Energy>
     {
         /** The dimensions of energy: kgm2/s2. */
         public static final SIUnit SI_UNIT = SIUnit.of("kgm2/s2");
 
         /** Joule. */
-        public static final Energy.Unit J = new Energy.Unit("J", "joule", 1.0, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit J =
+                new Energy.Unit("J", "J", "joule", IdentityScale.SCALE, UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefix(""));
 
         /** The SI or BASE unit. */
-        public static final Energy.Unit SI = J.generateSiPrefixes(false, false);
+        public static final Energy.Unit SI = (Unit) J.generateSiPrefixes(false, false);
 
         /** microjoule. */
         public static final Energy.Unit muJ = Units.resolve(Energy.Unit.class, "muJ");
@@ -294,7 +326,8 @@ public class Energy extends Quantity<Energy>
         public static final Energy.Unit Wh = new Energy.Unit("Wh", "watt hour", 3600.0, UnitSystem.SI_DERIVED);
 
         /** microwatt hour. */
-        public static final Energy.Unit muWh = Wh.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED);
+        public static final Energy.Unit muWh =
+                Wh.deriveUnit("muWh", "\u03BCWh", "microwatt hour", 1E-6, UnitSystem.SI_DERIVED, null);
 
         /** milliwatt hour. */
         public static final Energy.Unit mWh = Wh.deriveUnit("mWh", "milliwatt hour", 1E-3, UnitSystem.SI_DERIVED);
@@ -341,7 +374,7 @@ public class Energy extends Quantity<Energy>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -349,13 +382,14 @@ public class Energy extends Quantity<Energy>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -371,22 +405,30 @@ public class Energy extends Quantity<Energy>
         }
 
         @Override
-        public Energy ofSi(final double si)
+        public Energy ofSi(final double si, final UnitInterface<Energy> displayUnit)
         {
-            return Energy.ofSi(si);
+            return new Energy(si, (Unit) displayUnit, true);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public Energy.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new Energy.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }
 
+        @Override
+        public Energy.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
     }
+
 }

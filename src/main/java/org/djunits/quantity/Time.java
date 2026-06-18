@@ -19,14 +19,14 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Time quantity with a unit and a reference point.
-     * @param valueInUnit the duration value, expressed in a duration unit
-     * @param unit the duration unit in which the value is expressed, relative to the reference point
+     * Instantiate a Time quantity with an SI or base value and a display unit.and a reference point.
+     * @param siValue the duration value, expressed in the SI unit, relative to the reference point
+     * @param displayUnit the display unit to use
      * @param reference the reference point of this time
      */
-    public Time(final double valueInUnit, final Duration.Unit unit, final Reference reference)
+    public Time(final double siValue, final Duration.Unit displayUnit, final Reference reference)
     {
-        super(new Duration(valueInUnit, unit), reference);
+        super(new Duration(siValue, displayUnit), reference);
     }
 
     /**
