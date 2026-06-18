@@ -166,7 +166,7 @@ class AngleTest
     void testAddDirection()
     {
         var a = new Angle(30.0, Angle.Unit.deg); // π/6
-        var dir = new Direction(Math.PI / 2.0, Angle.Unit.rad, Reference.EAST); // 90°
+        var dir = new Direction(Math.PI / 2.0, Angle.Unit.rad, Reference.EAST, true); // 90°
         var out = a.add(dir);
         assertTrue(out instanceof Direction);
         assertEquals(Math.PI / 2.0 + Math.PI / 6.0, out.si(), 1E-12);

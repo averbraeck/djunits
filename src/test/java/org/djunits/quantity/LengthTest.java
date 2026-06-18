@@ -210,7 +210,7 @@ class LengthTest
         Position.Reference station = new Position.Reference("S", "Station", Length.ofSi(100.0), origin);
 
         // Position at Station: 20 m (display set to cm to verify later overwriting)
-        Position posStation = new Position(20.0, Length.Unit.m, station).setDisplayUnit(Length.Unit.cm);
+        Position posStation = new Position(20.0, Length.Unit.cm, station, true);
         assertEquals(20.0, posStation.si(), 1E-12);
         assertEquals(station, posStation.getReference());
 

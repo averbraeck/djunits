@@ -124,7 +124,8 @@ public class Matrix3x3Test
     }
 
     /**
-     * Verify {@link Matrix3x3#instantiateSi(double[])} creates a new matrix with the same display unit and the provided SI.
+     * Verify {@link Matrix3x3#instantiateSi(double[], UnitInterface)} creates a new matrix with the same display unit and the
+     * provided SI.
      */
     @Test
     @DisplayName("instantiateSi(double[]) — uses provided SI and keeps display unit")
@@ -132,8 +133,8 @@ public class Matrix3x3Test
     {
         Matrix3x3<Length> base = Matrix3x3.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, Length.Unit.km);
         double[] newSi = new double[] {9, 8, 7, 6, 5, 4, 3, 2, 1};
-        Matrix3x3<Length> inst = base.instantiateSi(newSi);
-        assertEquals(Length.Unit.km, inst.getDisplayUnit());
+        Matrix3x3<Length> inst = base.instantiateSi(newSi, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, inst.getDisplayUnit());
         assertArrayEquals(newSi, inst.getSiArray(), EPS);
 
         Matrix3x3<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
@@ -179,22 +180,6 @@ public class Matrix3x3Test
         Matrix3x3<Length> m6 =
                 ofSi(new double[] {-1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, 8, 9}, Length.Unit.m);
         assertEquals(6, m6.nnz());
-    }
-
-    /**
-     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
-     */
-    @Test
-    @DisplayName("setDisplayUnit() only changes presentation")
-    public void testSetDisplayUnit()
-    {
-        Matrix3x3<Length> m = ofSi(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, Length.Unit.km);
-        assertEquals(Length.Unit.km, m.getDisplayUnit());
-        m.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, m.getDisplayUnit());
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000}, m.getSiArray(), EPS);
-        m.setDisplayUnit(Length.Unit.km);
-        assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
 
     /**
@@ -456,8 +441,8 @@ public class Matrix3x3Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix3x3#as(UnitInterface)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch (e.g.,
-     * length ↔ time).
+     * Verify {@link Matrix3x3#as(UnitInterface)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
+     * (e.g., length ↔ time).
      */
     @Test
     @DisplayName("as(targetUnit) success (m↔km) and failure (length↔time)")
@@ -648,9 +633,9 @@ public class Matrix3x3Test
         assertDoesNotThrow(() -> m.msi(1, 1));
         assertDoesNotThrow(() -> m.msi(2, 2));
         assertEquals(0.01, m.get(0, 0).si(), EPS);
-        assertEquals(0.09, m.get(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertEquals(0.09, m.get(2, 2).si(), EPS);
         assertEquals(0.01, m.mget(1, 1).si(), EPS);
-        assertEquals(0.09, m.mget(3, 3).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertEquals(0.09, m.mget(3, 3).si(), EPS);
 
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(-1, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(3, 3));

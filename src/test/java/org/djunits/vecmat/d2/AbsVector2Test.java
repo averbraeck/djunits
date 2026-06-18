@@ -59,8 +59,8 @@ public class AbsVector2Test
         assertEquals(Angle.Unit.deg, avCol.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, avCol.getReference());
 
-        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
         assertEquals(d180, avCol.get(0));
         assertEquals(d180, avCol.mget(1));
         assertEquals(d270, avCol.get(1));
@@ -89,8 +89,8 @@ public class AbsVector2Test
         assertEquals(Angle.Unit.deg, avRow.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, avRow.getReference());
 
-        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
         assertEquals(d180, avRow.get(0));
         assertEquals(d180, avRow.mget(1));
         assertEquals(d270, avRow.get(1));
@@ -130,7 +130,7 @@ public class AbsVector2Test
     public void testInstantiateCol()
     {
         var vCol = northDegCol();
-        var v2 = vCol.instantiateSi(new double[] {0.5 * Math.PI, Math.PI}, Direction.Reference.EAST);
+        var v2 = vCol.instantiateSi(new double[] {0.5 * Math.PI, Math.PI}, Direction.Reference.EAST, vCol.getDisplayUnit());
         assertEquals(0.5 * Math.PI, v2.si(0));
         assertEquals(Angle.Unit.deg, v2.getDisplayUnit()); // same as original northDeg column vector
         assertEquals(Direction.Reference.EAST, v2.getReference());
@@ -138,14 +138,17 @@ public class AbsVector2Test
         var rv = Vector2.Col.of(0.5 * Math.PI, Math.PI, Angle.Unit.rad);
         var v3 = vCol.instantiate(rv, Direction.Reference.EAST);
         assertEquals(0.5 * Math.PI, v3.si(0));
-        assertEquals(Angle.Unit.deg, v3.getDisplayUnit()); // same as original northDeg column vector
+        assertEquals(Angle.Unit.rad, v3.getDisplayUnit()); // same as relative vector
         assertEquals(Direction.Reference.EAST, v3.getReference());
 
-        assertThrows(NullPointerException.class, () -> vCol.instantiateSi(null, Direction.Reference.EAST));
-        assertThrows(NullPointerException.class, () -> vCol.instantiateSi(v2.getSiArray(), null));
-        assertThrows(IllegalArgumentException.class, () -> vCol.instantiateSi(new double[] {}, Direction.Reference.EAST));
+        assertThrows(NullPointerException.class,
+                () -> vCol.instantiateSi(null, Direction.Reference.EAST, vCol.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> vCol.instantiateSi(v2.getSiArray(), null, vCol.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> vCol.instantiateSi(v2.getSiArray(), Direction.Reference.EAST, null));
         assertThrows(IllegalArgumentException.class,
-                () -> vCol.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST));
+                () -> vCol.instantiateSi(new double[] {}, Direction.Reference.EAST, vCol.getDisplayUnit()));
+        assertThrows(IllegalArgumentException.class,
+                () -> vCol.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST, vCol.getDisplayUnit()));
 
         assertThrows(NullPointerException.class, () -> vCol.instantiate(null, Direction.Reference.EAST));
         assertThrows(NullPointerException.class, () -> vCol.instantiate(rv, null));
@@ -158,7 +161,7 @@ public class AbsVector2Test
     public void testInstantiateRow()
     {
         var vRow = northDegRow();
-        var v2 = vRow.instantiateSi(new double[] {0.5 * Math.PI, Math.PI}, Direction.Reference.EAST);
+        var v2 = vRow.instantiateSi(new double[] {0.5 * Math.PI, Math.PI}, Direction.Reference.EAST, vRow.getDisplayUnit());
         assertEquals(0.5 * Math.PI, v2.si(0));
         assertEquals(Angle.Unit.deg, v2.getDisplayUnit()); // same as original northDeg column vector
         assertEquals(Direction.Reference.EAST, v2.getReference());
@@ -166,14 +169,17 @@ public class AbsVector2Test
         var rv = Vector2.Row.of(0.5 * Math.PI, Math.PI, Angle.Unit.rad);
         var v3 = vRow.instantiate(rv, Direction.Reference.EAST);
         assertEquals(0.5 * Math.PI, v3.si(0));
-        assertEquals(Angle.Unit.deg, v3.getDisplayUnit()); // same as original northDeg column vector
+        assertEquals(Angle.Unit.rad, v3.getDisplayUnit()); // same as relative vector
         assertEquals(Direction.Reference.EAST, v3.getReference());
 
-        assertThrows(NullPointerException.class, () -> vRow.instantiateSi(null, Direction.Reference.EAST));
-        assertThrows(NullPointerException.class, () -> vRow.instantiateSi(v2.getSiArray(), null));
-        assertThrows(IllegalArgumentException.class, () -> vRow.instantiateSi(new double[] {}, Direction.Reference.EAST));
+        assertThrows(NullPointerException.class,
+                () -> vRow.instantiateSi(null, Direction.Reference.EAST, vRow.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> vRow.instantiateSi(v2.getSiArray(), null, vRow.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> vRow.instantiateSi(v2.getSiArray(), Direction.Reference.EAST, null));
         assertThrows(IllegalArgumentException.class,
-                () -> vRow.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST));
+                () -> vRow.instantiateSi(new double[] {}, Direction.Reference.EAST, vRow.getDisplayUnit()));
+        assertThrows(IllegalArgumentException.class,
+                () -> vRow.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST, vRow.getDisplayUnit()));
 
         assertThrows(NullPointerException.class, () -> vRow.instantiate(null, Direction.Reference.EAST));
         assertThrows(NullPointerException.class, () -> vRow.instantiate(rv, null));

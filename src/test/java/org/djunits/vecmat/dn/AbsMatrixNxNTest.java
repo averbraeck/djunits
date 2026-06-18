@@ -57,10 +57,10 @@ public class AbsMatrixNxNTest
         assertTrue(am.isAbsolute());
         assertFalse(am.isRelative());
 
-        Direction d0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
         assertEquals(d0, am.get(0, 0));
         assertEquals(d0, am.mget(1, 1));
         assertEquals(d90, am.get(0, 1));
@@ -102,17 +102,20 @@ public class AbsMatrixNxNTest
     {
         AbsMatrixNxN<Direction, Angle> m = northDeg();
 
-        AbsMatrixNxN<Direction, Angle> m2 = m.instantiateSi(new double[] {1, 2, 3, 4}, Direction.Reference.EAST);
+        AbsMatrixNxN<Direction, Angle> m2 =
+                m.instantiateSi(new double[] {1, 2, 3, 4}, Direction.Reference.EAST, m.getDisplayUnit());
 
         assertEquals(Direction.Reference.EAST, m2.getReference());
         assertEquals(1.0, m2.si(0, 0), 1e-12);
         assertEquals(Angle.Unit.deg, m2.getDisplayUnit());
 
-        assertThrows(NullPointerException.class, () -> m.instantiateSi(null, Direction.Reference.EAST));
-        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), null));
-        assertThrows(IllegalArgumentException.class, () -> m.instantiateSi(new double[] {}, Direction.Reference.EAST));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(null, Direction.Reference.EAST, m.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), null, m.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), Direction.Reference.EAST, null));
         assertThrows(IllegalArgumentException.class,
-                () -> m.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST));
+                () -> m.instantiateSi(new double[] {}, Direction.Reference.EAST, m.getDisplayUnit()));
+        assertThrows(IllegalArgumentException.class,
+                () -> m.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST, m.getDisplayUnit()));
     }
 
     // ==================================== Static factory methods ====================================
@@ -268,7 +271,7 @@ public class AbsMatrixNxNTest
         {
             arr7[i] = new Direction(qa[i], Direction.Reference.EAST);
         }
-        
+
         Direction[][] grid = new Direction[3][3];
         for (int r = 0; r < 3; r++)
         {

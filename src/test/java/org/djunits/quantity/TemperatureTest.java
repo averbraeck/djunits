@@ -58,7 +58,7 @@ class TemperatureTest
     @Test
     void testAllConstructors()
     {
-        Temperature t1 = new Temperature(300.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
+        Temperature t1 = new Temperature(300.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
         assertEquals(300.0, t1.si(), 1E-12);
 
         Temperature t2 = new Temperature(50.0, Temperature.Unit.degC);
@@ -136,19 +136,19 @@ class TemperatureTest
     @Test
     void testReferenceConversion()
     {
-        Temperature t0C = new Temperature(0.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+        Temperature t0C = new Temperature(0.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS, false);
         assertEquals(273.15, t0C.relativeTo(Temperature.Reference.KELVIN).si(), 1E-12);
 
-        Temperature t32F = new Temperature(32.0, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT);
+        Temperature t32F = new Temperature(32.0, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT, false);
         assertEquals(273.15, t32F.relativeTo(Temperature.Reference.KELVIN).si(), 1E-12);
 
         Temperature.Reference.add("K+10", "Kelvin+10", TemperatureDifference.ofSi(10.0));
         Temperature.Reference r10 = Temperature.Reference.get("K+10");
 
-        Temperature t0Plus10 = new Temperature(0.0, Temperature.Unit.K, r10);
+        Temperature t0Plus10 = new Temperature(0.0, Temperature.Unit.K, r10, false);
         assertEquals(10.0, t0Plus10.relativeTo(Temperature.Reference.KELVIN).si(), 1E-12);
 
-        Temperature t50Plus10 = new Temperature(50.0, Temperature.Unit.K, r10);
+        Temperature t50Plus10 = new Temperature(50.0, Temperature.Unit.K, r10, false);
         assertEquals(60.0, t50Plus10.relativeTo(Temperature.Reference.KELVIN).si(), 1E-12);
 
         // clean up
@@ -198,19 +198,17 @@ class TemperatureTest
     @Test
     void testArithmetic()
     {
-        Temperature t20C = new Temperature(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS)
-                .setDisplayUnit(Temperature.Unit.degC);
-        Temperature t30C = new Temperature(30.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS)
-                .setDisplayUnit(Temperature.Unit.degC);
+        Temperature t20C = new Temperature(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS, false);
+        Temperature t30C = new Temperature(30.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS, false);
 
         TemperatureDifference diff = t30C.subtract(t20C);
         assertEquals(10.0, diff.getInUnit(), 1E-12);
         assertEquals(Temperature.Unit.degC, diff.getDisplayUnit());
 
-        Temperature t35C = t30C.add(TemperatureDifference.of(5.0, "degC")).setDisplayUnit(Temperature.Unit.degC);
+        Temperature t35C = t30C.add(TemperatureDifference.of(5.0, "degC"));
         assertEquals(35.0, t35C.getInUnit(), 1E-12);
 
-        Temperature t15C = t20C.subtract(TemperatureDifference.of(5.0, "degC")).setDisplayUnit(Temperature.Unit.degC);
+        Temperature t15C = t20C.subtract(TemperatureDifference.of(5.0, "degC"));
         assertEquals(15.0, t15C.getInUnit(), 1E-12);
     }
 
@@ -224,8 +222,8 @@ class TemperatureTest
     @Test
     void testComparisonOperators()
     {
-        Temperature a = new Temperature(10.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
-        Temperature b = new Temperature(20.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
+        Temperature a = new Temperature(10.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
+        Temperature b = new Temperature(20.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
 
         assertTrue(a.lt(b));
         assertTrue(a.le(b));
@@ -237,7 +235,7 @@ class TemperatureTest
         assertEquals(-1, a.compareTo(b));
         assertEquals(1, b.compareTo(a));
 
-        Temperature c = new Temperature(10.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+        Temperature c = new Temperature(10.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS, false);
         assertThrows(IllegalArgumentException.class, () -> a.lt(c));
     }
 
@@ -248,13 +246,13 @@ class TemperatureTest
     @Test
     void testZeroComparisonsNumericConversions()
     {
-        Temperature t0 = new Temperature(0.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
+        Temperature t0 = new Temperature(0.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
         assertTrue(t0.eq0());
         assertFalse(t0.ne0());
         assertFalse(t0.gt0());
         assertTrue(t0.le0());
 
-        Temperature t5 = new Temperature(5.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
+        Temperature t5 = new Temperature(5.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
         assertTrue(t5.gt0());
         assertFalse(t5.lt0());
     }
@@ -270,9 +268,9 @@ class TemperatureTest
     @Test
     void testStaticOperations()
     {
-        Temperature a = new Temperature(10.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
-        Temperature b = new Temperature(20.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
-        Temperature c = new Temperature(30.0, Temperature.Unit.K, Temperature.Reference.KELVIN);
+        Temperature a = new Temperature(10.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
+        Temperature b = new Temperature(20.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
+        Temperature c = new Temperature(30.0, Temperature.Unit.K, Temperature.Reference.KELVIN, true);
 
         assertEquals(c, ComparableAbsQuantity.max(a, b, c));
         assertEquals(a, ComparableAbsQuantity.min(a, b, c));
@@ -283,7 +281,7 @@ class TemperatureTest
         Temperature mid = ComparableAbsQuantity.interpolate(a, c, 0.5);
         assertEquals(20.0, mid.si(), 1E-12);
 
-        Temperature d = new Temperature(5.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+        Temperature d = new Temperature(5.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS, false);
         assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, d));
     }
 
@@ -315,7 +313,7 @@ class TemperatureTest
         assertNotNull(Temperature.of(-0.1, "K", Temperature.Reference.CELSIUS));
         assertNotNull(Temperature.of(-273.15, "degC", Temperature.Reference.CELSIUS));
         assertThrows(IllegalArgumentException.class, () -> Temperature.of(-273.16, "degC", Temperature.Reference.CELSIUS));
-        assertNotNull(new Temperature(-0.1, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT));
+        assertNotNull(new Temperature(-0.1, Temperature.Unit.degF, Temperature.Reference.FAHRENHEIT, false));
         assertThrows(IllegalArgumentException.class, () -> Temperature.ofSi(-1.0));
         assertThrows(IllegalArgumentException.class, () -> Temperature.of(-0.1, "K", Temperature.Reference.KELVIN));
         assertThrows(IllegalArgumentException.class, () -> Temperature.valueOf("-0.1 K", Temperature.Reference.KELVIN));

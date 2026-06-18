@@ -122,17 +122,17 @@ public class Matrix2x2Test
     }
 
     /**
-     * Verify {@link Matrix2x2#instantiateSi(double[])} creates a new matrix with the same display unit and the provided SI
-     * values.
+     * Verify {@link Matrix2x2#instantiateSi(double[], UnitInterface)} creates a new matrix with the same display unit and the
+     * provided SI values.
      */
     @Test
-    @DisplayName("instantiate(double[]) — uses provided SI data and keeps display unit")
+    @DisplayName("instantiate(double[], UnitInterface) — uses provided SI data and keeps display unit")
     public void testInstantiate()
     {
         Matrix2x2<Length> base = Matrix2x2.of(new double[] {1, 2, 3, 4}, Length.Unit.km);
         double[] newSi = new double[] {10, 20, 30, 40};
-        Matrix2x2<Length> inst = base.instantiateSi(newSi);
-        assertEquals(Length.Unit.km, inst.getDisplayUnit(), "display unit retained");
+        Matrix2x2<Length> inst = base.instantiateSi(newSi, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, inst.getDisplayUnit(), "display unit retained");
         assertArrayEquals(newSi, inst.getSiArray(), EPS, "si array used as-is");
 
         Matrix2x2<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
@@ -174,25 +174,6 @@ public class Matrix2x2Test
         assertEquals(0, m0.nnz());
         Matrix2x2<Length> m2 = ofSi(new double[] {-0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0}, Length.Unit.m);
         assertEquals(2, m2.nnz());
-    }
-
-    /**
-     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation and not SI storage.
-     */
-    @Test
-    @DisplayName("setDisplayUnit() only changes presentation")
-    public void testSetDisplayUnit()
-    {
-        Matrix2x2<Length> m = ofSi(new double[] {1000, 2000, 3000, 4000}, Length.Unit.km);
-        assertEquals(Length.Unit.km, m.getDisplayUnit());
-        // switch to meters
-        m.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, m.getDisplayUnit(), "display unit changed");
-        assertArrayEquals(new double[] {1000, 2000, 3000, 4000}, m.getSiArray(), EPS, "SI unchanged");
-        assertEquals(1000.0, m.get(0, 0).si(), EPS, "value SI unaffected");
-        // back to km
-        m.setDisplayUnit(Length.Unit.km);
-        assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
 
     /**
@@ -445,8 +426,8 @@ public class Matrix2x2Test
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link Matrix2x2#as(UnitInterface)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch (e.g.,
-     * length ↔ time).
+     * Verify {@link Matrix2x2#as(UnitInterface)} succeeds when SI units match (e.g., m ↔ km), and throws when SI units mismatch
+     * (e.g., length ↔ time).
      */
     @Test
     @DisplayName("as(targetUnit) success (m↔km) and failure (length↔time)")
@@ -680,7 +661,7 @@ public class Matrix2x2Test
         assertDoesNotThrow(() -> m.get(0, 0));
         assertDoesNotThrow(() -> m.get(1, 1));
         assertEquals(0.01, m.get(0, 0).si(), EPS);
-        assertEquals(4.0, m.get(1, 1).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertEquals(4.0, m.get(1, 1).si(), EPS);
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(-1, 0));
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(0, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.get(2, 0));
@@ -698,7 +679,7 @@ public class Matrix2x2Test
         assertDoesNotThrow(() -> m.mget(1, 1));
         assertDoesNotThrow(() -> m.mget(2, 2));
         assertEquals(0.01, m.mget(1, 1).si(), EPS);
-        assertEquals(4.0, m.mget(2, 2).setDisplayUnit(Length.Unit.m).si(), EPS);
+        assertEquals(4.0, m.mget(2, 2).si(), EPS);
         assertThrows(IndexOutOfBoundsException.class, () -> m.mget(0, 1));
         assertThrows(IndexOutOfBoundsException.class, () -> m.mget(1, 0));
         assertThrows(IndexOutOfBoundsException.class, () -> m.mget(3, 1));
@@ -929,17 +910,17 @@ public class Matrix2x2Test
         assertArrayEquals(m.getSiArray(), mNxN.asMatrix2x2().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxN.getDisplayUnit());
         assertEquals(2000.0, mNxN.si(0, 0), 1E-10);
-        
+
         var mNxM = m.asMatrixNxM();
         assertArrayEquals(m.getSiArray(), mNxM.asMatrix2x2().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
         assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
-        
+
         var mQT = m.asQuantityTable();
         assertArrayEquals(m.getSiArray(), mQT.asMatrix2x2().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mQT.getDisplayUnit());
         assertEquals(2000.0, mQT.si(0, 0), 1E-10);
-        
+
         assertThrows(IllegalStateException.class, () -> m.asMatrix1x1());
         assertThrows(IllegalStateException.class, () -> m.asMatrix3x3());
         assertThrows(IllegalStateException.class, () -> m.asVector1());

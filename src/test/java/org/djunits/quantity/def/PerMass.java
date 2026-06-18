@@ -57,8 +57,7 @@ public class PerMass extends Quantity<PerMass>
      */
     public PerMass(final PerMass value)
     {
-        super(value.si(), PerMass.Unit.SI, true);
-        setDisplayUnit(value.getDisplayUnit());
+        super(value.si(), value.getDisplayUnit(), true);
     }
 
     /**

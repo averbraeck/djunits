@@ -104,7 +104,7 @@ public class MatrixNxMTest
     public void testFactoryQuantityGrid()
     {
         Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
-        MatrixNxM<Length> m = MatrixNxM.of(q).setDisplayUnit(Length.Unit.m);
+        MatrixNxM<Length> m = MatrixNxM.of(q);
         assertArrayEquals(new double[] {1000.0, 200.0}, m.getSiArray(), EPS);
         assertEquals(1, m.rows());
         assertEquals(2, m.cols());
@@ -117,8 +117,8 @@ public class MatrixNxMTest
     {
         MatrixNxM<Length> base = MatrixNxM.of(new double[] {1, 2, 3, 4, 5, 6}, 3, 2, Length.Unit.km);
         double[] newSi = new double[] {6, 5, 4, 3, 2, 1};
-        MatrixNxM<Length> inst = base.instantiateSi(newSi);
-        assertEquals(base.getDisplayUnit(), inst.getDisplayUnit());
+        MatrixNxM<Length> inst = base.instantiateSi(newSi, Length.Unit.cm);
+        assertEquals(Length.Unit.cm, inst.getDisplayUnit());
         assertArrayEquals(new double[] {6, 5, 4, 3, 2, 1}, inst.getSiArray(), EPS);
 
         MatrixNxM<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
@@ -157,19 +157,6 @@ public class MatrixNxMTest
         MatrixNxM<Length> m6 =
                 ofSi(new double[] {-1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, 8, 9}, 3, 3, Length.Unit.m);
         assertEquals(6, m6.nnz());
-    }
-
-    /** setDisplayUnit only affects presentation; SI unchanged. */
-    @Test
-    @DisplayName("setDisplayUnit() only changes presentation")
-    public void testSetDisplayUnit()
-    {
-        MatrixNxM<Length> m = ofSi(new double[] {1000, 2000, 3000, 4000}, 2, 2, Length.Unit.km);
-        m.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, m.getDisplayUnit());
-        assertEquals(1000.0, m.get(0, 0).si(), EPS);
-        m.setDisplayUnit(Length.Unit.km);
-        assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
 
     /** toString and toString(unit) include unit abbreviation. */

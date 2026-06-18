@@ -121,7 +121,7 @@ public class QuantityTableTest
     public void testFactoryQuantityGrid()
     {
         Length[][] q = new Length[][] {{Length.of(1.0, "km"), Length.of(200.0, "m")}};
-        QuantityTable<Length> m = QuantityTable.of(q).setDisplayUnit(Length.Unit.m);
+        QuantityTable<Length> m = QuantityTable.of(q);
         assertArrayEquals(new double[] {1000.0, 200.0}, m.getSiArray(), EPS);
         assertEquals(1, m.rows());
         assertEquals(2, m.cols());
@@ -141,7 +141,7 @@ public class QuantityTableTest
         QuantityTable<Length> q = create2x2();
         double[] newSi = new double[] {10, 20, 30, 40};
 
-        QuantityTable<Length> q2 = q.instantiateSi(newSi);
+        QuantityTable<Length> q2 = q.instantiateSi(newSi, Length.Unit.m);
 
         assertNotSame(q, q2);
         assertArrayEquals(newSi, q2.getSiArray(), 1e-12);

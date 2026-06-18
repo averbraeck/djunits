@@ -9,7 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * DirectionTest tests the Direction absolute quantity class and its Reference handling.<p>
+ * DirectionTest tests the Direction absolute quantity class and its Reference handling.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -33,7 +34,7 @@ class DirectionTest
     void testBasics()
     {
         // Construct with value + unit + reference
-        Direction dEast90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.EAST);
+        Direction dEast90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.EAST, false);
         assertEquals(Math.PI / 2.0, dEast90.si(), 1E-12);
 
         // Construct with value + abbreviation + reference
@@ -45,8 +46,8 @@ class DirectionTest
         assertEquals(Math.PI / 3.0, dFromAngle.si(), 1E-12);
 
         // NORTH reference; 0° NORTH == +90° EAST
-        Direction dNorth0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction dEast0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST);
+        Direction dNorth0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction dEast0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST, false);
         assertEquals(Math.PI / 2.0, dNorth0.subtract(dEast0).si(), 1E-12);
 
         // ofSi
@@ -64,12 +65,12 @@ class DirectionTest
 
         // siUnit delegates to Angle SI
         assertEquals("rad", dEast90.siUnit().format(true, false));
-        
+
         // instantiate from relative
         Direction d2 = dEast90.instantiate(Angle.of(120.0, "deg"), Direction.Reference.NORTH);
         assertEquals(120.0, d2.getInUnit(), 1E-6);
         assertEquals("NORTH", d2.getReference().toString());
-        
+
         // instantiate from reference
         Direction d3 = Direction.Reference.NORTH.instantiate(Angle.of(120.0, "deg"));
         assertEquals(120.0, d3.getInUnit(), 1E-6);
@@ -83,9 +84,9 @@ class DirectionTest
     void testOperationsAndDisplayPropagation()
     {
         // A = 30° EAST
-        Direction a = new Direction(30.0, Angle.Unit.deg, Direction.Reference.EAST);
+        Direction a = new Direction(30.0, Angle.Unit.deg, Direction.Reference.EAST, false);
         // B = 0° NORTH = +90° EAST
-        Direction b = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction b = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
 
         // subtract(Direction): result is Angle in A's display unit; angle = A.si - B(relative to A.ref).si
         Angle diff = a.subtract(b);
@@ -121,8 +122,8 @@ class DirectionTest
         Direction.Reference.add("WEST", "West = 180 degrees from East", Angle.of(180.0, "deg"));
         var west = Direction.Reference.get("WEST");
         // Check Direction using WEST
-        Direction w0 = new Direction(0.0, Angle.Unit.deg, west);
-        Direction east0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST);
+        Direction w0 = new Direction(0.0, Angle.Unit.deg, west, false);
+        Direction east0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST, false);
         assertEquals(0.0, w0.si(), 1E-12);
         assertEquals(Math.PI, w0.subtract(east0).si());
 
@@ -130,16 +131,16 @@ class DirectionTest
         Direction.Reference.add("NE", "North-East: 45 degrees from North", Angle.of(45.0, "deg"), Direction.Reference.NORTH);
         var northEast = Direction.Reference.get("NE");
         // 0° in NE equals NORTH (90°) + 45° = 135° EAST = 3π/4
-        Direction north0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction ne0 = new Direction(0.0, Angle.Unit.deg, northEast);
+        Direction north0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction ne0 = new Direction(0.0, Angle.Unit.deg, northEast, false);
         assertEquals(0.25 * Math.PI, ne0.subtract(north0).si(), 1E-12);
 
         // Cross-check via subtraction (relativeTo conversion used inside):
         // WEST(0°) minus EAST(0°) should be +π (in A's display unit)
-        Angle westMinusEast = w0.subtract(new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST));
+        Angle westMinusEast = w0.subtract(new Direction(0.0, Angle.Unit.deg, Direction.Reference.EAST, false));
         assertEquals(Math.PI, westMinusEast.si(), 1E-12);
         assertEquals(w0.getDisplayUnit(), westMinusEast.getDisplayUnit());
-        
+
         // clean up
         Direction.Reference.get("WEST").unregister();
         Direction.Reference.get("NE").unregister();

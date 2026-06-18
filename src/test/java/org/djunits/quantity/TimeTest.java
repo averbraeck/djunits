@@ -57,14 +57,9 @@ class TimeTest
     void testConstructors()
     {
         // Use built-in references directly
-        Time t1 = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX);
+        Time t1 = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX, false);
         assertEquals(10.0, t1.si(), 1E-12);
         assertEquals(Time.Reference.UNIX, t1.getReference());
-
-        Time t2 = Time.of(250.0, "ms", Time.Reference.UNIX);
-        t2.setDisplayUnit(Duration.Unit.ms);
-        assertEquals(250.0, t2.getInUnit(), 1E-12);
-        assertEquals(Time.Reference.UNIX, t2.getReference());
 
         Time t3 = new Time(Duration.ofSi(5.0), Time.Reference.GREGORIAN);
         assertEquals(5.0, t3.si(), 1E-12);
@@ -143,17 +138,17 @@ class TimeTest
         assertNotNull(unixPlus10);
 
         // 0 @ UNIX_PLUS10 equals absolute time 10 s relative to UNIX
-        Time t0Plus10 = new Time(0.0, Duration.Unit.s, unixPlus10);
+        Time t0Plus10 = new Time(0.0, Duration.Unit.s, unixPlus10, false);
         Time t0Plus10RelUnix = t0Plus10.relativeTo(Time.Reference.UNIX);
         assertEquals(10.0, t0Plus10RelUnix.si(), 1E-12);
 
         // 50 @ UNIX_PLUS10 equals 60 s relative to UNIX
-        Time t50Plus10 = new Time(50.0, Duration.Unit.s, unixPlus10);
+        Time t50Plus10 = new Time(50.0, Duration.Unit.s, unixPlus10, false);
         Time t50Plus10RelUnix = t50Plus10.relativeTo(Time.Reference.UNIX);
         assertEquals(60.0, t50Plus10RelUnix.si(), 1E-12);
 
         // Built-ins are independent (no chain defined) → conversion not possible
-        Time tGregorian = new Time(0.0, Duration.Unit.s, Time.Reference.GREGORIAN);
+        Time tGregorian = new Time(0.0, Duration.Unit.s, Time.Reference.GREGORIAN, false);
         assertThrows(IllegalArgumentException.class, () -> tGregorian.relativeTo(Time.Reference.UNIX));
 
         // clean up
@@ -172,29 +167,29 @@ class TimeTest
     void testArithmetic()
     {
         // Use UNIX reference
-        Time t10 = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX).setDisplayUnit(Duration.Unit.ms);
-        Time t25 = new Time(25.0, Duration.Unit.s, Time.Reference.UNIX).setDisplayUnit(Duration.Unit.ms);
+        Time t10 = new Time(10.0, Duration.Unit.ms, Time.Reference.UNIX, true);
+        Time t25 = new Time(25.0, Duration.Unit.ms, Time.Reference.UNIX, true);
 
         // subtract absolute → Duration in display unit of minuend
         Duration diff = t25.subtract(t10);
         assertEquals(15.0, diff.si(), 1E-12);
         assertEquals(Duration.Unit.ms, diff.getDisplayUnit());
 
-        // add relative duration
-        Time t35 = t25.add(Duration.ofSi(10.0)).setDisplayUnit(Duration.Unit.s);
-        assertEquals(35.0, t35.getInUnit(), 1E-12);
+        // add relative duration, unit of t25 dominates
+        Time t35 = t25.add(Duration.ofSi(10.0, Duration.Unit.s));
+        assertEquals(35000.0, t35.getInUnit(), 1E-12);
         assertEquals(Time.Reference.UNIX, t35.getReference());
 
-        // subtract relative duration
-        Time t5 = t10.subtract(Duration.ofSi(5.0)).setDisplayUnit(Duration.Unit.s);
-        assertEquals(5.0, t5.getInUnit(), 1E-12);
+        // subtract relative duration, unit of t10 dominates
+        Time t5 = t10.subtract(Duration.ofSi(5.0, Duration.Unit.s));
+        assertEquals(5000.0, t5.getInUnit(), 1E-12);
         assertEquals(Time.Reference.UNIX, t5.getReference());
 
         // Cross-reference subtraction with convertible references:
         // UNIX: 20 s; UNIX_PLUS10: 15 s → 25 s relative to UNIX; 20 - 25 = -5 s
         Time.Reference.add("UNIX_PLUS10", "UNIX + 10 seconds", Duration.ofSi(10.0), Time.Reference.UNIX);
-        Time tUnix20 = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX).setDisplayUnit(Duration.Unit.s);
-        Time tUnixPlus1015 = new Time(15.0, Duration.Unit.s, Time.Reference.get("UNIX_PLUS10")).setDisplayUnit(Duration.Unit.s);
+        Time tUnix20 = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX, false);
+        Time tUnixPlus1015 = new Time(15.0, Duration.Unit.s, Time.Reference.get("UNIX_PLUS10"), false);
         Duration cross = tUnix20.subtract(tUnixPlus1015);
         assertEquals(-5.0, cross.si(), 1E-12);
         assertEquals(Duration.Unit.s, cross.getDisplayUnit());
@@ -213,8 +208,8 @@ class TimeTest
     @Test
     void testComparisonOperators()
     {
-        Time a = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX);
-        Time b = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX);
+        Time a = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX, true);
+        Time b = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX, true);
 
         assertTrue(a.lt(b));
         assertTrue(a.le(b));
@@ -227,7 +222,7 @@ class TimeTest
         assertEquals(1, b.compareTo(a));
 
         // Different references → compareTo and relational ops should throw
-        Time c = new Time(10.0, Duration.Unit.s, Time.Reference.GPS);
+        Time c = new Time(10.0, Duration.Unit.s, Time.Reference.GPS, true);
         assertThrows(IllegalArgumentException.class, () -> a.lt(c));
         assertThrows(IllegalArgumentException.class, () -> a.compareTo(c));
     }
@@ -238,13 +233,13 @@ class TimeTest
     @Test
     void testZeroComparisonsAndNumericConversions()
     {
-        Time t0 = new Time(0.0, Duration.Unit.s, Time.Reference.UNIX);
+        Time t0 = new Time(0.0, Duration.Unit.s, Time.Reference.UNIX, true);
         assertTrue(t0.eq0());
         assertFalse(t0.ne0());
         assertFalse(t0.gt0());
         assertTrue(t0.le0());
 
-        Time t5 = new Time(5.0, Duration.Unit.s, Time.Reference.UNIX);
+        Time t5 = new Time(5.0, Duration.Unit.s, Time.Reference.UNIX, true);
         assertTrue(t5.gt0());
         assertFalse(t5.lt0());
     }
@@ -260,9 +255,9 @@ class TimeTest
     @Test
     void testStaticOperations()
     {
-        Time a = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX);
-        Time b = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX);
-        Time c = new Time(30.0, Duration.Unit.s, Time.Reference.UNIX);
+        Time a = new Time(10.0, Duration.Unit.s, Time.Reference.UNIX, true);
+        Time b = new Time(20.0, Duration.Unit.s, Time.Reference.UNIX, true);
+        Time c = new Time(30.0, Duration.Unit.s, Time.Reference.UNIX, true);
 
         assertEquals(c, ComparableAbsQuantity.max(a, b, c));
         assertEquals(a, ComparableAbsQuantity.min(a, b, c));
@@ -274,7 +269,7 @@ class TimeTest
         assertEquals(20.0, mid.si(), 1E-12);
 
         // Mixed references → should throw
-        Time d = new Time(5.0, Duration.Unit.s, Time.Reference.GPS);
+        Time d = new Time(5.0, Duration.Unit.s, Time.Reference.GPS, true);
         assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, d));
     }
 }

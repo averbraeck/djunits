@@ -151,8 +151,9 @@ public final class VectorNTest
     public void testInstantiateSiArrayCol()
     {
         VectorN.Col<Length> c = col(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> c.instantiateSi(new double[] {1.0, 2.0}), "Wrong length must throw");
-        VectorN.Col<Length> d = c.instantiateSi(new double[] {10.0, 20.0, 30.0});
+        assertThrows(IllegalArgumentException.class, () -> c.instantiateSi(new double[] {1.0, 2.0}, c.getDisplayUnit()),
+                "Wrong length must throw");
+        VectorN.Col<Length> d = c.instantiateSi(new double[] {10.0, 20.0, 30.0}, c.getDisplayUnit());
         assertArrayEquals(new double[] {10.0, 20.0, 30.0}, d.getSiArray(), EPS);
         assertEquals(c.getDisplayUnit(), d.getDisplayUnit());
 
@@ -176,8 +177,9 @@ public final class VectorNTest
     public void testInstantiateSiArrayRow()
     {
         VectorN.Row<Length> r = row(new double[] {1.0, 2.0, 3.0}, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> r.instantiateSi(new double[] {1.0, 2.0}), "Wrong length must throw");
-        VectorN.Row<Length> s = r.instantiateSi(new double[] {10.0, 20.0, 30.0});
+        assertThrows(IllegalArgumentException.class, () -> r.instantiateSi(new double[] {1.0, 2.0}, r.getDisplayUnit()),
+                "Wrong length must throw");
+        VectorN.Row<Length> s = r.instantiateSi(new double[] {10.0, 20.0, 30.0}, r.getDisplayUnit());
         assertArrayEquals(new double[] {10.0, 20.0, 30.0}, s.getSiArray(), EPS);
         assertEquals(r.getDisplayUnit(), s.getDisplayUnit());
 
@@ -350,9 +352,9 @@ public final class VectorNTest
         assertFalse(it.hasNext(), "no more elements");
         assertThrows(NoSuchElementException.class, it::next, "must throw at end");
 
-        assertEquals(1.0, a.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
-        assertEquals(2.0, b.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
-        assertEquals(3.0, d.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(1.0, a.si() / 1000.0, EPS);
+        assertEquals(2.0, b.si() / 1000.0, EPS);
+        assertEquals(3.0, d.si() / 1000.0, EPS);
     }
 
     /**
@@ -379,29 +381,24 @@ public final class VectorNTest
     // =====================================================================================
 
     /**
-     * Verify that {@link VectorN#setDisplayUnit(org.djunits.unit.UnitInterface)} returns {@code this} for fluent usage and that
-     * {@link VectorN#toString()} and {@link VectorN#format(org.djunits.unit.UnitInterface)} contain correct orientation and unit
-     * abbreviation.
+     * Verify that {@link VectorN#toString()} and {@link VectorN#format(org.djunits.unit.UnitInterface)} contain correct
+     * orientation and unit abbreviation.
      */
     @Test
-    @DisplayName("setDisplayUnit() is fluent; toString contains orientation & unit")
+    @DisplayName("toString contains orientation & unit")
     public void testFluentAndToString()
     {
-        final VectorN.Row<Length> r = row(new double[] {1, 2, 3}, Length.Unit.m);
-        final VectorN.Row<Length> ret = r.setDisplayUnit(Length.Unit.km);
+        final VectorN.Row<Length> r = row(new double[] {1, 2, 3}, Length.Unit.km);
         final String s1 = r.toString();
         final String s2 = r.format(Length.Unit.m);
 
-        assertEquals(r, ret, "fluent");
         assertTrue(s1.startsWith("["), "start tag");
         assertTrue(s1.endsWith("] km"), "unit in default toString");
         assertTrue(s2.endsWith("] m"), "unit in toString(withUnit)");
 
-        final VectorN.Col<Length> c = col(new double[] {1, 2, 3}, Length.Unit.m);
-        final VectorN.Col<Length> retc = c.setDisplayUnit(Length.Unit.km);
+        final VectorN.Col<Length> c = col(new double[] {1, 2, 3}, Length.Unit.km);
         final String sc = c.toString();
 
-        assertEquals(c, retc, "fluent");
         assertTrue(sc.startsWith("["), "start tag");
         assertTrue(sc.endsWith("] km"), "unit in toString");
     }
@@ -1003,22 +1000,22 @@ public final class VectorNTest
         assertArrayEquals(v.getSiArray(), v3Col.asVectorNCol().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, v3Col.getDisplayUnit());
         assertEquals(2000.0, v3Col.si(0), 1E-10);
-        
+
         var mNxM = v.asMatrixNxM();
         assertArrayEquals(v.getSiArray(), mNxM.asVectorNCol().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
         assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
-        
+
         var mQT = v.asQuantityTable();
         assertArrayEquals(v.getSiArray(), mQT.asVectorNCol().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mQT.getDisplayUnit());
         assertEquals(2000.0, mQT.si(0, 0), 1E-10);
-        
+
         var vNcol = v.asVectorNCol();
         assertArrayEquals(v.getSiArray(), vNcol.asVectorNCol().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, vNcol.getDisplayUnit());
         assertEquals(2000.0, vNcol.si(0), 1E-10);
-        
+
         assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
         assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
@@ -1027,7 +1024,7 @@ public final class VectorNTest
         assertThrows(IllegalStateException.class, () -> v.asVector2Row());
         assertThrows(IllegalStateException.class, () -> v.asVector3Row());
         assertThrows(IllegalStateException.class, () -> v.asVectorNRow());
-        
+
         var v1 = col(new double[] {2.0}, Length.Unit.km);
         var v1Col = v1.asVector1();
         assertArrayEquals(v1.getSiArray(), v1Col.asVectorNCol().getSiArray(), 1E-10);
@@ -1059,22 +1056,22 @@ public final class VectorNTest
         assertArrayEquals(v.getSiArray(), v3Row.asVectorNRow().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, v3Row.getDisplayUnit());
         assertEquals(2000.0, v3Row.si(0), 1E-10);
-        
+
         var mNxM = v.asMatrixNxM();
         assertArrayEquals(v.getSiArray(), mNxM.asVectorNRow().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
         assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
-        
+
         var mQT = v.asQuantityTable();
         assertArrayEquals(v.getSiArray(), mQT.asVectorNRow().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mQT.getDisplayUnit());
         assertEquals(2000.0, mQT.si(0, 0), 1E-10);
-        
+
         var vNrow = v.asVectorNRow();
         assertArrayEquals(v.getSiArray(), vNrow.asVectorNRow().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, vNrow.getDisplayUnit());
         assertEquals(2000.0, vNrow.si(0), 1E-10);
-        
+
         assertThrows(IllegalStateException.class, () -> v.asMatrix1x1());
         assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
@@ -1083,7 +1080,7 @@ public final class VectorNTest
         assertThrows(IllegalStateException.class, () -> v.asVector2Row());
         assertThrows(IllegalStateException.class, () -> v.asVector3Col());
         assertThrows(IllegalStateException.class, () -> v.asVectorNCol());
-        
+
         var v1 = row(new double[] {2.0}, Length.Unit.km);
         var v1Row = v1.asVector1();
         assertArrayEquals(v1.getSiArray(), v1Row.asVectorNRow().getSiArray(), 1E-10);
@@ -1094,7 +1091,7 @@ public final class VectorNTest
         assertArrayEquals(v1.getSiArray(), m1x1.asVectorNRow().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, m1x1.getDisplayUnit());
         assertEquals(2000.0, m1x1.si(0, 0), 1E-10);
-        
+
         var v2 = row(new double[] {2.0, 3.0}, Length.Unit.km);
         var v2Row = v2.asVector2Row();
         assertArrayEquals(v2.getSiArray(), v2Row.asVectorNRow().getSiArray(), 1E-10);

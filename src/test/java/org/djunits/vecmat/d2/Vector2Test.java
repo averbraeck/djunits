@@ -16,6 +16,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.def.Vector;
 import org.junit.jupiter.api.DisplayName;
@@ -112,21 +113,23 @@ public class Vector2Test
     }
 
     /**
-     * Verify {@link Vector2#instantiateSi(double[])} delegates to the (xSi,ySi) variant and enforces length=2.
+     * Verify {@link Vector2#instantiateSi(double[], UnitInterface)} delegates to the (xSi,ySi) variant and enforces length=2.
      */
     @Test
     @DisplayName("instantiateSi(double[]) enforces length=2 and delegates")
     public void testInstantiateSiArray()
     {
         Vector2.Row<Length> r1 = row(1.0, 2.0, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> r1.instantiateSi(new double[] {1.0}), "Wrong length must throw");
-        Vector2.Row<Length> r2 = r1.instantiateSi(new double[] {10.0, 20.0});
+        assertThrows(IllegalArgumentException.class, () -> r1.instantiateSi(new double[] {1.0}, r1.getDisplayUnit()),
+                "Wrong length must throw");
+        Vector2.Row<Length> r2 = r1.instantiateSi(new double[] {10.0, 20.0}, r1.getDisplayUnit());
         assertArrayEquals(new double[] {10.0, 20.0}, r2.getSiArray(), EPS);
         assertEquals(r1.getDisplayUnit(), r2.getDisplayUnit(), "display unit copied by instantiate path");
 
         Vector2.Col<Length> c1 = col(1.0, 2.0, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> c1.instantiateSi(new double[] {1.0}), "Wrong length must throw");
-        Vector2.Col<Length> c2 = c1.instantiateSi(new double[] {10.0, 20.0});
+        assertThrows(IllegalArgumentException.class, () -> c1.instantiateSi(new double[] {1.0}, c1.getDisplayUnit()),
+                "Wrong length must throw");
+        Vector2.Col<Length> c2 = c1.instantiateSi(new double[] {10.0, 20.0}, c1.getDisplayUnit());
         assertArrayEquals(new double[] {10.0, 20.0}, c2.getSiArray(), EPS);
         assertEquals(c1.getDisplayUnit(), c2.getDisplayUnit(), "display unit copied by instantiate path");
 
@@ -175,8 +178,8 @@ public class Vector2Test
         assertEquals(2, v.size(), "size is 2");
         assertEquals(0.005, v.xSi(), EPS);
         assertEquals(2.0, v.ySi(), EPS);
-        assertEquals(0.5, v.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "x() returns Length with display unit");
-        assertEquals(200.0, v.y().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "y() returns Length with display unit");
+        assertEquals(0.5, v.x().si() * 100.0, EPS, "x() returns Length with display unit");
+        assertEquals(200.0, v.y().si() * 100.0, EPS, "y() returns Length with display unit");
 
         // getSiArray() must return a fresh copy (mutating the returned array must not affect the vector)
         double[] siCopy = v.getSiArray();
@@ -211,8 +214,8 @@ public class Vector2Test
         assertEquals(2, w.size(), "size is 2");
         assertEquals(0.005, w.xSi(), EPS);
         assertEquals(2.0, w.ySi(), EPS);
-        assertEquals(0.5, w.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "x() returns Length with display unit");
-        assertEquals(200.0, w.y().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "y() returns Length with display unit");
+        assertEquals(0.5, w.x().si() * 100.0, EPS, "x() returns Length with display unit");
+        assertEquals(200.0, w.y().si() * 100.0, EPS, "y() returns Length with display unit");
 
         // getSiArray() must return a fresh copy (mutating the returned array must not affect the vector)
         double[] siCopyCol = w.getSiArray();
@@ -240,8 +243,8 @@ public class Vector2Test
         Length secondCol = itCol.next();
         assertFalse(itCol.hasNext());
         assertThrows(NoSuchElementException.class, itCol::next);
-        assertEquals(1.0, firstCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
-        assertEquals(2.0, secondCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(1.0, firstCol.si() / 1000.0, EPS);
+        assertEquals(2.0, secondCol.si() / 1000.0, EPS);
         assertEquals(v.get(0).si(), firstCol.si(), EPS);
         assertEquals(v.get(1).si(), secondCol.si(), EPS);
 
@@ -252,8 +255,8 @@ public class Vector2Test
         Length secondRow = itRow.next();
         assertFalse(itRow.hasNext());
         assertThrows(NoSuchElementException.class, itRow::next);
-        assertEquals(1.0, firstRow.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
-        assertEquals(2.0, secondRow.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
+        assertEquals(1.0, firstRow.si() / 1000.0, EPS);
+        assertEquals(2.0, secondRow.si() / 1000.0, EPS);
         assertEquals(w.get(0).si(), firstRow.si(), EPS);
         assertEquals(w.get(1).si(), secondRow.si(), EPS);
     }
@@ -610,7 +613,7 @@ public class Vector2Test
     public void testEqualsHashCode()
     {
         Vector2.Row<Length> r1 = row(1000.0, 2000.0, Length.Unit.m);
-        Vector2.Row<Length> r2 = row(1.0, 2.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
+        Vector2.Row<Length> r2 = row(1.0, 2.0, Length.Unit.km);
         Vector2.Row<Length> r3 = row(2000.0, 2000.0, Length.Unit.m);
         Vector2.Row<Length> r4 = row(1000.0, 3000.0, Length.Unit.m);
         Vector2.Col<Length> c1 = col(1.0, 2.0, Length.Unit.m);
@@ -657,15 +660,11 @@ public class Vector2Test
     public void testFluentAndRelative()
     {
         Vector2.Row<Length> r = row(1.0, 2.0, Length.Unit.km);
-        Vector2.Row<Length> returnedR = r.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, r.getDisplayUnit());
-        assertEquals(r, returnedR, "fluent returns this");
+        assertEquals(Length.Unit.km, r.getDisplayUnit());
         assertTrue(r.isRelative(), "Length is a relative quantity");
 
         Vector2.Col<Length> c = col(1.0, 2.0, Length.Unit.km);
-        Vector2.Col<Length> returnedC = c.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, c.getDisplayUnit());
-        assertEquals(c, returnedC, "fluent returns this");
+        assertEquals(Length.Unit.km, c.getDisplayUnit());
         assertTrue(c.isRelative(), "Length is a relative quantity");
     }
 

@@ -121,49 +121,19 @@ public class QuantityTest
         assertThrows(NullPointerException.class, () -> new Length(1.0, (Length.Unit) null));
     }
 
-    /**
-     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.UnitInterface)}
-     * round-trip correctly and that the setter is fluent (returns {@code this}).
-     */
-    @Test
-    void displayUnitAccessors()
-    {
-        Length l = m(12).setDisplayUnit(Length.Unit.km);
-        assertSame(Length.Unit.km, l.getDisplayUnit());
-        Length same = l.setDisplayUnit(Length.Unit.cm);
-        assertSame(l, same);
-        assertSame(Length.Unit.cm, l.getDisplayUnit());
-    }
-
-    /**
-     * Ensures that the SI value returned by {@link Quantity#si()} is invariant under changes to the display unit.
-     */
-    @Test
-    void siValueInvariant()
-    {
-        Length l = new Length(1.5, Length.Unit.km); // 1500 m
-        assertClose(1500.0, l.si());
-        assertClose(1500.0, l.si);
-        l.setDisplayUnit(Length.Unit.m);
-        assertClose(1500.0, l.si());
-        assertClose(1500.0, l.si);
-    }
-
     // ----------------------------------------------------------------------
     // In-unit retrieval
     // ----------------------------------------------------------------------
 
     /**
      * Verifies {@link Quantity#getInUnit()} using the current display unit.
-     * <p>
-     * <strong>Case:</strong> switch from meters to kilometers and check numeric conversion.
      */
     @Test
     void getInUnitCurrentDisplay()
     {
         Length l = new Length(2500.0, Length.Unit.m);
         assertClose(2500.0, l.getInUnit());
-        l.setDisplayUnit(Length.Unit.km);
+        l = new Length(2.5, Length.Unit.km);
         assertClose(2.5, l.getInUnit());
         assertTrue(l.isRelative());
         assertFalse(l.isAbsolute());
@@ -484,8 +454,8 @@ public class QuantityTest
     @Test
     void interpolateQuantity()
     {
-        Length a = m(0).setDisplayUnit(Length.Unit.m);
-        Length b = m(1000).setDisplayUnit(Length.Unit.m);
+        Length a = m(0);
+        Length b = m(1000);
         Length mid = Quantity.interpolate(a, b, 0.25);
         assertClose(250.0, mid.si());
         assertClose(250.0, mid.si);
@@ -515,7 +485,7 @@ public class QuantityTest
     @Test
     void sumMean()
     {
-        Length a = m(1).setDisplayUnit(Length.Unit.cm);
+        Length a = new Length(100.0, Length.Unit.cm);
         Length b = m(2);
         Length c = m(3);
         Length sum = Quantity.sum(a, b, c);
@@ -535,13 +505,13 @@ public class QuantityTest
     @Test
     void absNegate()
     {
-        Length a = m(-1).setDisplayUnit(Length.Unit.cm);
+        Length a = new Length(-1, Length.Unit.cm, true);
         Length aa = a.abs();
         assertClose(1.0, aa.si());
         assertClose(1.0, aa.si);
         assertSame(a.getDisplayUnit(), aa.getDisplayUnit());
 
-        Length one = m(1).setDisplayUnit(Length.Unit.cm);
+        Length one = new Length(1, Length.Unit.cm, true);
         Length none = one.negate();
         Length na = a.negate();
         assertClose(1.0, na.si());
@@ -623,8 +593,8 @@ public class QuantityTest
     void equalsHashCode()
     {
         Length a = new Length(1, Length.Unit.km); // 1000 m
-        Length b = m(1000).setDisplayUnit(Length.Unit.km);
-        Length c = m(1000).setDisplayUnit(Length.Unit.m); // different display unit
+        Length b = new Length(1000, Length.Unit.km, true);
+        Length c = m(1000); // different display unit
         assertEquals(a, a);
         assertNotEquals(a, null);
         assertNotEquals(a, "");

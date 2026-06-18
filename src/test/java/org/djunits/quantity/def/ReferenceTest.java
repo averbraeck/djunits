@@ -143,7 +143,7 @@ class ReferenceTest
         var b = Position.Reference.get("B_POS");
         assertNotNull(b);
 
-        Position pB0 = new Position(0.0, Length.Unit.m, b);
+        Position pB0 = new Position(0.0, Length.Unit.m, b, true);
         Position pB0RelA = pB0.relativeTo(a);
         assertEquals(10.0, pB0RelA.si(), 1E-12);
 

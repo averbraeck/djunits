@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Locale;
 
 import org.djunits.quantity.def.Quantity;
-import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.si.SIUnit;
 import org.junit.jupiter.api.AfterAll;
@@ -114,12 +113,6 @@ public class SIQuantityTest
     {
         SIQuantity base = new SIQuantity(1.0, SIUnit.of("m"));
         assertEquals(SIUnit.of("m"), base.getDisplayUnit());
-
-        // Change the display unit; instantiate should pick up the new one.
-        base.setDisplayUnit(SIUnit.of("s"));
-        SIQuantity inst = base.instantiateSi(42.0);
-        assertEquals(42.0, inst.si(), 1e-12);
-        assertEquals(SIUnit.of("s"), inst.getDisplayUnit(), "instantiate must use the current display unit of the receiver");
     }
 
     /**
@@ -131,8 +124,6 @@ public class SIQuantityTest
         SIUnit accel = SIUnit.of("m/s2");
         SIQuantity a = new SIQuantity(9.81, accel);
         assertSame(accel, a.siUnit(), "For SIQuantity, siUnit() must return the display unit");
-        a.setDisplayUnit(SIUnit.of("kg"));
-        assertEquals(SIUnit.of("kg"), a.siUnit(), "siUnit() tracks the current display unit");
     }
 
     /**
@@ -221,17 +212,11 @@ public class SIQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies fluent {@link Quantity#setDisplayUnit(UnitInterface)} returns {@code this} and that equals/hashCode
-     * include both SI bits and the display unit.
+     * Verifies that equals/hashCode include both SI bits and the display unit.
      */
     @Test
     void displayUnitFluentAndEquality()
     {
-        SIQuantity q = new SIQuantity(1.0, SIUnit.of("m"));
-        SIQuantity same = q.setDisplayUnit(SIUnit.of("kg"));
-        assertSame(q, same, "setDisplayUnit must be fluent for Q=SIQuantity");
-        assertEquals(SIUnit.of("kg"), q.getDisplayUnit());
-
         SIQuantity a = new SIQuantity(10.0, SIUnit.of("m/s2"));
         SIQuantity b = new SIQuantity(10.0, SIUnit.of("m/s2"));
         SIQuantity c = new SIQuantity(10.0, SIUnit.of("kg"));

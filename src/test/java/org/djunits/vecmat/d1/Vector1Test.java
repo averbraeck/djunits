@@ -16,6 +16,7 @@ import org.djunits.quantity.Duration;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Speed;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.vecmat.def.Vector;
 import org.junit.jupiter.api.DisplayName;
@@ -94,17 +95,17 @@ public class Vector1Test
     }
 
     /**
-     * Verify {@link Vector1#instantiateSi(double[])} delegates to the (xSi) variant and enforces length=1.
+     * Verify {@link Vector1#instantiateSi(double[], UnitInterface)} delegates to the (xSi) variant and enforces length=1.
      */
     @Test
     @DisplayName("instantiateSi(double[]) enforces length=1 and delegates")
     public void testInstantiateSiArray()
     {
         Vector1<Length> v1 = vec(1.0, Length.Unit.m);
-        assertThrows(IllegalArgumentException.class, () -> v1.instantiateSi(new double[] {1.0, 2.0}),
+        assertThrows(IllegalArgumentException.class, () -> v1.instantiateSi(new double[] {1.0, 2.0}, Length.Unit.m),
                 "Wrong length must throw");
         double[] newSi = new double[] {20.0};
-        Vector1<Length> r2 = v1.instantiateSi(newSi);
+        Vector1<Length> r2 = v1.instantiateSi(newSi, Length.Unit.m);
         assertArrayEquals(new double[] {20.0}, r2.getSiArray(), EPS);
         assertEquals(v1.getDisplayUnit(), r2.getDisplayUnit(), "display unit copied by instantiate path");
 
@@ -136,7 +137,6 @@ public class Vector1Test
         Vector1<Length> v = vec(0.5, Length.Unit.cm); // SI: 0.005
         assertEquals(1, v.size(), "size is 1");
         assertEquals(0.005, v.xSi(), EPS);
-        assertEquals(0.5, v.x().setDisplayUnit(Length.Unit.cm).si() * 100.0, EPS, "x() returns Length with display unit");
 
         // getSiArray() must return a fresh copy (mutating the returned array must not affect the vector)
         double[] siCopy = v.getSiArray();
@@ -177,7 +177,6 @@ public class Vector1Test
         Length firstCol = itCol.next();
         assertFalse(itCol.hasNext());
         assertThrows(NoSuchElementException.class, itCol::next);
-        assertEquals(2.0, firstCol.setDisplayUnit(Length.Unit.km).si() / 1000.0, EPS);
         assertEquals(v.get(0).si(), firstCol.si(), EPS);
     }
 
@@ -339,7 +338,7 @@ public class Vector1Test
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // equals / hashCode / toString / setDisplayUnit / isRelative
+    // equals / hashCode / toString / isRelative
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
@@ -350,7 +349,7 @@ public class Vector1Test
     public void testEqualsHashCode()
     {
         Vector1<Length> r1 = vec(1000.0, Length.Unit.m);
-        Vector1<Length> r2 = vec(1.0, Length.Unit.km).setDisplayUnit(Length.Unit.m);
+        Vector1<Length> r2 = vec(1.0, Length.Unit.km);
         Vector1<Length> r3 = vec(3000.0, Length.Unit.m);
 
         assertEquals(r1, r1, "reflexive");
@@ -378,16 +377,14 @@ public class Vector1Test
     }
 
     /**
-     * Verify setDisplayUnit returns {@code this} (fluent) and that isRelative aligns with Length semantics.
+     * Verify that isRelative aligns with Length semantics.
      */
     @Test
     @DisplayName("setDisplayUnit() fluent and isRelative()")
     public void testFluentAndRelative()
     {
         Vector1<Length> r = vec(1.0, Length.Unit.km);
-        Vector1<Length> returnedR = r.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, r.getDisplayUnit());
-        assertEquals(r, returnedR, "fluent returns this");
+        assertEquals(Length.Unit.km, r.getDisplayUnit());
         assertTrue(r.isRelative(), "Length is a relative quantity");
     }
 
@@ -562,7 +559,7 @@ public class Vector1Test
         assertThrows(IllegalArgumentException.class, () -> Vector1.of(new Length[] {}));
         assertThrows(IllegalArgumentException.class, () -> Vector1.of(new Length[] {Length.ofSi(1.0), Length.ofSi(2.0)}));
     }
-    
+
     /**
      * Test as() functions.
      */
@@ -581,32 +578,32 @@ public class Vector1Test
         assertArrayEquals(v.getSiArray(), v1.asMatrix1x1().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, v1.getDisplayUnit());
         assertEquals(2000.0, v1.si(0), 1E-10);
-        
+
         var mNxN = v.asMatrixNxN();
         assertArrayEquals(v.getSiArray(), mNxN.asMatrix1x1().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxN.getDisplayUnit());
         assertEquals(2000.0, mNxN.si(0, 0), 1E-10);
-        
+
         var mNxM = v.asMatrixNxM();
         assertArrayEquals(v.getSiArray(), mNxM.asMatrix1x1().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mNxM.getDisplayUnit());
         assertEquals(2000.0, mNxM.si(0, 0), 1E-10);
-        
+
         var mQT = v.asQuantityTable();
         assertArrayEquals(v.getSiArray(), mQT.asMatrix1x1().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, mQT.getDisplayUnit());
         assertEquals(2000.0, mQT.si(0, 0), 1E-10);
-        
+
         var vNcol = v.asVectorNCol();
         assertArrayEquals(v.getSiArray(), vNcol.asMatrix1x1().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, vNcol.getDisplayUnit());
         assertEquals(2000.0, vNcol.si(0), 1E-10);
-        
+
         var vNrow = v.asVectorNRow();
         assertArrayEquals(v.getSiArray(), vNrow.asMatrix1x1().getSiArray(), 1E-10);
         assertEquals(Length.Unit.km, vNrow.getDisplayUnit());
         assertEquals(2000.0, vNrow.si(0), 1E-10);
-        
+
         assertThrows(IllegalStateException.class, () -> v.asMatrix2x2());
         assertThrows(IllegalStateException.class, () -> v.asMatrix3x3());
         assertThrows(IllegalStateException.class, () -> v.asVector2Col());

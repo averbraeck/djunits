@@ -58,7 +58,7 @@ class PositionTest
         assertNotNull(origin);
 
         // (value, unit, reference)
-        Position p1 = new Position(10.0, Length.Unit.m, origin);
+        Position p1 = new Position(10.0, Length.Unit.m, origin, false);
         assertEquals(10.0, p1.si(), 1E-12);
         assertEquals(origin, p1.getReference());
 
@@ -139,12 +139,12 @@ class PositionTest
         assertNotNull(b);
 
         // Position(0 @ B) should equal absolute position 10 m relative to A
-        Position pB0 = new Position(0.0, Length.Unit.m, b);
+        Position pB0 = new Position(0.0, Length.Unit.m, b, true);
         Position pRelA = pB0.relativeTo(a);
         assertEquals(10.0, pRelA.si(), 1E-12);
 
         // Position(5 @ B) => 15 m relative to A
-        Position pB5 = new Position(5.0, Length.Unit.m, b);
+        Position pB5 = new Position(5.0, Length.Unit.m, b, true);
         Position pB5RelA = pB5.relativeTo(a);
         assertEquals(15.0, pB5RelA.si(), 1E-12);
         
@@ -167,22 +167,22 @@ class PositionTest
         Position.Reference.add("R", "Ref R");
         Position.Reference r = Position.Reference.get("R");
 
-        Position p10 = new Position(10.0, Length.Unit.m, r).setDisplayUnit(Length.Unit.cm);
-        Position p25 = new Position(25.0, Length.Unit.m, r).setDisplayUnit(Length.Unit.cm);
+        Position p10 = new Position(10.0, Length.Unit.cm, r, true);
+        Position p25 = new Position(25.0, Length.Unit.cm, r, true);
 
         // subtract absolute → Length using display unit of minuend
         Length diff = p25.subtract(p10);
         assertEquals(15.0, diff.si(), 1E-12);
         assertEquals(Length.Unit.cm, diff.getDisplayUnit());
 
-        // add relative length
-        Position p35 = p25.add(Length.ofSi(10.0)).setDisplayUnit(Length.Unit.m);
-        assertEquals(35.0, p35.getInUnit(), 1E-12);
+        // add relative length, p25 dominates
+        Position p35 = p25.add(Length.ofSi(10.0));
+        assertEquals(3500.0, p35.getInUnit(), 1E-12);
         assertEquals(r, p35.getReference());
 
-        // subtract relative length
-        Position p5 = p10.subtract(Length.ofSi(5.0)).setDisplayUnit(Length.Unit.m);
-        assertEquals(5.0, p5.getInUnit(), 1E-12);
+        // subtract relative length, p10 dominates
+        Position p5 = p10.subtract(Length.ofSi(5.0));
+        assertEquals(500.0, p5.getInUnit(), 1E-12);
         assertEquals(r, p5.getReference());
         
         // clean up
@@ -205,8 +205,8 @@ class PositionTest
         Position.Reference.add("R2", "Ref 2");
         Position.Reference r2 = Position.Reference.get("R2");
 
-        Position a = new Position(10.0, Length.Unit.m, r1);
-        Position b = new Position(20.0, Length.Unit.m, r1);
+        Position a = new Position(10.0, Length.Unit.m, r1, true);
+        Position b = new Position(20.0, Length.Unit.m, r1, true);
 
         assertTrue(a.lt(b));
         assertTrue(a.le(b));
@@ -219,7 +219,7 @@ class PositionTest
         assertEquals(1, b.compareTo(a));
 
         // mismatched reference → exception
-        Position c = new Position(10.0, Length.Unit.m, r2);
+        Position c = new Position(10.0, Length.Unit.m, r2, true);
         assertThrows(IllegalArgumentException.class, () -> a.lt(c));
         
         // clean up
@@ -236,13 +236,13 @@ class PositionTest
         Position.Reference.add("RZ", "ZeroRef");
         Position.Reference rz = Position.Reference.get("RZ");
 
-        Position p0 = new Position(0.0, Length.Unit.m, rz);
+        Position p0 = new Position(0.0, Length.Unit.m, rz, true);
         assertTrue(p0.eq0());
         assertFalse(p0.ne0());
         assertFalse(p0.gt0());
         assertTrue(p0.le0());
 
-        Position p5 = new Position(5.0, Length.Unit.m, rz);
+        Position p5 = new Position(5.0, Length.Unit.m, rz, true);
         assertTrue(p5.gt0());
         assertFalse(p5.lt0());
         
@@ -263,9 +263,9 @@ class PositionTest
         Position.Reference.add("RS", "Ref S");
         Position.Reference rs = Position.Reference.get("RS");
 
-        Position a = new Position(10.0, Length.Unit.m, rs);
-        Position b = new Position(20.0, Length.Unit.m, rs);
-        Position c = new Position(30.0, Length.Unit.m, rs);
+        Position a = new Position(10.0, Length.Unit.m, rs, true);
+        Position b = new Position(20.0, Length.Unit.m, rs, true);
+        Position c = new Position(30.0, Length.Unit.m, rs, true);
 
         assertEquals(c, ComparableAbsQuantity.max(a, b, c));
         assertEquals(a, ComparableAbsQuantity.min(a, b, c));
@@ -278,7 +278,7 @@ class PositionTest
 
         // mismatched references in static ops must throw
         Position.Reference.add("RS2", "Ref S2");
-        Position d = new Position(5.0, Length.Unit.m, Position.Reference.get("RS2"));
+        Position d = new Position(5.0, Length.Unit.m, Position.Reference.get("RS2"), true);
         assertThrows(IllegalArgumentException.class, () -> ComparableAbsQuantity.mean(a, d));
         
         // clean up

@@ -49,15 +49,15 @@ public class AbsMatrix3x3Test
         assertEquals(Angle.Unit.deg, am.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, am.getReference());
 
-        Direction d0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d45 = new Direction(45.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d135 = new Direction(135.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d225 = new Direction(225.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d30 = new Direction(30.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction d315 = new Direction(315.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d0 = new Direction(0.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d270 = new Direction(270.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d45 = new Direction(45.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d135 = new Direction(135.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d225 = new Direction(225.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d30 = new Direction(30.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction d315 = new Direction(315.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
 
         assertEquals(d0, am.get(0, 0));
         assertEquals(d0, am.mget(1, 1));
@@ -118,17 +118,19 @@ public class AbsMatrix3x3Test
     {
         var m = northDeg();
         var m2 = m.instantiateSi(new double[] {0.5 * Math.PI, Math.PI, 1.5 * Math.PI, 2.0 * Math.PI, 2.5 * Math.PI,
-                3.0 * Math.PI, 3.5 * Math.PI, 4.0 * Math.PI, 4.5 * Math.PI}, Direction.Reference.EAST);
+                3.0 * Math.PI, 3.5 * Math.PI, 4.0 * Math.PI, 4.5 * Math.PI}, Direction.Reference.EAST, m.getDisplayUnit());
 
         assertEquals(0.5 * Math.PI, m2.si(0, 0));
         assertEquals(Angle.Unit.deg, m2.getDisplayUnit()); // same as original northDeg matrix
         assertEquals(Direction.Reference.EAST, m2.getReference());
 
-        assertThrows(NullPointerException.class, () -> m.instantiateSi(null, Direction.Reference.EAST));
-        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), null));
-        assertThrows(IllegalArgumentException.class, () -> m.instantiateSi(new double[] {}, Direction.Reference.EAST));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(null, Direction.Reference.EAST, m.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), null, m.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), Direction.Reference.EAST, null));
         assertThrows(IllegalArgumentException.class,
-                () -> m.instantiateSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, Direction.Reference.EAST));
+                () -> m.instantiateSi(new double[] {}, Direction.Reference.EAST, m.getDisplayUnit()));
+        assertThrows(IllegalArgumentException.class, () -> m.instantiateSi(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+                Direction.Reference.EAST, m.getDisplayUnit()));
     }
 
     // ==================================== Static factory methods ====================================

@@ -124,17 +124,17 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#instantiateSi(double[])} preserves display unit and adopts SI values.
+     * Verify {@link MatrixNxN#instantiateSi(double[], UnitInterface)} adopts display unit and SI values.
      */
     @Test
-    @DisplayName("instantiateSi(double[]): display unit preserved, SI adopted")
+    @DisplayName("instantiateSi(double[], UnitInterface): display unit, SI adopted")
     public void testInstantiateSi()
     {
         MatrixNxN<Length> base =
                 MatrixNxN.of(new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, Length.Unit.km);
         double[] newSi = {16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-        MatrixNxN<Length> inst = base.instantiateSi(newSi);
-        assertEquals(base.getDisplayUnit(), inst.getDisplayUnit());
+        MatrixNxN<Length> inst = base.instantiateSi(newSi, Length.Unit.m);
+        assertNotEquals(base.getDisplayUnit(), inst.getDisplayUnit());
         assertArrayEquals(newSi, inst.getSiArray(), EPS);
 
         MatrixNxN<SIQuantity> siMatrix = base.instantiateSi(newSi, SIUnit.of("kgm/s2K"));
@@ -194,22 +194,6 @@ public class MatrixNxNTest
                 ofSi4(new double[] {0, 0, 0, 0, -1, -0.0, Double.NaN, Double.POSITIVE_INFINITY, 0.0, 6, 0.0, -8, 90, 0, 0, 0},
                         Length.Unit.m);
         assertEquals(6, m6.nnz());
-    }
-
-    /**
-     * Verify that {@link VectorMatrix#setDisplayUnit(UnitInterface)} only affects presentation (not SI storage).
-     */
-    @Test
-    @DisplayName("setDisplayUnit() only changes presentation")
-    public void testSetDisplayUnit()
-    {
-        MatrixNxN<Length> m = ofSi4(new double[] {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000,
-                13000, 14000, 15000, 16000}, Length.Unit.km);
-        m.setDisplayUnit(Length.Unit.m);
-        assertEquals(Length.Unit.m, m.getDisplayUnit());
-        assertEquals(1000.0, m.get(0, 0).si(), EPS);
-        m.setDisplayUnit(Length.Unit.km);
-        assertEquals(Length.Unit.km, m.getDisplayUnit());
     }
 
     /**
@@ -713,8 +697,8 @@ public class MatrixNxNTest
     // ------------------------------------------------------------------------------------
 
     /**
-     * Verify {@link MatrixNxN#of(double[], UnitInterface)} for null checks, non-square sizes, and SI conversion using different length
-     * units.
+     * Verify {@link MatrixNxN#of(double[], UnitInterface)} for null checks, non-square sizes, and SI conversion using different
+     * length units.
      */
     @Test
     @DisplayName("of(double[], Unit): nulls, square check, SI conversion (cm/km)")
@@ -816,7 +800,8 @@ public class MatrixNxNTest
     }
 
     /**
-     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} for unit conversion and structural validation using {@link Duration}.
+     * Verify {@link MatrixNxN#of(double[][], UnitInterface)} for unit conversion and structural validation using
+     * {@link Duration}.
      */
     @Test
     @DisplayName("of(double[][], Unit): square grid & unit conversion (ms/h)")

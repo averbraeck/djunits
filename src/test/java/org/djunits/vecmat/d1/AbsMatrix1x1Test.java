@@ -47,7 +47,7 @@ public class AbsMatrix1x1Test
         assertEquals(Angle.Unit.deg, am.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, am.getReference());
 
-        Direction d90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d90 = new Direction(90.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
         assertEquals(d90, am.get(0, 0));
 
         assertEquals(1, am.rows());
@@ -79,15 +79,18 @@ public class AbsMatrix1x1Test
     public void testInstantiateSi()
     {
         var m = northDeg();
-        var m2 = m.instantiateSi(new double[] {0.5 * Math.PI}, Direction.Reference.EAST);
+        var m2 = m.instantiateSi(new double[] {0.5 * Math.PI}, Direction.Reference.EAST, m.getDisplayUnit());
         assertEquals(0.5 * Math.PI, m2.si(0, 0));
         assertEquals(Angle.Unit.deg, m2.getDisplayUnit()); // same as original northDeg matrix
         assertEquals(Direction.Reference.EAST, m2.getReference());
 
-        assertThrows(NullPointerException.class, () -> m.instantiateSi(null, Direction.Reference.EAST));
-        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), null));
-        assertThrows(IllegalArgumentException.class, () -> m.instantiateSi(new double[] {}, Direction.Reference.EAST));
-        assertThrows(IllegalArgumentException.class, () -> m.instantiateSi(new double[] {1, 2}, Direction.Reference.EAST));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(null, Direction.Reference.EAST, m.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), null, m.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> m.instantiateSi(m2.getSiArray(), Direction.Reference.EAST, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> m.instantiateSi(new double[] {}, Direction.Reference.EAST, m.getDisplayUnit()));
+        assertThrows(IllegalArgumentException.class,
+                () -> m.instantiateSi(new double[] {1, 2}, Direction.Reference.EAST, m.getDisplayUnit()));
     }
 
     // ==================================== Static factory methods ====================================

@@ -483,7 +483,7 @@ public class QuantityFormatTest
     @Test
     public void testAbsQuantityPrefixPostfix()
     {
-        Direction dir = new Direction(1.23456, Angle.Unit.rad, Direction.Reference.EAST);
+        Direction dir = new Direction(1.23456, Angle.Unit.rad, Direction.Reference.EAST, true);
 
         String s1 = dir.toString();
         assertTrue(s1.contains("1.23456"));
@@ -517,8 +517,8 @@ public class QuantityFormatTest
     @Test
     public void testAbsReferencePrefixPostfix()
     {
-        Direction n = new Direction(30.0, Angle.Unit.deg, Direction.Reference.NORTH);
-        Direction e = new Direction(30.0, Angle.Unit.deg, Direction.Reference.EAST);
+        Direction n = new Direction(30.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
+        Direction e = new Direction(30.0, Angle.Unit.deg, Direction.Reference.EAST, false);
 
         String s1a = n.format(QuantityFormat.instance().setTextual());
         assertTrue(s1a.contains("30") || s1a.contains("29.9999999"));
@@ -560,7 +560,7 @@ public class QuantityFormatTest
     public void testSiFormatting()
     {
         Energy energy = new Energy(1.2345, Energy.Unit.kJ);
-        Temperature temp = new Temperature(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS);
+        Temperature temp = new Temperature(20.0, Temperature.Unit.degC, Temperature.Reference.CELSIUS, false);
 
         String s1 = energy.format(QuantityFormat.instance().setSiUnits());
         assertEquals("1234.5 kgm2/s2", s1);

@@ -50,7 +50,7 @@ public class AbsVector1Test
         assertEquals(Angle.Unit.deg, av.getDisplayUnit());
         assertEquals(Direction.Reference.NORTH, av.getReference());
 
-        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d180 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.NORTH, false);
         assertEquals(d180, av.get(0));
         assertEquals(d180, av.mget(1));
 
@@ -82,7 +82,7 @@ public class AbsVector1Test
     public void testInstantiate()
     {
         var v = northDeg();
-        var v2 = v.instantiateSi(new double[] {0.5 * Math.PI}, Direction.Reference.EAST);
+        var v2 = v.instantiateSi(new double[] {0.5 * Math.PI}, Direction.Reference.EAST, v.getDisplayUnit());
         assertEquals(0.5 * Math.PI, v2.si(0));
         assertEquals(Angle.Unit.deg, v2.getDisplayUnit()); // same as original northDeg AbsVector1
         assertEquals(Direction.Reference.EAST, v2.getReference());
@@ -90,14 +90,16 @@ public class AbsVector1Test
         var rv = Vector1.of(0.5 * Math.PI, Angle.Unit.rad);
         var v3 = v.instantiate(rv, Direction.Reference.EAST);
         assertEquals(0.5 * Math.PI, v3.si(0));
-        assertEquals(Angle.Unit.deg, v3.getDisplayUnit()); // same as original northDeg AbsVector1
+        assertEquals(Angle.Unit.rad, v3.getDisplayUnit()); // same as relative vector
         assertEquals(Direction.Reference.EAST, v3.getReference());
 
-        assertThrows(NullPointerException.class, () -> v.instantiateSi(null, Direction.Reference.EAST));
-        assertThrows(NullPointerException.class, () -> v.instantiateSi(v2.getSiArray(), null));
-        assertThrows(IllegalArgumentException.class, () -> v.instantiateSi(new double[] {}, Direction.Reference.EAST));
+        assertThrows(NullPointerException.class, () -> v.instantiateSi(null, Direction.Reference.EAST, v.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> v.instantiateSi(v2.getSiArray(), null, v.getDisplayUnit()));
+        assertThrows(NullPointerException.class, () -> v.instantiateSi(v2.getSiArray(), Direction.Reference.EAST, null));
         assertThrows(IllegalArgumentException.class,
-                () -> v.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST));
+                () -> v.instantiateSi(new double[] {}, Direction.Reference.EAST, v.getDisplayUnit()));
+        assertThrows(IllegalArgumentException.class,
+                () -> v.instantiateSi(new double[] {1, 2, 3, 4, 5}, Direction.Reference.EAST, v.getDisplayUnit()));
 
         assertThrows(NullPointerException.class, () -> v.instantiate(null, Direction.Reference.EAST));
         assertThrows(NullPointerException.class, () -> v.instantiate(rv, null));

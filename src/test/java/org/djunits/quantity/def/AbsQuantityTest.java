@@ -149,7 +149,7 @@ public class AbsQuantityTest
      */
     private static Position pos(final double si, final Position.Reference ref, final Length.Unit unit)
     {
-        return new Position(si, unit, ref);
+        return new Position(si, unit, ref, true);
     }
 
     // ----------------------------------------------------------------------
@@ -165,21 +165,6 @@ public class AbsQuantityTest
     {
         assertThrows(NullPointerException.class, () -> new Position(null, this.refA));
         assertThrows(NullPointerException.class, () -> new Position(Length.ofSi(0), null));
-    }
-
-    /**
-     * Verifies that {@link ComparableAbsQuantity#getDisplayUnit()} and
-     * {@link ComparableAbsQuantity#setDisplayUnit(org.djunits.unit.UnitInterface)} delegate correctly to the inner relative
-     * quantity and that the setter is fluent.
-     */
-    @Test
-    void displayUnitAccessors()
-    {
-        Position p = pos(5, this.refA, Length.Unit.m);
-        assertSame(Length.Unit.m, p.getDisplayUnit());
-        Position same = p.setDisplayUnit(Length.Unit.km);
-        assertSame(p, same);
-        assertSame(Length.Unit.km, p.getDisplayUnit());
     }
 
     /**
@@ -394,7 +379,7 @@ public class AbsQuantityTest
     @DisplayName("Default toString() uses default number and display unit")
     public void testDefaultToString()
     {
-        Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH);
+        Direction d = new Direction(12.34567, Angle.Unit.deg, Direction.Reference.NORTH, false);
         assertEquals("      12.346 deg", d.format(QuantityFormat.instance().setFixedWithSciFallback().setTextual()));
     }
 
@@ -405,12 +390,12 @@ public class AbsQuantityTest
     @DisplayName("toString(Unit) converts value and displays target unit")
     public void testToStringWithTargetUnit()
     {
-        Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST);
+        Direction d = new Direction(Math.PI, Angle.Unit.rad, Direction.Reference.EAST, true);
         assertEquals("       3.142 rad", d.format(QuantityFormat.instance().setTextual().setFixedWithSciFallback()));
         assertEquals("     180.000 deg",
                 d.format(QuantityFormat.instance().setDisplayUnit(Angle.Unit.deg).setTextual().setFixedWithSciFallback()));
 
-        Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST);
+        Direction d2 = new Direction(180.0, Angle.Unit.deg, Direction.Reference.EAST, false);
         assertTrue(d2.format(Angle.Unit.rad).contains("3.14159"));
     }
 
@@ -424,7 +409,7 @@ public class AbsQuantityTest
         Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
         try
         {
-            Position p = new Position(12_345_678.9, Length.Unit.m, pref);
+            Position p = new Position(12_345_678.9, Length.Unit.m, pref, true);
             String s1 =
                     p.format(QuantityFormat.instance().setFixedFloat().setDecimals(1).setWidth(12).setGroupingSeparator(true));
             assertEquals("12,345,678.9 m", s1);
@@ -451,7 +436,7 @@ public class AbsQuantityTest
         Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
         try
         {
-            Position pos = new Position(20400.0, Length.Unit.m, pref);
+            Position pos = new Position(20400.0, Length.Unit.m, pref, true);
             String s1 = pos
                     .format(QuantityFormat.instance().setFixedWithSciFallback().setAutoSiPrefix().setDecimals(3).setTextual());
             assertEquals("      20.400 km", s1);
@@ -476,7 +461,7 @@ public class AbsQuantityTest
         Position.Reference pref = new Position.Reference("TEST", "TEST REFERENCE");
         try
         {
-            Position pos = new Position(20400.0, Length.Unit.m, pref);
+            Position pos = new Position(20400.0, Length.Unit.m, pref, true);
             String s = pos.format(QuantityFormat.instance().setFixedWithSciFallback().setLocale(Locale.GERMANY));
             assertEquals("   20400,000 m", s);
         }
@@ -512,7 +497,7 @@ public class AbsQuantityTest
     @Test
     void addSubtractRelative()
     {
-        Position p = pos(10, this.refA, Length.Unit.km);
+        Position p = pos(10000, this.refA, Length.Unit.km);
         Position pPlus = p.add(Length.ofSi(500)); // +0.5 km
         assertEquals(10.5, pPlus.getInUnit(Length.Unit.km), 1e-12);
         assertSame(this.refA, pPlus.getReference());
