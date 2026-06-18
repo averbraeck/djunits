@@ -40,18 +40,19 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     public final double si;
 
     /** The display unit. */
-    private UnitInterface<?, Q> displayUnit;
+    private UnitInterface<Q> displayUnit;
 
     /**
-     * Instantiate a quantity with a value and a display unit.
-     * @param valueInUnit the value expressed in the display unit
-     * @param unit the display unit to use
+     * Instantiate a quantity with an SI or base value and a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
+     * @param useSi use SI value when true, value in unit when false
      */
-    public Quantity(final double valueInUnit, final UnitInterface<?, Q> unit)
+    public Quantity(final double siValue, final UnitInterface<Q> displayUnit, final boolean useSi)
     {
-        Throw.whenNull(unit, "unit");
-        this.si = unit.toBaseValue(valueInUnit);
-        this.displayUnit = unit;
+        Throw.whenNull(displayUnit, "displayUnit");
+        this.si = useSi ? siValue : displayUnit.toBaseValue(siValue);
+        this.displayUnit = displayUnit;
     }
 
     /**********************************************************************************/
@@ -59,7 +60,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     /**********************************************************************************/
 
     @Override
-    public UnitInterface<?, Q> getDisplayUnit()
+    public UnitInterface<Q> getDisplayUnit()
     {
         return this.displayUnit;
     }
@@ -70,7 +71,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @return the quantity for fluent design
      */
     @SuppressWarnings("unchecked")
-    public Q setDisplayUnit(final UnitInterface<?, Q> newUnit)
+    public Q setDisplayUnit(final UnitInterface<Q> newUnit)
     {
         this.displayUnit = newUnit;
         return (Q) this;
@@ -90,7 +91,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @param targetUnit the unit to convert the value into
      * @return the double value of this quantity expressed in the target unit
      */
-    public final double getInUnit(final UnitInterface<?, Q> targetUnit)
+    public final double getInUnit(final UnitInterface<Q> targetUnit)
     {
         return targetUnit.getScale().fromIdentityScale(si());
     }
@@ -146,11 +147,23 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     }
 
     /**
-     * Instantiate a quantity with an SI or base value.
+     * Instantiate a quantity with an SI or base value, and a display unit.
      * @param siValue the value expressed in the base (SI) unit
-     * @return a quantity with the given SI-value and base (SI) unit
+     * @param displayUnit the display unit to use for the quantity
+     * @return a quantity with the given SI or base value, and the given display unit
      */
-    public abstract Q instantiateSi(double siValue);
+    @SuppressWarnings("checkstyle:hiddenfield")
+    public abstract Q instantiateSi(double siValue, UnitInterface<Q> displayUnit);
+
+    /**
+     * Instantiate a quantity with an SI or base value, with the SI or base display unit.
+     * @param siValue the value expressed in the base (SI) unit
+     * @return a quantity with the given SI or base value, with the SI or base display unit
+     */
+    public Q instantiateSi(final double siValue)
+    {
+        return instantiateSi(siValue, getDisplayUnit().getBaseUnit());
+    }
 
     /**
      * Instantiate a quantity with a value and a unit.
@@ -158,7 +171,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @param unit the unit
      * @return a quantity with the given value and display unit
      */
-    public Q instantiate(final double valueInUnit, final UnitInterface<?, Q> unit)
+    public Q instantiate(final double valueInUnit, final UnitInterface<Q> unit)
     {
         return instantiateSi(unit.toBaseValue(valueInUnit)).setDisplayUnit(unit);
     }
@@ -363,15 +376,15 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
             String unitStringRaw = text.substring(numberParser.getTrailingPosition());
             String unitString = unitStringRaw.trim();
 
-            Class<? extends UnitInterface<?, Q>> unitClass = (Class<UnitInterface<?, Q>>) example.getDisplayUnit().getClass();
+            Class<? extends UnitInterface<Q>> unitClass = (Class<UnitInterface<Q>>) example.getDisplayUnit().getClass();
 
-            UnitInterface<?, Q> unit = null;
+            UnitInterface<Q> unit = null;
             if (unitString.isEmpty())
             {
                 // Special-case: DIMENSIONLESS can omit the unit entirely ("" or all whitespace).
                 if (Unitless.class.isAssignableFrom(unitClass))
                 {
-                    unit = (UnitInterface<?, Q>) Unitless.BASE;
+                    unit = (UnitInterface<Q>) Unitless.BASE;
                 }
                 else
                 {
@@ -382,7 +395,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
             else
             {
                 // Normal path: resolve the unit string for the quantity's unit class.
-                UnitInterface<?, Q> resolved = (UnitInterface<?, Q>) Units.resolve(unitClass, unitString);
+                UnitInterface<Q> resolved = (UnitInterface<Q>) Units.resolve(unitClass, unitString);
                 Throw.when(resolved == null, IllegalArgumentException.class, "Unit '%s' not found for quantity %s", unitString,
                         quantityClass);
                 unit = resolved;
@@ -415,7 +428,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
         Throw.when(unitString.length() == 0, IllegalArgumentException.class, "Error parsing %s: empty unitString",
                 quantityClass);
         @SuppressWarnings("unchecked")
-        UnitInterface<?, Q> unit = (UnitInterface<?, Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
+        UnitInterface<Q> unit = (UnitInterface<Q>) Units.resolve(example.getDisplayUnit().getClass(), unitString);
         Throw.when(unit == null, IllegalArgumentException.class, "Error parsing %s with unit %s", quantityClass, unitString);
         return example.instantiate(valueInUnit, unit);
     }
@@ -460,7 +473,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @return printable string with the quantity value expressed in the specified unit
      */
     @Override
-    public String format(final UnitInterface<?, Q> targetUnit)
+    public String format(final UnitInterface<Q> targetUnit)
     {
         return format(QuantityFormat.instance().setDisplayUnit(targetUnit));
     }
@@ -650,7 +663,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> TQ as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> TQ as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit, siUnit().getDisplayAbbreviation(),
