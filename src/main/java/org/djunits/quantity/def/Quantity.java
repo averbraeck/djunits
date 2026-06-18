@@ -40,7 +40,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     public final double si;
 
     /** The display unit. */
-    private UnitInterface<Q> displayUnit;
+    private final UnitInterface<Q> displayUnit;
 
     /**
      * Instantiate a quantity with an SI or base value and a display unit.
@@ -63,18 +63,6 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     public UnitInterface<Q> getDisplayUnit()
     {
         return this.displayUnit;
-    }
-
-    /**
-     * TODO: TEMP: KEEP BRIEFLY.
-     * @param newUnit the new unit
-     * @return the quantity for fluent design
-     */
-    @SuppressWarnings("unchecked")
-    public Q setDisplayUnit(final UnitInterface<Q> newUnit)
-    {
-        this.displayUnit = newUnit;
-        return (Q) this;
     }
 
     /**
@@ -173,7 +161,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      */
     public Q instantiate(final double valueInUnit, final UnitInterface<Q> unit)
     {
-        return instantiateSi(unit.toBaseValue(valueInUnit)).setDisplayUnit(unit);
+        return instantiateSi(unit.toBaseValue(valueInUnit), unit);
     }
 
     /**********************************************************************************/
@@ -494,7 +482,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     {
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
-        return zero.instantiateSi(zero.si() * (1 - ratio) + one.si() * ratio).setDisplayUnit(zero.getDisplayUnit());
+        return zero.instantiateSi(zero.si() * (1 - ratio) + one.si() * ratio, zero.getDisplayUnit());
     }
 
     /**
@@ -554,7 +542,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
         {
             sum += quantity.si();
         }
-        return quantity1.instantiateSi(sum).setDisplayUnit(quantity1.getDisplayUnit());
+        return quantity1.instantiateSi(sum, quantity1.getDisplayUnit());
     }
 
     /**
@@ -597,31 +585,31 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     @Override
     public Q add(final Q increment)
     {
-        return instantiateSi(si() + increment.si()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(si() + increment.si(), getDisplayUnit());
     }
 
     @Override
     public Q subtract(final Q decrement)
     {
-        return instantiateSi(si() - decrement.si()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(si() - decrement.si(), getDisplayUnit());
     }
 
     @Override
     public Q abs()
     {
-        return instantiateSi(Math.abs(si())).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(Math.abs(si()), getDisplayUnit());
     }
 
     @Override
     public Q negate()
     {
-        return instantiateSi(-si()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(-si(), getDisplayUnit());
     }
 
     @Override
     public Q scaleBy(final double factor)
     {
-        return instantiateSi(si() * factor).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(si() * factor, getDisplayUnit());
     }
 
     /**
@@ -668,7 +656,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
         Throw.when(!siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit, siUnit().getDisplayAbbreviation(),
                 targetUnit.siUnit().getDisplayAbbreviation());
-        return targetUnit.ofSi(si()).setDisplayUnit(targetUnit);
+        return targetUnit.ofSi(si(), targetUnit);
     }
 
     @Override
