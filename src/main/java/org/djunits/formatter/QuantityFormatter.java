@@ -131,7 +131,6 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
         // Reset to base unit if needed
         if (this.unit.getSiPrefix() == null)
         {
-            q.setDisplayUnit(q.getDisplayUnit().getBaseUnit());
             this.unit = q.getDisplayUnit();
         }
 
@@ -147,7 +146,7 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
 
         double log10 = Math.log10(Math.abs(si));
         boolean invert = false;
-        String baseId = this.unit.getId();
+        String baseId = this.unit.getBaseUnit().getId();
         
         // normalize per type
         switch (type)
