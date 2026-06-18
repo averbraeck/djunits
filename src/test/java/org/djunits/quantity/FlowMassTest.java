@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * FlowMassTest tests the FlowMass quantity class.<p>
+ * FlowMassTest tests the FlowMass quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -143,14 +144,15 @@ class FlowMassTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (kg/s) -> should succeed
-        FlowMass.Unit twoKgPerS = FlowMass.Unit.kg_s.deriveUnit("2kg/s", "2 kilogram per second", 2.0, UnitSystem.OTHER);
+        FlowMass.Unit twoKgPerS = (FlowMass.Unit) FlowMass.Unit.kg_s.deriveUnit("2kg/s", "2kg/s", "2 kilogram per second", 2.0,
+                UnitSystem.OTHER, null);
         FlowMass x = new FlowMass(1.0, twoKgPerS); // 1 * 2 kg/s == 2 kg/s
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
-        FlowMass.Unit nonLinear =
-                new FlowMass.Unit("gkg/s", "gkg/s", "grade-like kg/s (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+        FlowMass.Unit nonLinear = new FlowMass.Unit("gkg/s", "gkg/s", "grade-like kg/s (nonlinear)", new GradeScale(0.01),
+                UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2kg/s", "g2 kg/s", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2kg/s", "g2 kg/s", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

@@ -14,7 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * LuminousFluxTest tests the LuminousFlux quantity class.<p>
+ * LuminousFluxTest tests the LuminousFlux quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -92,7 +93,7 @@ class LuminousFluxTest
         assertThrows(IllegalArgumentException.class, () -> LuminousFlux.valueOf("not-a-number lm"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> LuminousFlux.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> LuminousFlux.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> LuminousFlux.of(1.0, ""));
@@ -157,15 +158,15 @@ class LuminousFluxTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (lm) -> klm (scale 1000)
-        LuminousFlux.Unit klm = LuminousFlux.Unit.lm.deriveUnit("klm", "klm", "kilolumen", 1000.0, UnitSystem.SI_DERIVED);
+        LuminousFlux.Unit klm = LuminousFlux.Unit.lm.deriveUnit("klm", "klm", "kilolumen", 1000.0, UnitSystem.SI_DERIVED, null);
         LuminousFlux x = new LuminousFlux(1.0, klm); // 1 klm == 1000 lm
         assertEquals(1000.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
-        LuminousFlux.Unit nonLinear =
-                new LuminousFlux.Unit("gLm", "gLm", "grade-like lumen (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+        LuminousFlux.Unit nonLinear = new LuminousFlux.Unit("gLm", "gLm", "grade-like lumen (nonlinear)", new GradeScale(0.01),
+                UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Unit resolution sanity for base abbreviation
         LuminousFlux.Unit resolved = Units.resolve(LuminousFlux.Unit.class, "lm");

@@ -50,7 +50,7 @@ public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSu
     public final void createAmountOfSubstanceUnit()
     {
         AmountOfSubstance.Unit myUnit =
-                AmountOfSubstance.Unit.SI.deriveUnit("my", "myAmountOfSubstance", 1.23, UnitSystem.OTHER);
+                AmountOfSubstance.Unit.SI.deriveUnit("my", "my", "myAmountOfSubstance", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new AmountOfSubstanceUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myAmountOfSubstance", "my");
         Units.unregister(myUnit);
@@ -67,7 +67,7 @@ public class AmountOfSubstanceUnitTest extends AbstractLinearUnitTest<AmountOfSu
         assertEquals(AmountOfSubstance.ONE, AmountOfSubstance.Unit.mol.ofSi(1.0));
 
         AmountOfSubstance.Unit nonlinearUnit =
-                new AmountOfSubstance.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new AmountOfSubstance.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

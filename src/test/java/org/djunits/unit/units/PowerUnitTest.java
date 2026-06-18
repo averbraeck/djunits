@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Power.Unit test. <p>
+ * Power.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -80,7 +81,7 @@ public class PowerUnitTest extends AbstractLinearUnitTest<Power.Unit>
         assertEquals(Power.Unit.W, Power.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Power.ONE, Power.Unit.W.ofSi(1.0));
 
-        Power.Unit nonlinearUnit = new Power.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Power.Unit nonlinearUnit = new Power.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

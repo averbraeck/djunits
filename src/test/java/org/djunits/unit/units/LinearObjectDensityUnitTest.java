@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * LinearObjectDensity.Unit test. <p>
+ * LinearObjectDensity.Unit test.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -57,7 +58,7 @@ public class LinearObjectDensityUnitTest extends AbstractLinearUnitTest<LinearOb
     public final void createLinearDensityUnit()
     {
         LinearObjectDensity.Unit muLDU =
-                LinearObjectDensity.Unit.per_m.deriveUnit("perin", "PerInch", 2.54 / 100, UnitSystem.OTHER);
+                LinearObjectDensity.Unit.per_m.deriveUnit("perin", "perin", "PerInch", 2.54 / 100, UnitSystem.OTHER, null);
         assertTrue(null != muLDU, "Can create a new LinearObjectDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "PerInch", "perin");
         Units.unregister(muLDU);
@@ -74,7 +75,7 @@ public class LinearObjectDensityUnitTest extends AbstractLinearUnitTest<LinearOb
         assertEquals(LinearObjectDensity.ONE, LinearObjectDensity.Unit.per_m.ofSi(1.0));
 
         LinearObjectDensity.Unit nonlinearUnit =
-                new LinearObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new LinearObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

@@ -122,14 +122,14 @@ class DensityTest
 
         // Derive from a linear unit (kg/m3) -> should succeed
         Density.Unit twoKgPerM3 =
-                Density.Unit.kg_m3.deriveUnit("2kg/m3", "2kg/m3", "two kilogram per cubic meter", 2.0, UnitSystem.OTHER);
+                Density.Unit.kg_m3.deriveUnit("2kg/m3", "2kg/m3", "two kilogram per cubic meter", 2.0, UnitSystem.OTHER, null);
         Density x = new Density(1.0, twoKgPerM3); // 1 * 2 kg/m3 == 2 kg/m3
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Density.Unit nonLinear =
-                new Density.Unit("g%/m3", "g%/m3", "grade-like density (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Density.Unit("g%/m3", "g%/m3", "grade-like density (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2%/m3", "g2%/m3", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2%/m3", "g2%/m3", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

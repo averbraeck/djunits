@@ -18,7 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * ElectricalPotential.Unit test. <p>
+ * ElectricalPotential.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -56,14 +57,15 @@ public class ElectricPotentialUnitTest extends AbstractLinearUnitTest<ElectricPo
     @Test
     public final void createElectricPotentialUnit()
     {
-        ElectricPotential.Unit myEPU = ElectricPotential.Unit.V.deriveUnit("nanoV", "NanoVolt", 1e-9, UnitSystem.SI_DERIVED);
+        ElectricPotential.Unit myEPU =
+                ElectricPotential.Unit.V.deriveUnit("nanoV", "nanoV", "NanoVolt", 1e-9, UnitSystem.SI_DERIVED, null);
         assertTrue(null != myEPU, "Can create a new ElectricPotential.Unit");
         checkUnitRatioNameAndAbbreviation(myEPU, 1e-9, 0.1, "NanoVolt", "nanoV");
         Units.unregister(myEPU);
 
-        myEPU = ElectricPotential.Unit.SI.deriveUnit("ft.lbfph/uA", "foot pound-force per hour per microA",
+        myEPU = ElectricPotential.Unit.SI.deriveUnit("ft.lbfph/uA", "ft.lbfph/uA", "foot pound-force per hour per microA",
                 Power.Unit.ft_lbf_h.getScale().toIdentityScale(1.0) / ElectricCurrent.Unit.muA.getScale().toIdentityScale(1.0),
-                UnitSystem.IMPERIAL);
+                UnitSystem.IMPERIAL, null);
         assertTrue(null != myEPU, "Can create a new ElectricPotential.Unit");
         checkUnitRatioNameAndAbbreviation(myEPU, 376.6, 0.1, "foot pound-force per hour per microA", "ft.lbfph/uA");
         Units.unregister(myEPU);
@@ -80,7 +82,7 @@ public class ElectricPotentialUnitTest extends AbstractLinearUnitTest<ElectricPo
         assertEquals(ElectricPotential.ONE, ElectricPotential.Unit.V.ofSi(1.0));
 
         ElectricPotential.Unit nonlinearUnit =
-                new ElectricPotential.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new ElectricPotential.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

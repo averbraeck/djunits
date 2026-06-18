@@ -78,7 +78,7 @@ class LinearDensityTest
     {
         // Derive g/m = 1e-3 kg/m and register it
         LinearDensity.Unit gPerM =
-                LinearDensity.Unit.kg_m.deriveUnit("g/m", "g/m", "gram per meter", 1e-3, UnitSystem.SI_DERIVED);
+                LinearDensity.Unit.kg_m.deriveUnit("g/m", "g/m", "gram per meter", 1e-3, UnitSystem.SI_DERIVED, null);
 
         // valueOf with derived unit
         LinearDensity threeKgPerM = LinearDensity.valueOf("3000 g/m"); // 3000 g/m == 3 kg/m
@@ -112,7 +112,7 @@ class LinearDensityTest
         assertThrows(IllegalArgumentException.class, () -> LinearDensity.valueOf("not-a-number kg/m"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> LinearDensity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> LinearDensity.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> LinearDensity.of(1.0, ""));
@@ -178,14 +178,14 @@ class LinearDensityTest
 
         // Derive from a linear unit (kg/m) -> e.g., t/m (ton per meter), scale 1000
         LinearDensity.Unit tPerM =
-                LinearDensity.Unit.kg_m.deriveUnit("t/m", "t/m", "ton per meter", 1000.0, UnitSystem.SI_DERIVED);
+                LinearDensity.Unit.kg_m.deriveUnit("t/m", "t/m", "ton per meter", 1000.0, UnitSystem.SI_DERIVED, null);
         LinearDensity x = new LinearDensity(1.0, tPerM); // 1 t/m == 1000 kg/m
         assertEquals(1000.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         LinearDensity.Unit nonLinear = new LinearDensity.Unit("gLd", "gLd", "grade-like linear density (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

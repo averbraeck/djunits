@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * SolidAngle.Unit test. <p>
+ * SolidAngle.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -55,7 +56,7 @@ public class SolidAngleUnitTest extends AbstractLinearUnitTest<SolidAngle.Unit>
     @Test
     public final void createSolidAngleUnit()
     {
-        SolidAngle.Unit myAPU = SolidAngle.Unit.sr.deriveUnit("pt", "point", 0.19634954085, UnitSystem.OTHER);
+        SolidAngle.Unit myAPU = SolidAngle.Unit.sr.deriveUnit("pt", "pt", "point", 0.19634954085, UnitSystem.OTHER, null);
         assertTrue(null != myAPU, "Can create a new TimeUnit");
         checkUnitRatioNameAndAbbreviation(myAPU, 0.19634954085, 0.0000001, "point", "pt");
         Units.unregister(myAPU);
@@ -71,7 +72,7 @@ public class SolidAngleUnitTest extends AbstractLinearUnitTest<SolidAngle.Unit>
         assertEquals(SolidAngle.Unit.sr, SolidAngle.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(SolidAngle.ONE, SolidAngle.Unit.sr.ofSi(1.0));
 
-        SolidAngle.Unit nonlinearUnit = new SolidAngle.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        SolidAngle.Unit nonlinearUnit = new SolidAngle.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

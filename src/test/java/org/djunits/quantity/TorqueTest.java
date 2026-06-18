@@ -94,7 +94,7 @@ class TorqueTest
         assertThrows(IllegalArgumentException.class, () -> Torque.valueOf("10 blargh"));
         assertThrows(IllegalArgumentException.class, () -> Torque.valueOf("not-a-number Nm"));
 
-        assertThrows(NullPointerException.class, () -> Torque.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Torque.of(1.0, (String) null));
         assertThrows(IllegalArgumentException.class, () -> Torque.of(1.0, ""));
         assertThrows(UnitRuntimeException.class, () -> Torque.of(1.0, "blargh"));
     }
@@ -220,13 +220,13 @@ class TorqueTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Linear derivation
-        Torque.Unit twoNm = Torque.Unit.Nm.deriveUnit("2Nm", "2Nm", "two newton meter", 2.0, UnitSystem.OTHER);
+        Torque.Unit twoNm = Torque.Unit.Nm.deriveUnit("2Nm", "2Nm", "two newton meter", 2.0, UnitSystem.OTHER, null);
         Torque x = new Torque(1.0, twoNm);
         assertEquals(2.0, x.si(), 1E-12);
 
         // Non-linear derivation throws
-        Torque.Unit bad = new Torque.Unit("gNm", "gNm", "grade-like Nm", new GradeScale(0.01), UnitSystem.OTHER);
+        Torque.Unit bad = new Torque.Unit("gNm", "gNm", "grade-like Nm", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { bad.deriveUnit("bad", "bad", "bad unit", 3.0, UnitSystem.OTHER); });
+        { bad.deriveUnit("bad", "bad", "bad unit", 3.0, UnitSystem.OTHER, null); });
     }
 }

@@ -173,12 +173,12 @@ class TemperatureTest
         assertEquals(Temperature.Reference.KELVIN, Temperature.Unit.K.getReference());
         assertEquals(Temperature.Reference.KELVIN, Temperature.Unit.degR.getReference());
 
-        var doubleKelvin = Temperature.Unit.K.deriveUnit("K2", "K2", "Kelvin*2", 2.0, UnitSystem.OTHER);
+        var doubleKelvin = Temperature.Unit.K.deriveUnit("K2", "K2", "Kelvin*2", 2.0, UnitSystem.OTHER, null);
         assertEquals(2.0 * Temperature.Unit.K.getScale().toIdentityScale(1.0), doubleKelvin.getScale().toIdentityScale(1.0),
                 1E-12);
 
         assertThrows(RuntimeException.class, () ->
-        { Temperature.Unit.K.deriveUnit("BAD", "BAD", "BAD", Double.NaN, UnitSystem.SI_DERIVED); });
+        { Temperature.Unit.K.deriveUnit("BAD", "BAD", "BAD", Double.NaN, UnitSystem.SI_DERIVED, null); });
 
         TemperatureDifference d = Temperature.Unit.degC.ofSi(5.0);
         assertEquals(5.0, d.si(), 1E-12);

@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Length.Unit test. <p>
+ * Length.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -65,7 +66,7 @@ public class LengthUnitTest extends AbstractLinearUnitTest<Length.Unit>
     @Test
     public final void createLengthUnit()
     {
-        Length.Unit myLU = Length.Unit.m.deriveUnit("fl", "Furlong", 201.16800, UnitSystem.OTHER);
+        Length.Unit myLU = Length.Unit.m.deriveUnit("fl", "fl", "Furlong", 201.16800, UnitSystem.OTHER, null);
         assertTrue(null != myLU, "Can create a new LengthUnit");
         checkUnitRatioNameAndAbbreviation(myLU, 200, 2, "Furlong", "fl");
         Units.unregister(myLU);
@@ -81,7 +82,7 @@ public class LengthUnitTest extends AbstractLinearUnitTest<Length.Unit>
         assertEquals(Length.Unit.m, Length.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Length.ONE, Length.Unit.m.ofSi(1.0));
 
-        Length.Unit nonlinearUnit = new Length.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Length.Unit nonlinearUnit = new Length.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

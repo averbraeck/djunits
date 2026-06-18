@@ -187,12 +187,12 @@ class AngleTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (deg) -> should succeed
-        Angle.Unit twoDeg = Angle.Unit.deg.deriveUnit("deg2", "deg2", "two degrees", 2.0, UnitSystem.OTHER);
+        Angle.Unit twoDeg = Angle.Unit.deg.deriveUnit("deg2", "deg2", "two degrees", 2.0, UnitSystem.OTHER, null);
         Angle x = new Angle(1.0, twoDeg); // 1 * 2 deg == 2 deg
         assertEquals(2.0 * Math.PI / 180.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit (percent with GradeScale) -> should throw UnitRuntimeException
         assertThrows(UnitRuntimeException.class, () ->
-        { Angle.Unit.percent.deriveUnit("p2", "p2", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { Angle.Unit.percent.deriveUnit("p2", "p2", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

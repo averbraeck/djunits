@@ -1,14 +1,13 @@
 package org.djunits.unit.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.junit.jupiter.api.Test;
 
 /**
- * SIUnitTest tests a few remaining methods of the SIUnit class.<p>
+ * SIUnitTest tests a few remaining methods of the SIUnit class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -16,24 +15,6 @@ import org.junit.jupiter.api.Test;
  */
 public class SIUnitTest
 {
-    // --------------------------------
-    // SIUnit does not have SI prefixes
-    // --------------------------------
-
-    /**
-     * Test SIPrefix methods.
-     */
-    @Test
-    public void testSIPrefix()
-    {
-        var su = SIUnit.of("kgm/s2");
-        assertEquals(su, su.setSiPrefix(SIPrefixes.getSiPrefix("G")));
-        assertEquals(su, su.setSiPrefix("G"));
-        assertEquals(su, su.setSiPrefixKilo("G"));
-        assertEquals(su, su.setSiPrefixPer("G"));
-        assertNull(su.getSiPrefix());
-    }
-
     /**
      * Test toString() methods.
      */
@@ -47,7 +28,7 @@ public class SIUnitTest
         assertEquals("kgm3/s2", su.format(true, false));
         assertEquals("kg.m3.s-2", su.format(false, true));
         assertEquals("kg.m3/s2", su.format(true, true));
-        
+
         // divided, separator, power
         assertEquals("kgm3s-2", su.format(false, false, false));
         assertEquals("kgm3/s2", su.format(true, false, false));

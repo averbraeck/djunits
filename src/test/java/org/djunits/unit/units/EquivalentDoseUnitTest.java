@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * EquivalentDose.Unit test. <p>
+ * EquivalentDose.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -49,7 +50,8 @@ public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDos
     @Test
     public final void createEquivalentDoseUnit()
     {
-        EquivalentDose.Unit myUnit = EquivalentDose.Unit.SI.deriveUnit("my", "myEquivalentDose", 1.23, UnitSystem.OTHER);
+        EquivalentDose.Unit myUnit =
+                EquivalentDose.Unit.SI.deriveUnit("my", "my", "myEquivalentDose", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new EquivalentDoseUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myEquivalentDose", "my");
         Units.unregister(myUnit);
@@ -65,7 +67,8 @@ public class EquivalentDoseUnitTest extends AbstractLinearUnitTest<EquivalentDos
         assertEquals(EquivalentDose.Unit.Sv, EquivalentDose.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(EquivalentDose.ONE, EquivalentDose.Unit.Sv.ofSi(1.0));
 
-        EquivalentDose.Unit nonlinearUnit = new EquivalentDose.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        EquivalentDose.Unit nonlinearUnit =
+                new EquivalentDose.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

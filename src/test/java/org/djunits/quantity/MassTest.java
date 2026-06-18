@@ -182,7 +182,7 @@ class MassTest
         assertThrows(IllegalArgumentException.class, () -> Mass.valueOf("not-a-number kg"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> Mass.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Mass.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> Mass.of(1.0, ""));
@@ -262,15 +262,15 @@ class MassTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive a simple linear unit from kg -> "2kg" (scale 2.0)
-        Mass.Unit twoKg = Mass.Unit.kg.deriveUnit("2kg", "2kg", "two kilogram", 2.0, UnitSystem.OTHER);
+        Mass.Unit twoKg = Mass.Unit.kg.deriveUnit("2kg", "2kg", "two kilogram", 2.0, UnitSystem.OTHER, null);
         Mass x = new Mass(1.0, twoKg); // 1 * 2 kg == 2 kg
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Mass.Unit nonLinear =
-                new Mass.Unit("gMass", "gMass", "grade-like mass (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Mass.Unit("gMass", "gMass", "grade-like mass (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity already partly checked; verify a few more
         assertEquals(Mass.Unit.long_tn, Units.resolve(Mass.Unit.class, "long tn"));

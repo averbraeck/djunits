@@ -114,14 +114,14 @@ class EquivalentDoseTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (Sv) -> should succeed
-        EquivalentDose.Unit twoSv = EquivalentDose.Unit.Sv.deriveUnit("2Sv", "2Sv", "two sievert", 2.0, UnitSystem.OTHER);
+        EquivalentDose.Unit twoSv = EquivalentDose.Unit.Sv.deriveUnit("2Sv", "2Sv", "two sievert", 2.0, UnitSystem.OTHER, null);
         EquivalentDose x = new EquivalentDose(1.0, twoSv); // 1 * 2 Sv == 2 Sv
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         EquivalentDose.Unit nonLinear =
-                new EquivalentDose.Unit("gSv", "gSv", "grade-like sievert (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new EquivalentDose.Unit("gSv", "gSv", "grade-like sievert (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2Sv", "g2Sv", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2Sv", "g2Sv", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

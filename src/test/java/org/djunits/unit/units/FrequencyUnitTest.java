@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Frequency.Unit test. <p>
+ * Frequency.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -57,7 +58,7 @@ public class FrequencyUnitTest extends AbstractLinearUnitTest<Frequency.Unit>
     @Test
     public final void createFrequencyUnit()
     {
-        Frequency.Unit myFU = Frequency.Unit.kHz.deriveUnit("MA", "MiddleA", 0.440, UnitSystem.OTHER);
+        Frequency.Unit myFU = Frequency.Unit.kHz.deriveUnit("MA", "MA", "MiddleA", 0.440, UnitSystem.OTHER, null);
         assertTrue(null != myFU, "Can create a new ForceUnit");
         checkUnitRatioNameAndAbbreviation(myFU, 440, 0.0001, "MiddleA", "MA");
         Units.unregister(myFU);
@@ -73,7 +74,7 @@ public class FrequencyUnitTest extends AbstractLinearUnitTest<Frequency.Unit>
         assertEquals(Frequency.Unit.Hz, Frequency.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Frequency.ONE, Frequency.Unit.Hz.ofSi(1.0));
 
-        Frequency.Unit nonlinearUnit = new Frequency.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Frequency.Unit nonlinearUnit = new Frequency.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

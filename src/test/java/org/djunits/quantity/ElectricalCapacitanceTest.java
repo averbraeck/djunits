@@ -130,14 +130,14 @@ class ElectricalCapacitanceTest
 
         // Derive from a linear unit (F) -> should succeed
         ElectricalCapacitance.Unit twoF =
-                ElectricalCapacitance.Unit.F.deriveUnit("2F", "2F", "two farads", 2.0, UnitSystem.OTHER);
+                ElectricalCapacitance.Unit.F.deriveUnit("2F", "2F", "two farads", 2.0, UnitSystem.OTHER, null);
         ElectricalCapacitance x = new ElectricalCapacitance(1.0, twoF); // 1 * 2 F == 2 F
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricalCapacitance.Unit nonLinear = new ElectricalCapacitance.Unit("gF", "gF", "grade-like farad (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2F", "g2F", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2F", "g2F", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

@@ -186,16 +186,16 @@ class DurationTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (s) -> should succeed
-        Duration.Unit twoS = Duration.Unit.s.deriveUnit("2s", "2s", "two seconds", 2.0, UnitSystem.OTHER);
+        Duration.Unit twoS = Duration.Unit.s.deriveUnit("2s", "2s", "two seconds", 2.0, UnitSystem.OTHER, null);
         Duration x = new Duration(1.0, twoS); // 1 * 2 s == 2 s
         assertEquals(2.0, x.si(), 1E-12);
         Units.unregister(twoS);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Duration.Unit nonLinear =
-                new Duration.Unit("gs", "gs", "grade-like second (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Duration.Unit("gs", "gs", "grade-like second (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2s", "g2s", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2s", "g2s", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
         Units.unregister(nonLinear);
     }
 }

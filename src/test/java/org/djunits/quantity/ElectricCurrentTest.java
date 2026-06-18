@@ -142,14 +142,14 @@ class ElectricCurrentTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (A) -> should succeed
-        ElectricCurrent.Unit twoA = ElectricCurrent.Unit.A.deriveUnit("2A", "2A", "two ampere", 2.0, UnitSystem.OTHER);
+        ElectricCurrent.Unit twoA = ElectricCurrent.Unit.A.deriveUnit("2A", "2A", "two ampere", 2.0, UnitSystem.OTHER, null);
         ElectricCurrent x = new ElectricCurrent(1.0, twoA); // 1 * 2 A == 2 A
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricCurrent.Unit nonLinear =
-                new ElectricCurrent.Unit("gA", "gA", "grade-like ampere (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new ElectricCurrent.Unit("gA", "gA", "grade-like ampere (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2A", "g2A", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2A", "g2A", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

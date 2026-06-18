@@ -18,7 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * ElectricalResistance.Unit test. <p>
+ * ElectricalResistance.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -57,14 +58,15 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
     public final void createElectricalResistanceUnit()
     {
         ElectricalResistance.Unit myERU =
-                ElectricalResistance.Unit.ohm.deriveUnit("GigOhm", "GigaOhm", 1.0E9, UnitSystem.SI_DERIVED);
+                ElectricalResistance.Unit.ohm.deriveUnit("GigOhm", "GigOhm", "GigaOhm", 1.0E9, UnitSystem.SI_DERIVED, null);
         assertTrue(null != myERU, "Can create a new ElectricalResistanceUnit");
         checkUnitRatioNameAndAbbreviation(myERU, 1e9, 0.1, "GigaOhm", "GigOhm");
         Units.unregister(myERU);
 
-        ElectricalResistance.Unit abOhm = ElectricalResistance.Unit.ohm.deriveUnit("abOO", "abOhm(CGS)",
-                ElectricPotential.Unit.abV.getScale().toIdentityScale(1.0) / ElectricCurrent.Unit.abA.getScale().toIdentityScale(1.0),
-                UnitSystem.CGS);
+        ElectricalResistance.Unit abOhm = ElectricalResistance.Unit.ohm.deriveUnit("abOO", "abOO", "abOhm(CGS)",
+                ElectricPotential.Unit.abV.getScale().toIdentityScale(1.0)
+                        / ElectricCurrent.Unit.abA.getScale().toIdentityScale(1.0),
+                UnitSystem.CGS, null);
         assertTrue(null != abOhm, "Can create Abohm unit");
         checkUnitRatioNameAndAbbreviation(abOhm, 1e-9, 1e-12, "abOhm(CGS)", "abOO");
         Units.unregister(myERU);
@@ -86,7 +88,7 @@ public class ElectricalResistanceUnitTest extends AbstractLinearUnitTest<Electri
         assertEquals(ElectricalResistance.ONE, ElectricalResistance.Unit.ohm.ofSi(1.0));
 
         ElectricalResistance.Unit nonlinearUnit =
-                new ElectricalResistance.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new ElectricalResistance.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

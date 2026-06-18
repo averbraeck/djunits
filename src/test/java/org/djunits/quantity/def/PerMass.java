@@ -1,10 +1,14 @@
 package org.djunits.quantity.def;
 
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Units;
+import org.djunits.unit.scale.IdentityScale;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
+import org.djunits.unit.si.SIPrefixes;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -28,13 +32,13 @@ public class PerMass extends Quantity<PerMass>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Mass quantity with a unit.
-     * @param valueInUnit the value, expressed in the unit
-     * @param unit the unit in which the value is expressed
+     * Instantiate a Mass quantity with a display unit.
+     * @param siValue the quantity value expressed in the SI or base unit
+     * @param displayUnit the display unit to use
      */
-    public PerMass(final double valueInUnit, final PerMass.Unit unit)
+    public PerMass(final double siValue, final PerMass.Unit displayUnit)
     {
-        super(valueInUnit, unit);
+        super(siValue, displayUnit, true);
     }
 
     /**
@@ -53,7 +57,7 @@ public class PerMass extends Quantity<PerMass>
      */
     public PerMass(final PerMass value)
     {
-        super(value.si(), PerMass.Unit.SI);
+        super(value.si(), PerMass.Unit.SI, true);
         setDisplayUnit(value.getDisplayUnit());
     }
 
@@ -68,15 +72,9 @@ public class PerMass extends Quantity<PerMass>
     }
 
     @Override
-    public PerMass instantiateSi(final double si)
+    public PerMass instantiateSi(final double siValue, final UnitInterface<PerMass> displayUnit)
     {
-        return ofSi(si);
-    }
-
-    @Override
-    public SIUnit siUnit()
-    {
-        return PerMass.Unit.SI_UNIT;
+        return new PerMass(siValue, (Unit) displayUnit);
     }
 
     /**
@@ -125,16 +123,17 @@ public class PerMass extends Quantity<PerMass>
      * @author Alexander Verbraeck
      */
     @SuppressWarnings("checkstyle:constantname")
-    public static class Unit extends AbstractUnit<PerMass.Unit, PerMass>
+    public static class Unit extends AbstractUnit<PerMass>
     {
         /** The dimensions of mass: /kg. */
         public static final SIUnit SI_UNIT = SIUnit.of("/kg");
 
         /** per kilogram. */
-        public static final PerMass.Unit per_kg = new PerMass.Unit("/kg", "per kilogram", 1.0, UnitSystem.SI_BASE);
+        public static final PerMass.Unit per_kg = new PerMass.Unit("/kg", "/kg", "per kilogram", IdentityScale.SCALE,
+                UnitSystem.SI_DERIVED, SIPrefixes.getSiPrefixPerKilo("/k"));
 
         /** The SI or BASE unit. */
-        public static final PerMass.Unit SI = per_kg.generateSiPrefixes(true, true);
+        public static final PerMass.Unit SI = (Unit) per_kg.generateSiPrefixes(true, true);
 
         /** gram. */
         public static final PerMass.Unit per_g = Units.resolve(PerMass.Unit.class, "/g");
@@ -154,7 +153,7 @@ public class PerMass extends Quantity<PerMass>
          */
         public Unit(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
         {
-            super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+            super(id, name, scaleFactorToBaseUnit, unitSystem);
         }
 
         /**
@@ -162,13 +161,14 @@ public class PerMass extends Quantity<PerMass>
          * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
          * @param displayAbbreviation the display abbreviation of the unit
          * @param name the full name of the unit
-         * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+         * @param scale the scale to use to convert from this unit to the standard (e.g., SI, BASE) unit
          * @param unitSystem unit system, e.g. SI or Imperial
+         * @param siPrefix the SI Prefix of this unit
          */
         public Unit(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-                final UnitSystem unitSystem)
+                final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
-            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+            super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
         }
 
         @Override
@@ -184,19 +184,19 @@ public class PerMass extends Quantity<PerMass>
         }
 
         @Override
-        public PerMass ofSi(final double si)
+        public PerMass ofSi(final double si, final UnitInterface<PerMass> displayUnit)
         {
-            return PerMass.ofSi(si);
+            return new PerMass(si, (Unit) displayUnit);
         }
 
         @Override
-        public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                final double scaleFactor, final UnitSystem unitSystem)
+        public PerMass.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
+                final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {
             if (getScale() instanceof LinearScale ls)
             {
                 return new PerMass.Unit(textualAbbreviation, displayAbbreviation, name,
-                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                        new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
             }
             throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
         }

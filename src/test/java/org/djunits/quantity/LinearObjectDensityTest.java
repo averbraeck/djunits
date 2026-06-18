@@ -117,7 +117,7 @@ class LinearObjectDensityTest
         assertThrows(IllegalArgumentException.class, () -> LinearObjectDensity.valueOf("not-a-number /m"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> LinearObjectDensity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> LinearObjectDensity.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> LinearObjectDensity.of(1.0, ""));
@@ -188,15 +188,15 @@ class LinearObjectDensityTest
 
         // Derive a linear unit from /m -> e.g., "/2m" meaning "per 2 meters" (scale 0.5)
         LinearObjectDensity.Unit per2m =
-                LinearObjectDensity.Unit.per_m.deriveUnit("/2m", "/2m", "per two meters", 0.5, UnitSystem.OTHER);
+                LinearObjectDensity.Unit.per_m.deriveUnit("/2m", "/2m", "per two meters", 0.5, UnitSystem.OTHER, null);
         LinearObjectDensity x = new LinearObjectDensity(1.0, per2m); // 1 * 0.5 /m == 0.5 /m
         assertEquals(0.5, x.si(), 1E-12);
 
         // Non-linear scale derivation must throw
         LinearObjectDensity.Unit nonLinear = new LinearObjectDensity.Unit("gLOD", "gLOD", "grade-like LOD (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Prefix-generated unit sanity already tested above for /km; also assert several are resolvable
         assertEquals(LinearObjectDensity.Unit.per_mm, Units.resolve(LinearObjectDensity.Unit.class, "/mm"));

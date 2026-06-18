@@ -76,7 +76,7 @@ public class AreaUnitTest extends AbstractLinearUnitTest<Area.Unit>
         assertEquals(Area.Unit.m2, Area.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Area.ONE, Area.Unit.m2.ofSi(1.0));
 
-        Area.Unit nonlinearUnit = new Area.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Area.Unit nonlinearUnit = new Area.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

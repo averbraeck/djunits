@@ -50,7 +50,7 @@ public class ArealObjectDensityUnitTest extends AbstractLinearUnitTest<ArealObje
     public final void createLinearDensityUnit()
     {
         ArealObjectDensity.Unit muLDU =
-                ArealObjectDensity.Unit.per_m2.deriveUnit("perin2", "PerInch2", 2.54 / 100, UnitSystem.OTHER);
+                ArealObjectDensity.Unit.per_m2.deriveUnit("perin2", "perin2", "PerInch2", 2.54 / 100, UnitSystem.OTHER, null);
         assertTrue(null != muLDU, "Can create a new ArealObjectDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "PerInch2", "perin2");
         Units.unregister(muLDU);
@@ -67,7 +67,7 @@ public class ArealObjectDensityUnitTest extends AbstractLinearUnitTest<ArealObje
         assertEquals(ArealObjectDensity.ONE, ArealObjectDensity.Unit.per_m2.ofSi(1.0));
 
         ArealObjectDensity.Unit nonlinearUnit =
-                new ArealObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new ArealObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

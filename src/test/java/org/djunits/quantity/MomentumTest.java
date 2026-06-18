@@ -92,7 +92,7 @@ class MomentumTest
         assertThrows(IllegalArgumentException.class, () -> Momentum.valueOf("not-a-number kgm/s"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> Momentum.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Momentum.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> Momentum.of(1.0, ""));
@@ -168,15 +168,15 @@ class MomentumTest
 
         // Derive from a linear unit -> e.g., "2kgm/s" (scale = 2.0)
         Momentum.Unit twoKgmPerS =
-                Momentum.Unit.kgm_s.deriveUnit("2kgm/s", "2kgm/s", "two kilogram meter per second", 2.0, UnitSystem.OTHER);
+                Momentum.Unit.kgm_s.deriveUnit("2kgm/s", "2kgm/s", "two kilogram meter per second", 2.0, UnitSystem.OTHER, null);
         Momentum x = new Momentum(1.0, twoKgmPerS); // 1 * 2 kgm/s == 2 kgm/s
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Momentum.Unit nonLinear =
-                new Momentum.Unit("gMom", "gMom", "grade-like momentum (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Momentum.Unit("gMom", "gMom", "grade-like momentum (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity for base abbreviation
         Momentum.Unit resolved = Units.resolve(Momentum.Unit.class, "kgm/s");

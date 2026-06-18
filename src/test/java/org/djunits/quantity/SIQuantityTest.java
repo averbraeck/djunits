@@ -189,7 +189,7 @@ public class SIQuantityTest
         assertEquals(5.0, mass.si(), 1e-12);
         assertEquals(SIUnit.of("kg"), mass.getDisplayUnit());
 
-        assertThrows(NullPointerException.class, () -> SIQuantity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> SIQuantity.of(1.0, (String) null));
         assertThrows(IllegalArgumentException.class, () -> SIQuantity.of(1.0, ""));
         assertThrows(UnitRuntimeException.class, () -> SIQuantity.of(1.0, "???"));
     }

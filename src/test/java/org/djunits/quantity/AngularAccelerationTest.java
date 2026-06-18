@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * AngularAccelerationTest tests the AngularAcceleration quantity class.<p>
+ * AngularAccelerationTest tests the AngularAcceleration quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -145,14 +146,14 @@ class AngularAccelerationTest
 
         // Derive from a linear unit (deg/s2) -> should succeed
         AngularAcceleration.Unit twoDegS2 = AngularAcceleration.Unit.deg_s2.deriveUnit("deg2/s2", "deg2/s2",
-                "two degrees per second squared", 2.0, UnitSystem.OTHER);
+                "two degrees per second squared", 2.0, UnitSystem.OTHER, null);
         AngularAcceleration x = new AngularAcceleration(1.0, twoDegS2); // 1 * 2 deg/s2 == 2 deg/s2
         assertEquals(2.0 * Math.PI / 180.0, x.si(), 1E-12);
 
         // Derive from a non-linear scale -> should throw UnitRuntimeException
-        AngularAcceleration.Unit nonLinear =
-                new AngularAcceleration.Unit("g%", "g%", "grade-like (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+        AngularAcceleration.Unit nonLinear = new AngularAcceleration.Unit("g%", "g%", "grade-like (nonlinear)",
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2%", "g2%", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2%", "g2%", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

@@ -18,11 +18,11 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.Temperature;
 import org.djunits.quantity.Volume;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
-import org.djunits.unit.scale.IdentityScale;
-import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.AfterAll;
@@ -122,8 +122,8 @@ public class QuantityTest
     }
 
     /**
-     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.UnitInterface)} round-trip
-     * correctly and that the setter is fluent (returns {@code this}).
+     * Verifies that {@link Quantity#getDisplayUnit()} and {@link Quantity#setDisplayUnit(org.djunits.unit.UnitInterface)}
+     * round-trip correctly and that the setter is fluent (returns {@code this}).
      */
     @Test
     void displayUnitAccessors()
@@ -598,8 +598,8 @@ public class QuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link Quantity#as(org.djunits.unit.UnitInterface)} converts to a correctly typed quantity while preserving the SI value
-     * and replacing the display unit with the requested unit.
+     * Verifies {@link Quantity#as(org.djunits.unit.UnitInterface)} converts to a correctly typed quantity while preserving the
+     * SI value and replacing the display unit with the requested unit.
      */
     @Test
     void asKnownQuantity()
@@ -681,30 +681,30 @@ public class QuantityTest
          */
         ExampleQuantityAQxyz(final double value, final Unit displayUnit)
         {
-            super(value, displayUnit);
+            super(value, displayUnit, true);
         }
 
         @Override
-        public ExampleQuantityAQxyz instantiateSi(final double siValue)
+        public ExampleQuantityAQxyz instantiateSi(final double siValue, final UnitInterface<ExampleQuantityAQxyz> displayUnit)
         {
             return null;
         }
 
         /** The unit for ExampleQuantityAQxyz. */
-        static class Unit extends AbstractUnit<Unit, ExampleQuantityAQxyz>
+        static class Unit extends AbstractUnit<ExampleQuantityAQxyz>
         {
             /** */
-            static final Unit DEFAULT = new Unit("u", "u", IdentityScale.SCALE, UnitSystem.OTHER);
+            static final Unit DEFAULT = new Unit("u", "u", 1.0, UnitSystem.OTHER);
 
             /**
              * @param textualAbbreviation x
              * @param name x
-             * @param scale x
+             * @param scaleFactor x
              * @param unitSystem x
              */
-            Unit(final String textualAbbreviation, final String name, final Scale scale, final UnitSystem unitSystem)
+            Unit(final String textualAbbreviation, final String name, final double scaleFactor, final UnitSystem unitSystem)
             {
-                super(textualAbbreviation, name, scale, unitSystem);
+                super(textualAbbreviation, name, scaleFactor, unitSystem);
             }
 
             @Override
@@ -720,14 +720,14 @@ public class QuantityTest
             }
 
             @Override
-            public ExampleQuantityAQxyz ofSi(final double si)
+            public ExampleQuantityAQxyz ofSi(final double si, final UnitInterface<ExampleQuantityAQxyz> displayUnit)
             {
                 return null;
             }
 
             @Override
             public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                    final double scaleFactor, final UnitSystem unitSystem)
+                    final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
             {
                 return null;
             }

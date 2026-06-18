@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * ElectricChargeTest tests the ElectricCharge quantity class.<p>
+ * ElectricChargeTest tests the ElectricCharge quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -152,14 +153,15 @@ class ElectricChargeTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (C) -> should succeed
-        ElectricCharge.Unit twoC = ElectricCharge.Unit.C.deriveUnit("2C", "two coulomb", 2.0, UnitSystem.OTHER);
+        ElectricCharge.Unit twoC =
+                (ElectricCharge.Unit) ElectricCharge.Unit.C.deriveUnit("2C", "2C", "two coulomb", 2.0, UnitSystem.OTHER, null);
         ElectricCharge x = new ElectricCharge(1.0, twoC); // 1 * 2 C == 2 C
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricCharge.Unit nonLinear =
-                new ElectricCharge.Unit("gC", "gC", "grade-like coulomb (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new ElectricCharge.Unit("gC", "gC", "grade-like coulomb (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2C", "g2C", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2C", "g2C", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

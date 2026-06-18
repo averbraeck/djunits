@@ -130,14 +130,14 @@ class CatalyticActivityTest
 
         // Derive from a linear unit (kat) -> should succeed
         CatalyticActivity.Unit twoKat =
-                CatalyticActivity.Unit.kat.deriveUnit("2kat", "2kat", "two katal", 2.0, UnitSystem.OTHER);
+                CatalyticActivity.Unit.kat.deriveUnit("2kat", "2kat", "two katal", 2.0, UnitSystem.OTHER, null);
         CatalyticActivity x = new CatalyticActivity(1.0, twoKat); // 1 * 2 kat == 2 kat
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         CatalyticActivity.Unit nonLinear = new CatalyticActivity.Unit("gkat", "gkat", "grade-like katal (nonlinear)",
-                new org.djunits.unit.scale.GradeScale(0.01), UnitSystem.OTHER);
+                new org.djunits.unit.scale.GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2kat", "g2kat", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2kat", "g2kat", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

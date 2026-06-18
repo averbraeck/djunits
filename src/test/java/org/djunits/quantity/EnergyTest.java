@@ -196,14 +196,14 @@ class EnergyTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (J) -> should succeed
-        Energy.Unit twoJ = Energy.Unit.J.deriveUnit("2J", "2J", "two joule", 2.0, UnitSystem.OTHER);
+        Energy.Unit twoJ = Energy.Unit.J.deriveUnit("2J", "2J", "two joule", 2.0, UnitSystem.OTHER, null);
         Energy x = new Energy(1.0, twoJ); // 1 * 2 J == 2 J
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Energy.Unit nonLinear =
-                new Energy.Unit("gJ", "gJ", "grade-like joule (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Energy.Unit("gJ", "gJ", "grade-like joule (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2J", "g2J", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2J", "g2J", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

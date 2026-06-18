@@ -14,7 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * VolumeTest tests the Volume quantity class.<p>
+ * VolumeTest tests the Volume quantity class.
+ * <p>
  * This test suite verifies:
  * <ul>
  * <li>Constructors, constants, copy behavior, and SI conversions</li>
@@ -106,7 +107,7 @@ class VolumeTest
         assertThrows(IllegalArgumentException.class, () -> Volume.valueOf("not-a-number m3"));
 
         // of null unit -> NPE
-        assertThrows(NullPointerException.class, () -> Volume.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Volume.of(1.0, (String) null));
 
         // of empty unit -> IAE
         assertThrows(IllegalArgumentException.class, () -> Volume.of(1.0, ""));
@@ -264,13 +265,14 @@ class VolumeTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive linear: "2m3"
-        Volume.Unit twoM3 = Volume.Unit.m3.deriveUnit("2m3", "two cubic meters", 2.0, UnitSystem.OTHER);
+        Volume.Unit twoM3 =
+                (Volume.Unit) Volume.Unit.m3.deriveUnit("2m3", "2m3", "two cubic meters", 2.0, UnitSystem.OTHER, null);
         Volume x = new Volume(1.0, twoM3); // 1 * 2 m^3 == 2 m^3
         assertEquals(2.0, x.si(), 1E-12);
 
         // Non-linear derive should throw
-        Volume.Unit bad = new Volume.Unit("gM3", "gM3", "grade-like cubic meter", new GradeScale(0.01), UnitSystem.OTHER);
+        Volume.Unit bad = new Volume.Unit("gM3", "gM3", "grade-like cubic meter", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { bad.deriveUnit("bad", "bad", "nonlinear derived", 3.0, UnitSystem.OTHER); });
+        { bad.deriveUnit("bad", "bad", "nonlinear derived", 3.0, UnitSystem.OTHER, null); });
     }
 }

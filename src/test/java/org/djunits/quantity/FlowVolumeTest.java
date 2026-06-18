@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * FlowVolumeTest tests the FlowVolume quantity class.<p>
+ * FlowVolumeTest tests the FlowVolume quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -158,14 +159,15 @@ class FlowVolumeTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (m3/s) -> should succeed
-        FlowVolume.Unit twoM3S = FlowVolume.Unit.m3_s.deriveUnit("2m3/s", "two cubic meters per second", 2.0, UnitSystem.OTHER);
+        FlowVolume.Unit twoM3S = (FlowVolume.Unit) FlowVolume.Unit.m3_s.deriveUnit("2m3/s", "2m3/s",
+                "two cubic meters per second", 2.0, UnitSystem.OTHER, null);
         FlowVolume x = new FlowVolume(1.0, twoM3S); // 1 * 2 m3/s == 2 m3/s
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
-        FlowVolume.Unit nonLinear =
-                new FlowVolume.Unit("gm3/s", "gm3/s", "grade-like m3/s (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+        FlowVolume.Unit nonLinear = new FlowVolume.Unit("gm3/s", "gm3/s", "grade-like m3/s (nonlinear)", new GradeScale(0.01),
+                UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2m3/s", "g2 m3/s", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2m3/s", "g2 m3/s", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

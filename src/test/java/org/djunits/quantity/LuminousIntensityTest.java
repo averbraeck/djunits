@@ -92,7 +92,7 @@ class LuminousIntensityTest
         assertThrows(IllegalArgumentException.class, () -> LuminousIntensity.valueOf("not-a-number cd"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> LuminousIntensity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> LuminousIntensity.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> LuminousIntensity.of(1.0, ""));
@@ -144,15 +144,15 @@ class LuminousIntensityTest
 
         // Derive from a linear unit (cd) -> kcd (scale 1000)
         LuminousIntensity.Unit kcd =
-                LuminousIntensity.Unit.cd.deriveUnit("kcd", "kcd", "kilocandela", 1000.0, UnitSystem.SI_DERIVED);
+                LuminousIntensity.Unit.cd.deriveUnit("kcd", "kcd", "kilocandela", 1000.0, UnitSystem.SI_DERIVED, null);
         LuminousIntensity x = new LuminousIntensity(1.0, kcd); // 1 kcd == 1000 cd
         assertEquals(1000.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         LuminousIntensity.Unit nonLinear = new LuminousIntensity.Unit("gCd", "gCd", "grade-like candela (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity for base abbreviation
         LuminousIntensity.Unit resolved = Units.resolve(LuminousIntensity.Unit.class, "cd");

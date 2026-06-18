@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * LuminousFlux.Unit test. <p>
+ * LuminousFlux.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -49,7 +50,7 @@ public class LuminousFluxUnitTest extends AbstractLinearUnitTest<LuminousFlux.Un
     @Test
     public final void createLuminousFluxUnit()
     {
-        LuminousFlux.Unit myUnit = LuminousFlux.Unit.SI.deriveUnit("my", "myLuminousFlux", 1.23, UnitSystem.OTHER);
+        LuminousFlux.Unit myUnit = LuminousFlux.Unit.SI.deriveUnit("my", "my", "myLuminousFlux", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new LuminousFluxUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myLuminousFlux", "my");
         Units.unregister(myUnit);
@@ -65,7 +66,7 @@ public class LuminousFluxUnitTest extends AbstractLinearUnitTest<LuminousFlux.Un
         assertEquals(LuminousFlux.Unit.lm, LuminousFlux.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(LuminousFlux.ONE, LuminousFlux.Unit.lm.ofSi(1.0));
 
-        LuminousFlux.Unit nonlinearUnit = new LuminousFlux.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        LuminousFlux.Unit nonlinearUnit = new LuminousFlux.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

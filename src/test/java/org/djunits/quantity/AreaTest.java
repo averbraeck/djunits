@@ -187,13 +187,13 @@ class AreaTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (m2) -> should succeed
-        Area.Unit twoM2 = Area.Unit.m2.deriveUnit("m2x2", "m2x2", "two square meters", 2.0, UnitSystem.OTHER);
+        Area.Unit twoM2 = Area.Unit.m2.deriveUnit("m2x2", "m2x2", "two square meters", 2.0, UnitSystem.OTHER, null);
         Area x = new Area(1.0, twoM2); // 1 * 2 m2 == 2 m2
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
-        Area.Unit nonLinear = new Area.Unit("ga", "ga", "grade-like area (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+        Area.Unit nonLinear = new Area.Unit("ga", "ga", "grade-like area (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("ga2", "ga2", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("ga2", "ga2", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

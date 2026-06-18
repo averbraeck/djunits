@@ -92,7 +92,7 @@ class SolidAngleTest
         assertThrows(IllegalArgumentException.class, () -> SolidAngle.valueOf("not-a-number sr"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> SolidAngle.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> SolidAngle.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> SolidAngle.of(1.0, ""));
@@ -148,15 +148,15 @@ class SolidAngleTest
         assertEquals(expectedSqDeg, oneSqDeg.si(), 1E-12);
 
         // Derive from a linear unit (sr) -> e.g., "2sr" (scale 2.0)
-        SolidAngle.Unit twoSr = SolidAngle.Unit.sr.deriveUnit("2sr", "2sr", "two steradian", 2.0, UnitSystem.OTHER);
+        SolidAngle.Unit twoSr = SolidAngle.Unit.sr.deriveUnit("2sr", "2sr", "two steradian", 2.0, UnitSystem.OTHER, null);
         SolidAngle x = new SolidAngle(1.0, twoSr); // 1 * 2 sr == 2 sr
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         SolidAngle.Unit nonLinear =
-                new SolidAngle.Unit("gSr", "gSr", "grade-like steradian (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new SolidAngle.Unit("gSr", "gSr", "grade-like steradian (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity
         SolidAngle.Unit resolved = Units.resolve(SolidAngle.Unit.class, "sr");

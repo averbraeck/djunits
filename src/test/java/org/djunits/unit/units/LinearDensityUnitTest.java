@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * LinearDensity.Unit test. <p>
+ * LinearDensity.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -49,7 +50,8 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensity.
     @Test
     public final void createLinearDensityUnit()
     {
-        LinearDensity.Unit muLDU = LinearDensity.Unit.kg_m.deriveUnit("kgperin", "KgPerInch", 2.54 / 100, UnitSystem.OTHER);
+        LinearDensity.Unit muLDU =
+                LinearDensity.Unit.kg_m.deriveUnit("kgperin", "kgperin", "KgPerInch", 2.54 / 100, UnitSystem.OTHER, null);
         assertTrue(null != muLDU, "Can create a new LinearDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "KgPerInch", "kgperin");
         Units.unregister(muLDU);
@@ -65,7 +67,8 @@ public class LinearDensityUnitTest extends AbstractLinearUnitTest<LinearDensity.
         assertEquals(LinearDensity.Unit.kg_m, LinearDensity.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(LinearDensity.ONE, LinearDensity.Unit.kg_m.ofSi(1.0));
 
-        LinearDensity.Unit nonlinearUnit = new LinearDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        LinearDensity.Unit nonlinearUnit =
+                new LinearDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

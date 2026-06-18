@@ -128,14 +128,14 @@ class ArealObjectDensityTest
 
         // Derive from a linear unit (per m2) -> should succeed
         ArealObjectDensity.Unit twoPerM2 =
-                ArealObjectDensity.Unit.per_m2.deriveUnit("/m2x2", "/m2x2", "twice per square meter", 2.0, UnitSystem.OTHER);
+                ArealObjectDensity.Unit.per_m2.deriveUnit("/m2x2", "/m2x2", "twice per square meter", 2.0, UnitSystem.OTHER, null);
         ArealObjectDensity x = new ArealObjectDensity(1.0, twoPerM2); // 1 * 2 (/m2) == 2 (/m2)
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ArealObjectDensity.Unit nonLinear = new ArealObjectDensity.Unit("gA", "gA", "grade-like areal density (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("gA2", "gA2", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("gA2", "gA2", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

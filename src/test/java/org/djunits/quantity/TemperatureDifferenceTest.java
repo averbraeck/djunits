@@ -90,7 +90,7 @@ class TemperatureDifferenceTest
         assertThrows(IllegalArgumentException.class, () -> TemperatureDifference.valueOf("not-a-number K"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> TemperatureDifference.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> TemperatureDifference.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> TemperatureDifference.of(1.0, ""));

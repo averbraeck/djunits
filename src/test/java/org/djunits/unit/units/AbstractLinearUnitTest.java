@@ -5,14 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.djunits.unit.UnitInterface;
 
 /**
- * Test for AbstractLinearUnit. <p>
+ * Test for AbstractLinearUnit.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  * @param <U> Make the test specific for this sub class of Unit
  */
-public abstract class AbstractLinearUnitTest<U extends UnitInterface<U, ?>> extends AbstractUnitTest<U>
+public abstract class AbstractLinearUnitTest<U extends UnitInterface<?>> extends AbstractUnitTest<U>
 {
     /**
      * Verify one length conversion factor to standard unit and the localization of the name and abbreviation.

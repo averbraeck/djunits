@@ -77,7 +77,7 @@ public class AngleUnitTest extends AbstractLinearUnitTest<Angle.Unit>
     @Test
     public final void createAngleUnit()
     {
-        Angle.Unit myAPU = Angle.Unit.rad.deriveUnit("pt", "point", 0.19634954085, UnitSystem.OTHER);
+        Angle.Unit myAPU = Angle.Unit.rad.deriveUnit("pt", "pt", "point", 0.19634954085, UnitSystem.OTHER, null);
         assertTrue(null != myAPU, "Can create a new AngleUnit");
         checkUnitValueNameAndAbbreviation(myAPU, 0.19634954085, 0.0000001, "point", "pt");
         Units.unregister(myAPU);
@@ -98,7 +98,7 @@ public class AngleUnitTest extends AbstractLinearUnitTest<Angle.Unit>
         assertEquals(Angle.Unit.rad, Angle.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Angle.ONE, Angle.Unit.rad.ofSi(1.0));
 
-        Angle.Unit nonlinearUnit = new Angle.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Angle.Unit nonlinearUnit = new Angle.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

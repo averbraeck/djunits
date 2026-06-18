@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test for Acceleration.Unit. <p>
+ * Test for Acceleration.Unit.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -71,7 +72,7 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<Acceleration.Un
     @Test
     public final void createAccelerationUnit()
     {
-        Acceleration.Unit myUnit = Acceleration.Unit.SI.deriveUnit("my", "myAcceleration", 1.23, UnitSystem.OTHER);
+        Acceleration.Unit myUnit = Acceleration.Unit.SI.deriveUnit("my", "my", "myAcceleration", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new AccelerationUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myAcceleration", "my");
         Units.unregister(myUnit);
@@ -87,7 +88,7 @@ public class AccelerationUnitTest extends AbstractLinearUnitTest<Acceleration.Un
         assertEquals(Acceleration.Unit.m_s2, Acceleration.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Acceleration.ONE, Acceleration.Unit.m_s2.ofSi(1.0));
 
-        Acceleration.Unit nonlinearUnit = new Acceleration.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Acceleration.Unit nonlinearUnit = new Acceleration.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

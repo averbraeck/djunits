@@ -49,7 +49,7 @@ public class AbsorbedDoseUnitTest extends AbstractLinearUnitTest<AbsorbedDose.Un
     @Test
     public final void createAbsorbedDoseUnit()
     {
-        AbsorbedDose.Unit myUnit = AbsorbedDose.Unit.SI.deriveUnit("my", "myAbsorbedDose", 1.23, UnitSystem.OTHER);
+        AbsorbedDose.Unit myUnit = AbsorbedDose.Unit.SI.deriveUnit("my", "my", "myAbsorbedDose", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new AbsorbedDoseUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myAbsorbedDose", "my");
         Units.unregister(myUnit);
@@ -65,8 +65,8 @@ public class AbsorbedDoseUnitTest extends AbstractLinearUnitTest<AbsorbedDose.Un
         assertEquals(AbsorbedDose.Unit.Gy, AbsorbedDose.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(AbsorbedDose.ONE, AbsorbedDose.Unit.Gy.ofSi(1.0));
 
-        AbsorbedDose.Unit nonlinearUnit = new AbsorbedDose.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
-        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
+        AbsorbedDose.Unit nonlinearUnit = new AbsorbedDose.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
+        assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", "yy", 0.1, UnitSystem.OTHER, null));
         Units.unregister(nonlinearUnit);
     }
 

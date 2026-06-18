@@ -124,14 +124,14 @@ class AngularVelocityTest
 
         // Derive from a linear unit (deg/s) -> should succeed
         AngularVelocity.Unit twoDegPerS =
-                AngularVelocity.Unit.deg_s.deriveUnit("deg2/s", "deg2/s", "two degrees per second", 2.0, UnitSystem.OTHER);
+                AngularVelocity.Unit.deg_s.deriveUnit("deg2/s", "deg2/s", "two degrees per second", 2.0, UnitSystem.OTHER, null);
         AngularVelocity x = new AngularVelocity(1.0, twoDegPerS); // 1 * 2 deg/s == 2 deg/s
         assertEquals(2.0 * Math.PI / 180.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         AngularVelocity.Unit nonLinear = new AngularVelocity.Unit("g%/s", "g%/s", "grade-like per second (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2%/s", "g2%/s", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2%/s", "g2%/s", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

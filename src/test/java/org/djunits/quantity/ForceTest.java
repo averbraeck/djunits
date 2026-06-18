@@ -169,14 +169,14 @@ class ForceTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (N) -> should succeed
-        Force.Unit twoN = Force.Unit.N.deriveUnit("2N", "2N", "two newton", 2.0, UnitSystem.OTHER);
+        Force.Unit twoN = Force.Unit.N.deriveUnit("2N", "2N", "two newton", 2.0, UnitSystem.OTHER, null);
         Force x = new Force(1.0, twoN); // 1 * 2 N == 2 N
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Force.Unit nonLinear =
-                new Force.Unit("gN", "gN", "grade-like newton (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Force.Unit("gN", "gN", "grade-like newton (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2N", "g2N", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2N", "g2N", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

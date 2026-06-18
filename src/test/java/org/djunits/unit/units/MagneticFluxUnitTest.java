@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * MagneticFlux.Unit test. <p>
+ * MagneticFlux.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -49,7 +50,7 @@ public class MagneticFluxUnitTest extends AbstractLinearUnitTest<MagneticFlux.Un
     @Test
     public final void createMagneticFluxUnit()
     {
-        MagneticFlux.Unit myUnit = MagneticFlux.Unit.SI.deriveUnit("my", "myMagneticFlux", 1.23, UnitSystem.OTHER);
+        MagneticFlux.Unit myUnit = MagneticFlux.Unit.SI.deriveUnit("my", "my", "myMagneticFlux", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new MagneticFluxUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myMagneticFlux", "my");
         Units.unregister(myUnit);
@@ -65,7 +66,7 @@ public class MagneticFluxUnitTest extends AbstractLinearUnitTest<MagneticFlux.Un
         assertEquals(MagneticFlux.Unit.Wb, MagneticFlux.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(MagneticFlux.ONE, MagneticFlux.Unit.Wb.ofSi(1.0));
 
-        MagneticFlux.Unit nonlinearUnit = new MagneticFlux.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        MagneticFlux.Unit nonlinearUnit = new MagneticFlux.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

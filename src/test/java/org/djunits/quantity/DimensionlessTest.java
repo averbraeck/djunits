@@ -140,13 +140,13 @@ class DimensionlessTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (BASE) -> should succeed
-        Unitless twice = Unitless.BASE.deriveUnit(" 2x", " 2x", "twice unitless", 2.0, UnitSystem.OTHER);
+        Unitless twice = Unitless.BASE.deriveUnit(" 2x", " 2x", "twice unitless", 2.0, UnitSystem.OTHER, null);
         Dimensionless x = new Dimensionless(1.0, twice); // 1 * 2 == 2
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
-        Unitless nonLinear = new Unitless("gradeless", "gradeless", "gradeless", new GradeScale(0.01), UnitSystem.OTHER);
+        Unitless nonLinear = new Unitless("gradeless", "gradeless", "gradeless", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("gradeless2", "gradeless2", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("gradeless2", "gradeless2", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

@@ -159,7 +159,7 @@ class PowerTest
         assertThrows(IllegalArgumentException.class, () -> Power.valueOf("not-a-number W"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> Power.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Power.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> Power.of(1.0, ""));
@@ -249,17 +249,17 @@ class PowerTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (W) -> e.g., "2W" (scale 2.0)
-        Power.Unit twoW = Power.Unit.W.deriveUnit("2W", "2W", "two watt", 2.0, UnitSystem.OTHER);
+        Power.Unit twoW = Power.Unit.W.deriveUnit("2W", "2W", "two watt", 2.0, UnitSystem.OTHER, null);
         Power x = new Power(1.0, twoW); // 1 * 2 W == 2 W
         assertEquals(2.0, x.si(), 1E-12);
         Units.unregister(twoW);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Power.Unit nonLinear = new Power.Unit("gWatt", "gWatt", "grade-like watt (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
         {
-            nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER);
+            nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null);
         });
         Units.unregister(nonLinear);
 

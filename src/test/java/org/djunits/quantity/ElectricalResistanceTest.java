@@ -140,14 +140,14 @@ class ElectricalResistanceTest
 
         // Derive from a linear unit (ohm) -> should succeed
         ElectricalResistance.Unit twoOhm =
-                ElectricalResistance.Unit.ohm.deriveUnit("2ohm", "2\u03A9", "two ohm", 2.0, UnitSystem.OTHER);
+                ElectricalResistance.Unit.ohm.deriveUnit("2ohm", "2\u03A9", "two ohm", 2.0, UnitSystem.OTHER, null);
         ElectricalResistance x = new ElectricalResistance(1.0, twoOhm); // 1 * 2 Ω == 2 Ω
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricalResistance.Unit nonLinear = new ElectricalResistance.Unit("gohm", "g\u03A9", "grade-like ohm (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2ohm", "g2\u03A9", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2ohm", "g2\u03A9", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

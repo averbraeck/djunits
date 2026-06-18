@@ -11,13 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for {@link Unitless}. Ensures full coverage across constructors, constants, SI mapping, derivation behavior
- * (linear vs. non-linear), and basic object contracts. <p>
+ * (linear vs. non-linear), and basic object contracts.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -83,13 +85,13 @@ public class UnitlessTest
     }
 
     /**
-     * Verify the secondary constructor {@link Unitless#Unitless(String, String, String, Scale, UnitSystem)} accepts an explicit
-     * scale and sets fields properly. Also test null-scale rejection.
+     * Verify the secondary constructor {@link Unitless#Unitless(String, String, String, Scale, UnitSystem, SIPrefix)} accepts
+     * an explicit scale and sets fields properly. Also test null-scale rejection.
      */
     @Test
     public void testSecondaryConstructorAndNulls()
     {
-        Unitless twoX = new Unitless("2x", "2x", "double-x", new LinearScale(2.0), UnitSystem.SI_DERIVED);
+        Unitless twoX = new Unitless("2x", "2x", "double-x", new LinearScale(2.0), UnitSystem.SI_DERIVED, null);
         assertEquals("2x", twoX.getStoredTextualAbbreviation());
         assertEquals("2x", twoX.getStoredDisplayAbbreviation());
         assertEquals("double-x", twoX.getStoredName());
@@ -98,7 +100,7 @@ public class UnitlessTest
         assertEquals(2.0, ((LinearScale) twoX.getScale()).getScaleFactorToBaseUnit(), 1e-12);
 
         // Null scale should be rejected by AbstractUnit preconditions.
-        assertThrows(NullPointerException.class, () -> new Unitless("id", "disp", "nm", null, UnitSystem.OTHER),
+        assertThrows(NullPointerException.class, () -> new Unitless("id", "disp", "nm", null, UnitSystem.OTHER, null),
                 "Null scale should not be accepted");
     }
 
@@ -115,14 +117,14 @@ public class UnitlessTest
     }
 
     /**
-     * Verify {@link Unitless#deriveUnit(String, String, String, double, UnitSystem)} on a unit with linear scale composes
-     * factors multiplicatively.
+     * Verify {@link Unitless#deriveUnit(String, String, String, double, UnitSystem, SIPrefix)} on a unit with linear scale
+     * composes factors multiplicatively.
      */
     @Test
     public void testDeriveUnitLinearScale()
     {
         Unitless base = Unitless.BASE;
-        Unitless permille = base.deriveUnit("permille", "\u2030", "permille", 0.001, UnitSystem.OTHER);
+        Unitless permille = base.deriveUnit("permille", "\u2030", "permille", 0.001, UnitSystem.OTHER, null);
         assertNotNull(permille);
         assertEquals("permille", permille.getStoredTextualAbbreviation());
         assertEquals("\u2030", permille.getStoredDisplayAbbreviation());
@@ -136,7 +138,7 @@ public class UnitlessTest
 
         // Compose on an already scaled Unitless: 0.01 (percent) x 2 -> 0.02.
         Unitless percent = new Unitless("%", "percent", 0.01, UnitSystem.OTHER);
-        Unitless twoPercent = percent.deriveUnit("2%", "2%", "two percent", 2.0, UnitSystem.OTHER);
+        Unitless twoPercent = percent.deriveUnit("2%", "2%", "two percent", 2.0, UnitSystem.OTHER, null);
         assertTrue(twoPercent.getScale() instanceof LinearScale);
         assertEquals(0.02, ((LinearScale) twoPercent.getScale()).getScaleFactorToBaseUnit(), 1e-12);
     }
@@ -150,15 +152,15 @@ public class UnitlessTest
     {
         Unitless base = Unitless.BASE;
         assertThrows(IllegalArgumentException.class,
-                () -> base.deriveUnit("zero", "zero", "zero-scale", 0.0, UnitSystem.OTHER));
+                () -> base.deriveUnit("zero", "zero", "zero-scale", 0.0, UnitSystem.OTHER, null));
         assertThrows(IllegalArgumentException.class,
-                () -> base.deriveUnit("neg", "neg", "negative-scale", -2.0, UnitSystem.OTHER));
+                () -> base.deriveUnit("neg", "neg", "negative-scale", -2.0, UnitSystem.OTHER, null));
         assertThrows(IllegalArgumentException.class,
-                () -> base.deriveUnit("nan", "nan", "nan-scale", Double.NaN, UnitSystem.OTHER));
+                () -> base.deriveUnit("nan", "nan", "nan-scale", Double.NaN, UnitSystem.OTHER, null));
         assertThrows(IllegalArgumentException.class,
-                () -> base.deriveUnit("inf", "inf", "inf-scale", Double.POSITIVE_INFINITY, UnitSystem.OTHER));
+                () -> base.deriveUnit("inf", "inf", "inf-scale", Double.POSITIVE_INFINITY, UnitSystem.OTHER, null));
         assertThrows(IllegalArgumentException.class,
-                () -> base.deriveUnit("ninf", "ninf", "ninf-scale", Double.NEGATIVE_INFINITY, UnitSystem.OTHER));
+                () -> base.deriveUnit("ninf", "ninf", "ninf-scale", Double.NEGATIVE_INFINITY, UnitSystem.OTHER, null));
     }
 
     /**
@@ -211,8 +213,8 @@ public class UnitlessTest
             }
         }
 
-        Unitless special = new Unitless("id", "disp", "not-linear", new FakeScale(), UnitSystem.OTHER);
-        assertThrows(UnitRuntimeException.class, () -> special.deriveUnit("x", "x", "x", 10.0, UnitSystem.OTHER),
+        Unitless special = new Unitless("id", "disp", "not-linear", new FakeScale(), UnitSystem.OTHER, null);
+        assertThrows(UnitRuntimeException.class, () -> special.deriveUnit("x", "x", "x", 10.0, UnitSystem.OTHER, null),
                 "Derivation must fail for non-linear scale");
     }
 

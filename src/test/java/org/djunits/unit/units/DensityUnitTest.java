@@ -69,7 +69,7 @@ public class DensityUnitTest extends AbstractLinearUnitTest<Density.Unit>
         assertEquals(Density.Unit.kg_m3, Density.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Density.ONE, Density.Unit.kg_m3.ofSi(1.0));
 
-        Density.Unit nonlinearUnit = new Density.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Density.Unit nonlinearUnit = new Density.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

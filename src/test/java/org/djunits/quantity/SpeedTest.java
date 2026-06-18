@@ -95,7 +95,7 @@ class SpeedTest
         assertThrows(IllegalArgumentException.class, () -> Speed.valueOf("not-a-number m/s"));
 
         // of null unit -> NPE
-        assertThrows(NullPointerException.class, () -> Speed.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Speed.of(1.0, (String) null));
 
         // of empty unit -> IAE
         assertThrows(IllegalArgumentException.class, () -> Speed.of(1.0, ""));
@@ -245,14 +245,14 @@ class SpeedTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from linear unit (m/s) -> "2m/s" (scale 2.0)
-        Speed.Unit twoMs = Speed.Unit.m_s.deriveUnit("2m/s", "2m/s", "two meter per second", 2.0, UnitSystem.OTHER);
+        Speed.Unit twoMs = Speed.Unit.m_s.deriveUnit("2m/s", "2m/s", "two meter per second", 2.0, UnitSystem.OTHER, null);
         Speed x = new Speed(1.0, twoMs); // 1 * 2 m/s == 2 m/s
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Speed.Unit nonLinear =
-                new Speed.Unit("gSpeed", "gSpeed", "grade-like speed (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Speed.Unit("gSpeed", "gSpeed", "grade-like speed (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

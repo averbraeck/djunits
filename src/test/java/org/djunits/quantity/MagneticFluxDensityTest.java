@@ -132,7 +132,7 @@ class MagneticFluxDensityTest
         assertThrows(IllegalArgumentException.class, () -> MagneticFluxDensity.valueOf("not-a-number T"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> MagneticFluxDensity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> MagneticFluxDensity.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> MagneticFluxDensity.of(1.0, ""));
@@ -183,15 +183,15 @@ class MagneticFluxDensityTest
 
         // Derive from a linear unit (T) -> kT (scale 1000)
         MagneticFluxDensity.Unit kT =
-                MagneticFluxDensity.Unit.T.deriveUnit("kT", "kT", "kilotesla", 1000.0, UnitSystem.SI_DERIVED);
+                MagneticFluxDensity.Unit.T.deriveUnit("kT", "kT", "kilotesla", 1000.0, UnitSystem.SI_DERIVED, null);
         MagneticFluxDensity x = new MagneticFluxDensity(1.0, kT); // 1 kT == 1000 T
         assertEquals(1000.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         MagneticFluxDensity.Unit nonLinear = new MagneticFluxDensity.Unit("gT", "gT", "grade-like tesla (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity for some prefixed units
         assertEquals(MagneticFluxDensity.Unit.mT, Units.resolve(MagneticFluxDensity.Unit.class, "mT"));

@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * VolumetricObjectDensity.Unit test. <p>
+ * VolumetricObjectDensity.Unit test.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -49,8 +50,8 @@ public class VolumetricObjectDensityUnitTest extends AbstractLinearUnitTest<Volu
     @Test
     public final void createLinearDensityUnit()
     {
-        VolumetricObjectDensity.Unit muLDU =
-                VolumetricObjectDensity.Unit.per_m3.deriveUnit("perin3", "PerInch3", 2.54 / 100, UnitSystem.OTHER);
+        VolumetricObjectDensity.Unit muLDU = VolumetricObjectDensity.Unit.per_m3.deriveUnit("perin3", "perin3", "PerInch3",
+                2.54 / 100, UnitSystem.OTHER, null);
         assertTrue(null != muLDU, "Can create a new VolumetricObjectDensityUnit");
         checkUnitRatioNameAndAbbreviation(muLDU, 0.0254, 0.000001, "PerInch3", "perin3");
         Units.unregister(muLDU);
@@ -67,7 +68,7 @@ public class VolumetricObjectDensityUnitTest extends AbstractLinearUnitTest<Volu
         assertEquals(VolumetricObjectDensity.ONE, VolumetricObjectDensity.Unit.per_m3.ofSi(1.0));
 
         VolumetricObjectDensity.Unit nonlinearUnit =
-                new VolumetricObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new VolumetricObjectDensity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

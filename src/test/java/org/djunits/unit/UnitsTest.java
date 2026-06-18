@@ -39,7 +39,7 @@ public class UnitsTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public <U extends UnitInterface<U, ?>> void testResolveUsLocaleParsing()
+    public <U extends UnitInterface<?>> void testResolveUsLocaleParsing()
     {
         Locale original = Locale.getDefault();
         try
@@ -47,19 +47,19 @@ public class UnitsTest
             Locale.setDefault(Locale.US);
 
             // Known US abbreviations should resolve without error.
-            UnitInterface<?, ?> kmh = Units.resolve(Speed.Unit.class, "km/h");
+            UnitInterface<?> kmh = Units.resolve(Speed.Unit.class, "km/h");
             assertNotNull(kmh);
             assertEquals("km/h", kmh.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> mih = Units.resolve(Speed.Unit.class, "mi/h");
+            UnitInterface<?> mih = Units.resolve(Speed.Unit.class, "mi/h");
             assertNotNull(mih);
             assertEquals("mi/h", mih.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> kt = Units.resolve(Speed.Unit.class, "kt");
+            UnitInterface<?> kt = Units.resolve(Speed.Unit.class, "kt");
             assertNotNull(kt);
             assertEquals("kt", kt.getStoredTextualAbbreviation());
 
-            UnitInterface<?, ?> cm = Units.resolve(Length.Unit.class, "cm");
+            UnitInterface<?> cm = Units.resolve(Length.Unit.class, "cm");
             assertNotNull(cm);
             assertEquals("cm", cm.getStoredTextualAbbreviation());
 
@@ -90,7 +90,7 @@ public class UnitsTest
             Locale.setDefault(Locale.FRANCE);
             // assertDoesNotThrow(Units::readTranslateMap); // ensure translate map is refreshed
 
-            UnitInterface<?, ?> rpmFr = Units.resolve(Frequency.Unit.class, "tr/min");
+            UnitInterface<?> rpmFr = Units.resolve(Frequency.Unit.class, "tr/min");
             assertNotNull(rpmFr);
             // The underlying US-stored key is "rpm"; stored abbreviation should be US key.
             assertEquals("rpm", rpmFr.getStoredTextualAbbreviation());
@@ -192,13 +192,13 @@ public class UnitsTest
     @Test
     public void testRegisteredUnitsSafeTopLevelCopy()
     {
-        Map<String, Map<String, UnitInterface<?, ?>>> snapshot = Units.registeredUnits();
+        Map<String, Map<String, UnitInterface<?>>> snapshot = Units.registeredUnits();
         assertNotNull(snapshot);
         assertNotEquals(0, snapshot.size());
 
         // Mutate the top-level map and verify internal state continues to resolve known entries.
         snapshot.put("BogusQuantity", new LinkedHashMap<>());
-        UnitInterface<?, ?> meter = Units.resolve(Length.Unit.class, "m");
+        UnitInterface<?> meter = Units.resolve(Length.Unit.class, "m");
         assertNotNull(meter);
     }
 
@@ -227,7 +227,7 @@ public class UnitsTest
     @Test
     public void testRegisterUnregister()
     {
-        Length.Unit lu = Length.Unit.m.deriveUnit("two", "two", 2.0, UnitSystem.OTHER);
+        Length.Unit lu = (Length.Unit) Length.Unit.m.deriveUnit("two", "two", 2.0, UnitSystem.OTHER);
         assertEquals(lu, Units.resolve(Length.Unit.class, "two"));
         assertNotNull(Units.localizedUnitName(Locale.US, "Length", "two"));
         assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "Length", "two"));
@@ -243,7 +243,7 @@ public class UnitsTest
 
         QUnit qu = new QUnit();
         Units.register(qu);
-        assertNotNull(Units.localizedQuantityName((Class<? extends UnitInterface<?, ?>>) QUnit.class));
+        assertNotNull(Units.localizedQuantityName((Class<? extends UnitInterface<?>>) QUnit.class));
         assertNotNull(Units.localizedUnitName(Locale.US, "UnitsTest.QUnit", "xx"));
         assertNotNull(Units.localizedUnitDisplayAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
         assertNotNull(Units.localizedUnitTextualAbbr(Locale.US, "UnitsTest.QUnit", "xx"));
@@ -327,37 +327,13 @@ public class UnitsTest
         }
 
         @Override
-        public UnitInterface setSiPrefix(final SIPrefix siPrefix)
-        {
-            return null;
-        }
-
-        @Override
-        public UnitInterface setSiPrefix(final String prefix)
-        {
-            return null;
-        }
-
-        @Override
-        public UnitInterface setSiPrefixKilo(final String prefix)
-        {
-            return null;
-        }
-
-        @Override
-        public UnitInterface setSiPrefixPer(final String prefix)
-        {
-            return null;
-        }
-
-        @Override
         public SIPrefix getSiPrefix()
         {
             return null;
         }
 
         @Override
-        public Quantity ofSi(final double si)
+        public Quantity ofSi(final double si, final UnitInterface displayUnit)
         {
             return null;
         }
@@ -375,18 +351,18 @@ public class UnitsTest
          */
         Q(final double value, final QUnit displayUnit)
         {
-            super(value, displayUnit);
+            super(value, displayUnit, true);
         }
 
         @Override
-        public Q instantiateSi(final double siValue)
+        public Q instantiateSi(final double siValue, final UnitInterface<Q> displayUnit)
         {
-            return new Q(siValue, QUnit.DEFAULT);
+            return new Q(siValue, (QUnit) displayUnit);
         }
     }
 
     /** UnitInterface Length class that does not register itself. */
-    static class QUnit implements UnitInterface<QUnit, Q>
+    static class QUnit implements UnitInterface<Q>
     {
         /** */
         public static final QUnit DEFAULT = new QUnit();
@@ -458,37 +434,13 @@ public class UnitsTest
         }
 
         @Override
-        public QUnit setSiPrefix(final SIPrefix siPrefix)
-        {
-            return null;
-        }
-
-        @Override
-        public QUnit setSiPrefix(final String prefix)
-        {
-            return null;
-        }
-
-        @Override
-        public QUnit setSiPrefixKilo(final String prefix)
-        {
-            return null;
-        }
-
-        @Override
-        public QUnit setSiPrefixPer(final String prefix)
-        {
-            return null;
-        }
-
-        @Override
         public SIPrefix getSiPrefix()
         {
             return null;
         }
 
         @Override
-        public Q ofSi(final double si)
+        public Q ofSi(final double si, final UnitInterface<Q> displayUnit)
         {
             return null;
         }

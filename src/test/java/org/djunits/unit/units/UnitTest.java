@@ -13,7 +13,8 @@ import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.Test;
 
 /**
- * Generic Unit class test. <p>
+ * Generic Unit class test.
+ * <p>
  * Copyright (c) 2019-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -39,8 +40,8 @@ public class UnitTest
         assertEquals(0.0000771604938, Acceleration.Unit.km_h2.getScale().toIdentityScale(1.0), 1.0E-12);
 
         // these two should be similar except for the abbreviations
-        Length.Unit xx1 = new Length.Unit("xx1Id", "xx11t", "xxName1", new LinearScale(1.0E-13), UnitSystem.OTHER);
-        Length.Unit xx2 = Length.Unit.m.deriveUnit("xx2Id", "xx22t", "xxName2", 1.0E-13, UnitSystem.OTHER);
+        Length.Unit xx1 = new Length.Unit("xx1Id", "xx11t", "xxName1", new LinearScale(1.0E-13), UnitSystem.OTHER, null);
+        Length.Unit xx2 = Length.Unit.m.deriveUnit("xx2Id", "xx22t", "xxName2", 1.0E-13, UnitSystem.OTHER, null);
         assertEquals(xx1.getScale(), xx2.getScale());
         assertEquals(xx1.getUnitSystem(), xx2.getUnitSystem());
         assertEquals("xx1Id", xx1.getId());
@@ -58,9 +59,9 @@ public class UnitTest
     @Test
     public void unitHashCodeEqualsTest()
     {
-        Length.Unit m13a = Length.Unit.m.deriveUnit("m13", "10^13 m", 1.0E13, UnitSystem.SI_DERIVED);
+        Length.Unit m13a = Length.Unit.m.deriveUnit("m13", "m13", "10^13 m", 1.0E13, UnitSystem.SI_DERIVED, null);
         Units.unregister(m13a);
-        Length.Unit m13b = Length.Unit.m.deriveUnit("m13", "10^13 m", 1.0E13, UnitSystem.SI_DERIVED);
+        Length.Unit m13b = Length.Unit.m.deriveUnit("m13", "m13", "10^13 m", 1.0E13, UnitSystem.SI_DERIVED, null);
         Units.unregister(m13b);
         assertEquals(m13a, m13b);
         assertEquals(m13a.hashCode(), m13b.hashCode());

@@ -115,14 +115,14 @@ class ElectricalInductanceTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (H) -> should succeed
-        ElectricalInductance.Unit twoH = ElectricalInductance.Unit.H.deriveUnit("2H", "2H", "two henry", 2.0, UnitSystem.OTHER);
+        ElectricalInductance.Unit twoH = ElectricalInductance.Unit.H.deriveUnit("2H", "2H", "two henry", 2.0, UnitSystem.OTHER, null);
         ElectricalInductance x = new ElectricalInductance(1.0, twoH); // 1 * 2 H == 2 H
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricalInductance.Unit nonLinear = new ElectricalInductance.Unit("gH", "gH", "grade-like henry (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2H", "g2H", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2H", "g2H", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

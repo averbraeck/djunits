@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * IlluminanceTest tests the Illuminance quantity class.<p>
+ * IlluminanceTest tests the Illuminance quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -123,14 +124,15 @@ class IlluminanceTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (lx) -> should succeed
-        Illuminance.Unit twoLx = Illuminance.Unit.lx.deriveUnit("2lx", "two lux", 2.0, UnitSystem.OTHER);
+        Illuminance.Unit twoLx =
+                (Illuminance.Unit) Illuminance.Unit.lx.deriveUnit("2lx", "2lx", "two lux", 2.0, UnitSystem.OTHER, null);
         Illuminance x = new Illuminance(1.0, twoLx); // 1 * 2 lx == 2 lx
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Illuminance.Unit nonLinear =
-                new Illuminance.Unit("glx", "glx", "grade-like lux (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Illuminance.Unit("glx", "glx", "grade-like lux (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2lx", "nonlinear derived", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2lx", "nonlinear derived", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

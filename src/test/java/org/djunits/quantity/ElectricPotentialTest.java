@@ -133,14 +133,14 @@ class ElectricPotentialTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (V) -> should succeed
-        ElectricPotential.Unit twoV = ElectricPotential.Unit.V.deriveUnit("2V", "2V", "two volt", 2.0, UnitSystem.OTHER);
+        ElectricPotential.Unit twoV = ElectricPotential.Unit.V.deriveUnit("2V", "2V", "two volt", 2.0, UnitSystem.OTHER, null);
         ElectricPotential x = new ElectricPotential(1.0, twoV); // 1 * 2 V == 2 V
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricPotential.Unit nonLinear =
-                new ElectricPotential.Unit("gV", "gV", "grade-like volt (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new ElectricPotential.Unit("gV", "gV", "grade-like volt (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2V", "g2V", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2V", "g2V", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

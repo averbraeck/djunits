@@ -105,7 +105,7 @@ class FrequencyTest
         assertThrows(IllegalArgumentException.class, () -> Frequency.valueOf("not-a-number Hz"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> Frequency.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Frequency.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> Frequency.of(1.0, ""));
@@ -179,14 +179,14 @@ class FrequencyTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (Hz) -> should succeed
-        Frequency.Unit twoHz = Frequency.Unit.Hz.deriveUnit("2Hz", "2Hz", "two hertz", 2.0, UnitSystem.OTHER);
+        Frequency.Unit twoHz = Frequency.Unit.Hz.deriveUnit("2Hz", "2Hz", "two hertz", 2.0, UnitSystem.OTHER, null);
         Frequency x = new Frequency(1.0, twoHz); // 1 * 2 Hz == 2 Hz
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Frequency.Unit nonLinear =
-                new Frequency.Unit("gHz", "gHz", "grade-like hertz (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Frequency.Unit("gHz", "gHz", "grade-like hertz (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2Hz", "g2Hz", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2Hz", "g2Hz", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

@@ -173,7 +173,7 @@ class PressureTest
         assertThrows(IllegalArgumentException.class, () -> Pressure.valueOf("not-a-number Pa"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> Pressure.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Pressure.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> Pressure.of(1.0, ""));
@@ -228,15 +228,15 @@ class PressureTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (Pa) -> "2Pa" (scale 2.0)
-        Pressure.Unit twoPa = Pressure.Unit.Pa.deriveUnit("2Pa", "2Pa", "two pascal", 2.0, UnitSystem.OTHER);
+        Pressure.Unit twoPa = Pressure.Unit.Pa.deriveUnit("2Pa", "2Pa", "two pascal", 2.0, UnitSystem.OTHER, null);
         Pressure x = new Pressure(1.0, twoPa); // 1 * 2 Pa == 2 Pa
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Pressure.Unit nonLinear =
-                new Pressure.Unit("gPa", "gPa", "grade-like pascal (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Pressure.Unit("gPa", "gPa", "grade-like pascal (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity already partly checked above; verify a few more
         assertEquals(Pressure.Unit.cmHg, Units.resolve(Pressure.Unit.class, "cmHg"));

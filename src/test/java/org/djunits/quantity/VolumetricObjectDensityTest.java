@@ -14,7 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * VolumetricObjectDensityTest tests the VolumetricObjectDensity quantity class.<p>
+ * VolumetricObjectDensityTest tests the VolumetricObjectDensity quantity class.
+ * <p>
  * This suite verifies:
  * <ul>
  * <li>Constructors, constants, SI behavior, copy constructor</li>
@@ -105,7 +106,7 @@ class VolumetricObjectDensityTest
         assertThrows(IllegalArgumentException.class, () -> VolumetricObjectDensity.valueOf("10 blargh"));
         assertThrows(IllegalArgumentException.class, () -> VolumetricObjectDensity.valueOf("not-a-number /m3"));
 
-        assertThrows(NullPointerException.class, () -> VolumetricObjectDensity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> VolumetricObjectDensity.of(1.0, (String) null));
         assertThrows(IllegalArgumentException.class, () -> VolumetricObjectDensity.of(1.0, ""));
         // Quantity.of() throws UnitRuntimeException for unknown unitString
         assertThrows(UnitRuntimeException.class, () -> VolumetricObjectDensity.of(1.0, "blargh"));
@@ -184,16 +185,16 @@ class VolumetricObjectDensityTest
         assertEquals(2.5, v.si(), 1E-12);
 
         // Linear derive
-        VolumetricObjectDensity.Unit twoPerM3 =
-                VolumetricObjectDensity.Unit.per_m3.deriveUnit("2/m3", "two per cubic meter", 2.0, UnitSystem.OTHER);
+        VolumetricObjectDensity.Unit twoPerM3 = (VolumetricObjectDensity.Unit) VolumetricObjectDensity.Unit.per_m3
+                .deriveUnit("2/m3", "2/m3", "two per cubic meter", 2.0, UnitSystem.OTHER, null);
         VolumetricObjectDensity x = new VolumetricObjectDensity(1.0, twoPerM3);
         assertEquals(2.0, x.si(), 1E-12);
 
         // Non-linear derive throws
-        VolumetricObjectDensity.Unit bad =
-                new VolumetricObjectDensity.Unit("g/m3", "g/m3", "grade-like density", new GradeScale(0.01), UnitSystem.OTHER);
+        VolumetricObjectDensity.Unit bad = new VolumetricObjectDensity.Unit("g/m3", "g/m3", "grade-like density",
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { bad.deriveUnit("bad", "bad", "nonlinear derived", 3.0, UnitSystem.OTHER); });
+        { bad.deriveUnit("bad", "bad", "nonlinear derived", 3.0, UnitSystem.OTHER, null); });
 
         // Registry
         assertEquals(VolumetricObjectDensity.Unit.per_m3, Units.resolve(VolumetricObjectDensity.Unit.class, "/m3"));

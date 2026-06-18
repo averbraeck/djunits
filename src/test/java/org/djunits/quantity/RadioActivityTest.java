@@ -129,7 +129,7 @@ class RadioActivityTest
         assertThrows(IllegalArgumentException.class, () -> RadioActivity.valueOf("not-a-number Bq"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> RadioActivity.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> RadioActivity.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> RadioActivity.of(1.0, ""));
@@ -174,14 +174,14 @@ class RadioActivityTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (Bq) -> e.g., "2Bq" (scale 2.0)
-        RadioActivity.Unit twoBq = RadioActivity.Unit.Bq.deriveUnit("2Bq", "2Bq", "two becquerel", 2.0, UnitSystem.OTHER);
+        RadioActivity.Unit twoBq = RadioActivity.Unit.Bq.deriveUnit("2Bq", "2Bq", "two becquerel", 2.0, UnitSystem.OTHER, null);
         RadioActivity x = new RadioActivity(1.0, twoBq); // 1 * 2 Bq == 2 Bq
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         RadioActivity.Unit nonLinear = new RadioActivity.Unit("gBq", "gBq", "grade-like becquerel (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

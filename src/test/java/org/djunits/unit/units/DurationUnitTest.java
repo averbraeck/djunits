@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Duration.Unit test. <p>
+ * Duration.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -75,7 +76,7 @@ public class DurationUnitTest extends AbstractLinearUnitTest<Duration.Unit>
         assertEquals(Duration.Unit.s, Duration.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Duration.ONE, Duration.Unit.s.ofSi(1.0));
 
-        Duration.Unit nonlinearUnit = new Duration.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Duration.Unit nonlinearUnit = new Duration.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

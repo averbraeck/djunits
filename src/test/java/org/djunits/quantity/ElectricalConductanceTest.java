@@ -134,14 +134,14 @@ class ElectricalConductanceTest
 
         // Derive from a linear unit (S) -> should succeed
         ElectricalConductance.Unit twoS =
-                ElectricalConductance.Unit.S.deriveUnit("2S", "2S", "two siemens", 2.0, UnitSystem.OTHER);
+                ElectricalConductance.Unit.S.deriveUnit("2S", "2S", "two siemens", 2.0, UnitSystem.OTHER, null);
         ElectricalConductance x = new ElectricalConductance(1.0, twoS); // 1 * 2 S == 2 S
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         ElectricalConductance.Unit nonLinear = new ElectricalConductance.Unit("gS", "gS", "grade-like siemens (nonlinear)",
-                new GradeScale(0.01), UnitSystem.OTHER);
+                new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2S", "g2S", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2S", "g2S", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

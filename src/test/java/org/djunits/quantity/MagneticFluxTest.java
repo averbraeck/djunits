@@ -14,7 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * MagneticFluxTest tests the MagneticFlux quantity class.<p>
+ * MagneticFluxTest tests the MagneticFlux quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -132,7 +133,7 @@ class MagneticFluxTest
         assertThrows(IllegalArgumentException.class, () -> MagneticFlux.valueOf("not-a-number Wb"));
 
         // of null unit
-        assertThrows(NullPointerException.class, () -> MagneticFlux.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> MagneticFlux.of(1.0, (String) null));
 
         // of empty unit
         assertThrows(IllegalArgumentException.class, () -> MagneticFlux.of(1.0, ""));
@@ -207,15 +208,15 @@ class MagneticFluxTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (Wb) -> kWb (scale 1000)
-        MagneticFlux.Unit kWb = MagneticFlux.Unit.Wb.deriveUnit("kWb", "kWb", "kiloweber", 1000.0, UnitSystem.SI_DERIVED);
+        MagneticFlux.Unit kWb = MagneticFlux.Unit.Wb.deriveUnit("kWb", "kWb", "kiloweber", 1000.0, UnitSystem.SI_DERIVED, null);
         MagneticFlux x = new MagneticFlux(1.0, kWb); // 1 kWb == 1000 Wb
         assertEquals(1000.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
-        MagneticFlux.Unit nonLinear =
-                new MagneticFlux.Unit("gWb", "gWb", "grade-like weber (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+        MagneticFlux.Unit nonLinear = new MagneticFlux.Unit("gWb", "gWb", "grade-like weber (nonlinear)", new GradeScale(0.01),
+                UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("bad", "bad", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
 
         // Registry sanity for some prefixed units
         assertEquals(MagneticFlux.Unit.mWb, Units.resolve(MagneticFlux.Unit.class, "mWb"));

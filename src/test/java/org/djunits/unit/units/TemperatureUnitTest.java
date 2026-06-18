@@ -17,7 +17,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Temperature.Unit test. <p>
+ * Temperature.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -57,11 +58,11 @@ public class TemperatureUnitTest extends AbstractLinearUnitTest<Temperature.Unit
     @Test
     public final void createTempteratureUnit()
     {
-        Temperature.Unit myTU = Temperature.Unit.K.deriveUnit("N", "Newton", 3.0, UnitSystem.OTHER);
+        Temperature.Unit myTU = Temperature.Unit.K.deriveUnit("N", "N", "Newton", 3.0, UnitSystem.OTHER, null);
         assertTrue(null != myTU, "Can create a new TempteratureUnit");
         checkUnitRatioNameAndAbbreviation(myTU, 3.0, 0.0001, "Newton", "N");
         Units.unregister(myTU);
-        
+
         Temperature.Unit myTU2 = new Temperature.Unit("N", "Newton", 3.0, UnitSystem.OTHER);
         assertTrue(null != myTU2, "Can create a new TempteratureUnit");
         checkUnitRatioNameAndAbbreviation(myTU2, 3.0, 0.0001, "Newton", "N");
@@ -78,7 +79,7 @@ public class TemperatureUnitTest extends AbstractLinearUnitTest<Temperature.Unit
         assertEquals(Temperature.Unit.K, TemperatureDifference.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(TemperatureDifference.ONE, Temperature.Unit.K.ofSi(1.0));
 
-        Temperature.Unit nonlinearUnit = new Temperature.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Temperature.Unit nonlinearUnit = new Temperature.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

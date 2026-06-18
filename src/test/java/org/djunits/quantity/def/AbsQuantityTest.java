@@ -16,9 +16,9 @@ import org.djunits.quantity.Direction;
 import org.djunits.quantity.Length;
 import org.djunits.quantity.Position;
 import org.djunits.unit.AbstractUnit;
+import org.djunits.unit.UnitInterface;
 import org.djunits.unit.UnitRuntimeException;
-import org.djunits.unit.scale.IdentityScale;
-import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 import org.junit.jupiter.api.AfterAll;
@@ -40,10 +40,11 @@ import org.junit.jupiter.api.Test;
  * {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)}</li>
  * <li>Stringification and SI-prefix formatting</li>
  * <li>Static helpers: {@link ComparableAbsQuantity#interpolate(ComparableAbsQuantity, ComparableAbsQuantity, double)},
- * {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])}, {@link ComparableAbsQuantity#min(ComparableAbsQuantity, ComparableAbsQuantity[])},
+ * {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])},
+ * {@link ComparableAbsQuantity#min(ComparableAbsQuantity, ComparableAbsQuantity[])},
  * {@link ComparableAbsQuantity#mean(ComparableAbsQuantity, ComparableAbsQuantity[])}</li>
- * <li>Arithmetic with relative quantities: {@link ComparableAbsQuantity#add(Quantity)} and {@link ComparableAbsQuantity#subtract(Quantity)} and
- * {@link ComparableAbsQuantity#subtract(AbsQuantity)}</li>
+ * <li>Arithmetic with relative quantities: {@link ComparableAbsQuantity#add(Quantity)} and
+ * {@link ComparableAbsQuantity#subtract(Quantity)} and {@link ComparableAbsQuantity#subtract(AbsQuantity)}</li>
  * <li>{@code equals}/{@code hashCode} contract</li>
  * </ul>
  * <p>
@@ -156,8 +157,8 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies that the constructor of {@link Position} (as a representative of {@link ComparableAbsQuantity}) rejects {@code null} for
-     * either the relative quantity or the reference.
+     * Verifies that the constructor of {@link Position} (as a representative of {@link ComparableAbsQuantity}) rejects
+     * {@code null} for either the relative quantity or the reference.
      */
     @Test
     void constructorNulls()
@@ -167,8 +168,9 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies that {@link ComparableAbsQuantity#getDisplayUnit()} and {@link ComparableAbsQuantity#setDisplayUnit(org.djunits.unit.UnitInterface)} delegate
-     * correctly to the inner relative quantity and that the setter is fluent.
+     * Verifies that {@link ComparableAbsQuantity#getDisplayUnit()} and
+     * {@link ComparableAbsQuantity#setDisplayUnit(org.djunits.unit.UnitInterface)} delegate correctly to the inner relative
+     * quantity and that the setter is fluent.
      */
     @Test
     void displayUnitAccessors()
@@ -196,7 +198,8 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies {@link ComparableAbsQuantity#getInUnit()} and {@link ComparableAbsQuantity#getInUnit(org.djunits.unit.UnitInterface)}.
+     * Verifies {@link ComparableAbsQuantity#getInUnit()} and
+     * {@link ComparableAbsQuantity#getInUnit(org.djunits.unit.UnitInterface)}.
      */
     @Test
     void getInUnitVariants()
@@ -275,8 +278,8 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies successful parsing via {@link ComparableAbsQuantity#valueOf(String, ComparableAbsQuantity, Reference)} and error branches for
-     * {@code null} parameters, empty text, and unknown units.
+     * Verifies successful parsing via {@link ComparableAbsQuantity#valueOf(String, ComparableAbsQuantity, Reference)} and error
+     * branches for {@code null} parameters, empty text, and unknown units.
      */
     @Test
     void valueOfParses()
@@ -294,8 +297,8 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies successful parsing via {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)} and error branches for
-     * {@code null} parameters, empty unit string, and unknown units.
+     * Verifies successful parsing via {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)} and
+     * error branches for {@code null} parameters, empty unit string, and unknown units.
      */
     @Test
     void ofParses()
@@ -503,8 +506,8 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies {@link ComparableAbsQuantity#add(Quantity)} and {@link ComparableAbsQuantity#subtract(Quantity)} adjust the inner relative quantity
-     * while preserving the absolute reference and the display unit.
+     * Verifies {@link ComparableAbsQuantity#add(Quantity)} and {@link ComparableAbsQuantity#subtract(Quantity)} adjust the
+     * inner relative quantity while preserving the absolute reference and the display unit.
      */
     @Test
     void addSubtractRelative()
@@ -551,8 +554,9 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])} and {@link ComparableAbsQuantity#min(ComparableAbsQuantity, ComparableAbsQuantity[])} for
-     * identical references and that mixing references raises an {@link IllegalArgumentException}.
+     * Verifies {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])} and
+     * {@link ComparableAbsQuantity#min(ComparableAbsQuantity, ComparableAbsQuantity[])} for identical references and that
+     * mixing references raises an {@link IllegalArgumentException}.
      */
     @Test
     void maxMin()
@@ -569,8 +573,8 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies {@link ComparableAbsQuantity#mean(ComparableAbsQuantity, ComparableAbsQuantity[])} for identical references, and ensures that the reference
-     * and display unit of the first argument are preserved. Mixing references must throw.
+     * Verifies {@link ComparableAbsQuantity#mean(ComparableAbsQuantity, ComparableAbsQuantity[])} for identical references, and
+     * ensures that the reference and display unit of the first argument are preserved. Mixing references must throw.
      */
     @Test
     void mean()
@@ -690,20 +694,21 @@ public class AbsQuantityTest
          */
         RelativeExampleQuantityAQxyz(final double value, final RelativeExampleQuantityAQxyz.Unit displayUnit)
         {
-            super(value, displayUnit);
+            super(value, displayUnit, true);
         }
 
         @Override
-        public RelativeExampleQuantityAQxyz instantiateSi(final double siValue)
+        public RelativeExampleQuantityAQxyz instantiateSi(final double siValue,
+                final UnitInterface<RelativeExampleQuantityAQxyz> displayUnit)
         {
             return null;
         }
 
         /** The unit. */
-        static class Unit extends AbstractUnit<Unit, RelativeExampleQuantityAQxyz>
+        static class Unit extends AbstractUnit<RelativeExampleQuantityAQxyz>
         {
             /** BASE. */
-            static final Unit BASE = new Unit("BASE", "BASE", IdentityScale.SCALE, UnitSystem.OTHER);
+            static final Unit BASE = new Unit("BASE", "BASE", 1.0, UnitSystem.OTHER);
 
             /**
              * @param textualAbbreviation abb
@@ -711,7 +716,7 @@ public class AbsQuantityTest
              * @param scale scale
              * @param unitSystem system
              */
-            Unit(final String textualAbbreviation, final String name, final Scale scale, final UnitSystem unitSystem)
+            Unit(final String textualAbbreviation, final String name, final double scale, final UnitSystem unitSystem)
             {
                 super(textualAbbreviation, name, scale, unitSystem);
             }
@@ -729,14 +734,15 @@ public class AbsQuantityTest
             }
 
             @Override
-            public RelativeExampleQuantityAQxyz ofSi(final double si)
+            public RelativeExampleQuantityAQxyz ofSi(final double si,
+                    final UnitInterface<RelativeExampleQuantityAQxyz> displayUnit)
             {
                 return null;
             }
 
             @Override
             public Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-                    final double scaleFactor, final UnitSystem unitSystem)
+                    final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
             {
                 return null;
             }
@@ -747,8 +753,8 @@ public class AbsQuantityTest
     /**
      * Absolute quantity class for test.
      */
-    static class AbsoluteExampleQuantityAQxyz extends
-            ComparableAbsQuantity<AbsoluteExampleQuantityAQxyz, RelativeExampleQuantityAQxyz, AbsoluteExampleQuantityAQxyz.Reference>
+    static class AbsoluteExampleQuantityAQxyz extends ComparableAbsQuantity<AbsoluteExampleQuantityAQxyz,
+            RelativeExampleQuantityAQxyz, AbsoluteExampleQuantityAQxyz.Reference>
     {
         /** */
         private static final long serialVersionUID = 1L;

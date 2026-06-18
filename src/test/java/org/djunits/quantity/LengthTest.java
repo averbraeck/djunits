@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * LengthTest tests the Length quantity class.<p>
+ * LengthTest tests the Length quantity class.
+ * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -113,7 +114,7 @@ class LengthTest
         assertThrows(IllegalArgumentException.class, () -> Length.valueOf("abc m")); // bad number
         assertThrows(IllegalArgumentException.class, () -> Length.valueOf("10 blargh")); // unknown unit
 
-        assertThrows(NullPointerException.class, () -> Length.of(1.0, null));
+        assertThrows(NullPointerException.class, () -> Length.of(1.0, (String) null));
         assertThrows(IllegalArgumentException.class, () -> Length.of(1.0, ""));
         assertThrows(UnitRuntimeException.class, () -> Length.of(1.0, "blargh"));
 
@@ -245,14 +246,14 @@ class LengthTest
         assertEquals(2.5, fromUnit.si(), 1E-12);
 
         // Derive from a linear unit (m) -> should succeed
-        Length.Unit twoM = Length.Unit.m.deriveUnit("2m", "two meter", 2.0, UnitSystem.OTHER);
+        Length.Unit twoM = (Length.Unit) Length.Unit.m.deriveUnit("2m", "2m", "two meter", 2.0, UnitSystem.OTHER, null);
         Length x = new Length(1.0, twoM); // 1 * 2 m == 2 m
         assertEquals(2.0, x.si(), 1E-12);
 
         // Derive from a non-linear unit -> should throw UnitRuntimeException
         Length.Unit nonLinear =
-                new Length.Unit("gm", "gm", "grade-like meter (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER);
+                new Length.Unit("gm", "gm", "grade-like meter (nonlinear)", new GradeScale(0.01), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () ->
-        { nonLinear.deriveUnit("g2m", "nonlinear derived", "nonlinear derived", 2.0, UnitSystem.OTHER); });
+        { nonLinear.deriveUnit("g2m", "nonlinear derived", "nonlinear derived", 2.0, UnitSystem.OTHER, null); });
     }
 }

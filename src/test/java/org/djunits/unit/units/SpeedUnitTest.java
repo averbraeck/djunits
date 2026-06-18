@@ -16,7 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Speed.Unit test. <p>
+ * Speed.Unit test.
+ * <p>
  * Copyright (c) 2013-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
@@ -59,7 +60,7 @@ public class SpeedUnitTest extends AbstractLinearUnitTest<Speed.Unit>
     @Test
     public final void createSpeedUnit()
     {
-        Speed.Unit mySU = Speed.Unit.km_h.deriveUnit("sprtr", "Sprinter", 48, UnitSystem.SI_DERIVED);
+        Speed.Unit mySU = Speed.Unit.km_h.deriveUnit("sprtr", "sprtr", "Sprinter", 48, UnitSystem.SI_DERIVED, null);
         assertTrue(null != mySU, "Can create a new PowerUnit");
         checkUnitRatioNameAndAbbreviation(mySU, 13.3333, 0.0001, "Sprinter", "sprtr");
         Units.unregister(mySU);
@@ -75,7 +76,7 @@ public class SpeedUnitTest extends AbstractLinearUnitTest<Speed.Unit>
         assertEquals(Speed.Unit.m_s, Speed.ONE.getDisplayUnit().getBaseUnit());
         assertEquals(Speed.ONE, Speed.Unit.m_s.ofSi(1.0));
 
-        Speed.Unit nonlinearUnit = new Speed.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+        Speed.Unit nonlinearUnit = new Speed.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }

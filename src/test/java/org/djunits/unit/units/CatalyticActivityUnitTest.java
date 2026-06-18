@@ -50,7 +50,7 @@ public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticA
     public final void createCatalyticActivityUnit()
     {
         CatalyticActivity.Unit myUnit =
-                CatalyticActivity.Unit.SI.deriveUnit("my", "myCatalyticActivity", 1.23, UnitSystem.OTHER);
+                CatalyticActivity.Unit.SI.deriveUnit("my", "my", "myCatalyticActivity", 1.23, UnitSystem.OTHER, null);
         assertTrue(null != myUnit, "Can create a new CatalyticActivityUnit");
         checkUnitRatioNameAndAbbreviation(myUnit, 1.23, 0.0001, "myCatalyticActivity", "my");
         Units.unregister(myUnit);
@@ -67,7 +67,7 @@ public class CatalyticActivityUnitTest extends AbstractLinearUnitTest<CatalyticA
         assertEquals(CatalyticActivity.ONE, CatalyticActivity.Unit.kat.ofSi(1.0));
 
         CatalyticActivity.Unit nonlinearUnit =
-                new CatalyticActivity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER);
+                new CatalyticActivity.Unit("xx", "xx", "xx", new GradeScale(0.1), UnitSystem.OTHER, null);
         assertThrows(UnitRuntimeException.class, () -> nonlinearUnit.deriveUnit("yy", "yy", 0.1, UnitSystem.OTHER));
         Units.unregister(nonlinearUnit);
     }
