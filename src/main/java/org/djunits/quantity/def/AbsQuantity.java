@@ -67,18 +67,6 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
     }
 
     /**
-     * TODO: TEMP: KEEP BRIEFLY.
-     * @param newUnit the new unit
-     * @return the quantity for fluent design
-     */
-    @SuppressWarnings("unchecked")
-    public A setDisplayUnit(final UnitInterface<Q> newUnit)
-    {
-        this.quantity.setDisplayUnit(newUnit);
-        return (A) this;
-    }
-
-    /**
      * Retrieve the relative quantity value in the current display unit.
      * @return the relative quantity value in the current display unit
      */

@@ -203,9 +203,8 @@ public abstract class ComparableAbsQuantity<A extends ComparableAbsQuantity<A, Q
                 zero.getReference().getId(), one.getReference().getId());
         Throw.when(ratio < 0.0 || ratio > 1.0, IllegalArgumentException.class,
                 "ratio for interpolation should be between 0 and 1, but is %f", ratio);
-        Q quantity =
-                zero.getQuantity().instantiateSi(zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio)
-                        .setDisplayUnit(zero.getDisplayUnit());
+        Q quantity = zero.getQuantity().instantiateSi(
+                zero.getInUnit() * (1 - ratio) + one.getInUnit(zero.getDisplayUnit()) * ratio, zero.getDisplayUnit());
         return zero.instantiate(quantity, zero.getReference());
     }
 
