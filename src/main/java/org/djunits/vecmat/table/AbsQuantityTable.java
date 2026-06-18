@@ -71,7 +71,7 @@ public class AbsQuantityTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantity
     @Override
     public AbsQuantityTable<A, Q> transpose()
     {
-        return instantiate(getRelativeVecMat().transpose(), getReference()).setDisplayUnit(getDisplayUnit());
+        return instantiate(getRelativeVecMat().transpose(), getReference());
     }
 
     // ------------------------------------------ OF METHODS ------------------------------------------

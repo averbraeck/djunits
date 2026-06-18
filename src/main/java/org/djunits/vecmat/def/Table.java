@@ -66,7 +66,7 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
      */
     public Q get(final int row, final int col) throws IndexOutOfBoundsException
     {
-        return getDisplayUnit().ofSi(si(row, col)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(si(row, col), getDisplayUnit());
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
      */
     public Q mget(final int mRow, final int mCol) throws IndexOutOfBoundsException
     {
-        return getDisplayUnit().ofSi(msi(mRow, mCol)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(msi(mRow, mCol), getDisplayUnit());
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
         var unit = getDisplayUnit();
         for (int i = 0; i < rows() * cols(); i++)
         {
-            out[i] = unit.ofSi(dataSi[i]).setDisplayUnit(unit);
+            out[i] = unit.ofSi(dataSi[i], unit);
         }
         return out;
     }

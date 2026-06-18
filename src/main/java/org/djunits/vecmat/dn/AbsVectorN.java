@@ -72,7 +72,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         @Override
         public AbsVectorN.Col<A, Q> instantiate(final VectorN.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVectorN.Col<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
+            return new AbsVectorN.Col<>(relativeVector, reference);
         }
 
         @Override
@@ -111,8 +111,8 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <R> the reference type
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit,
-                        final R reference)
+                R extends Reference<R, A, Q>> AbsVectorN.Col<A, Q> ofSi(final double[] dataSi,
+                        final UnitInterface<Q> displayUnit, final R reference)
         {
             return new AbsVectorN.Col<>(VectorN.Col.ofSi(dataSi, displayUnit), reference);
         }
@@ -233,7 +233,7 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         @Override
         public AbsVectorN.Row<A, Q> instantiate(final VectorN.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVectorN.Row<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
+            return new AbsVectorN.Row<>(relativeVector, reference);
         }
 
         @Override
@@ -272,8 +272,8 @@ public abstract class AbsVectorN<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <R> the reference type
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit,
-                        final R reference)
+                R extends Reference<R, A, Q>> AbsVectorN.Row<A, Q> ofSi(final double[] dataSi,
+                        final UnitInterface<Q> displayUnit, final R reference)
         {
             return new AbsVectorN.Row<>(VectorN.Row.ofSi(dataSi, displayUnit), reference);
         }

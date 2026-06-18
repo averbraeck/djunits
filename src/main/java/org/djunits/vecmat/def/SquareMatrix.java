@@ -63,7 +63,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>, M extends SquareMatrix
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
                 newSi[n * i + j] = data[n * j + i];
-        return instantiateSi(newSi).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(newSi, getDisplayUnit());
     }
 
     /**
@@ -162,7 +162,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>, M extends SquareMatrix
      */
     public Q normFrobenius()
     {
-        return getDisplayUnit().ofSi(Math.sqrt(Math2.sumSqr(unsafeSiArray()))).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.sqrt(Math2.sumSqr(unsafeSiArray())), getDisplayUnit());
     }
 
     /**

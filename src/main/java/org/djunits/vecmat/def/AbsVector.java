@@ -100,7 +100,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      */
     public A get(final int index) throws IndexOutOfBoundsException
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(si(index))).setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(si(index), getDisplayUnit()));
     }
 
     /**
@@ -111,7 +111,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      */
     public A mget(final int mIndex) throws IndexOutOfBoundsException
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(si(mIndex - 1))).setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(si(mIndex - 1), getDisplayUnit()));
     }
 
     /**

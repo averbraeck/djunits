@@ -51,10 +51,9 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
     }
 
     @Override
-    public MatrixNxN<Q> instantiateSi(final double[] siNew)
+    public MatrixNxN<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
-        return new MatrixNxN<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit().getBaseUnit())
-                .setDisplayUnit(getDisplayUnit());
+        return new MatrixNxN<Q>(this.dataGridSi.instantiateNew(siNew), displayUnit);
     }
 
     @Override
@@ -399,6 +398,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
      * @return a {@code Matrix1x1} with identical SI data and display unit
      * @throws IllegalStateException if this matrix is not 1 x 1
      */
+    @Override
     public Matrix1x1<Q> asMatrix1x1()
     {
         Throw.when(order() != 1, IllegalStateException.class, "asMatrix1x1() called, but matrix is no 1x1 but %dx%d", rows(),
@@ -411,6 +411,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
      * @return a {@code Matrix2x2} with identical SI data and display unit
      * @throws IllegalStateException if this matrix is not 2 x 2
      */
+    @Override
     public Matrix2x2<Q> asMatrix2x2()
     {
         Throw.when(order() != 2, IllegalStateException.class, "asMatrix2x2() called, but matrix is no 2x2 but %dx%d", rows(),
@@ -423,6 +424,7 @@ public class MatrixNxN<Q extends Quantity<Q>> extends SquareMatrix<Q, MatrixNxN<
      * @return a {@code Matrix3x3} with identical SI data and display unit
      * @throws IllegalStateException if this matrix is not 3 x 3
      */
+    @Override
     public Matrix3x3<Q> asMatrix3x3()
     {
         Throw.when(order() != 3, IllegalStateException.class, "asMatrix3x3() called, but matrix is no 3x3 but %dx%d", rows(),

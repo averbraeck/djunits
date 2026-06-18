@@ -87,7 +87,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
      */
     public Q get(final int index) throws IndexOutOfBoundsException
     {
-        return getDisplayUnit().ofSi(si(index)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(si(index), getDisplayUnit());
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
      */
     public Q mget(final int mIndex) throws IndexOutOfBoundsException
     {
-        return getDisplayUnit().ofSi(si(mIndex - 1)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(si(mIndex - 1), getDisplayUnit());
     }
 
     /**

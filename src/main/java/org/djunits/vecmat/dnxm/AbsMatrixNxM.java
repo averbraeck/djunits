@@ -69,7 +69,7 @@ public class AbsMatrixNxM<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     @Override
     public AbsMatrixNxM<A, Q> transpose()
     {
-        return instantiate(getRelativeVecMat().transpose(), getReference()).setDisplayUnit(getDisplayUnit());
+        return instantiate(getRelativeVecMat().transpose(), getReference());
     }
 
     // ------------------------------------------ OF METHODS ------------------------------------------

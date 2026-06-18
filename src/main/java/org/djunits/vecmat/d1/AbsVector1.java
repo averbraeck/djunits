@@ -38,7 +38,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
     @Override
     public AbsVector1<A, Q> instantiate(final Vector1<Q> relativeVector, final Reference<?, A, Q> reference)
     {
-        return new AbsVector1<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
+        return new AbsVector1<>(relativeVector, reference);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <Q> the quantity type
      * @param <R> the reference type
      */
-    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final double xInUnit, final UnitInterface<Q> unit, final R reference)
+    public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> of(
+            final double xInUnit, final UnitInterface<Q> unit, final R reference)
     {
         return new AbsVector1<>(Vector1.of(xInUnit, unit), reference);
     }

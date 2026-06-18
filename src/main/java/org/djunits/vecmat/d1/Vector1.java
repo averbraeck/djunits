@@ -45,19 +45,20 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     /**
      * Return a 1-vector with x value in SI or BASE units.
      * @param xSiNew the x value in SI or BASE units
+     * @param displayUnit the display unit to use
      * @return a new column or row vector with adapted x and y values
      */
-    public Vector1<Q> instantiateSi(final double xSiNew)
+    public Vector1<Q> instantiateSi(final double xSiNew, final UnitInterface<Q> displayUnit)
     {
-        return new Vector1<Q>(xSiNew, getDisplayUnit());
+        return new Vector1<Q>(xSiNew, displayUnit);
     }
 
     @Override
-    public Vector1<Q> instantiateSi(final double[] siNew)
+    public Vector1<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
         Throw.when(siNew.length != 1, IllegalArgumentException.class, "Size of new data for Vector1 != 1, but %d",
                 siNew.length);
-        return instantiateSi(siNew[0]);
+        return new Vector1<Q>(siNew[0], displayUnit);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     @Override
     public Vector1<Q> transpose()
     {
-        return instantiateSi(this.xSi);
+        return instantiateSi(this.xSi, getDisplayUnit());
     }
 
     @Override
@@ -122,7 +123,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     {
         final double[] si = new double[] {this.xSi};
         final UnitInterface<Q> frozenDisplayUnit = getDisplayUnit(); // capture once
-        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
+        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v, frozenDisplayUnit)).iterator();
     }
 
     @Override
@@ -163,61 +164,61 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      */
     public Q x()
     {
-        return getDisplayUnit().ofSi(this.xSi).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(this.xSi, getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> scaleBy(final double factor)
     {
-        return instantiateSi(this.xSi * factor);
+        return instantiateSi(this.xSi * factor, getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> add(final Vector1<Q> other)
     {
-        return instantiateSi(this.xSi + other.xSi());
+        return instantiateSi(this.xSi + other.xSi(), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> subtract(final Vector1<Q> other)
     {
-        return instantiateSi(this.xSi - other.xSi());
+        return instantiateSi(this.xSi - other.xSi(), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> negate()
     {
-        return instantiateSi(-this.xSi);
+        return instantiateSi(-this.xSi, getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> abs()
     {
-        return instantiateSi(Math.abs(this.xSi));
+        return instantiateSi(Math.abs(this.xSi), getDisplayUnit());
     }
 
     @Override
     public Q normL1()
     {
-        return getDisplayUnit().ofSi(Math.abs(this.xSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.abs(this.xSi), getDisplayUnit());
     }
 
     @Override
     public Q normL2()
     {
-        return getDisplayUnit().ofSi(Math.abs(this.xSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.abs(this.xSi), getDisplayUnit());
     }
 
     @Override
     public Q normLp(final int p)
     {
-        return getDisplayUnit().ofSi(Math.abs(this.xSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.abs(this.xSi), getDisplayUnit());
     }
 
     @Override
     public Q normLinf()
     {
-        return getDisplayUnit().ofSi(Math.abs(this.xSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.abs(this.xSi), getDisplayUnit());
     }
 
     @Override
@@ -253,13 +254,13 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     @Override
     public Vector1<Q> add(final Q increment)
     {
-        return instantiateSi(this.xSi + increment.si());
+        return instantiateSi(this.xSi + increment.si(), getDisplayUnit());
     }
 
     @Override
     public Vector1<Q> subtract(final Q decrement)
     {
-        return instantiateSi(this.xSi - decrement.si());
+        return instantiateSi(this.xSi - decrement.si(), getDisplayUnit());
     }
 
     @Override

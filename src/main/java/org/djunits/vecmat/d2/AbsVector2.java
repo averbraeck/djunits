@@ -69,7 +69,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         @Override
         public AbsVector2.Col<A, Q> instantiate(final Vector2.Col<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVector2.Col<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
+            return new AbsVector2.Col<>(relativeVector, reference);
         }
 
         @Override
@@ -265,7 +265,7 @@ public abstract class AbsVector2<A extends AbsQuantity<A, Q, ?>, Q extends Quant
         @Override
         public AbsVector2.Row<A, Q> instantiate(final Vector2.Row<Q> relativeVector, final Reference<?, A, Q> reference)
         {
-            return new AbsVector2.Row<>(relativeVector, reference).setDisplayUnit(getDisplayUnit());
+            return new AbsVector2.Row<>(relativeVector, reference);
         }
 
         @Override

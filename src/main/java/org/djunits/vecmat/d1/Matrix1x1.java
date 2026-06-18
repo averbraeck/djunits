@@ -39,9 +39,9 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     }
 
     @Override
-    public Matrix1x1<Q> instantiateSi(final double[] siNew)
+    public Matrix1x1<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
-        return new Matrix1x1<Q>(siNew, getDisplayUnit());
+        return new Matrix1x1<Q>(siNew, displayUnit);
     }
 
     @Override

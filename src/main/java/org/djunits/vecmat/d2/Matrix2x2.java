@@ -36,9 +36,9 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     }
 
     @Override
-    public Matrix2x2<Q> instantiateSi(final double[] siNew)
+    public Matrix2x2<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
-        return new Matrix2x2<Q>(siNew, getDisplayUnit());
+        return new Matrix2x2<Q>(siNew, displayUnit);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class Matrix2x2<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     @Override
     public Vector2.Col<Q> getDiagonalVector() throws IllegalStateException
     {
-        return new Vector2.Col<Q>(si(0, 0), si(1, 1), getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+        return new Vector2.Col<Q>(si(0, 0), si(1, 1), getDisplayUnit());
     }
 
     @Override

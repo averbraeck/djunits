@@ -68,7 +68,7 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
      */
     public A get(final int row, final int col) throws IndexOutOfBoundsException
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(si(row, col))).setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(si(row, col), getDisplayUnit()));
     }
 
     /**
@@ -80,7 +80,7 @@ public abstract class AbsTable<A extends AbsQuantity<A, Q, ?>, Q extends Quantit
      */
     public A mget(final int mRow, final int mCol) throws IndexOutOfBoundsException
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(msi(mRow, mCol))).setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(msi(mRow, mCol), getDisplayUnit()));
     }
 
     /**

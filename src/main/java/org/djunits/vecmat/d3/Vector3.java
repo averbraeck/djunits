@@ -64,16 +64,17 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      * @param xSiNew the x value to use
      * @param ySiNew the y value to use
      * @param zSiNew the z value to use
+     * @param displayUnit the displayUnit for this Vector
      * @return a new column or row vector with adapted x, y and z values
      */
-    protected abstract V instantiateSi(double xSiNew, double ySiNew, double zSiNew);
+    protected abstract V instantiateSi(double xSiNew, double ySiNew, double zSiNew, UnitInterface<Q> displayUnit);
 
     @Override
-    public V instantiateSi(final double[] siNew)
+    public V instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
         Throw.when(siNew.length != 3, IllegalArgumentException.class, "Size of new data for Vector3 != 3, but %d",
                 siNew.length);
-        return instantiateSi(siNew[0], siNew[1], siNew[2]);
+        return instantiateSi(siNew[0], siNew[1], siNew[2], displayUnit);
     }
 
     @Override
@@ -99,7 +100,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
     {
         final double[] si = new double[] {this.xSi, this.ySi, this.zSi};
         final UnitInterface<Q> frozenDisplayUnit = getDisplayUnit(); // capture once
-        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
+        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v, frozenDisplayUnit)).iterator();
     }
 
     @Override
@@ -160,7 +161,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      */
     public Q x()
     {
-        return getDisplayUnit().ofSi(this.xSi).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(this.xSi, getDisplayUnit());
     }
 
     /**
@@ -169,7 +170,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      */
     public Q y()
     {
-        return getDisplayUnit().ofSi(this.ySi).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(this.ySi, getDisplayUnit());
     }
 
     /**
@@ -178,7 +179,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      */
     public Q z()
     {
-        return getDisplayUnit().ofSi(this.zSi).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(this.zSi, getDisplayUnit());
     }
 
     @Override
@@ -193,101 +194,99 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
     @Override
     public V scaleBy(final double factor)
     {
-        return instantiateSi(this.xSi * factor, this.ySi * factor, this.zSi * factor);
+        return instantiateSi(this.xSi * factor, this.ySi * factor, this.zSi * factor, getDisplayUnit());
     }
 
     @Override
     public V add(final V other)
     {
-        return instantiateSi(this.xSi + other.xSi(), this.ySi + other.ySi(), this.zSi + other.zSi());
+        return instantiateSi(this.xSi + other.xSi(), this.ySi + other.ySi(), this.zSi + other.zSi(), getDisplayUnit());
     }
 
     @Override
     public V subtract(final V other)
     {
-        return instantiateSi(this.xSi - other.xSi(), this.ySi - other.ySi(), this.zSi - other.zSi());
+        return instantiateSi(this.xSi - other.xSi(), this.ySi - other.ySi(), this.zSi - other.zSi(), getDisplayUnit());
     }
 
     @Override
     public V negate()
     {
-        return instantiateSi(-this.xSi, -this.ySi, -this.zSi);
+        return instantiateSi(-this.xSi, -this.ySi, -this.zSi, getDisplayUnit());
     }
 
     @Override
     public V abs()
     {
-        return instantiateSi(Math.abs(this.xSi), Math.abs(this.ySi), Math.abs(this.zSi));
+        return instantiateSi(Math.abs(this.xSi), Math.abs(this.ySi), Math.abs(this.zSi), getDisplayUnit());
     }
 
     @Override
     public Q normL1()
     {
-        return getDisplayUnit().ofSi(Math.abs(this.xSi) + Math.abs(this.ySi) + Math.abs(this.zSi))
-                .setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.abs(this.xSi) + Math.abs(this.ySi) + Math.abs(this.zSi), getDisplayUnit());
     }
 
     @Override
     public Q normL2()
     {
-        return getDisplayUnit().ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi + this.zSi * this.zSi))
-                .setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.sqrt(this.xSi * this.xSi + this.ySi * this.ySi + this.zSi * this.zSi),
+                getDisplayUnit());
     }
 
     @Override
     public Q normLp(final int p)
     {
         return getDisplayUnit().ofSi(Math.pow(
-                Math.pow(Math.abs(this.xSi), p) + Math.pow(Math.abs(this.ySi), p) + Math.pow(Math.abs(this.zSi), p), 1.0 / p))
-                .setDisplayUnit(getDisplayUnit());
+                Math.pow(Math.abs(this.xSi), p) + Math.pow(Math.abs(this.ySi), p) + Math.pow(Math.abs(this.zSi), p), 1.0 / p));
     }
 
     @Override
     public Q normLinf()
     {
-        return getDisplayUnit().ofSi(Math2.maxAbs(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.maxAbs(this.xSi, this.ySi, this.zSi), getDisplayUnit());
     }
 
     @Override
     public Q mean()
     {
-        return getDisplayUnit().ofSi((this.xSi + this.ySi + this.zSi) / 3.0).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi((this.xSi + this.ySi + this.zSi) / 3.0, getDisplayUnit());
     }
 
     @Override
     public Q min()
     {
-        return getDisplayUnit().ofSi(Math2.min(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.min(this.xSi, this.ySi, this.zSi), getDisplayUnit());
     }
 
     @Override
     public Q max()
     {
-        return getDisplayUnit().ofSi(Math2.max(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.max(this.xSi, this.ySi, this.zSi), getDisplayUnit());
     }
 
     @Override
     public Q median()
     {
-        return getDisplayUnit().ofSi(Math2.median(this.xSi, this.ySi, this.zSi)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.median(this.xSi, this.ySi, this.zSi), getDisplayUnit());
     }
 
     @Override
     public Q sum()
     {
-        return getDisplayUnit().ofSi(this.xSi + this.ySi + this.zSi).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(this.xSi + this.ySi + this.zSi, getDisplayUnit());
     }
 
     @Override
     public V add(final Q increment)
     {
-        return instantiateSi(this.xSi + increment.si(), this.ySi + increment.si(), this.zSi + increment.si());
+        return instantiateSi(this.xSi + increment.si(), this.ySi + increment.si(), this.zSi + increment.si(), getDisplayUnit());
     }
 
     @Override
     public V subtract(final Q decrement)
     {
-        return instantiateSi(this.xSi - decrement.si(), this.ySi - decrement.si(), this.zSi - decrement.si());
+        return instantiateSi(this.xSi - decrement.si(), this.ySi - decrement.si(), this.zSi - decrement.si(), getDisplayUnit());
     }
 
     @Override
@@ -374,9 +373,10 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         }
 
         @Override
-        protected Vector3.Col<Q> instantiateSi(final double xSi, final double ySi, final double zSi)
+        protected Vector3.Col<Q> instantiateSi(final double xSi, final double ySi, final double zSi,
+                final UnitInterface<Q> displayUnit)
         {
-            return new Vector3.Col<>(xSi, ySi, zSi, getDisplayUnit());
+            return new Vector3.Col<>(xSi, ySi, zSi, displayUnit);
         }
 
         @Override
@@ -593,9 +593,10 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
         }
 
         @Override
-        protected Vector3.Row<Q> instantiateSi(final double xSi, final double ySi, final double zSi)
+        protected Vector3.Row<Q> instantiateSi(final double xSi, final double ySi, final double zSi,
+                final UnitInterface<Q> displayUnit)
         {
-            return new Vector3.Row<>(xSi, ySi, zSi, getDisplayUnit());
+            return new Vector3.Row<>(xSi, ySi, zSi, displayUnit);
         }
 
         @Override

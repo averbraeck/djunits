@@ -47,9 +47,9 @@ public class QuantityTable<Q extends Quantity<Q>>
     }
 
     @Override
-    public QuantityTable<Q> instantiateSi(final double[] siNew)
+    public QuantityTable<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
-        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit());
+        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(siNew), displayUnit);
     }
 
     @Override
@@ -156,11 +156,10 @@ public class QuantityTable<Q extends Quantity<Q>>
         int rows = rows();
         int cols = cols();
         final UnitInterface<Q> displayUnit = getDisplayUnit();
-        final UnitInterface<Q> baseUnit = displayUnit.getBaseUnit();
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
                 newSi[c * rows + r] = data[r * cols + c];
-        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(newSi, cols, rows), baseUnit).setDisplayUnit(displayUnit);
+        return new QuantityTable<Q>(this.dataGridSi.instantiateNew(newSi, cols, rows), displayUnit);
     }
 
     // --------------------------------------- EQUALS AND HASHCODE ---------------------------------

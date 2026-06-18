@@ -48,7 +48,7 @@ public abstract class AbsSquareMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     @Override
     public MA transpose()
     {
-        return instantiateSi(getRelativeVecMat().transpose().unsafeSiArray(), getReference()).setDisplayUnit(getDisplayUnit());
+        return instantiateSi(getRelativeVecMat().transpose().unsafeSiArray(), getReference(), getDisplayUnit());
     }
 
     /**

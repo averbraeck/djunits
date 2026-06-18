@@ -53,9 +53,9 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
     }
 
     @Override
-    public MatrixNxM<Q> instantiateSi(final double[] siNew)
+    public MatrixNxM<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
-        return new MatrixNxM<Q>(this.dataGridSi.instantiateNew(siNew), getDisplayUnit());
+        return new MatrixNxM<Q>(this.dataGridSi.instantiateNew(siNew), displayUnit);
     }
 
     @Override

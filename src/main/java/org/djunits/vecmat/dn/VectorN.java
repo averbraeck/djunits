@@ -58,7 +58,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     {
         final double[] si = this.dataSi.unsafeSiArray();
         final UnitInterface<Q> frozenDisplayUnit = getDisplayUnit(); // capture once
-        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
+        return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v, frozenDisplayUnit)).iterator();
     }
 
     @Override
@@ -66,14 +66,14 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
     {
         final double[] siArray = this.dataSi.unsafeSiArray();
         final UnitInterface<Q> frozenDisplayUnit = getDisplayUnit(); // capture once
-        final Q first = frozenDisplayUnit.ofSi(siArray[0]).setDisplayUnit(frozenDisplayUnit);
+        final Q first = frozenDisplayUnit.ofSi(siArray[0], frozenDisplayUnit);
         final Class<?> qClass = first.getClass();
         @SuppressWarnings("unchecked")
         final Q[] out = (Q[]) Array.newInstance(qClass, siArray.length);
         out[0] = first;
         for (int i = 1; i < siArray.length; i++)
         {
-            out[i] = frozenDisplayUnit.ofSi(siArray[i]).setDisplayUnit(frozenDisplayUnit);
+            out[i] = frozenDisplayUnit.ofSi(siArray[i], frozenDisplayUnit);
         }
         return out;
     }
@@ -86,7 +86,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             n += Math.abs(d);
         }
-        return getDisplayUnit().ofSi(n).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(n, getDisplayUnit());
     }
 
     @Override
@@ -97,7 +97,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             n += d * d;
         }
-        return getDisplayUnit().ofSi(Math.sqrt(n)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.sqrt(n), getDisplayUnit());
     }
 
     @Override
@@ -108,7 +108,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             n += Math.pow(Math.abs(d), p);
         }
-        return getDisplayUnit().ofSi(Math.pow(n, 1.0 / p)).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math.pow(n, 1.0 / p), getDisplayUnit());
     }
 
     @Override
@@ -119,7 +119,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         {
             max = Math.max(Math.abs(d), max);
         }
-        return getDisplayUnit().ofSi(max).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(max, getDisplayUnit());
     }
 
     @Override
@@ -203,10 +203,9 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         }
 
         @Override
-        public VectorN.Col<Q> instantiateSi(final double[] data)
+        public VectorN.Col<Q> instantiateSi(final double[] data, final UnitInterface<Q> displayUnit)
         {
-            return new VectorN.Col<Q>(this.dataSi.instantiateNew(data), getDisplayUnit().getBaseUnit())
-                    .setDisplayUnit(getDisplayUnit());
+            return new VectorN.Col<Q>(this.dataSi.instantiateNew(data), displayUnit);
         }
 
         @Override
@@ -237,7 +236,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         public VectorN.Row<Q> transpose()
         {
             var newSi = this.dataSi.instantiateNew(unsafeSiArray(), cols(), rows());
-            return new VectorN.Row<Q>(newSi, getDisplayUnit().getBaseUnit()).setDisplayUnit(getDisplayUnit());
+            return new VectorN.Row<Q>(newSi, getDisplayUnit());
         }
 
         @Override
@@ -299,8 +298,7 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          */
         public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit)
         {
-            return new VectorN.Col<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit.getBaseUnit())
-                    .setDisplayUnit(displayUnit);
+            return new VectorN.Col<Q>(new DenseDoubleDataSi(dataSi.clone(), dataSi.length, 1), displayUnit);
         }
 
         /**
@@ -331,9 +329,10 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new column VectorN with a unit, based on a DataGridSi storage object that contains SI data
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi, final UnitInterface<Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Col<Q> ofSi(final DataGridSi<?> dataSi,
+                final UnitInterface<Q> displayUnit)
         {
-            return new VectorN.Col<Q>(dataSi, displayUnit.getBaseUnit()).setDisplayUnit(displayUnit);
+            return new VectorN.Col<Q>(dataSi, displayUnit);
         }
 
         /**
@@ -412,9 +411,9 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
         }
 
         @Override
-        public VectorN.Row<Q> instantiateSi(final double[] data)
+        public VectorN.Row<Q> instantiateSi(final double[] data, final UnitInterface<Q> displayUnit)
         {
-            return new VectorN.Row<>(this.dataSi.instantiateNew(data), getDisplayUnit());
+            return new VectorN.Row<>(this.dataSi.instantiateNew(data), displayUnit);
         }
 
         @Override
@@ -532,7 +531,8 @@ public abstract class VectorN<Q extends Quantity<Q>, V extends VectorN<Q, V, SI,
          * @return a new row VectorN with a unit, based on a DataGridSi storage object that contains SI data
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi, final UnitInterface<Q> displayUnit)
+        public static <Q extends Quantity<Q>> VectorN.Row<Q> ofSi(final DataGridSi<?> dataSi,
+                final UnitInterface<Q> displayUnit)
         {
             return new VectorN.Row<Q>(dataSi, displayUnit);
         }

@@ -36,9 +36,9 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
     }
 
     @Override
-    public Matrix3x3<Q> instantiateSi(final double[] siNew)
+    public Matrix3x3<Q> instantiateSi(final double[] siNew, final UnitInterface<Q> displayUnit)
     {
-        return new Matrix3x3<Q>(siNew, getDisplayUnit());
+        return new Matrix3x3<Q>(siNew, displayUnit);
     }
 
     @Override
