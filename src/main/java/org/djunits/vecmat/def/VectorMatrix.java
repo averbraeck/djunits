@@ -45,7 +45,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     private static final long serialVersionUID = 600L;
 
     /** The display unit. */
-    private UnitInterface<Q> displayUnit;
+    private final UnitInterface<Q> displayUnit;
 
     /**
      * Create a new vector or matrix with a unit.
@@ -64,19 +64,6 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     }
 
     /**
-     * TODO: TEMP: KEEP BRIEFLY.
-     * @param newUnit the new unit
-     * @return the quantity for fluent design
-     */
-    @SuppressWarnings("unchecked")
-    public VM setDisplayUnit(final UnitInterface<Q> newUnit)
-    {
-        Throw.whenNull(newUnit, "newUnit");
-        this.displayUnit = newUnit;
-        return (VM) this;
-    }
-
-    /**
      * Return the number of rows.
      * @return the number of rows
      */
@@ -91,9 +78,11 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     /**
      * Return a new vector or matrix with the given SI or BASE values.
      * @param siNew the values for the new vector or matrix in row-major format
+     * @param displayUnit the display unit to use for the vector or matrix
      * @return a new matrix with the provided SI or BASE values
      */
-    public abstract VM instantiateSi(double[] siNew);
+    @SuppressWarnings("checkstyle:hiddenfield")
+    public abstract VM instantiateSi(double[] siNew, UnitInterface<Q> displayUnit);
 
     /**
      * Return a new vector or matrix in SI-units with the given SI or BASE values.
@@ -135,7 +124,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     public Q mean()
     {
         double[] siArray = unsafeSiArray();
-        return getDisplayUnit().ofSi(Math2.sum(siArray) / siArray.length).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.sum(siArray) / siArray.length, getDisplayUnit());
     }
 
     /**
@@ -144,7 +133,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q min()
     {
-        return getDisplayUnit().ofSi(Math2.min(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.min(unsafeSiArray()), getDisplayUnit());
     }
 
     /**
@@ -153,7 +142,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q max()
     {
-        return getDisplayUnit().ofSi(Math2.max(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.max(unsafeSiArray()), getDisplayUnit());
     }
 
     /**
@@ -162,7 +151,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q median()
     {
-        return getDisplayUnit().ofSi(Math2.median(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.median(unsafeSiArray()), getDisplayUnit());
     }
 
     /**
@@ -171,7 +160,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public Q sum()
     {
-        return getDisplayUnit().ofSi(Math2.sum(unsafeSiArray())).setDisplayUnit(getDisplayUnit());
+        return getDisplayUnit().ofSi(Math2.sum(unsafeSiArray()), getDisplayUnit());
     }
 
     /**
@@ -181,7 +170,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public VM add(final Q increment)
     {
-        return instantiateSi(ArrayMath.add(unsafeSiArray(), increment.si()));
+        return instantiateSi(ArrayMath.add(unsafeSiArray(), increment.si()), getDisplayUnit());
     }
 
     /**
@@ -191,19 +180,19 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      */
     public VM subtract(final Q decrement)
     {
-        return instantiateSi(ArrayMath.add(unsafeSiArray(), -decrement.si()));
+        return instantiateSi(ArrayMath.add(unsafeSiArray(), -decrement.si()), getDisplayUnit());
     }
 
     @Override
     public VM add(final VM other)
     {
-        return instantiateSi(ArrayMath.add(unsafeSiArray(), other.unsafeSiArray()));
+        return instantiateSi(ArrayMath.add(unsafeSiArray(), other.unsafeSiArray()), getDisplayUnit());
     }
 
     @Override
     public VM subtract(final VM other)
     {
-        return instantiateSi(ArrayMath.subtract(unsafeSiArray(), other.unsafeSiArray()));
+        return instantiateSi(ArrayMath.subtract(unsafeSiArray(), other.unsafeSiArray()), getDisplayUnit());
     }
 
     @Override
@@ -215,13 +204,13 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     @Override
     public VM abs()
     {
-        return instantiateSi(ArrayMath.abs(unsafeSiArray()));
+        return instantiateSi(ArrayMath.abs(unsafeSiArray()), getDisplayUnit());
     }
 
     @Override
     public VM scaleBy(final double factor)
     {
-        return instantiateSi(ArrayMath.scaleBy(unsafeSiArray(), factor));
+        return instantiateSi(ArrayMath.scaleBy(unsafeSiArray(), factor), getDisplayUnit());
     }
 
     /**
@@ -478,5 +467,5 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     {
         return format();
     }
-    
+
 }
