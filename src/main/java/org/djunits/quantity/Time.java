@@ -1,7 +1,7 @@
 package org.djunits.quantity;
 
-import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.AbstractReference;
+import org.djunits.quantity.def.ComparableAbsQuantity;
 import org.djunits.quantity.def.Quantity;
 
 /**
@@ -19,14 +19,16 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Time quantity with an SI or base value and a display unit.and a reference point.
-     * @param siValue the duration value, expressed in the SI unit, relative to the reference point
-     * @param displayUnit the display unit to use
+     * Instantiate a Time quantity with an SI or base value, or a value expressed in a unit, and a reference point.
+     * @param value the duration value, either expressed in the SI unit, or in the provided unit, relative to the reference
+     *            point
+     * @param unit the duration display unit or unit
      * @param reference the reference point of this time
+     * @param useSi when true, value is taken as the SI value; when false, value is expressed in the unit
      */
-    public Time(final double siValue, final Duration.Unit displayUnit, final Reference reference)
+    public Time(final double value, final Duration.Unit unit, final Reference reference, final boolean useSi)
     {
-        super(new Duration(siValue, displayUnit), reference);
+        super(new Duration(value, unit, useSi), reference);
     }
 
     /**
@@ -47,7 +49,7 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
      */
     public static Time ofSi(final double si, final Reference reference)
     {
-        return new Time(si, Duration.Unit.SI, reference);
+        return new Time(si, Duration.Unit.SI, reference, true);
     }
 
     @Override
@@ -89,19 +91,19 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
     public Duration subtract(final Time other)
     {
         var otherRef = other.relativeTo(getReference());
-        return Duration.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
+        return Duration.ofSi(si() - otherRef.si(), getQuantity().getDisplayUnit());
     }
 
     @Override
     public Time add(final Duration other)
     {
-        return new Time(Duration.ofSi(si() + other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Time(Duration.ofSi(si() + other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     @Override
     public Time subtract(final Duration other)
     {
-        return new Time(Duration.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Time(Duration.ofSi(si() - other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     /**

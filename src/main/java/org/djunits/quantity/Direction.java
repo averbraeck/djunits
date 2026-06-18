@@ -20,14 +20,15 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Direction quantity with an SI or base value and a display unit.and a reference point.
-     * @param siValue the angle value, expressed in the SI unit, relative to the reference point
-     * @param displayUnit the angle display unit
+     * Instantiate a Direction quantity with an SI or base value, or a value expressed in a unit, and a reference point.
+     * @param value the angle value, either expressed in the SI unit, or in the provided unit, relative to the reference point
+     * @param unit the angle display unit or unit
      * @param reference the reference point of this direction
+     * @param useSi when true, value is taken as the SI value; when false, value is expressed in the unit
      */
-    public Direction(final double siValue, final Angle.Unit displayUnit, final Reference reference)
+    public Direction(final double value, final Angle.Unit unit, final Reference reference, final boolean useSi)
     {
-        super(new Angle(siValue, displayUnit), reference);
+        super(new Angle(value, unit, useSi), reference);
     }
 
     /**
@@ -48,7 +49,7 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
      */
     public static Direction ofSi(final double si, final Reference reference)
     {
-        return new Direction(si, Angle.Unit.SI, reference);
+        return new Direction(si, Angle.Unit.SI, reference, true);
     }
 
     @Override
@@ -90,19 +91,19 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     public Angle subtract(final Direction other)
     {
         var otherRef = other.relativeTo(getReference());
-        return Angle.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
+        return Angle.ofSi(si() - otherRef.si(), getQuantity().getDisplayUnit());
     }
 
     @Override
     public Direction add(final Angle other)
     {
-        return new Direction(Angle.ofSi(si() + other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Direction(Angle.ofSi(si() + other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     @Override
     public Direction subtract(final Angle other)
     {
-        return new Direction(Angle.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Direction(Angle.ofSi(si() - other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     /**

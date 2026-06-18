@@ -142,7 +142,8 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
      */
     public final Temperature add(final Temperature absoluteTemperature)
     {
-        return absoluteTemperature.add(this).setDisplayUnit(getDisplayUnit());
+        return new Temperature(new TemperatureDifference(absoluteTemperature.si() + si(), getDisplayUnit(), true),
+                absoluteTemperature.getReference());
     }
 
     /**

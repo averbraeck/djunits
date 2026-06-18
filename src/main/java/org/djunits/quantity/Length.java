@@ -150,7 +150,8 @@ public class Length extends Quantity<Length>
      */
     public final Position add(final Position position)
     {
-        return position.add(this).setDisplayUnit(getDisplayUnit());
+       return new Position(new Length(position.si() + si(), getDisplayUnit(), true), position.getReference());
+
     }
 
     /**

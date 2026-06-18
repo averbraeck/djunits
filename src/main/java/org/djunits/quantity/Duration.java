@@ -152,7 +152,7 @@ public class Duration extends Quantity<Duration>
      */
     public final Time add(final Time time)
     {
-        return time.add(this).setDisplayUnit(getDisplayUnit());
+        return new Time(new Duration(time.si() + si(), getDisplayUnit(), true), time.getReference());
     }
 
     /**

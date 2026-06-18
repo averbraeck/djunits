@@ -18,14 +18,15 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
     private static final long serialVersionUID = 600L;
 
     /**
-     * Instantiate a Position quantity with an SI or base value and a display unit.and a reference point.
-     * @param siValue the length value, expressed in the SI unit, relative to the reference point
-     * @param displayUnit the display unit to use
+     * Instantiate a Position quantity with an SI or base value, or a value expressed in a unit, and a reference point.
+     * @param value the length value, either expressed in the SI unit, or in the provided unit, relative to the reference point
+     * @param unit the length display unit or unit
      * @param reference the reference point of this position
+     * @param useSi when true, value is taken as the SI value; when false, value is expressed in the unit
      */
-    public Position(final double siValue, final Length.Unit displayUnit, final Reference reference)
+    public Position(final double value, final Length.Unit unit, final Reference reference, final boolean useSi)
     {
-        super(new Length(siValue, displayUnit), reference);
+        super(new Length(value, unit, useSi), reference);
     }
 
     /**
@@ -46,7 +47,7 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
      */
     public static Position ofSi(final double si, final Reference reference)
     {
-        return new Position(si, Length.Unit.SI, reference);
+        return new Position(si, Length.Unit.SI, reference, true);
     }
 
     @Override
@@ -88,19 +89,19 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
     public Length subtract(final Position other)
     {
         var otherRef = other.relativeTo(getReference());
-        return Length.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
+        return Length.ofSi(si() - otherRef.si(), getQuantity().getDisplayUnit());
     }
 
     @Override
     public Position add(final Length other)
     {
-        return new Position(Length.ofSi(si() + other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Position(Length.ofSi(si() + other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     @Override
     public Position subtract(final Length other)
     {
-        return new Position(Length.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Position(Length.ofSi(si() - other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     /**

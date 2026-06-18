@@ -45,15 +45,17 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     }
 
     /**
-     * Instantiate a Temperature quantity with an SI or base value and a display unit.and a reference point.
-     * @param siValue the temperature value, expressed in a the SI unit (K), relative to 0 K
-     * @param displayUnit the display unit to use
-     * @param reference the reference point of this absolute temperature
+     * Instantiate a Temperature quantity with an SI or base value, or a value expressed in a unit, and a reference point.
+     * @param value the temperature value, either expressed in the SI unit, or in the provided unit, relative to the reference
+     *            point
+     * @param unit the temperature display unit or unit
+     * @param reference the reference point of this temperature
+     * @param useSi when true, value is taken as the SI value; when false, value is expressed in the unit
      * @throws IllegalArgumentException when temperature is below 0 K
      */
-    public Temperature(final double siValue, final Temperature.Unit displayUnit, final Reference reference)
+    public Temperature(final double value, final Temperature.Unit unit, final Reference reference, final boolean useSi)
     {
-        super(checkTemperature(new TemperatureDifference(siValue, displayUnit), reference), reference);
+        super(checkTemperature(new TemperatureDifference(value, unit, useSi), reference), reference);
     }
 
     /**
@@ -63,7 +65,7 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
      */
     public Temperature(final double siValue, final Temperature.Unit displayUnit)
     {
-        this(siValue, displayUnit, displayUnit.getReference());
+        this(siValue, displayUnit, displayUnit.getReference(), true);
     }
 
     /**
@@ -93,7 +95,7 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
      */
     public static Temperature ofSi(final double si, final Reference reference)
     {
-        return new Temperature(si, Temperature.Unit.SI, reference);
+        return new Temperature(si, Temperature.Unit.SI, reference, true);
     }
 
     /**
@@ -103,7 +105,7 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
      */
     public static Temperature ofSi(final double si)
     {
-        return new Temperature(si, Temperature.Unit.SI, Reference.KELVIN);
+        return new Temperature(si, Temperature.Unit.SI, Reference.KELVIN, true);
     }
 
     @Override
@@ -173,19 +175,19 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     public TemperatureDifference subtract(final Temperature other)
     {
         var otherRef = other.relativeTo(getReference());
-        return TemperatureDifference.ofSi(si() - otherRef.si()).setDisplayUnit(getDisplayUnit());
+        return TemperatureDifference.ofSi(si() - otherRef.si(), getQuantity().getDisplayUnit());
     }
 
     @Override
     public Temperature add(final TemperatureDifference other)
     {
-        return new Temperature(TemperatureDifference.ofSi(si() + other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Temperature(TemperatureDifference.ofSi(si() + other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     @Override
     public Temperature subtract(final TemperatureDifference other)
     {
-        return new Temperature(TemperatureDifference.ofSi(si() - other.si()).setDisplayUnit(getDisplayUnit()), getReference());
+        return new Temperature(TemperatureDifference.ofSi(si() - other.si(), getQuantity().getDisplayUnit()), getReference());
     }
 
     /**

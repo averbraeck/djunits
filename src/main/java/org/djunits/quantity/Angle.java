@@ -161,7 +161,7 @@ public class Angle extends Quantity<Angle>
      */
     public final Direction add(final Direction direction)
     {
-        return direction.add(this).setDisplayUnit(getDisplayUnit());
+        return new Direction(new Angle(direction.si() + si(), getDisplayUnit(), true), direction.getReference());
     }
 
     /**
