@@ -187,7 +187,7 @@ public class QuantityFormatter extends Formatter<QuantityFormatContext>
         SIPrefix prefix = SIPrefixes.FACTORS.getOrDefault(lookupExponent, SIPrefixes.getSiPrefix(""));
         String prefixText = prefix.getDefaultTextualPrefix();
         String key = invert ? "/" + prefixText + baseId.substring(1) : prefixText + baseId;
-        this.unit = (UnitInterface<?, Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
+        this.unit = (UnitInterface<Q>) Units.resolve(q.getDisplayUnit().getClass(), key);
         return true;
     }
         

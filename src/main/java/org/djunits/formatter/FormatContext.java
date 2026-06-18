@@ -47,7 +47,7 @@ abstract class FormatContext implements Cloneable
     // Unit formatting, contains default values
 
     /** Display unit to use. */
-    UnitInterface<?, ?> displayUnit = null;
+    UnitInterface<?> displayUnit = null;
 
     /** Display unit to use, based on a String representation. */
     String unitString = null;

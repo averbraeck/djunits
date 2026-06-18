@@ -33,7 +33,7 @@ public abstract class Formatter<C extends FormatContext>
     final Value<?> value;
 
     /** the unit to express the value in. */
-    UnitInterface<?, ?> unit;
+    UnitInterface<?> unit;
 
     /** the formatted unit. */
     String unitStr = null;

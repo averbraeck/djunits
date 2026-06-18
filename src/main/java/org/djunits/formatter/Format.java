@@ -228,7 +228,7 @@ abstract class Format<F extends Format<F, C>, C extends FormatContext>
      * @param unit the display unit to use
      * @return the object instance for fluent design
      */
-    public F setDisplayUnit(final UnitInterface<?, ?> unit)
+    public F setDisplayUnit(final UnitInterface<?> unit)
     {
         this.ctx.displayUnit = unit;
         return self();
