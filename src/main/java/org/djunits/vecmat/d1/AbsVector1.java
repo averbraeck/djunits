@@ -72,7 +72,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final double xInUnit, final UnitInterface<?, Q> unit, final R reference)
+            R extends Reference<R, A, Q>> AbsVector1<A, Q> of(final double xInUnit, final UnitInterface<Q> unit, final R reference)
     {
         return new AbsVector1<>(Vector1.of(xInUnit, unit), reference);
     }
@@ -118,7 +118,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> of(
-            final double[] dataInUnit, final UnitInterface<?, Q> unit, final R reference)
+            final double[] dataInUnit, final UnitInterface<Q> unit, final R reference)
     {
         return new AbsVector1<>(Vector1.of(dataInUnit, unit), reference);
     }
@@ -134,7 +134,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
-            final double xSi, final UnitInterface<?, Q> displayUnit, final R reference)
+            final double xSi, final UnitInterface<Q> displayUnit, final R reference)
     {
         return new AbsVector1<>(Vector1.ofSi(xSi, displayUnit), reference);
     }
@@ -150,7 +150,7 @@ public class AbsVector1<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsVector1<A, Q> ofSi(
-            final double[] dataSi, final UnitInterface<?, Q> displayUnit, final R reference)
+            final double[] dataSi, final UnitInterface<Q> displayUnit, final R reference)
     {
         return new AbsVector1<>(Vector1.ofSi(dataSi, displayUnit), reference);
     }

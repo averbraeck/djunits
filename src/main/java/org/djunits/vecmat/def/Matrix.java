@@ -35,7 +35,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * Create a new matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public Matrix(final UnitInterface<?, Q> displayUnit)
+    public Matrix(final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
     }
@@ -90,7 +90,7 @@ public abstract class Matrix<Q extends Quantity<Q>, M extends Matrix<Q, M, SI, H
      * @return printable string with the matrix's values expressed in the specified unit
      */
     @Override
-    public String format(final UnitInterface<?, Q> targetUnit)
+    public String format(final UnitInterface<Q> targetUnit)
     {
         return format(MatrixFormat.instance().setDisplayUnit(targetUnit));
     }

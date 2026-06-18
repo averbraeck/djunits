@@ -45,20 +45,20 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
     private static final long serialVersionUID = 600L;
 
     /** The display unit. */
-    private UnitInterface<?, Q> displayUnit;
+    private UnitInterface<Q> displayUnit;
 
     /**
      * Create a new vector or matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public VectorMatrix(final UnitInterface<?, Q> displayUnit)
+    public VectorMatrix(final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         this.displayUnit = displayUnit;
     }
 
     @Override
-    public UnitInterface<?, Q> getDisplayUnit()
+    public UnitInterface<Q> getDisplayUnit()
     {
         return this.displayUnit;
     }
@@ -69,7 +69,7 @@ public abstract class VectorMatrix<Q extends Quantity<Q>, VM extends VectorMatri
      * @return the quantity for fluent design
      */
     @SuppressWarnings("unchecked")
-    public VM setDisplayUnit(final UnitInterface<?, Q> newUnit)
+    public VM setDisplayUnit(final UnitInterface<Q> newUnit)
     {
         Throw.whenNull(newUnit, "newUnit");
         this.displayUnit = newUnit;

@@ -66,7 +66,7 @@ public abstract class AbsMatrix<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
      * @return printable string with the matrix's values expressed in the specified unit
      */
     @Override
-    public String format(final UnitInterface<?, Q> targetUnit)
+    public String format(final UnitInterface<Q> targetUnit)
     {
         return format(MatrixFormat.instance().setDisplayUnit(targetUnit));
     }

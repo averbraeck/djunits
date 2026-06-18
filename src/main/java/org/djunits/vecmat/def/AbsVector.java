@@ -217,7 +217,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
          * @return printable string with the vector's values expressed in the specified unit
          */
         @Override
-        default String format(final UnitInterface<?, Q> targetUnit)
+        default String format(final UnitInterface<Q> targetUnit)
         {
             return format(VectorFormat.Col.instance().setDisplayUnit(targetUnit));
         }
@@ -256,7 +256,7 @@ public abstract class AbsVector<A extends AbsQuantity<A, Q, ?>, Q extends Quanti
          * @return printable string with the vector's values expressed in the specified unit
          */
         @Override
-        default String format(final UnitInterface<?, Q> targetUnit)
+        default String format(final UnitInterface<Q> targetUnit)
         {
             return format(VectorFormat.Row.instance().setDisplayUnit(targetUnit));
         }

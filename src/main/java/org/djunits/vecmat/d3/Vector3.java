@@ -51,7 +51,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
      * @param zSi the z-value expressed in the SI unit
      * @param displayUnit the display unit to use
      */
-    protected Vector3(final double xSi, final double ySi, final double zSi, final UnitInterface<?, Q> displayUnit)
+    protected Vector3(final double xSi, final double ySi, final double zSi, final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
         this.xSi = xSi;
@@ -98,7 +98,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
     public Iterator<Q> iterator()
     {
         final double[] si = new double[] {this.xSi, this.ySi, this.zSi};
-        final UnitInterface<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
+        final UnitInterface<Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
     }
 
@@ -350,7 +350,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @param zSi the z-value expressed in the SI unit
          * @param displayUnit the display unit to use
          */
-        public Col(final double xSi, final double ySi, final double zSi, final UnitInterface<?, Q> displayUnit)
+        public Col(final double xSi, final double ySi, final double zSi, final UnitInterface<Q> displayUnit)
         {
             super(xSi, ySi, zSi, displayUnit);
         }
@@ -444,7 +444,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @param <Q> the quantity type
          */
         public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final double xInUnit, final double yInUnit,
-                final double zInUnit, final UnitInterface<?, Q> unit)
+                final double zInUnit, final UnitInterface<Q> unit)
         {
             return new Vector3.Col<>(unit.toBaseValue(xInUnit), unit.toBaseValue(yInUnit), unit.toBaseValue(zInUnit), unit);
         }
@@ -472,7 +472,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @return a new Vector3.Col with a unit
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> of(final double[] dataInUnit, final UnitInterface<Q> unit)
         {
             Throw.whenNull(dataInUnit, "dataInUnit");
             Throw.when(dataInUnit.length != 3, IllegalArgumentException.class, "Length of dataInUnit != 3 but %d",
@@ -488,7 +488,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @return a new Vector3.Col with a unit
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> Vector3.Col<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> Vector3.Col<Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit)
         {
             Throw.whenNull(dataSi, "dataSi");
             Throw.whenNull(displayUnit, "displayUnit");
@@ -506,7 +506,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @param <Q> the quantity type
          */
         public static <Q extends Quantity<Q>> Vector3.Col<Q> ofSi(final double xSi, final double ySi, final double zSi,
-                final UnitInterface<?, Q> displayUnit)
+                final UnitInterface<Q> displayUnit)
         {
             Throw.whenNull(displayUnit, "displayUnit");
             return new Vector3.Col<>(xSi, ySi, zSi, displayUnit);
@@ -535,7 +535,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> Vector3.Col<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> Vector3.Col<TQ> as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,
@@ -569,7 +569,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @param zSi the z-value expressed in the SI unit
          * @param displayUnit the display unit to use
          */
-        public Row(final double xSi, final double ySi, final double zSi, final UnitInterface<?, Q> displayUnit)
+        public Row(final double xSi, final double ySi, final double zSi, final UnitInterface<Q> displayUnit)
         {
             super(xSi, ySi, zSi, displayUnit);
         }
@@ -675,7 +675,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @param <Q> the quantity type
          */
         public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final double xInUnit, final double yInUnit,
-                final double zInUnit, final UnitInterface<?, Q> unit)
+                final double zInUnit, final UnitInterface<Q> unit)
         {
             return new Vector3.Row<>(unit.toBaseValue(xInUnit), unit.toBaseValue(yInUnit), unit.toBaseValue(zInUnit), unit);
         }
@@ -703,7 +703,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @return a new Vector3.Row with a unit
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> of(final double[] dataInUnit, final UnitInterface<Q> unit)
         {
             Throw.whenNull(dataInUnit, "dataInUnit");
             Throw.when(dataInUnit.length != 3, IllegalArgumentException.class, "Length of dataInUnit != 3 but %d",
@@ -719,7 +719,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @return a new Vector3.Row with a unit
          * @param <Q> the quantity type
          */
-        public static <Q extends Quantity<Q>> Vector3.Row<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+        public static <Q extends Quantity<Q>> Vector3.Row<Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit)
         {
             Throw.whenNull(dataSi, "dataSi");
             Throw.whenNull(displayUnit, "displayUnit");
@@ -737,7 +737,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @param <Q> the quantity type
          */
         public static <Q extends Quantity<Q>> Vector3.Row<Q> ofSi(final double xSi, final double ySi, final double zSi,
-                final UnitInterface<?, Q> displayUnit)
+                final UnitInterface<Q> displayUnit)
         {
             Throw.whenNull(displayUnit, "displayUnit");
             return new Vector3.Row<>(xSi, ySi, zSi, displayUnit);
@@ -766,7 +766,7 @@ public abstract class Vector3<Q extends Quantity<Q>, V extends Vector3<Q, V, SI,
          * @throws IllegalArgumentException when the units do not match
          * @param <TQ> target quantity type
          */
-        public <TQ extends Quantity<TQ>> Vector3.Row<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+        public <TQ extends Quantity<TQ>> Vector3.Row<TQ> as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
         {
             Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                     "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,

@@ -30,7 +30,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @param dataSi the matrix values [a11, a12, a13, a21, a22, a23, a31, a32, a33] expressed in the SI-unit
      * @param displayUnit the display unit for the matrix
      */
-    protected Matrix3x3(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+    protected Matrix3x3(final double[] dataSi, final UnitInterface<Q> displayUnit)
     {
         super(dataSi, displayUnit, 3);
     }
@@ -160,7 +160,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix3x3 with a unit
      * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 values
      */
-    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[] dataInUnit, final UnitInterface<Q> unit)
     {
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.whenNull(unit, "unit");
@@ -181,7 +181,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @param <Q> the quantity type
      * @throws IllegalArgumentException when dataSi does not contain 3x3 = 9 values
      */
-    public static <Q extends Quantity<Q>> Matrix3x3<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(dataSi, "dataSi");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -219,7 +219,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 values
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix3x3<Q> ofSi(final double[][] gridSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> ofSi(final double[][] gridSi, final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(gridSi, "gridSi");
         Throw.whenNull(displayUnit, "displayUnit");
@@ -246,7 +246,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @throws IllegalArgumentException when dataInUnit does not contain 3x3 = 9 values
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[][] gridInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Matrix3x3<Q> of(final double[][] gridInUnit, final UnitInterface<Q> unit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");
@@ -300,7 +300,7 @@ public class Matrix3x3<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> Matrix3x3<TQ> as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix3x3.as(%s) called, but units do not match: %s <> %s", targetUnit,

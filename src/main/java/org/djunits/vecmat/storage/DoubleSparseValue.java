@@ -59,7 +59,7 @@ public class DoubleSparseValue<Q extends Quantity<Q>> implements Serializable
      * @param valueInUnit the value in the given unit of the data point in the matrix
      * @param unit the unit of the value
      */
-    public DoubleSparseValue(final int row, final int column, final double valueInUnit, final UnitInterface<?, Q> unit)
+    public DoubleSparseValue(final int row, final int column, final double valueInUnit, final UnitInterface<Q> unit)
     {
         this(row, column, unit.toBaseValue(valueInUnit));
     }

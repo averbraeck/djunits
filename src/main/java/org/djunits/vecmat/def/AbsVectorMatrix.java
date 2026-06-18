@@ -70,7 +70,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     }
 
     @Override
-    public UnitInterface<?, Q> getDisplayUnit()
+    public UnitInterface<Q> getDisplayUnit()
     {
         return this.relativeVecMat.getDisplayUnit();
     }
@@ -81,7 +81,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * @return the quantity for fluent design
      */
     @SuppressWarnings("unchecked")
-    public VMA setDisplayUnit(final UnitInterface<?, Q> newUnit)
+    public VMA setDisplayUnit(final UnitInterface<Q> newUnit)
     {
         this.relativeVecMat.setDisplayUnit(newUnit);
         return (VMA) this;

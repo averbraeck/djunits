@@ -33,7 +33,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @param dataSi the matrix values {a11} expressed in the SI unit
      * @param displayUnit the display unit for the matrix
      */
-    protected Matrix1x1(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+    protected Matrix1x1(final double[] dataSi, final UnitInterface<Q> displayUnit)
     {
         super(dataSi, displayUnit, 1);
     }
@@ -199,7 +199,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double xInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double xInUnit, final UnitInterface<Q> unit)
     {
         return new Matrix1x1<>(new double[] {unit.toBaseValue(xInUnit)}, unit);
     }
@@ -223,7 +223,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[] dataInUnit, final UnitInterface<Q> unit)
     {
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.when(dataInUnit.length != 1, IllegalArgumentException.class, "Length of dataInUnit != 1 but %d",
@@ -238,7 +238,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(dataSi, "dataSi");
         Throw.when(dataSi.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", dataSi.length);
@@ -267,7 +267,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> ofSi(final double[][] gridSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> ofSi(final double[][] gridSi, final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(gridSi, "gridSi");
         Throw.when(gridSi.length != 1, IllegalArgumentException.class, "gridSi does not have 1 row");
@@ -284,7 +284,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @return a new Matrix1x1 with a unit
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[][] gridInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Matrix1x1<Q> of(final double[][] gridInUnit, final UnitInterface<Q> unit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.when(gridInUnit.length != 1, IllegalArgumentException.class, "gridInUnit does not have 1 row");
@@ -319,7 +319,7 @@ public class Matrix1x1<Q extends Quantity<Q>> extends SquareDenseMatrix<Q, Matri
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Matrix1x1<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> Matrix1x1<TQ> as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Matrix1x1.as(%s) called, but units do not match: %s <> %s", targetUnit,

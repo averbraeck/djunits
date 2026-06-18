@@ -94,7 +94,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> of(final double xInUnit, final double yInUnit,
-                        final double zInUnit, final UnitInterface<?, Q> unit, final R reference)
+                        final double zInUnit, final UnitInterface<Q> unit, final R reference)
         {
             return new AbsVector3.Col<>(Vector3.Col.of(xInUnit, yInUnit, zInUnit, unit), reference);
         }
@@ -151,7 +151,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <R> the reference type
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-                R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit,
+                R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> of(final double[] dataInUnit, final UnitInterface<Q> unit,
                         final R reference)
         {
             return new AbsVector3.Col<>(Vector3.Col.of(dataInUnit, unit), reference);
@@ -168,7 +168,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <R> the reference type
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-                R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit,
+                R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit,
                         final R reference)
         {
             return new AbsVector3.Col<>(Vector3.Col.ofSi(dataSi, displayUnit), reference);
@@ -188,7 +188,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVector3.Col<A, Q> ofSi(final double xSi, final double ySi, final double zSi,
-                        final UnitInterface<?, Q> displayUnit, final R reference)
+                        final UnitInterface<Q> displayUnit, final R reference)
         {
             return new AbsVector3.Col<>(Vector3.Col.ofSi(xSi, ySi, zSi, displayUnit), reference);
         }
@@ -297,7 +297,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> of(final double xInUnit, final double yInUnit,
-                        final double zInUnit, final UnitInterface<?, Q> unit, final R reference)
+                        final double zInUnit, final UnitInterface<Q> unit, final R reference)
         {
             return new AbsVector3.Row<>(Vector3.Row.of(xInUnit, yInUnit, zInUnit, unit), reference);
         }
@@ -354,7 +354,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <R> the reference type
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-                R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit,
+                R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> of(final double[] dataInUnit, final UnitInterface<Q> unit,
                         final R reference)
         {
             return new AbsVector3.Row<>(Vector3.Row.of(dataInUnit, unit), reference);
@@ -371,7 +371,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          * @param <R> the reference type
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
-                R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit,
+                R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit,
                         final R reference)
         {
             return new AbsVector3.Row<>(Vector3.Row.ofSi(dataSi, displayUnit), reference);
@@ -391,7 +391,7 @@ public abstract class AbsVector3<A extends AbsQuantity<A, Q, ?>, Q extends Quant
          */
         public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>,
                 R extends Reference<R, A, Q>> AbsVector3.Row<A, Q> ofSi(final double xSi, final double ySi, final double zSi,
-                        final UnitInterface<?, Q> displayUnit, final R reference)
+                        final UnitInterface<Q> displayUnit, final R reference)
         {
             return new AbsVector3.Row<>(Vector3.Row.ofSi(xSi, ySi, zSi, displayUnit), reference);
         }

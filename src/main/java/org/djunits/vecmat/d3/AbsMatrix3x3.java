@@ -83,7 +83,7 @@ public class AbsMatrix3x3<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix3x3<A, Q> of(
-            final double[] dataInUnit, final UnitInterface<?, Q> unit, final R reference)
+            final double[] dataInUnit, final UnitInterface<Q> unit, final R reference)
     {
         return new AbsMatrix3x3<>(Matrix3x3.of(dataInUnit, unit), reference);
     }
@@ -99,7 +99,7 @@ public class AbsMatrix3x3<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      * @param <R> the reference type
      */
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix3x3<A, Q> ofSi(
-            final double[] dataSi, final UnitInterface<?, Q> displayUnit, final R reference)
+            final double[] dataSi, final UnitInterface<Q> displayUnit, final R reference)
     {
         return new AbsMatrix3x3<>(Matrix3x3.ofSi(dataSi, displayUnit), reference);
     }
@@ -157,7 +157,7 @@ public class AbsMatrix3x3<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix3x3<A, Q> ofSi(
-            final double[][] gridSi, final UnitInterface<?, Q> displayUnit, final R reference)
+            final double[][] gridSi, final UnitInterface<Q> displayUnit, final R reference)
     {
         return new AbsMatrix3x3<>(Matrix3x3.ofSi(gridSi, displayUnit), reference);
     }
@@ -174,7 +174,7 @@ public class AbsMatrix3x3<A extends AbsQuantity<A, Q, ?>, Q extends Quantity<Q>>
      */
     @SuppressWarnings("checkstyle:needbraces")
     public static <A extends AbsQuantity<A, Q, R>, Q extends Quantity<Q>, R extends Reference<R, A, Q>> AbsMatrix3x3<A, Q> of(
-            final double[][] gridInUnit, final UnitInterface<?, Q> unit, final R reference)
+            final double[][] gridInUnit, final UnitInterface<Q> unit, final R reference)
     {
         return new AbsMatrix3x3<>(Matrix3x3.of(gridInUnit, unit), reference);
     }

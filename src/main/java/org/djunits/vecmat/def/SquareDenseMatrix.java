@@ -41,7 +41,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q>, M extends SquareD
      * @param order the order of the square matrix (number of rows/columns)
      * @throws IllegalArgumentException when dataSi.length != order * order.
      */
-    protected SquareDenseMatrix(final double[] dataSi, final UnitInterface<?, Q> displayUnit, final int order)
+    protected SquareDenseMatrix(final double[] dataSi, final UnitInterface<Q> displayUnit, final int order)
     {
         super(displayUnit);
         Throw.when(dataSi.length != order * order, IllegalArgumentException.class,

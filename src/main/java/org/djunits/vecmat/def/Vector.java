@@ -34,7 +34,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
      * Create a new Vector with a unit, as an extension of Matrix.
      * @param displayUnit the display unit to use
      */
-    public Vector(final UnitInterface<?, Q> displayUnit)
+    public Vector(final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
     }
@@ -151,7 +151,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
          * @return printable string with the vector's values expressed in the specified unit
          */
         @Override
-        default String format(final UnitInterface<?, Q> targetUnit)
+        default String format(final UnitInterface<Q> targetUnit)
         {
             return format(VectorFormat.Col.instance().setDisplayUnit(targetUnit));
         }
@@ -190,7 +190,7 @@ public abstract class Vector<Q extends Quantity<Q>, V extends Vector<Q, V, SI, H
          * @return printable string with the vector's values expressed in the specified unit
          */
         @Override
-        default String format(final UnitInterface<?, Q> targetUnit)
+        default String format(final UnitInterface<Q> targetUnit)
         {
             return format(VectorFormat.Row.instance().setDisplayUnit(targetUnit));
         }

@@ -45,7 +45,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      * @param displayUnit the display unit to use
      * @throws IllegalArgumentException when the number of rows or columns does not have a positive value
      */
-    public MatrixNxM(final DataGridSi<?> dataGridSi, final UnitInterface<?, Q> displayUnit)
+    public MatrixNxM(final DataGridSi<?> dataGridSi, final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
         Throw.whenNull(dataGridSi, "dataGridSi");
@@ -161,7 +161,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
         double[] newSi = new double[data.length];
         int rows = rows();
         int cols = cols();
-        final UnitInterface<?, Q> displayUnit = getDisplayUnit();
+        final UnitInterface<Q> displayUnit = getDisplayUnit();
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
                 newSi[c * rows + r] = data[r * cols + c];
@@ -335,7 +335,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
      */
     public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[] dataInUnit, final int rows, final int cols,
-            final UnitInterface<?, Q> unit)
+            final UnitInterface<Q> unit)
     {
         return new MatrixNxM<Q>(DenseDoubleDataSi.of(dataInUnit, rows, cols, unit), unit);
     }
@@ -351,7 +351,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      * @throws IllegalArgumentException when dataSi does not contain a square number of values
      */
     public static <Q extends Quantity<Q>> MatrixNxM<Q> ofSi(final double[] dataSi, final int rows, final int cols,
-            final UnitInterface<?, Q> displayUnit)
+            final UnitInterface<Q> displayUnit)
     {
         return new MatrixNxM<Q>(DenseDoubleDataSi.ofSi(dataSi, rows, cols), displayUnit);
     }
@@ -382,7 +382,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxM<Q> ofSi(final double[][] gridSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> ofSi(final double[][] gridSi, final UnitInterface<Q> displayUnit)
     {
         return new MatrixNxM<>(DenseDoubleDataSi.ofSi(gridSi), displayUnit);
     }
@@ -396,7 +396,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      * @throws IllegalArgumentException when dataInUnit does not contain a square number of values
      */
     @SuppressWarnings("checkstyle:needbraces")
-    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[][] gridInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> MatrixNxM<Q> of(final double[][] gridInUnit, final UnitInterface<Q> unit)
     {
         return new MatrixNxM<>(DenseDoubleDataSi.of(gridInUnit, unit), unit);
     }
@@ -430,7 +430,7 @@ public class MatrixNxM<Q extends Quantity<Q>> extends Matrix<Q, MatrixNxM<Q>, Ma
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> MatrixNxM<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> MatrixNxM<TQ> as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "MatrixNxM.as(%s) called, but units do not match: %s <> %s", targetUnit,

@@ -36,7 +36,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      * @param xSi the x-value expressed in the SI unit for the quantity
      * @param displayUnit the display unit of the vector
      */
-    public Vector1(final double xSi, final UnitInterface<?, Q> displayUnit)
+    public Vector1(final double xSi, final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
         this.xSi = xSi;
@@ -121,7 +121,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
     public Iterator<Q> iterator()
     {
         final double[] si = new double[] {this.xSi};
-        final UnitInterface<?, Q> frozenDisplayUnit = getDisplayUnit(); // capture once
+        final UnitInterface<Q> frozenDisplayUnit = getDisplayUnit(); // capture once
         return Arrays.stream(si).mapToObj(v -> frozenDisplayUnit.ofSi(v).setDisplayUnit(frozenDisplayUnit)).iterator();
     }
 
@@ -277,7 +277,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      * @return a new Vector1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final double xInUnit, final UnitInterface<Q> unit)
     {
         return new Vector1<>(unit.toBaseValue(xInUnit), unit);
     }
@@ -301,7 +301,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      * @return a new Vector1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Vector1<Q> of(final double[] dataInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> Vector1<Q> of(final double[] dataInUnit, final UnitInterface<Q> unit)
     {
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.when(dataInUnit.length != 1, IllegalArgumentException.class, "Length of dataInUnit != 1 but %d",
@@ -316,7 +316,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      * @return a new Vector1 with the display unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double xSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double xSi, final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(displayUnit, "displayUnit");
         return new Vector1<>(xSi, displayUnit);
@@ -329,7 +329,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      * @return a new Vector1 with a unit
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double[] dataSi, final UnitInterface<?, Q> displayUnit)
+    public static <Q extends Quantity<Q>> Vector1<Q> ofSi(final double[] dataSi, final UnitInterface<Q> displayUnit)
     {
         Throw.whenNull(dataSi, "dataSi");
         Throw.when(dataSi.length != 1, IllegalArgumentException.class, "Length of dataSi != 1 but %d", dataSi.length);
@@ -359,7 +359,7 @@ public class Vector1<Q extends Quantity<Q>> extends Vector<Q, Vector1<Q>, Vector
      * @throws IllegalArgumentException when the units do not match
      * @param <TQ> target quantity type
      */
-    public <TQ extends Quantity<TQ>> Vector1<TQ> as(final UnitInterface<?, TQ> targetUnit) throws IllegalArgumentException
+    public <TQ extends Quantity<TQ>> Vector1<TQ> as(final UnitInterface<TQ> targetUnit) throws IllegalArgumentException
     {
         Throw.when(!getDisplayUnit().siUnit().equals(targetUnit.siUnit()), IllegalArgumentException.class,
                 "Quantity.as(%s) called, but units do not match: %s <> %s", targetUnit,

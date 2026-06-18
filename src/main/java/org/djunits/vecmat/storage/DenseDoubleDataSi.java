@@ -82,7 +82,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @param <Q> the quantity type
      */
     public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final double[] dataInUnit, final int rows, final int cols,
-            final UnitInterface<?, Q> unit)
+            final UnitInterface<Q> unit)
     {
         Throw.whenNull(dataInUnit, "dataInUnit");
         Throw.whenNull(unit, "unit");
@@ -216,7 +216,7 @@ public class DenseDoubleDataSi implements DataGridSi<DenseDoubleDataSi>
      * @throws IllegalArgumentException when the size of the data object is not equal to rows*cols
      * @param <Q> the quantity type
      */
-    public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final double[][] gridInUnit, final UnitInterface<?, Q> unit)
+    public static <Q extends Quantity<Q>> DenseDoubleDataSi of(final double[][] gridInUnit, final UnitInterface<Q> unit)
     {
         Throw.whenNull(gridInUnit, "gridInUnit");
         Throw.whenNull(unit, "unit");

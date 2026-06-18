@@ -35,7 +35,7 @@ public abstract class SquareMatrix<Q extends Quantity<Q>, M extends SquareMatrix
      * Create a new square matrix with a unit.
      * @param displayUnit the display unit to use
      */
-    public SquareMatrix(final UnitInterface<?, Q> displayUnit)
+    public SquareMatrix(final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
     }

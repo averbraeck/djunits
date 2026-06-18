@@ -31,7 +31,7 @@ public abstract class Table<Q extends Quantity<Q>, T extends Table<Q, T, SI, H, 
      * Create a new Table with a unit.
      * @param displayUnit the display unit to use
      */
-    public Table(final UnitInterface<?, Q> displayUnit)
+    public Table(final UnitInterface<Q> displayUnit)
     {
         super(displayUnit);
     }
