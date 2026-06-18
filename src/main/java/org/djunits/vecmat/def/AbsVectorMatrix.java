@@ -76,18 +76,6 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     }
 
     /**
-     * TODO: TEMP: KEEP BRIEFLY.
-     * @param newUnit the new unit
-     * @return the quantity for fluent design
-     */
-    @SuppressWarnings("unchecked")
-    public VMA setDisplayUnit(final UnitInterface<Q> newUnit)
-    {
-        this.relativeVecMat.setDisplayUnit(newUnit);
-        return (VMA) this;
-    }
-
-    /**
      * Return the number of rows.
      * @return the number of rows
      */
@@ -109,19 +97,21 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * Return a new vector or matrix with the given SI or BASE values for the relative vector or matrix.
      * @param siNew the values for the new vector or matrix in row-major format
      * @param newReference the reference point for the relative SI values
+     * @param displayUnit the display unit of the data in the absolute vector or matrix
      * @return a new matrix with the provided SI or BASE values
      */
-    public VMA instantiateSi(final double[] siNew, final Reference<?, A, Q> newReference)
+    public VMA instantiateSi(final double[] siNew, final Reference<?, A, Q> newReference, final UnitInterface<Q> displayUnit)
     {
-        VMQ rel = this.relativeVecMat.instantiateSi(siNew).setDisplayUnit(getDisplayUnit());
+        VMQ rel = this.relativeVecMat.instantiateSi(siNew, displayUnit);
         return instantiate(rel, newReference);
     }
 
     /**
-     * Return a new vector or matrix with the given SI or BASE values for the relative vector or matrix.
+     * Return a new vector or matrix with the given SI or BASE values for the relative vector or matrix. The absolute matrix
+     * uses the display unit of the relative vector or matrix.
      * @param relVecMat the underlying relative vector or matrix with SI values relative to the reference point
      * @param newReference the reference point for the relative SI values
-     * @return a new matrix with the provided SI or BASE values
+     * @return a new matrix with the provided SI or BASE values, and the display unit of the relative vector or matrix
      */
     public abstract VMA instantiate(VMQ relVecMat, Reference<?, A, Q> newReference);
 
@@ -202,8 +192,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public A min()
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(this.relativeVecMat.min().si()))
-                .setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(this.relativeVecMat.min().si(), getDisplayUnit()));
     }
 
     /**
@@ -212,8 +201,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public A max()
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(this.relativeVecMat.max().si()))
-                .setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(this.relativeVecMat.max().si(), getDisplayUnit()));
     }
 
     /**
@@ -222,8 +210,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public A median()
     {
-        return getReference().instantiate(getDisplayUnit().ofSi(this.relativeVecMat.median().si()))
-                .setDisplayUnit(getDisplayUnit());
+        return getReference().instantiate(getDisplayUnit().ofSi(this.relativeVecMat.median().si(), getDisplayUnit()));
     }
 
     /**
@@ -233,8 +220,8 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA add(final Q increment)
     {
-        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), increment.si()), getReference())
-                .setDisplayUnit(getDisplayUnit());
+        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), increment.si()), getReference(),
+                getDisplayUnit());
     }
 
     /**
@@ -244,8 +231,8 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA subtract(final Q decrement)
     {
-        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), -decrement.si()), getReference())
-                .setDisplayUnit(getDisplayUnit());
+        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), -decrement.si()), getReference(),
+                getDisplayUnit());
     }
 
     /**
@@ -255,8 +242,8 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA add(final VMQ other)
     {
-        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), other.unsafeSiArray()), getReference())
-                .setDisplayUnit(getDisplayUnit());
+        return instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), other.unsafeSiArray()), getReference(),
+                getDisplayUnit());
     }
 
     /**
@@ -266,8 +253,8 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMA subtract(final VMQ other)
     {
-        return instantiateSi(ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.unsafeSiArray()), getReference())
-                .setDisplayUnit(getDisplayUnit());
+        return instantiateSi(ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.unsafeSiArray()), getReference(),
+                getDisplayUnit());
     }
 
     /**
@@ -277,10 +264,9 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMQ subtract(final VMA other)
     {
-        return this.relativeVecMat
-                .instantiateSi(
-                        ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.getRelativeVecMat().unsafeSiArray()))
-                .setDisplayUnit(getDisplayUnit());
+        return this.relativeVecMat.instantiateSi(
+                ArrayMath.subtract(this.relativeVecMat.unsafeSiArray(), other.getRelativeVecMat().unsafeSiArray()),
+                getDisplayUnit());
     }
 
     /**
@@ -290,8 +276,8 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      */
     public VMQ subtract(final A decrement)
     {
-        return this.relativeVecMat.instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), -decrement.si()))
-                .setDisplayUnit(getDisplayUnit());
+        return this.relativeVecMat.instantiateSi(ArrayMath.add(this.relativeVecMat.unsafeSiArray(), -decrement.si()),
+                getDisplayUnit());
     }
 
     // ------------------------------------ AS() METHODS ------------------------------------
@@ -482,5 +468,5 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
     {
         return format();
     }
- 
+
 }
