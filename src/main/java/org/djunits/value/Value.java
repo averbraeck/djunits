@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
-import org.djunits.unit.UnitRuntimeException;
-import org.djunits.unit.Units;
 
 /**
  * Value is the generic interface for all Scalar, Vector and Matrix classes that forces implementation of a few unit- and
@@ -28,7 +26,7 @@ public interface Value<Q extends Quantity<Q>> extends Serializable
      * Retrieve the unit of this Value.
      * @return the unit of this Value
      */
-    UnitInterface<?, Q> getDisplayUnit();
+    UnitInterface<Q> getDisplayUnit();
 
     /**
      * Indicate whether this is an Absolute Value.
@@ -56,6 +54,6 @@ public interface Value<Q extends Quantity<Q>> extends Serializable
      * @param displayUnit the unit into which the values are converted for display
      * @return a String with the value contents expressed in the specified unit
      */
-    String format(UnitInterface<?, Q> displayUnit);
+    String format(UnitInterface<Q> displayUnit);
 
 }
