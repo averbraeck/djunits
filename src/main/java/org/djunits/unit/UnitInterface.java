@@ -13,10 +13,9 @@ import org.djunits.unit.system.UnitSystem;
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
- * @param <U> The unit type
  * @param <Q> the quantity type
  */
-public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity<Q>>
+public interface UnitInterface<Q extends Quantity<Q>>
 {
     /**
      * Return the id, which is the main abbreviation, of the unit.
@@ -66,7 +65,7 @@ public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity
      * Return the base unit for this unit.
      * @return the base unit for this unit
      */
-    U getBaseUnit();
+    UnitInterface<Q> getBaseUnit();
 
     /**
      * Retrieve the display abbreviation, and apply localization when possible.
@@ -105,45 +104,28 @@ public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity
     String getStoredName();
 
     /**
-     * Set the SI-prefix so it can be localized if necessary.
-     * @param siPrefix the SI-prefix to set
-     * @return the unit for method chaining
-     */
-    U setSiPrefix(SIPrefix siPrefix);
-
-    /**
-     * Set the SI-prefix so it can be localized if necessary. This method does NOT handle kilo-prefixes.
-     * @param prefix the string-representation of the SI-prefix to set
-     * @return the unit for method chaining
-     */
-    U setSiPrefix(String prefix);
-
-    /**
-     * Set the SI-prefix so it can be localized if necessary. This method handles kilo-prefixes.
-     * @param prefix the string-representation of the SI-prefix to set
-     * @return the unit for method chaining
-     */
-    U setSiPrefixKilo(String prefix);
-
-    /**
-     * Set the SI-prefix so it can be localized if necessary. This method handles per-unit prefixes.
-     * @param prefix the string-representation of the SI-prefix to set
-     * @return the unit for method chaining
-     */
-    U setSiPrefixPer(String prefix);
-
-    /**
      * Return the SI-prefix so it can be localized if necessary.
      * @return the SI-prefix of this unit, or null when the unit has no SI-prefix
      */
     SIPrefix getSiPrefix();
 
     /**
-     * Return an SI-quantity for this unit with a value.
+     * Return a quantity for this unit with the given si-value and the SI-unit as the display unit.
      * @param si the value in SI or BASE units
-     * @return an SI-quantity for this unit with the given si-value
+     * @return a quantity for this unit with the given si-value and the SI-unit as the display unit
      */
-    Q ofSi(double si);
+    default Q ofSi(final double si)
+    {
+        return ofSi(si, getBaseUnit());
+    }
+
+    /**
+     * Return a quantity for this unit with the SI-value and the provided display unit.
+     * @param si the value in SI or BASE units
+     * @param displayUnit the display unit to use
+     * @return a quantity for this unit with the SI-value and the provided display unit
+     */
+    Q ofSi(double si, UnitInterface<Q> displayUnit);
 
     /**
      * Return a quantity for this unit where the value is expressed in the current unit. When the unit is, e.g., kilometer, and
@@ -151,11 +133,9 @@ public interface UnitInterface<U extends UnitInterface<U, Q>, Q extends Quantity
      * @param value the value in the current unit
      * @return a quantity with the value in the current unit
      */
-    @SuppressWarnings("unchecked")
     default Q quantityInUnit(final double value)
     {
-        Q quantity = ofSi(getScale().toIdentityScale(value));
-        quantity.setDisplayUnit((U) this);
+        Q quantity = ofSi(getScale().toIdentityScale(value), this);
         return quantity;
     }
 }

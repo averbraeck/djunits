@@ -3,6 +3,7 @@ package org.djunits.unit;
 import java.util.Objects;
 
 import org.djunits.quantity.def.Quantity;
+import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
 import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIPrefixes;
@@ -22,10 +23,9 @@ import org.djutils.exceptions.Throw;
  * project is distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style
  * license</a>.
  * @author Alexander Verbraeck
- * @param <U> the unit type
  * @param <Q> the quantity type belonging to this unit
  */
-public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quantity<Q>> implements UnitInterface<U, Q>
+public abstract class AbstractUnit<Q extends Quantity<Q>> implements UnitInterface<Q>
 {
     /** The textual abbreviation of the unit, which is also the id. */
     private final String textualAbbreviation;
@@ -43,18 +43,20 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
     private final UnitSystem unitSystem;
 
     /** The SI-prefix, if any, to allow localization of the SI-prefix. */
-    private SIPrefix siPrefix = null;
+    private final SIPrefix siPrefix;
 
     /**
      * Create a new unit, where the textual abbreviation is the same as the display abbreviation.
      * @param textualAbbreviation the textual abbreviation of the unit, which also serves as the id
      * @param name the full name of the unit
-     * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
+     * @param scaleFactorToBaseUnit the linear scale factor to use to convert between this unit and the standard (e.g., SI,
+     *            BASE) unit
      * @param unitSystem unit system, e.g. SI or Imperial
      */
-    public AbstractUnit(final String textualAbbreviation, final String name, final Scale scale, final UnitSystem unitSystem)
+    public AbstractUnit(final String textualAbbreviation, final String name, final double scaleFactorToBaseUnit,
+            final UnitSystem unitSystem)
     {
-        this(textualAbbreviation, textualAbbreviation, name, scale, unitSystem);
+        this(textualAbbreviation, textualAbbreviation, name, new LinearScale(scaleFactorToBaseUnit), unitSystem, null);
     }
 
     /**
@@ -64,9 +66,10 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
      * @param name the full name of the unit
      * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
      * @param unitSystem unit system, e.g. SI or Imperial
+     * @param siPrefix the SI Prefix of this unit, can be null
      */
     public AbstractUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-            final Scale scale, final UnitSystem unitSystem)
+            final Scale scale, final UnitSystem unitSystem, final SIPrefix siPrefix)
     {
         // Check the validity
         String cName = Units.unitClassName(getClass());
@@ -86,6 +89,7 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
         this.name = name;
         this.scale = scale;
         this.unitSystem = unitSystem;
+        this.siPrefix = siPrefix;
 
         // Register the unit
         Units.register(this);
@@ -97,8 +101,7 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
      * @param perUnit whether it is a "per unit" such as "per meter"
      * @return the unit for method chaining
      */
-    @SuppressWarnings("unchecked")
-    public U generateSiPrefixes(final boolean kilo, final boolean perUnit)
+    public UnitInterface<Q> generateSiPrefixes(final boolean kilo, final boolean perUnit)
     {
         String cName = getClass().getSimpleName();
         Throw.when(!getScale().isIdentityScale(), UnitRuntimeException.class,
@@ -126,29 +129,25 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
         {
             if (!perUnit)
             {
-                this.siPrefix = SIPrefixes.UNIT_PREFIXES.get("");
                 for (SIPrefix sip : SIPrefixes.UNIT_PREFIXES.values())
                 {
                     if (sip.getFactor() != 1.0)
                     {
-                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation(),
+                        deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation(),
                                 sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation(),
-                                sip.getPrefixName() + getStoredName(), sip.getFactor(), getUnitSystem());
-                        unit.setSiPrefix(sip);
+                                sip.getPrefixName() + getStoredName(), sip.getFactor(), getUnitSystem(), sip);
                     }
                 }
             }
             else
             {
-                this.siPrefix = SIPrefixes.PER_UNIT_PREFIXES.get("/");
                 for (SIPrefix sip : SIPrefixes.PER_UNIT_PREFIXES.values())
                 {
                     if (sip.getFactor() != 1.0)
                     {
-                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
+                        deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
                                 sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
-                                sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
-                        unit.setSiPrefix(sip);
+                                sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem(), sip);
                     }
                 }
             }
@@ -157,51 +156,31 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
         {
             if (!perUnit)
             {
-                this.siPrefix = SIPrefixes.KILO_PREFIXES.get("k");
                 for (SIPrefix sip : SIPrefixes.KILO_PREFIXES.values())
                 {
                     if (sip.getFactor() != 1.0)
                     {
-                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
+                        deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(1),
                                 sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(1),
-                                sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem());
-                        unit.setSiPrefix(sip);
+                                sip.getPrefixName() + getStoredName().substring(4), sip.getFactor(), getUnitSystem(), sip);
                     }
                 }
             }
             else
             {
-                this.siPrefix = SIPrefixes.PER_KILO_PREFIXES.get("/k");
                 for (SIPrefix sip : SIPrefixes.PER_KILO_PREFIXES.values())
                 {
                     if (sip.getFactor() != 1.0)
                     {
 
-                        U unit = deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(2),
+                        deriveUnit(sip.getDefaultTextualPrefix() + getStoredTextualAbbreviation().substring(2),
                                 sip.getDefaultDisplayPrefix() + getStoredDisplayAbbreviation().substring(2),
-                                sip.getPrefixName() + getStoredName().substring(8), sip.getFactor(), getUnitSystem());
-                        unit.setSiPrefix(sip);
+                                sip.getPrefixName() + getStoredName().substring(8), sip.getFactor(), getUnitSystem(), sip);
                     }
                 }
             }
         }
-        return (U) this;
-    }
-
-    /**
-     * Return a linearly scaled derived unit for this unit, where the textual abbreviation is the same as the display
-     * abbreviation.
-     * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
-     * @param name the full name of the unit
-     * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
-     * @param unitSystem unit system, e.g. SI or Imperial
-     * @return a derived unit for this unit
-     */
-    @SuppressWarnings("checkstyle:hiddenfield")
-    public U deriveUnit(final String textualAbbreviation, final String name, final double scaleFactor,
-            final UnitSystem unitSystem)
-    {
-        return deriveUnit(textualAbbreviation, textualAbbreviation, name, scaleFactor, unitSystem);
+        return this;
     }
 
     /**
@@ -211,11 +190,27 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
      * @param name the full name of the unit
      * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
      * @param unitSystem unit system, e.g. SI or Imperial
+     * @param siPrefix the SI prefix of this unit
      * @return a derived unit for this unit
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public abstract U deriveUnit(String textualAbbreviation, String displayAbbreviation, String name, double scaleFactor,
-            UnitSystem unitSystem);
+    public abstract UnitInterface<Q> deriveUnit(String textualAbbreviation, String displayAbbreviation, String name,
+            double scaleFactor, UnitSystem unitSystem, SIPrefix siPrefix);
+
+    /**
+     * Return a linearly scaled derived unit for this unit, with an abbreviation and scale factor.
+     * @param abbreviation the textual abbreviation of the unit, which doubles as the id
+     * @param name the full name of the unit
+     * @param scaleFactor the (linear) scale factor to multiply with the current (linear) scale factor
+     * @param unitSystem unit system, e.g. SI or Imperial
+     * @return a derived unit for this unit
+     */
+    @SuppressWarnings("checkstyle:hiddenfield")
+    public UnitInterface<Q> deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+            final UnitSystem unitSystem)
+    {
+        return deriveUnit(abbreviation, abbreviation, name, scaleFactor, unitSystem, null);
+    }
 
     @Override
     public String getId()
@@ -271,35 +266,6 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
         return this.unitSystem;
     }
 
-    @SuppressWarnings({"unchecked", "hiddenfield"})
-    @Override
-    public U setSiPrefix(final SIPrefix siPrefix)
-    {
-        this.siPrefix = siPrefix;
-        return (U) this;
-    }
-
-    @Override
-    public U setSiPrefix(final String prefix)
-    {
-        SIPrefix sip = SIPrefixes.getSiPrefix(prefix);
-        return setSiPrefix(sip);
-    }
-
-    @Override
-    public U setSiPrefixKilo(final String prefix)
-    {
-        SIPrefix sip = SIPrefixes.getSiPrefixKilo(prefix);
-        return setSiPrefix(sip);
-    }
-
-    @Override
-    public U setSiPrefixPer(final String prefix)
-    {
-        SIPrefix sip = SIPrefixes.getSiPrefixPer(prefix);
-        return setSiPrefix(sip);
-    }
-
     @Override
     public SIPrefix getSiPrefix()
     {
@@ -322,7 +288,7 @@ public abstract class AbstractUnit<U extends UnitInterface<U, Q>, Q extends Quan
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractUnit<?, ?> other = (AbstractUnit<?, ?>) obj;
+        AbstractUnit<?> other = (AbstractUnit<?>) obj;
         return Objects.equals(this.displayAbbreviation, other.displayAbbreviation) && Objects.equals(this.name, other.name)
                 && Objects.equals(this.scale, other.scale)
                 && Objects.equals(this.textualAbbreviation, other.textualAbbreviation)

@@ -217,4 +217,19 @@ public enum SIPrefixes
         return p;
     }
 
+    /**
+     * Return the prefix information for the given prefix key (e.g., "/G" for "per giga"), with an offset of a factor 1000 for
+     * units that have "per kilo" as the default.
+     * @param prefixKey the prefix key, e.g., "/G" for "per giga"
+     * @return the SIPrefix information, with an offset of 1000. So "/k" will return 1, and "" will return 1.0E3.
+     * @throws IllegalArgumentException when the <code>prefixKey</code> does not exist
+     */
+    public static SIPrefix getSiPrefixPerKilo(final String prefixKey)
+    {
+        Throw.whenNull(prefixKey, "prefixKey cannot be null");
+        SIPrefix p = PER_KILO_PREFIXES.get(prefixKey);
+        Throw.when(p == null, IllegalArgumentException.class, "Unknown SI prefix for 'per kilo': %s", prefixKey);
+        return p;
+    }
+
 }

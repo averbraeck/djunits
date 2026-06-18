@@ -18,7 +18,7 @@ import org.djutils.exceptions.Throw;
  * BSD-style license. See <a href="https://djunits.org/docs/license.html">DJUNITS License</a>
  * @author Alexander Verbraeck
  */
-public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
+public class SIUnit implements UnitInterface<SIQuantity>
 {
     /** The (currently) 9 dimensions we take into account: rad, sr, kg, m, s, A, K, mol, cd. */
     public static final int NUMBER_DIMENSIONS = 9;
@@ -311,9 +311,9 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     }
 
     @Override
-    public SIQuantity ofSi(final double si)
+    public SIQuantity ofSi(final double si, final UnitInterface<SIQuantity> displayUnit)
     {
-        return new SIQuantity(si, this);
+        return new SIQuantity(si, (SIUnit) displayUnit);
     }
 
     /**
@@ -507,30 +507,6 @@ public class SIUnit implements UnitInterface<SIUnit, SIQuantity>
     public String getStoredName()
     {
         return format(true, false);
-    }
-
-    @Override
-    public SIUnit setSiPrefix(final SIPrefix siPrefix)
-    {
-        return this;
-    }
-
-    @Override
-    public SIUnit setSiPrefix(final String prefix)
-    {
-        return this;
-    }
-
-    @Override
-    public SIUnit setSiPrefixKilo(final String prefix)
-    {
-        return this;
-    }
-
-    @Override
-    public SIUnit setSiPrefixPer(final String prefix)
-    {
-        return this;
     }
 
     @Override

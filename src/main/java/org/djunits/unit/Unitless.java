@@ -3,6 +3,7 @@ package org.djunits.unit;
 import org.djunits.quantity.Dimensionless;
 import org.djunits.unit.scale.LinearScale;
 import org.djunits.unit.scale.Scale;
+import org.djunits.unit.si.SIPrefix;
 import org.djunits.unit.si.SIUnit;
 import org.djunits.unit.system.UnitSystem;
 
@@ -14,7 +15,7 @@ import org.djunits.unit.system.UnitSystem;
  * distributed under a <a href="https://djunits.org/docs/license.html" target="_blank">three-clause BSD-style license</a>.
  * @author Alexander Verbraeck
  */
-public class Unitless extends AbstractUnit<Unitless, Dimensionless>
+public class Unitless extends AbstractUnit<Dimensionless>
 {
     /** The dimensions of the dimensionless quantity: 1 [rad, sr, kg, m, s, A, K, mol, cd]. */
     public static final SIUnit SI_UNIT = new SIUnit(new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0});
@@ -31,21 +32,22 @@ public class Unitless extends AbstractUnit<Unitless, Dimensionless>
      */
     public Unitless(final String id, final String name, final double scaleFactorToBaseUnit, final UnitSystem unitSystem)
     {
-        super(id, name, new LinearScale(scaleFactorToBaseUnit), unitSystem);
+        super(id, name, scaleFactorToBaseUnit, unitSystem);
     }
 
     /**
-     * Return a derived unit for this unit, with textual abbreviation(s) and a display abbreviation.
-     * @param textualAbbreviation the textual abbreviation of the unit, which doubles as the id
+     * Create a new unit, with textual abbreviation(s) and a display abbreviation.
+     * @param textualAbbreviation the textual abbreviation of the unit, which also serves as the id
      * @param displayAbbreviation the display abbreviation of the unit
      * @param name the full name of the unit
      * @param scale the scale to use to convert between this unit and the standard (e.g., SI, BASE) unit
      * @param unitSystem unit system, e.g. SI or Imperial
+     * @param siPrefix the SI Prefix of this unit, can be null
      */
     public Unitless(final String textualAbbreviation, final String displayAbbreviation, final String name, final Scale scale,
-            final UnitSystem unitSystem)
+            final UnitSystem unitSystem, final SIPrefix siPrefix)
     {
-        super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem);
+        super(textualAbbreviation, displayAbbreviation, name, scale, unitSystem, siPrefix);
     }
 
     @Override
@@ -61,19 +63,19 @@ public class Unitless extends AbstractUnit<Unitless, Dimensionless>
     }
 
     @Override
-    public Dimensionless ofSi(final double si)
+    public Dimensionless ofSi(final double si, final UnitInterface<Dimensionless> displayUnit)
     {
-        return Dimensionless.ofSi(si);
+        return new Dimensionless(si, (Unitless) displayUnit);
     }
 
     @Override
     public Unitless deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
-            final double scaleFactor, final UnitSystem unitSystem)
+            final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
     {
         if (getScale() instanceof LinearScale ls)
         {
             return new Unitless(textualAbbreviation, displayAbbreviation, name,
-                    new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem);
+                    new LinearScale(ls.getScaleFactorToBaseUnit() * scaleFactor), unitSystem, siPrefix);
         }
         throw new UnitRuntimeException("Only possible to derive a unit from a unit with a linear scale");
     }
