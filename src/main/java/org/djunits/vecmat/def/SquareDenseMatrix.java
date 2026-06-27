@@ -6,6 +6,7 @@ import org.djunits.quantity.SIQuantity;
 import org.djunits.quantity.def.Quantity;
 import org.djunits.unit.UnitInterface;
 import org.djunits.util.ArrayMath;
+import org.djunits.util.SuppressFBWarnings;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -51,6 +52,7 @@ public abstract class SquareDenseMatrix<Q extends Quantity<Q>, M extends SquareD
     }
 
     @Override
+    @SuppressFBWarnings("EI_EXPOSE_REP") // named as an unsafe operation
     public double[] unsafeSiArray()
     {
         return this.dataSi;

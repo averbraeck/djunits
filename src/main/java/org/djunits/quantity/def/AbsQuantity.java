@@ -12,6 +12,7 @@ import org.djunits.quantity.Time;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Units;
 import org.djunits.unit.si.SIUnit;
+import org.djunits.util.SuppressFBWarnings;
 import org.djunits.value.Value;
 import org.djutils.base.NumberParser;
 import org.djutils.exceptions.Throw;
@@ -48,6 +49,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param quantity the relative quantity that indicates the 'distance' to the reference point
      * @param reference the reference point
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // quantity is immutable
     public AbsQuantity(final Q quantity, final R reference)
     {
         Throw.whenNull(quantity, "quantity");
@@ -89,6 +91,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * Return the (relative) quantity relative to the reference.
      * @return the (relative) quantity relative to the reference
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP") // quantity is immutable
     public Q getQuantity()
     {
         return this.quantity;

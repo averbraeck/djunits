@@ -7,6 +7,7 @@ import org.djunits.quantity.def.Quantity;
 import org.djunits.quantity.def.Reference;
 import org.djunits.unit.UnitInterface;
 import org.djunits.util.ArrayMath;
+import org.djunits.util.SuppressFBWarnings;
 import org.djunits.value.Value;
 import org.djunits.vecmat.d1.AbsMatrix1x1;
 import org.djunits.vecmat.d1.AbsVector1;
@@ -61,6 +62,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * @param relativeVecMat the underlying relative vector or matrix with SI values relative to the reference point
      * @param reference the reference point for the absolute values
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // relative vector is immutable
     public AbsVectorMatrix(final VMQ relativeVecMat, final Reference<?, A, Q> reference)
     {
         Throw.whenNull(relativeVecMat, "relativeVecMat");
@@ -119,6 +121,7 @@ public abstract class AbsVectorMatrix<A extends AbsQuantity<A, Q, ?>, Q extends 
      * Return the underlying relative vector or matrix with SI values relative to the reference point.
      * @return the underlying relative vector or matrix with SI values relative to the reference point
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP") // relative vector is immutable
     public VMQ getRelativeVecMat()
     {
         return this.relativeVecMat;

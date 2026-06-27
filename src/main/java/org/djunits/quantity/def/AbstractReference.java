@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import org.djunits.util.SuppressFBWarnings;
 import org.djutils.exceptions.Throw;
 
 /**
@@ -47,6 +48,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, A, Q>, A 
      * @param offsetReference the reference to which the offset is relative, can be null
      * @throws IllegalArgumentException if an id is already registered for this Reference subclass
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // offset is immutable
     public AbstractReference(final String id, final String name, final Q offset, final R offsetReference)
     {
         Throw.whenNull(id, "id");
@@ -158,6 +160,7 @@ public abstract class AbstractReference<R extends AbstractReference<R, A, Q>, A 
      * @return the offset expressed in the relative quantity
      */
     @Override
+    @SuppressFBWarnings("EI") // Offset is immutable
     public Q getOffset()
     {
         return this.offset;
