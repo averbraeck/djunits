@@ -100,9 +100,8 @@ Speed diff = speed1.subtract(speed2);
 // Display unit after 'subtract' will be the unit of speed1:
 System.out.println("difference: " + diff);
 
-// Change default display unit; internal SI value is unaltered:
-diff.setDisplayUnit(Speed.Unit.mi_s);
-System.out.println("difference: " + diff);
+// Change default display unit when formatting:
+System.out.println("difference: " + diff.format(Speed.Unit.mi_s));
 
 // Works, but error-prone and not localizable:
 System.out.println("error-prone " + diff.getInUnit(Speed.Unit.kt) + " kt");
@@ -344,8 +343,7 @@ System.out.println("50 km/h = " + speed);
 System.out.println("Acceleration: " + Units.localizedQuantityName(Acceleration.Unit.class));
 
 var d3du = Duration.valueOf("3 dag");
-d3du.setDisplayUnit("u");
-System.out.println("3 dagen in uren: " + d3du);
+System.out.println("3 dagen in uren: " + d3du.format(Duration.unit.h));
 ```
 
 This results in:

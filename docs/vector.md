@@ -47,8 +47,6 @@ The generic methods of a `Vector` are:
 - `boolean isRowVector()` returns whether this vector is a row vector. Note that a `Vector1` is both a column vector and and row vector.
 - `Iterator<Q> iterator()` returns a `Quantity` iterator over the entries of the vector. The iterator is guaranteed to yield the entries ordered by increasing index, and it will yield 0-values for the 0-entries of a sparse vector.
 - `getDisplayUnit()` returns the display unit that applies to the entire `Vector`.
-- `setDisplayUnit(Unit)` sets a new display unit for the entire `Vector` based on a strongly typed `unit`.
-- `setDisplayUnit(String)` sets a new display unit for the entire `Vector` based on a `String` representation of the unit.
 - `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Vector` only stores relative quantities.
 - `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Vector` only stores relative quantities, whereas `AbsVector` stores absolute quantities.
 - `transpose()` returns a new `Vector` where the rows and columns are swapped.

@@ -33,8 +33,6 @@ The generic methods of an `AbsVector` are:
 - `boolean isRowVector()` returns whether this vector is a row vector. Note that an `AbsVector1` is both a column vector and and row vector.
 - `Iterator<A> iterator()` returns an `AbsQuantity` iterator over the entries of the vector.
 - `getDisplayUnit()` returns the display unit of the entire `AbsVector`.
-- `setDisplayUnit(unit)` sets a new display unit for the entire `AbsVector` based on a strongly typed `unit`.
-- `setDisplayUnit(string)` sets a new display unit for the entire `AbsVector` based on a `String` representation of the unit.
 - `getReference()` returns the reference point for all absolute quantities in the `AbsVector`.
 - `boolean isRelative()` returns whether the underlying `AbsQuantity` is relative or not. Note that `AbsVector` only stores absolute quantities.
 - `boolean isAbsolute()` returns whether the underlying `AbsQuantity` is absolute or not. Note that `AbsVector` only stores absolute quantities.

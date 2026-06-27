@@ -45,8 +45,6 @@ The generic methods of a `Matrix` are:
 - `int rows()` returns the number of rows of the matrix.
 - `int cols()` returns the number of columns of the matrix.
 - `getDisplayUnit()` returns the display unit of the entire `Matrix`.
-- `setDisplayUnit(unit)` sets a new display unit for the entire `Matrix` based on a strongly typed `unit`.
-- `setDisplayUnit(string)` sets a new display unit for the entire `Matrix` based on a `String` representation of the unit.
 - `boolean isRelative()` returns whether the underlying `Quantity` is relative or not. Note that `Matrix` only stores relative quantities.
 - `boolean isAbsolute()` returns whether the underlying `Quantity` is absolute or not. Note that `Matrix` only stores relative quantities.
 - `transpose()` returns a new `Matrix` where the rows and columns are swapped.

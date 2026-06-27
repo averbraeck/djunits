@@ -34,8 +34,7 @@ var dur6 = Duration.of(24.0, "h"); // results in a duration of 24 hours
 
 Quantities are strongly typed, and many operations on quantities are possible. A couple of examples are (where `Q` denotes the quantity such as `Area`):
 
-- `Unit getDisplayUnit()` to ask the current unit in which the quantity is displayed.
-- `Q setDisplayUnit(newUnit)` to give the unit a new display unit, without changing its value. Values are _always_ stored using the SI or BASE unit.
+- `UnitInterface getDisplayUnit()` to ask the current unit in which the quantity is displayed.
 - `double si()` or `si` to give the value of the quantity expressed in SI or BASE units.
 - `double getInUnit()` to get the value expressed in the display unit that is stored in the `Quantity`.
 - `double getInUnit(targetUnit)` to get the value expressed in the given target unit.
@@ -54,7 +53,7 @@ The constructor is the standard way to instantiate a quantity. The constructors 
 - `Q(double valueInUnit, Unit unit)` instantiates a new quantity with `valueInUnit` expressed in the given `unit`. Example: `new Area(10.0, Area.Unit.are)`.
 - `Q(double valueInUnit, String unitString)` instantiates a new quantity with `valueInUnit`, where the unit string will be parsed into the unit, e.g., `new Area(80.0, "m2")`.
 - `Q(Q value)` instantiates a new quantity by duplicating an existing quantity.
-- `Q.ofSi(siValue)` instantiates a new quantity with the given SI or base value, and the default display unit. The display unit can be changed with the `setDisplayUnit(newUnit)` method.
+- `Q.ofSi(siValue, displayUnit)` instantiates a new quantity with the given SI or base value, and the given display unit.
 - `Q.valueOf(String text)` parses the string with value and unit. The example is a quantity of the correct type, e.g. `Area.valueOf("10.0 are")`.
 - `Q.of(double valueInUnit, String unitString)` instantiates a new quantity with `valueInUnit`, where the unit string will be parsed into the unit, e.g., `Area.of(80.0, "m2")`.
 
@@ -141,10 +140,8 @@ Speed speed = length.divide(hour);
 The value of `speed` above will be 80 km/h. It will also be strongly typed as a `Speed` quantity. Because the calculation takes place in SI units, the resulting speed value will be expressed in the SI default unit for speed: m/s. If we want it expressed as km/h, we use:
 
 ```java
-Speed speed = length.divide(hour).setDisplayUnit(Speed.Unit.km/h);
+Speed speed = Speed.ofSi(length.divide(hour).si, Speed.Unit.km/h);
 ```
-
-As can be seen from the example above, the `setDisplayUnit` returns the original quantity with the new display unit.
 
 In case the multiplication or division results in a quantity that is not known, an `SIQuantity` with a unit `SIUnit` will be returned. See the following example:
 

@@ -14,8 +14,6 @@ The generic methods of an `AbsQuantityTable` are:
 - `int rows()` returns the number of rows of the quantity table.
 - `int cols()` returns the number of columns of the quantity table.
 - `getDisplayUnit()` returns the display unit of the entire `AbsQuantityTable`.
-- `setDisplayUnit(unit)` sets a new display unit for the entire `AbsQuantityTable` based on a strongly typed `unit`.
-- `setDisplayUnit(string)` sets a new display unit for the entire `AbsQuantityTable` based on a `String` representation of the unit.
 - `getReference()` returns the reference point for all absolute quantities in the `AbsQuantityTable`.
 - `boolean isRelative()` returns whether the underlying `AbsQuantity` is relative or not. Note that `AbsQuantityTable` only stores absolute quantities.
 - `boolean isAbsolute()` returns whether the underlying `AbsQuantity` is absolute or not. Note that `AbsQuantityTable` only stores absolute quantities.
