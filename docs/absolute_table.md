@@ -106,17 +106,17 @@ The **array**-based methods use a row-major array. This means that the data is p
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
-- `new AbsQuantityTable<A, Q>(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
+- `new AbsQuantityTable<A, Q>(DataGridSi dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
-- `AbsQuantityTable.of(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsQuantityTable.of(DataGridSi dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a `DataGridSi` storage object, a display unit and a reference point. More information can be found in the [storage](storage) section. 
-- `AbsQuantityTable.of(double[] dataInUnit, int rows, int cols, Unit unit, Reference reference)` <br>
+- `AbsQuantityTable.of(double[] dataInUnit, int rows, int cols, UnitInterface unit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a row-major array with values expressed in the given unit. The data is relative to the provided reference point. The length of the array needs to be equal to `rows * cols`.
-- `AbsQuantityTable.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
+- `AbsQuantityTable.of(double[][] gridInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The data is relative to the provided reference point. The grid cannot be 'ragged'.
-- `AbsQuantityTable.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit, Reference reference)` <br>
+- `AbsQuantityTable.ofSi(double[] dataSi, int rows, int cols, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
-- `AbsQuantityTable.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
+- `AbsQuantityTable.ofSi(double[][] gridSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a grid (array of arrays) with with SI values for the quantities, a display unit and a reference point. The grid cannot be 'ragged'.
 - `AbsQuantityTable.of(Q[] data, int rows, int cols, Reference reference)` <br>
   creates an `AbsQuantityTable` based on a row-major array with quantities, and a reference point for the values. The length of the array needs to be equal to `rows * cols`.

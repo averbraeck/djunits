@@ -50,7 +50,7 @@ Quantities are strongly typed, and many operations on quantities are possible. A
 
 The constructor is the standard way to instantiate a quantity. The constructors are typically as follows, where `Q` denotes the quantity class`:
 
-- `Q(double valueInUnit, Unit unit)` instantiates a new quantity with `valueInUnit` expressed in the given `unit`. Example: `new Area(10.0, Area.Unit.are)`.
+- `Q(double valueInUnit, UnitInterface unit)` instantiates a new quantity with `valueInUnit` expressed in the given `unit`. Example: `new Area(10.0, Area.Unit.are)`.
 - `Q(double valueInUnit, String unitString)` instantiates a new quantity with `valueInUnit`, where the unit string will be parsed into the unit, e.g., `new Area(80.0, "m2")`.
 - `Q(Q value)` instantiates a new quantity by duplicating an existing quantity.
 - `Q.ofSi(siValue, displayUnit)` instantiates a new quantity with the given SI or base value, and the given display unit.
@@ -111,7 +111,7 @@ Quantities have a `toString()` method that returns a String representation of th
 
 - `String toString()` returns the localized string representation of a quantity, using its current display unit. 
 - `String format()` formats the quantity according to the current locale, and using its current display unit.
-- `String format(Unit displayUnit)` returns the localized string representation of a quantity, using the provided unit. 
+- `String format(UnitInterface displayUnit)` returns the localized string representation of a quantity, using the provided unit. 
 - `String format(QuantityFormat format)` formats the quantity using the provided format parameters.
 
 See the section [Formatting](formatting.md) for more information on how to use the `QuantityFormat` options.

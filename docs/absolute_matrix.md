@@ -127,17 +127,17 @@ Square matrices have a number of additional operations:
 
 Several methods exist to instantiate an `AbsMatrix1x1`:
 
-- `new AbsMatrix1x1<Q>(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `new AbsMatrix1x1<Q>(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on an array of length 1 with SI values for a quantity with a displayUnit  and a reference point.
-- `AbsMatrix1x1.of(double xInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix1x1.of(double xInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`,  and a reference point.
-- `AbsMatrix1x1.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix1x1.of(double[] dataInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on an array of length 1 with values expressed in the given unit, and a reference point.
-- `AbsMatrix1x1.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix1x1.of(double[][] gridInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on a 1x1 grid (array of arrays) of values expressed in the given unit, and a reference point.
-- `AbsMatrix1x1.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrix1x1.ofSi(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on an array of length 1 with SI values for a quantity and a displayUnit, and a reference point.
-- `AbsMatrix1x1.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrix1x1.ofSi(double[][] gridSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on a 1x1 grid (array of arrays) of SI values and a displayUnit, and a reference point.
 - `AbsMatrix1x1.of(Q[] data, Reference reference)` <br>
   creates an `AbsMatrix1x1` based on an array of length 1 containing the quantity and a reference point. The display unit is taken from the quantity.
@@ -161,15 +161,15 @@ The **array**-based methods use a row-major array. This means that the data is p
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
-- `new AbsMatrix2x2<Q>(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `new AbsMatrix2x2<Q>(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a row-major array of length 4 with SI values for a quantity with a displayUnit and a reference.
-- `AbsMatrix2x2.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix2x2.of(double[] dataInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a row-major array of length 4 with values expressed in the given unit, and a reference.
-- `AbsMatrix2x2.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix2x2.of(double[][] gridInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a 2x2 grid (array of arrays) of values expressed in the given unit, and a reference.
-- `AbsMatrix2x2.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrix2x2.ofSi(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a row-major array of length 4 with SI values for a quantity and a displayUnit and a reference.
-- `AbsMatrix2x2.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrix2x2.ofSi(double[][] gridSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a 2x2 grid (array of arrays) of SI values and a displayUnit and a reference.
 - `AbsMatrix2x2.of(Q[] data, Reference reference)` <br>
   creates an `AbsMatrix2x2` based on a row-major array of length 4 containing the quantity and a reference. The display unit is taken from the quantity at position `[0]`.
@@ -191,15 +191,15 @@ The **array**-based methods use a row-major array. This means that the data is p
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 
 
-- `new AbsMatrix3x3<Q>(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `new AbsMatrix3x3<Q>(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a row-major array of length 9 with SI values for a quantity with a displayUnit and a reference.
-- `AbsMatrix3x3.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix3x3.of(double[] dataInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a row-major array of length 9 with values expressed in the given unit, and a reference.
-- `AbsMatrix3x3.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrix3x3.of(double[][] gridInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a 3x3 grid (array of arrays) of values expressed in the given unit, and a reference.
-- `AbsMatrix3x3.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrix3x3.ofSi(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a row-major array of length 9 with SI values for a quantity and a displayUnit and a reference.
-- `AbsMatrix3x3.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrix3x3.ofSi(double[][] gridSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a 3x3 grid (array of arrays) of SI values and a displayUnit and a reference.
 - `AbsMatrix3x3.of(Q[] data, Reference reference)` <br>
   creates an `AbsMatrix3x3` based on a row-major array of length 9 containing the quantity and a reference. The display unit is taken from the quantity at position `[0]`.
@@ -226,17 +226,17 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. For a square NxN matrix, the number of rows and columns should be the same, and 'ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
 
-- `new AbsMatrixNxN<Q>(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
+- `new AbsMatrixNxN<Q>(DataGridSi dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
-- `AbsMatrixNxN.of(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrixNxN.of(DataGridSi dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
-- `AbsMatrixNxN.of(double[] dataInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrixNxN.of(double[] dataInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a row-major array with values expressed in the given unit. The number of elements in the array needs to be a perfect square.
-- `AbsMatrixNxN.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrixNxN.of(double[][] gridInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a grid (array of arrays) with values expressed in the given unit. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
-- `AbsMatrixNxN.ofSi(double[] dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrixNxN.ofSi(double[] dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a row-major array with SI values for the quantities. The number of elements in the array needs to be a perfect square.
-- `AbsMatrixNxN.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrixNxN.ofSi(double[][] gridSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a grid (array of arrays) with with SI values for the quantities. The number of rows and columns in the grid have to be the same, and the grid cannot be 'ragged'.
 - `AbsMatrixNxN.of(Q[] data, Reference reference)` <br>
   creates an `AbsMatrixNxN` based on a row-major array with quantities. The number of elements in the array needs to be a perfect square.
@@ -263,17 +263,17 @@ The **array**-based methods use a row-major array. This means that the data is p
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
 
-- `new MatrixNxM<Q>(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
+- `new MatrixNxM<Q>(DataGridSi dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
-- `AbsMatrixNxM.of(DataGridSi dataSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrixNxM.of(DataGridSi dataSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
-- `AbsMatrixNxM.of(double[] dataInUnit, int rows, int cols, Unit unit, Reference reference)` <br>
+- `AbsMatrixNxM.of(double[] dataInUnit, int rows, int cols, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a row-major array with values expressed in the given unit. The length of the array needs to be equal to `rows * cols`.
-- `AbsMatrixNxM.of(double[][] gridInUnit, Unit unit, Reference reference)` <br>
+- `AbsMatrixNxM.of(double[][] gridInUnit, UnitInterface unit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
-- `AbsMatrixNxM.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrixNxM.ofSi(double[] dataSi, int rows, int cols, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
-- `AbsMatrixNxM.ofSi(double[][] gridSi, Unit displayUnit, Reference reference)` <br>
+- `AbsMatrixNxM.ofSi(double[][] gridSi, UnitInterface displayUnit, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a grid (array of arrays) with with SI values for the quantities. The grid cannot be 'ragged'.
 - `AbsMatrixNxM.of(Q[] data, int rows, int cols, Reference reference)` <br>
   creates an `AbsMatrixNxM` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.

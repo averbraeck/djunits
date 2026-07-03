@@ -4,17 +4,17 @@
 
 DJUNITS defines a sizable number of instantiated units for each quantity. For each quantity, the most common SI, SI-derived, SI-accepted and imperial units are included. A few MTS and CGS units are included as well. 
 
-Units are typically defined as an inner class of the corresponding Quantity. `Unit` types belong uniquely to a `Quantity` type. This relationship also shows in the definition of the generics of a `Unit`:
+Units are typically defined as an inner class of the corresponding Quantity. `Unit` types belong uniquely to a `Quantity` type. This relationship also shows in the definition of the generics of a `Unit` as defined in the `UnitInterface`:
 
 ```java
-public interface Unit<U extends Unit<U, Q>, Q extends Quantity<Q>>
+public interface UnitInterface<Q extends Quantity<Q>>
 ```
 
 This means that the unit type is aware of the quantity type it belongs to. When a quantity and unit are defined, the generics define the relationship, and the user is not concerned with generics anymore:
 
 ```java
 public class Power extends Quantity<Power>
-public static class Unit extends AbstractUnit<Power.Unit, Power>
+public static class Unit extends AbstractUnit<Power>
 ```
 
 In this case the `Power.Unit` class is defined as an inner class within the `Power` class, but it could also have been defined as a stand-alone class `PowerUnit`.

@@ -97,15 +97,15 @@ A `Vector` implements several mathematical operations. The most important ones a
 
 For a `Vector1`, there is no distinction between a row and column vector. Several methods exist to instantiate a `Vector1`:
 
-- `new Vector1<Q>(double xSi, Unit displayUnit)` <br>
+- `new Vector1<Q>(double xSi, UnitInterface displayUnit)` <br>
   creates a `Vector1` based on an SI value for the quantity with a displayUnit.
-- `Vector1.of(double xInUnit, Unit unit)` <br>
+- `Vector1.of(double xInUnit, UnitInterface unit)` <br>
   creates a `Vector1` based on a value expressed in the given unit, e.g., `60.0, Speed.Unit.km_h`.
-- `Vector1.of(double[] dataInUnit, Unit unit)` <br>
+- `Vector1.of(double[] dataInUnit, UnitInterface unit)` <br>
   creates a `Vector1` based on an array of length 1 with values expressed in the given unit.
-- `Vector1.ofSi(double xSi, Unit displayUnit)` <br>
+- `Vector1.ofSi(double xSi, UnitInterface displayUnit)` <br>
   creates a `Vector1` based on an SI value for a quantity with a displayUnit.
-- `Vector1.ofSi(double[] dataSi, Unit displayUnit)` <br>
+- `Vector1.ofSi(double[] dataSi, UnitInterface displayUnit)` <br>
   creates a `Vector1` based on an array of length 1 with SI values for a quantity with a displayUnit.
 - `Vector1.of(Q x)` <br>
   creates a `Vector1` based on a provided quantity.
@@ -117,15 +117,15 @@ For a `Vector1`, there is no distinction between a row and column vector. Severa
 
 For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` exist. Several methods exist to instantiate a `Vector2`. Below, the instantiation methods are given for `Vector2.Col`. The instantiation methods for a `Vector2.Row` are analogous.
 
-- `new Vector2.Col<Q>(double xSi, double ySi, Unit displayUnit)` <br>
+- `new Vector2.Col<Q>(double xSi, double ySi, UnitInterface displayUnit)` <br>
   creates a `Vector2.Col` based on two SI values for the quantities with a displayUnit.
-- `Vector2.Col.of(double xInUnit, double yInUnit, Unit unit)` <br>
+- `Vector2.Col.of(double xInUnit, double yInUnit, UnitInterface unit)` <br>
   creates a `Vector2.Col` based on two values expressed in the given unit.
-- `Vector2.Col.of(double[] dataInUnit, Unit unit)` <br>
+- `Vector2.Col.of(double[] dataInUnit, UnitInterface unit)` <br>
   creates a `Vector2.Col` based on an array of length 2 with values expressed in the given unit.
-- `Vector2.Col.ofSi(double xSi, double ySi, Unit displayUnit)` <br>
+- `Vector2.Col.ofSi(double xSi, double ySi, UnitInterface displayUnit)` <br>
   creates a `Vector2.Col` based on two SI values for the quantities with a displayUnit.
-- `Vector2.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
+- `Vector2.Col.ofSi(double[] dataSi, UnitInterface displayUnit)` <br>
   creates a `Vector2.Col` based on an array of length 2 with SI values for the quantities with a displayUnit.
 - `Vector2.Col.of(Q x, Q y)` <br>
   creates a `Vector2.Col` containing the two provided quantities. The `x` quantity provides the display unit of the vector.
@@ -136,15 +136,15 @@ For a `Vector2`, a row vector `Vector2.Row` and a column vector `Vector2.Col` ex
 
 For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` exist. Several methods exist to instantiate a `Vector3`. Below, the instantiation methods are given for `Vector3.Col`. The instantiation methods for a `Vector3.Row` are analogous.
 
-- `new Vector3.Col<Q>(double xSi, double ySi, double zSi, Unit displayUnit)` <br>
+- `new Vector3.Col<Q>(double xSi, double ySi, double zSi, UnitInterface displayUnit)` <br>
   creates a `Vector3.Col` based on three SI values for the quantities with a displayUnit.
-- `Vector3.Col.of(double xInUnit, double yInUnit, double zInUnit, Unit unit)` <br>
+- `Vector3.Col.of(double xInUnit, double yInUnit, double zInUnit, UnitInterface unit)` <br>
   creates a `Vector3.Col` based on three values expressed in the given unit.
-- `Vector3.Col.of(double[] dataInUnit, Unit unit)` <br>
+- `Vector3.Col.of(double[] dataInUnit, UnitInterface unit)` <br>
   creates a `Vector3.Col` based on an array of length 3 with values expressed in the given unit.
-- `Vector3.Col.ofSi(double xSi, double ySi, double zSi, Unit displayUnit)` <br>
+- `Vector3.Col.ofSi(double xSi, double ySi, double zSi, UnitInterface displayUnit)` <br>
   creates a `Vector3.Col` based on three SI values for the quantities with a displayUnit.
-- `Vector3.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
+- `Vector3.Col.ofSi(double[] dataSi, UnitInterface displayUnit)` <br>
   creates a `Vector3.Col` based on an array of length 3 with SI values for the quantities with a displayUnit.
 - `Vector3.Col.of(Q x, Q y, Q z)` <br>
   creates a `Vector3.Col` containing the three provided quantities. The `x` quantity provides the display unit of the vector.
@@ -156,13 +156,13 @@ For a `Vector3`, a row vector `Vector3.Row` and a column vector `Vector3.Col` ex
 
 The `VectorN` class is used for storing row and column vectors of any length. Data can be stored as single-precision `float` variable, or as double-preciding `double` values. Both dense (store every number) and sparse (only store non-zero values) is possible. For a `VectorN`, a row vector subclass `VectorN.Row` and a column vector subclass `VectorN.Col` exist. Several methods exist to instantiate a `VectorN`. Below, the instantiation methods are given for `VectorN.Col`. The instantiation methods for a `VectorN.Row` are analogous.
 
-- `new VectorN.Col<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
+- `new VectorN.Col<Q>(DataGridSi dataSi, UnitInterface displayUnit)` <br>
   creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [Data Storage](storage.md) section. 
-- `VectorN.Col.of(DataGridSi dataSi, Unit displayUnit)` <br>
+- `VectorN.Col.of(DataGridSi dataSi, UnitInterface displayUnit)` <br>
   creates a `VectorN.Col` based on a `DataGridSi` storage object. More information can be found in the [Data Storage](storage.md) section. 
-- `VectorN.Col.of(double[] dataInUnit, Unit unit)` <br>
+- `VectorN.Col.of(double[] dataInUnit, UnitInterface unit)` <br>
   creates a `VectorN.Col` based on an array with values expressed in the given unit. The vector will have the same number of elements as the array.
-- `VectorN.Col.ofSi(double[] dataSi, Unit displayUnit)` <br>
+- `VectorN.Col.ofSi(double[] dataSi, UnitInterface displayUnit)` <br>
   creates a `VectorN.Col` based on an array with SI values for the quantities. The vector will have the same number of elements as the array.
 - `VectorN.Col.of(Q[] data)` <br>
   creates a `VectorN.Col` based on an array with quantities. The vector will have the same number of elements as the array. The quantity at `data[0]` provides the display unit of the vector.
@@ -198,7 +198,7 @@ All vectors have a `toString()` method that returns a single-line String represe
 
 - `String toString()` returns the localized string representation of the vector, using its current display unit. Row vectors will be printed on one row, and column vectors will have one cell per line, and therefore result in a multi-line String.
 - `String format()` formats the vector according to the current locale, and using its current display unit. Row vectors will be formatted in a single-line String, and column vectors will have one cell per line, and therefore result in a multi-line String.
-- `String format(Unit displayUnit)` returns the localized string representation of the vector, using the provided unit. Row vectors will be formatted in a single-line String, and column vectors will have one cell per line, and therefore result in a multi-line String.
+- `String format(UnitInterface displayUnit)` returns the localized string representation of the vector, using the provided unit. Row vectors will be formatted in a single-line String, and column vectors will have one cell per line, and therefore result in a multi-line String.
 - `String format(VectorFormat format)` formats the vector using the provided format parameters.
 
 The `VectorFormat` class has two variants: a `VectorFormat.Row` class that by default formats the vector on one row, and the `VectorFormat.Col` class that by default uses one line per cell. See the section [Formatting](formatting.md) for more information on how to use the `VectorFormat` options.

@@ -119,17 +119,17 @@ The **array**-based methods use a row-major array. This means that the data is p
 
 The **grid**-based methods count the rows in the 'outer' (first) array `[r][]`, and the columns in the 'inner' second array `[][c]`. A `(r,c)`value is retrieved by `m[r][c]`. 'Ragged' grids are not allowed and result in an `IllegalArgumentException`. 
 
-- `new QuantityTable<Q>(DataGridSi dataSi, Unit displayUnit)` <br>
+- `new QuantityTable<Q>(DataGridSi dataSi, UnitInterface displayUnit)` <br>
   creates a `QuantityTable` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
-- `QuantityTable.of(DataGridSi dataSi, Unit displayUnit)` <br>
+- `QuantityTable.of(DataGridSi dataSi, UnitInterface displayUnit)` <br>
   creates a `QuantityTable` based on a `DataGridSi` storage object. More information can be found in the [storage](storage) section. 
-- `QuantityTable.of(double[] dataInUnit, int rows, int cols, Unit unit)` <br>
+- `QuantityTable.of(double[] dataInUnit, int rows, int cols, UnitInterface unit)` <br>
   creates a `QuantityTable` based on a row-major array with values expressed in the given unit. The length of the array needs to be equal to `rows * cols`.
-- `QuantityTable.of(double[][] gridInUnit, Unit unit)` <br>
+- `QuantityTable.of(double[][] gridInUnit, UnitInterface unit)` <br>
   creates a `QuantityTable` based on a grid (array of arrays) with values expressed in the given unit. The grid cannot be 'ragged'.
-- `QuantityTable.ofSi(double[] dataSi, int rows, int cols, Unit displayUnit)` <br>
+- `QuantityTable.ofSi(double[] dataSi, int rows, int cols, UnitInterface displayUnit)` <br>
   creates a `QuantityTable` based on a row-major array with SI values for the quantities. The length of the array needs to be equal to `rows * cols`.
-- `QuantityTable.ofSi(double[][] gridSi, Unit displayUnit)` <br>
+- `QuantityTable.ofSi(double[][] gridSi, UnitInterface displayUnit)` <br>
   creates a `QuantityTable` based on a grid (array of arrays) with with SI values for the quantities. The grid cannot be 'ragged'.
 - `QuantityTable.of(Q[] data, int rows, int cols)` <br>
   creates a `QuantityTable` based on a row-major array with quantities. The length of the array needs to be equal to `rows * cols`.
@@ -143,7 +143,7 @@ Quantity tables have a `toString()` method that returns a multi-line String repr
 
 - `String toString()` returns the localized string representation of the quantity table, using its current display unit. 
 - `String format()` formats the quantity table according to the current locale, and using its current display unit.
-- `String format(Unit displayUnit)` returns the localized string representation of the quantity table, using the provided unit. 
+- `String format(UnitInterface displayUnit)` returns the localized string representation of the quantity table, using the provided unit. 
 - `String format(TableFormat format)` formats the quantity table using the provided format parameters.
 
 See the section [Formatting](formatting.md) for more information on how to use the `TableFormat` options.

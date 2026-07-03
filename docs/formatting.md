@@ -22,7 +22,7 @@ All quantity-related types have four methods:
 
 - `toString()` returns a String with a representation of the quantity-related object using the default formatting rules. 
 - `format()` returns a String with a representation of the quantity-related object using the default formatting rules.
-- `format(Unit unit)` returns a String, with the quantity-related object expressed in the given unit, using the default formatting rules.
+- `format(UnitInterface unit)` returns a String, with the quantity-related object expressed in the given unit, using the default formatting rules.
 - `format(Format format)` returns a String representation of the quantity-related object, using the provided formatting rules.
 
 All `Format` subclasses implement methods for formatting the **number**, the **unit**, the **locale**, and the **reference** in case the object is absolute. The formatting rules for these four categories will be discussed below.

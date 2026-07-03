@@ -13,7 +13,7 @@ in their code, by catching many common errors with the use of quantities and uni
 * DJUNITS knows or computes the SI type of the result when a value in one unit is multiplied, or divided by another value 
   (that may have another unit).
 * DJUNITS handles Quantities, Vectors and Matrices, as well as quantity tables.
-* DJUNITS stores everything in immutable objects, except for the display unit that can be changed. 
+* DJUNITS stores everything in immutable objects. 
 * DJUNITS stores the data for vectors and matrices as float or double values, and using dense or sparse storage.
 
 
@@ -378,7 +378,7 @@ DJUNITS version 6 is different from versions 1 to 5, and not upward compatible. 
 - Operation names are streamlined across quantities, vectors and matrices, e.g., `add`, `subtract`, `multiply`, `divide`.
 - Vector and matrix classes use generics for definitions such as `Matrix3x3<Area>`, and only allow correct operations.
 - Vector and matrix operations such as trace, multiplication, and inverse are now fully supported with consistent unit calculations.
-- Vectors and matrices with absolute quantities such as `Matrix3x3<Position, Length>` are fully supported.
+- Vectors and matrices with absolute quantities such as `AbsMatrix3x3<Position, Length>` are fully supported.
 - Hadamard operations have been added to vector and matrix calculations.
 - The `QuantityTable` has been added for storage of tabular quantity data.
 
