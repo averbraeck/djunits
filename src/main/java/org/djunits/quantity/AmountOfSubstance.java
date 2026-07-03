@@ -251,6 +251,13 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
         }
 
         @Override
+        public AmountOfSubstance.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
+        @Override
         public AmountOfSubstance.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
                 final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {

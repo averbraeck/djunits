@@ -401,6 +401,13 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
         }
 
         @Override
+        public Temperature.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
+        @Override
         public Temperature.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
                 final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {

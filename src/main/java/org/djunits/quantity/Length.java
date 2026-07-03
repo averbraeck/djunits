@@ -150,7 +150,7 @@ public class Length extends Quantity<Length>
      */
     public final Position add(final Position position)
     {
-       return new Position(new Length(position.si() + si(), getDisplayUnit(), true), position.getReference());
+        return new Position(new Length(position.si() + si(), getDisplayUnit(), true), position.getReference());
 
     }
 
@@ -427,6 +427,13 @@ public class Length extends Quantity<Length>
         public Length ofSi(final double si, final UnitInterface<Length> displayUnit)
         {
             return new Length(si, (Unit) displayUnit, true);
+        }
+
+        @Override
+        public Length.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Length.Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
         }
 
         @Override

@@ -231,6 +231,13 @@ public class EquivalentDose extends Quantity<EquivalentDose>
         }
 
         @Override
+        public EquivalentDose.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
+        @Override
         public EquivalentDose.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
                 final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {

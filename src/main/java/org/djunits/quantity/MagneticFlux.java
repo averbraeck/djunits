@@ -294,6 +294,13 @@ public class MagneticFlux extends Quantity<MagneticFlux>
         }
 
         @Override
+        public MagneticFlux.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
+        @Override
         public MagneticFlux.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation,
                 final String name, final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {

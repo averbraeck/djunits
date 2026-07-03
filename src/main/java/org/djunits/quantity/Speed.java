@@ -391,6 +391,13 @@ public class Speed extends Quantity<Speed>
         }
 
         @Override
+        public Speed.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Speed.Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
+        }
+
+        @Override
         public Speed.Unit deriveUnit(final String textualAbbreviation, final String displayAbbreviation, final String name,
                 final double scaleFactor, final UnitSystem unitSystem, final SIPrefix siPrefix)
         {

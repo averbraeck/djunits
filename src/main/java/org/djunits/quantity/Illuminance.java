@@ -193,7 +193,7 @@ public class Illuminance extends Quantity<Illuminance>
         public static final Illuminance.Unit mulx = Units.resolve(Illuminance.Unit.class, "mulx");
 
         /** klux. */
-        public static final Illuminance.Unit klx = lx.deriveUnit("klx", "klx", "kilolux", 1.0E3, UnitSystem.SI_DERIVED, null);
+        public static final Illuminance.Unit klx = Units.resolve(Illuminance.Unit.class, "klx");
 
         /** phot. */
         public static final Illuminance.Unit ph = klx.deriveUnit("ph", "ph", "phot", 10.0, UnitSystem.CGS, null);
@@ -244,6 +244,13 @@ public class Illuminance extends Quantity<Illuminance>
         public Illuminance ofSi(final double si, final UnitInterface<Illuminance> displayUnit)
         {
             return new Illuminance(si, (Unit) displayUnit, true);
+        }
+
+        @Override
+        public Illuminance.Unit deriveUnit(final String abbreviation, final String name, final double scaleFactor,
+                final UnitSystem unitSystem)
+        {
+            return (Unit) super.deriveUnit(abbreviation, name, scaleFactor, unitSystem);
         }
 
         @Override
