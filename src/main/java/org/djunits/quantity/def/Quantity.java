@@ -5,7 +5,10 @@ import java.util.Objects;
 
 import org.djunits.formatter.QuantityFormat;
 import org.djunits.formatter.QuantityFormatter;
+import org.djunits.quantity.Area;
+import org.djunits.quantity.Length;
 import org.djunits.quantity.SIQuantity;
+import org.djunits.quantity.Speed;
 import org.djunits.unit.UnitInterface;
 import org.djunits.unit.Unitless;
 import org.djunits.unit.Units;
@@ -19,9 +22,9 @@ import org.djutils.exceptions.Throw;
 /**
  * Quantity is an abstract class that stores the basic information about a quantity. A physical quantity can be expressed as a
  * value, which is the combination of a numerical value and a unit of measurement. The type of physical quantity is encoded in
- * the class (Length, Speed, Area, etc.) with its associated (base) unit of measurement, whereas the numerical value is stored
- * in the si field. Additionally, each quantity has a displayUnit that gives the preference for the (scaled) display of the
- * quantity, e.g., in a toString() method.
+ * the class ({@link Length}, {@link Speed}, {@link Area}, etc.) with its associated (base) unit of measurement, whereas the
+ * numerical value is stored in the si field. Additionally, each quantity has a displayUnit that gives the preference for the
+ * (scaled) display of the quantity, e.g., in a toString() method.
  * <p>
  * Copyright (c) 2025-2026 Delft University of Technology, Jaffalaan 5, 2628 BX Delft, the Netherlands. All rights reserved. See
  * for project information <a href="https://djunits.org" target="_blank">https://djunits.org</a>. The DJUNITS project is
@@ -69,7 +72,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * Retrieve the value in the current display unit.
      * @return the value in the current display unit
      */
-    public final double getInUnit()
+    public double getInUnit()
     {
         return getDisplayUnit().getScale().fromIdentityScale(si());
     }
@@ -79,7 +82,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
      * @param targetUnit the unit to convert the value into
      * @return the double value of this quantity expressed in the target unit
      */
-    public final double getInUnit(final UnitInterface<Q> targetUnit)
+    public double getInUnit(final UnitInterface<Q> targetUnit)
     {
         return targetUnit.getScale().fromIdentityScale(si());
     }
@@ -307,7 +310,7 @@ public abstract class Quantity<Q extends Quantity<Q>> extends Number
     }
 
     @Override
-    public final int compareTo(final Q other)
+    public int compareTo(final Q other)
     {
         return Double.compare(this.si(), other.si());
     }

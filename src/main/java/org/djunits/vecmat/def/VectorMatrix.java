@@ -33,7 +33,7 @@ import org.djutils.exceptions.Throw;
  * @author Alexander Verbraeck
  * @param <Q> the quantity type
  * @param <VM> the 'SELF' vector or matrix type
- * @param <SI> the vector or matrix type with generics &lt;SIQuantity, SIUnit&lt;
+ * @param <SI> the vector or matrix type with generics &lt;{@link SIQuantity}, {@link SIUnit}&gt;
  * @param <H> the generic vector or matrix type with generics &lt;?, ?&lt; for Hadamard operations
  * @param <VMT> the type of the transposed version of the vector or matrix
  */
