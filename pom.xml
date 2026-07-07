@@ -37,7 +37,8 @@
     <maven.javadoc.version>3.11.2</maven.javadoc.version>
     <maven.resources.version>3.3.1</maven.resources.version>
     <maven.checkstyle.version>3.6.0</maven.checkstyle.version>
-    <checkstyle.version>13.5.0</checkstyle.version>
+    <!-- Checkstyle CANNOT be upgraded to v13 because it needs Java 21 to compile -->
+    <checkstyle.version>12.3.1</checkstyle.version>
     <maven.surefire.version>3.5.6</maven.surefire.version>
     <maven.surefire-report.version>3.5.6</maven.surefire-report.version>
     <maven.failsafe.version>3.5.6</maven.failsafe.version>
