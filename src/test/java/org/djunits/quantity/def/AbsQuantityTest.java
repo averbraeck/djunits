@@ -36,8 +36,8 @@ import org.junit.jupiter.api.Test;
  * <ul>
  * <li>Reference-aware comparisons and {@link Comparable} rules</li>
  * <li>Reference transformations via {@link ComparableAbsQuantity#relativeTo(Reference)}</li>
- * <li>Parsing helpers: {@link ComparableAbsQuantity#valueOf(String, ComparableAbsQuantity, Reference)} and
- * {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)}</li>
+ * <li>Parsing helpers: {@link AbsQuantity#valueOf(String, AbsQuantity, Reference)} and
+ * {@link AbsQuantity#of(double, String, AbsQuantity, Reference)}</li>
  * <li>Stringification and SI-prefix formatting</li>
  * <li>Static helpers: {@link ComparableAbsQuantity#interpolate(ComparableAbsQuantity, ComparableAbsQuantity, double)},
  * {@link ComparableAbsQuantity#max(ComparableAbsQuantity, ComparableAbsQuantity[])},
@@ -263,8 +263,8 @@ public class AbsQuantityTest
     // ----------------------------------------------------------------------
 
     /**
-     * Verifies successful parsing via {@link ComparableAbsQuantity#valueOf(String, ComparableAbsQuantity, Reference)} and error
-     * branches for {@code null} parameters, empty text, and unknown units.
+     * Verifies successful parsing via {@link AbsQuantity#valueOf(String, AbsQuantity, Reference)} and error branches for
+     * {@code null} parameters, empty text, and unknown units.
      */
     @Test
     void valueOfParses()
@@ -282,8 +282,8 @@ public class AbsQuantityTest
     }
 
     /**
-     * Verifies successful parsing via {@link ComparableAbsQuantity#of(double, String, ComparableAbsQuantity, Reference)} and
-     * error branches for {@code null} parameters, empty unit string, and unknown units.
+     * Verifies successful parsing via {@link AbsQuantity#of(double, String, AbsQuantity, Reference)} and error branches for
+     * {@code null} parameters, empty unit string, and unknown units.
      */
     @Test
     void ofParses()
