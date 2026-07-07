@@ -146,7 +146,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code volume} is {@code null}.
      */
-    public final Dimensionless multiply(final Volume volume)
+    public Dimensionless multiply(final Volume volume)
     {
         return new Dimensionless(this.si() * volume.si(), Unitless.BASE);
     }
@@ -159,7 +159,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code area} is {@code null}.
      */
-    public final LinearObjectDensity multiply(final Area area)
+    public LinearObjectDensity multiply(final Area area)
     {
         return new LinearObjectDensity(this.si() * area.si(), LinearObjectDensity.Unit.SI);
     }
@@ -172,7 +172,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @return the resulting areal object density in SI (1/m²).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final ArealObjectDensity multiply(final Length length)
+    public ArealObjectDensity multiply(final Length length)
     {
         return new ArealObjectDensity(this.si() * length.si(), ArealObjectDensity.Unit.SI);
     }
@@ -185,7 +185,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @return the resulting areal object density in SI (1/m²).
      * @throws NullPointerException if {@code lod} is {@code null}.
      */
-    public final ArealObjectDensity divide(final LinearObjectDensity lod)
+    public ArealObjectDensity divide(final LinearObjectDensity lod)
     {
         return new ArealObjectDensity(this.si() / lod.si(), ArealObjectDensity.Unit.SI);
     }
@@ -198,7 +198,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code aod} is {@code null}.
      */
-    public final LinearObjectDensity divide(final ArealObjectDensity aod)
+    public LinearObjectDensity divide(final ArealObjectDensity aod)
     {
         return new LinearObjectDensity(this.si() / aod.si(), LinearObjectDensity.Unit.SI);
     }
@@ -211,7 +211,7 @@ public class VolumetricObjectDensity extends Quantity<VolumetricObjectDensity>
      * @return the resulting dimensionless ratio in SI (1).
      * @throws NullPointerException if {@code other} is {@code null}.
      */
-    public final Dimensionless divide(final VolumetricObjectDensity other)
+    public Dimensionless divide(final VolumetricObjectDensity other)
     {
         return new Dimensionless(this.si() / other.si(), Unitless.BASE);
     }

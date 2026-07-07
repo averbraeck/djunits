@@ -143,7 +143,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v quantity
      * @return quantity as a division of FlowMass and FlowMass
      */
-    public final Dimensionless divide(final FlowMass v)
+    public Dimensionless divide(final FlowMass v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a multiplication of FlowMass and Duration
      */
-    public final Mass multiply(final Duration v)
+    public Mass multiply(final Duration v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a division of FlowMass and Frequency
      */
-    public final Mass divide(final Frequency v)
+    public Mass divide(final Frequency v)
     {
         return new Mass(this.si() / v.si(), Mass.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a division of FlowMass and Mass
      */
-    public final Frequency divide(final Mass v)
+    public Frequency divide(final Mass v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a multiplication of FlowMass and Speed
      */
-    public final Force multiply(final Speed v)
+    public Force multiply(final Speed v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -193,7 +193,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a division of FlowMass and FlowVolume
      */
-    public final Density divide(final FlowVolume v)
+    public Density divide(final FlowVolume v)
     {
         return new Density(this.si() / v.si(), Density.Unit.SI);
     }
@@ -203,7 +203,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a division of FlowMass and Density
      */
-    public final FlowVolume divide(final Density v)
+    public FlowVolume divide(final Density v)
     {
         return new FlowVolume(this.si() / v.si(), FlowVolume.Unit.SI);
     }
@@ -213,7 +213,7 @@ public class FlowMass extends Quantity<FlowMass>
      * @param v scalar
      * @return scalar as a multiplication of FlowMass and Length
      */
-    public final Momentum multiply(final Length v)
+    public Momentum multiply(final Length v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }

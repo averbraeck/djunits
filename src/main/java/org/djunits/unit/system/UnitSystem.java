@@ -71,7 +71,7 @@ public class UnitSystem
      * Retrieve the name of this UnitSystem.
      * @return the name of this UnitSystem, e.g. centimeter-gram-second
      */
-    public final String getName()
+    public String getName()
     {
         return this.name;
     }
@@ -80,7 +80,7 @@ public class UnitSystem
      * Retrieve the abbreviation of this UnitSystem.
      * @return the abbreviation of this UnitSystem, e.g., CGS.cgs
      */
-    public final String getId()
+    public String getId()
     {
         return this.id;
     }

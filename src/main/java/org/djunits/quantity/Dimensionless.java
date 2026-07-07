@@ -136,7 +136,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v quantity
      * @return quantity as a division of Dimensionless and Dimensionless
      */
-    public final Dimensionless divide(final Dimensionless v)
+    public Dimensionless divide(final Dimensionless v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -146,7 +146,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v scalar
      * @return scalar as a division of Dimensionless and Length
      */
-    public final LinearObjectDensity divide(final Length v)
+    public LinearObjectDensity divide(final Length v)
     {
         return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
@@ -156,7 +156,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v scalar
      * @return scalar as a division of Dimensionless and LinearObjectDensity
      */
-    public final Length divide(final LinearObjectDensity v)
+    public Length divide(final LinearObjectDensity v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v scalar
      * @return scalar as a division of Dimensionless and Duration
      */
-    public final Frequency divide(final Duration v)
+    public Frequency divide(final Duration v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v scalar
      * @return scalar as a division of Dimensionless and Frequency
      */
-    public final Duration divide(final Frequency v)
+    public Duration divide(final Frequency v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v scalar
      * @return scalar as a division of Dimensionless and ElectricalConductance
      */
-    public final ElectricalResistance divide(final ElectricalConductance v)
+    public ElectricalResistance divide(final ElectricalConductance v)
     {
         return new ElectricalResistance(this.si() / v.si(), ElectricalResistance.Unit.SI);
     }
@@ -196,7 +196,7 @@ public class Dimensionless extends Quantity<Dimensionless>
      * @param v scalar
      * @return scalar as a division of Dimensionless and ElectricalResistance
      */
-    public final ElectricalConductance divide(final ElectricalResistance v)
+    public ElectricalConductance divide(final ElectricalResistance v)
     {
         return new ElectricalConductance(this.si() / v.si(), ElectricalConductance.Unit.SI);
     }

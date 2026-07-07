@@ -150,7 +150,7 @@ public class Duration extends Quantity<Duration>
      * @param time the absolute time to add
      * @return the absolute time plus this duration
      */
-    public final Time add(final Time time)
+    public Time add(final Time time)
     {
         return new Time(new Duration(time.si() + si(), getDisplayUnit(), true), time.getReference());
     }
@@ -160,7 +160,7 @@ public class Duration extends Quantity<Duration>
      * @param v quantity
      * @return quantity as a division of Duration and Duration
      */
-    public final Dimensionless divide(final Duration v)
+    public Dimensionless divide(final Duration v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -170,7 +170,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricCurrent
      */
-    public final ElectricCharge multiply(final ElectricCurrent v)
+    public ElectricCharge multiply(final ElectricCurrent v)
     {
         return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
     }
@@ -180,7 +180,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and FlowMass
      */
-    public final Mass multiply(final FlowMass v)
+    public Mass multiply(final FlowMass v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -190,7 +190,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and FlowVolume
      */
-    public final Volume multiply(final FlowVolume v)
+    public Volume multiply(final FlowVolume v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -200,7 +200,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and Acceleration
      */
-    public final Speed multiply(final Acceleration v)
+    public Speed multiply(final Acceleration v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -210,7 +210,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and Power
      */
-    public final Energy multiply(final Power v)
+    public Energy multiply(final Power v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -220,7 +220,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and Speed
      */
-    public final Length multiply(final Speed v)
+    public Length multiply(final Speed v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -230,7 +230,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricPotential
      */
-    public final MagneticFlux multiply(final ElectricPotential v)
+    public MagneticFlux multiply(final ElectricPotential v)
     {
         return new MagneticFlux(this.si() * v.si(), MagneticFlux.Unit.SI);
     }
@@ -240,7 +240,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricalResistance
      */
-    public final ElectricalInductance multiply(final ElectricalResistance v)
+    public ElectricalInductance multiply(final ElectricalResistance v)
     {
         return new ElectricalInductance(this.si() * v.si(), ElectricalInductance.Unit.SI);
     }
@@ -250,7 +250,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and ElectricalConductance
      */
-    public final ElectricalCapacitance multiply(final ElectricalConductance v)
+    public ElectricalCapacitance multiply(final ElectricalConductance v)
     {
         return new ElectricalCapacitance(this.si() * v.si(), ElectricalCapacitance.Unit.SI);
     }
@@ -260,7 +260,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and AngularVelocity
      */
-    public final Angle multiply(final AngularVelocity v)
+    public Angle multiply(final AngularVelocity v)
     {
         return new Angle(this.si() * v.si(), Angle.Unit.SI);
     }
@@ -270,7 +270,7 @@ public class Duration extends Quantity<Duration>
      * @param v scalar
      * @return scalar as a multiplication of Duration and AngularAcceleration
      */
-    public final AngularVelocity multiply(final AngularAcceleration v)
+    public AngularVelocity multiply(final AngularAcceleration v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }

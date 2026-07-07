@@ -146,7 +146,7 @@ public class Energy extends Quantity<Energy>
      * @param v quantity
      * @return quantity as a division of Energy and Energy
      */
-    public final Dimensionless divide(final Energy v)
+    public Dimensionless divide(final Energy v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Force
      */
-    public final Length divide(final Force v)
+    public Length divide(final Force v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Length
      */
-    public final Force divide(final Length v)
+    public Force divide(final Length v)
     {
         return new Force(this.si() / v.si(), Force.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a multiplication of Energy and LinearDensity
      */
-    public final Force multiply(final LinearObjectDensity v)
+    public Force multiply(final LinearObjectDensity v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Duration
      */
-    public final Power divide(final Duration v)
+    public Power divide(final Duration v)
     {
         return new Power(this.si() / v.si(), Power.Unit.SI);
     }
@@ -196,7 +196,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Power
      */
-    public final Duration divide(final Power v)
+    public Duration divide(final Power v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -206,7 +206,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Volume
      */
-    public final Pressure divide(final Volume v)
+    public Pressure divide(final Volume v)
     {
         return new Pressure(this.si() / v.si(), Pressure.Unit.SI);
     }
@@ -216,7 +216,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Pressure
      */
-    public final Volume divide(final Pressure v)
+    public Volume divide(final Pressure v)
     {
         return new Volume(this.si() / v.si(), Volume.Unit.SI);
     }
@@ -226,7 +226,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a multiplication of Energy and Frequency
      */
-    public final Power multiply(final Frequency v)
+    public Power multiply(final Frequency v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -236,7 +236,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Speed
      */
-    public final Momentum divide(final Speed v)
+    public Momentum divide(final Speed v)
     {
         return new Momentum(this.si() / v.si(), Momentum.Unit.SI);
     }
@@ -246,7 +246,7 @@ public class Energy extends Quantity<Energy>
      * @param v scalar
      * @return scalar as a division of Energy and Momentum
      */
-    public final Speed divide(final Momentum v)
+    public Speed divide(final Momentum v)
     {
         return new Speed(this.si() / v.si(), Speed.Unit.SI);
     }

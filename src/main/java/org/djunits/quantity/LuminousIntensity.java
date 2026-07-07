@@ -145,7 +145,7 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
      * @param v quantity
      * @return quantity as a division of LuminousIntensity and LuminousIntensity
      */
-    public final Dimensionless divide(final LuminousIntensity v)
+    public Dimensionless divide(final LuminousIntensity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -155,7 +155,7 @@ public class LuminousIntensity extends Quantity<LuminousIntensity>
      * @param v scalar
      * @return scalar as a multiplication of LuminousIntensity and SolidAngle
      */
-    public final LuminousFlux multiply(final SolidAngle v)
+    public LuminousFlux multiply(final SolidAngle v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

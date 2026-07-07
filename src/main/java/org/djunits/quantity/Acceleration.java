@@ -143,7 +143,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @param v scalar
      * @return scalar as a division of Acceleration and Acceleration
      */
-    public final Dimensionless divide(final Acceleration v)
+    public Dimensionless divide(final Acceleration v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @param v scalar
      * @return scalar as a multiplication of Acceleration and Mass
      */
-    public final Force multiply(final Mass v)
+    public Force multiply(final Mass v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @param v scalar
      * @return scalar as a multiplication of Acceleration and Duration
      */
-    public final Speed multiply(final Duration v)
+    public Speed multiply(final Duration v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @param v scalar
      * @return scalar as a division of Acceleration and Frequency
      */
-    public final Speed divide(final Frequency v)
+    public Speed divide(final Frequency v)
     {
         return new Speed(this.si() / v.si(), Speed.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @param v scalar
      * @return scalar as a division of Acceleration and Speed
      */
-    public final Frequency divide(final Speed v)
+    public Frequency divide(final Speed v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }
@@ -193,7 +193,7 @@ public class Acceleration extends Quantity<Acceleration>
      * @param v scalar
      * @return scalar as a multiplication of Acceleration and Momentum
      */
-    public final Power multiply(final Momentum v)
+    public Power multiply(final Momentum v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

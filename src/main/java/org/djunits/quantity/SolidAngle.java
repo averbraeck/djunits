@@ -143,7 +143,7 @@ public class SolidAngle extends Quantity<SolidAngle>
      * @param v quantity
      * @return quantity as a division of SolidAngle and SolidAngle
      */
-    public final Dimensionless divide(final SolidAngle v)
+    public Dimensionless divide(final SolidAngle v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class SolidAngle extends Quantity<SolidAngle>
      * @param v scalar
      * @return scalar as a multiplication of SolidAngle and LuminousIntensity
      */
-    public final LuminousFlux multiply(final LuminousIntensity v)
+    public LuminousFlux multiply(final LuminousIntensity v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

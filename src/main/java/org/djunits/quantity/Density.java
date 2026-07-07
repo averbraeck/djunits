@@ -143,7 +143,7 @@ public class Density extends Quantity<Density>
      * @param v quantity
      * @return quantity as a division of Density and Density
      */
-    public final Dimensionless divide(final Density v)
+    public Dimensionless divide(final Density v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class Density extends Quantity<Density>
      * @param v scalar
      * @return scalar as a multiplication of Density and Volume
      */
-    public final Mass multiply(final Volume v)
+    public Mass multiply(final Volume v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class Density extends Quantity<Density>
      * @param v scalar
      * @return scalar as a multiplication of Density and FlowVolume
      */
-    public final FlowMass multiply(final FlowVolume v)
+    public FlowMass multiply(final FlowVolume v)
     {
         return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
     }

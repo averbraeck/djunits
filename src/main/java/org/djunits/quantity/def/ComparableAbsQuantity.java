@@ -172,7 +172,7 @@ public abstract class ComparableAbsQuantity<A extends ComparableAbsQuantity<A, Q
      * @throws IllegalArgumentException when the two absolute quantities have a different reference point
      */
     @Override
-    public final int compareTo(final A other)
+    public int compareTo(final A other)
     {
         Throw.when(!getReference().equals(other.getReference()), IllegalArgumentException.class,
                 "Comparable operator not applicable to quantities with a different reference: %s <> %s", getReference().getId(),

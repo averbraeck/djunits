@@ -140,7 +140,7 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
      * @param absoluteTemperature the absolute temperature to add
      * @return the absolute temperature plus this temperature difference
      */
-    public final Temperature add(final Temperature absoluteTemperature)
+    public Temperature add(final Temperature absoluteTemperature)
     {
         return new Temperature(new TemperatureDifference(absoluteTemperature.si() + si(), getDisplayUnit(), true),
                 absoluteTemperature.getReference());
@@ -151,7 +151,7 @@ public class TemperatureDifference extends Quantity<TemperatureDifference>
      * @param v quantity
      * @return quantity as a division of TemperatureDifference and Temperature
      */
-    public final Dimensionless divide(final TemperatureDifference v)
+    public Dimensionless divide(final TemperatureDifference v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }

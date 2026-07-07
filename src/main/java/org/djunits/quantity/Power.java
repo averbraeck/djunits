@@ -146,7 +146,7 @@ public class Power extends Quantity<Power>
      * @param v quantity
      * @return quantity as a division of Power and Power
      */
-    public final Dimensionless divide(final Power v)
+    public Dimensionless divide(final Power v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a multiplication of Power and Duration
      */
-    public final Energy multiply(final Duration v)
+    public Energy multiply(final Duration v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and Frequency
      */
-    public final Energy divide(final Frequency v)
+    public Energy divide(final Frequency v)
     {
         return new Energy(this.si() / v.si(), Energy.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and Energy
      */
-    public final Frequency divide(final Energy v)
+    public Frequency divide(final Energy v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and Speed
      */
-    public final Force divide(final Speed v)
+    public Force divide(final Speed v)
     {
         return new Force(this.si() / v.si(), Force.Unit.SI);
     }
@@ -196,7 +196,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and Force
      */
-    public final Speed divide(final Force v)
+    public Speed divide(final Force v)
     {
         return new Speed(this.si() / v.si(), Speed.Unit.SI);
     }
@@ -206,7 +206,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and ElectricPotential
      */
-    public final ElectricCurrent divide(final ElectricPotential v)
+    public ElectricCurrent divide(final ElectricPotential v)
     {
         return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
     }
@@ -216,7 +216,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and ElectricCurrent
      */
-    public final ElectricPotential divide(final ElectricCurrent v)
+    public ElectricPotential divide(final ElectricCurrent v)
     {
         return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
     }
@@ -226,7 +226,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and Acceleration
      */
-    public final Momentum divide(final Acceleration v)
+    public Momentum divide(final Acceleration v)
     {
         return new Momentum(this.si() / v.si(), Momentum.Unit.SI);
     }
@@ -236,7 +236,7 @@ public class Power extends Quantity<Power>
      * @param v scalar
      * @return scalar as a division of Power and Momentum
      */
-    public final Acceleration divide(final Momentum v)
+    public Acceleration divide(final Momentum v)
     {
         return new Acceleration(this.si() / v.si(), Acceleration.Unit.SI);
     }

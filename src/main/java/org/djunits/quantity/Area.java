@@ -143,7 +143,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a division of Area and Area
      */
-    public final Dimensionless divide(final Area v)
+    public Dimensionless divide(final Area v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a multiplication of Area and ArealObjectDensity
      */
-    public final Dimensionless multiply(final ArealObjectDensity v)
+    public Dimensionless multiply(final ArealObjectDensity v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -163,7 +163,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a multiplication of Area and Length
      */
-    public final Volume multiply(final Length v)
+    public Volume multiply(final Length v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a division of Area and LinearObjectDensity
      */
-    public final Volume divide(final LinearObjectDensity v)
+    public Volume divide(final LinearObjectDensity v)
     {
         return new Volume(this.si() / v.si(), Volume.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a division of Area and Volume
      */
-    public final LinearObjectDensity divide(final Volume v)
+    public LinearObjectDensity divide(final Volume v)
     {
         return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
@@ -193,7 +193,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a division of Area and Length
      */
-    public final Length divide(final Length v)
+    public Length divide(final Length v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
@@ -203,7 +203,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a multiplication of Area and LinearObjectDensity
      */
-    public final Length multiply(final LinearObjectDensity v)
+    public Length multiply(final LinearObjectDensity v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -213,7 +213,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a multiplication of Area and Speed
      */
-    public final FlowVolume multiply(final Speed v)
+    public FlowVolume multiply(final Speed v)
     {
         return new FlowVolume(this.si() * v.si(), FlowVolume.Unit.SI);
     }
@@ -223,7 +223,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a multiplication of Area and Pressure
      */
-    public final Force multiply(final Pressure v)
+    public Force multiply(final Pressure v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -233,7 +233,7 @@ public class Area extends Quantity<Area>
      * @param v scalar
      * @return scalar as a multiplication of Area and Illuminance
      */
-    public final LuminousFlux multiply(final Illuminance v)
+    public LuminousFlux multiply(final Illuminance v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

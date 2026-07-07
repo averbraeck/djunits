@@ -143,7 +143,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a division of Volume and Volume
      */
-    public final Dimensionless divide(final Volume v)
+    public Dimensionless divide(final Volume v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a multiplication of Volume and Density
      */
-    public final Mass multiply(final Density v)
+    public Mass multiply(final Density v)
     {
         return new Mass(this.si() * v.si(), Mass.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a multiplication of Volume and Pressure
      */
-    public final Energy multiply(final Pressure v)
+    public Energy multiply(final Pressure v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a division of Volume and Length
      */
-    public final Area divide(final Length v)
+    public Area divide(final Length v)
     {
         return new Area(this.si() / v.si(), Area.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a division of Volume and Area
      */
-    public final Length divide(final Area v)
+    public Length divide(final Area v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
@@ -193,7 +193,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a multiplication of Volume and LinearObjectDensity
      */
-    public final Area multiply(final LinearObjectDensity v)
+    public Area multiply(final LinearObjectDensity v)
     {
         return new Area(this.si() * v.si(), Area.Unit.SI);
     }
@@ -203,7 +203,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a division of Volume and Duration
      */
-    public final FlowVolume divide(final Duration v)
+    public FlowVolume divide(final Duration v)
     {
         return new FlowVolume(this.si() / v.si(), FlowVolume.Unit.SI);
     }
@@ -213,7 +213,7 @@ public class Volume extends Quantity<Volume>
      * @param v scalar
      * @return scalar as a division of Volume and FlowVolume
      */
-    public final Duration divide(final FlowVolume v)
+    public Duration divide(final FlowVolume v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }

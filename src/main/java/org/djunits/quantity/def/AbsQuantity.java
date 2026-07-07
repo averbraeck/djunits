@@ -72,7 +72,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * Retrieve the relative quantity value in the current display unit.
      * @return the relative quantity value in the current display unit
      */
-    public final double getInUnit()
+    public double getInUnit()
     {
         return getDisplayUnit().getScale().fromIdentityScale(si());
     }
@@ -82,7 +82,7 @@ public abstract class AbsQuantity<A extends AbsQuantity<A, Q, R>, Q extends Quan
      * @param targetUnit the unit to convert the relative quantity value into
      * @return the value of the relative quantity in the target unit
      */
-    public final double getInUnit(final UnitInterface<Q> targetUnit)
+    public double getInUnit(final UnitInterface<Q> targetUnit)
     {
         return targetUnit.getScale().fromIdentityScale(si());
     }

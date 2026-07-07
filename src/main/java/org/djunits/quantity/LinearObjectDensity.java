@@ -146,7 +146,7 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
      * @param v quantity
      * @return quantity as a division of LinearObjectDensity and LinearObjectDensity
      */
-    public final Dimensionless divide(final LinearObjectDensity v)
+    public Dimensionless divide(final LinearObjectDensity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
      * @param v scalar
      * @return scalar as a multiplication of LinearObjectDensity and Length
      */
-    public final Dimensionless multiply(final Length v)
+    public Dimensionless multiply(final Length v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -166,7 +166,7 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
      * @param v scalar
      * @return scalar as a multiplication of LinearObjectDensity and Area
      */
-    public final Length multiply(final Area v)
+    public Length multiply(final Area v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
      * @param v scalar
      * @return scalar as a multiplication of LinearObjectDensity and Energy
      */
-    public final Force multiply(final Energy v)
+    public Force multiply(final Energy v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class LinearObjectDensity extends Quantity<LinearObjectDensity>
      * @param v scalar
      * @return scalar as a multiplication of LinearObjectDensity and Speed
      */
-    public final Frequency multiply(final Speed v)
+    public Frequency multiply(final Speed v)
     {
         return new Frequency(this.si() * v.si(), Frequency.Unit.SI);
     }

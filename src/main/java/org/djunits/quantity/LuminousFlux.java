@@ -143,7 +143,7 @@ public class LuminousFlux extends Quantity<LuminousFlux>
      * @param v quantity
      * @return quantity as a division of LuminousFlux and LuminousFlux
      */
-    public final Dimensionless divide(final LuminousFlux v)
+    public Dimensionless divide(final LuminousFlux v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class LuminousFlux extends Quantity<LuminousFlux>
      * @param v scalar
      * @return scalar as a division of LuminousFlux and Area
      */
-    public final Illuminance divide(final Area v)
+    public Illuminance divide(final Area v)
     {
         return new Illuminance(this.si() / v.si(), Illuminance.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class LuminousFlux extends Quantity<LuminousFlux>
      * @param v scalar
      * @return scalar as a division of LuminousFlux and Illuminance
      */
-    public final Area divide(final Illuminance v)
+    public Area divide(final Illuminance v)
     {
         return new Area(this.si() / v.si(), Area.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class LuminousFlux extends Quantity<LuminousFlux>
      * @param v scalar
      * @return scalar as a division of LuminousFlux and LuminousIntensity
      */
-    public final SolidAngle divide(final LuminousIntensity v)
+    public SolidAngle divide(final LuminousIntensity v)
     {
         return new SolidAngle(this.si() / v.si(), SolidAngle.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class LuminousFlux extends Quantity<LuminousFlux>
      * @param v scalar
      * @return scalar as a division of LuminousFlux and SolidAngle
      */
-    public final LuminousIntensity divide(final SolidAngle v)
+    public LuminousIntensity divide(final SolidAngle v)
     {
         return new LuminousIntensity(this.si() / v.si(), LuminousIntensity.Unit.SI);
     }

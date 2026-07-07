@@ -147,7 +147,7 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
      * @param v quantity
      * @return quantity as a division of CatalyticActivity and CatalyticActivity
      */
-    public final Dimensionless divide(final CatalyticActivity v)
+    public Dimensionless divide(final CatalyticActivity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -157,7 +157,7 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
      * @param v scalar
      * @return scalar as a multiplication of CatalyticActivity and Duration
      */
-    public final AmountOfSubstance multiply(final Duration v)
+    public AmountOfSubstance multiply(final Duration v)
     {
         return new AmountOfSubstance(this.si() * v.si(), AmountOfSubstance.Unit.SI);
     }
@@ -167,7 +167,7 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
      * @param v scalar
      * @return scalar as a division of CatalyticActivity and AmountOfSubstance
      */
-    public final Frequency divide(final AmountOfSubstance v)
+    public Frequency divide(final AmountOfSubstance v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }
@@ -177,7 +177,7 @@ public class CatalyticActivity extends Quantity<CatalyticActivity>
      * @param v scalar
      * @return scalar as a division of CatalyticActivity and Frequency
      */
-    public final AmountOfSubstance divide(final Frequency v)
+    public AmountOfSubstance divide(final Frequency v)
     {
         return new AmountOfSubstance(this.si() / v.si(), AmountOfSubstance.Unit.SI);
     }

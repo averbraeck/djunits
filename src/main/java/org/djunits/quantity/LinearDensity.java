@@ -143,7 +143,7 @@ public class LinearDensity extends Quantity<LinearDensity>
      * @param v quantity
      * @return quantity as a division of LinearDensity and LinearDensity
      */
-    public final Dimensionless divide(final LinearDensity v)
+    public Dimensionless divide(final LinearDensity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class LinearDensity extends Quantity<LinearDensity>
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code mass} is {@code null}.
      */
-    public final LinearObjectDensity divide(final Mass mass)
+    public LinearObjectDensity divide(final Mass mass)
     {
         return new LinearObjectDensity(this.si() / mass.si(), LinearObjectDensity.Unit.SI);
     }
@@ -169,7 +169,7 @@ public class LinearDensity extends Quantity<LinearDensity>
      * @return the resulting mass in SI (kg).
      * @throws NullPointerException if {@code lod} is {@code null}.
      */
-    public final Mass divide(final LinearObjectDensity lod)
+    public Mass divide(final LinearObjectDensity lod)
     {
         return new Mass(this.si() / lod.si(), Mass.Unit.SI);
     }
@@ -182,7 +182,7 @@ public class LinearDensity extends Quantity<LinearDensity>
      * @return the resulting mass in SI (kg).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final Mass multiply(final Length length)
+    public Mass multiply(final Length length)
     {
         return new Mass(this.si() * length.si(), Mass.Unit.SI);
     }
@@ -195,7 +195,7 @@ public class LinearDensity extends Quantity<LinearDensity>
      * @return the resulting mass flow in SI (kg/s).
      * @throws NullPointerException if {@code speed} is {@code null}.
      */
-    public final FlowMass multiply(final Speed speed)
+    public FlowMass multiply(final Speed speed)
     {
         return new FlowMass(this.si() * speed.si(), FlowMass.Unit.SI);
     }

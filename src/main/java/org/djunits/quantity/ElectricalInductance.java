@@ -145,7 +145,7 @@ public class ElectricalInductance extends Quantity<ElectricalInductance>
      * @param v quantity
      * @return quantity as a division of ElectricalInductance and ElectricalInductance
      */
-    public final Dimensionless divide(final ElectricalInductance v)
+    public Dimensionless divide(final ElectricalInductance v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }

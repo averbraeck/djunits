@@ -82,7 +82,7 @@ public class DoubleSparseValue<Q extends Quantity<Q>> implements Serializable
     /**
      * @return the row in the matrix
      */
-    public final int getRow()
+    public int getRow()
     {
         return this.row;
     }
@@ -90,7 +90,7 @@ public class DoubleSparseValue<Q extends Quantity<Q>> implements Serializable
     /**
      * @return the column in the matrix
      */
-    public final int getColumn()
+    public int getColumn()
     {
         return this.column;
     }
@@ -98,7 +98,7 @@ public class DoubleSparseValue<Q extends Quantity<Q>> implements Serializable
     /**
      * @return the SI value of the data point in the matrix
      */
-    public final double si()
+    public double si()
     {
         return this.si;
     }

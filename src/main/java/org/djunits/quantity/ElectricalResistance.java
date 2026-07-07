@@ -147,7 +147,7 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
      * @param v quantity
      * @return quantity as a division of ElectricalResistance and ElectricalResistance
      */
-    public final Dimensionless divide(final ElectricalResistance v)
+    public Dimensionless divide(final ElectricalResistance v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -157,7 +157,7 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and ElectricalConductance
      */
-    public final Dimensionless multiply(final ElectricalConductance v)
+    public Dimensionless multiply(final ElectricalConductance v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -167,7 +167,7 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and ElectricCurrent
      */
-    public final ElectricPotential multiply(final ElectricCurrent v)
+    public ElectricPotential multiply(final ElectricCurrent v)
     {
         return new ElectricPotential(this.si() * v.si(), ElectricPotential.Unit.SI);
     }
@@ -177,7 +177,7 @@ public class ElectricalResistance extends Quantity<ElectricalResistance>
      * @param v scalar
      * @return scalar as a multiplication of ElectricalResistance and Duration
      */
-    public final ElectricalInductance multiply(final Duration v)
+    public ElectricalInductance multiply(final Duration v)
     {
         return new ElectricalInductance(this.si() * v.si(), ElectricalInductance.Unit.SI);
     }

@@ -148,7 +148,7 @@ public class Length extends Quantity<Length>
      * @param position the absolute position to add
      * @return the absolute position plus this length
      */
-    public final Position add(final Position position)
+    public Position add(final Position position)
     {
         return new Position(new Length(position.si() + si(), getDisplayUnit(), true), position.getReference());
 
@@ -159,7 +159,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a division of Length and Length
      */
-    public final Dimensionless divide(final Length v)
+    public Dimensionless divide(final Length v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -169,7 +169,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a multiplication of Length and LinearObjectDensity
      */
-    public final Dimensionless multiply(final LinearObjectDensity v)
+    public Dimensionless multiply(final LinearObjectDensity v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -179,7 +179,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a multiplication of Length and Length
      */
-    public final Area multiply(final Length v)
+    public Area multiply(final Length v)
     {
         return new Area(this.si() * v.si(), Area.Unit.SI);
     }
@@ -189,7 +189,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a division of Length and LinearObjectDensity
      */
-    public final Area divide(final LinearObjectDensity v)
+    public Area divide(final LinearObjectDensity v)
     {
         return new Area(this.si() / v.si(), Area.Unit.SI);
     }
@@ -199,7 +199,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a division of Length and Area
      */
-    public final LinearObjectDensity divide(final Area v)
+    public LinearObjectDensity divide(final Area v)
     {
         return new LinearObjectDensity(this.si() / v.si(), LinearObjectDensity.Unit.SI);
     }
@@ -209,7 +209,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a multiplication of Length and Area
      */
-    public final Volume multiply(final Area v)
+    public Volume multiply(final Area v)
     {
         return new Volume(this.si() * v.si(), Volume.Unit.SI);
     }
@@ -219,7 +219,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a multiplication of Length and Force
      */
-    public final Energy multiply(final Force v)
+    public Energy multiply(final Force v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -229,7 +229,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a multiplication of Length and Frequency
      */
-    public final Speed multiply(final Frequency v)
+    public Speed multiply(final Frequency v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -239,7 +239,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a division of Length and Duration
      */
-    public final Speed divide(final Duration v)
+    public Speed divide(final Duration v)
     {
         return new Speed(this.si() / v.si(), Speed.Unit.SI);
     }
@@ -249,7 +249,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a division of Length and Speed
      */
-    public final Duration divide(final Speed v)
+    public Duration divide(final Speed v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -259,7 +259,7 @@ public class Length extends Quantity<Length>
      * @param v quantity
      * @return quantity as a multiplication of Length and FlowMass
      */
-    public final Momentum multiply(final FlowMass v)
+    public Momentum multiply(final FlowMass v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }

@@ -143,7 +143,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
      * @param v scalar
      * @return scalar as a division of AngularAcceleration and AngularAcceleration
      */
-    public final Dimensionless divide(final AngularAcceleration v)
+    public Dimensionless divide(final AngularAcceleration v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
      * @param v scalar
      * @return scalar as a multiplication of AngularAcceleration and Duration
      */
-    public final AngularVelocity multiply(final Duration v)
+    public AngularVelocity multiply(final Duration v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
      * @param v scalar
      * @return scalar as a division of AngularAcceleration and Frequency
      */
-    public final AngularVelocity divide(final Frequency v)
+    public AngularVelocity divide(final Frequency v)
     {
         return new AngularVelocity(this.si() / v.si(), AngularVelocity.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class AngularAcceleration extends Quantity<AngularAcceleration>
      * @param v scalar
      * @return scalar as a division of AngularAcceleration and AngularVelocity
      */
-    public final Frequency divide(final AngularVelocity v)
+    public Frequency divide(final AngularVelocity v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }

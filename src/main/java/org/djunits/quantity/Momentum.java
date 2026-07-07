@@ -143,7 +143,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v quantity
      * @return quantity as a division of Momentum and Momentum
      */
-    public final Dimensionless divide(final Momentum v)
+    public Dimensionless divide(final Momentum v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -153,7 +153,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v scalar
      * @return scalar as a division of Momentum and Speed
      */
-    public final Mass divide(final Speed v)
+    public Mass divide(final Speed v)
     {
         return new Mass(this.si() / v.si(), Mass.Unit.SI);
     }
@@ -163,7 +163,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v scalar
      * @return scalar as a division of Momentum and Mass
      */
-    public final Speed divide(final Mass v)
+    public Speed divide(final Mass v)
     {
         return new Speed(this.si() / v.si(), Speed.Unit.SI);
     }
@@ -173,7 +173,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v scalar
      * @return scalar as a division of Momentum and Length
      */
-    public final FlowMass divide(final Length v)
+    public FlowMass divide(final Length v)
     {
         return new FlowMass(this.si() / v.si(), FlowMass.Unit.SI);
     }
@@ -183,7 +183,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v scalar
      * @return scalar as a division of Momentum and FlowMass
      */
-    public final Length divide(final FlowMass v)
+    public Length divide(final FlowMass v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
@@ -193,7 +193,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v scalar
      * @return scalar as a multiplication of Momentum and Speed
      */
-    public final Energy multiply(final Speed v)
+    public Energy multiply(final Speed v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }
@@ -203,7 +203,7 @@ public class Momentum extends Quantity<Momentum>
      * @param v scalar
      * @return scalar as a multiplication of Momentum and Acceleration
      */
-    public final Power multiply(final Acceleration v)
+    public Power multiply(final Acceleration v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }

@@ -147,7 +147,7 @@ public class ElectricCharge extends Quantity<ElectricCharge>
      * @param v quantity
      * @return quantity as a division of ElectricCharge and ElectricCharge
      */
-    public final Dimensionless divide(final ElectricCharge v)
+    public Dimensionless divide(final ElectricCharge v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -157,7 +157,7 @@ public class ElectricCharge extends Quantity<ElectricCharge>
      * @param v scalar
      * @return scalar as a division of ElectricCharge and Duration
      */
-    public final ElectricCurrent divide(final Duration v)
+    public ElectricCurrent divide(final Duration v)
     {
         return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
     }
@@ -167,7 +167,7 @@ public class ElectricCharge extends Quantity<ElectricCharge>
      * @param v scalar
      * @return scalar as a division of ElectricCharge and ElectricCurrent
      */
-    public final Duration divide(final ElectricCurrent v)
+    public Duration divide(final ElectricCurrent v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -177,7 +177,7 @@ public class ElectricCharge extends Quantity<ElectricCharge>
      * @param v scalar
      * @return scalar as a division of ElectricCharge and ElectricPotential
      */
-    public final ElectricalCapacitance divide(final ElectricPotential v)
+    public ElectricalCapacitance divide(final ElectricPotential v)
     {
         return new ElectricalCapacitance(this.si() / v.si(), ElectricalCapacitance.Unit.SI);
     }
@@ -187,7 +187,7 @@ public class ElectricCharge extends Quantity<ElectricCharge>
      * @param v scalar
      * @return scalar as a division of ElectricCharge and ElectricalCapacitance
      */
-    public final ElectricPotential divide(final ElectricalCapacitance v)
+    public ElectricPotential divide(final ElectricalCapacitance v)
     {
         return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
     }

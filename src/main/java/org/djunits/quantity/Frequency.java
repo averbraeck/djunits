@@ -146,7 +146,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v quantity
      * @return quantity as a division of Frequency and Frequency
      */
-    public final Dimensionless divide(final Frequency v)
+    public Dimensionless divide(final Frequency v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Duration
      */
-    public final Dimensionless multiply(final Duration v)
+    public Dimensionless multiply(final Duration v)
     {
         return new Dimensionless(this.si() * v.si(), Unitless.BASE);
     }
@@ -166,7 +166,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Length
      */
-    public final Speed multiply(final Length v)
+    public Speed multiply(final Length v)
     {
         return new Speed(this.si() * v.si(), Speed.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Speed
      */
-    public final Acceleration multiply(final Speed v)
+    public Acceleration multiply(final Speed v)
     {
         return new Acceleration(this.si() * v.si(), Acceleration.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Energy
      */
-    public final Power multiply(final Energy v)
+    public Power multiply(final Energy v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -196,7 +196,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and Angle
      */
-    public final AngularVelocity multiply(final Angle v)
+    public AngularVelocity multiply(final Angle v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }
@@ -206,7 +206,7 @@ public class Frequency extends Quantity<Frequency>
      * @param v scalar
      * @return scalar as a multiplication of Frequency and AngularVelocity
      */
-    public final AngularAcceleration multiply(final AngularVelocity v)
+    public AngularAcceleration multiply(final AngularVelocity v)
     {
         return new AngularAcceleration(this.si() * v.si(), AngularAcceleration.Unit.SI);
     }

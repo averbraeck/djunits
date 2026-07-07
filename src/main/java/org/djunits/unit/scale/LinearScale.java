@@ -61,7 +61,7 @@ public class LinearScale implements Scale
      * Retrieve the factor for conversion to the standard unit.
      * @return the factor for conversion to the standard unit
      */
-    public final double getScaleFactorToBaseUnit()
+    public double getScaleFactorToBaseUnit()
     {
         return this.scaleFactorToBaseUnit;
     }

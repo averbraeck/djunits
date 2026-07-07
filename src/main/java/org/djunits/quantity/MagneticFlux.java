@@ -146,7 +146,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v quantity
      * @return quantity as a division of MagneticFlux and MagneticFlux
      */
-    public final Dimensionless divide(final MagneticFlux v)
+    public Dimensionless divide(final MagneticFlux v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v scalar
      * @return scalar as a division of MagneticFlux and ElectricPotential
      */
-    public final Duration divide(final ElectricPotential v)
+    public Duration divide(final ElectricPotential v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v scalar
      * @return scalar as a division of MagneticFlux and Duration
      */
-    public final ElectricPotential divide(final Duration v)
+    public ElectricPotential divide(final Duration v)
     {
         return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v scalar
      * @return scalar as a division of MagneticFlux and Area
      */
-    public final MagneticFluxDensity divide(final Area v)
+    public MagneticFluxDensity divide(final Area v)
     {
         return new MagneticFluxDensity(this.si() / v.si(), MagneticFluxDensity.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v scalar
      * @return scalar as a division of MagneticFlux and MagneticFluxDensity
      */
-    public final Area divide(final MagneticFluxDensity v)
+    public Area divide(final MagneticFluxDensity v)
     {
         return new Area(this.si() / v.si(), Area.Unit.SI);
     }
@@ -196,7 +196,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v scalar
      * @return scalar as a division of MagneticFlux and ElectricCurrent
      */
-    public final ElectricalInductance divide(final ElectricCurrent v)
+    public ElectricalInductance divide(final ElectricCurrent v)
     {
         return new ElectricalInductance(this.si() / v.si(), ElectricalInductance.Unit.SI);
     }
@@ -206,7 +206,7 @@ public class MagneticFlux extends Quantity<MagneticFlux>
      * @param v scalar
      * @return scalar as a division of MagneticFlux and ElectricalInductance
      */
-    public final ElectricCurrent divide(final ElectricalInductance v)
+    public ElectricCurrent divide(final ElectricalInductance v)
     {
         return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
     }

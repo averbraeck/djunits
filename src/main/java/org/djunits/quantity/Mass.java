@@ -146,7 +146,7 @@ public class Mass extends Quantity<Mass>
      * @param v quantity
      * @return quantity as a division of Mass and Mass
      */
-    public final Dimensionless divide(final Mass v)
+    public Dimensionless divide(final Mass v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a division of Mass and FlowMass
      */
-    public final Duration divide(final FlowMass v)
+    public Duration divide(final FlowMass v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a division of Mass and Duration
      */
-    public final FlowMass divide(final Duration v)
+    public FlowMass divide(final Duration v)
     {
         return new FlowMass(this.si() / v.si(), FlowMass.Unit.SI);
     }
@@ -176,7 +176,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a multiplication of Mass and Acceleration
      */
-    public final Force multiply(final Acceleration v)
+    public Force multiply(final Acceleration v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -186,7 +186,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a multiplication of Mass and Frequency
      */
-    public final FlowMass multiply(final Frequency v)
+    public FlowMass multiply(final Frequency v)
     {
         return new FlowMass(this.si() * v.si(), FlowMass.Unit.SI);
     }
@@ -196,7 +196,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a division of Mass and Density
      */
-    public final Volume divide(final Density v)
+    public Volume divide(final Density v)
     {
         return new Volume(this.si() / v.si(), Volume.Unit.SI);
     }
@@ -206,7 +206,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a division of Mass and Volume
      */
-    public final Density divide(final Volume v)
+    public Density divide(final Volume v)
     {
         return new Density(this.si() / v.si(), Density.Unit.SI);
     }
@@ -216,7 +216,7 @@ public class Mass extends Quantity<Mass>
      * @param v scalar
      * @return scalar as a multiplication of Mass and Speed
      */
-    public final Momentum multiply(final Speed v)
+    public Momentum multiply(final Speed v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }

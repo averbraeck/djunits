@@ -146,7 +146,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @param v quantity
      * @return quantity as a division of ElectricCurrent and ElectricCurrent
      */
-    public final Dimensionless divide(final ElectricCurrent v)
+    public Dimensionless divide(final ElectricCurrent v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCurrent and ElectricalPotential
      */
-    public final Power multiply(final ElectricPotential v)
+    public Power multiply(final ElectricPotential v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCurrent and Duration
      */
-    public final ElectricCharge multiply(final Duration v)
+    public ElectricCharge multiply(final Duration v)
     {
         return new ElectricCharge(this.si() * v.si(), ElectricCharge.Unit.SI);
     }
@@ -177,7 +177,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @param v scalar
      * @return scalar as a multiplication of ElectricalCurrent and ElectricalResistance
      */
-    public final ElectricPotential multiply(final ElectricalResistance v)
+    public ElectricPotential multiply(final ElectricalResistance v)
     {
         return new ElectricPotential(this.si() * v.si(), ElectricPotential.Unit.SI);
     }
@@ -187,7 +187,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @param v scalar
      * @return scalar as a division of ElectricalCurrent and ElectricalPotential
      */
-    public final ElectricalConductance divide(final ElectricPotential v)
+    public ElectricalConductance divide(final ElectricPotential v)
     {
         return new ElectricalConductance(this.si() / v.si(), ElectricalConductance.Unit.SI);
     }
@@ -197,7 +197,7 @@ public class ElectricCurrent extends Quantity<ElectricCurrent>
      * @param v scalar
      * @return scalar as a division of ElectricalCurrent and ElectricalConductance
      */
-    public final ElectricPotential divide(final ElectricalConductance v)
+    public ElectricPotential divide(final ElectricalConductance v)
     {
         return new ElectricPotential(this.si() / v.si(), ElectricPotential.Unit.SI);
     }

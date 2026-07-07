@@ -146,7 +146,7 @@ public class EquivalentDose extends Quantity<EquivalentDose>
      * @param v quantity
      * @return quantity as a division of EquivalentDose and EquivalentDose
      */
-    public final Dimensionless divide(final EquivalentDose v)
+    public Dimensionless divide(final EquivalentDose v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }

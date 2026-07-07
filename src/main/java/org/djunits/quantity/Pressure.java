@@ -146,7 +146,7 @@ public class Pressure extends Quantity<Pressure>
      * @param v quantity
      * @return quantity as a division of Pressure and Pressure
      */
-    public final Dimensionless divide(final Pressure v)
+    public Dimensionless divide(final Pressure v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class Pressure extends Quantity<Pressure>
      * @param v scalar
      * @return scalar as a multiplication of Pressure and Area
      */
-    public final Force multiply(final Area v)
+    public Force multiply(final Area v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class Pressure extends Quantity<Pressure>
      * @param v scalar
      * @return scalar as a multiplication of Pressure and Volume
      */
-    public final Energy multiply(final Volume v)
+    public Energy multiply(final Volume v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }

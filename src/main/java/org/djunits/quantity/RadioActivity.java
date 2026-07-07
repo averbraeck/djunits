@@ -146,7 +146,7 @@ public class RadioActivity extends Quantity<RadioActivity>
      * @param v quantity
      * @return quantity as a division of RadioActivity and RadioActivity
      */
-    public final Dimensionless divide(final RadioActivity v)
+    public Dimensionless divide(final RadioActivity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }

@@ -33,13 +33,13 @@ public class GradeScale implements Scale
     }
 
     @Override
-    public final double toIdentityScale(final double value)
+    public double toIdentityScale(final double value)
     {
         return Math.atan(value * this.conversionFactorToGrade);
     }
 
     @Override
-    public final double fromIdentityScale(final double value)
+    public double fromIdentityScale(final double value)
     {
         return Math.tan(value) / this.conversionFactorToGrade;
     }
@@ -47,7 +47,7 @@ public class GradeScale implements Scale
     /**
      * @return conversionFactorToGrade
      */
-    public final double getConversionFactorToGrade()
+    public double getConversionFactorToGrade()
     {
         return this.conversionFactorToGrade;
     }

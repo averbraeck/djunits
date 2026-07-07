@@ -144,7 +144,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a division of Speed and Speed
      */
-    public final Dimensionless divide(final Speed v)
+    public Dimensionless divide(final Speed v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -154,7 +154,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Area
      */
-    public final FlowVolume multiply(final Area v)
+    public FlowVolume multiply(final Area v)
     {
         return new FlowVolume(this.si() * v.si(), FlowVolume.Unit.SI);
     }
@@ -164,7 +164,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Force
      */
-    public final Power multiply(final Force v)
+    public Power multiply(final Force v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -174,7 +174,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Frequency
      */
-    public final Acceleration multiply(final Frequency v)
+    public Acceleration multiply(final Frequency v)
     {
         return new Acceleration(this.si() * v.si(), Acceleration.Unit.SI);
     }
@@ -184,7 +184,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a division of Speed and Length
      */
-    public final Frequency divide(final Length v)
+    public Frequency divide(final Length v)
     {
         return new Frequency(this.si() / v.si(), Frequency.Unit.SI);
     }
@@ -194,7 +194,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a division of Speed and Frequency
      */
-    public final Length divide(final Frequency v)
+    public Length divide(final Frequency v)
     {
         return new Length(this.si() / v.si(), Length.Unit.SI);
     }
@@ -204,7 +204,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and LinearObjectDensity
      */
-    public final Frequency multiply(final LinearObjectDensity v)
+    public Frequency multiply(final LinearObjectDensity v)
     {
         return new Frequency(this.si() * v.si(), Frequency.Unit.SI);
     }
@@ -214,7 +214,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Duration
      */
-    public final Length multiply(final Duration v)
+    public Length multiply(final Duration v)
     {
         return new Length(this.si() * v.si(), Length.Unit.SI);
     }
@@ -224,7 +224,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a division of Speed and Duration
      */
-    public final Acceleration divide(final Duration v)
+    public Acceleration divide(final Duration v)
     {
         return new Acceleration(this.si() / v.si(), Acceleration.Unit.SI);
     }
@@ -234,7 +234,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a division of Speed and Acceleration
      */
-    public final Duration divide(final Acceleration v)
+    public Duration divide(final Acceleration v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -244,7 +244,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and FlowMass
      */
-    public final Force multiply(final FlowMass v)
+    public Force multiply(final FlowMass v)
     {
         return new Force(this.si() * v.si(), Force.Unit.SI);
     }
@@ -254,7 +254,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Mass
      */
-    public final Momentum multiply(final Mass v)
+    public Momentum multiply(final Mass v)
     {
         return new Momentum(this.si() * v.si(), Momentum.Unit.SI);
     }
@@ -264,7 +264,7 @@ public class Speed extends Quantity<Speed>
      * @param v scalar
      * @return scalar as a multiplication of Speed and Momentum
      */
-    public final Energy multiply(final Momentum v)
+    public Energy multiply(final Momentum v)
     {
         return new Energy(this.si() * v.si(), Energy.Unit.SI);
     }

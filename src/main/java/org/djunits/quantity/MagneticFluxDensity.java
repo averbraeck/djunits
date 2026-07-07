@@ -146,7 +146,7 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
      * @param v quantity
      * @return quantity as a division of MagneticFluxDensity and MagneticFluxDensity
      */
-    public final Dimensionless divide(final MagneticFluxDensity v)
+    public Dimensionless divide(final MagneticFluxDensity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class MagneticFluxDensity extends Quantity<MagneticFluxDensity>
      * @param v scalar
      * @return scalar as a multiplication of MagneticFluxDensity and Area
      */
-    public final MagneticFlux multiply(final Area v)
+    public MagneticFlux multiply(final Area v)
     {
         return new MagneticFlux(this.si() * v.si(), MagneticFlux.Unit.SI);
     }

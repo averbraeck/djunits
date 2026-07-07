@@ -159,7 +159,7 @@ public class Angle extends Quantity<Angle>
      * @param direction the absolute direction to add
      * @return the absolute direction plus this angle
      */
-    public final Direction add(final Direction direction)
+    public Direction add(final Direction direction)
     {
         return new Direction(new Angle(direction.si() + si(), getDisplayUnit(), true), direction.getReference());
     }
@@ -169,7 +169,7 @@ public class Angle extends Quantity<Angle>
      * @param v scalar
      * @return scalar as a division of Angle and Angle
      */
-    public final Dimensionless divide(final Angle v)
+    public Dimensionless divide(final Angle v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -179,7 +179,7 @@ public class Angle extends Quantity<Angle>
      * @param v scalar
      * @return scalar as a multiplication of Angle and Frequency
      */
-    public final AngularVelocity multiply(final Frequency v)
+    public AngularVelocity multiply(final Frequency v)
     {
         return new AngularVelocity(this.si() * v.si(), AngularVelocity.Unit.SI);
     }
@@ -189,7 +189,7 @@ public class Angle extends Quantity<Angle>
      * @param v scalar
      * @return scalar as a division of Angle and Duration
      */
-    public final AngularVelocity divide(final Duration v)
+    public AngularVelocity divide(final Duration v)
     {
         return new AngularVelocity(this.si() / v.si(), AngularVelocity.Unit.SI);
     }
@@ -199,7 +199,7 @@ public class Angle extends Quantity<Angle>
      * @param v scalar
      * @return scalar as a division of Angle and AngularVelocity
      */
-    public final Duration divide(final AngularVelocity v)
+    public Duration divide(final AngularVelocity v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }

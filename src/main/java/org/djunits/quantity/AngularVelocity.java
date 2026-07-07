@@ -143,7 +143,7 @@ public class AngularVelocity extends Quantity<AngularVelocity>
      * @param v scalar
      * @return scalar as a division of AngularVelocity and AngularVelocity
      */
-    public final Dimensionless divide(final AngularVelocity v)
+    public Dimensionless divide(final AngularVelocity v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }

@@ -146,7 +146,7 @@ public class Illuminance extends Quantity<Illuminance>
      * @param v quantity
      * @return quantity as a division of Illuminance and Illuminance
      */
-    public final Dimensionless divide(final Illuminance v)
+    public Dimensionless divide(final Illuminance v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class Illuminance extends Quantity<Illuminance>
      * @param v scalar
      * @return scalar as a multiplication of Illuminance and Area
      */
-    public final LuminousFlux multiply(final Area v)
+    public LuminousFlux multiply(final Area v)
     {
         return new LuminousFlux(this.si() * v.si(), LuminousFlux.Unit.SI);
     }

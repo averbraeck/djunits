@@ -146,7 +146,7 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
      * @param v scalar
      * @return scalar as a division of AmountOfSubstance and AmountOfSubstance
      */
-    public final Dimensionless divide(final AmountOfSubstance v)
+    public Dimensionless divide(final AmountOfSubstance v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -156,7 +156,7 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
      * @param v scalar
      * @return scalar as a division of AmountOfSubstance and CatalyticActivity
      */
-    public final Duration divide(final CatalyticActivity v)
+    public Duration divide(final CatalyticActivity v)
     {
         return new Duration(this.si() / v.si(), Duration.Unit.SI);
     }
@@ -166,7 +166,7 @@ public class AmountOfSubstance extends Quantity<AmountOfSubstance>
      * @param v scalar
      * @return scalar as a division of AmountOfSubstance and Duration
      */
-    public final CatalyticActivity divide(final Duration v)
+    public CatalyticActivity divide(final Duration v)
     {
         return new CatalyticActivity(this.si() / v.si(), CatalyticActivity.Unit.SI);
     }

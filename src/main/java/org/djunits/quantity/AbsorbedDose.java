@@ -144,7 +144,7 @@ public class AbsorbedDose extends Quantity<AbsorbedDose>
      * @param v quantity
      * @return quantity as a division of AbsorbedDose and AbsorbedDose
      */
-    public final Dimensionless divide(final AbsorbedDose v)
+    public Dimensionless divide(final AbsorbedDose v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }

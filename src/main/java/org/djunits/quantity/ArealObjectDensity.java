@@ -146,7 +146,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      * @return the resulting dimensionless ratio in SI (1).
      * @throws NullPointerException if {@code other} is {@code null}.
      */
-    public final Dimensionless divide(final ArealObjectDensity other)
+    public Dimensionless divide(final ArealObjectDensity other)
     {
         return new Dimensionless(this.si() / other.si(), Unitless.BASE);
     }
@@ -159,7 +159,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      * @return the resulting dimensionless count in SI (1).
      * @throws NullPointerException if {@code area} is {@code null}.
      */
-    public final Dimensionless multiply(final Area area)
+    public Dimensionless multiply(final Area area)
     {
         return new Dimensionless(this.si() * area.si(), Unitless.BASE);
     }
@@ -172,7 +172,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      * @return the resulting linear object density in SI (1/m).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final LinearObjectDensity multiply(final Length length)
+    public LinearObjectDensity multiply(final Length length)
     {
         return new LinearObjectDensity(this.si() * length.si(), LinearObjectDensity.Unit.SI);
     }
@@ -185,7 +185,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      * @return the resulting volumetric object density in SI (1/m³).
      * @throws NullPointerException if {@code length} is {@code null}.
      */
-    public final VolumetricObjectDensity divide(final Length length)
+    public VolumetricObjectDensity divide(final Length length)
     {
         return new VolumetricObjectDensity(this.si() / length.si(), VolumetricObjectDensity.Unit.SI);
     }
@@ -198,7 +198,7 @@ public class ArealObjectDensity extends Quantity<ArealObjectDensity>
      * @return the resulting length in SI (m).
      * @throws NullPointerException if {@code vod} is {@code null}.
      */
-    public final Length divide(final VolumetricObjectDensity vod)
+    public Length divide(final VolumetricObjectDensity vod)
     {
         return new Length(this.si() / vod.si(), Length.Unit.SI);
     }

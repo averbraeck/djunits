@@ -147,7 +147,7 @@ public class ElectricPotential extends Quantity<ElectricPotential>
      * @param v quantity
      * @return quantity as a division of ElectricPotential and ElectricPotential
      */
-    public final Dimensionless divide(final ElectricPotential v)
+    public Dimensionless divide(final ElectricPotential v)
     {
         return new Dimensionless(this.si() / v.si(), Unitless.BASE);
     }
@@ -157,7 +157,7 @@ public class ElectricPotential extends Quantity<ElectricPotential>
      * @param v scalar
      * @return scalar as a multiplication of ElectricPotential and ElectricCurrent
      */
-    public final Power multiply(final ElectricCurrent v)
+    public Power multiply(final ElectricCurrent v)
     {
         return new Power(this.si() * v.si(), Power.Unit.SI);
     }
@@ -167,7 +167,7 @@ public class ElectricPotential extends Quantity<ElectricPotential>
      * @param v scalar
      * @return scalar as a division of ElectricPotential and ElectricCurrent
      */
-    public final ElectricalResistance divide(final ElectricCurrent v)
+    public ElectricalResistance divide(final ElectricCurrent v)
     {
         return new ElectricalResistance(this.si() / v.si(), ElectricalResistance.Unit.SI);
     }
@@ -177,7 +177,7 @@ public class ElectricPotential extends Quantity<ElectricPotential>
      * @param v scalar
      * @return scalar as a division of ElectricPotential and ElectricalResistance
      */
-    public final ElectricCurrent divide(final ElectricalResistance v)
+    public ElectricCurrent divide(final ElectricalResistance v)
     {
         return new ElectricCurrent(this.si() / v.si(), ElectricCurrent.Unit.SI);
     }
