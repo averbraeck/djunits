@@ -8,7 +8,7 @@ package org.djunits.unit.scale;
  * @author Alexander Verbraeck
  * @author Peter Knoppers
  */
-public class IdentityScale extends LinearScale
+public final class IdentityScale extends LinearScale
 {
     /** */
     private static final long serialVersionUID = 600L;
