@@ -13,21 +13,23 @@ Note that next to the `Quantity`, which is relative, an `AbsoluteQuantity` exist
 
 ## Constructing a quantity
 
-The constructor of a quantity like a `Duration` is straightforward: it takes a value and a unit, a value and a `String` representing a unit, or another duration:
+The constructor of a quantity like a `Duration` is straightforward: it takes a value and a unit, where the value is expressed in the provided unit:
 
 ```java
-Duration dur1 = new Duration(10.0, Duration.Unit.s);
-Duration dur2 = new Duration(10.0, "min");
-Duration dur3 = new Duration(dur2);
+Duration dur1 = new Duration(10.0, Duration.Unit.min);
 ```
 
-Several static `of()` and `valueOf()` methods are available as well:
+Several static `ofSi()`, `of()` and `valueOf()` methods are available as well:
 
 ```java
-var dur4 = Duration.ofSi(10.0); // results in a duration of 10 seconds
-var dur5 = Duration.valueOf("20 min"); // results in a duration of 20 minutes
-var dur6 = Duration.of(24.0, "h"); // results in a duration of 24 hours
+var dur2 = Duration.ofSi(10.0); // a duration of 10 seconds
+var dur3 = Duration.ofSi(10.0, Duration.unit.min); // 10 seconds, display unit in minutes
+var dur4 = Duration.of(24.0, Duration.Unit.h); // a duration of 24 hours
+var dur5 = Duration.of(24.0, "h"); // a duration of 24 hours
+var dur6 = Duration.valueOf("20 min"); // a duration of 20 minutes
 ```
+
+When a value is constructed using a certain unit, this unit is also used as the display unit.
 
 
 ## Requesting information of the quantity
@@ -51,15 +53,17 @@ Quantities are strongly typed, and many operations on quantities are possible. A
 The constructor is the standard way to instantiate a quantity. The constructors are typically as follows, where `Q` denotes the quantity class`:
 
 - `Q(double valueInUnit, UnitInterface unit)` instantiates a new quantity with `valueInUnit` expressed in the given `unit`. Example: `new Area(10.0, Area.Unit.are)`.
-- `Q(double valueInUnit, String unitString)` instantiates a new quantity with `valueInUnit`, where the unit string will be parsed into the unit, e.g., `new Area(80.0, "m2")`.
-- `Q(Q value)` instantiates a new quantity by duplicating an existing quantity.
-- `Q.ofSi(siValue, displayUnit)` instantiates a new quantity with the given SI or base value, and the given display unit.
-- `Q.valueOf(String text)` parses the string with value and unit. The example is a quantity of the correct type, e.g. `Area.valueOf("10.0 are")`.
+- `Q(double value, UnitInterface unit, boolean useSi)` instantiates a unit, where the `value` will either be in SI units when `useSi` is `true`, or expressed in the `unit` when `useSi` is `false`.
+- `Q.of(double valueInUnit, UnitInterface unit)` instantiates a new quantity with `valueInUnit`, expressed in the given unit, `Area.of(200.0, Area.Unit.ac)`.
 - `Q.of(double valueInUnit, String unitString)` instantiates a new quantity with `valueInUnit`, where the unit string will be parsed into the unit, e.g., `Area.of(80.0, "m2")`.
+- `Q.ofSi(siValue)` instantiates a new quantity with the given SI or base value. The SI or base unit will also act as the display unit.
+- `Q.ofSi(siValue, displayUnit)` instantiates a new quantity with the given SI or base value, and the given display unit.
+- `Q.valueOf(String text)` parses the string with value and unit. The example is a quantity of the correct type, e.g. `Area.valueOf("10.0 m2")`.
 
 Two instance methods are also present, that are typically used internally to instantiate a new quantity from an existing one:
 
 - `Area instantiateSi(siValue)` instantiates a new quantity with `si` as its SI or base value.
+- `Area instantiateSi(siValue, displayUnit)` instantiates a new quantity with `si` as its SI or base value, but for printing, the `displayUnit` will be used.
 - `Area instantiate(valueInUnit, unit)` instantiates a new quantity with `valueInUnit` expressed in the given `unit`.
 
 
