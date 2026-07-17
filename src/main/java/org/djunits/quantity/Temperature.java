@@ -59,13 +59,25 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     }
 
     /**
-     * Instantiate a Temperature quantity with an SI or base value and a display unit, relative to its own reference point.
-     * @param siValue the temperature value, expressed in K
-     * @param displayUnit the display unit to use
+     * Instantiate a Temperature quantity with a value expressed in a unit, and a reference point.
+     * @param value the temperature value in the provided unit, relative to the reference point
+     * @param unit the temperature unit
+     * @param reference the reference point of this Temperature
+     * @throws IllegalArgumentException when temperature is below 0 K
      */
-    public Temperature(final double siValue, final Temperature.Unit displayUnit)
+    public Temperature(final double value, final Temperature.Unit unit, final Reference reference)
     {
-        this(siValue, displayUnit, displayUnit.getReference(), true);
+        this(value, unit, reference, false);
+    }
+
+    /**
+     * Instantiate a Temperature quantity with a value in a unit, relative to its own reference point.
+     * @param value the temperature value, expressed in the unit
+     * @param unit the display unit to use
+     */
+    public Temperature(final double value, final Temperature.Unit unit)
+    {
+        this(value, unit, unit.getReference(), false);
     }
 
     /**
@@ -99,6 +111,18 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     }
 
     /**
+     * Return a Temperature instance based on an SI value and a reference point with a display unit.
+     * @param si the temperature si value, relative to the reference point
+     * @param displayUnit the display unit to use
+     * @param reference the reference point of this absolute temperature
+     * @return the Temperature instance based on an SI value
+     */
+    public static Temperature ofSi(final double si, final Temperature.Unit displayUnit, final Reference reference)
+    {
+        return new Temperature(si, displayUnit, reference, true);
+    }
+
+    /**
      * Return a Temperature instance based on an SI value and the KELVIN reference point.
      * @param si the temperature si value, relative to the reference point
      * @return the Temperature instance based on an SI value
@@ -106,6 +130,17 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     public static Temperature ofSi(final double si)
     {
         return new Temperature(si, Temperature.Unit.SI, Reference.KELVIN, true);
+    }
+
+    /**
+     * Return a Temperature instance based on an SI value and the KELVIN reference point.
+     * @param si the temperature si value, relative to the reference point
+     * @param displayUnit the display unit to use
+     * @return the Temperature instance based on an SI value
+     */
+    public static Temperature ofSi(final double si, final Temperature.Unit displayUnit)
+    {
+        return new Temperature(si, displayUnit, Reference.KELVIN, true);
     }
 
     @Override
@@ -144,6 +179,19 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     }
 
     /**
+     * Returns a Temperature based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the unit
+     * @param unit the unit in which the value is expressed
+     * @param reference the reference point of this absolute temperature
+     * @return the Scalar representation of the value in its unit
+     * @throws NullPointerException when the unit is null
+     */
+    public static Temperature of(final double valueInUnit, final Temperature.Unit unit, final Reference reference)
+    {
+        return new Temperature(TemperatureDifference.of(valueInUnit, unit), reference);
+    }
+
+    /**
      * Returns a Temperature based on a value and the textual representation of the unit, which can be localized.
      * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
@@ -158,7 +206,21 @@ public class Temperature extends ComparableAbsQuantity<Temperature, TemperatureD
     }
 
     /**
-     * Returns a Temperature based on a value and the textual representation of the unit, which can be localized.
+     * Returns a Temperature based on a value expressed in the unit, relative to its 'natural' reference point.
+     * @param valueInUnit the value, expressed in the unit
+     * @param unit the unit in which the value is expressed
+     * @return the Scalar representation of the value in its unit
+     * @throws NullPointerException when the unit is null
+     */
+    public static Temperature of(final double valueInUnit, final Temperature.Unit unit)
+    {
+        TemperatureDifference temp = TemperatureDifference.of(valueInUnit, unit);
+        return new Temperature(temp, temp.getDisplayUnit().getReference());
+    }
+
+    /**
+     * Returns a Temperature based on a value and the textual representation of the unit, which can be localized. The
+     * temperature is relative to its 'natural' reference point.
      * @param valueInUnit the value, expressed in the unit as given by unitString
      * @param unitString the textual representation of the unit
      * @return the Scalar representation of the value in its unit

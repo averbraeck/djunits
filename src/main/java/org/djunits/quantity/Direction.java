@@ -32,6 +32,17 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     }
 
     /**
+     * Instantiate a Direction quantity with a value expressed in a unit, and a reference point.
+     * @param value the angle value in the provided unit, relative to the reference point
+     * @param unit the angle unit
+     * @param reference the reference point of this direction
+     */
+    public Direction(final double value, final Angle.Unit unit, final Reference reference)
+    {
+        this(value, unit, reference, false);
+    }
+
+    /**
      * Instantiate a Direction instance based on an angle and a reference point.
      * @param angle the angle, relative to the reference point
      * @param reference the reference point of this direction
@@ -50,6 +61,18 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     public static Direction ofSi(final double si, final Reference reference)
     {
         return new Direction(si, Angle.Unit.SI, reference, true);
+    }
+
+    /**
+     * Return a Direction instance based on an SI value and a reference point.
+     * @param si the angle si value, relative to the reference point
+     * @param displayUnit the display unit to use
+     * @param reference the reference point of this direction
+     * @return the Direction instance based on an SI value
+     */
+    public static Direction ofSi(final double si, final Angle.Unit displayUnit, final Reference reference)
+    {
+        return new Direction(si, displayUnit, reference, true);
     }
 
     @Override
@@ -71,6 +94,19 @@ public class Direction extends AbsQuantity<Direction, Angle, Reference>
     public static Direction valueOf(final String text, final Reference reference)
     {
         return new Direction(Quantity.valueOf(text, Angle.ZERO), reference);
+    }
+
+    /**
+     * Returns a Direction based on a value expressed in the unit, which can be localized.
+     * @param valueInUnit the value, expressed in the unit
+     * @param unit the unit in which the value is expressed
+     * @param reference the reference point of this direction
+     * @return the Scalar representation of the value in its unit
+     * @throws NullPointerException when the unit is null
+     */
+    public static Direction of(final double valueInUnit, final Angle.Unit unit, final Reference reference)
+    {
+        return new Direction(Angle.of(valueInUnit, unit), reference);
     }
 
     /**

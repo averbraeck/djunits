@@ -30,6 +30,17 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
     }
 
     /**
+     * Instantiate a Position quantity with a value expressed in a unit, and a reference point.
+     * @param value the length value in the provided unit, relative to the reference point
+     * @param unit the length unit
+     * @param reference the reference point of this position
+     */
+    public Position(final double value, final Length.Unit unit, final Reference reference)
+    {
+        this(value, unit, reference, false);
+    }
+
+    /**
      * Instantiate a Position instance based on an length and a reference point.
      * @param length the length, relative to the reference point
      * @param reference the reference point of this position
@@ -48,6 +59,18 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
     public static Position ofSi(final double si, final Reference reference)
     {
         return new Position(si, Length.Unit.SI, reference, true);
+    }
+
+    /**
+     * Return a Position instance based on an SI value and a reference point.
+     * @param si the length si value, relative to the reference point
+     * @param displayUnit the display unit to use
+     * @param reference the reference point of this position
+     * @return the Position instance based on an SI value
+     */
+    public static Position ofSi(final double si, final Length.Unit displayUnit, final Reference reference)
+    {
+        return new Position(si, displayUnit, reference, true);
     }
 
     @Override
@@ -69,6 +92,19 @@ public class Position extends ComparableAbsQuantity<Position, Length, Position.R
     public static Position valueOf(final String text, final Reference reference)
     {
         return new Position(Quantity.valueOf(text, Length.ZERO), reference);
+    }
+
+    /**
+     * Returns a Position based on a value expressed in the unit, which can be localized.
+     * @param valueInUnit the value, expressed in the unit
+     * @param unit the unit in which the value is expressed
+     * @param reference the reference point of this position
+     * @return the Scalar representation of the value in its unit
+     * @throws NullPointerException when the unit is null
+     */
+    public static Position of(final double valueInUnit, final Length.Unit unit, final Reference reference)
+    {
+        return new Position(Length.of(valueInUnit, unit), reference);
     }
 
     /**

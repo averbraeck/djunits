@@ -32,6 +32,17 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
     }
 
     /**
+     * Instantiate a Time quantity with a value expressed in a unit, and a reference point.
+     * @param value the duration value in the provided unit, relative to the reference point
+     * @param unit the duration display unit or unit
+     * @param reference the reference point of this time
+     */
+    public Time(final double value, final Duration.Unit unit, final Reference reference)
+    {
+        this(value, unit, reference, false);
+    }
+
+    /**
      * Instantiate a Time instance based on an duration and a reference point.
      * @param duration the duration, relative to the reference point
      * @param reference the reference point of this time
@@ -50,6 +61,18 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
     public static Time ofSi(final double si, final Reference reference)
     {
         return new Time(si, Duration.Unit.SI, reference, true);
+    }
+
+    /**
+     * Return a Time instance based on an SI value and a reference point, with a display unit.
+     * @param si the duration si value, relative to the reference point
+     * @param displayUnit the display unit
+     * @param reference the reference point of this time
+     * @return the Time instance based on an SI value
+     */
+    public static Time ofSi(final double si, final Duration.Unit displayUnit, final Reference reference)
+    {
+        return new Time(si, displayUnit, reference, true);
     }
 
     @Override
@@ -71,6 +94,19 @@ public class Time extends ComparableAbsQuantity<Time, Duration, Time.Reference>
     public static Time valueOf(final String text, final Reference reference)
     {
         return new Time(Quantity.valueOf(text, Duration.ZERO), reference);
+    }
+
+    /**
+     * Returns a Time based on a value expressed in the unit.
+     * @param valueInUnit the value, expressed in the unit
+     * @param unit the unit in which the relative value is expressed
+     * @param reference the reference point of this Time
+     * @return the Scalar representation of the value in its unit
+     * @throws NullPointerException when the unit is null
+     */
+    public static Time of(final double valueInUnit, final Duration.Unit unit, final Reference reference)
+    {
+        return new Time(Duration.of(valueInUnit, unit), reference);
     }
 
     /**
