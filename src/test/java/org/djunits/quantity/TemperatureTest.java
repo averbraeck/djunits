@@ -121,7 +121,8 @@ class TemperatureTest
         assertEquals(5.0, tOf2.getInUnit(), 1E-12);
 
         assertThrows(NullPointerException.class, () -> Temperature.valueOf(null));
-        assertThrows(NullPointerException.class, () -> Temperature.of(10, null));
+        assertThrows(NullPointerException.class, () -> Temperature.of(10, (String) null));
+        assertThrows(NullPointerException.class, () -> Temperature.of(10, (Temperature.Unit) null));
         assertThrows(IllegalArgumentException.class, () -> Temperature.valueOf("50 XYZ"));
     }
 

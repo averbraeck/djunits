@@ -111,7 +111,8 @@ class PositionTest
         assertEquals(12.0, p2.getInUnit(), 1E-12);
 
         assertThrows(NullPointerException.class, () -> Position.valueOf(null, ref));
-        assertThrows(NullPointerException.class, () -> Position.of(10.0, null, ref));
+        assertThrows(NullPointerException.class, () -> Position.of(10.0, (String) null, ref));
+        assertThrows(NullPointerException.class, () -> Position.of(10.0, (Length.Unit) null, ref));
         assertThrows(IllegalArgumentException.class, () -> Position.valueOf("12 XYZ", ref));
         
         // clean up

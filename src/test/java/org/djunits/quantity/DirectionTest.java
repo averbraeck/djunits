@@ -2,6 +2,7 @@ package org.djunits.quantity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Locale;
 
@@ -75,6 +76,34 @@ class DirectionTest
         Direction d3 = Direction.Reference.NORTH.instantiate(Angle.of(120.0, "deg"));
         assertEquals(120.0, d3.getInUnit(), 1E-6);
         assertEquals("NORTH", d3.getReference().toString());
+    }
+
+    // =================================================================
+    // PARSING METHODS (valueOf, of) with errors
+    // =================================================================
+
+    /**
+     * Test parsing errors for textual values via valueOf(text, ref) and of(value, unitString, ref).
+     */
+    @Test
+    void testParsing()
+    {
+        Direction.Reference.add("REF", "Reference point", new Angle(180.0, Angle.Unit.deg));
+        Direction.Reference ref = Direction.Reference.get("REF");
+
+        Direction d1 = Direction.valueOf("90 deg", ref);
+        assertEquals(90.0, d1.getInUnit(), 1E-12);
+
+        Direction d2 = Direction.of(90.0, "deg", ref);
+        assertEquals(90.0, d2.getInUnit(), 1E-12);
+
+        assertThrows(NullPointerException.class, () -> Direction.valueOf(null, ref));
+        assertThrows(NullPointerException.class, () -> Direction.of(10.0, (String) null, ref));
+        assertThrows(NullPointerException.class, () -> Direction.of(10.0, (Angle.Unit) null, ref));
+        assertThrows(IllegalArgumentException.class, () -> Direction.valueOf("12 XYZ", ref));
+        
+        // clean up
+        Direction.Reference.get("REF").unregister();
     }
 
     /**

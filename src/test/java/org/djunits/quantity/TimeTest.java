@@ -111,7 +111,8 @@ class TimeTest
 
         // Error cases
         assertThrows(NullPointerException.class, () -> Time.valueOf(null, Time.Reference.UNIX));
-        assertThrows(NullPointerException.class, () -> Time.of(10.0, null, Time.Reference.UNIX));
+        assertThrows(NullPointerException.class, () -> Time.of(10.0, (String) null, Time.Reference.UNIX));
+        assertThrows(NullPointerException.class, () -> Time.of(10.0, (Duration.Unit) null, Time.Reference.UNIX));
         assertThrows(IllegalArgumentException.class, () -> Time.valueOf("12 XYZ", Time.Reference.UNIX));
     }
 
