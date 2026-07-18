@@ -1,5 +1,5 @@
 #SpotBugs User Preferences
-#Fri Jun 05 22:11:28 CEST 2026
+#Sat Jul 18 13:47:12 CEST 2026
 adjust_priority=
 detectorAppendingToAnObjectOutputStream=AppendingToAnObjectOutputStream|true
 detectorAtomicityProblem=AtomicityProblem|true
@@ -63,7 +63,9 @@ detectorFindFloatEquality=FindFloatEquality|true
 detectorFindFloatMath=FindFloatMath|false
 detectorFindHEmismatch=FindHEmismatch|true
 detectorFindHiddenMethod=FindHiddenMethod|true
+detectorFindImproperSynchronization=FindImproperSynchronization|true
 detectorFindInconsistentSync2=FindInconsistentSync2|true
+detectorFindIncreasedAccessibilityOfMethods=FindIncreasedAccessibilityOfMethods|true
 detectorFindInstanceLockOnSharedStaticData=FindInstanceLockOnSharedStaticData|true
 detectorFindJSR166LockMonitorenter=FindJSR166LockMonitorenter|true
 detectorFindLocalSelfAssignment2=FindLocalSelfAssignment2|true
@@ -186,6 +188,7 @@ detectorUncallableMethodOfAnonymousClass=UncallableMethodOfAnonymousClass|true
 detectorUnnecessaryEnvUsage=UnnecessaryEnvUsage|true
 detectorUnnecessaryMath=UnnecessaryMath|true
 detectorUnreadFields=UnreadFields|true
+detectorUnsafeDetector=UnsafeDetector|true
 detectorUselessSubclassMethod=UselessSubclassMethod|false
 detectorUselessSuppressionDetector=UselessSuppressionDetector|true
 detectorVarArgsProblems=VarArgsProblems|true
@@ -196,7 +199,7 @@ detectorWrongMapIterator=WrongMapIterator|true
 detectorXMLFactoryBypass=XMLFactoryBypass|true
 detector_threshold=2
 effort=default
-excludefilter0=config/spotbugs-exclude.xml|true
+excludefilter0=.build-config/spotbugs-exclude.xml|true
 filter_settings=Medium|BAD_PRACTICE,CORRECTNESS,MALICIOUS_CODE,MT_CORRECTNESS,PERFORMANCE,STYLE|false|20
 filter_settings_neg=SECURITY,EXPERIMENTAL,NOISE,I18N|
 mergeSimilarWarnings=false
